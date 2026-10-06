@@ -1,0 +1,47 @@
+---
+title: "Démonstration des conventions"
+subtitle: "Page de test du prototype : à supprimer ou à garder comme référence"
+---
+
+{{< include /_macros.qmd >}}
+
+Cette page montre le rendu des **quatre catégories** de contenu définies dans `CONTEXTE_PROJET.md` (section 7). L'exemple reprend la formule de Bennett de TS227.
+
+## Support officiel {#sec-demo-officiel}
+
+Le texte issu du support de l'enseignant est écrit normalement. La formule de Bennett donne la densité spectrale de puissance du signal émis :
+
+$$
+\Gamma_{s_l}(f) = \frac{|H(f)|^2}{\Ts} \sum_{m} R_A[m]\, e^{-j2\pi f m \Ts}
+$$ {#eq-demo-bennett}
+
+::: {#def-demo-cyclo}
+## Processus cyclostationnaire
+
+Un processus est cyclostationnaire de période $\Ts$ si sa moyenne et son autocorrélation sont périodiques en $t$, de période $\Ts$.
+:::
+
+## Notes de cours {#sec-demo-notes}
+
+::: {.notes}
+**Démonstration faite au tableau.** On part de l'autocorrélation moyennée sur une période, puis on intervertit somme et intégrale : les sommes ne comportent qu'un nombre fini de termes non nuls car $h$ est à support borné. On obtient ainsi l'@eq-demo-bennett.
+:::
+
+Dans une phrase du support, un ajout oral s'écrit ainsi : la porte est le filtre le plus simple [mais le professeur a insisté sur son lobe principal trop large]{.notes}.
+
+## Complément {#sec-demo-complement}
+
+::: {.complement}
+Étape non écrite au tableau : le changement d'indice $k \to k - 1$ montre que $m_{s_l}(t + \Ts) = m_{s_l}(t)$.
+:::
+
+## À vérifier {#sec-demo-verifier}
+
+::: {.a-verifier}
+Le support (p. 78) donne pour $Y = aX + b$ la loi $\mathcal{N}(a\mu + b,\ b^2\sigma^2)$.
+**Correction proposée :** la variance est $a^2\sigma^2$.
+:::
+
+## Références croisées {#sec-demo-refs}
+
+Voir la @def-demo-cyclo, l'@eq-demo-bennett et la @sec-demo-notes.

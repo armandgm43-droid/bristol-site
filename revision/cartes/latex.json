@@ -1,0 +1,558 @@
+{
+ "deck": "LaTeX",
+ "color": "#FFFFFF",
+ "items": [
+  {
+   "key": "latex-base-01",
+   "chap": "Structure d'un document",
+   "front": "Squelette minimal d'un document LaTeX en français ?",
+   "back": "`\\documentclass[11pt,a4paper]{article}`\n`\\usepackage[T1]{fontenc}`\n`\\usepackage[french]{babel}`\n`\\begin{document}`\n`Bonjour.`\n`\\end{document}`"
+  },
+  {
+   "key": "latex-base-02",
+   "chap": "Structure d'un document",
+   "front": "Préambule et corps du document : où sont-ils, que contiennent-ils ?",
+   "back": "Le **préambule** va de `\\documentclass` à `\\begin{document}` : packages, réglages, macros.\nLe **corps** est entre `\\begin{document}` et `\\end{document}` : le contenu."
+  },
+  {
+   "key": "latex-base-03",
+   "chap": "Structure d'un document",
+   "front": "Classes de document courantes ?",
+   "back": "`article` : rapport court, sans chapitres.\n`report` : rapport long (stage, projet), avec `\\chapter`.\n`book` : livre, pages recto-verso.\n`beamer` : présentation."
+  },
+  {
+   "key": "latex-base-04",
+   "chap": "Structure d'un document",
+   "front": "Rôle de `\\usepackage[french]{babel}` ?",
+   "back": "Adapter le document au français : césure, typographie (espaces avant `:` `;` `?` `!`), et noms automatiques (« Table des matières », « Figure »)."
+  },
+  {
+   "key": "latex-base-05",
+   "chap": "Structure d'un document",
+   "front": "Faut-il encore écrire `\\usepackage[utf8]{inputenc}` ?",
+   "back": "Non : depuis 2018, LaTeX lit l'UTF-8 par défaut. `\\usepackage[T1]{fontenc}` reste utile avec pdflatex pour les accents (césure, copier-coller)."
+  },
+  {
+   "key": "latex-base-06",
+   "chap": "Structure d'un document",
+   "front": "Afficher titre, auteur et date en tête de document ?",
+   "back": "Dans le préambule : `\\title{…}`, `\\author{…}`, `\\date{\\today}`.\nDans le corps : `\\maketitle`."
+  },
+  {
+   "key": "latex-base-07",
+   "chap": "Structure d'un document",
+   "front": "Commandes de sectionnement, de la plus haute à la plus basse ?",
+   "back": "`\\part`, `\\chapter` (report et book seulement), `\\section`, `\\subsection`, `\\subsubsection`, `\\paragraph`, `\\subparagraph`."
+  },
+  {
+   "key": "latex-base-08",
+   "chap": "Structure d'un document",
+   "front": "Effet de l'étoile dans `\\section*{Introduction}` ?",
+   "back": "La section n'est pas numérotée et n'apparaît pas dans la table des matières."
+  },
+  {
+   "key": "latex-base-09",
+   "chap": "Structure d'un document",
+   "front": "Insérer la table des matières ? Pourquoi compiler deux fois ?",
+   "back": "`\\tableofcontents`.\nLa première compilation écrit les titres dans le fichier .aux, la seconde les relit pour construire la table. Même principe pour les références croisées."
+  },
+  {
+   "key": "latex-base-10",
+   "chap": "Structure d'un document",
+   "front": "Écrire un commentaire en LaTeX ?",
+   "back": "Avec `%` : tout ce qui suit sur la ligne est ignoré."
+  },
+  {
+   "key": "latex-base-11",
+   "chap": "Structure d'un document",
+   "front": "Les caractères spéciaux à échapper, et comment ?",
+   "back": "`# $ % & _ { }` s'écrivent `\\# \\$ \\% \\& \\_ \\{ \\}`.\n`~` et `^` : `\\textasciitilde`, `\\textasciicircum`. Antislash : `\\textbackslash`."
+  },
+  {
+   "key": "latex-base-12",
+   "chap": "Structure d'un document",
+   "front": "Nouveau paragraphe vs retour à la ligne ?",
+   "back": "Une **ligne vide** crée un nouveau paragraphe (avec retrait).\n`\\\\` force un retour à la ligne dans le même paragraphe : à éviter dans le texte courant."
+  },
+  {
+   "key": "latex-base-13",
+   "chap": "Structure d'un document",
+   "front": "Que produit `~` dans le texte ?",
+   "back": "Une espace insécable : la ligne ne sera pas coupée à cet endroit. Ex. `Figure~\\ref{fig:bode}`, `M.~Dupont`."
+  },
+  {
+   "key": "latex-base-14",
+   "chap": "Structure d'un document",
+   "front": "Trait d'union, demi-cadratin, cadratin ?",
+   "back": "`-` : trait d'union (porte-monnaie).\n`--` : demi-cadratin, pour les intervalles (pages 3--5).\n`---` : cadratin, tiret d'incise."
+  },
+  {
+   "key": "latex-base-15",
+   "chap": "Structure d'un document",
+   "front": "Écrire des guillemets français ?",
+   "back": "Avec babel en français : `\\og texte \\fg{}`, qui place les espaces insécables. Ou directement « texte » en UTF-8."
+  },
+  {
+   "key": "latex-base-16",
+   "chap": "Structure d'un document",
+   "front": "`\\emph`, `\\textbf`, `\\textit`, `\\texttt` ?",
+   "back": "`\\emph{…}` : mise en valeur sémantique (italique en général).\n`\\textbf{…}` : gras. `\\textit{…}` : italique. `\\texttt{…}` : police à chasse fixe (noms de fichiers, de fonctions)."
+  },
+  {
+   "key": "latex-base-17",
+   "chap": "Structure d'un document",
+   "front": "Ajouter une note de bas de page ?",
+   "back": "`\\footnote{Texte de la note.}` à l'endroit de l'appel."
+  },
+  {
+   "key": "latex-base-18",
+   "chap": "Structure d'un document",
+   "front": "Saut de page : `\\newpage` vs `\\clearpage` ?",
+   "back": "Les deux passent à la page suivante. `\\clearpage` place en plus toutes les figures et tables flottantes en attente."
+  },
+  {
+   "key": "latex-ref-01",
+   "chap": "Références et liens",
+   "front": "Faire référence à une figure, une section ou une équation ?",
+   "back": "Placer `\\label{fig:bode}` sur l'élément, puis écrire `figure~\\ref{fig:bode}` (numéro) ou `page~\\pageref{fig:bode}`. Compiler deux fois."
+  },
+  {
+   "key": "latex-ref-02",
+   "chap": "Références et liens",
+   "front": "Pourquoi préfixer les labels (`fig:`, `tab:`, `eq:`, `sec:`) ?",
+   "back": "Simple convention de lisibilité : on sait ce que désigne le label, et on évite les doublons. LaTeX ne les interprète pas."
+  },
+  {
+   "key": "latex-ref-03",
+   "chap": "Références et liens",
+   "front": "Une référence affiche « ?? ». Causes possibles ?",
+   "back": "Le document n'a pas été recompilé après l'ajout du label, ou le label n'existe pas (faute de frappe). Le journal signale « Reference undefined »."
+  },
+  {
+   "key": "latex-ref-04",
+   "chap": "Références et liens",
+   "front": "Rôle du package hyperref ?",
+   "back": "Rendre cliquables les références, la table des matières et les citations, et créer les signets du PDF. `\\url{…}` et `\\href{url}{texte}` pour les liens. À charger en dernier, ou presque."
+  },
+  {
+   "key": "latex-ref-05",
+   "chap": "Références et liens",
+   "front": "Avantage de `\\cref{fig:bode}` (package cleveref) sur `\\ref` ?",
+   "back": "Il écrit automatiquement le type : « figure 3 », « équation (2) ». Plus besoin de taper « figure~ » à la main."
+  },
+  {
+   "key": "latex-ref-06",
+   "chap": "Références et liens",
+   "front": "Faire référence à une équation numérotée ?",
+   "back": "`\\eqref{eq:ohm}` (amsmath) : affiche le numéro entre parenthèses, « (2) »."
+  },
+  {
+   "key": "latex-math-01",
+   "chap": "Mathématiques",
+   "front": "Formule dans le texte vs formule centrée ?",
+   "back": "Dans le texte : `$…$` (ou `\\(…\\)`).\nCentrée, sans numéro : `\\[…\\]`.\nCentrée et numérotée : environnement `equation`."
+  },
+  {
+   "key": "latex-math-02",
+   "chap": "Mathématiques",
+   "front": "Pourquoi éviter `$$…$$` en LaTeX ?",
+   "back": "C'est une syntaxe de TeX brut : espacements incohérents et incompatibilités avec certains packages. On utilise `\\[…\\]` ou les environnements d'amsmath."
+  },
+  {
+   "key": "latex-math-03",
+   "chap": "Mathématiques",
+   "front": "Package indispensable pour les maths ? Et pour ℝ, ℕ, ℂ ?",
+   "back": "`amsmath` (environnements align, cases, matrices, `\\text`).\n`amssymb` pour `\\mathbb{R}`, qui donne $\\mathbb{R}$."
+  },
+  {
+   "key": "latex-math-04",
+   "chap": "Mathématiques",
+   "front": "Écrire une fraction et une racine n-ième ?",
+   "back": "`\\frac{a}{b}` donne $\\frac{a}{b}$.\n`\\sqrt{x}` et `\\sqrt[3]{x}` donnent $\\sqrt{x}$ et $\\sqrt[3]{x}$."
+  },
+  {
+   "key": "latex-math-05",
+   "chap": "Mathématiques",
+   "front": "Pourquoi `x^10` ne donne-t-il pas $x^{10}$ ?",
+   "back": "Exposants et indices ne prennent qu'un caractère sans accolades : `x^10` donne $x^10$. Il faut écrire `x^{10}`. Idem pour les indices : `V_{CC}`."
+  },
+  {
+   "key": "latex-math-06",
+   "chap": "Mathématiques",
+   "front": "Écrire une somme et une intégrale avec leurs bornes ?",
+   "back": "`\\sum_{k=1}^{n} u_k` donne $\\sum_{k=1}^{n} u_k$.\n`\\int_a^b f(t)\\,\\mathrm{d}t` donne $\\int_a^b f(t)\\,\\mathrm{d}t$."
+  },
+  {
+   "key": "latex-math-07",
+   "chap": "Mathématiques",
+   "front": "Pourquoi écrire `\\mathrm{d}t` dans une intégrale, et `\\,` avant ?",
+   "back": "Selon la norme ISO, le d différentiel s'écrit en droit. `\\,` ajoute une petite espace entre la fonction et le dt."
+  },
+  {
+   "key": "latex-math-08",
+   "chap": "Mathématiques",
+   "front": "Parenthèses qui s'adaptent à la hauteur de leur contenu ?",
+   "back": "`\\left( \\frac{a}{b} \\right)` donne $\\left( \\frac{a}{b} \\right)$. Fonctionne aussi avec `[`, `\\{`, `|`."
+  },
+  {
+   "key": "latex-math-09",
+   "chap": "Mathématiques",
+   "front": "Aligner plusieurs équations sur le signe égal ?",
+   "back": "Environnement `align` (ou `align*` sans numéros) :\n`\\begin{align}`\n`  U &= R I \\\\`\n`  P &= U I`\n`\\end{align}`\n`&` marque le point d'alignement, `\\\\` change de ligne."
+  },
+  {
+   "key": "latex-math-10",
+   "chap": "Mathématiques",
+   "front": "`equation` vs `equation*` ?",
+   "back": "`equation` numérote la formule ; `equation*` (amsmath) ne la numérote pas, comme `\\[…\\]`."
+  },
+  {
+   "key": "latex-math-11",
+   "chap": "Mathématiques",
+   "front": "Écrire une matrice entre parenthèses ?",
+   "back": "`\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}` donne $\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}$.\n`bmatrix` pour des crochets, `vmatrix` pour un déterminant."
+  },
+  {
+   "key": "latex-math-12",
+   "chap": "Mathématiques",
+   "front": "Écrire une fonction définie par morceaux ?",
+   "back": "`f(x) = \\begin{cases} 1 & \\text{si } x > 0 \\\\ 0 & \\text{sinon} \\end{cases}` donne :\n$$f(x) = \\begin{cases} 1 & \\text{si } x > 0 \\\\ 0 & \\text{sinon} \\end{cases}$$"
+  },
+  {
+   "key": "latex-math-13",
+   "chap": "Mathématiques",
+   "front": "Écrire du texte normal dans une formule ?",
+   "back": "`\\text{…}` (amsmath). Ex. `V_{\\text{max}}` donne $V_{\\text{max}}$, alors que `V_{max}` met « max » en italique comme un produit de variables."
+  },
+  {
+   "key": "latex-math-14",
+   "chap": "Mathématiques",
+   "front": "Écrire le j des complexes et une fonction de transfert proprement ?",
+   "back": "`H(\\mathrm{j}\\omega) = \\frac{1}{1 + \\mathrm{j} R C \\omega}` donne :\n$$H(\\mathrm{j}\\omega) = \\frac{1}{1 + \\mathrm{j} R C \\omega}$$\nLe j (ou i) imaginaire s'écrit en droit."
+  },
+  {
+   "key": "latex-math-15",
+   "chap": "Mathématiques",
+   "front": "Symboles ≈, ≠, ≤, ≥, ±, ×, · en mode maths ?",
+   "back": "`\\approx`, `\\neq`, `\\leq`, `\\geq`, `\\pm`, `\\times`, `\\cdot`"
+  },
+  {
+   "key": "latex-math-16",
+   "chap": "Mathématiques",
+   "front": "Lettres grecques minuscules et majuscules ?",
+   "back": "`\\alpha`, `\\omega`, `\\tau`, `\\varphi`… et `\\Omega`, `\\Delta`, `\\Phi` pour les majuscules : $\\alpha, \\omega, \\tau, \\varphi, \\Omega, \\Delta$."
+  },
+  {
+   "key": "latex-math-17",
+   "chap": "Mathématiques",
+   "front": "Écrire un vecteur et une dérivée par rapport au temps ?",
+   "back": "`\\vec{E}` ou `\\overrightarrow{AB}` : $\\vec{E}$, $\\overrightarrow{AB}$.\n`\\dot{x}`, `\\ddot{x}` : $\\dot{x}$, $\\ddot{x}$. Dérivée partielle : `\\partial`."
+  },
+  {
+   "key": "latex-math-18",
+   "chap": "Mathématiques",
+   "front": "Espaces en mode maths, de la plus petite à la plus grande ?",
+   "back": "`\\,` (fine), `\\:` (moyenne), `\\;` (grande), `\\quad`, `\\qquad`. LaTeX ignore les espaces tapées au clavier en mode maths."
+  },
+  {
+   "key": "latex-math-19",
+   "chap": "Mathématiques",
+   "front": "Définir un opérateur en droit, comme sinc ?",
+   "back": "`\\operatorname{sinc}(x)`, ou dans le préambule `\\DeclareMathOperator{\\sinc}{sinc}` puis `\\sinc(x)`. Les fonctions usuelles existent déjà : `\\sin`, `\\log`, `\\exp`, `\\lim`."
+  },
+  {
+   "key": "latex-si-01",
+   "chap": "Unités avec siunitx",
+   "front": "Pourquoi utiliser siunitx pour les grandeurs physiques ?",
+   "back": "Pour une écriture homogène et conforme : valeur et unité séparées par une espace insécable fine, unités en droit, séparateur décimal et puissances de 10 gérés automatiquement."
+  },
+  {
+   "key": "latex-si-02",
+   "chap": "Unités avec siunitx",
+   "front": "Écrire 4,7 kΩ avec siunitx ?",
+   "back": "`\\qty{4.7}{\\kilo\\ohm}` (siunitx v3), ou `\\SI{4.7}{\\kilo\\ohm}` (ancienne syntaxe, toujours acceptée).\nAvec `\\sisetup{locale=FR}`, le point devient une virgule."
+  },
+  {
+   "key": "latex-si-03",
+   "chap": "Unités avec siunitx",
+   "front": "`\\num`, `\\unit`, `\\qty` dans siunitx ?",
+   "back": "`\\num{12345.6}` : un nombre seul, bien formaté.\n`\\unit{\\mega\\hertz}` : une unité seule (`\\si` en v2).\n`\\qty{100}{\\mega\\hertz}` : nombre + unité."
+  },
+  {
+   "key": "latex-si-04",
+   "chap": "Unités avec siunitx",
+   "front": "Écrire 10 µF, 3,3 V et 50 Ω avec siunitx ?",
+   "back": "`\\qty{10}{\\micro\\farad}`, `\\qty{3.3}{\\volt}`, `\\qty{50}{\\ohm}`"
+  },
+  {
+   "key": "latex-si-05",
+   "chap": "Unités avec siunitx",
+   "front": "Écrire −20 dB/décade avec siunitx, alors que « décade » n'est pas une unité prédéfinie ?",
+   "back": "Déclarer l'unité dans le préambule : `\\DeclareSIUnit\\decade{décade}`, puis `\\qty{-20}{\\decibel\\per\\decade}`."
+  },
+  {
+   "key": "latex-fig-01",
+   "chap": "Figures et tableaux",
+   "front": "Insérer une image dans une figure numérotée et légendée ?",
+   "back": "`\\begin{figure}[htbp]`\n`  \\centering`\n`  \\includegraphics[width=0.8\\textwidth]{bode.pdf}`\n`  \\caption{Diagramme de Bode du filtre.}`\n`  \\label{fig:bode}`\n`\\end{figure}`\nPackage `graphicx`."
+  },
+  {
+   "key": "latex-fig-02",
+   "chap": "Figures et tableaux",
+   "front": "Pourquoi placer `\\label` **après** `\\caption` ?",
+   "back": "C'est `\\caption` qui fixe le numéro de la figure. Placé avant, `\\label` récupère le numéro de la section courante."
+  },
+  {
+   "key": "latex-fig-03",
+   "chap": "Figures et tableaux",
+   "front": "Que signifient les options `[htbp]` d'une figure ?",
+   "back": "Les emplacements autorisés, par ordre de préférence : here (ici), top (haut de page), bottom (bas de page), page (page de flottants). La figure « flotte » vers le meilleur endroit."
+  },
+  {
+   "key": "latex-fig-04",
+   "chap": "Figures et tableaux",
+   "front": "Forcer une figure exactement à l'endroit du code ?",
+   "back": "Option `[H]` du package `float`. À utiliser avec modération : on laisse en général LaTeX placer les flottants."
+  },
+  {
+   "key": "latex-fig-05",
+   "chap": "Figures et tableaux",
+   "front": "`\\centering` ou environnement center dans une figure ?",
+   "back": "`\\centering` : il n'ajoute pas d'espace vertical en plus de celui de la figure. L'environnement `center` en ajoute."
+  },
+  {
+   "key": "latex-fig-06",
+   "chap": "Figures et tableaux",
+   "front": "Formats d'image acceptés par pdflatex ? Et pour un schéma ?",
+   "back": "PDF, PNG, JPG. Un schéma ou une courbe en **PDF vectoriel** reste net à tout zoom ; un SVG doit être converti (Inkscape) ou chargé avec le package `svg`."
+  },
+  {
+   "key": "latex-fig-07",
+   "chap": "Figures et tableaux",
+   "front": "Mettre deux images côte à côte avec chacune sa sous-légende ?",
+   "back": "Package `subcaption` :\n`\\begin{subfigure}{0.48\\textwidth}`\n`  \\includegraphics[width=\\linewidth]{a.pdf}`\n`  \\caption{Entrée}`\n`\\end{subfigure}`\npuis une seconde subfigure, dans la même figure."
+  },
+  {
+   "key": "latex-fig-08",
+   "chap": "Figures et tableaux",
+   "front": "Syntaxe de base d'un tableau ?",
+   "back": "`\\begin{tabular}{l c r}`\n`  Nom & Valeur & Unité \\\\`\n`  R1 & 4,7 & kΩ \\\\`\n`\\end{tabular}`\n`l c r` : colonnes alignées à gauche, centrées, à droite ; `&` sépare les cellules, `\\\\` termine la ligne."
+  },
+  {
+   "key": "latex-fig-09",
+   "chap": "Figures et tableaux",
+   "front": "Colonne de largeur fixe avec retour à la ligne automatique dans un tableau ?",
+   "back": "`p{4cm}` dans la définition des colonnes : `\\begin{tabular}{l p{4cm}}`."
+  },
+  {
+   "key": "latex-fig-10",
+   "chap": "Figures et tableaux",
+   "front": "Filets d'un tableau propre avec booktabs ?",
+   "back": "`\\toprule` en haut, `\\midrule` sous l'en-tête, `\\bottomrule` en bas, et pas de filets verticaux. Plus lisible que `\\hline` et `|`."
+  },
+  {
+   "key": "latex-fig-11",
+   "chap": "Figures et tableaux",
+   "front": "Où placer la légende d'un tableau et celle d'une figure ?",
+   "back": "Usage typographique : légende **au-dessus** d'un tableau, **en dessous** d'une figure. Le tableau va dans un environnement flottant `table`."
+  },
+  {
+   "key": "latex-fig-12",
+   "chap": "Figures et tableaux",
+   "front": "Fusionner des cellules d'un tableau ?",
+   "back": "Horizontalement : `\\multicolumn{2}{c}{Texte}` (2 colonnes, centré).\nVerticalement : `\\multirow{2}{*}{Texte}` (package `multirow`)."
+  },
+  {
+   "key": "latex-fig-13",
+   "chap": "Figures et tableaux",
+   "front": "Insérer la liste des figures et celle des tableaux ?",
+   "back": "`\\listoffigures` et `\\listoftables`."
+  },
+  {
+   "key": "latex-list-01",
+   "chap": "Listes et code",
+   "front": "Les trois environnements de liste ?",
+   "back": "`itemize` : liste à puces. `enumerate` : liste numérotée. `description` : liste de termes avec `\\item[Terme] définition`. Chaque élément commence par `\\item`."
+  },
+  {
+   "key": "latex-list-02",
+   "chap": "Listes et code",
+   "front": "Insérer du code source coloré dans un rapport ?",
+   "back": "Package `listings` : `\\begin{lstlisting}[language=C] … \\end{lstlisting}`, réglages avec `\\lstset`.\nOu `minted` (rendu plus beau, mais il faut Python/Pygments et compiler avec `-shell-escape`)."
+  },
+  {
+   "key": "latex-list-03",
+   "chap": "Listes et code",
+   "front": "Écrire un petit bout de code dans le texte ?",
+   "back": "`\\verb|x <<= 1|` ou `\\lstinline|x <<= 1|` : le texte est reproduit tel quel. Le délimiteur (ici `|`) peut être tout caractère absent du code."
+  },
+  {
+   "key": "latex-list-04",
+   "chap": "Listes et code",
+   "front": "listings connaît-il le VHDL ?",
+   "back": "Oui : `language=VHDL`. Aussi C, C++, Python, Matlab, Bash, Verilog, etc."
+  },
+  {
+   "key": "latex-list-05",
+   "chap": "Listes et code",
+   "front": "Inclure un fichier de code externe avec listings ?",
+   "back": "`\\lstinputlisting[language=VHDL]{src/compteur.vhd}`, éventuellement avec `firstline=` et `lastline=` pour un extrait."
+  },
+  {
+   "key": "latex-bib-01",
+   "chap": "Bibliographie",
+   "front": "Forme d'une entrée dans un fichier .bib ?",
+   "back": "`@article{dupont2024,`\n`  author  = {Dupont, Jean and Martin, Léa},`\n`  title   = {Titre de l'article},`\n`  journal = {IEEE Trans. on Circuits},`\n`  year    = {2024}`\n`}`\n`dupont2024` est la clé de citation."
+  },
+  {
+   "key": "latex-bib-02",
+   "chap": "Bibliographie",
+   "front": "Mettre en place biblatex avec le style IEEE ?",
+   "back": "Préambule : `\\usepackage[backend=biber,style=ieee]{biblatex}` et `\\addbibresource{refs.bib}`.\nTexte : `\\cite{dupont2024}`. Fin : `\\printbibliography`."
+  },
+  {
+   "key": "latex-bib-03",
+   "chap": "Bibliographie",
+   "front": "Séquence de compilation avec biblatex et biber ?",
+   "back": "pdflatex → biber → pdflatex → pdflatex. `latexmk -pdf` enchaîne tout automatiquement (Overleaf le fait aussi)."
+  },
+  {
+   "key": "latex-bib-04",
+   "chap": "Bibliographie",
+   "front": "Bibliographie avec BibTeX classique ?",
+   "back": "`\\bibliographystyle{ieeetr}` et `\\bibliography{refs}` à l'endroit voulu ; compilation pdflatex → bibtex → pdflatex → pdflatex."
+  },
+  {
+   "key": "latex-bib-05",
+   "chap": "Bibliographie",
+   "front": "Une référence de la bibliographie n'apparaît pas : pourquoi ?",
+   "back": "Par défaut, seules les entrées **citées** dans le texte sont imprimées. `\\nocite{*}` ajoute toutes celles du .bib. Vérifier aussi que biber ou bibtex a bien été lancé."
+  },
+  {
+   "key": "latex-bib-06",
+   "chap": "Bibliographie",
+   "front": "Types d'entrées .bib courants ?",
+   "back": "`@article` (revue), `@inproceedings` (conférence), `@book`, `@manual` ou `@techreport` (datasheet, note d'application), `@online` (biblatex) ou `@misc` pour un site web."
+  },
+  {
+   "key": "latex-tikz-01",
+   "chap": "Schémas : TikZ, circuitikz, pgfplots",
+   "front": "Tracer un segment et un rectangle avec TikZ ?",
+   "back": "`\\begin{tikzpicture}`\n`  \\draw (0,0) -- (2,1);`\n`  \\draw (0,0) rectangle (3,2);`\n`\\end{tikzpicture}`\nCoordonnées en cm par défaut."
+  },
+  {
+   "key": "latex-tikz-02",
+   "chap": "Schémas : TikZ, circuitikz, pgfplots",
+   "front": "Placer du texte dans un schéma TikZ ?",
+   "back": "`\\node at (1,1) {Texte};` ou sur un tracé : `\\draw (0,0) -- (2,0) node[midway, above] {$I$};`"
+  },
+  {
+   "key": "latex-tikz-03",
+   "chap": "Schémas : TikZ, circuitikz, pgfplots",
+   "front": "Dessiner une résistance puis un condensateur en série avec circuitikz ?",
+   "back": "`\\begin{circuitikz}`\n`  \\draw (0,0) to[R, l=$R_1$] (2,0)`\n`        to[C, l=$C_1$] (4,0);`\n`\\end{circuitikz}`\nChaque `to[…]` place un dipôle entre deux points."
+  },
+  {
+   "key": "latex-tikz-04",
+   "chap": "Schémas : TikZ, circuitikz, pgfplots",
+   "front": "Noms de dipôles courants dans circuitikz ?",
+   "back": "`R` résistance, `C` condensateur, `L` inductance, `D` diode, `led`, `V` source de tension, `I` source de courant, `short` fil, `open` circuit ouvert."
+  },
+  {
+   "key": "latex-tikz-05",
+   "chap": "Schémas : TikZ, circuitikz, pgfplots",
+   "front": "Symboles européens dans circuitikz ?",
+   "back": "Option du package : `\\usepackage[european]{circuitikz}` (résistance rectangulaire, sources normalisées CEI)."
+  },
+  {
+   "key": "latex-tikz-06",
+   "chap": "Schémas : TikZ, circuitikz, pgfplots",
+   "front": "Ajouter une masse et un AOP avec circuitikz ?",
+   "back": "Masse : `\\draw (0,0) node[ground] {};`\nAOP : `\\draw (0,0) node[op amp] (ao) {};` puis relier ses bornes `(ao.-)`, `(ao.+)` et `(ao.out)`."
+  },
+  {
+   "key": "latex-tikz-07",
+   "chap": "Schémas : TikZ, circuitikz, pgfplots",
+   "front": "Tracer une courbe à partir de données ou d'une fonction ?",
+   "back": "Package `pgfplots` :\n`\\begin{axis}[xlabel={$f$ (Hz)}, ylabel={$G$ (dB)}]`\n`  \\addplot table {mesures.dat};`\n`\\end{axis}`\ndans un `tikzpicture`. `\\addplot {x^2};` trace une fonction."
+  },
+  {
+   "key": "latex-tikz-08",
+   "chap": "Schémas : TikZ, circuitikz, pgfplots",
+   "front": "Axe logarithmique pour un diagramme de Bode avec pgfplots ?",
+   "back": "Environnement `semilogxaxis` à la place de `axis` (`loglogaxis` pour deux axes logarithmiques)."
+  },
+  {
+   "key": "latex-beam-01",
+   "chap": "Beamer",
+   "front": "Structure d'une présentation beamer ?",
+   "back": "`\\documentclass{beamer}`\n`\\usetheme{Madrid}`\n`\\begin{document}`\n`\\begin{frame}{Titre de la diapo}`\n`  Contenu`\n`\\end{frame}`\n`\\end{document}`"
+  },
+  {
+   "key": "latex-beam-02",
+   "chap": "Beamer",
+   "front": "Faire apparaître les éléments d'une diapo un par un ?",
+   "back": "`\\pause` entre les éléments, ou des recouvrements : `\\item<2->` (visible à partir de l'étape 2), `\\only<3>{…}`, `\\onslide<2->{…}`."
+  },
+  {
+   "key": "latex-beam-03",
+   "chap": "Beamer",
+   "front": "Mettre deux colonnes sur une diapo beamer ?",
+   "back": "`\\begin{columns}`\n`  \\begin{column}{0.5\\textwidth} … \\end{column}`\n`  \\begin{column}{0.5\\textwidth} … \\end{column}`\n`\\end{columns}`"
+  },
+  {
+   "key": "latex-beam-04",
+   "chap": "Beamer",
+   "front": "Pourquoi du code lstlisting ou verbatim plante-t-il dans une diapo ?",
+   "back": "La diapo doit être déclarée fragile : `\\begin{frame}[fragile]{Titre}`."
+  },
+  {
+   "key": "latex-err-01",
+   "chap": "Compilation et erreurs",
+   "front": "pdflatex, xelatex, lualatex : différences ?",
+   "back": "pdflatex : le plus courant et rapide, polices LaTeX classiques.\nxelatex et lualatex : Unicode natif et polices système (OpenType) avec `fontspec`. lualatex permet aussi la programmation en Lua."
+  },
+  {
+   "key": "latex-err-02",
+   "chap": "Compilation et erreurs",
+   "front": "Erreur `Undefined control sequence` ?",
+   "back": "Commande inconnue : faute de frappe, ou package qui la définit non chargé. Le journal indique la ligne et la commande."
+  },
+  {
+   "key": "latex-err-03",
+   "chap": "Compilation et erreurs",
+   "front": "Erreur `Missing $ inserted` ?",
+   "back": "Un élément mathématique est hors du mode maths : souvent un `_` ou un `^` dans le texte (nom de fichier, signal `clk_en`). Échapper (`\\_`) ou passer en mode maths."
+  },
+  {
+   "key": "latex-err-04",
+   "chap": "Compilation et erreurs",
+   "front": "Erreur `Misplaced alignment tab character &` ?",
+   "back": "Un `&` utilisé hors d'un tableau ou d'un align : écrire `\\&`."
+  },
+  {
+   "key": "latex-err-05",
+   "chap": "Compilation et erreurs",
+   "front": "Avertissement `Overfull \\hbox` ?",
+   "back": "Une ligne dépasse la marge : mot non coupable, URL, formule ou image trop large. Reformuler, réduire l'élément, ou `\\url{}` pour les liens."
+  },
+  {
+   "key": "latex-err-06",
+   "chap": "Compilation et erreurs",
+   "front": "À quoi servent les fichiers .aux, .log, .toc, .bbl générés ?",
+   "back": ".aux : labels et citations pour la compilation suivante. .log : journal détaillé. .toc : table des matières. .bbl : bibliographie formatée. On peut les supprimer, ils seront régénérés."
+  },
+  {
+   "key": "latex-err-07",
+   "chap": "Compilation et erreurs",
+   "front": "Organiser un long rapport en plusieurs fichiers ?",
+   "back": "Un fichier principal et `\\input{chapitres/intro}` (insertion simple) ou `\\include{…}` (nouvelle page, compilable séparément avec `\\includeonly`)."
+  },
+  {
+   "key": "latex-err-08",
+   "chap": "Compilation et erreurs",
+   "front": "Définir sa propre commande ?",
+   "back": "`\\newcommand{\\vcc}{V_{\\text{CC}}}` puis `$\\vcc$`. Avec argument : `\\newcommand{\\abs}[1]{\\left|#1\\right|}`."
+  }
+ ]
+}

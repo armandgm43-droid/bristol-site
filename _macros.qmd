@@ -1,0 +1,13 @@
+<!-- Macros LaTeX communes à tout le site.
+     À inclure en haut de chaque page avec : {{< include /_macros.qmd >}}
+     Ne jamais redéfinir une macro existante dans une page. -->
+
+::: {.hidden}
+$$
+\newcommand{\Ts}{T_s}
+\newcommand{\Tb}{T_b}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\sinc}{\operatorname{sinc}}
+\newcommand{\TF}{\operatorname{TF}}
+$$
+:::

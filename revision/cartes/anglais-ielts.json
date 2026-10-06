@@ -1,0 +1,648 @@
+{
+ "deck": "Anglais : vocabulaire IELTS",
+ "color": "#F8D2DB",
+ "items": [
+  {
+   "key": "ang-ground-floor-en",
+   "chap": "Logement : types",
+   "front": "Que signifie **ground floor** ?",
+   "back": "Le rez-de-chaussée.\nEn américain, le rez-de-chaussée se dit **first floor**."
+  },
+  {
+   "key": "ang-first-floor-uk",
+   "chap": "Logement : types",
+   "front": "En anglais **britannique**, que désigne le *first floor* ?",
+   "back": "Le **1er étage**, au-dessus du rez-de-chaussée (*ground floor*).\nEn américain, *first floor* désigne au contraire le rez-de-chaussée."
+  },
+  {
+   "key": "ang-two-storey-house-en",
+   "chap": "Logement : types",
+   "front": "Que signifie **two-storey house (UK) / two-story house (US)** ?",
+   "back": "Une maison à deux niveaux (avec un étage).\nstorey (UK) / story (US) = étage, niveau."
+  },
+  {
+   "key": "ang-detached-house-en",
+   "chap": "Logement : types",
+   "front": "Que signifie **detached house** ?",
+   "back": "Une maison individuelle, non mitoyenne."
+  },
+  {
+   "key": "ang-semi-detached-house-en",
+   "chap": "Logement : types",
+   "front": "Que signifie **semi-detached house** ?",
+   "back": "Une maison jumelée, mitoyenne d'un seul côté."
+  },
+  {
+   "key": "ang-terraced-house-en",
+   "chap": "Logement : types",
+   "front": "Que signifie **terraced house (UK) / row house (US)** ?",
+   "back": "Une maison mitoyenne des deux côtés, dans une rangée de maisons."
+  },
+  {
+   "key": "ang-flat-en",
+   "chap": "Logement : types",
+   "front": "Que signifie **flat (UK) / apartment (US)** ?",
+   "back": "Un appartement.\nEn anglais, *apartment* s'écrit avec un seul p."
+  },
+  {
+   "key": "ang-penthouse-en",
+   "chap": "Logement : types",
+   "front": "Que signifie **penthouse** ?",
+   "back": "Un appartement de luxe au dernier étage d'un immeuble."
+  },
+  {
+   "key": "ang-cottage-en",
+   "chap": "Logement : types",
+   "front": "Que signifie **cottage** ?",
+   "back": "Une petite maison de campagne."
+  },
+  {
+   "key": "ang-cabin-en",
+   "chap": "Logement : types",
+   "front": "Que signifie **cabin** ?",
+   "back": "Une cabane, un chalet en bois."
+  },
+  {
+   "key": "ang-bungalow-en",
+   "chap": "Logement : types",
+   "front": "Que signifie **bungalow** ?",
+   "back": "Une maison de plain-pied, sans étage."
+  },
+  {
+   "key": "ang-farmhouse-en",
+   "chap": "Logement : types",
+   "front": "Que signifie **farmhouse** ?",
+   "back": "La maison d'habitation d'une ferme.\nEn un seul mot."
+  },
+  {
+   "key": "ang-halls-of-residence-en",
+   "chap": "Logement : types",
+   "front": "Que signifie **halls of residence (UK) / dorm (US)** ?",
+   "back": "Une résidence universitaire (type Crous).\nPlus général : **student accommodation**, le logement étudiant."
+  },
+  {
+   "key": "ang-living-room-en",
+   "chap": "Logement : salon",
+   "front": "Que signifie **living room / lounge (UK)** ?",
+   "back": "Le salon."
+  },
+  {
+   "key": "ang-flat-screen-tv-en",
+   "chap": "Logement : salon",
+   "front": "Que signifie **flat-screen TV** ?",
+   "back": "Une télévision à écran plat."
+  },
+  {
+   "key": "ang-sofa-en",
+   "chap": "Logement : salon",
+   "front": "Que signifie **sofa (UK) / couch (US)** ?",
+   "back": "Un canapé."
+  },
+  {
+   "key": "ang-coffee-table-en",
+   "chap": "Logement : salon",
+   "front": "Que signifie **coffee table** ?",
+   "back": "Une table basse."
+  },
+  {
+   "key": "ang-curtain-en",
+   "chap": "Logement : salon",
+   "front": "Que signifie **curtain** ?",
+   "back": "Un rideau."
+  },
+  {
+   "key": "ang-carpet-en",
+   "chap": "Logement : salon",
+   "front": "Que signifie **carpet** ?",
+   "back": "La moquette, qui couvre tout le sol.\nUn tapis posé au sol se dit **rug**."
+  },
+  {
+   "key": "ang-rug-en",
+   "chap": "Logement : salon",
+   "front": "Que signifie **rug** ?",
+   "back": "Un tapis, posé sur une partie du sol.\nLa moquette se dit **carpet**."
+  },
+  {
+   "key": "ang-tiles-en",
+   "chap": "Logement : salon",
+   "front": "Que signifie **tiles** ?",
+   "back": "Le carrelage, les carreaux.\nAussi : les tuiles d'un toit (*roof tiles*)."
+  },
+  {
+   "key": "ang-oven-en",
+   "chap": "Logement : cuisine",
+   "front": "Que signifie **oven** ?",
+   "back": "Un four."
+  },
+  {
+   "key": "ang-cooker-en",
+   "chap": "Logement : cuisine",
+   "front": "Que signifie **cooker (UK) / stove, range (US)** ?",
+   "back": "Une cuisinière (four + plaques de cuisson).\nNe pas confondre avec **cook**, le cuisinier."
+  },
+  {
+   "key": "ang-hob-en",
+   "chap": "Logement : cuisine",
+   "front": "Que signifie **hob (UK) / stovetop (US)** ?",
+   "back": "Une plaque de cuisson.\nUne cuisinière à gaz : *gas cooker* (UK), *gas stove* (US)."
+  },
+  {
+   "key": "ang-sink-en",
+   "chap": "Logement : cuisine",
+   "front": "Que signifie **sink** ?",
+   "back": "Un évier.\nLe lavabo de la salle de bains : **washbasin** (UK)."
+  },
+  {
+   "key": "ang-freezer-en",
+   "chap": "Logement : cuisine",
+   "front": "Que signifie **freezer** ?",
+   "back": "Un congélateur."
+  },
+  {
+   "key": "ang-extractor-fan-en",
+   "chap": "Logement : cuisine",
+   "front": "Que signifie **extractor fan** ?",
+   "back": "Un ventilateur d'extraction (aération).\nLa hotte de cuisine : **cooker hood** (UK) / **range hood** (US)."
+  },
+  {
+   "key": "ang-bar-stool-en",
+   "chap": "Logement : cuisine",
+   "front": "Que signifie **bar stool** ?",
+   "back": "Un tabouret de bar."
+  },
+  {
+   "key": "ang-tap-en",
+   "chap": "Logement : cuisine",
+   "front": "Que signifie **tap (UK) / faucet (US)** ?",
+   "back": "Un robinet."
+  },
+  {
+   "key": "ang-cutlery-en",
+   "chap": "Logement : cuisine",
+   "front": "Que signifie **cutlery (UK) / silverware (US)** ?",
+   "back": "Les couverts."
+  },
+  {
+   "key": "ang-teaspoon-en",
+   "chap": "Logement : cuisine",
+   "front": "Que signifie **teaspoon** ?",
+   "back": "Une cuillère à café."
+  },
+  {
+   "key": "ang-tablespoon-en",
+   "chap": "Logement : cuisine",
+   "front": "Que signifie **tablespoon** ?",
+   "back": "Une cuillère à soupe (mesure en cuisine, service)."
+  },
+  {
+   "key": "ang-soup-spoon-en",
+   "chap": "Logement : cuisine",
+   "front": "Que signifie **soup spoon** ?",
+   "back": "Une cuillère pour manger la soupe."
+  },
+  {
+   "key": "ang-dessert-spoon-en",
+   "chap": "Logement : cuisine",
+   "front": "Que signifie **dessert spoon** ?",
+   "back": "Une cuillère à dessert."
+  },
+  {
+   "key": "ang-loo-en",
+   "chap": "Logement : salle de bains",
+   "front": "Que signifie **loo** ?",
+   "back": "Les toilettes (familier, britannique).\nNeutre : **toilet**. Américain : *bathroom*, *restroom*."
+  },
+  {
+   "key": "ang-bath-en",
+   "chap": "Logement : salle de bains",
+   "front": "Que signifie **bath (UK) / bathtub (US)** ?",
+   "back": "Une baignoire.\n*Bathtub* s'écrit en un seul mot."
+  },
+  {
+   "key": "ang-wooden-floor-en",
+   "chap": "Logement : salle de bains",
+   "front": "Que signifie **wooden floor** ?",
+   "back": "Un parquet, un sol en bois."
+  },
+  {
+   "key": "ang-mat-en",
+   "chap": "Logement : salle de bains",
+   "front": "Que signifie **mat** ?",
+   "back": "Un petit tapis (bath mat : tapis de bain ; doormat : paillasson)."
+  },
+  {
+   "key": "ang-single-bed-en",
+   "chap": "Logement : chambre",
+   "front": "Que signifie **single bed (UK) / twin bed (US)** ?",
+   "back": "Un lit simple, une place."
+  },
+  {
+   "key": "ang-king-size-bed-en",
+   "chap": "Logement : chambre",
+   "front": "Que signifie **queen-size bed / king-size bed** ?",
+   "back": "Un grand lit / un très grand lit.\nDu plus petit au plus grand : single, double, queen-size, king-size."
+  },
+  {
+   "key": "ang-aircon-en",
+   "chap": "Logement : chambre",
+   "front": "Que signifie **aircon** ?",
+   "back": "La climatisation (abréviation familière).\nForme complète : **air conditioning**."
+  },
+  {
+   "key": "ang-drawer-en",
+   "chap": "Logement : chambre",
+   "front": "Que signifie **drawer** ?",
+   "back": "Un tiroir.\nUne commode : **chest of drawers**."
+  },
+  {
+   "key": "ang-bedside-table-en",
+   "chap": "Logement : chambre",
+   "front": "Que signifie **bedside table (UK) / nightstand (US)** ?",
+   "back": "Une table de chevet.\nUne *lamp table* est une petite table d'appoint qui porte une lampe."
+  },
+  {
+   "key": "ang-pillow-en",
+   "chap": "Logement : chambre",
+   "front": "Que signifie **pillow** ?",
+   "back": "Un oreiller."
+  },
+  {
+   "key": "ang-cushion-en",
+   "chap": "Logement : chambre",
+   "front": "Que signifie **cushion** ?",
+   "back": "Un coussin."
+  },
+  {
+   "key": "ang-study-en",
+   "chap": "Logement : bureau",
+   "front": "Que signifie **study** ?",
+   "back": "Un bureau, la pièce de travail à la maison.\n**office** : le bureau en général, y compris au travail."
+  },
+  {
+   "key": "ang-lectern-en",
+   "chap": "Logement : bureau",
+   "front": "Que signifie **lectern** ?",
+   "back": "Un pupitre."
+  },
+  {
+   "key": "ang-bookshelf-en",
+   "chap": "Logement : bureau",
+   "front": "Que signifie **bookshelf (pl. bookshelves)** ?",
+   "back": "Une étagère à livres.\nLa bibliothèque (le meuble) : **bookcase**."
+  },
+  {
+   "key": "ang-wheelie-chair-en",
+   "chap": "Logement : bureau",
+   "front": "Que signifie **wheelie chair (UK, familier)** ?",
+   "back": "Une chaise de bureau à roulettes.\nPlus neutre : **office chair**, **swivel chair** (pivotante)."
+  },
+  {
+   "key": "ang-hallway-en",
+   "chap": "Logement : divers",
+   "front": "Que signifie **hallway** ?",
+   "back": "Un couloir, une entrée."
+  },
+  {
+   "key": "ang-light-bulb-en",
+   "chap": "Logement : divers",
+   "front": "Que signifie **light bulb** ?",
+   "back": "Une ampoule."
+  },
+  {
+   "key": "ang-handle-en",
+   "chap": "Logement : divers",
+   "front": "Que signifie **handle** ?",
+   "back": "Une poignée.\nLe verbe *to handle* : gérer, manipuler."
+  },
+  {
+   "key": "ang-birds-eye-view-en",
+   "chap": "Vocabulaire divers",
+   "front": "Que signifie **bird's eye view** ?",
+   "back": "Une vue d'en haut, une vue aérienne (ex. sur un plan) ; au figuré : une vue d'ensemble."
+  },
+  {
+   "key": "ang-duty-free-shop-en",
+   "chap": "Vocabulaire divers",
+   "front": "Que signifie **duty-free shop** ?",
+   "back": "Une boutique hors taxes (aéroport).\n*duty* : taxe, droit de douane."
+  },
+  {
+   "key": "ang-ground-floor-fr",
+   "chap": "Logement : types",
+   "front": "Comment dit-on « rez-de-chaussée » en anglais ?",
+   "back": "**ground floor**\nEn américain, le rez-de-chaussée se dit **first floor**."
+  },
+  {
+   "key": "ang-two-storey-house-fr",
+   "chap": "Logement : types",
+   "front": "Comment dit-on « maison à deux niveaux (avec un étage) » en anglais ?",
+   "back": "**two-storey house (UK) / two-story house (US)**\nstorey (UK) / story (US) = étage, niveau."
+  },
+  {
+   "key": "ang-detached-house-fr",
+   "chap": "Logement : types",
+   "front": "Comment dit-on « maison individuelle, non mitoyenne » en anglais ?",
+   "back": "**detached house**"
+  },
+  {
+   "key": "ang-semi-detached-house-fr",
+   "chap": "Logement : types",
+   "front": "Comment dit-on « maison jumelée, mitoyenne d'un seul côté » en anglais ?",
+   "back": "**semi-detached house**"
+  },
+  {
+   "key": "ang-terraced-house-fr",
+   "chap": "Logement : types",
+   "front": "Comment dit-on « maison en bande, mitoyenne des deux côtés » en anglais ?",
+   "back": "**terraced house (UK) / row house (US)**"
+  },
+  {
+   "key": "ang-flat-fr",
+   "chap": "Logement : types",
+   "front": "Comment dit-on « appartement » en anglais ?",
+   "back": "**flat (UK) / apartment (US)**\nEn anglais, *apartment* s'écrit avec un seul p."
+  },
+  {
+   "key": "ang-penthouse-fr",
+   "chap": "Logement : types",
+   "front": "Comment dit-on « appartement de luxe au dernier étage » en anglais ?",
+   "back": "**penthouse**"
+  },
+  {
+   "key": "ang-cottage-fr",
+   "chap": "Logement : types",
+   "front": "Comment dit-on « petite maison de campagne » en anglais ?",
+   "back": "**cottage**"
+  },
+  {
+   "key": "ang-cabin-fr",
+   "chap": "Logement : types",
+   "front": "Comment dit-on « cabane, chalet en bois » en anglais ?",
+   "back": "**cabin**"
+  },
+  {
+   "key": "ang-bungalow-fr",
+   "chap": "Logement : types",
+   "front": "Comment dit-on « maison de plain-pied » en anglais ?",
+   "back": "**bungalow**"
+  },
+  {
+   "key": "ang-farmhouse-fr",
+   "chap": "Logement : types",
+   "front": "Comment dit-on « maison d'une ferme » en anglais ?",
+   "back": "**farmhouse**\nEn un seul mot."
+  },
+  {
+   "key": "ang-halls-of-residence-fr",
+   "chap": "Logement : types",
+   "front": "Comment dit-on « résidence universitaire (type Crous) » en anglais ?",
+   "back": "**halls of residence (UK) / dorm (US)**\nPlus général : **student accommodation**, le logement étudiant."
+  },
+  {
+   "key": "ang-living-room-fr",
+   "chap": "Logement : salon",
+   "front": "Comment dit-on « salon (la pièce) » en anglais ?",
+   "back": "**living room / lounge (UK)**"
+  },
+  {
+   "key": "ang-flat-screen-tv-fr",
+   "chap": "Logement : salon",
+   "front": "Comment dit-on « télévision à écran plat » en anglais ?",
+   "back": "**flat-screen TV**"
+  },
+  {
+   "key": "ang-sofa-fr",
+   "chap": "Logement : salon",
+   "front": "Comment dit-on « canapé » en anglais ?",
+   "back": "**sofa (UK) / couch (US)**"
+  },
+  {
+   "key": "ang-coffee-table-fr",
+   "chap": "Logement : salon",
+   "front": "Comment dit-on « table basse » en anglais ?",
+   "back": "**coffee table**"
+  },
+  {
+   "key": "ang-curtain-fr",
+   "chap": "Logement : salon",
+   "front": "Comment dit-on « rideau » en anglais ?",
+   "back": "**curtain**"
+  },
+  {
+   "key": "ang-carpet-fr",
+   "chap": "Logement : salon",
+   "front": "Comment dit-on « moquette » en anglais ?",
+   "back": "**carpet**\nUn tapis posé au sol se dit **rug**."
+  },
+  {
+   "key": "ang-rug-fr",
+   "chap": "Logement : salon",
+   "front": "Comment dit-on « tapis (posé sur une partie du sol) » en anglais ?",
+   "back": "**rug**\nLa moquette se dit **carpet**."
+  },
+  {
+   "key": "ang-tiles-fr",
+   "chap": "Logement : salon",
+   "front": "Comment dit-on « carrelage, carreaux » en anglais ?",
+   "back": "**tiles**\nAussi : les tuiles d'un toit (*roof tiles*)."
+  },
+  {
+   "key": "ang-oven-fr",
+   "chap": "Logement : cuisine",
+   "front": "Comment dit-on « four » en anglais ?",
+   "back": "**oven**"
+  },
+  {
+   "key": "ang-cooker-fr",
+   "chap": "Logement : cuisine",
+   "front": "Comment dit-on « cuisinière (l'appareil : four + plaques) » en anglais ?",
+   "back": "**cooker (UK) / stove, range (US)**\nNe pas confondre avec **cook**, le cuisinier."
+  },
+  {
+   "key": "ang-hob-fr",
+   "chap": "Logement : cuisine",
+   "front": "Comment dit-on « plaque de cuisson » en anglais ?",
+   "back": "**hob (UK) / stovetop (US)**\nUne cuisinière à gaz : *gas cooker* (UK), *gas stove* (US)."
+  },
+  {
+   "key": "ang-sink-fr",
+   "chap": "Logement : cuisine",
+   "front": "Comment dit-on « évier » en anglais ?",
+   "back": "**sink**\nLe lavabo de la salle de bains : **washbasin** (UK)."
+  },
+  {
+   "key": "ang-freezer-fr",
+   "chap": "Logement : cuisine",
+   "front": "Comment dit-on « congélateur » en anglais ?",
+   "back": "**freezer**"
+  },
+  {
+   "key": "ang-extractor-fan-fr",
+   "chap": "Logement : cuisine",
+   "front": "Comment dit-on « ventilateur d'extraction (aération) » en anglais ?",
+   "back": "**extractor fan**\nLa hotte de cuisine : **cooker hood** (UK) / **range hood** (US)."
+  },
+  {
+   "key": "ang-bar-stool-fr",
+   "chap": "Logement : cuisine",
+   "front": "Comment dit-on « tabouret de bar » en anglais ?",
+   "back": "**bar stool**"
+  },
+  {
+   "key": "ang-tap-fr",
+   "chap": "Logement : cuisine",
+   "front": "Comment dit-on « robinet » en anglais ?",
+   "back": "**tap (UK) / faucet (US)**"
+  },
+  {
+   "key": "ang-cutlery-fr",
+   "chap": "Logement : cuisine",
+   "front": "Comment dit-on « couverts (couteaux, fourchettes, cuillères) » en anglais ?",
+   "back": "**cutlery (UK) / silverware (US)**"
+  },
+  {
+   "key": "ang-teaspoon-fr",
+   "chap": "Logement : cuisine",
+   "front": "Comment dit-on « cuillère à café » en anglais ?",
+   "back": "**teaspoon**"
+  },
+  {
+   "key": "ang-tablespoon-fr",
+   "chap": "Logement : cuisine",
+   "front": "Comment dit-on « cuillère à soupe (mesure en cuisine) » en anglais ?",
+   "back": "**tablespoon**"
+  },
+  {
+   "key": "ang-soup-spoon-fr",
+   "chap": "Logement : cuisine",
+   "front": "Comment dit-on « cuillère pour manger la soupe » en anglais ?",
+   "back": "**soup spoon**"
+  },
+  {
+   "key": "ang-dessert-spoon-fr",
+   "chap": "Logement : cuisine",
+   "front": "Comment dit-on « cuillère à dessert » en anglais ?",
+   "back": "**dessert spoon**"
+  },
+  {
+   "key": "ang-loo-fr",
+   "chap": "Logement : salle de bains",
+   "front": "Comment dit-on « toilettes (familier, britannique) » en anglais ?",
+   "back": "**loo**\nNeutre : **toilet**. Américain : *bathroom*, *restroom*."
+  },
+  {
+   "key": "ang-bath-fr",
+   "chap": "Logement : salle de bains",
+   "front": "Comment dit-on « baignoire » en anglais ?",
+   "back": "**bath (UK) / bathtub (US)**\n*Bathtub* s'écrit en un seul mot."
+  },
+  {
+   "key": "ang-wooden-floor-fr",
+   "chap": "Logement : salle de bains",
+   "front": "Comment dit-on « parquet, sol en bois » en anglais ?",
+   "back": "**wooden floor**"
+  },
+  {
+   "key": "ang-mat-fr",
+   "chap": "Logement : salle de bains",
+   "front": "Comment dit-on « petit tapis (de bain, paillasson) » en anglais ?",
+   "back": "**mat**"
+  },
+  {
+   "key": "ang-single-bed-fr",
+   "chap": "Logement : chambre",
+   "front": "Comment dit-on « lit simple, une place » en anglais ?",
+   "back": "**single bed (UK) / twin bed (US)**"
+  },
+  {
+   "key": "ang-king-size-bed-fr",
+   "chap": "Logement : chambre",
+   "front": "Comment dit-on « grand lit / très grand lit » en anglais ?",
+   "back": "**queen-size bed / king-size bed**\nDu plus petit au plus grand : single, double, queen-size, king-size."
+  },
+  {
+   "key": "ang-aircon-fr",
+   "chap": "Logement : chambre",
+   "front": "Comment dit-on « climatisation (familier) » en anglais ?",
+   "back": "**aircon**\nForme complète : **air conditioning**."
+  },
+  {
+   "key": "ang-drawer-fr",
+   "chap": "Logement : chambre",
+   "front": "Comment dit-on « tiroir » en anglais ?",
+   "back": "**drawer**\nUne commode : **chest of drawers**."
+  },
+  {
+   "key": "ang-bedside-table-fr",
+   "chap": "Logement : chambre",
+   "front": "Comment dit-on « table de chevet » en anglais ?",
+   "back": "**bedside table (UK) / nightstand (US)**\nUne *lamp table* est une petite table d'appoint qui porte une lampe."
+  },
+  {
+   "key": "ang-pillow-fr",
+   "chap": "Logement : chambre",
+   "front": "Comment dit-on « oreiller » en anglais ?",
+   "back": "**pillow**"
+  },
+  {
+   "key": "ang-cushion-fr",
+   "chap": "Logement : chambre",
+   "front": "Comment dit-on « coussin » en anglais ?",
+   "back": "**cushion**"
+  },
+  {
+   "key": "ang-study-fr",
+   "chap": "Logement : bureau",
+   "front": "Comment dit-on « bureau (pièce de travail à la maison) » en anglais ?",
+   "back": "**study**\n**office** : le bureau en général, y compris au travail."
+  },
+  {
+   "key": "ang-lectern-fr",
+   "chap": "Logement : bureau",
+   "front": "Comment dit-on « pupitre » en anglais ?",
+   "back": "**lectern**"
+  },
+  {
+   "key": "ang-bookshelf-fr",
+   "chap": "Logement : bureau",
+   "front": "Comment dit-on « étagère à livres » en anglais ?",
+   "back": "**bookshelf (pl. bookshelves)**\nLa bibliothèque (le meuble) : **bookcase**."
+  },
+  {
+   "key": "ang-wheelie-chair-fr",
+   "chap": "Logement : bureau",
+   "front": "Comment dit-on « chaise de bureau à roulettes » en anglais ?",
+   "back": "**wheelie chair (UK, familier)**\nPlus neutre : **office chair**, **swivel chair** (pivotante)."
+  },
+  {
+   "key": "ang-hallway-fr",
+   "chap": "Logement : divers",
+   "front": "Comment dit-on « couloir, entrée » en anglais ?",
+   "back": "**hallway**"
+  },
+  {
+   "key": "ang-light-bulb-fr",
+   "chap": "Logement : divers",
+   "front": "Comment dit-on « ampoule (électrique) » en anglais ?",
+   "back": "**light bulb**"
+  },
+  {
+   "key": "ang-handle-fr",
+   "chap": "Logement : divers",
+   "front": "Comment dit-on « poignée » en anglais ?",
+   "back": "**handle**\nLe verbe *to handle* : gérer, manipuler."
+  },
+  {
+   "key": "ang-birds-eye-view-fr",
+   "chap": "Vocabulaire divers",
+   "front": "Comment dit-on « vue d'en haut, vue aérienne (ex. sur un plan) » en anglais ?",
+   "back": "**bird's eye view**"
+  },
+  {
+   "key": "ang-duty-free-shop-fr",
+   "chap": "Vocabulaire divers",
+   "front": "Comment dit-on « boutique hors taxes » en anglais ?",
+   "back": "**duty-free shop**\n*duty* : taxe, droit de douane."
+  }
+ ]
+}

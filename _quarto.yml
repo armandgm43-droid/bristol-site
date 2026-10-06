@@ -1,0 +1,57 @@
+project:
+  type: website
+  output-dir: _site
+  # Seuls les fichiers .qmd sont des pages du site.
+  # Les fichiers .md (CONTEXTE_PROJET.md, README.md…) restent des documents de travail.
+  render:
+    - "*.qmd"
+    - "matieres/**/*.qmd"
+  # L'application de révision est copiée telle quelle dans le site.
+  resources:
+    - "revision/**"
+
+lang: fr
+
+website:
+  title: "Bristol"
+  description: "Base de connaissances pour mes études d'ingénieur"
+  search: true
+  page-navigation: true
+  back-to-top-navigation: true
+  navbar:
+    left:
+      - text: "Matières"
+        href: index.qmd
+      - text: "Révisions"
+        href: revision/index.html
+      - text: "Conventions"
+        href: demo-conventions.qmd
+  sidebar:
+    - id: ts227
+      title: "TS227"
+      style: docked
+      contents:
+        - matieres/ts227-communications-numeriques/index.qmd
+        # Ajouter les chapitres au fur et à mesure, dans l'ordre :
+        # - section: "Cours"
+        #   contents:
+        #     - matieres/ts227-communications-numeriques/cours/01-introduction.qmd
+
+format:
+  html:
+    theme:
+      light: [cosmo, assets/bristol.scss]
+    toc: true
+    toc-title: "Sur cette page"
+    number-sections: true
+    html-math-method: mathjax
+    crossref:
+      eq-prefix: "équation"
+      fig-prefix: "figure"
+      tbl-prefix: "tableau"
+      sec-prefix: "section"
+      def-prefix: "définition"
+      thm-prefix: "théorème"
+      prp-prefix: "propriété"
+      prp-title: "Propriété"
+      exm-prefix: "exemple"

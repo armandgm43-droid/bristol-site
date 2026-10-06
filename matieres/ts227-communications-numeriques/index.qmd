@@ -1,0 +1,36 @@
+---
+title: "TS227 — Introduction aux communications numériques"
+subtitle: "Fiche matière"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Enseignant | Romain Tajan |
+| TD | Guillaume Ferré et Romain Tajan |
+| Année | 2026-2027 |
+
+## Chapitres
+
+| N° | Chapitre | Statut |
+|---|---|---|
+| 1 | Introduction | BROUILLON |
+| 2 | Principes de communication en l'absence de bruit | BROUILLON |
+| 3 | DSP des signaux codés en ligne | BROUILLON |
+| 4 | Transmission en présence de bruit | BROUILLON |
+| 5 | Transmission sur fréquence porteuse | BROUILLON |
+| 6 | Modulation et démodulation numériques | BROUILLON |
+
+## Table des notations
+
+Le cours Bristol suit les notations **du cours** (poly). Correspondance avec le TD :
+
+| Rôle | Cours (poly) | TD |
+|---|---|---|
+| Filtre de mise en forme | $h(t)$ | $g(t)$ |
+| Filtre de réception | $h_a(t)$ | $g_a(t)$ |
+| Filtre global | $g(t) = (h \star h_c \star h_a)(t)$ | $v(t)$ |

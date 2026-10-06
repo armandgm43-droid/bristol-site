@@ -1,0 +1,654 @@
+{
+ "deck": "C et Unix",
+ "color": "#FBDDC0",
+ "items": [
+  {
+   "key": "cu-type-01",
+   "chap": "C : types et représentation",
+   "front": "Tailles minimales garanties par la norme pour char, short, int, long, long long ?",
+   "back": "char : 1 octet (au moins 8 bits). short et int : au moins 16 bits. long : au moins 32 bits. long long : au moins 64 bits.\nLe reste dépend de la plateforme : int fait 16 bits sur certains microcontrôleurs."
+  },
+  {
+   "key": "cu-type-02",
+   "chap": "C : types et représentation",
+   "front": "Pourquoi utiliser `uint8_t`, `int32_t`… en embarqué ?",
+   "back": "Ils ont une taille exacte et portable (`<stdint.h>`), indispensable pour les registres, les trames et les formats binaires."
+  },
+  {
+   "key": "cu-type-03",
+   "chap": "C : types et représentation",
+   "front": "Dépassement d'un entier non signé vs signé ?",
+   "back": "Non signé : comportement défini, le calcul se fait modulo $2^n$ (255 + 1 = 0 sur 8 bits).\nSigné : **comportement indéfini** ; le compilateur peut supposer qu'il n'arrive jamais."
+  },
+  {
+   "key": "cu-type-04",
+   "chap": "C : types et représentation",
+   "front": "Comment sont représentés les entiers signés ?",
+   "back": "En complément à deux (imposé depuis C23, universel en pratique) : −x = ~x + 1. Sur 8 bits : de −128 à 127."
+  },
+  {
+   "key": "cu-type-05",
+   "chap": "C : types et représentation",
+   "front": "Que vaut `(uint8_t)200 + (uint8_t)100`, et pourquoi ?",
+   "back": "300 : les opérandes sont promus en int avant le calcul (promotion entière). La troncature n'a lieu que si on range le résultat dans un uint8_t : on obtient alors 44 (300 − 256)."
+  },
+  {
+   "key": "cu-type-06",
+   "chap": "C : types et représentation",
+   "front": "La condition `-1 < 1u` est-elle vraie ?",
+   "back": "Non : −1 est converti en unsigned (valeur maximale) avant la comparaison. Éviter de comparer des signés et des non signés."
+  },
+  {
+   "key": "cu-type-07",
+   "chap": "C : types et représentation",
+   "front": "Le type char est-il signé ?",
+   "back": "Ça dépend de la plateforme : souvent signé sur x86, non signé sur ARM. Pour manipuler des octets, utiliser `uint8_t` ou `unsigned char`."
+  },
+  {
+   "key": "cu-type-08",
+   "chap": "C : types et représentation",
+   "front": "Qu'est-ce que l'**endianness** ?",
+   "back": "L'ordre des octets d'un mot en mémoire.\nLittle endian : octet de poids faible à l'adresse la plus basse (x86, la plupart des ARM).\nBig endian : poids fort en premier (ordre réseau)."
+  },
+  {
+   "key": "cu-type-09",
+   "chap": "C : types et représentation",
+   "front": "0x2A en binaire et en décimal ?",
+   "back": "0b0010 1010 = 42."
+  },
+  {
+   "key": "cu-type-10",
+   "chap": "C : types et représentation",
+   "front": "Préfixes et suffixes des constantes entières ?",
+   "back": "`0x` : hexadécimal. `0` : octal (attention, `010` vaut 8). `0b` : binaire (extension GCC, standard en C23).\nSuffixes `u`, `l`, `ul` : unsigned, long, unsigned long."
+  },
+  {
+   "key": "cu-type-11",
+   "chap": "C : types et représentation",
+   "front": "Que renvoie sizeof, et quand est-il évalué ?",
+   "back": "La taille en octets d'un type ou d'un objet, de type size_t. Il est évalué à la compilation (sauf pour les tableaux de taille variable)."
+  },
+  {
+   "key": "cu-bit-01",
+   "chap": "C : opérations bit à bit",
+   "front": "Mettre à 1 le bit n de x ?",
+   "back": "`x |= (1u << n);`"
+  },
+  {
+   "key": "cu-bit-02",
+   "chap": "C : opérations bit à bit",
+   "front": "Mettre à 0 le bit n de x ?",
+   "back": "`x &= ~(1u << n);`"
+  },
+  {
+   "key": "cu-bit-03",
+   "chap": "C : opérations bit à bit",
+   "front": "Inverser le bit n de x ?",
+   "back": "`x ^= (1u << n);`"
+  },
+  {
+   "key": "cu-bit-04",
+   "chap": "C : opérations bit à bit",
+   "front": "Tester le bit n de x ?",
+   "back": "`if (x & (1u << n))` ou `(x >> n) & 1u`"
+  },
+  {
+   "key": "cu-bit-05",
+   "chap": "C : opérations bit à bit",
+   "front": "Extraire le champ de 3 bits qui commence au bit 4 d'un registre ?",
+   "back": "`(reg >> 4) & 0x7u`"
+  },
+  {
+   "key": "cu-bit-06",
+   "chap": "C : opérations bit à bit",
+   "front": "Écrire v (3 bits) dans les bits 4 à 6 d'un registre sans toucher au reste ?",
+   "back": "`reg = (reg & ~(0x7u << 4)) | ((v & 0x7u) << 4);`\nLecture, effacement du champ, écriture."
+  },
+  {
+   "key": "cu-bit-07",
+   "chap": "C : opérations bit à bit",
+   "front": "Pourquoi écrire `1u << n` plutôt que `1 << n` ?",
+   "back": "1 est un int signé : décaler un 1 jusque dans le bit de signe (n = 31 sur 32 bits) est un comportement indéfini. `1u` est non signé."
+  },
+  {
+   "key": "cu-bit-08",
+   "chap": "C : opérations bit à bit",
+   "front": "`&` vs `&&` ?",
+   "back": "`&` : ET bit à bit, `5 & 2` vaut 0.\n`&&` : ET logique, `5 && 2` vaut 1.\nMême distinction entre `|` et `||`."
+  },
+  {
+   "key": "cu-bit-09",
+   "chap": "C : opérations bit à bit",
+   "front": "Piège de priorité : `if (x & MASK == 0)` ?",
+   "back": "`==` est prioritaire sur `&` : le code calcule `x & (MASK == 0)`. Il faut écrire `if ((x & MASK) == 0)`."
+  },
+  {
+   "key": "cu-bit-10",
+   "chap": "C : opérations bit à bit",
+   "front": "Décalage à droite d'un entier signé négatif ?",
+   "back": "Le résultat dépend de l'implémentation (en général un décalage arithmétique qui recopie le signe). Pour manipuler des bits, travailler en non signé."
+  },
+  {
+   "key": "cu-bit-11",
+   "chap": "C : opérations bit à bit",
+   "front": "Multiplier ou diviser un non signé par 8 avec des décalages ?",
+   "back": "`x << 3` multiplie par 8, `x >> 3` divise par 8. Les compilateurs font cette optimisation d'eux-mêmes."
+  },
+  {
+   "key": "cu-bit-12",
+   "chap": "C : opérations bit à bit",
+   "front": "Tester si un entier non signé x est une puissance de 2 ?",
+   "back": "`x && !(x & (x - 1))` : une puissance de 2 n'a qu'un seul bit à 1, et `x - 1` les inverse tous jusqu'à lui."
+  },
+  {
+   "key": "cu-ptr-01",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Qu'est-ce qu'un pointeur ?",
+   "back": "Une variable qui contient une adresse. `&x` donne l'adresse de x ; `*p` accède à la valeur pointée (déréférencement)."
+  },
+  {
+   "key": "cu-ptr-02",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Si `int *p` vaut 0x1000, que vaut `p + 1` ?",
+   "back": "0x1004 si un int fait 4 octets : l'arithmétique des pointeurs avance de `sizeof(*p)` octets."
+  },
+  {
+   "key": "cu-ptr-03",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Lien entre tableau et pointeur ?",
+   "back": "Dans une expression, un tableau devient un pointeur vers son premier élément : `t[i]` équivaut à `*(t + i)`."
+  },
+  {
+   "key": "cu-ptr-04",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Dans `void f(int t[10])`, que vaut `sizeof(t)` ?",
+   "back": "La taille d'un pointeur (4 ou 8 octets) : un tableau passé en paramètre devient un pointeur. C'est pourquoi on passe toujours la taille en paramètre."
+  },
+  {
+   "key": "cu-ptr-05",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Comment est représentée une chaîne de caractères en C ?",
+   "back": "Un tableau de char terminé par le caractère nul `'\\0'`.\n`strlen` compte les caractères sans le `'\\0'` ; `sizeof` d'un tableau l'inclut."
+  },
+  {
+   "key": "cu-ptr-06",
+   "chap": "C : pointeurs et mémoire",
+   "front": "`const int *p` vs `int *const p` ?",
+   "back": "`const int *p` : la valeur pointée est constante, p peut changer.\n`int *const p` : le pointeur est constant, la valeur pointée peut changer.\nAstuce : lire de droite à gauche."
+  },
+  {
+   "key": "cu-ptr-07",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Comment une fonction peut-elle modifier une variable de l'appelant ?",
+   "back": "En C, tout est passé par valeur : on passe l'**adresse** de la variable, `f(&x)`, et la fonction écrit à travers le pointeur."
+  },
+  {
+   "key": "cu-ptr-08",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Pile, tas, .data, .bss, .text : qu'y trouve-t-on ?",
+   "back": "Pile (stack) : variables locales, adresses de retour, libérées en sortie de fonction.\nTas (heap) : mémoire allouée par malloc.\n.data : globales et statiques initialisées. .bss : non initialisées (mises à 0). .text : le code."
+  },
+  {
+   "key": "cu-ptr-09",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Pourquoi ne jamais renvoyer l'adresse d'une variable locale ?",
+   "back": "Elle est sur la pile et disparaît au retour de la fonction : le pointeur devient invalide (dangling pointer)."
+  },
+  {
+   "key": "cu-ptr-10",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Règles d'usage de malloc et free ?",
+   "back": "Tester le retour de malloc (NULL en cas d'échec), libérer chaque bloc une seule fois, ne plus l'utiliser après free (mettre le pointeur à NULL). Oublier free : fuite mémoire."
+  },
+  {
+   "key": "cu-ptr-11",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Pourquoi éviter malloc dans l'embarqué critique ?",
+   "back": "Fragmentation du tas, temps d'allocation non déterministe, risque d'échec en cours d'exécution. On préfère l'allocation statique."
+  },
+  {
+   "key": "cu-ptr-12",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Effet de static sur une variable **locale** ?",
+   "back": "Elle conserve sa valeur entre deux appels (stockée en .data ou .bss, pas sur la pile) et n'est initialisée qu'une fois."
+  },
+  {
+   "key": "cu-ptr-13",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Effet de static sur une fonction ou une variable **globale** ?",
+   "back": "Elle n'est visible que dans son fichier source (liaison interne) : encapsulation, pas de conflit de noms entre fichiers."
+  },
+  {
+   "key": "cu-ptr-14",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Rôle de extern ?",
+   "back": "Déclarer une variable définie ailleurs, sans la créer : `extern int compteur;` dans le .h, et la définition `int compteur;` dans un seul .c."
+  },
+  {
+   "key": "cu-ptr-15",
+   "chap": "C : pointeurs et mémoire",
+   "front": "Déclarer et utiliser un pointeur de fonction ?",
+   "back": "`void (*cb)(int);`\n`cb = ma_fonction;`\n`cb(3);`\nUtilisé pour les callbacks et les tables de vecteurs d'interruption."
+  },
+  {
+   "key": "cu-ptr-16",
+   "chap": "C : pointeurs et mémoire",
+   "front": "À quoi sert `void *` ?",
+   "back": "C'est un pointeur générique vers n'importe quel type (retour de malloc, paramètres de memcpy). Il faut le convertir dans le bon type avant de le déréférencer."
+  },
+  {
+   "key": "cu-emb-01",
+   "chap": "C : embarqué et registres",
+   "front": "Rôle du mot-clé volatile ?",
+   "back": "Indiquer qu'une variable peut changer en dehors du flot du programme : le compilateur doit la relire en mémoire à chaque accès et ne pas supprimer les écritures."
+  },
+  {
+   "key": "cu-emb-02",
+   "chap": "C : embarqué et registres",
+   "front": "Trois cas où volatile est nécessaire ?",
+   "back": "Les registres de périphériques, les variables partagées avec une routine d'interruption, et celles partagées entre threads ou modifiées par DMA."
+  },
+  {
+   "key": "cu-emb-03",
+   "chap": "C : embarqué et registres",
+   "front": "volatile rend-il un accès atomique ?",
+   "back": "Non. Il empêche les optimisations, mais une lecture-modification-écriture comme `cpt++` peut toujours être interrompue au milieu. Il faut masquer les interruptions ou utiliser des opérations atomiques."
+  },
+  {
+   "key": "cu-emb-04",
+   "chap": "C : embarqué et registres",
+   "front": "Accéder à un registre 32 bits situé à l'adresse 0x40021000 ?",
+   "back": "`#define REG (*(volatile uint32_t *)0x40021000u)`\npuis par exemple `REG |= (1u << 3);`"
+  },
+  {
+   "key": "cu-emb-05",
+   "chap": "C : embarqué et registres",
+   "front": "Sans volatile, que risque `while (flag == 0);` si flag est modifié par une interruption ?",
+   "back": "Le compilateur peut ne lire flag qu'une seule fois et créer une boucle infinie, puisque rien ne modifie flag dans la boucle à ses yeux."
+  },
+  {
+   "key": "cu-emb-06",
+   "chap": "C : embarqué et registres",
+   "front": "Règles pour écrire une routine d'interruption (ISR) ?",
+   "back": "Courte et rapide ; ni appel bloquant, ni printf, ni malloc ; variables partagées en volatile ; acquitter le drapeau d'interruption."
+  },
+  {
+   "key": "cu-emb-07",
+   "chap": "C : embarqué et registres",
+   "front": "Qu'est-ce que le **padding** dans une structure ?",
+   "back": "Des octets ajoutés par le compilateur pour aligner les champs. `struct { uint8_t a; uint32_t b; }` fait en général 8 octets, pas 5."
+  },
+  {
+   "key": "cu-emb-08",
+   "chap": "C : embarqué et registres",
+   "front": "Comment réduire le padding d'une structure ?",
+   "back": "Ranger les champs du plus grand au plus petit. Ou `__attribute__((packed))` (GCC), au prix d'accès non alignés plus lents, voire interdits sur certains processeurs."
+  },
+  {
+   "key": "cu-emb-09",
+   "chap": "C : embarqué et registres",
+   "front": "Champs de bits (bitfields) : intérêt et limite ?",
+   "back": "`struct { unsigned en : 1; unsigned mode : 3; }` donne un accès lisible à des bits.\nMais leur disposition en mémoire dépend du compilateur : à éviter pour décrire un registre ou un format binaire portable."
+  },
+  {
+   "key": "cu-emb-10",
+   "chap": "C : embarqué et registres",
+   "front": "#define, const ou enum pour une constante ?",
+   "back": "`#define` : substitution de texte par le préprocesseur, sans type.\n`const` : objet typé, visible au débogueur, souvent placé en flash en embarqué.\n`enum` : constantes entières liées entre elles (états, codes)."
+  },
+  {
+   "key": "cu-emb-11",
+   "chap": "C : embarqué et registres",
+   "front": "Qu'est-ce qu'une union ?",
+   "back": "Une structure dont tous les champs partagent la même zone mémoire ; sa taille est celle du plus grand champ. Elle permet de voir les mêmes octets de plusieurs façons."
+  },
+  {
+   "key": "cu-emb-12",
+   "chap": "C : embarqué et registres",
+   "front": "Qu'est-ce que la compilation croisée ?",
+   "back": "Compiler sur une machine (PC x86) un programme destiné à une autre architecture (microcontrôleur ARM), avec une chaîne comme `arm-none-eabi-gcc`."
+  },
+  {
+   "key": "cu-comp-01",
+   "chap": "C : compilation et Makefile",
+   "front": "Les 4 étapes de la compilation C ?",
+   "back": "Préprocesseur (`gcc -E`), compilation en assembleur (`gcc -S`), assemblage en fichier objet .o (`gcc -c`), édition de liens (exécutable)."
+  },
+  {
+   "key": "cu-comp-02",
+   "chap": "C : compilation et Makefile",
+   "front": "Options de gcc à connaître ?",
+   "back": "`-o` : nom de sortie. `-c` : compiler sans lier. `-Wall -Wextra` : avertissements. `-g` : infos de débogage. `-O0` à `-O3`, `-Os` : optimisation. `-I` : dossier d'en-têtes. `-lm` : lier une bibliothèque (ici math)."
+  },
+  {
+   "key": "cu-comp-03",
+   "chap": "C : compilation et Makefile",
+   "front": "Rôle des include guards ?",
+   "back": "Éviter qu'un en-tête soit inclus deux fois dans un même fichier compilé :\n`#ifndef CAPTEUR_H`\n`#define CAPTEUR_H`\n`/* déclarations */`\n`#endif`\nAlternative : `#pragma once`."
+  },
+  {
+   "key": "cu-comp-04",
+   "chap": "C : compilation et Makefile",
+   "front": "Que met-on dans un .h et dans un .c ?",
+   "back": "Le .h : les déclarations (prototypes, types, macros, `extern`).\nLe .c : les définitions (code des fonctions, variables). Définir une variable dans un .h crée des doublons à l'édition de liens."
+  },
+  {
+   "key": "cu-comp-05",
+   "chap": "C : compilation et Makefile",
+   "front": "Piège : `#define CARRE(x) x * x` appelée avec `CARRE(a + 1)` ?",
+   "back": "On obtient `a + 1 * a + 1`, soit 2a + 1. Il faut tout parenthéser : `#define CARRE(x) ((x) * (x))`."
+  },
+  {
+   "key": "cu-comp-06",
+   "chap": "C : compilation et Makefile",
+   "front": "Piège : `MAX(i++, j)` avec une macro MAX ?",
+   "back": "L'argument est évalué plusieurs fois : i peut être incrémenté deux fois. Préférer une fonction `static inline`."
+  },
+  {
+   "key": "cu-comp-07",
+   "chap": "C : compilation et Makefile",
+   "front": "« undefined reference to f » : quelle étape échoue, et pourquoi ?",
+   "back": "L'**édition de liens** : f est déclarée mais sa définition est introuvable. Fichier .c non compilé ou non lié, bibliothèque manquante (`-lm`), faute de nom…"
+  },
+  {
+   "key": "cu-comp-08",
+   "chap": "C : compilation et Makefile",
+   "front": "Bibliothèque statique (.a) vs dynamique (.so) ?",
+   "back": "Statique : son code est copié dans l'exécutable à l'édition de liens.\nDynamique : chargée à l'exécution et partagée entre programmes ; exécutable plus petit, mais qui dépend de la .so installée."
+  },
+  {
+   "key": "cu-comp-09",
+   "chap": "C : compilation et Makefile",
+   "front": "Syntaxe d'une règle de Makefile ?",
+   "back": "`cible: dépendances`\n`<TAB>commande`\nLa commande commence obligatoirement par une tabulation."
+  },
+  {
+   "key": "cu-comp-10",
+   "chap": "C : compilation et Makefile",
+   "front": "Variables automatiques `$@`, `$<` et `$^` d'un Makefile ?",
+   "back": "`$@` : la cible.\n`$<` : la première dépendance.\n`$^` : toutes les dépendances."
+  },
+  {
+   "key": "cu-comp-11",
+   "chap": "C : compilation et Makefile",
+   "front": "Pourquoi make plutôt qu'un script qui recompile tout ?",
+   "back": "make compare les dates de modification et ne reconstruit que les cibles plus anciennes que leurs dépendances."
+  },
+  {
+   "key": "cu-comp-12",
+   "chap": "C : compilation et Makefile",
+   "front": "Règle de Makefile qui compile n'importe quel .c en .o ?",
+   "back": "`%.o: %.c`\n`<TAB>$(CC) $(CFLAGS) -c $< -o $@`"
+  },
+  {
+   "key": "cu-comp-13",
+   "chap": "C : compilation et Makefile",
+   "front": "Pourquoi déclarer `.PHONY: clean` ?",
+   "back": "clean n'est pas un fichier : .PHONY force make à exécuter la règle même si un fichier nommé clean existe."
+  },
+  {
+   "key": "cu-dbg-01",
+   "chap": "C : débogage et comportements indéfinis",
+   "front": "Qu'est-ce qu'un **comportement indéfini** (UB) ?",
+   "back": "Une situation pour laquelle la norme n'impose rien : le programme peut sembler marcher, planter, ou être optimisé de façon inattendue."
+  },
+  {
+   "key": "cu-dbg-02",
+   "chap": "C : débogage et comportements indéfinis",
+   "front": "Exemples courants de comportements indéfinis ?",
+   "back": "Accès hors des bornes d'un tableau, lecture d'une variable non initialisée, dépassement d'un entier signé, déréférencement de NULL ou d'un pointeur libéré, modification d'une chaîne littérale."
+  },
+  {
+   "key": "cu-dbg-03",
+   "chap": "C : débogage et comportements indéfinis",
+   "front": "Que signifie « Segmentation fault » ?",
+   "back": "Le programme a accédé à une zone mémoire interdite (NULL, pointeur invalide, débordement de pile…) : le système l'arrête avec le signal SIGSEGV."
+  },
+  {
+   "key": "cu-dbg-04",
+   "chap": "C : débogage et comportements indéfinis",
+   "front": "Commandes de base de gdb ?",
+   "back": "`break main` : point d'arrêt. `run`. `next` : ligne suivante sans entrer dans les fonctions. `step` : en y entrant. `print x`. `bt` : pile d'appels. `continue`.\nCompiler avec `-g`."
+  },
+  {
+   "key": "cu-dbg-05",
+   "chap": "C : débogage et comportements indéfinis",
+   "front": "À quoi sert valgrind ?",
+   "back": "À détecter les fuites mémoire, les accès invalides et l'utilisation de mémoire non initialisée : `valgrind --leak-check=full ./prog`"
+  },
+  {
+   "key": "cu-dbg-06",
+   "chap": "C : débogage et comportements indéfinis",
+   "front": "Pourquoi un printf de débogage peut-il ne pas s'afficher avant un plantage ?",
+   "back": "stdout est mis en tampon (par ligne vers un terminal, par bloc vers un fichier). Sans `\\n` ni `fflush(stdout)`, le texte reste dans le tampon. stderr, lui, n'est pas tamponné."
+  },
+  {
+   "key": "cu-dbg-07",
+   "chap": "C : débogage et comportements indéfinis",
+   "front": "printf vs write ?",
+   "back": "`write` est un appel système qui écrit directement sur un descripteur.\n`printf` est une fonction de la bibliothèque C qui formate et met en tampon, puis appelle write."
+  },
+  {
+   "key": "cu-dbg-08",
+   "chap": "C : débogage et comportements indéfinis",
+   "front": "Pourquoi `if (x = 0)` est-il un bug ?",
+   "back": "C'est une affectation, pas une comparaison : x prend la valeur 0 et la condition est toujours fausse. `-Wall` le signale ; il faut écrire `==`."
+  },
+  {
+   "key": "cu-dbg-09",
+   "chap": "C : débogage et comportements indéfinis",
+   "front": "Pourquoi `scanf(\"%d\", x)` plante-t-il ?",
+   "back": "scanf attend l'**adresse** de la variable : `scanf(\"%d\", &x)`."
+  },
+  {
+   "key": "cu-sh-01",
+   "chap": "Unix : shell",
+   "front": "Que signifient les permissions `-rwxr-x---` ?",
+   "back": "Fichier ordinaire. Propriétaire : lecture, écriture, exécution. Groupe : lecture, exécution. Autres : rien.\nEn octal : 750."
+  },
+  {
+   "key": "cu-sh-02",
+   "chap": "Unix : shell",
+   "front": "Que fait `chmod 755 script.sh` ?",
+   "back": "rwx pour le propriétaire, r-x pour le groupe et les autres (r = 4, w = 2, x = 1)."
+  },
+  {
+   "key": "cu-sh-03",
+   "chap": "Unix : shell",
+   "front": "Rendre un script exécutable et le lancer ?",
+   "back": "`chmod +x script.sh` puis `./script.sh`\nLe `./` est nécessaire car le dossier courant n'est pas dans le PATH."
+  },
+  {
+   "key": "cu-sh-04",
+   "chap": "Unix : shell",
+   "front": "Redirections `>`, `>>`, `<`, `2>` et `2>&1` ?",
+   "back": "`>` : sortie vers un fichier (écrase). `>>` : ajoute à la fin. `<` : entrée depuis un fichier. `2>` : redirige les erreurs. `2>&1` : envoie stderr au même endroit que stdout."
+  },
+  {
+   "key": "cu-sh-05",
+   "chap": "Unix : shell",
+   "front": "Que fait le pipe `|` ?",
+   "back": "Il envoie la sortie standard d'une commande vers l'entrée standard de la suivante. Ex. `dmesg | grep tty`"
+  },
+  {
+   "key": "cu-sh-06",
+   "chap": "Unix : shell",
+   "front": "Chercher un motif dans tous les fichiers d'un dossier ?",
+   "back": "`grep -rn \"motif\" dossier/`\n-r : récursif. -n : numéros de ligne. -i : insensible à la casse."
+  },
+  {
+   "key": "cu-sh-07",
+   "chap": "Unix : shell",
+   "front": "Trouver tous les fichiers .c sous le dossier courant ?",
+   "back": "`find . -name \"*.c\"`"
+  },
+  {
+   "key": "cu-sh-08",
+   "chap": "Unix : shell",
+   "front": "Suivre un fichier de log en temps réel ?",
+   "back": "`tail -f fichier.log`"
+  },
+  {
+   "key": "cu-sh-09",
+   "chap": "Unix : shell",
+   "front": "Trouver un processus et l'arrêter ?",
+   "back": "`ps aux` (ou `top`, `htop`) pour trouver son PID, puis `kill PID` (SIGTERM) ou `kill -9 PID` (SIGKILL, impossible à ignorer)."
+  },
+  {
+   "key": "cu-sh-10",
+   "chap": "Unix : shell",
+   "front": "Que contient `$?` dans le shell ?",
+   "back": "Le code de retour de la dernière commande : 0 en cas de succès, une autre valeur en cas d'erreur."
+  },
+  {
+   "key": "cu-sh-11",
+   "chap": "Unix : shell",
+   "front": "Rôle de la variable PATH ?",
+   "back": "La liste des dossiers où le shell cherche les commandes. `echo $PATH` l'affiche ; `export PATH=$PATH:~/bin` ajoute un dossier."
+  },
+  {
+   "key": "cu-sh-12",
+   "chap": "Unix : shell",
+   "front": "Arrière-plan et premier plan dans le shell ?",
+   "back": "`commande &` : lancer en arrière-plan. `jobs` : lister. `fg` : ramener au premier plan. Ctrl+Z suspend la commande en cours, `bg` la relance en arrière-plan."
+  },
+  {
+   "key": "cu-sh-13",
+   "chap": "Unix : shell",
+   "front": "Ctrl+C vs Ctrl+Z dans un terminal ?",
+   "back": "Ctrl+C envoie SIGINT : le programme est interrompu.\nCtrl+Z envoie SIGTSTP : il est suspendu, et reprend avec fg ou bg."
+  },
+  {
+   "key": "cu-sh-14",
+   "chap": "Unix : shell",
+   "front": "Sous quel nom apparaît un adaptateur USB-série (Arduino, FTDI) sous Linux ?",
+   "back": "Dans /dev, en général `/dev/ttyUSB0` ou `/dev/ttyACM0`. `dmesg | tail` l'indique juste après le branchement."
+  },
+  {
+   "key": "cu-sh-15",
+   "chap": "Unix : shell",
+   "front": "« Permission denied » sur /dev/ttyUSB0 : solution propre ?",
+   "back": "Ajouter l'utilisateur au groupe qui possède le port (dialout sur Debian et Ubuntu) : `sudo usermod -aG dialout $USER`, puis se reconnecter. Éviter de tout lancer en sudo."
+  },
+  {
+   "key": "cu-sh-16",
+   "chap": "Unix : shell",
+   "front": "Ouvrir un terminal série à 115 200 bauds ?",
+   "back": "`screen /dev/ttyUSB0 115200` (quitter : Ctrl+A puis K), ou minicom, picocom."
+  },
+  {
+   "key": "cu-sh-17",
+   "chap": "Unix : shell",
+   "front": "Se connecter à une carte distante (ex. Raspberry Pi) et lui copier un fichier ?",
+   "back": "`ssh pi@192.168.1.20` pour se connecter.\n`scp prog.c pi@192.168.1.20:~/` pour copier."
+  },
+  {
+   "key": "cu-sh-18",
+   "chap": "Unix : shell",
+   "front": "Obtenir la documentation d'une commande, d'un appel système, d'une fonction C ?",
+   "back": "`man ls` pour une commande, `man 2 write` pour un appel système, `man 3 printf` pour une fonction de la bibliothèque C."
+  },
+  {
+   "key": "cu-sh-19",
+   "chap": "Unix : shell",
+   "front": "Que fait sudo ?",
+   "back": "Exécuter une commande avec les droits d'un autre utilisateur, root par défaut. À réserver aux opérations d'administration."
+  },
+  {
+   "key": "cu-sh-20",
+   "chap": "Unix : shell",
+   "front": "Taille d'un dossier et espace disque libre ?",
+   "back": "`du -sh dossier` pour la taille du dossier, `df -h` pour l'espace libre des partitions."
+  },
+  {
+   "key": "cu-proc-01",
+   "chap": "Unix : processus et système",
+   "front": "Programme vs processus ?",
+   "back": "Un programme est un fichier exécutable. Un processus est une instance en cours d'exécution, avec son PID, sa mémoire et ses descripteurs."
+  },
+  {
+   "key": "cu-proc-02",
+   "chap": "Unix : processus et système",
+   "front": "Rôle de la famille exec (execl, execvp…) ?",
+   "back": "Remplacer le programme du processus courant par un autre, en gardant le même PID. En cas de succès, exec ne revient jamais."
+  },
+  {
+   "key": "cu-proc-03",
+   "chap": "Unix : processus et système",
+   "front": "Lancer une autre commande depuis un programme C ?",
+   "back": "`fork()`, puis `exec…()` dans l'enfant ; le parent attend la fin avec `wait()` ou `waitpid()`. C'est ce que fait le shell."
+  },
+  {
+   "key": "cu-proc-04",
+   "chap": "Unix : processus et système",
+   "front": "Qu'est-ce qu'un processus **zombie** ?",
+   "back": "Un processus terminé dont le parent n'a pas encore récupéré le code de retour avec wait() : il reste dans la table des processus."
+  },
+  {
+   "key": "cu-proc-05",
+   "chap": "Unix : processus et système",
+   "front": "Qu'est-ce qu'un processus **orphelin** ?",
+   "back": "Un processus dont le parent s'est terminé avant lui. Il est rattaché à init (PID 1), qui fera le wait à sa place."
+  },
+  {
+   "key": "cu-proc-06",
+   "chap": "Unix : processus et système",
+   "front": "Que reçoit `int main(int argc, char *argv[])` ?",
+   "back": "argc : le nombre d'arguments, nom du programme compris.\nargv : le tableau des arguments ; `argv[0]` est le nom du programme, `argv[argc]` vaut NULL."
+  },
+  {
+   "key": "cu-proc-07",
+   "chap": "Unix : processus et système",
+   "front": "Signification de la valeur de retour de main ?",
+   "back": "Le code de sortie du processus : 0 (EXIT_SUCCESS) en cas de succès, une autre valeur pour une erreur. Le shell la récupère dans `$?`."
+  },
+  {
+   "key": "cu-proc-08",
+   "chap": "Unix : processus et système",
+   "front": "Qu'est-ce qu'un signal Unix ? Exemples ?",
+   "back": "Une notification asynchrone envoyée à un processus.\nSIGINT (Ctrl+C), SIGTERM (demande d'arrêt), SIGKILL (arrêt forcé), SIGSEGV (accès mémoire invalide), SIGCHLD (fin d'un enfant)."
+  },
+  {
+   "key": "cu-proc-09",
+   "chap": "Unix : processus et système",
+   "front": "Intercepter un signal en C ?",
+   "back": "Avec `sigaction()` (ou `signal()`, plus ancien), qui associe une fonction de traitement au signal. SIGKILL et SIGSTOP ne peuvent pas être interceptés."
+  },
+  {
+   "key": "cu-proc-10",
+   "chap": "Unix : processus et système",
+   "front": "Créer un tube entre deux processus ?",
+   "back": "`int fd[2];`\n`pipe(fd);`\npuis fork. `fd[0]` est l'extrémité de lecture, `fd[1]` celle d'écriture ; chaque processus ferme celle qu'il n'utilise pas."
+  },
+  {
+   "key": "cu-proc-11",
+   "chap": "Unix : processus et système",
+   "front": "Comment connaître la cause d'échec d'un appel système ?",
+   "back": "Il renvoie −1 et renseigne la variable `errno` ; `perror(\"open\")` affiche un message lisible."
+  },
+  {
+   "key": "cu-proc-12",
+   "chap": "Unix : processus et système",
+   "front": "Processus vs thread ?",
+   "back": "Les threads d'un même processus partagent sa mémoire (globales, tas) ; chaque processus a son propre espace mémoire. Les threads sont plus légers, mais exposés aux accès concurrents."
+  },
+  {
+   "key": "cu-proc-13",
+   "chap": "Unix : processus et système",
+   "front": "Qu'est-ce qu'une **condition de course**, et comment l'éviter ?",
+   "back": "Un résultat qui dépend de l'ordre d'exécution de threads qui accèdent à une donnée partagée. On protège la section critique par un mutex (`pthread_mutex_lock` / `pthread_mutex_unlock`)."
+  },
+  {
+   "key": "cu-proc-14",
+   "chap": "Unix : processus et système",
+   "front": "Compiler un programme qui utilise les threads POSIX ?",
+   "back": "`gcc prog.c -o prog -pthread`"
+  },
+  {
+   "key": "cu-proc-15",
+   "chap": "Unix : processus et système",
+   "front": "Appel système vs fonction de bibliothèque ?",
+   "back": "Un appel système (open, read, fork…) demande un service au noyau. Une fonction de bibliothèque (printf, malloc…) s'exécute en espace utilisateur et s'appuie éventuellement sur des appels système."
+  }
+ ]
+}

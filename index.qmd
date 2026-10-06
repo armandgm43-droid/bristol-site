@@ -1,0 +1,17 @@
+---
+title: "Bristol"
+subtitle: "Base de connaissances pour mes études d'ingénieur"
+toc: false
+number-sections: false
+---
+
+## Matières
+
+| Code | Matière | Statut |
+|---|---|---|
+| [TS227](matieres/ts227-communications-numeriques/index.qmd) | Introduction aux communications numériques | En cours de mise en place |
+
+## Ressources
+
+- [Révisions](revision/index.html) : flashcards à répétition espacée.
+- [Conventions](demo-conventions.qmd) : rendu des quatre catégories de contenu.

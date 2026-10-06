@@ -1,0 +1,344 @@
+# Bristol — Conventions
+
+> Règles détaillées de rédaction, de mise en forme et de nommage.
+> À lire avec `CONTEXTE_PROJET.md` (le *pourquoi*) et `ETAT_PROJET.md` (l'état du projet).
+> Ces conventions s'appliquent à **toutes les matières**. Ce qui est propre à une matière (notations, convention de la TF…) va dans sa fiche matière, pas ici.
+>
+> Dernière mise à jour : 6 octobre 2026.
+
+Toute nouvelle convention est **proposée explicitement** avant d'être appliquée, puis ajoutée ici et dans le [journal des conventions](#12-journal-des-conventions).
+
+---
+
+## 1. Langue et style
+
+- Langue : **français**. Les termes techniques anglais usuels sont gardés quand le cours les emploie (*matched filter*, *eye diagram*…), en italique à leur première apparition.
+- Ton neutre de manuel. Pas de « on va voir que… » en cascade, pas de familiarités.
+- Typographie française : espace insécable avant `: ; ! ?` et dans « », virgule décimale dans le texte (« 0,5 »).
+- Dans les formules, la virgule décimale s'écrit `0{,}5` (sinon LaTeX ajoute une espace).
+- Unités : espace entre la valeur et l'unité (`10 kHz`, `$10\ \mathrm{kHz}$`).
+
+---
+
+## 2. Nommage des fichiers et dossiers
+
+Règle générale : **minuscules, sans accents, mots séparés par des tirets**. Pas d'espace, pas de majuscule.
+
+| Élément | Format | Exemple |
+|---|---|---|
+| Dossier de matière | `<code>-<intitule>` | `matieres/ts227-communications-numeriques/` |
+| Code de matière (`<code>`) | code officiel en minuscules, ou code court explicite | `ts227` |
+| Chapitre | `cours/NN-slug.qmd` | `cours/03-dsp-signaux-codes-en-ligne.qmd` |
+| Flashcards d'un chapitre | `flashcards/NN-slug.yml` (même nom que le chapitre) | `flashcards/03-dsp-signaux-codes-en-ligne.yml` |
+| Figure (source) | `figures/NN-slug-figure.py` ou `.tex` | `figures/03-dsp-nrz.py` |
+| Figure (rendu) | même nom, `.svg` | `figures/03-dsp-nrz.svg` |
+| TD, TP, annales (phase 2, provisoire) | `td/tdNN-slug.qmd`, `tp/tpNN-slug.qmd`, `annales/AAAA-session.qmd` | `td/td01-bande-de-base.qmd`, `annales/2025-janvier.qmd` |
+| Sources brutes (hors dépôt) | `sources/<code>/support/…`, `sources/<code>/notes/AAAA-MM-JJ.pdf` | `sources/ts227/notes/2026-09-15.pdf` |
+
+- `NN` : numéro sur deux chiffres (`01`, `02`…).
+- Le slug du chapitre décrit son contenu en 2 à 5 mots.
+- **Un fichier publié n'est jamais renommé** (voir `CONTEXTE_PROJET.md`, section 4.3). Si c'est indispensable : redirection + note dans `ETAT_PROJET.md`.
+- Les notes manuscrites sont nommées par **date de séance**, un PDF par séance.
+
+---
+
+## 3. Front matter
+
+### 3.1 Chapitre
+
+Chaque chapitre commence par ce bloc YAML. Les champs marqués *obligatoire* doivent toujours être présents.
+
+```yaml
+---
+title: "DSP des signaux codés en ligne"       # obligatoire
+matiere: ts227                                # obligatoire : code de la matière
+chapitre: 3                                   # obligatoire : numéro (entier)
+enseignants: ["Romain Tajan"]                 # obligatoire
+annee: "2026-2027"                            # obligatoire : année universitaire
+statut: brouillon                             # obligatoire : voir section 4
+date-modified: 2026-10-06                     # obligatoire : AAAA-MM-JJ
+sources:                                      # obligatoire : au moins une source
+  - id: poly                                  # identifiant court, utilisé pour citer
+    fichier: poly_ts227.pdf
+    nature: officielle                        # officielle | personnelle | externe
+    version: "2025-10-09"
+    pages: "60-95"
+  - id: notes-2026-09-22
+    fichier: notes/2026-09-22.pdf
+    nature: personnelle
+    seance: 2026-09-22
+    pages: "1-6"
+---
+
+{{< include /_macros.qmd >}}
+```
+
+- `date-modified` est un champ standard de Quarto : il est affiché sur la page.
+- L'`id` d'une source sert à la citer dans le texte : `[poly, p. 78]`, `[notes-2026-09-22, p. 3]`.
+- La ligne `{{< include /_macros.qmd >}}` suit **toujours** le front matter.
+
+### 3.2 Fiche matière (`index.qmd`)
+
+```yaml
+---
+title: "TS227 — Introduction aux communications numériques"
+subtitle: "Fiche matière"
+matiere: ts227
+enseignants: ["Romain Tajan"]
+annee: "2026-2027"
+number-sections: false
+---
+```
+
+Contenu de la page : voir `CONTEXTE_PROJET.md`, section 6.6. La table des notations et les conventions propres à la matière (signe de la TF, étiquetage des constellations…) y sont obligatoires.
+
+---
+
+## 4. Statuts des chapitres
+
+Le champ `statut` prend une valeur **en minuscules, sans accents**, pour pouvoir être lu par des scripts.
+
+| Valeur du champ | Affichage | Signification |
+|---|---|---|
+| `brouillon` | BROUILLON | Sources reçues, rien n'est encore rédigé |
+| `analyse` | ANALYSÉ | Rapport d'analyse produit, questions posées |
+| `redige` | RÉDIGÉ | Cours reconstruit, figures intégrées |
+| `verifie` | VÉRIFIÉ | Relecture et vérifications de Claude faites |
+| `valide` | VALIDÉ | Relu et validé par Armand |
+| `flashcards` | FLASHCARDS GÉNÉRÉES | Cartes produites à partir du cours validé |
+
+Un retour en arrière est explicite et noté dans `ETAT_PROJET.md`.
+
+---
+
+## 5. Les quatre catégories
+
+Classes **figées** (déjà stylées dans `assets/bristol.scss`) :
+
+| Catégorie | Classe | Bloc | Segment dans une phrase |
+|---|---|---|---|
+| Support officiel | *(aucune)* | texte normal | texte normal |
+| Notes de cours | `.notes` | `::: {.notes}` | `[texte]{.notes}` |
+| Complément | `.complement` | `::: {.complement}` | `[texte]{.complement}` |
+| À vérifier | `.a-verifier` | `::: {.a-verifier #av-slug}` | `[texte]{.a-verifier}` |
+
+### 5.1 Règles d'usage
+
+- **Préférer les blocs.** Une démonstration faite au tableau forme un bloc entier. Les segments sont réservés à quelques mots insérés dans une phrase du support.
+- Un bloc peut contenir des équations, des figures, des listes et des environnements (démonstration, exemple…).
+- Pour imbriquer, l'enveloppe extérieure prend **plus de deux-points** que l'intérieure :
+
+  ```markdown
+  :::: {.notes}
+  ::: {.proof}
+  On part de l'autocorrélation moyennée…
+  :::
+  ::::
+  ```
+
+- Ne jamais imbriquer deux catégories (pas de `.complement` dans `.notes`) : fermer le premier bloc, ouvrir le second.
+
+### 5.2 Bloc *À vérifier*
+
+Chaque bloc *À vérifier* porte un **identifiant** `#av-<slug>`, unique dans la matière. Il permet de le citer dans `ETAT_PROJET.md` et de compter les blocs restants par script.
+
+Contenu obligatoire, dans cet ordre :
+
+```markdown
+::: {.a-verifier #av-variance-affine}
+**Source** [poly, p. 78] : « $Y \sim \mathcal{N}(a\mu + b,\ b^2\sigma^2)$ ».
+
+**Problème** : la variance d'une transformation affine est $a^2\sigma^2$.
+
+**Proposition** : $Y \sim \mathcal{N}(a\mu + b,\ a^2\sigma^2)$.
+:::
+```
+
+- Citer la source **fidèlement**, sans la corriger.
+- La *Proposition* est facultative si aucune correction fiable n'est possible.
+- Un bloc levé par Armand disparaît : son contenu est réintégré dans la bonne catégorie, l'identifiant `av-…` n'est pas réutilisé, et la décision est notée dans `ETAT_PROJET.md` si elle est importante.
+
+---
+
+## 6. Environnements de cours
+
+On utilise les environnements natifs de Quarto. Les titres s'affichent en français grâce à `lang: fr`.
+
+| Contenu | Syntaxe | Numéroté |
+|---|---|---|
+| Définition | `::: {#def-slug}` | oui |
+| Théorème | `::: {#thm-slug}` | oui |
+| Propriété | `::: {#prp-slug}` | oui |
+| Lemme | `::: {#lem-slug}` | oui |
+| Corollaire | `::: {#cor-slug}` | oui |
+| Exemple | `::: {#exm-slug}` | oui |
+| Exercice | `::: {#exr-slug}` | oui |
+| Démonstration | `::: {.proof}` | non |
+| Remarque | `::: {.remark}` | non |
+| Solution d'exercice | `::: {.solution}` | non |
+
+- Le nom de l'environnement s'écrit en titre de niveau 2 à l'intérieur du bloc :
+
+  ```markdown
+  ::: {#def-cyclostationnaire}
+  ## Processus cyclostationnaire
+
+  Un processus est cyclostationnaire de période $\Ts$ si…
+  :::
+  ```
+
+- Ne pas utiliser les *callouts* Quarto (`.callout-…`) pour le contenu de cours : leurs couleurs se confondraient avec les quatre catégories.
+- Chaque chapitre se termine par une section `## À retenir` : liste des résultats et formules, **avec leurs conditions d'application**, et liens vers leur label.
+
+---
+
+## 7. Labels et références croisées
+
+### 7.1 Format
+
+`<préfixe>-<slug>`, en minuscules, sans accents, mots séparés par des tirets.
+
+| Préfixe | Objet |
+|---|---|
+| `sec-` | section |
+| `eq-` | équation |
+| `fig-` | figure |
+| `tbl-` | tableau |
+| `def-`, `thm-`, `prp-`, `lem-`, `cor-`, `exm-`, `exr-` | environnements (section 6) |
+| `av-` | bloc *À vérifier* (ancre simple, pas une référence Quarto) |
+
+Exemples : `eq-bennett`, `fig-diagramme-oeil-nrz`, `def-filtre-adapte`, `sec-critere-nyquist`.
+
+### 7.2 Règles
+
+- Un label est **unique dans toute la matière** (pas seulement dans le chapitre), pour que les liens entre chapitres et les références des flashcards restent sans ambiguïté.
+- Le slug décrit l'objet, **pas sa position** : pas de numéro de chapitre ni d'ordre (`eq-bennett`, pas `eq-3-12`).
+- **Un label n'est jamais renommé** : les flashcards et les autres chapitres pointent dessus.
+- Toute section de niveau 2 reçoit un label `{#sec-…}`. Les sections de niveau 3 en reçoivent un si on y renvoie.
+- On ne labellise une équation que si elle est citée ailleurs, reprise dans « À retenir » ou visée par une flashcard.
+
+### 7.3 Références
+
+- Dans le même chapitre : `@eq-bennett`, `@def-filtre-adapte`, `@sec-critere-nyquist` (lien et numéro générés par Quarto).
+- Vers un autre chapitre (Quarto ne résout pas `@` entre pages d'un site) : lien Markdown explicite, `[formule de Bennett](03-dsp-signaux-codes-en-ligne.qmd#eq-bennett)`.
+
+---
+
+## 8. Écriture mathématique
+
+- En ligne : `$…$`. Centrée : `$$…$$`, suivie si besoin de son label : `$$ … $$ {#eq-slug}`.
+- Macros communes : définies **uniquement** dans `_macros.qmd`, jamais redéfinies dans une page. Une nouvelle macro y est ajoutée et listée ci-dessous.
+
+| Macro | Rendu | Usage |
+|---|---|---|
+| `\Ts` | $T_s$ | durée symbole |
+| `\Tb` | $T_b$ | durée bit |
+| `\E` | $\mathbb{E}$ | espérance |
+| `\sinc` | $\operatorname{sinc}$ | sinus cardinal |
+| `\TF` | $\operatorname{TF}$ | transformée de Fourier |
+
+- Unité imaginaire : $j$. Différentielle : `\mathrm{d}t`. Indices textuels en romain : `E_\mathrm{b}` seulement si le support le fait ; sinon on suit le support (`E_b`).
+- Convention de signe de la TF, définition de $\sinc$ (avec ou sans $\pi$) : **propres à chaque matière**, fixées dans la fiche matière.
+- Toute formule importante est accompagnée de ses **conditions d'application** juste après (ou dans l'environnement qui la contient).
+
+---
+
+## 9. Figures
+
+- Inclusion : `![Légende.](../figures/03-dsp-nrz.svg){#fig-dsp-nrz}`.
+- Format publié : **SVG**. Les sources (`.py`, `.tex`) sont versionnées à côté du rendu ; une figure doit pouvoir être régénérée.
+- Légende : une phrase de description, puis l'origine, selon `CONTEXTE_PROJET.md`, section 9.3 :
+  - « D'après le support [poly, p. X]. »
+  - « D'après les notes de cours [notes-AAAA-MM-JJ, p. Y], redessinée. »
+  - « Reconstruite : … ajouté (en pointillés gris). »
+- Éléments ajoutés par rapport à la source : **pointillés gris `#7E889B`** (la couleur de la catégorie *Complément*).
+- Courbes Python : matplotlib, police sans empattement, texte en français, axes titrés avec unités, export `svg`.
+
+---
+
+## 10. Flashcards
+
+### 10.1 Fichier
+
+Un fichier YAML par chapitre : `flashcards/NN-slug.yml`, même nom que le chapitre.
+
+```yaml
+matiere: ts227
+chapitre: 3
+cours: cours/03-dsp-signaux-codes-en-ligne.qmd
+ids-retires: []          # identifiants supprimés : ne jamais les réutiliser
+cartes:
+  - id: ts227-bennett-conditions
+    type: formule
+    question: |
+      Expression de la formule de Bennett, et hypothèses nécessaires ?
+    reponse: |
+      $$\Gamma_{s_l}(f) = \frac{|H(f)|^2}{\Ts} \sum_m R_A[m]\, e^{-j2\pi f m \Ts}$$
+      Symboles formant un processus stationnaire à temps discret, mis en forme
+      par un filtre linéaire invariant $h(t)$, au rythme $1/\Ts$.
+    ref: eq-bennett
+    source: officiel     # facultatif : officiel | notes | complement
+    tags: [dsp]          # facultatif
+```
+
+| Champ | Obligatoire | Contenu |
+|---|---|---|
+| `id` | oui | identifiant persistant (10.3) |
+| `type` | oui | voir 10.2 |
+| `question` | oui | recto |
+| `reponse` | oui | verso |
+| `ref` | oui | label du passage du cours dans le chapitre du fichier (`eq-…`, `def-…`, `sec-…`). Vers un autre chapitre : `NN-slug.qmd#label` |
+| `source` | non | catégorie d'origine du contenu |
+| `tags` | non | mots-clés libres |
+
+La matière et le chapitre sont déclarés **une fois en tête de fichier** et valent pour toutes les cartes.
+
+### 10.2 Types
+
+`definition`, `formule`, `condition`, `propriete`, `methode`, `raisonnement`, `piege`, `relation`, `resultat`, `exercice`.
+
+### 10.3 Identifiants
+
+- Format : `<matiere>-<slug>`, par exemple `ts227-bennett-conditions`.
+- **Pas de numéro de chapitre** : comme les labels, l'identifiant décrit la notion visée (slug de 2 à 5 mots), pas sa position.
+- Un identifiant est **unique dans toute la matière**, tous chapitres confondus.
+- Une carte **modifiée garde son identifiant**. Une carte supprimée voit son identifiant ajouté à `ids-retires` du fichier où elle se trouvait ; il n'est **jamais réutilisé**, dans aucun chapitre de la matière.
+- Une carte qui change de chapitre passe dans le fichier du nouveau chapitre et garde son identifiant (sans l'ajouter à `ids-retires`).
+- Les préfixes des paquets hérités (`ts-`, `res-`, `ang-`, `vhdl-`, `cu-`, `latex-`) sont réservés à ces paquets.
+
+### 10.4 Rédaction
+
+- Une seule notion par carte ; la question oblige à **retrouver** la réponse.
+- Réponse courte ; le lien vers le cours sert à approfondir.
+- Mise en forme autorisée (celle de l'application de révision) : `**gras**`, `*italique*`, `` `code` ``, `$…$`, `$$…$$`.
+- En dehors du code et des formules, **jamais d'astérisque isolé** sur une ligne (il serait pris pour de l'italique).
+- En YAML, écrire `question` et `reponse` en bloc `|` : les antislashs du LaTeX n'ont alors pas à être doublés.
+- Les macros de `_macros.qmd` ne sont pas connues de l'application de révision : le script de conversion les remplace (voir `architecture.md`) ; en attendant, écrire la forme développée dans les cartes.
+
+### 10.5 Conversion vers l'application
+
+Le script `scripts/` (à écrire) produit un paquet par matière au format de `revision/cartes/*.json` : `key` ← `id`, `chap` ← « Ch. NN — titre », `front` ← `question`, `back` ← `reponse`. Les cartes sont écrites dans l'ordre des fichiers.
+
+---
+
+## 11. Git
+
+- Messages au format *Conventional Commits*, en anglais : `feat:`, `fix:`, `docs:`, `refactor:`, `chore:`.
+- Portée facultative entre parenthèses : `feat(ts227): add chapter 2`.
+- Un commit = une étape logique. Les sources brutes ne sont jamais commitées (`sources/` est dans `.gitignore`).
+
+---
+
+## 12. Journal des conventions
+
+| Date | Convention | Remarque |
+|---|---|---|
+| 2026-10-06 | Classes `.notes`, `.complement`, `.a-verifier` figées | Celles proposées dans le contexte, déjà stylées |
+| 2026-10-06 | Identifiant `#av-slug` obligatoire sur les blocs *À vérifier* | Nouveau : suivi et comptage |
+| 2026-10-06 | Front matter des chapitres (section 3) avec `id` par source | Nouveau : `id` pour citer les sources |
+| 2026-10-06 | Statuts en minuscules sans accents | Lisibles par script |
+| 2026-10-06 | Labels uniques dans la matière, sans numéro | |
+| 2026-10-06 | Flashcards en YAML, un fichier par chapitre, matière et chapitre en tête de fichier, `ids-retires` | Proposition du contexte, précisée |
+| 2026-10-06 | Identifiants de cartes `<matiere>-<slug>`, uniques dans la matière, sans numéro de chapitre | Modifie la proposition du contexte (`<matiere>-c<NN>-<slug>`) |
+| 2026-10-06 | Macros dans `_macros.qmd` (et non `_macros.tex`) | Fichier existant |
+| 2026-10-06 | Pas de callouts Quarto pour le contenu ; section « À retenir » en fin de chapitre | |

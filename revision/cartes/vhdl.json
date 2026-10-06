@@ -1,0 +1,546 @@
+{
+ "deck": "VHDL",
+ "color": "#D2ECD8",
+ "items": [
+  {
+   "key": "vhdl-base-01",
+   "chap": "Structure d'une description",
+   "front": "Que signifie VHDL, et quelle est la nature de ce langage ?",
+   "back": "VHSIC Hardware Description Language (VHSIC : Very High Speed Integrated Circuit).\nC'est un langage de **description de matériel** : on décrit un circuit, on n'écrit pas un programme exécuté pas à pas."
+  },
+  {
+   "key": "vhdl-base-02",
+   "chap": "Structure d'une description",
+   "front": "Rôle de l'**entity** et de l'**architecture** ?",
+   "back": "L'entity décrit l'interface du composant (ports, generics) : la boîte noire vue de l'extérieur.\nL'architecture décrit son fonctionnement interne. Une même entity peut avoir plusieurs architectures."
+  },
+  {
+   "key": "vhdl-base-03",
+   "chap": "Structure d'une description",
+   "front": "Bibliothèques à déclarer pour utiliser std_logic, signed et unsigned ?",
+   "back": "`library ieee;`\n`use ieee.std_logic_1164.all;`\n`use ieee.numeric_std.all;`"
+  },
+  {
+   "key": "vhdl-base-04",
+   "chap": "Structure d'une description",
+   "front": "Pourquoi éviter `std_logic_arith` et `std_logic_unsigned` ?",
+   "back": "Ce sont des bibliothèques Synopsys non normalisées, en conflit avec numeric_std. La bibliothèque normalisée IEEE est **numeric_std**."
+  },
+  {
+   "key": "vhdl-base-05",
+   "chap": "Structure d'une description",
+   "front": "Les quatre modes de port ?",
+   "back": "`in` : entrée.\n`out` : sortie, non relisible dans l'architecture avant VHDL-2008.\n`inout` : bidirectionnel (bus trois états).\n`buffer` : sortie relisible, à éviter."
+  },
+  {
+   "key": "vhdl-base-06",
+   "chap": "Structure d'une description",
+   "front": "Comment relire une sortie dans l'architecture sans le mode buffer ?",
+   "back": "On travaille sur un signal interne, qu'on lit librement, puis on l'affecte au port : `q <= q_int;`\nVHDL-2008 autorise directement la lecture d'un port out."
+  },
+  {
+   "key": "vhdl-base-07",
+   "chap": "Structure d'une description",
+   "front": "À quoi sert un **generic** ?",
+   "back": "À paramétrer un composant à l'instanciation (largeur de bus, valeur de comptage…).\n`generic (N : integer := 8);` dans l'entity, puis `generic map (N => 16)` à l'instanciation."
+  },
+  {
+   "key": "vhdl-base-08",
+   "chap": "Structure d'une description",
+   "front": "Instancier directement une entité (sans déclarer de component) ?",
+   "back": "`u1 : entity work.compteur`\n`  generic map (N => 8)`\n`  port map (clk => clk, rst => rst, q => cnt);`"
+  },
+  {
+   "key": "vhdl-base-09",
+   "chap": "Structure d'une description",
+   "front": "Association nominative ou positionnelle dans un port map : laquelle préférer ?",
+   "back": "La nominative (`port_formel => signal_local`) : lisible, et robuste si l'ordre des ports change. La positionnelle dépend de l'ordre de déclaration."
+  },
+  {
+   "key": "vhdl-base-10",
+   "chap": "Structure d'une description",
+   "front": "VHDL est-il sensible à la casse ? Comment écrire un commentaire ?",
+   "back": "Non, sauf dans les caractères et les chaînes (`'1'`, `\"0101\"`).\nCommentaire : `--` jusqu'à la fin de la ligne (`/* … */` en VHDL-2008)."
+  },
+  {
+   "key": "vhdl-type-01",
+   "chap": "Types",
+   "front": "Les 9 valeurs du type std_logic ?",
+   "back": "'U' non initialisé, 'X' inconnu fort, '0', '1', 'Z' haute impédance, 'W' inconnu faible, 'L' 0 faible, 'H' 1 faible, '-' indifférent."
+  },
+  {
+   "key": "vhdl-type-02",
+   "chap": "Types",
+   "front": "std_logic vs std_ulogic ?",
+   "back": "std_logic est la version **résolue** de std_ulogic : plusieurs sources peuvent piloter le même signal (bus trois états), une fonction de résolution calcule la valeur.\nAvec std_ulogic, plusieurs drivers provoquent une erreur dès la compilation."
+  },
+  {
+   "key": "vhdl-type-03",
+   "chap": "Types",
+   "front": "Résolution de '0' et '1' sur un même signal std_logic ? Et de 'Z' et '1' ?",
+   "back": "'0' et '1' : 'X' (conflit).\n'Z' et '1' : '1', car 'Z' ne pilote rien."
+  },
+  {
+   "key": "vhdl-type-04",
+   "chap": "Types",
+   "front": "Quand utiliser unsigned ou signed plutôt que std_logic_vector ?",
+   "back": "Dès qu'on fait de l'arithmétique (+, −, comparaisons numériques). Un std_logic_vector n'est qu'un paquet de bits ; unsigned et signed (numeric_std) ont une valeur numérique."
+  },
+  {
+   "key": "vhdl-type-05",
+   "chap": "Types",
+   "front": "Convertir un std_logic_vector `v` en entier ?",
+   "back": "`to_integer(unsigned(v))`, ou `to_integer(signed(v))` s'il représente un nombre signé."
+  },
+  {
+   "key": "vhdl-type-06",
+   "chap": "Types",
+   "front": "Convertir un entier `n` en std_logic_vector de 8 bits ?",
+   "back": "`std_logic_vector(to_unsigned(n, 8))`"
+  },
+  {
+   "key": "vhdl-type-07",
+   "chap": "Types",
+   "front": "Passer de std_logic_vector à unsigned et inversement ?",
+   "back": "Un simple cast, car ces types ont les mêmes éléments : `unsigned(v)` et `std_logic_vector(u)`. Pas besoin de fonction de conversion."
+  },
+  {
+   "key": "vhdl-type-08",
+   "chap": "Types",
+   "front": "Rôle de `resize()` ?",
+   "back": "Changer la largeur d'un signed ou d'un unsigned : extension par des 0 (unsigned) ou par le bit de signe (signed), ou troncature. Ex. `resize(a, 16)`."
+  },
+  {
+   "key": "vhdl-type-09",
+   "chap": "Types",
+   "front": "Pourquoi borner un integer, par exemple `integer range 0 to 255` ?",
+   "back": "Sans borne, un integer est synthétisé sur 32 bits. Avec la borne, l'outil n'utilise que 8 bits, et le simulateur signale tout dépassement."
+  },
+  {
+   "key": "vhdl-type-10",
+   "chap": "Types",
+   "front": "Mettre tous les bits d'un vecteur à 0, quelle que soit sa taille ?",
+   "back": "`(others => '0')`"
+  },
+  {
+   "key": "vhdl-type-11",
+   "chap": "Types",
+   "front": "Opérateur de concaténation ? Exemple ?",
+   "back": "`&`. Ex. `s <= a(6 downto 0) & '0';` décale a d'un bit vers la gauche."
+  },
+  {
+   "key": "vhdl-type-12",
+   "chap": "Types",
+   "front": "`(7 downto 0)` vs `(0 to 7)` ?",
+   "back": "downto : l'indice le plus élevé est à gauche (bit de poids fort), convention habituelle pour les nombres.\nto : l'indice 0 est à gauche."
+  },
+  {
+   "key": "vhdl-type-13",
+   "chap": "Types",
+   "front": "Déclarer un type énuméré ? Usage typique ?",
+   "back": "`type etat_t is (IDLE, LOAD, RUN);`\nPour les machines à états : on raisonne sur des noms, l'outil de synthèse choisit l'encodage."
+  },
+  {
+   "key": "vhdl-type-14",
+   "chap": "Types",
+   "front": "Déclarer une mémoire de 256 mots de 8 bits ?",
+   "back": "`type ram_t is array (0 to 255) of std_logic_vector(7 downto 0);`\n`signal ram : ram_t;`"
+  },
+  {
+   "key": "vhdl-type-15",
+   "chap": "Types",
+   "front": "Attributs `'length`, `'range`, `'high` et `'low` d'un vecteur v(7 downto 0) ?",
+   "back": "v'length = 8, v'range = 7 downto 0, v'high = 7, v'low = 0.\nIls permettent d'écrire du code indépendant de la taille."
+  },
+  {
+   "key": "vhdl-type-16",
+   "chap": "Types",
+   "front": "Le type real est-il synthétisable ?",
+   "back": "Non, sauf pour calculer des constantes. Pour du calcul fractionnaire, on utilise la virgule fixe (signed/unsigned, ou fixed_pkg en VHDL-2008)."
+  },
+  {
+   "key": "vhdl-conc-01",
+   "chap": "Concurrent et séquentiel",
+   "front": "Instructions concurrentes vs séquentielles ?",
+   "back": "Dans l'architecture, les instructions concurrentes fonctionnent en parallèle : leur ordre n'a pas d'importance.\nDans un process, les instructions sont séquentielles, mais le process entier est une instruction concurrente."
+  },
+  {
+   "key": "vhdl-conc-02",
+   "chap": "Concurrent et séquentiel",
+   "front": "Affectation conditionnelle concurrente ?",
+   "back": "`s <= a when sel = '1' else b;`\nC'est l'équivalent d'un if hors process ; elle crée une logique à priorité."
+  },
+  {
+   "key": "vhdl-conc-03",
+   "chap": "Concurrent et séquentiel",
+   "front": "Affectation sélective concurrente ?",
+   "back": "`with sel select`\n`  s <= a when \"00\",`\n`       b when \"01\",`\n`       c when others;`\nC'est l'équivalent d'un case hors process ; elle crée un multiplexeur sans priorité."
+  },
+  {
+   "key": "vhdl-conc-04",
+   "chap": "Concurrent et séquentiel",
+   "front": "À quoi sert la **liste de sensibilité** d'un process ?",
+   "back": "En simulation, le process est réévalué quand un de ses signaux change. La synthèse l'ignore : une liste incomplète crée un écart entre la simulation et le circuit."
+  },
+  {
+   "key": "vhdl-conc-05",
+   "chap": "Concurrent et séquentiel",
+   "front": "Signal vs variable : quand la nouvelle valeur est-elle visible ?",
+   "back": "**Variable** (`:=`) : immédiatement, dans la suite du process.\n**Signal** (`<=`) : à la suspension du process (après un delta cycle). Dans le process, on lit encore l'ancienne valeur."
+  },
+  {
+   "key": "vhdl-conc-06",
+   "chap": "Concurrent et séquentiel",
+   "front": "Dans un process, on écrit `s <= '0';` puis `s <= '1';`. Valeur finale de s ?",
+   "back": "'1' : seule la dernière affectation d'un signal dans un process compte. C'est ce qui permet les affectations par défaut en début de process."
+  },
+  {
+   "key": "vhdl-conc-07",
+   "chap": "Concurrent et séquentiel",
+   "front": "Qu'est-ce qu'un **delta cycle** ?",
+   "back": "Un pas de simulation de durée nulle : les signaux mis à jour réveillent les process sensibles, qui recalculent, jusqu'à stabilisation. Il ordonne des événements simultanés."
+  },
+  {
+   "key": "vhdl-conc-08",
+   "chap": "Concurrent et séquentiel",
+   "front": "Où déclare-t-on une variable ? Un signal ?",
+   "back": "Une variable : dans un process ou un sous-programme.\nUn signal : dans la partie déclarative de l'architecture (ou d'un package), jamais dans un process."
+  },
+  {
+   "key": "vhdl-conc-09",
+   "chap": "Concurrent et séquentiel",
+   "front": "Que se passe-t-il si un signal est affecté dans deux process différents ?",
+   "back": "Deux drivers sur le même signal : 'X' en simulation et erreur à la synthèse (multiple drivers). Un signal ne doit être affecté que dans un seul process."
+  },
+  {
+   "key": "vhdl-conc-10",
+   "chap": "Concurrent et séquentiel",
+   "front": "Pourquoi terminer un case par `when others` ?",
+   "back": "Un case doit couvrir toutes les valeurs, y compris 'U', 'X', 'Z'… d'un std_logic_vector. `when others` couvre le reste et évite les latches."
+  },
+  {
+   "key": "vhdl-conc-11",
+   "chap": "Concurrent et séquentiel",
+   "front": "if/elsif vs case : différence en matériel ?",
+   "back": "if/elsif crée une chaîne de priorité : la première condition vraie l'emporte.\ncase sur un sélecteur crée un multiplexeur parallèle, sans priorité."
+  },
+  {
+   "key": "vhdl-conc-12",
+   "chap": "Concurrent et séquentiel",
+   "front": "Que signifie `process(all)` ?",
+   "back": "VHDL-2008 : la liste de sensibilité contient automatiquement tous les signaux lus dans le process. Idéal pour la logique combinatoire."
+  },
+  {
+   "key": "vhdl-comb-01",
+   "chap": "Logique combinatoire",
+   "front": "Règles pour décrire de la logique combinatoire dans un process ?",
+   "back": "Tous les signaux lus dans la liste de sensibilité (ou `process(all)`), et chaque sortie affectée dans **toutes** les branches."
+  },
+  {
+   "key": "vhdl-comb-02",
+   "chap": "Logique combinatoire",
+   "front": "Qu'est-ce qu'un **latch** inféré, et pourquoi l'éviter ?",
+   "back": "Une bascule sensible au niveau, créée quand une sortie n'est pas affectée dans toutes les branches (if sans else, case incomplet) : le circuit doit mémoriser l'ancienne valeur.\nSur FPGA, c'est mauvais pour le timing et la fiabilité."
+  },
+  {
+   "key": "vhdl-comb-03",
+   "chap": "Logique combinatoire",
+   "front": "Technique simple pour éviter les latches ?",
+   "back": "Donner une valeur par défaut à toutes les sorties au début du process, puis ne modifier que celles qui changent."
+  },
+  {
+   "key": "vhdl-comb-04",
+   "chap": "Logique combinatoire",
+   "front": "Ce process crée-t-il un latch ?\n`process(en, d) begin`\n`  if en = '1' then q <= d; end if;`\n`end process;`",
+   "back": "Oui : quand en = '0', q n'est pas affectée et doit garder sa valeur. C'est un latch transparent."
+  },
+  {
+   "key": "vhdl-comb-05",
+   "chap": "Logique combinatoire",
+   "front": "Multiplexeur 4 vers 1 dans un process ?",
+   "back": "`process(all) begin`\n`  case sel is`\n`    when \"00\" => s <= a;`\n`    when \"01\" => s <= b;`\n`    when \"10\" => s <= c;`\n`    when others => s <= d;`\n`  end case;`\n`end process;`"
+  },
+  {
+   "key": "vhdl-comb-06",
+   "chap": "Logique combinatoire",
+   "front": "Additionner deux unsigned de 8 bits sans perdre la retenue ?",
+   "back": "Étendre d'abord à 9 bits : `s <= resize(a, 9) + resize(b, 9);`\nSinon le résultat a la taille des opérandes et la retenue est perdue."
+  },
+  {
+   "key": "vhdl-comb-07",
+   "chap": "Logique combinatoire",
+   "front": "Décaler un unsigned de 2 bits vers la gauche ?",
+   "back": "`shift_left(u, 2)` (numeric_std), ou `u(5 downto 0) & \"00\"`.\nSur un signed, `shift_right` conserve le signe (décalage arithmétique)."
+  },
+  {
+   "key": "vhdl-seq-01",
+   "chap": "Logique séquentielle",
+   "front": "Bascule D sur front montant ?",
+   "back": "`process(clk) begin`\n`  if rising_edge(clk) then`\n`    q <= d;`\n`  end if;`\n`end process;`"
+  },
+  {
+   "key": "vhdl-seq-02",
+   "chap": "Logique séquentielle",
+   "front": "Pourquoi préférer `rising_edge(clk)` à `clk'event and clk = '1'` ?",
+   "back": "rising_edge vérifie une vraie transition de '0' vers '1' (ou de 'L' vers 'H'). L'autre écriture détecte aussi un passage de 'X' ou 'U' à '1', ce qui fausse la simulation."
+  },
+  {
+   "key": "vhdl-seq-03",
+   "chap": "Logique séquentielle",
+   "front": "Structure d'un process avec reset **synchrone** ?",
+   "back": "`process(clk) begin`\n`  if rising_edge(clk) then`\n`    if rst = '1' then q <= '0';`\n`    else q <= d; end if;`\n`  end if;`\n`end process;`\nLe reset n'agit qu'au front d'horloge."
+  },
+  {
+   "key": "vhdl-seq-04",
+   "chap": "Logique séquentielle",
+   "front": "Structure d'un process avec reset **asynchrone** ?",
+   "back": "`process(clk, rst) begin`\n`  if rst = '1' then q <= '0';`\n`  elsif rising_edge(clk) then q <= d;`\n`  end if;`\n`end process;`\nrst est dans la liste de sensibilité et agit immédiatement."
+  },
+  {
+   "key": "vhdl-seq-05",
+   "chap": "Logique séquentielle",
+   "front": "Reset synchrone ou asynchrone : intérêt de chacun ?",
+   "back": "Synchrone : analysé par le timing comme les autres signaux, insensible aux glitchs ; souvent recommandé sur FPGA (Xilinx notamment).\nAsynchrone : agit sans horloge ; mais son relâchement doit être synchronisé pour éviter la métastabilité."
+  },
+  {
+   "key": "vhdl-seq-06",
+   "chap": "Logique séquentielle",
+   "front": "Ajouter un **clock enable** à une bascule ?",
+   "back": "`if rising_edge(clk) then`\n`  if ce = '1' then q <= d; end if;`\n`end if;`\nPas de latch ici : garder sa valeur est le rôle d'une bascule."
+  },
+  {
+   "key": "vhdl-seq-07",
+   "chap": "Logique séquentielle",
+   "front": "Pourquoi ne pas écrire `clk_g <= clk and en;` pour arrêter une horloge ?",
+   "back": "Une horloge générée par de la logique (gated clock) donne des glitchs, du décalage d'horloge (skew) et une analyse temporelle difficile. On utilise un clock enable, ou les buffers d'horloge dédiés du FPGA."
+  },
+  {
+   "key": "vhdl-seq-08",
+   "chap": "Logique séquentielle",
+   "front": "Compteur 8 bits avec reset synchrone ?",
+   "back": "`signal cnt : unsigned(7 downto 0);`\n`process(clk) begin`\n`  if rising_edge(clk) then`\n`    if rst = '1' then cnt <= (others => '0');`\n`    else cnt <= cnt + 1; end if;`\n`  end if;`\n`end process;`"
+  },
+  {
+   "key": "vhdl-seq-09",
+   "chap": "Logique séquentielle",
+   "front": "Registre à décalage série vers parallèle sur 8 bits ?",
+   "back": "`if rising_edge(clk) then`\n`  sr <= sr(6 downto 0) & din;`\n`end if;`\nÀ chaque front, les bits avancent d'un rang et din entre à droite."
+  },
+  {
+   "key": "vhdl-seq-10",
+   "chap": "Logique séquentielle",
+   "front": "Dans un process synchrone : `b <= a;` puis `c <= b;`. Combien de bascules ?",
+   "back": "Deux, en série : c reçoit l'**ancienne** valeur de b.\nAvec des variables (`b := a; c := b;`), c recevrait a au même front."
+  },
+  {
+   "key": "vhdl-seq-11",
+   "chap": "Logique séquentielle",
+   "front": "Qu'est-ce que la **métastabilité** ?",
+   "back": "Si l'entrée d'une bascule change pendant sa fenêtre de setup/hold, la sortie peut rester un temps indéterminé entre 0 et 1 avant de se stabiliser."
+  },
+  {
+   "key": "vhdl-seq-12",
+   "chap": "Logique séquentielle",
+   "front": "Synchroniser un signal asynchrone (bouton, autre domaine d'horloge) ?",
+   "back": "Deux bascules en série dans le domaine d'arrivée (double synchronisation) : la probabilité que la métastabilité se propage devient négligeable."
+  },
+  {
+   "key": "vhdl-seq-13",
+   "chap": "Logique séquentielle",
+   "front": "Peut-on faire passer un bus de plusieurs bits d'un domaine d'horloge à un autre par double synchronisation ?",
+   "back": "Non : les bits peuvent être capturés à des fronts différents et donner une valeur incohérente. On utilise un code de Gray (compteurs), un handshake ou une FIFO asynchrone."
+  },
+  {
+   "key": "vhdl-seq-14",
+   "chap": "Logique séquentielle",
+   "front": "Pourquoi filtrer un bouton poussoir (anti-rebond) ?",
+   "back": "Le contact rebondit pendant quelques millisecondes : un appui produit plusieurs fronts. On ne valide l'état que s'il reste stable un certain temps (compteur)."
+  },
+  {
+   "key": "vhdl-seq-15",
+   "chap": "Logique séquentielle",
+   "front": "Détecter le front montant d'un signal `s` déjà synchronisé ?",
+   "back": "Mémoriser sa valeur précédente dans le process synchrone (`s_d <= s;`), puis `front <= s and not s_d;` : une impulsion d'une période d'horloge."
+  },
+  {
+   "key": "vhdl-fsm-01",
+   "chap": "Machines à états",
+   "front": "Machine de Moore vs machine de Mealy ?",
+   "back": "Moore : les sorties ne dépendent que de l'état.\nMealy : elles dépendent de l'état et des entrées ; elles réagissent un cycle plus tôt mais peuvent présenter des glitchs."
+  },
+  {
+   "key": "vhdl-fsm-02",
+   "chap": "Machines à états",
+   "front": "Squelette d'une machine à états en VHDL ?",
+   "back": "`type etat_t is (IDLE, RUN, DONE);`\n`signal etat : etat_t;`\nUn process synchrone met à jour l'état ; un `case etat is` décrit les transitions et les sorties."
+  },
+  {
+   "key": "vhdl-fsm-03",
+   "chap": "Machines à états",
+   "front": "FSM à un process vs à deux process ?",
+   "back": "Un process : état et sorties dans le même process synchrone. Sorties registrées, sans glitch, mais en retard d'un cycle.\nDeux process : un synchrone pour le registre d'état, un combinatoire pour l'état suivant et les sorties. Attention aux latches."
+  },
+  {
+   "key": "vhdl-fsm-04",
+   "chap": "Machines à états",
+   "front": "Encodage one-hot : principe et intérêt sur FPGA ?",
+   "back": "Une bascule par état, une seule à 1. Plus de bascules, mais une logique de décodage simple et rapide : bien adapté aux FPGA, riches en bascules."
+  },
+  {
+   "key": "vhdl-fsm-05",
+   "chap": "Machines à états",
+   "front": "Combien de bascules pour une FSM de 10 états en binaire ? En one-hot ?",
+   "back": "Binaire : 4 ($\\lceil \\log_2 10 \\rceil$).\nOne-hot : 10."
+  },
+  {
+   "key": "vhdl-fsm-06",
+   "chap": "Machines à états",
+   "front": "Pourquoi prévoir un état de reset et un `when others` dans une FSM ?",
+   "back": "Le reset garantit un état initial connu. `when others` ramène la machine dans un état sûr si elle se retrouve dans un état non prévu (aléa, code d'état inutilisé)."
+  },
+  {
+   "key": "vhdl-tb-01",
+   "chap": "Simulation et testbench",
+   "front": "Particularité de l'entity d'un testbench ?",
+   "back": "Elle n'a aucun port : le testbench instancie le composant à tester (DUT) et génère lui-même les stimuli."
+  },
+  {
+   "key": "vhdl-tb-02",
+   "chap": "Simulation et testbench",
+   "front": "Générer une horloge de 100 MHz dans un testbench ?",
+   "back": "`clk <= not clk after 5 ns;` avec clk initialisé à '0' : demi-période de 5 ns, période de 10 ns."
+  },
+  {
+   "key": "vhdl-tb-03",
+   "chap": "Simulation et testbench",
+   "front": "`wait for`, `wait until` et `wait;` ?",
+   "back": "`wait for 20 ns;` : attendre une durée.\n`wait until rising_edge(clk);` : attendre un événement.\n`wait;` : suspendre le process définitivement (fin des stimuli)."
+  },
+  {
+   "key": "vhdl-tb-04",
+   "chap": "Simulation et testbench",
+   "front": "Peut-on avoir une liste de sensibilité et des wait dans le même process ?",
+   "back": "Non, c'est l'un ou l'autre."
+  },
+  {
+   "key": "vhdl-tb-05",
+   "chap": "Simulation et testbench",
+   "front": "Vérifier automatiquement un résultat en simulation ?",
+   "back": "`assert s = x\"0F\" report \"erreur sur s\" severity error;`\nLe message s'affiche si la condition est **fausse**. Niveaux : note, warning, error, failure."
+  },
+  {
+   "key": "vhdl-tb-06",
+   "chap": "Simulation et testbench",
+   "front": "Constructions non synthétisables à connaître ?",
+   "back": "Les délais `after`, `wait for`, les fichiers (textio), le type real dans la logique. Elles servent à la simulation (les assert sont ignorés par la synthèse)."
+  },
+  {
+   "key": "vhdl-tb-07",
+   "chap": "Simulation et testbench",
+   "front": "Pourquoi un signal reste-t-il à 'X' ou 'U' en simulation ?",
+   "back": "'U' : jamais initialisé ni affecté (reset absent, par exemple).\n'X' : en général deux drivers en conflit, ou une opération sur un signal 'U' ou 'X'."
+  },
+  {
+   "key": "vhdl-tb-08",
+   "chap": "Simulation et testbench",
+   "front": "Un signal non initialisé vaut 'U' en simulation. Et sur le FPGA ?",
+   "back": "Les bascules démarrent avec la valeur de la configuration (souvent 0, ou la valeur donnée à la déclaration). Mieux vaut ne pas s'y fier et prévoir un reset."
+  },
+  {
+   "key": "vhdl-fpga-01",
+   "chap": "Synthèse et FPGA",
+   "front": "Simulation vs synthèse ?",
+   "back": "La simulation exécute la description (constructions non synthétisables comprises) pour vérifier le comportement.\nLa synthèse la traduit en LUT, bascules et ressources du circuit ; seule une partie du langage est synthétisable."
+  },
+  {
+   "key": "vhdl-fpga-02",
+   "chap": "Synthèse et FPGA",
+   "front": "De quoi est constitué un FPGA ?",
+   "back": "De blocs logiques configurables (LUT + bascules), d'une interconnexion programmable, de blocs d'entrées-sorties, et de ressources dédiées : mémoires BRAM, blocs DSP (multiplieurs), PLL/MMCM pour les horloges."
+  },
+  {
+   "key": "vhdl-fpga-03",
+   "chap": "Synthèse et FPGA",
+   "front": "Qu'est-ce qu'une **LUT** ?",
+   "back": "Look-Up Table : petite mémoire qui stocke la table de vérité d'une fonction de n entrées (souvent 4 à 6). Elle réalise n'importe quelle fonction de ces n entrées."
+  },
+  {
+   "key": "vhdl-fpga-04",
+   "chap": "Synthèse et FPGA",
+   "front": "FPGA, ASIC, microcontrôleur : différences ?",
+   "back": "FPGA : matériel reconfigurable, vrai parallélisme.\nASIC : circuit figé, plus performant et moins cher en grande série, mais très coûteux à concevoir.\nMicrocontrôleur : processeur qui exécute un programme séquentiel."
+  },
+  {
+   "key": "vhdl-fpga-05",
+   "chap": "Synthèse et FPGA",
+   "front": "Temps de **setup** et de **hold** d'une bascule ?",
+   "back": "Setup : durée pendant laquelle la donnée doit être stable **avant** le front d'horloge.\nHold : durée pendant laquelle elle doit rester stable **après**."
+  },
+  {
+   "key": "vhdl-fpga-06",
+   "chap": "Synthèse et FPGA",
+   "front": "Fréquence maximale d'un chemin entre deux bascules ?",
+   "back": "$$f_{max} = \\frac{1}{t_{co} + t_{logique} + t_{routage} + t_{su}}$$\nPropagation de la bascule de départ, de la logique, du routage, et setup de la bascule d'arrivée."
+  },
+  {
+   "key": "vhdl-fpga-07",
+   "chap": "Synthèse et FPGA",
+   "front": "Qu'est-ce que le **chemin critique** ?",
+   "back": "Le chemin entre deux registres qui a le plus long temps de propagation : c'est lui qui limite la fréquence d'horloge."
+  },
+  {
+   "key": "vhdl-fpga-08",
+   "chap": "Synthèse et FPGA",
+   "front": "Comment faire monter en fréquence un calcul combinatoire long ?",
+   "back": "Le **pipeliner** : couper la logique par des registres intermédiaires. La fréquence augmente, au prix de quelques cycles de latence."
+  },
+  {
+   "key": "vhdl-fpga-09",
+   "chap": "Synthèse et FPGA",
+   "front": "Qu'est-ce que le **slack** dans un rapport de timing ?",
+   "back": "La marge entre le temps disponible et le temps nécessaire sur un chemin. Positif : contrainte respectée. Négatif : violation de timing."
+  },
+  {
+   "key": "vhdl-fpga-10",
+   "chap": "Synthèse et FPGA",
+   "front": "Pourquoi déclarer une contrainte d'horloge (fichier .xdc ou .sdc) ?",
+   "back": "Pour que l'outil connaisse la fréquence visée, place et route en conséquence, et vérifie le timing. Sans contrainte, l'analyse temporelle ne garantit rien."
+  },
+  {
+   "key": "vhdl-fpga-11",
+   "chap": "Synthèse et FPGA",
+   "front": "Comment l'outil de synthèse infère-t-il une BRAM ?",
+   "back": "Quand un tableau est lu et écrit de façon **synchrone** (dans un process d'horloge), avec un style reconnu. Une lecture asynchrone donne plutôt de la mémoire distribuée en LUT."
+  },
+  {
+   "key": "vhdl-fpga-12",
+   "chap": "Synthèse et FPGA",
+   "front": "À quoi sert l'instruction generate ?",
+   "back": "À répliquer ou conditionner du matériel à l'élaboration : `gen : for i in 0 to 7 generate … end generate;` crée 8 instances ; `if … generate` en crée selon une condition."
+  },
+  {
+   "key": "vhdl-fpga-13",
+   "chap": "Synthèse et FPGA",
+   "front": "Une boucle for dans un process s'exécute-t-elle cycle par cycle ?",
+   "back": "Non : elle est **déroulée** à la synthèse et produit du matériel répliqué, qui travaille en parallèle dans un même cycle. Ce n'est pas une boucle logicielle."
+  },
+  {
+   "key": "vhdl-fpga-14",
+   "chap": "Synthèse et FPGA",
+   "front": "Étapes du flot de conception FPGA ?",
+   "back": "Description VHDL, simulation, synthèse, placement-routage (implémentation), analyse de timing, génération du bitstream, programmation du FPGA."
+  },
+  {
+   "key": "vhdl-fpga-15",
+   "chap": "Synthèse et FPGA",
+   "front": "Pourquoi éviter `/` par une variable dans du code synthétisable ?",
+   "back": "Cela produirait un diviseur combinatoire énorme et lent, voire non supporté. Division par une puissance de 2 : un décalage. Sinon : un diviseur séquentiel ou une IP."
+  },
+  {
+   "key": "vhdl-fpga-16",
+   "chap": "Synthèse et FPGA",
+   "front": "Produit de deux signed de 16 bits : taille du résultat et ressource utilisée ?",
+   "back": "32 bits (somme des largeurs). Il est en général implanté dans un bloc DSP du FPGA."
+  }
+ ]
+}

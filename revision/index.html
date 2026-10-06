@@ -1,0 +1,1489 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bristol, fiches de révision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#E2E7ED; --desk-ink:#26324A; --desk-muted:#5A667B;
+  --desk-pen:#233C80; --desk-on-pen:#FFFFFF;
+  --paper:#FFFFFF; --field:#FBFCFD; --field-border:#B7C1CF;
+  --ink:#1C2740; --ink-soft:#4A5670; --ink-faint:#7E889B;
+  --pen:#233C80; --pen-hover:#1A2E63; --on-pen:#FFFFFF;
+  --rule-red:#D8465B; --rule-blue:#C3D5EB;
+  --again:#B3303E; --again-bg:#FBE4E7;
+  --hard:#8A5B08; --hard-bg:#F8ECD2;
+  --good:#23489A; --good-bg:#E1E9F8;
+  --easy:#246A49; --easy-bg:#DCEFE4;
+  --cn:#23489A; --cl:#B3303E; --cr:#246A49;
+  --dn:#23489A; --dl:#B3303E; --dr:#246A49;
+  --shadow:0 1px 1px rgba(28,39,64,.08), 0 12px 30px -16px rgba(28,39,64,.38);
+  --paper-mix:100%;
+  --lh:2rem;
+  --serif:"Literata", Georgia, "Times New Roman", serif;
+  --sans:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top, 0px);
+  padding-bottom:env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --desk:#1B2231; --desk-ink:#DCE2EC; --desk-muted:#9BA6B9;
+    --desk-pen:#A9BFF2; --desk-on-pen:#12192A;
+    --paper:#E8EBF0; --field:#F3F5F8; --field-border:#A9B3C2;
+    --rule-blue:#B3C4DB;
+    --dn:#A9BFF2; --dl:#F2A0A9; --dr:#8FD2AE;
+    --shadow:0 1px 1px rgba(0,0,0,.35), 0 16px 34px -14px rgba(0,0,0,.7);
+    --paper-mix:88%;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --desk:#1B2231; --desk-ink:#DCE2EC; --desk-muted:#9BA6B9;
+  --desk-pen:#A9BFF2; --desk-on-pen:#12192A;
+  --paper:#E8EBF0; --field:#F3F5F8; --field-border:#A9B3C2;
+  --rule-blue:#B3C4DB;
+  --dn:#A9BFF2; --dl:#F2A0A9; --dr:#8FD2AE;
+  --shadow:0 1px 1px rgba(0,0,0,.35), 0 16px 34px -14px rgba(0,0,0,.7);
+  --paper-mix:88%;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%; scroll-padding-top:env(safe-area-inset-top, 0px); -webkit-text-size-adjust:100%}
+body{margin:0; min-height:100%; background:var(--desk); color:var(--desk-ink); font-family:var(--sans); font-size:1rem; line-height:1.5; display:flex; flex-direction:column}
+[hidden]{display:none !important}
+img,svg{max-width:100%}
+button{font:inherit; color:inherit}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+:focus-visible{outline:3px solid color-mix(in srgb, var(--pen) 55%, transparent); outline-offset:2px}
+
+.wrap{width:100%; max-width:56rem; margin:0 auto; padding:0 1rem}
+.site-head .wrap{display:flex; align-items:center; justify-content:space-between; gap:1rem; padding-top:1rem; padding-bottom:1rem}
+.wordmark{background:none; border:0; padding:.1rem 0; cursor:pointer; font-family:var(--serif); font-weight:600; font-size:1.5rem; line-height:1.2; color:var(--desk-ink); text-decoration:underline; text-decoration-color:var(--rule-red); text-decoration-thickness:2px; text-underline-offset:.3em}
+.save-status{font-size:.82rem; color:var(--desk-muted); display:inline-flex; align-items:center; gap:.45rem; text-align:right}
+.save-status::before{content:""; width:.5rem; height:.5rem; border-radius:50%; background:var(--dr); flex:none}
+.save-status[data-state="pending"]::before,.save-status[data-state="saving"]::before,.save-status[data-state="loading"]::before{background:var(--desk-muted)}
+.save-status[data-state="error"]::before,.save-status[data-state="full"]::before,.save-status[data-state="refused"]::before,.save-status[data-state="memory"]::before,.save-status[data-state="offline"]::before{background:var(--dl)}
+main{flex:1; padding-bottom:2rem}
+
+/* Paper sheets */
+.sheet{background:var(--paper); color:var(--ink); border-radius:4px; box-shadow:var(--shadow); padding:1.5rem 1.5rem 2rem}
+.sheet-head{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:.75rem 1rem; padding-bottom:.85rem; border-bottom:2px solid var(--rule-red)}
+.sheet h1{font-family:var(--serif); font-weight:600; font-size:1.75rem; line-height:1.2; margin:0; overflow-wrap:anywhere}
+.sheet h2{font-family:var(--serif); font-weight:600; font-size:1.2rem; line-height:1.3; margin:2.25rem 0 .9rem; padding-bottom:.45rem; border-bottom:1px solid var(--rule-blue)}
+.head-actions{display:flex; flex-wrap:wrap; gap:.5rem}
+.sheet p{max-width:65ch}
+
+/* Buttons */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:.45rem; min-height:2.5rem; padding:.5rem 1rem; border-radius:6px; border:1.5px solid var(--pen); background:transparent; color:var(--pen); font-weight:700; font-size:.95rem; line-height:1.2; cursor:pointer; text-decoration:none}
+.btn:hover{background:color-mix(in srgb, var(--pen) 8%, transparent)}
+.btn.primary{background:var(--pen); color:var(--on-pen)}
+.btn.primary:hover{background:var(--pen-hover); border-color:var(--pen-hover)}
+.btn.quiet{border-color:transparent}
+.btn.danger{border-color:var(--again); color:var(--again)}
+.btn.danger:hover{background:var(--again-bg)}
+.btn.primary.danger{background:var(--again); color:#fff}
+.btn.quiet.danger{border-color:transparent}
+.btn.sm{min-height:2rem; padding:.3rem .6rem; font-size:.85rem}
+.btn:disabled{opacity:.45; cursor:not-allowed}
+
+/* Home */
+.deck-grid{display:grid; grid-template-columns:1.1rem minmax(0,1fr) 13rem 7rem; grid-template-areas:"sw name counts act"; align-items:center; column-gap:1rem}
+.legend{padding:.9rem 0 .3rem; font-size:.78rem; color:var(--ink-soft)}
+.legend .lg{grid-area:counts; display:grid; grid-template-columns:repeat(3,1fr); text-align:center; line-height:1.25}
+.deck-list{list-style:none; margin:0; padding:0}
+.deck-row{min-height:4.25rem; padding:.55rem 0; border-bottom:1px solid var(--rule-blue)}
+.swatch{grid-area:sw; width:1.1rem; height:1.45rem; border-radius:2px; background:linear-gradient(var(--rule-red),var(--rule-red)) 0 28%/100% 1.5px no-repeat, var(--tint,#fff); box-shadow:inset 0 0 0 1px rgba(28,39,64,.22)}
+.deck-name{grid-area:name; background:none; border:0; padding:.25rem 0; text-align:left; cursor:pointer; color:var(--ink); min-width:0}
+.deck-name .dn{display:block; font-family:var(--serif); font-size:1.15rem; font-weight:500; line-height:1.3; overflow-wrap:anywhere}
+.deck-name .ds{display:block; font-size:.82rem; color:var(--ink-soft)}
+.deck-name:hover .dn{text-decoration:underline; text-decoration-color:var(--rule-blue); text-underline-offset:.2em}
+.counts{grid-area:counts; display:grid; grid-template-columns:repeat(3,1fr); text-align:center; font-weight:700; font-variant-numeric:tabular-nums; font-size:1.05rem}
+.counts .n{color:var(--cn)} .counts .l{color:var(--cl)} .counts .r{color:var(--cr)}
+.counts .z{color:var(--ink-faint); font-weight:400}
+.legend .n{color:var(--cn)} .legend .l{color:var(--cl)} .legend .r{color:var(--cr)}
+.act-study{grid-area:act; width:100%}
+.empty{padding:2rem 0 .5rem}
+.empty-lead{font-family:var(--serif); font-size:1.25rem; margin:0 0 .5rem}
+.empty-actions{display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.25rem}
+.desk-note{color:var(--desk-muted); font-size:.85rem; margin:1rem .25rem 0; max-width:65ch}
+.notice{margin:1rem 0 0; padding:.75rem 1rem; border-left:3px solid var(--rule-red); background:var(--again-bg); color:var(--ink); border-radius:0 4px 4px 0; font-size:.92rem}
+@media (hover:none){ .desk-note.keys{display:none} }
+@media (max-width:36rem){
+  .sheet{padding:1.25rem 1rem 1.5rem}
+  .deck-grid{grid-template-columns:1.1rem minmax(0,1fr) 7rem; grid-template-areas:"sw name name" "counts counts act"; row-gap:.35rem}
+  .legend{grid-template-areas:"counts counts ."}
+  .legend .lg{white-space:nowrap}
+  .sheet h1{font-size:1.5rem}
+}
+
+/* Deck page */
+.crumbs{margin:0 0 .75rem}
+.back{display:inline-flex; align-items:center; gap:.35rem; background:none; border:0; padding:.35rem .25rem; cursor:pointer; color:var(--desk-ink); font-weight:700}
+.back svg{width:1.1rem; height:1.1rem}
+.title-row{display:flex; align-items:center; gap:.75rem; min-width:0}
+.title-row .swatch{flex:none}
+.deck-summary{color:var(--ink-soft); margin:.9rem 0 0}
+.add-grid{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
+.field{display:grid; gap:.35rem; margin:0; min-width:0}
+.field > label,.field > legend{font-weight:700; font-size:.88rem; color:var(--ink-soft); padding:0}
+fieldset.field{border:0; padding:0}
+textarea,input[type=text],input[type=number],input[type=search],select{font:inherit; color:var(--ink); background:var(--field); border:1px solid var(--field-border); border-radius:6px; padding:.55rem .7rem; width:100%; min-height:2.5rem}
+textarea{font-family:var(--serif); line-height:1.5; resize:vertical; min-height:5rem}
+input[type=file]{font:inherit; font-size:.9rem; color:var(--ink-soft); max-width:100%}
+.add-foot{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.75rem; margin-top:1rem}
+.check{display:inline-flex; align-items:center; gap:.5rem; font-size:.95rem; cursor:pointer}
+.check input{width:1.1rem; height:1.1rem; accent-color:var(--pen)}
+.hint{font-size:.85rem; color:var(--ink-soft); margin:.75rem 0 0}
+.hint code,.hint kbd{font-family:inherit; background:color-mix(in srgb, var(--rule-blue) 45%, transparent); padding:.05rem .3rem; border-radius:3px}
+.field-error{color:var(--again); font-size:.9rem; font-weight:700; margin:.6rem 0 0}
+.preview{margin-top:1rem; border:1px dashed var(--field-border); border-radius:6px; padding:.75rem 1rem; display:grid; grid-template-columns:1fr 1fr; gap:1rem}
+.preview .pv-l{display:block; font-size:.78rem; color:var(--ink-soft); margin-bottom:.2rem}
+.preview .pv-c{font-family:var(--serif); white-space:pre-wrap; overflow-wrap:anywhere; overflow-x:auto}
+.list-tools{display:flex; gap:.5rem; align-items:center; margin-bottom:.5rem}
+.list-tools input{flex:1}
+.card-list{list-style:none; margin:0; padding:0}
+.card-row{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) 5.5rem auto; gap:.25rem 1rem; align-items:start; padding:.7rem 0; border-bottom:1px solid var(--rule-blue)}
+.cr-f,.cr-b{font-family:var(--serif); overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; white-space:pre-line}
+.cr-b{color:var(--ink-soft)}
+.cr-fw{min-width:0}
+.cr-c{display:block; font-size:.75rem; color:var(--ink-soft); margin-bottom:.1rem}
+.cr-s{font-size:.82rem; color:var(--ink-soft); padding-top:.15rem}
+.cr-s.n{color:var(--cn)} .cr-s.l{color:var(--cl)} .cr-s.r{color:var(--cr)}
+.cr-a{display:flex; gap:.25rem; justify-content:flex-end}
+.list-empty{color:var(--ink-soft); padding:1rem 0}
+.more-wrap{padding-top:1rem}
+.settings{display:grid; grid-template-columns:1fr 12rem; gap:1rem; align-items:start}
+.colors{grid-column:1 / -1}
+.sw-opts{display:flex; flex-wrap:wrap; gap:.6rem}
+.sw-opt{position:relative; cursor:pointer}
+.sw-opt input{position:absolute; opacity:0; inset:0; margin:0; cursor:pointer}
+.sw-opt .swatch{display:block; width:2rem; height:2.5rem; border-radius:3px}
+.sw-opt input:checked + .swatch{box-shadow:inset 0 0 0 1px rgba(28,39,64,.22), 0 0 0 2px var(--paper), 0 0 0 4px var(--pen)}
+.sw-opt input:focus-visible + .swatch{outline:3px solid color-mix(in srgb, var(--pen) 55%, transparent); outline-offset:5px}
+.settings-actions{grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.5rem}
+@media (max-width:40rem){
+  .add-grid,.preview{grid-template-columns:1fr}
+  .card-row{grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"f f" "b b" "s a"}
+  .cr-fw{grid-area:f} .cr-b{grid-area:b} .cr-s{grid-area:s; align-self:center} .cr-a{grid-area:a}
+  .settings{grid-template-columns:1fr}
+}
+
+/* Study */
+.study{--paper-c:var(--tint,#fff); --cn:var(--dn); --cl:var(--dl); --cr:var(--dr); display:flex; flex-direction:column; min-height:100%}
+@supports (color: color-mix(in srgb, red 50%, blue)){
+  .study{--paper-c:color-mix(in srgb, var(--tint,#fff) var(--paper-mix), var(--desk))}
+}
+.study-top{display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:.5rem; max-width:40rem; margin:0 auto; width:100%}
+.study-title{display:flex; flex-direction:column; align-items:center; min-width:0}
+.st-name{font-family:var(--serif); font-weight:600; font-size:1.05rem; max-width:16rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.study .counts{display:flex; gap:.9rem; font-size:.95rem}
+.study .counts span{padding-bottom:.05rem; border-bottom:2px solid transparent}
+.study .counts .cur{border-bottom-color:currentColor}
+.study .counts .z{color:var(--desk-muted)}
+.study-tools{display:flex; justify-content:flex-end; gap:.25rem}
+.tool{display:inline-flex; align-items:center; gap:.35rem; background:none; border:0; border-radius:6px; padding:.45rem .55rem; color:var(--desk-ink); cursor:pointer; font-size:.88rem; font-weight:700}
+.tool:hover:not(:disabled){background:color-mix(in srgb, var(--desk-ink) 9%, transparent)}
+.tool:disabled{opacity:.4; cursor:not-allowed}
+.tool svg,.back svg{width:1.1rem; height:1.1rem; flex:none}
+.stage-wrap{flex:1; display:flex; flex-direction:column}
+.stage{position:relative; isolation:isolate; width:100%; max-width:40rem; margin:1.25rem auto 1rem; perspective:1600px}
+.stage::before,.stage::after{content:""; position:absolute; inset:0; z-index:-1; border-radius:5px; background:var(--paper-c); box-shadow:var(--shadow)}
+.stage::before{transform:translate(6px,7px) rotate(1.1deg)}
+.stage::after{transform:translate(-5px,11px) rotate(-1.5deg)}
+.stage[data-pile="0"]::before,.stage[data-pile="0"]::after,.stage[data-pile="1"]::after{display:none}
+.card3d{position:relative; width:100%; height:clamp(17rem, 52vh, 25rem); transform-style:preserve-3d; transition:transform .5s cubic-bezier(.3,.7,.2,1); cursor:pointer}
+@supports (height:1dvh){ .card3d{height:clamp(17rem, 52dvh, 25rem)} }
+.card3d.flipped{transform:rotateY(180deg); cursor:default}
+.card3d.no-anim,.card3d.no-anim .face{transition:none !important}
+.card3d.enter{animation:deal .3s cubic-bezier(.2,.7,.2,1)}
+@keyframes deal{from{opacity:0; transform:translateY(16px) rotate(-1.2deg)} to{opacity:1; transform:none}}
+.face{position:absolute; inset:0; border-radius:5px; box-shadow:var(--shadow); overflow:auto; overscroll-behavior:contain; -webkit-backface-visibility:hidden; backface-visibility:hidden; color:var(--ink)}
+.face.verso{transform:rotateY(180deg)}
+.bristol{
+  --top:4.25rem;
+  background-color:var(--paper-c);
+  background-image:
+    linear-gradient(var(--rule-red), var(--rule-red)),
+    linear-gradient(var(--paper-c), var(--paper-c)),
+    linear-gradient(to bottom, transparent calc(var(--lh) - 1px), var(--rule-blue) calc(var(--lh) - 1px));
+  background-size:100% 2px, 100% var(--top), 100% var(--lh);
+  background-position:0 var(--top), 0 0, 0 calc(var(--top) + 2px);
+  background-repeat:no-repeat, no-repeat, repeat;
+  background-attachment:local;
+}
+.face .head{height:var(--top); display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; padding:0 1.5rem .55rem; font-size:.82rem; color:var(--ink-soft); line-height:1.35}
+.face .head .hk{flex:none}
+.face .head .hd{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.q-copy{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; font-family:var(--serif); font-size:.9rem}
+.face .body{padding:.45rem 1.5rem 1rem; font-family:var(--serif); line-height:var(--lh); white-space:pre-wrap; overflow-wrap:anywhere}
+.face .body.q{font-size:1.4rem; font-weight:500}
+.face .body.a{font-size:1.2rem}
+.face code,.preview code{font-family:ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size:.85em; background:color-mix(in srgb, var(--rule-blue) 40%, transparent); padding:.05em .3em; border-radius:3px}
+mjx-container{max-width:100%}
+mjx-container[display="true"]{overflow-x:auto; overflow-y:hidden; margin:.25rem 0 !important}
+.answer-bar{position:sticky; bottom:0; width:100%; max-width:40rem; margin:0 auto; padding:.75rem 0 calc(.75rem + env(safe-area-inset-bottom, 0px)); background:linear-gradient(to top, var(--desk) 75%, transparent)}
+.reveal{width:100%; min-height:3.25rem; border:0; border-radius:6px; background:var(--desk-pen); color:var(--desk-on-pen); font-weight:700; font-size:1.05rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:.6rem}
+.reveal kbd,.grade kbd{font:inherit; font-size:.72rem; font-weight:400; padding:.05rem .4rem; border-radius:4px; border:1px solid currentColor; opacity:.7}
+.grades{display:grid; grid-template-columns:repeat(4,1fr); gap:.5rem}
+.grade{position:relative; min-height:3.25rem; border-radius:6px; border:1.5px solid currentColor; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.05rem; padding:.4rem .2rem; cursor:pointer; font-weight:700; font-size:.95rem; line-height:1.2}
+.grade .gi{font-weight:400; font-size:.8rem; font-variant-numeric:tabular-nums}
+.grade kbd{position:absolute; top:.3rem; left:.35rem; font-size:.65rem; padding:0 .25rem}
+.g1{color:var(--again); background:var(--again-bg)} .g2{color:var(--hard); background:var(--hard-bg)}
+.g3{color:var(--good); background:var(--good-bg)} .g4{color:var(--easy); background:var(--easy-bg)}
+.grade:hover{filter:brightness(.97)}
+@media (hover:none){ .reveal kbd,.grade kbd{display:none} }
+.done{max-width:40rem; margin:1.25rem auto 0; width:100%}
+.done h2{margin-top:0}
+.done-actions{display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.5rem}
+@media (max-width:36rem){
+  body.studying .site-head{display:none}
+  body.studying main{padding-top:.75rem}
+  .tool span,.back.in-study span{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+  .face .head{padding:0 1.1rem .55rem}
+  .face .body{padding:.45rem 1.1rem 1rem}
+  .face .body.q{font-size:1.25rem}
+  .face .body.a{font-size:1.1rem}
+  .grade{font-size:.88rem}
+}
+@media (prefers-reduced-motion: reduce){
+  .card3d,.card3d.flipped{transition:none; transform:none}
+  .card3d.enter{animation:none}
+  .face{transition:opacity .15s}
+  .face.verso{transform:none; opacity:0; visibility:hidden}
+  .card3d.flipped .face.recto{opacity:0; visibility:hidden}
+  .card3d.flipped .face.verso{opacity:1; visibility:visible}
+}
+
+/* Dialog */
+dialog{border:0; padding:0; border-radius:8px; background:var(--paper); color:var(--ink); width:min(36rem, calc(100% - 2rem)); max-height:calc(100% - 2rem); box-shadow:0 24px 60px -20px rgba(10,16,30,.55)}
+dialog::backdrop{background:rgba(18,25,40,.5)}
+.dlg-body{padding:1.5rem}
+.dlg-title{font-family:var(--serif); font-weight:600; font-size:1.3rem; line-height:1.3; margin:0 0 1rem; padding-bottom:.6rem; border-bottom:2px solid var(--rule-red)}
+.dlg-body > p{margin:0 0 1rem; color:var(--ink-soft)}
+.dlg-body .field + .field,.dlg-body .field + .preview{margin-top:1rem}
+.dlg-body > p.field-error{margin:.75rem 0 0; color:var(--again)}
+.dlg-actions{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:.5rem; margin-top:1.5rem}
+.import-status{margin:1rem 0 0 !important; font-size:.92rem; color:var(--ink) !important}
+.import-preview{list-style:none; margin:.5rem 0 0; padding:0; font-size:.9rem}
+.import-preview li{display:grid; grid-template-columns:1fr 1fr; gap:1rem; padding:.35rem 0; border-bottom:1px solid var(--rule-blue); font-family:var(--serif)}
+.import-preview span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.import-preview span + span{color:var(--ink-soft)}
+
+/* Toast */
+.toast-wrap{position:fixed; left:0; right:0; bottom:0; display:flex; justify-content:center; padding:0 1rem calc(1.25rem + env(safe-area-inset-bottom, 0px)); pointer-events:none; z-index:50}
+body.studying .toast-wrap{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom, 0px))}
+.toast-pill{pointer-events:auto; display:flex; align-items:center; gap:1rem; background:var(--desk-ink); color:var(--desk); padding:.65rem .75rem .65rem 1.1rem; border-radius:6px; box-shadow:0 10px 30px -10px rgba(0,0,0,.45); font-size:.92rem; max-width:34rem}
+.toast-btn{background:none; border:1px solid currentColor; color:inherit; border-radius:4px; padding:.25rem .6rem; font-weight:700; cursor:pointer}
+.loading-sheet p{margin:0; color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+  <button class="wordmark" data-act="home" aria-label="Bristol, retour aux paquets">Bristol</button>
+  <span class="save-status" id="saveStatus" data-state="loading" aria-live="polite">Chargement…</span>
+</div></header>
+<main id="app" class="wrap"></main>
+<dialog id="dlg" aria-labelledby="dlgTitle"></dialog>
+<div class="toast-wrap" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+'use strict';
+
+/* ---------- Utilitaires ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const newId = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+const clone = o => JSON.parse(JSON.stringify(o));
+const enc = new TextEncoder();
+const byteLen = x => enc.encode(JSON.stringify(x)).length;
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+const pl = (n, s, p = s + 's') => n + '\u00a0' + (n <= 1 ? s : p);
+const norm = s => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const useCap = name => (window.claude && typeof window.claude.use === 'function') ? window.claude.use(name).catch(() => null) : Promise.resolve(null);
+const MIN = 60e3, DAY = 864e5;
+const MAX_FIELD = 20000;
+
+const ICON = {
+  back: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5"/></svg>',
+  undo: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 5 4 8.5 7.5 12"/><path d="M4.5 8.5h7a4.5 4.5 0 0 1 0 9H9"/></svg>',
+  edit: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 3.5 16.5 6.5 7 16H4v-3z"/></svg>'
+};
+
+const PALETTE = [
+  { c: '#FFF0A6', label: 'Jaune' }, { c: '#D3E4F6', label: 'Bleu' }, { c: '#F8D2DB', label: 'Rose' },
+  { c: '#D2ECD8', label: 'Vert' }, { c: '#FBDDC0', label: 'Orange' }, { c: '#FFFFFF', label: 'Blanc' }
+];
+
+/* ---------- Planification (inspirée de l'algorithme SM-2 d'Anki) ---------- */
+const S = { learn: [1, 10], relearn: [10], gradIvl: 1, easyIvl: 4, startEase: 2.5, easyBonus: 1.3, hardMult: 1.2, minEase: 1.3, learnAhead: 20 * MIN, maxIvl: 36500 };
+
+// Une journée commence à 4 h du matin, comme dans Anki.
+function dayNum(ts) { const d = new Date(ts - 4 * 3600e3); return Math.round(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / DAY); }
+function dayStart(n) { const d = new Date(n * DAY); return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), 4).getTime(); }
+
+const fmt1 = x => x < 10 ? String(Math.round(x * 10) / 10).replace('.', ',') : String(Math.round(x));
+function fmtDays(n) {
+  if (n < 30) return n + '\u00a0j';
+  if (n < 365) return fmt1(n / 30.44) + '\u00a0mois';
+  const y = n / 365.25; return fmt1(y) + '\u00a0an' + (y >= 2 ? 's' : '');
+}
+function fmtDelay(ms) {
+  const m = ms / MIN;
+  if (m < 1) return '<1\u00a0min';
+  if (m < 60) return Math.round(m) + '\u00a0min';
+  const h = m / 60;
+  if (h < 24) return fmt1(h) + '\u00a0h';
+  return fmtDays(Math.round(h / 24));
+}
+const roundEase = e => Math.round(e * 100) / 100;
+function fuzz(v) { if (v < 3) return v; const f = Math.max(1, Math.round(v * 0.05)); return v + Math.round((Math.random() * 2 - 1) * f); }
+
+function computeOutcomes(card, now) {
+  const today = dayNum(now), out = {};
+  const toReview = (ivl, ease, extra = {}) => ({ card: { state: 'review', ivl, ease: roundEase(ease), step: 0, due: dayStart(today + ivl), ...extra }, label: fmtDays(ivl) });
+  const toLearn = (state, step, mins, extra = {}) => ({ card: { state, step, due: now + mins * MIN, ...extra }, label: fmtDelay(mins * MIN) });
+  const hardDelay = (steps, step) => step === 0 ? (steps.length > 1 ? (steps[0] + steps[1]) / 2 : steps[0] * 1.5) : steps[step];
+  const ease = card.ease || S.startEase;
+
+  if (card.state === 'new' || card.state === 'learning') {
+    const steps = S.learn, step = card.state === 'new' ? 0 : Math.min(card.step || 0, steps.length - 1);
+    out[1] = toLearn('learning', 0, steps[0]);
+    out[2] = toLearn('learning', step, hardDelay(steps, step));
+    out[3] = step + 1 < steps.length ? toLearn('learning', step + 1, steps[step + 1]) : toReview(S.gradIvl, ease);
+    out[4] = toReview(S.easyIvl, ease);
+  } else if (card.state === 'relearning') {
+    const steps = S.relearn, step = Math.min(card.step || 0, steps.length - 1), ivl = Math.max(1, card.ivl || 1);
+    out[1] = toLearn('relearning', 0, steps[0]);
+    out[2] = toLearn('relearning', step, hardDelay(steps, step));
+    out[3] = step + 1 < steps.length ? toLearn('relearning', step + 1, steps[step + 1]) : toReview(ivl, ease);
+    out[4] = toReview(ivl + 1, ease);
+  } else {
+    const ivl = Math.max(1, card.ivl || 1), late = Math.max(0, today - dayNum(card.due || now));
+    let hard = Math.max(ivl + 1, Math.round(ivl * S.hardMult));
+    let good = Math.max(hard + 1, Math.round((ivl + late / 2) * ease));
+    let easy = Math.max(good + 1, Math.round((ivl + late) * ease * S.easyBonus));
+    hard = Math.min(S.maxIvl, fuzz(hard));
+    good = Math.min(S.maxIvl, Math.max(hard + 1, fuzz(good)));
+    easy = Math.min(S.maxIvl, Math.max(good + 1, fuzz(easy)));
+    out[1] = toLearn('relearning', 0, S.relearn[0], { ivl: 1, ease: roundEase(Math.max(S.minEase, ease - 0.2)), lapses: (card.lapses || 0) + 1 });
+    out[2] = toReview(hard, Math.max(S.minEase, ease - 0.15));
+    out[3] = toReview(good, ease);
+    out[4] = toReview(easy, ease + 0.15);
+  }
+  return out;
+}
+
+function rollover(deck, now) {
+  const d = dayNum(now);
+  if (!deck.today || deck.today.day !== d) deck.today = { day: d, newSeen: 0, reviews: 0 };
+}
+function queues(deck, now) {
+  const lrn = [], rev = [], nw = [];
+  for (const c of deck.cards) {
+    if (c.state === 'new') nw.push(c);
+    else if (c.state === 'review') { if (c.due <= now) rev.push(c); }
+    else lrn.push(c);
+  }
+  lrn.sort((a, b) => a.due - b.due); rev.sort((a, b) => a.due - b.due); nw.sort((a, b) => a.created - b.created);
+  const newLeft = Math.max(0, (deck.settings.newPerDay ?? 20) - deck.today.newSeen);
+  return { lrn, rev, nw: nw.slice(0, newLeft), nwTotal: nw.length };
+}
+function counts(deck, now) {
+  rollover(deck, now);
+  const q = queues(deck, now), end = dayStart(dayNum(now) + 1);
+  return { n: q.nw.length, l: q.lrn.filter(c => c.due < end).length, r: q.rev.length };
+}
+const kindOf = c => c.state === 'new' ? 'n' : c.state === 'review' ? 'r' : 'l';
+function pickNext(deck, now, s) {
+  const q = queues(deck, now);
+  const lrnDue = q.lrn.filter(c => c.due <= now);
+  if (lrnDue.length) return { card: lrnDue[0], kind: 'l' };
+  if (q.rev.length && q.nw.length) {
+    const gap = Math.floor(q.rev.length / q.nw.length) + 1;
+    return s.sinceNew >= gap ? { card: q.nw[0], kind: 'n' } : { card: q.rev[0], kind: 'r' };
+  }
+  if (q.rev.length) return { card: q.rev[0], kind: 'r' };
+  if (q.nw.length) return { card: q.nw[0], kind: 'n' };
+  const ahead = q.lrn.filter(c => c.due <= now + S.learnAhead);
+  if (ahead.length) return { card: ahead.find(c => c.id !== s.lastId) || ahead[0], kind: 'l' };
+  return null;
+}
+
+/* ---------- Modèle ---------- */
+function newCard(front, back, created, key = '', chap = '') {
+  return { id: newId('c'), front, back, key, chap, state: 'new', due: 0, ivl: 0, ease: S.startEase, step: 0, reps: 0, lapses: 0, created, b: 0 };
+}
+function normCard(c) {
+  return {
+    id: c.id || newId('c'), front: String(c.front ?? ''), back: String(c.back ?? ''),
+    key: c.key ? String(c.key).trim().slice(0, 120) : '', chap: c.chap ? String(c.chap).trim().slice(0, 120) : '',
+    src: c.src ? String(c.src).slice(0, 120) : '',
+    state: ['new', 'learning', 'review', 'relearning'].includes(c.state) ? c.state : 'new',
+    due: +c.due || 0, ivl: +c.ivl || 0, ease: +c.ease || S.startEase, step: +c.step || 0,
+    reps: +c.reps || 0, lapses: +c.lapses || 0, created: +c.created || Date.now(), b: +c.b || 0
+  };
+}
+function normDeck(d) {
+  d = clone(d);
+  const cards = (d.cards || []).map(normCard).sort((a, b) => a.created - b.created);
+  const npd = d.settings && Number.isFinite(+d.settings.newPerDay) ? +d.settings.newPerDay : 20;
+  return {
+    id: d.id, name: d.name || 'Sans titre', created: +d.created || Date.now(), color: d.color || PALETTE[0].c, src: d.src ? String(d.src) : '',
+    settings: { newPerDay: npd }, today: d.today && typeof d.today === 'object' ? { day: +d.today.day || 0, newSeen: +d.today.newSeen || 0, reviews: +d.today.reviews || 0 } : { day: 0, newSeen: 0, reviews: 0 },
+    cards
+  };
+}
+
+/* ---------- Stockage ---------- */
+function setStatus(st) {
+  const el = $('#saveStatus'); if (!el) return;
+  const m = Store.mode();
+  const txt = {
+    loading: 'Chargement…', pending: 'Enregistrement…', saving: 'Enregistrement…',
+    saved: m === 'db' ? 'Enregistré' : m === 'local' ? 'Enregistré sur cet appareil' : 'Non enregistré',
+    memory: 'Non enregistré', error: 'Échec de l\u2019enregistrement, nouvel essai bientôt',
+    full: 'Espace de stockage plein', refused: 'Enregistrement refusé', offline: 'Enregistrement indisponible'
+  }[st] || '';
+  el.textContent = txt; el.dataset.state = st;
+}
+
+const Store = (() => {
+  const LS = 'bristol:v1';
+  let mode = 'memory', col = null, inbox = null, timer = null, busy = false, again = false, halted = false, lastFailed = false;
+  const dirty = new Map(), known = new Map();
+
+  const lsOk = () => { try { localStorage.setItem('bristol:t', '1'); localStorage.removeItem('bristol:t'); return true; } catch { return false; } };
+  async function retry(fn) {
+    try { return await fn(); }
+    catch (e) { if (e && e.code === 'unavailable') { await sleep(400 + Math.random() * 700); return await fn(); } throw e; }
+  }
+
+  async function init() {
+    try {
+      if (window.claude && typeof window.claude.use === 'function') {
+        const [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+        const uid = user ? await user.id() : null;
+        if (db && uid) {
+          const prof = db.doc('data/users/' + uid + '/profile');
+          col = prof.collection('decks'); inbox = prof.collection('inbox'); mode = 'db'; return mode;
+        }
+      }
+    } catch (e) { /* on bascule sur le stockage local */ }
+    mode = lsOk() ? 'local' : 'memory';
+    return mode;
+  }
+
+  async function load() {
+    if (mode === 'db') {
+      const snap = await retry(() => col.get());
+      return Promise.all(snap.docs.map(async doc => {
+        const meta = clone(doc.data() || {});
+        const cs = await retry(() => col.doc(doc.id).collection('chunks').get());
+        const cards = [], ids = new Set();
+        for (const c of cs.docs) {
+          ids.add(c.id);
+          const b = parseInt(c.id.slice(1), 10) || 0;
+          for (const card of (clone(c.data() || {}).cards || [])) { card.b = b; cards.push(card); }
+        }
+        known.set(doc.id, ids);
+        return normDeck({ ...meta, id: doc.id, cards });
+      }));
+    }
+    if (mode === 'local') {
+      try { const raw = localStorage.getItem(LS); if (raw) return (JSON.parse(raw).decks || []).map(normDeck); } catch { /* données illisibles */ }
+    }
+    return [];
+  }
+
+  function touch(deckId, w = {}) {
+    if (mode === 'memory' || halted) return;
+    const e = dirty.get(deckId) || { meta: false, buckets: new Set(), all: false, del: false };
+    if (w.meta) e.meta = true;
+    if (w.bucket != null) e.buckets.add(w.bucket);
+    if (w.all) { e.all = true; e.meta = true; }
+    if (w.del) e.del = true;
+    dirty.set(deckId, e);
+    schedule(w.soon ? 200 : 1200);
+  }
+  function schedule(ms) { clearTimeout(timer); timer = setTimeout(flush, ms); setStatus('pending'); }
+
+  const groupBuckets = deck => { const g = new Map(); for (const c of deck.cards) { if (!g.has(c.b)) g.set(c.b, []); g.get(c.b).push(c); } return g; };
+  const stripB = ({ b, ...rest }) => rest;
+  const metaOf = d => ({ v: 1, name: d.name, created: d.created, color: d.color, src: d.src || '', settings: d.settings, today: d.today });
+
+  // Un document est limité à 256 Kio : les cartes sont réparties en blocs.
+  function rebalance(groups, e) {
+    const check = e.all ? [...groups.keys()] : [...e.buckets];
+    let maxB = Math.max(0, ...groups.keys());
+    for (let i = 0; i < check.length; i++) {
+      const cards = groups.get(check[i]); if (!cards) continue;
+      const sizes = cards.map(c => byteLen(stripB(c)) + 1);
+      let total = sizes.reduce((a, b) => a + b, 12);
+      if (total <= 200000) continue;
+      const moved = [];
+      while (cards.length > 1 && total > 140000) { moved.unshift(cards.pop()); total -= sizes.pop(); }
+      const nb = ++maxB;
+      moved.forEach(c => { c.b = nb; });
+      groups.set(nb, moved); e.buckets.add(check[i]); e.buckets.add(nb); check.push(nb);
+    }
+  }
+
+  async function writeDeck(id, e) {
+    const ref = col.doc(id);
+    const deck = App.decks.find(d => d.id === id);
+    if (e.del || !deck) {
+      const ids = new Set(known.get(id) || []);
+      try { (await retry(() => ref.collection('chunks').get())).docs.forEach(c => ids.add(c.id)); } catch { /* ignoré */ }
+      for (const cid of ids) await retry(() => ref.collection('chunks').doc(cid).delete());
+      await retry(() => ref.delete());
+      known.delete(id);
+      return;
+    }
+    const groups = groupBuckets(deck);
+    rebalance(groups, e);
+    const have = known.get(id) || new Set();
+    const targets = e.all ? new Set([...groups.keys(), ...[...have].map(x => parseInt(x.slice(1), 10))]) : e.buckets;
+    for (const b of targets) {
+      const cards = groups.get(b), key = 'b' + b, cref = ref.collection('chunks').doc(key);
+      if (cards && cards.length) { await retry(() => cref.set({ cards: cards.map(stripB) })); have.add(key); }
+      else if (have.has(key)) { await retry(() => cref.delete()); have.delete(key); }
+    }
+    known.set(id, have);
+    await retry(() => ref.set(metaOf(deck)));
+  }
+
+  function mergeBack(id, e) {
+    const cur = dirty.get(id);
+    if (!cur) { dirty.set(id, e); return; }
+    cur.meta = cur.meta || e.meta; cur.all = cur.all || e.all; cur.del = cur.del || e.del;
+    e.buckets.forEach(b => cur.buckets.add(b));
+  }
+
+  function fail(err) {
+    const code = err && (err.code || err.name);
+    if (code === 'quota_exceeded' || code === 'QuotaExceededError') { setStatus('full'); toast('Espace de stockage plein : supprime des cartes ou des paquets pour pouvoir enregistrer.'); timer = setTimeout(flush, 30000); }
+    else if (code === 'invalid_argument') { halted = true; dirty.clear(); setStatus('refused'); toast('Enregistrement refusé : tes modifications ne seront pas conservées sur cette page.'); }
+    else if (['revoked', 'not_granted', 'capability_disabled', 'capability_removed'].includes(code)) { halted = true; setStatus('offline'); }
+    else { setStatus('error'); timer = setTimeout(flush, 8000); }
+  }
+
+  async function flush() {
+    clearTimeout(timer); timer = null;
+    if (busy) { again = true; return; }
+    if (!dirty.size || halted) return;
+    busy = true; setStatus('saving');
+    let current = null;
+    try {
+      if (mode === 'local') {
+        localStorage.setItem(LS, JSON.stringify({ v: 1, decks: App.decks }));
+        dirty.clear();
+      } else {
+        while (dirty.size) {
+          const [id, e] = dirty.entries().next().value;
+          dirty.delete(id); current = [id, e];
+          await writeDeck(id, e);
+          current = null;
+        }
+      }
+      lastFailed = false;
+      setStatus('saved');
+    } catch (err) {
+      lastFailed = true;
+      if (current) mergeBack(current[0], current[1]);
+      fail(err);
+    } finally {
+      busy = false;
+      if (again) { again = false; if (dirty.size && !halted) schedule(300); }
+    }
+  }
+
+  // Attend que toutes les modifications soient écrites ; false en cas d'échec.
+  async function settle() {
+    for (let i = 0; i < 60; i++) {
+      if (halted) return false;
+      if (busy) { await sleep(150); continue; }
+      if (!dirty.size) return !lastFailed;
+      await flush();
+      if (lastFailed) return false;
+    }
+    return false;
+  }
+
+  // Boîte de réception : des lots de cartes déposés par Claude, fusionnés ici
+  // dans les paquets, puis retirés une fois enregistrés.
+  function watchInbox(apply) {
+    if (mode !== 'db' || !inbox) return;
+    const seen = new Set();
+    let chain = Promise.resolve();
+    inbox.onSnapshot(snap => {
+      for (const doc of snap.docs) {
+        if (seen.has(doc.id)) continue;
+        seen.add(doc.id);
+        const body = clone(doc.data() || {});
+        chain = chain.then(async () => {
+          try { apply(body); } catch (e) { return; }
+          if (await settle()) { try { await retry(() => inbox.doc(doc.id).delete()); } catch { /* sera retraité au prochain chargement */ } }
+        });
+      }
+    }, () => { /* la boîte de réception reste inactive pour cette visite */ });
+  }
+
+  return { init, load, touch, flush, settle, watchInbox, mode: () => mode, pending: () => dirty.size > 0 };
+})();
+
+/* ---------- Mise en forme des cartes ---------- */
+function renderRich(src) {
+  // Le code entre `…` est mis de côté en premier : ni formule ni mise en forme
+  // n'y est interprétée (pointeurs *p, variables $@ de Makefile…).
+  const codes = [], maths = [];
+  let s = String(src ?? '');
+  s = s.replace(/`([^`\n]+)`/g, (m, c) => { codes.push(c); return '\u0001' + (codes.length - 1) + '\u0001'; });
+  s = s.replace(/\$\$([\s\S]+?)\$\$|\\\[([\s\S]+?)\\\]|\\\(([\s\S]+?)\\\)|\$([^$\n]+?)\$/g, m => { maths.push(m); return '\u0000' + (maths.length - 1) + '\u0000'; });
+  s = esc(s)
+    .replace(/\*\*([^*\n](?:[\s\S]*?[^*\n])?)\*\*/g, '<strong>$1</strong>')
+    .replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<em>$2</em>')
+    .replace(/\u0000(\d+)\u0000/g, (m, i) => esc(maths[+i]))
+    .replace(/\u0001(\d+)\u0001/g, (m, i) => '<code>' + esc(codes[+i]) + '</code>');
+  return { html: s, math: maths.length > 0 };
+}
+const hasRich = s => /[$*`]|\\\(|\\\[/.test(s);
+
+const MJ = { state: 'none', pending: new Set(), chain: Promise.resolve(), sched: false };
+function typeset(el) {
+  if (!el) return;
+  MJ.pending.add(el);
+  if (MJ.state === 'ready') { if (!MJ.sched) { MJ.sched = true; setTimeout(() => { MJ.sched = false; flushMath(); }, 0); } }
+  else if (MJ.state === 'none') loadMath();
+}
+function loadMath() {
+  MJ.state = 'loading';
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    svg: { fontCache: 'local' },
+    options: { enableMenu: false },
+    startup: {
+      typeset: false,
+      ready() { window.MathJax.startup.defaultReady(); window.MathJax.startup.promise.then(() => { MJ.state = 'ready'; flushMath(); }); }
+    }
+  };
+  const sc = document.createElement('script');
+  sc.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js';
+  sc.async = true;
+  sc.onerror = () => { MJ.state = 'failed'; };
+  document.head.appendChild(sc);
+}
+function flushMath() {
+  const els = [...MJ.pending].filter(e => e.isConnected); MJ.pending.clear();
+  if (!els.length || !window.MathJax || !window.MathJax.typesetPromise) return;
+  MJ.chain = MJ.chain.then(() => {
+    try { window.MathJax.typesetClear(els); } catch { /* ignoré */ }
+    return window.MathJax.typesetPromise(els.filter(e => e.isConnected));
+  }).catch(() => {});
+}
+function paintRich(el, text) { const r = renderRich(text); el.innerHTML = r.html; if (r.math) typeset(el); }
+
+/* ---------- Application ---------- */
+const main = $('#app'), dlg = $('#dlg');
+const App = { decks: [], view: 'loading', deckId: null, listLimit: 150, search: '', s: null, doneTimer: null };
+const getDeck = id => App.decks.find(d => d.id === id);
+
+function go(view, deckId) {
+  clearTimeout(App.doneTimer);
+  if (view !== 'study') App.s = null;
+  if (view === 'deck' && deckId !== App.deckId) { App.search = ''; App.listLimit = 150; }
+  App.view = view; App.deckId = deckId || null;
+  document.body.classList.toggle('studying', view === 'study');
+  if (view === 'deck' && !getDeck(deckId)) return go('home');
+  if (view === 'home') renderHome();
+  else if (view === 'deck') renderDeck();
+  else if (view === 'study') startStudy();
+  window.scrollTo(0, 0);
+}
+
+function addCards(deck, list) {
+  let maxB = deck.cards.reduce((m, c) => Math.max(m, c.b || 0), 0);
+  let size = deck.cards.reduce((s, c) => (c.b || 0) === maxB ? s + byteLen(c) + 1 : s, 0);
+  const touched = new Set();
+  for (const c of list) {
+    const sz = byteLen(c) + 1;
+    if (size > 0 && size + sz > 150000) { maxB++; size = 0; }
+    c.b = maxB; size += sz; touched.add(maxB);
+    deck.cards.push(c);
+  }
+  touched.forEach(b => Store.touch(deck.id, { bucket: b, meta: true }));
+}
+function createDeck(name, color) {
+  const now = Date.now();
+  const d = normDeck({ id: newId('d'), name, created: now, color: color || PALETTE[App.decks.length % PALETTE.length].c, cards: [] });
+  d.today = { day: dayNum(now), newSeen: 0, reviews: 0 };
+  App.decks.push(d);
+  Store.touch(d.id, { all: true, soon: true });
+  return d;
+}
+
+// Fusionne des cartes dans un paquet. Une carte avec une clé déjà connue est
+// mise à jour (sa progression est conservée) ; del: true la supprime.
+function mergeItems(deck, items, opt = {}) {
+  const src = opt.src || '', seenKeys = new Set();
+  const byKey = new Map(deck.cards.filter(c => c.key).map(c => [c.key, c]));
+  const byContent = new Map(deck.cards.map(c => [c.front + '\u0001' + c.back, c]));
+  const now = Date.now(), toAdd = [], removeIds = new Set();
+  let updated = 0, removed = 0, dup = 0;
+  items.forEach((it, i) => {
+    if (!it || typeof it !== 'object') return;
+    const key = String(it.key || '').trim().slice(0, 120), chap = String(it.chap || '').trim().slice(0, 120);
+    const ex = key ? byKey.get(key) : null;
+    if (it.del) { if (ex && !removeIds.has(ex.id)) { removeIds.add(ex.id); removed++; } return; }
+    if (key) seenKeys.add(key);
+    const front = String(it.front || '').trim().slice(0, MAX_FIELD), back = String(it.back || '').trim().slice(0, MAX_FIELD);
+    if (!front || !back) return;
+    if (ex) {
+      if (ex.front !== front || ex.back !== back || ex.chap !== chap) {
+        ex.front = front; ex.back = back; ex.chap = chap;
+        Store.touch(deck.id, { bucket: ex.b, meta: true }); updated++;
+      }
+      if (src && ex.src !== src) { ex.src = src; Store.touch(deck.id, { bucket: ex.b, meta: true }); }
+      return;
+    }
+    const same = byContent.get(front + '\u0001' + back);
+    if (same) {
+      if (key && !same.key) { same.key = key; same.chap = chap; if (src) same.src = src; byKey.set(key, same); Store.touch(deck.id, { bucket: same.b, meta: true }); }
+      else dup++;
+      return;
+    }
+    const c = newCard(front, back, now + i, key, chap);
+    if (src) c.src = src;
+    toAdd.push(c); byContent.set(front + '\u0001' + back, c); if (key) byKey.set(key, c);
+  });
+  // Fichier du dépôt = contenu complet : une carte venue de ce fichier et
+  // absente de la nouvelle version est retirée.
+  if (opt.prune && src) {
+    for (const c of deck.cards) if (c.src === src && c.key && !seenKeys.has(c.key) && !removeIds.has(c.id)) { removeIds.add(c.id); removed++; }
+  }
+  if (removeIds.size) {
+    const bs = new Set();
+    deck.cards = deck.cards.filter(c => { if (removeIds.has(c.id)) { bs.add(c.b); return false; } return true; });
+    bs.forEach(b => Store.touch(deck.id, { bucket: b, meta: true }));
+  }
+  if (toAdd.length) addCards(deck, toAdd);
+  return { added: toAdd.length, updated, removed, dup };
+}
+function mergeSummary(r) {
+  const parts = [];
+  if (r.added) parts.push(pl(r.added, 'carte ajoutée', 'cartes ajoutées'));
+  if (r.updated) parts.push(pl(r.updated, 'mise à jour', 'mises à jour'));
+  if (r.removed) parts.push(pl(r.removed, 'supprimée', 'supprimées'));
+  if (r.dup) parts.push(pl(r.dup, 'doublon ignoré', 'doublons ignorés'));
+  return parts.length ? parts.join(', ') : 'aucun changement';
+}
+function applyBatch(body) {
+  const items = Array.isArray(body.items) ? body.items : [];
+  if (!items.length) return;
+  const name = String(body.deck || 'Nouvelles cartes').trim().slice(0, 80) || 'Nouvelles cartes';
+  let d = (body.deckId && getDeck(body.deckId)) || App.decks.find(x => norm(x.name.trim()) === norm(name));
+  if (!d) d = createDeck(name, PALETTE.some(p => p.c === body.color) ? body.color : undefined);
+  const r = mergeItems(d, items);
+  Store.touch(d.id, { meta: true, soon: true });
+  refreshAfterExternal(d);
+  toast(`${d.name} : ${mergeSummary(r)}`);
+}
+// Version hébergée (GitHub Pages…) : les paquets listés dans cartes/index.json
+// sont lus à chaque ouverture et fusionnés, progression conservée.
+async function syncRepoDecks() {
+  if (!/^https?:$/.test(location.protocol)) return;
+  const get = async path => { const r = await fetch(path, { cache: 'no-cache' }); if (!r.ok) throw new Error(r.status); return r.json(); };
+  let list;
+  try { list = await get('cartes/index.json'); } catch { return; }
+  const files = Array.isArray(list) ? list : (list && Array.isArray(list.paquets) ? list.paquets : []);
+  for (const f of files) {
+    const file = String(f || '').trim();
+    if (!/^[\w .-]+\.json$/.test(file)) continue;
+    let body;
+    try { body = await get('cartes/' + encodeURIComponent(file)); } catch { toast(`Fichier cartes/${file} introuvable ou illisible`); continue; }
+    if (!body || !Array.isArray(body.items)) continue;
+    const name = String(body.deck || file.replace(/\.json$/, '')).trim().slice(0, 80);
+    let d = App.decks.find(x => x.src === file) || App.decks.find(x => !x.src && norm(x.name.trim()) === norm(name));
+    if (!d) d = createDeck(name, PALETTE.some(p => p.c === body.color) ? body.color : undefined);
+    if (d.src !== file) { d.src = file; Store.touch(d.id, { meta: true }); }
+    const r = mergeItems(d, body.items, { src: file, prune: true });
+    if (r.added || r.updated || r.removed) { Store.touch(d.id, { meta: true, soon: true }); refreshAfterExternal(d); toast(`${d.name} : ${mergeSummary(r)}`); }
+  }
+}
+function refreshAfterExternal(d) {
+  if (App.view === 'home') renderHome();
+  else if (App.view === 'deck' && App.deckId === d.id) { renderDeckSummary(); renderCardList(); }
+  else if (App.view === 'study' && App.s && App.s.deckId === d.id) {
+    const s = App.s;
+    if (!s.current || !d.cards.includes(s.current)) nextCard();
+    else { updateStudyCounts(d, Date.now(), s.kind); if (s.current) paintFaces(d, s.current, s.kind); }
+  }
+}
+
+const SAMPLE = [
+  ["Loi d'Ohm", String.raw`$U = R\,I$` + "\nTension en volts, résistance en ohms, courant en ampères."],
+  ["Fréquence de coupure d'un filtre RC du premier ordre", String.raw`$$f_c = \frac{1}{2\pi R C}$$`],
+  [String.raw`Impédance complexe d'un condensateur de capacité $C$`, String.raw`$Z_C = \dfrac{1}{jC\omega}$`],
+  [String.raw`Impédance complexe d'une bobine d'inductance $L$`, String.raw`$Z_L = jL\omega$`],
+  ["Puissance dissipée par une résistance", String.raw`$P = R\,I^2 = \dfrac{U^2}{R}$`],
+  ["Gain d'un amplificateur non inverseur (AOP idéal)", String.raw`$G = 1 + \dfrac{R_2}{R_1}$`],
+  ["Gain d'un amplificateur inverseur (AOP idéal)", String.raw`$G = -\dfrac{R_2}{R_1}$`],
+  ["Pont diviseur de tension, à vide", String.raw`$V_s = V_e\,\dfrac{R_2}{R_1 + R_2}$`],
+  ["Constante de temps d'un circuit RC", String.raw`$\tau = R\,C$` + "\n" + String.raw`À $t = 5\tau$, le condensateur est chargé à plus de 99 %.`],
+  ["Fréquence de résonance d'un circuit LC", String.raw`$$f_0 = \frac{1}{2\pi\sqrt{LC}}$$`],
+  [String.raw`Gain en décibels d'une fonction de transfert $H$`, String.raw`$G_{dB} = 20\log_{10}|H|$`],
+  ["Théorème de Shannon-Nyquist", "La fréquence d'échantillonnage doit dépasser le double de la fréquence maximale du signal :\n" + String.raw`$f_e > 2 f_{max}$`],
+  ["Critère de Barkhausen pour un oscillateur", String.raw`$|A\beta| = 1$ et $\arg(A\beta) \equiv 0 \pmod{2\pi}$`],
+  ["Tension de seuil typique d'une diode au silicium", "Environ **0,6 à 0,7 V**."],
+  ["Pente d'un filtre du premier ordre au-delà de la coupure", "**−20 dB par décade**, soit environ −6 dB par octave."],
+  ["Code couleur des résistances : rouge, rouge, marron", "**220 Ω** : 2, 2, puis un multiplicateur ×10."]
+];
+function createSample() {
+  const d = createDeck("Électronique, les bases", PALETTE[0].c);
+  const now = Date.now();
+  addCards(d, SAMPLE.map(([f, b], i) => newCard(f, b, now + i)));
+  go('home');
+  toast('Paquet d\u2019exemple ajouté');
+}
+
+/* ---------- Accueil ---------- */
+function countsHTML(c, cur) {
+  const cell = (k, v, label) => `<span class="${k}${v ? '' : ' z'}${cur === k ? ' cur' : ''}" title="${label}">${v}</span>`;
+  return cell('n', c.n, 'Nouvelles') + cell('l', c.l, 'En cours') + cell('r', c.r, 'À revoir');
+}
+function renderHome() {
+  const now = Date.now();
+  const decks = [...App.decks].sort((a, b) => a.created - b.created);
+  const rows = decks.map(d => {
+    const c = counts(d, now), due = c.n + c.l + c.r;
+    return `<li class="deck-row deck-grid" style="--tint:${esc(d.color)}">
+      <span class="swatch" aria-hidden="true"></span>
+      <button class="deck-name" data-act="open-deck" data-id="${d.id}"><span class="dn">${esc(d.name)}</span><span class="ds">${pl(d.cards.length, 'carte')}</span></button>
+      <span class="counts" aria-label="${c.n} nouvelles, ${c.l} en cours, ${c.r} à revoir">${countsHTML(c)}</span>
+      <button class="btn act-study${due ? ' primary' : ''}" data-act="study" data-id="${d.id}">Réviser</button>
+    </li>`;
+  }).join('');
+  const memNote = Store.mode() === 'memory' ? `<p class="notice">Le stockage n'est pas disponible ici : tes cartes disparaîtront à la fermeture de la page. Pense à les exporter.</p>` : '';
+  main.innerHTML = `
+    <section class="sheet">
+      <div class="sheet-head">
+        <h1>Mes paquets</h1>
+        <div class="head-actions">
+          <button class="btn" data-act="import">Importer</button>
+          <button class="btn primary" data-act="new-deck">Nouveau paquet</button>
+        </div>
+      </div>
+      ${memNote}
+      ${decks.length ? `
+        <div class="legend deck-grid" aria-hidden="true"><span class="lg"><span class="n">Nouvelles</span><span class="l">En cours</span><span class="r">À revoir</span></span></div>
+        <ul class="deck-list">${rows}</ul>` : `
+        <div class="empty">
+          <p class="empty-lead">Aucun paquet pour l'instant.</p>
+          <p>Crée un paquet et ajoute tes cartes une à une, importe une liste exportée d'Anki ou de Quizlet, ou commence avec un paquet d'exemple sur les bases de l'électronique.</p>
+          <div class="empty-actions"><button class="btn" data-act="sample">Utiliser le paquet d'exemple</button></div>
+        </div>`}
+    </section>
+    <p class="desk-note keys">Pendant une révision : Espace pour retourner la carte, puis 1 à 4 pour noter ta réponse. Z annule la dernière réponse, E modifie la carte.</p>`;
+}
+
+/* ---------- Page d'un paquet ---------- */
+function statusOf(c, now) {
+  if (c.state === 'new') return { t: 'Nouvelle', k: 'n' };
+  if (c.state !== 'review') return { t: 'En cours', k: 'l' };
+  if (c.due <= now) return { t: 'À revoir', k: 'r' };
+  const days = dayNum(c.due) - dayNum(now);
+  return { t: days <= 1 ? 'Demain' : 'Dans ' + fmtDays(days), k: 'f' };
+}
+function renderDeck() {
+  const d = getDeck(App.deckId);
+  const sw = PALETTE.map(p => `<label class="sw-opt" title="${p.label}"><input type="radio" name="sColor" value="${p.c}" ${p.c.toLowerCase() === d.color.toLowerCase() ? 'checked' : ''}><span class="swatch" style="--tint:${p.c}"></span><span class="sr">${p.label}</span></label>`).join('');
+  main.innerHTML = `
+    <nav class="crumbs"><button class="back" data-act="home">${ICON.back}<span>Paquets</span></button></nav>
+    <section class="sheet" id="deckSheet" style="--tint:${esc(d.color)}">
+      <div class="sheet-head">
+        <div class="title-row"><span class="swatch" aria-hidden="true"></span><h1 id="deckTitle">${esc(d.name)}</h1></div>
+        <button class="btn primary" data-act="study" data-id="${d.id}">Réviser</button>
+      </div>
+      <p class="deck-summary" id="deckSummary"></p>
+
+      <h2>Ajouter une carte</h2>
+      <div id="addForm">
+        <div class="add-grid">
+          <div class="field"><label for="fFront">Recto</label><textarea id="fFront" rows="3" maxlength="${MAX_FIELD}" placeholder="La question"></textarea></div>
+          <div class="field"><label for="fBack">Verso</label><textarea id="fBack" rows="3" maxlength="${MAX_FIELD}" placeholder="La réponse"></textarea></div>
+        </div>
+        <div class="preview" id="addPreview" hidden></div>
+        <p class="field-error" id="addError" role="alert" hidden></p>
+        <div class="add-foot">
+          <label class="check"><input type="checkbox" id="fReverse"> Créer aussi la carte inverse</label>
+          <button class="btn primary" data-act="add-card">Ajouter la carte</button>
+        </div>
+        <p class="hint">Mise en forme : <code>**gras**</code>, <code>*italique*</code>, <code>\`code\`</code>, formules LaTeX entre <code>$…$</code> ou <code>$$…$$</code>. <kbd>Ctrl</kbd> + <kbd>Entrée</kbd> ajoute la carte.</p>
+      </div>
+
+      <h2>Cartes</h2>
+      <div class="list-tools">
+        <input type="search" id="cardSearch" placeholder="Rechercher dans les cartes" aria-label="Rechercher dans les cartes" value="${esc(App.search)}">
+        <button class="btn" data-act="import">Importer</button>
+      </div>
+      <ul class="card-list" id="cardList"></ul>
+
+      <h2>Réglages</h2>
+      <div class="settings">
+        <div class="field"><label for="sName">Nom du paquet</label><input id="sName" type="text" maxlength="80" value="${esc(d.name)}"></div>
+        <div class="field"><label for="sNew">Nouvelles cartes par jour</label><input id="sNew" type="number" min="0" max="999" inputmode="numeric" value="${d.settings.newPerDay}"></div>
+        <fieldset class="field colors"><legend>Couleur des fiches</legend><div class="sw-opts">${sw}</div></fieldset>
+        <div class="settings-actions">
+          <button class="btn" data-act="export">Exporter les cartes</button>
+          <button class="btn" data-act="reset">Remettre à zéro la progression</button>
+          <button class="btn danger" data-act="delete-deck">Supprimer le paquet</button>
+        </div>
+      </div>
+    </section>`;
+
+  renderDeckSummary(); renderCardList();
+  const f = $('#fFront'), b = $('#fBack');
+  bindPreview(f, b, $('#addPreview'));
+  $('#addForm').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); addCardFromForm(); } });
+  $('#cardSearch').addEventListener('input', debounce(e => { App.search = e.target.value; App.listLimit = 150; renderCardList(); }, 150));
+  $('#sName').addEventListener('change', e => {
+    const v = e.target.value.trim();
+    if (!v || v === d.name) { e.target.value = d.name; return; }
+    d.name = v; $('#deckTitle').textContent = v; Store.touch(d.id, { meta: true }); toast('Nom enregistré');
+  });
+  $('#sNew').addEventListener('change', e => {
+    let v = parseInt(e.target.value, 10); if (!Number.isFinite(v) || v < 0) v = 0; v = Math.min(999, v);
+    e.target.value = v; d.settings.newPerDay = v; Store.touch(d.id, { meta: true }); renderDeckSummary(); toast('Limite enregistrée');
+  });
+  $$('input[name="sColor"]').forEach(r => r.addEventListener('change', e => {
+    d.color = e.target.value; $('#deckSheet').style.setProperty('--tint', d.color); Store.touch(d.id, { meta: true });
+  }));
+}
+function renderDeckSummary() {
+  const d = getDeck(App.deckId), el = $('#deckSummary'); if (!d || !el) return;
+  const now = Date.now(), c = counts(d, now);
+  let n = 0, l = 0, r = 0;
+  for (const x of d.cards) { if (x.state === 'new') n++; else if (x.state === 'review') r++; else l++; }
+  el.textContent = d.cards.length
+    ? `${pl(d.cards.length, 'carte')} : ${pl(n, 'nouvelle')}, ${l} en cours d'apprentissage, ${r} en révision. À étudier aujourd'hui : ${c.n + c.l + c.r}.`
+    : 'Aucune carte pour l\u2019instant.';
+}
+function renderCardList() {
+  const d = getDeck(App.deckId), el = $('#cardList'); if (!d || !el) return;
+  const now = Date.now(), q = norm(App.search.trim());
+  const list = [...d.cards].reverse().filter(c => !q || norm(c.front).includes(q) || norm(c.back).includes(q) || norm(c.chap).includes(q));
+  if (!list.length) {
+    el.innerHTML = `<li class="list-empty">${d.cards.length ? `Aucune carte ne contient « ${esc(App.search.trim())} ».` : 'Ce paquet est vide. Ajoute une carte ci-dessus ou importe une liste.'}</li>`;
+    return;
+  }
+  const shown = list.slice(0, App.listLimit);
+  el.innerHTML = shown.map(c => {
+    const st = statusOf(c, now);
+    return `<li class="card-row">
+      <div class="cr-fw">${c.chap ? `<span class="cr-c">${esc(c.chap)}</span>` : ''}<div class="cr-f">${esc(c.front)}</div></div>
+      <div class="cr-b">${esc(c.back)}</div>
+      <span class="cr-s ${st.k}">${st.t}</span>
+      <span class="cr-a"><button class="btn quiet sm" data-act="edit-card" data-id="${c.id}">Modifier</button><button class="btn quiet sm danger" data-act="del-card" data-id="${c.id}">Supprimer</button></span>
+    </li>`;
+  }).join('') + (list.length > shown.length ? `<li class="more-wrap"><button class="btn" data-act="more">Afficher plus de cartes (${list.length - shown.length} restantes)</button></li>` : '');
+}
+function bindPreview(f, b, box) {
+  const upd = debounce(() => {
+    if (!box.isConnected) return;
+    if (!hasRich(f.value) && !hasRich(b.value)) { box.hidden = true; return; }
+    box.hidden = false;
+    box.innerHTML = `<div><span class="pv-l">Aperçu du recto</span><div class="pv-c" id="${box.id}F"></div></div><div><span class="pv-l">Aperçu du verso</span><div class="pv-c" id="${box.id}B"></div></div>`;
+    paintRich($('#' + box.id + 'F'), f.value); paintRich($('#' + box.id + 'B'), b.value);
+  }, 350);
+  f.addEventListener('input', upd); b.addEventListener('input', upd);
+  upd();
+  return upd;
+}
+function addCardFromForm() {
+  const d = getDeck(App.deckId); if (!d) return;
+  const f = $('#fFront'), b = $('#fBack'), err = $('#addError');
+  const front = f.value.trim(), back = b.value.trim();
+  if (!front || !back) { err.textContent = 'Remplis le recto et le verso pour ajouter la carte.'; err.hidden = false; (front ? b : f).focus(); return; }
+  err.hidden = true;
+  const now = Date.now(), list = [newCard(front, back, now)];
+  if ($('#fReverse').checked) list.push(newCard(back, front, now + 1));
+  addCards(d, list);
+  f.value = ''; b.value = ''; f.dispatchEvent(new Event('input')); f.focus();
+  renderDeckSummary(); renderCardList();
+  toast(list.length > 1 ? '2 cartes ajoutées' : 'Carte ajoutée');
+}
+function deleteCard(deckId, cardId) {
+  const d = getDeck(deckId); if (!d) return;
+  const idx = d.cards.findIndex(c => c.id === cardId); if (idx < 0) return;
+  const [card] = d.cards.splice(idx, 1);
+  Store.touch(d.id, { bucket: card.b, meta: true });
+  renderDeckSummary(); renderCardList();
+  toast('Carte supprimée', { label: 'Annuler', run: () => {
+    if (!getDeck(deckId)) return;
+    d.cards.splice(Math.min(idx, d.cards.length), 0, card);
+    Store.touch(d.id, { bucket: card.b, meta: true });
+    if (App.view === 'deck' && App.deckId === deckId) { renderDeckSummary(); renderCardList(); }
+  } });
+}
+
+/* ---------- Dialogues ---------- */
+let lastFocus = null;
+function openDialog(html) {
+  lastFocus = document.activeElement;
+  dlg.innerHTML = `<div class="dlg-body">${html}</div>`;
+  const t = dlg.querySelector('.dlg-title'); if (t) t.id = 'dlgTitle';
+  $$('[data-close]', dlg).forEach(b => b.addEventListener('click', () => dlg.close()));
+  dlg.showModal();
+  const af = dlg.querySelector('[autofocus]'); if (af) af.focus();
+}
+dlg.addEventListener('close', () => { dlg.innerHTML = ''; if (lastFocus && lastFocus.isConnected) lastFocus.focus(); });
+dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+
+function confirmDialog({ title, text, confirm, danger, onConfirm }) {
+  openDialog(`<h2 class="dlg-title">${esc(title)}</h2><p>${esc(text)}</p>
+    <div class="dlg-actions"><button class="btn quiet" data-close>Annuler</button><button class="btn primary${danger ? ' danger' : ''}" id="cGo">${esc(confirm)}</button></div>`);
+  $('#cGo').addEventListener('click', () => { dlg.close(); onConfirm(); });
+}
+
+function openNewDeck() {
+  openDialog(`<h2 class="dlg-title">Nouveau paquet</h2>
+    <div class="field"><label for="nName">Nom du paquet</label><input id="nName" type="text" maxlength="80" placeholder="Par exemple : Traitement du signal" autofocus></div>
+    <p class="field-error" id="nErr" role="alert" hidden>Donne un nom au paquet.</p>
+    <div class="dlg-actions"><button class="btn quiet" data-close>Annuler</button><button class="btn primary" id="nGo">Créer le paquet</button></div>`);
+  const inp = $('#nName');
+  const create = () => {
+    const name = inp.value.trim();
+    if (!name) { $('#nErr').hidden = false; inp.focus(); return; }
+    const d = createDeck(name); dlg.close(); go('deck', d.id); toast('Paquet créé');
+    setTimeout(() => { const f = $('#fFront'); if (f) f.focus(); }, 50);
+  };
+  $('#nGo').addEventListener('click', create);
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); create(); } });
+}
+
+function openEditCard(deckId, cardId, after) {
+  const d = getDeck(deckId), c = d && d.cards.find(x => x.id === cardId); if (!c) return;
+  openDialog(`<h2 class="dlg-title">Modifier la carte</h2>
+    <div class="field"><label for="eFront">Recto</label><textarea id="eFront" rows="3" maxlength="${MAX_FIELD}"></textarea></div>
+    <div class="field"><label for="eBack">Verso</label><textarea id="eBack" rows="4" maxlength="${MAX_FIELD}"></textarea></div>
+    <div class="preview" id="ePreview" hidden></div>
+    <p class="field-error" id="eErr" role="alert" hidden>Le recto et le verso ne peuvent pas être vides.</p>
+    <div class="dlg-actions"><button class="btn quiet" data-close>Annuler</button><button class="btn primary" id="eGo">Enregistrer</button></div>`);
+  const f = $('#eFront'), b = $('#eBack');
+  f.value = c.front; b.value = c.back; f.focus();
+  bindPreview(f, b, $('#ePreview'));
+  const save = () => {
+    const front = f.value.trim(), back = b.value.trim();
+    if (!front || !back) { $('#eErr').hidden = false; return; }
+    c.front = front; c.back = back;
+    Store.touch(d.id, { bucket: c.b, meta: true });
+    dlg.close();
+    if (App.view === 'deck') renderCardList();
+    if (after) after();
+    toast('Carte enregistrée');
+  };
+  $('#eGo').addEventListener('click', save);
+  dlg.querySelector('.dlg-body').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); save(); } });
+}
+
+/* ---------- Import / export ---------- */
+const SEP_NAMES = { '\t': 'tabulation', ';': 'point-virgule', '|': 'barre verticale', ',': 'virgule', ' - ': 'tiret' };
+function parseDelimited(text, sep) {
+  const rows = []; let row = [], field = '', i = 0, inQ = false, atStart = true;
+  while (i < text.length) {
+    const ch = text[i];
+    if (inQ) {
+      if (ch === '"') { if (text[i + 1] === '"') { field += '"'; i += 2; continue; } inQ = false; i++; continue; }
+      field += ch; i++; continue;
+    }
+    if (ch === '"' && atStart) { inQ = true; atStart = false; i++; continue; }
+    if (text.startsWith(sep, i)) { row.push(field); field = ''; atStart = true; i += sep.length; continue; }
+    if (ch === '\n') { row.push(field); rows.push(row); row = []; field = ''; atStart = true; i++; continue; }
+    field += ch; atStart = false; i++;
+  }
+  if (field !== '' || row.length) { row.push(field); rows.push(row); }
+  return rows;
+}
+function detectSep(text) {
+  const lines = text.split('\n').filter(l => l.trim()).slice(0, 40);
+  if (!lines.length) return null;
+  let best = null, bestN = 0;
+  for (const s of ['\t', ';', '|', ' - ', ',']) {
+    const n = lines.filter(l => l.includes(s)).length;
+    if (n >= Math.ceil(lines.length * 0.6)) return s;
+    if (n > bestN) { best = s; bestN = n; }
+  }
+  return best;
+}
+function htmlToText(s) {
+  s = s.replace(/\[\$\$\]([\s\S]*?)\[\/\$\$\]/g, '$$$$$1$$$$').replace(/\[\$\]([\s\S]*?)\[\/\$\]/g, '$$$1$$');
+  if (!/<\/?(br|div|p|b|i|u|strong|em|span|li|ul|ol|img|sup|sub|font)\b[^>]*>|&(nbsp|amp|lt|gt|quot|#\d+);/i.test(s)) return s;
+  s = s.replace(/<br\s*\/?>/gi, '\n').replace(/<\/(div|p|li)>/gi, '\n')
+       .replace(/<(b|strong)\b[^>]*>([\s\S]*?)<\/\1>/gi, '**$2**').replace(/<(i|em)\b[^>]*>([\s\S]*?)<\/\1>/gi, '*$2*');
+  const doc = new DOMParser().parseFromString('<body>' + s + '</body>', 'text/html');
+  return (doc.body.textContent || '').replace(/\u00a0/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
+}
+function parseImport(text) {
+  text = String(text || '').replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
+  const lines = text.split('\n');
+  let sep = null, i = 0, ext = false;
+  for (; i < lines.length; i++) {
+    const m = lines[i].match(/^#([a-z ]+):(.*)$/i);
+    if (!m) break;
+    if (m[1].trim().toLowerCase() === 'bristol') ext = true;
+    if (m[1].trim().toLowerCase() === 'separator') {
+      const v = m[2].trim().toLowerCase();
+      sep = { tab: '\t', semicolon: ';', comma: ',', pipe: '|', space: ' ', colon: ':' }[v] || (v.length === 1 ? v : null);
+    }
+  }
+  const body = lines.slice(i).join('\n');
+  if (!sep) sep = detectSep(body);
+  if (!sep || !body.trim()) return { cards: [], sep, skipped: 0, ext };
+  const cards = []; let skipped = 0;
+  for (const r of parseDelimited(body, sep)) {
+    if (r.length === 1 && !r[0].trim()) continue;
+    if (r.length < 2) { skipped++; continue; }
+    const front = htmlToText(r[0]).trim().slice(0, MAX_FIELD);
+    const back = htmlToText(sep === '\t' ? r[1] : r.slice(1).join(sep)).trim().slice(0, MAX_FIELD);
+    if (!front || !back) { skipped++; continue; }
+    // Format Bristol : colonnes 3 et 4 = identifiant de la carte et chapitre.
+    const key = ext && sep === '\t' ? String(r[2] || '').trim() : '';
+    const chap = ext && sep === '\t' ? String(r[3] || '').trim() : '';
+    cards.push({ front, back, key, chap });
+  }
+  return { cards, sep, skipped, ext };
+}
+function exportText(deck) {
+  const q = f => /[\t\n"]/.test(f) ? '"' + f.replace(/"/g, '""') + '"' : f;
+  const ext = deck.cards.some(c => c.key || c.chap);
+  return '#separator:tab\n#html:false\n' + (ext ? '#bristol:1\n' : '') +
+    deck.cards.map(c => q(c.front) + '\t' + q(c.back) + (ext ? '\t' + q(c.key) + '\t' + q(c.chap) : '')).join('\n') + '\n';
+}
+
+function openImport(presetId) {
+  const preset = presetId && getDeck(presetId) ? presetId : (App.view === 'deck' ? App.deckId : null);
+  const opts = [...App.decks].sort((a, b) => a.created - b.created).map(d => `<option value="${d.id}"${d.id === preset ? ' selected' : ''}>${esc(d.name)}</option>`).join('');
+  openDialog(`<h2 class="dlg-title">Importer des cartes</h2>
+    <p>Une carte par ligne : le recto puis le verso, séparés par une tabulation, un point-virgule ou une barre verticale. Les exports texte d'Anki et de Quizlet fonctionnent tels quels.</p>
+    <div class="field"><label for="iFile">Fichier .txt, .tsv ou .csv</label><input type="file" id="iFile" accept=".txt,.tsv,.csv,text/plain,text/csv,text/tab-separated-values"></div>
+    <div class="field"><label for="iText">Ou colle ton texte</label><textarea id="iText" rows="7" placeholder="Loi d'Ohm;U = R·I&#10;Unité de la capacité;le farad (F)"></textarea></div>
+    <div class="field"><label for="iDeck">Paquet de destination</label><select id="iDeck"><option value="__new"${preset ? '' : ' selected'}>Nouveau paquet</option>${opts}</select></div>
+    <div class="field" id="iNewWrap"${preset ? ' hidden' : ''}><label for="iName">Nom du nouveau paquet</label><input id="iName" type="text" maxlength="80" value="Cartes importées"></div>
+    <p class="import-status" id="iStatus" aria-live="polite">Colle du texte ou choisis un fichier.</p>
+    <ul class="import-preview" id="iPrev"></ul>
+    <div class="dlg-actions"><button class="btn quiet" data-close>Annuler</button><button class="btn primary" id="iGo" disabled>Importer</button></div>`);
+  const ta = $('#iText'), sel = $('#iDeck'), nameIn = $('#iName'), go_ = $('#iGo');
+  let parsed = { cards: [] }, nameEdited = false;
+  const upd = () => {
+    parsed = parseImport(ta.value);
+    const n = parsed.cards.length, st = $('#iStatus');
+    if (!ta.value.trim()) st.textContent = 'Colle du texte ou choisis un fichier.';
+    else if (!n) st.textContent = 'Aucune carte détectée : chaque ligne doit contenir un recto et un verso séparés par une tabulation, un point-virgule ou une barre verticale.';
+    else st.textContent = `${pl(n, 'carte détectée', 'cartes détectées')}, séparateur : ${SEP_NAMES[parsed.sep] || '« ' + parsed.sep + ' »'}.` + (parsed.skipped ? ` ${pl(parsed.skipped, 'ligne ignorée', 'lignes ignorées')} faute de verso.` : '') + (parsed.ext ? ' Les cartes déjà présentes seront mises à jour, sans perdre ta progression.' : '');
+    $('#iPrev').innerHTML = parsed.cards.slice(0, 3).map(c => `<li><span>${esc(c.front)}</span><span>${esc(c.back)}</span></li>`).join('');
+    go_.disabled = !n;
+    go_.textContent = n ? `Importer ${pl(n, 'carte')}` : 'Importer';
+  };
+  ta.addEventListener('input', debounce(upd, 200));
+  nameIn.addEventListener('input', () => { nameEdited = true; });
+  sel.addEventListener('change', () => { $('#iNewWrap').hidden = sel.value !== '__new'; });
+  $('#iFile').addEventListener('change', e => {
+    const file = e.target.files && e.target.files[0]; if (!file) return;
+    const rd = new FileReader();
+    rd.onload = () => { ta.value = String(rd.result || ''); if (!nameEdited) nameIn.value = file.name.replace(/\.[^.]+$/, '').slice(0, 80) || 'Cartes importées'; upd(); };
+    rd.onerror = () => { $('#iStatus').textContent = 'Lecture du fichier impossible. Copie son contenu dans la zone de texte.'; };
+    rd.readAsText(file);
+  });
+  go_.addEventListener('click', () => {
+    if (!parsed.cards.length) return;
+    const d = sel.value === '__new' ? createDeck(nameIn.value.trim() || 'Cartes importées') : getDeck(sel.value);
+    if (!d) return;
+    const r = mergeItems(d, parsed.cards);
+    Store.touch(d.id, { meta: true, soon: true });
+    dlg.close();
+    go('deck', d.id);
+    toast(`Import terminé : ${mergeSummary(r)}`);
+  });
+}
+
+function openExport(deckId) {
+  const d = getDeck(deckId); if (!d) return;
+  const txt = exportText(d);
+  openDialog(`<h2 class="dlg-title">Exporter les cartes</h2>
+    <p>Texte séparé par des tabulations, importable dans Anki (menu Fichier, puis Importer) ou ici même.</p>
+    <div class="field"><label for="xText">Contenu</label><textarea id="xText" rows="8" readonly></textarea></div>
+    <p class="hint" id="xMsg" aria-live="polite"></p>
+    <div class="dlg-actions"><button class="btn quiet" data-close>Fermer</button><button class="btn" id="xCopy">Copier le texte</button><button class="btn primary" id="xSave" hidden>Télécharger le fichier</button></div>`);
+  const ta = $('#xText'), msg = $('#xMsg');
+  ta.value = txt;
+  $('#xCopy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(txt); msg.textContent = 'Texte copié.'; }
+    catch {
+      ta.focus(); ta.select();
+      let ok = false; try { ok = document.execCommand('copy'); } catch { ok = false; }
+      msg.textContent = ok ? 'Texte copié.' : 'Copie automatique impossible ici : le texte est sélectionné, copie-le avec Ctrl + C.';
+    }
+  });
+  useCap('downloads').then(dl => {
+    const btn = $('#xSave'); if (!dl || !btn || !dlg.open) return;
+    btn.hidden = false;
+    btn.addEventListener('click', async () => {
+      const slug = norm(d.name).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'paquet';
+      try { const r = await dl.save({ filename: slug + '.txt', data: txt }); if (r && r.status === 'saved') msg.textContent = 'Fichier téléchargé.'; }
+      catch (e) {
+        if (e && e.code === 'declined') return;
+        if (e && e.code === 'rate_limited') { msg.textContent = 'Un téléchargement est déjà en attente de confirmation.'; return; }
+        msg.textContent = 'Téléchargement indisponible ici : utilise « Copier le texte ».'; btn.hidden = true;
+      }
+    });
+  });
+}
+
+function confirmReset(deckId) {
+  const d = getDeck(deckId); if (!d) return;
+  confirmDialog({
+    title: 'Remettre à zéro la progression ?',
+    text: 'Toutes les cartes redeviendront nouvelles et leur historique de révision sera effacé. Le contenu des cartes est conservé.',
+    confirm: 'Remettre à zéro', danger: true,
+    onConfirm: () => {
+      d.cards.forEach(c => Object.assign(c, { state: 'new', due: 0, ivl: 0, ease: S.startEase, step: 0, reps: 0, lapses: 0 }));
+      Store.touch(d.id, { all: true, soon: true });
+      renderDeckSummary(); renderCardList(); toast('Progression remise à zéro');
+    }
+  });
+}
+function confirmDeleteDeck(deckId) {
+  const d = getDeck(deckId); if (!d) return;
+  confirmDialog({
+    title: 'Supprimer ce paquet ?',
+    text: `« ${d.name} » et ${d.cards.length <= 1 ? 'sa carte' : 'ses ' + d.cards.length + ' cartes'} seront supprimés définitivement.`,
+    confirm: 'Supprimer le paquet', danger: true,
+    onConfirm: () => {
+      App.decks = App.decks.filter(x => x.id !== d.id);
+      Store.touch(d.id, { del: true, soon: true });
+      go('home'); toast('Paquet supprimé');
+    }
+  });
+}
+
+/* ---------- Révision ---------- */
+function startStudy() {
+  const d = getDeck(App.deckId); if (!d) return go('home');
+  App.s = { deckId: d.id, sinceNew: 0, lastId: null, current: null, kind: null, outcomes: null, revealed: false, undo: [], studied: 0 };
+  main.innerHTML = `
+    <div class="study" style="--tint:${esc(d.color)}">
+      <div class="study-top">
+        <div><button class="back in-study" data-act="home">${ICON.back}<span>Paquets</span></button></div>
+        <div class="study-title"><span class="st-name">${esc(d.name)}</span><span class="counts" id="stCounts"></span></div>
+        <div class="study-tools">
+          <button class="tool" data-act="undo" id="btnUndo" disabled title="Annuler la dernière réponse (Z)">${ICON.undo}<span>Annuler</span></button>
+          <button class="tool" data-act="edit-current" id="btnEdit" title="Modifier la carte (E)">${ICON.edit}<span>Modifier</span></button>
+        </div>
+      </div>
+      <div class="stage-wrap" id="stageWrap">
+        <div class="stage" id="stage" data-pile="0">
+          <div class="card3d" id="card3d">
+            <div class="face recto bristol" id="faceFront"><div class="head"><span class="hd" id="ffDeck"></span><span class="hk" id="ffKind"></span></div><div class="body q" id="ffBody"></div></div>
+            <div class="face verso bristol" id="faceBack" aria-hidden="true"><div class="head"><span class="q-copy" id="fbQ"></span></div><div class="body a" id="fbBody"></div></div>
+          </div>
+        </div>
+        <div class="answer-bar">
+          <button class="reveal" id="btnReveal" data-act="reveal">Afficher la réponse <kbd>Espace</kbd></button>
+          <div class="grades" id="grades" hidden>
+            <button class="grade g1" data-act="grade" data-g="1"><kbd>1</kbd><span>Encore</span><span class="gi" id="gi1"></span></button>
+            <button class="grade g2" data-act="grade" data-g="2"><kbd>2</kbd><span>Difficile</span><span class="gi" id="gi2"></span></button>
+            <button class="grade g3" data-act="grade" data-g="3"><kbd>3</kbd><span>Bien</span><span class="gi" id="gi3"></span></button>
+            <button class="grade g4" data-act="grade" data-g="4"><kbd>4</kbd><span>Facile</span><span class="gi" id="gi4"></span></button>
+          </div>
+        </div>
+      </div>
+      <section class="done sheet" id="doneBox" hidden></section>
+    </div>`;
+  $('#card3d').addEventListener('click', e => { if (e.target.closest('a')) return; if (App.s && App.s.current && !App.s.revealed) reveal(); });
+  nextCard();
+}
+function setFaces(flipped) {
+  const f = $('#faceFront'), b = $('#faceBack');
+  f.setAttribute('aria-hidden', flipped ? 'true' : 'false'); b.setAttribute('aria-hidden', flipped ? 'false' : 'true');
+  f.inert = flipped; b.inert = !flipped;
+}
+function paintFaces(d, card, kind) {
+  $('#ffDeck').textContent = card.chap || d.name;
+  $('#ffKind').textContent = { n: 'Nouvelle', l: 'En cours', r: 'À revoir' }[kind] || '';
+  paintRich($('#ffBody'), card.front);
+  paintRich($('#fbQ'), card.front);
+  paintRich($('#fbBody'), card.back);
+}
+function updateStudyCounts(d, now, kind) {
+  const c = counts(d, now), el = $('#stCounts');
+  el.innerHTML = countsHTML(c, kind);
+  el.setAttribute('aria-label', `${c.n} nouvelles, ${c.l} en cours, ${c.r} à revoir`);
+  $('#stage').dataset.pile = String(Math.min(2, Math.max(0, c.n + c.l + c.r - 1)));
+}
+function nextCard(forced) {
+  clearTimeout(App.doneTimer);
+  const s = App.s; if (!s) return;
+  const d = getDeck(s.deckId); if (!d) return go('home');
+  const now = Date.now();
+  rollover(d, now);
+  const pick = forced || pickNext(d, now, s);
+  $('#btnUndo').disabled = !s.undo.length;
+  updateStudyCounts(d, now, pick && pick.kind);
+  if (!pick) { s.current = null; showDone(d, now); return; }
+  $('#stageWrap').hidden = false; $('#doneBox').hidden = true; $('#btnEdit').disabled = false;
+  s.current = pick.card; s.kind = pick.kind; s.revealed = false; s.outcomes = null;
+  const c3 = $('#card3d');
+  c3.classList.add('no-anim'); c3.classList.remove('flipped', 'enter');
+  paintFaces(d, pick.card, pick.kind);
+  setFaces(false);
+  $('#faceFront').scrollTop = 0; $('#faceBack').scrollTop = 0;
+  void c3.offsetWidth;
+  c3.classList.remove('no-anim');
+  if (!reducedMotion()) c3.classList.add('enter');
+  $('#grades').hidden = true; $('#btnReveal').hidden = false;
+}
+function reveal() {
+  const s = App.s; if (!s || !s.current || s.revealed) return;
+  s.outcomes = computeOutcomes(s.current, Date.now());
+  for (let g = 1; g <= 4; g++) $('#gi' + g).textContent = s.outcomes[g].label;
+  s.revealed = true;
+  const c3 = $('#card3d'); c3.classList.remove('enter'); c3.classList.add('flipped');
+  setFaces(true);
+  $('#btnReveal').hidden = true; $('#grades').hidden = false;
+}
+function grade(g) {
+  const s = App.s; if (!s || !s.current || !s.revealed || !s.outcomes || !s.outcomes[g]) return;
+  const d = getDeck(s.deckId), card = s.current;
+  s.undo.push({ id: card.id, prev: clone(card), today: clone(d.today), sinceNew: s.sinceNew, lastId: s.lastId, studied: s.studied });
+  if (s.undo.length > 30) s.undo.shift();
+  if (card.state === 'new') { d.today.newSeen++; s.sinceNew = 0; } else s.sinceNew++;
+  Object.assign(card, s.outcomes[g].card);
+  card.reps = (card.reps || 0) + 1;
+  d.today.reviews++; s.studied++; s.lastId = card.id;
+  Store.touch(d.id, { meta: true, bucket: card.b });
+  nextCard();
+}
+function undo() {
+  const s = App.s; if (!s || !s.undo.length) return;
+  const u = s.undo.pop(), d = getDeck(s.deckId), card = d && d.cards.find(c => c.id === u.id);
+  if (!card) { $('#btnUndo').disabled = !s.undo.length; return; }
+  for (const k of Object.keys(card)) delete card[k];
+  Object.assign(card, u.prev);
+  d.today = u.today; s.sinceNew = u.sinceNew; s.lastId = u.lastId; s.studied = u.studied;
+  Store.touch(d.id, { meta: true, bucket: card.b });
+  nextCard({ card, kind: kindOf(card) });
+  toast('Dernière réponse annulée');
+}
+function editCurrent() {
+  const s = App.s; if (!s || !s.current) return;
+  const card = s.current;
+  openEditCard(s.deckId, card.id, () => { if (App.s && App.s.current === card) paintFaces(getDeck(s.deckId), card, s.kind); });
+}
+function showDone(d, now) {
+  $('#stageWrap').hidden = true; $('#btnEdit').disabled = true;
+  const box = $('#doneBox'); box.hidden = false;
+  const s = App.s, q = queues(d, now), lines = [];
+  if (!d.cards.length) {
+    box.innerHTML = `<h2>Ce paquet est vide</h2><p>Ajoute des cartes pour commencer à réviser.</p>
+      <div class="done-actions"><button class="btn primary" data-act="open-deck" data-id="${d.id}">Ajouter des cartes</button><button class="btn" data-act="home">Retour aux paquets</button></div>`;
+    return;
+  }
+  if (s.studied) lines.push(`Tu as étudié ${pl(s.studied, 'carte')} pendant cette séance.`);
+  const endToday = dayStart(dayNum(now) + 1);
+  const lrnToday = q.lrn.filter(c => c.due < endToday);
+  if (lrnToday.length) {
+    const wait = lrnToday[0].due - S.learnAhead - now;
+    lines.push(`${lrnToday.length <= 1 ? 'Une carte est encore' : lrnToday.length + ' cartes sont encore'} en cours d'apprentissage aujourd'hui. La prochaine revient dans ${fmtDelay(Math.max(0, wait))} et s'affichera ici si la page reste ouverte.`);
+    if (wait < 6 * 3600e3) App.doneTimer = setTimeout(() => { if (App.view === 'study' && App.s && !App.s.current) nextCard(); }, Math.max(1000, wait + 500));
+  }
+  const endTomorrow = dayStart(dayNum(now) + 2);
+  const revTomorrow = d.cards.filter(c => c.state === 'review' && c.due < endTomorrow).length;
+  const newTomorrow = Math.min(d.settings.newPerDay, d.cards.filter(c => c.state === 'new').length);
+  lines.push(revTomorrow || newTomorrow ? `Demain : ${pl(revTomorrow, 'carte')} à revoir et ${pl(newTomorrow, 'nouvelle')}.` : 'Rien de prévu pour demain.');
+  if (q.nwTotal > 0 && q.nw.length === 0) lines.push(`La limite de ${pl(d.settings.newPerDay, 'nouvelle carte', 'nouvelles cartes')} par jour est atteinte. Tu peux la changer dans les réglages du paquet.`);
+  box.innerHTML = `<h2>Paquet à jour pour aujourd'hui</h2>${lines.map(l => `<p>${esc(l)}</p>`).join('')}
+    <div class="done-actions"><button class="btn primary" data-act="home">Retour aux paquets</button><button class="btn" data-act="open-deck" data-id="${d.id}">Gérer les cartes</button></div>`;
+}
+
+/* ---------- Notifications ---------- */
+let toastTimer = null;
+function toast(msg, action) {
+  const w = $('#toast');
+  w.innerHTML = `<div class="toast-pill"><span>${esc(msg)}</span>${action ? `<button class="toast-btn">${esc(action.label)}</button>` : ''}</div>`;
+  if (action) w.querySelector('.toast-btn').addEventListener('click', () => { w.innerHTML = ''; action.run(); });
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { w.innerHTML = ''; }, action ? 6500 : 3000);
+}
+
+/* ---------- Événements globaux ---------- */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-act]'); if (!t || t.disabled) return;
+  const id = t.dataset.id;
+  switch (t.dataset.act) {
+    case 'home': go('home'); break;
+    case 'open-deck': go('deck', id); break;
+    case 'study': go('study', id); break;
+    case 'new-deck': openNewDeck(); break;
+    case 'import': openImport(id); break;
+    case 'sample': createSample(); break;
+    case 'add-card': addCardFromForm(); break;
+    case 'edit-card': openEditCard(App.deckId, id); break;
+    case 'del-card': deleteCard(App.deckId, id); break;
+    case 'more': App.listLimit += 150; renderCardList(); break;
+    case 'export': openExport(App.deckId); break;
+    case 'reset': confirmReset(App.deckId); break;
+    case 'delete-deck': confirmDeleteDeck(App.deckId); break;
+    case 'reveal': reveal(); break;
+    case 'grade': grade(+t.dataset.g); break;
+    case 'undo': undo(); break;
+    case 'edit-current': editCurrent(); break;
+  }
+});
+document.addEventListener('keydown', e => {
+  if (dlg.open || App.view !== 'study' || !App.s) return;
+  const tag = e.target.tagName;
+  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(tag) || e.target.isContentEditable) return;
+  const s = App.s, k = e.key;
+  if ((k === 'z' || k === 'Z') && !e.altKey) { if (e.ctrlKey || e.metaKey || !e.shiftKey) { e.preventDefault(); undo(); } return; }
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (k === 'Escape') { go('home'); return; }
+  if (!s.current) return;
+  if ((k === ' ' || k === 'Enter') && tag === 'BUTTON') return;
+  if (k === ' ' || k === 'Enter') { e.preventDefault(); if (s.revealed) grade(3); else reveal(); }
+  else if (/^[1-4]$/.test(k) && s.revealed) { e.preventDefault(); grade(+k); }
+  else if (k === 'e' || k === 'E') { e.preventDefault(); editCurrent(); }
+});
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') Store.flush(); });
+window.addEventListener('pagehide', () => { Store.flush(); });
+
+/* ---------- Démarrage ---------- */
+async function boot() {
+  setStatus('loading');
+  main.innerHTML = `<section class="sheet loading-sheet"><p>Chargement de tes paquets…</p></section>`;
+  const mode = await Store.init();
+  try { App.decks = await Store.load(); }
+  catch (e) {
+    setStatus('error');
+    main.innerHTML = `<section class="sheet"><div class="sheet-head"><h1>Chargement impossible</h1></div><p>Tes paquets n'ont pas pu être récupérés. Vérifie ta connexion, puis réessaie.</p><div class="empty-actions"><button class="btn primary" id="retryLoad">Réessayer</button></div></section>`;
+    $('#retryLoad').addEventListener('click', boot);
+    return;
+  }
+  setStatus(mode === 'memory' ? 'memory' : 'saved');
+  go('home');
+  Store.watchInbox(applyBatch);
+  if (mode !== 'db') syncRepoDecks();
+}
+boot();
+})();
+</script>
+</body>
+</html>

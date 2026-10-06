@@ -1,0 +1,15 @@
+# Site généré et fichiers temporaires de Quarto
+/_site/
+/.quarto/
+*_files/
+*_cache/
+
+# Sources brutes (PDF des enseignants, scans des notes) : jamais dans le dépôt
+/sources/
+
+# Divers
+.DS_Store
+__pycache__/
+.venv/
+
+**/*.quarto_ipynb
