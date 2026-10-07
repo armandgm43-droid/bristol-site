@@ -41,9 +41,10 @@
 - [x] Analyse, rédaction et figures (étapes 2 à 5) ; TD ex. 2 et ex. 5 q. 10-11 intégrés (7 octobre 2026).
 - [x] Répondre aux 8 questions bloquantes (7 octobre 2026, rapport section 16).
 - [x] Blocs `av-esperance-exercice-bpsk` et `av-moment-ordre-2-notes` tranchés (7 octobre 2026).
-- [ ] Trancher `av-dsp-porte-notes` à la validation (proposition : sommet $\sigma_a^2 T_s$) et revoir les choix par défaut (rapport, section 12).
+- [x] Trancher `av-dsp-porte-notes` (résultats du TD, sommet $\sigma_a^2 T_s$) et revoir les choix par défaut (7 octobre 2026).
 - [ ] Contrôler le rendu avec `quarto preview` (segments `[$…$]{.a-verifier}`, premier environnement `cor-` du site).
-- [ ] Vérification par Claude (étape 6), puis validation (étape 7) et flashcards (étape 8).
+- [x] Vérification par Claude (étape 6, rapport § 17), validation (étape 7) et flashcards (étape 8, 56 cartes) (7 octobre 2026).
+- [ ] Contrôler les 56 cartes du chapitre 3 dans l'application (`quarto preview`, http://localhost:4848/revision/).
 
 ## Priorité 3 — Outillage
 

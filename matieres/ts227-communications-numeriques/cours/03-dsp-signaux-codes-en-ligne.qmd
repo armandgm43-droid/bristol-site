@@ -4,7 +4,7 @@ matiere: ts227
 chapitre: 3
 enseignants: ["Romain Tajan"]
 annee: "2026-2027"
-statut: redige
+statut: flashcards
 date-modified: 2026-10-07
 sources:
   - id: poly
@@ -519,7 +519,6 @@ Les notes s'arrêtent après ce calcul.
 :::
 ::::
 
-
 ::: {.complement}
 **Fin du calcul.** Les notes écrivent « $m_Y(t)$ périodique » (lecture confirmée par Armand) ; le calcul montre plus précisément que $m_Y$ est **constante**, ce qui est cohérent avec la stationnarité annoncée (une constante est périodique de toute période). En effet, comme $m_X$ est périodique de période $T$, l'intégrale de $m_X(t - \theta)$ sur une période ne dépend pas de $t$ :
 
@@ -649,7 +648,7 @@ Le même résultat est obtenu au tableau par un calcul direct [notes, f. 5 v°] 
 :::
 
 ::: {.complement}
-**Puissance du signal émis.** Par @eq-puissance-dsp, $P_{s_l} = \tilde{R}_{s_l}(0) = \frac{1}{\Ts} \sum_d R_A[d]\, R_h(-d\Ts)$. Pour des symboles iid centrés, $P_{s_l} = \frac{\sigma_A^2}{\Ts}\, R_h(0) = \frac{\sigma_A^2 E_h}{\Ts}$, où $E_h = \int |h(t)|^2\, \mathrm{d}t$ est l'énergie du filtre de mise en forme : énergie moyenne par symbole, divisée par la durée d'un symbole.
+**Puissance du signal émis.** Avec la définition du TD ($P_{s_l} = \bar{R}_{s_l}(0)$, @exr-td-bennett, q. 8), $P_{s_l} = \tilde{R}_{s_l}(0) = \frac{1}{\Ts} \sum_d R_A[d]\, R_h(-d\Ts)$. Pour des symboles iid centrés, $P_{s_l} = \frac{\sigma_A^2}{\Ts}\, R_h(0) = \frac{\sigma_A^2 E_h}{\Ts}$, où $E_h = \int |h(t)|^2\, \mathrm{d}t$ est l'énergie du filtre de mise en forme : énergie moyenne par symbole, divisée par la durée d'un symbole.
 :::
 
 ## Exemple : mise en forme par une porte {#sec-dsp-porte}
@@ -661,7 +660,7 @@ On considère la chaîne de transmission de la @fig-chaine-dsp. Calculer la DSP 
 :::
 
 ::: {.complement}
-Le support ne précise ni l'amplitude de la porte ni la loi des symboles. Les notes [notes, f. 5 v°] et le TD [td, p. 2] prennent une porte d'amplitude 1 ; les notes supposent des symboles centrés et indépendants.
+Le support ne précise ni l'amplitude de la porte ni la loi des symboles. Les notes [notes, f. 5 v°] et le TD [td, p. 2] prennent une porte d'amplitude 1 ; les notes supposent des symboles centrés et indépendants, de variance notée $\sigma_a^2$ (notée $\sigma_A^2$ ailleurs dans ce chapitre, @cor-bennett-iid).
 :::
 
 :::: {.notes}
@@ -713,14 +712,14 @@ avec $h(t) = \Pi_{\Ts}\!\left(t - \frac{\Ts}{2}\right)$ et la transformée de la
 :::
 ::::
 
-::: {.a-verifier #av-dsp-porte-notes}
+::: {.a-verifier .tranche #av-dsp-porte-notes}
 **Source** [notes, f. 5 v°] : sous $|H(f)|^2$, l'accolade « $\sinc(f\Ts)$ » ; transformée de la porte écrite « $\Pi_{\Ts}(f) = \frac{\sin(\pi f T)}{\pi f}$ » ; sur le dessin de la DSP, valeur au sommet « $\frac{\sigma_a^2}{\Ts}$ ».
 
 **Problème** : avec une porte d'amplitude 1 et de durée $\Ts$, $H(f) = \Ts \sinc(f\Ts)\, e^{-j\pi f\Ts}$ (avec $\sinc(x) = \frac{\sin(\pi x)}{\pi x}$), donc $|H(f)|^2 = \Ts^2 \sinc^2(f\Ts)$ et non $\sinc(f\Ts)$ ; la DSP vaut alors $\sigma_a^2 \Ts \sinc^2(f\Ts)$, de valeur maximale $\sigma_a^2 \Ts$ en $f = 0$, et non $\frac{\sigma_a^2}{\Ts}$. La correction du TD donne $\Gamma_{s_l}(f) = \Ts \sinc^2(\Ts f)$ pour $\sigma_A^2 = 1$ [td-correction, p. 8], ce qui confirme $\sigma_a^2\Ts$. Contrôle par la puissance : $\int \sigma_a^2 \Ts \sinc^2(f\Ts)\, \mathrm{d}f = \sigma_a^2$, puissance attendue ($E_h = \Ts$, voir @cor-bennett-iid).
 
-Armand ne sait pas ce que l'enseignant a dit sur ce point (2026-10-07) : le bloc reste ouvert.
-
 **Proposition** : $\Gamma_{s_l}(f) = \sigma_a^2\, \Ts \sinc^2(f\Ts)$, maximum $\sigma_a^2\Ts$ (le « $\frac{\sigma_a^2}{\Ts}$ » du dessin correspondrait à $|H(0)|^2 = 1$, c'est-à-dire à une porte d'amplitude $1/\Ts$).
+
+**Décision** : résultat de la correction du TD retenu par Armand (2026-10-07) : $\Gamma_{s_l}(f) = \sigma_a^2\, \Ts \sinc^2(f\Ts)$, maximum $\sigma_a^2\Ts$.
 :::
 
 ::: {.complement}
@@ -741,7 +740,7 @@ $$ {#eq-dsp-porte}
 La DSP s'annule aux fréquences $k/\Ts$, $k \neq 0$. Son **lobe principal** occupe $[-1/\Ts, 1/\Ts]$ : c'est la bande $B = 1/\Ts$ des notes (au sens du support $[-B, B]$ du chapitre 2), soit deux fois la bande minimale de Nyquist $\frac{1}{2\Ts}$. Les lobes secondaires décroissent lentement, en $1/f^2$.
 :::
 
-![DSP du signal émis avec un filtre de mise en forme en porte de durée $\Ts$ et des symboles iid centrés de variance $\sigma_A^2$ : $\Gamma_{s_l}(f) = \sigma_A^2 \Ts \sinc^2(f\Ts)$ ; lobe principal sur $[-1/\Ts, 1/\Ts]$. D'après les notes de cours [notes, f. 5 v°] et la correction du TD [td-correction, p. 9], redessinée. Axes normalisés ($f\Ts$, $\Gamma_{s_l}/(\sigma_A^2 \Ts)$), échelle linéaire ; la valeur au sommet suit la proposition du bloc `av-dsp-porte-notes`.](../figures/03-dsp-porte.svg){#fig-dsp-porte}
+![DSP du signal émis avec un filtre de mise en forme en porte de durée $\Ts$ et des symboles iid centrés de variance $\sigma_A^2$ : $\Gamma_{s_l}(f) = \sigma_A^2 \Ts \sinc^2(f\Ts)$ ; lobe principal sur $[-1/\Ts, 1/\Ts]$. D'après les notes de cours [notes, f. 5 v°] et la correction du TD [td-correction, p. 9], redessinée. Axes normalisés ($f\Ts$, $\Gamma_{s_l}/(\sigma_A^2 \Ts)$), échelle linéaire ; valeur au sommet $\sigma_A^2\Ts$, celle de la correction du TD (les notes donnent $\sigma_a^2/\Ts$, bloc `av-dsp-porte-notes`).](../figures/03-dsp-porte.svg){#fig-dsp-porte}
 
 ::: {.a-verifier .tranche #av-phase-tf-porte-td}
 **Source** [td-correction, p. 8] : « $G(f) = e^{j\pi T_s f}\, \mathcal{F}(\Pi_{T_s}(t)) = e^{j\pi T_s f}\, T_s \sinc(T_s f)$ » pour $g(t) = \Pi_{T_s}(t - T_s/2)$.
@@ -835,7 +834,7 @@ Interprétation : $A_k = \frac{1}{2} + B_k$ avec $B_k \in \{-\frac{1}{2}, \frac{
 ::: {#exr-td-largeur-bande}
 ## Étude pratique : DSP et largeur de bande [td, p. 4, ex. 5, q. 10-11]
 
-Hypothèses de l'étude pratique : fréquence d'échantillonnage $f_e = 1/T_e = 8\ \mathrm{kHz}$ ; filtre de mise en forme en porte de durée $\Ts$ (celui de l'exercice précédent), échantillonné à $T_e$ ; débit symbole $D_s = 2\ \mathrm{ksymboles/s}$, donc $\Ts = 0{,}5\ \mathrm{ms}$ ; symboles 4-PAM, $A_k \in \{\pm 1, \pm 3\}$.
+Hypothèses de l'étude pratique : fréquence d'échantillonnage $f_e = 1/T_e = 8\ \mathrm{kHz}$ ; filtre de mise en forme en porte de durée $\Ts$ (celui de l'exercice précédent), échantillonné à $T_e$ et normalisé en énergie [td, p. 4, q. 6] ; débit symbole $D_s = 2\ \mathrm{ksymboles/s}$, donc $\Ts = 0{,}5\ \mathrm{ms}$ ; symboles 4-PAM, $A_k \in \{\pm 1, \pm 3\}$.
 
 10. Représenter l'allure de la DSP de $s_l[n]$.
 11. Si l'on définit la largeur de bande de $s_l[n]$ comme la largeur du lobe principal de la DSP, combien vaut-elle ?
@@ -850,7 +849,7 @@ Solution (aucune source ne la donne) :
 
 ## À retenir {#sec-retenir-dsp}
 
-Origine : support officiel, sauf mention *(notes)*, *(TD)* ou *(complément)*. Les points marqués *(à vérifier)* dépendent d'un bloc encore ouvert.
+Origine : support officiel, sauf mention *(notes)*, *(TD)* ou *(complément)*.
 
 - **Objet du chapitre** : $s_l(t)$ est aléatoire ; on caractérise la répartition fréquentielle de sa puissance par une grandeur qui ne dépend que des statistiques des symboles, la DSP (@sec-intro-dsp).
 - **Espérance, variance** : $\E[h(X)] = \sum_k h(x_k) P(X = x_k)$ ou $\int h(x) f_X(x)\, \mathrm{d}x$ (@def-esperance, @eq-esperance-fonction) ; $\mathrm{VAR}(X) = \E[|X|^2] - |\E[X]|^2$ (@eq-variance) ; $\E[XY] = \E[X]\,\E[Y]$ **si $X$ et $Y$ sont indépendantes** (@prp-esperance).
@@ -858,10 +857,10 @@ Origine : support officiel, sauf mention *(notes)*, *(TD)* ou *(complément)*. L
 - **Autocorrélation** : $R_X(t, \tau) = \E[X(t)\, X^*(t - \tau)]$ (@eq-autocorrelation).
 - **Stationnarité au sens large** : $m_X$ constante et $R_X(t, \tau) = R_X(\tau)$ (@def-stationnarite) ; alors $R_X(\tau) = R_X^*(-\tau)$, $|R_X(\tau)| \leq R_X(0)$, $P_X = R_X(0)$ (@prp-autocorrelation-stationnaire).
 - **DSP (Wiener-Khintchine)** : pour un PA SSL, $\Gamma_X(f) = \TF(R_X(\tau))$ (@eq-wiener-khintchine) ; la puissance est l'aire sous la DSP, $R_X(0) = \int \Gamma_X(f)\, \mathrm{d}f$ (@eq-puissance-dsp) *(notes)*.
-- **Bruit blanc** : DSP constante $N_0/2$ *(notes)* ; puissance dans une bande = intégrale de la DSP sur la bande, fréquences négatives comprises : bande $[f_p - B, f_p + B]$ hachurée, aire $N_0 B$ *(notes)* ; puissance totale d'un bruit réel dans cette bande, $2 N_0 B$ *(complément)*.
+- **Bruit blanc** : DSP constante $N_0/2$ ; bande $[f_p - B, f_p + B]$ hachurée, aire $N_0 B$ *(notes)*. Puissance dans une bande = intégrale de la DSP sur la bande, fréquences négatives comprises : puissance totale d'un bruit réel dans cette bande, $2 N_0 B$ ; autocorrélation $\frac{N_0}{2}\delta(\tau)$ *(complément)*.
 - **Cyclostationnarité** : $m_X$ et $R_X(\cdot, \tau)$ périodiques de période $\Ts$ (@def-cyclostationnarite) ; DSP = TF de l'autocorrélation moyennée $\tilde{R}_X(\tau) = \frac{1}{\Ts}\int_0^{\Ts} R_X(t, \tau)\, \mathrm{d}t$ (@def-dsp-cyclostationnaire). Un retard aléatoire uniforme sur une période rend le processus stationnaire, d'autocorrélation $\tilde{R}_X$ (@exm-dephasage-aleatoire) *(notes, complément)*.
 - **Filtrage** : $\Gamma_Y(f) = |H(f)|^2\, \Gamma_X(f)$ ; le filtrage conserve stationnarité et cyclostationnarité (@prp-filtrage-processus, @eq-filtrage-dsp).
 - **Formule de Bennett** : si les symboles $A_m$ forment un processus **stationnaire** à temps discret, $X(t) = \sum_m A_m h(t - m\Ts)$ est **cyclostationnaire** de période $\Ts$ et $\Gamma_X(f) = \frac{|H(f)|^2}{\Ts} \sum_m R_A[m]\, e^{-j2\pi f m\Ts}$, avec $R_A[m] = \E[A_n A^*_{n-m}]$ (@thm-bennett) ; démonstration *(TD)*.
 - **Symboles iid centrés** : $\Gamma_{s_l}(f) = \sigma_A^2\, |H(f)|^2 / \Ts$ (@cor-bennett-iid) *(TD, notes)* ; la DSP a la forme de $|H(f)|^2$ : le filtre de mise en forme fixe la bande occupée *(TD)*.
-- **Porte de durée $\Ts$** : $\Gamma_{s_l}(f) = \sigma_A^2 \Ts \sinc^2(f\Ts)$, avec $\sinc(x) = \frac{\sin \pi x}{\pi x}$ ; lobe principal $[-1/\Ts, 1/\Ts]$, soit $B = 1/\Ts$ (@eq-dsp-porte) *(notes, TD ; à vérifier : `av-dsp-porte-notes`)*.
+- **Porte de durée $\Ts$** : $\Gamma_{s_l}(f) = \sigma_A^2 \Ts \sinc^2(f\Ts)$, avec $\sinc(x) = \frac{\sin \pi x}{\pi x}$ ; lobe principal $[-1/\Ts, 1/\Ts]$, soit $B = 1/\Ts$ (@eq-dsp-porte) *(notes, TD ; sommet $\sigma_A^2\Ts$ d'après la correction du TD, les notes écrivent $\sigma_a^2/\Ts$ : `av-dsp-porte-notes`)*.
 - **Symboles non centrés** (OOK) : la moyenne $m_A$ crée des raies dans la DSP ; avec une porte, $\Gamma_{s_l}(f) = \frac{\Ts}{4}\sinc^2(f\Ts) + \frac{1}{4}\delta(f)$ (@exr-td-dsp-ook) *(complément)*.

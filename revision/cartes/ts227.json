@@ -367,6 +367,342 @@
       "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
       "front": "Que traduit l'ouverture **horizontale** de l'œil ?",
       "back": "La robustesse aux déphasages de l'échantillonneur."
+    },
+    {
+      "key": "ts227-dsp-motivation",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Pourquoi ne caractérise-t-on pas la répartition fréquentielle de la puissance de $s_l(t)$ par sa transformée de Fourier $S_l(f)$, et quelle grandeur utilise-t-on à la place ?",
+      "back": "$s_l(t)$ est **aléatoire** : $S_l(f)$ dépend du message tiré. On veut une grandeur qui ne dépende que des **statistiques** du message : la densité spectrale de puissance (DSP)."
+    },
+    {
+      "key": "ts227-variable-aleatoire",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Qu'est-ce qu'une variable aléatoire, et qu'est-ce qui distingue une VA discrète d'une VA continue ?",
+      "back": "Une VA $X(\\omega)$ traduit le résultat d'une expérience aléatoire ($\\omega$ : épreuve).\n- Discrète : valeurs dans un ensemble discret (ex. $\\{-3, -1, 1, 3\\}$).\n- Continue : valeurs dans un ensemble continu (ex. $\\mathbb{R}$, $[0, 1]$)."
+    },
+    {
+      "key": "ts227-loi-va-discrete",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Qu'est-ce qui détermine entièrement la loi d'une VA discrète à valeurs dans $\\{x_1, \\dots, x_N\\}$ ?",
+      "back": "Les probabilités $P(X = x_i)$ pour tous les $x_i$, $i \\in [1, N]$."
+    },
+    {
+      "key": "ts227-probabilite-union",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Que vaut $P(X \\in A \\cup B)$ dans le cas général, et quand $A$ et $B$ sont disjoints ?",
+      "back": "- Cas général : $P(X \\in A) + P(X \\in B) - P(X \\in A \\cap B)$.\n- Si $A \\cap B = \\emptyset$ : $P(X \\in A) + P(X \\in B)$."
+    },
+    {
+      "key": "ts227-fonction-repartition",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Définition et propriétés de la fonction de répartition d'une VA réelle ?",
+      "back": "$F_X(x) = P(X \\leq x)$, à valeurs dans $[0, 1]$, croissante, avec $F_X(-\\infty) = 0$ et $F_X(+\\infty) = 1$."
+    },
+    {
+      "key": "ts227-densite-probabilite",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Définition de la densité de probabilité $f_X$, et ses trois propriétés ?",
+      "back": "$f_X(x) = \\dfrac{\\mathrm{d}F_X(x)}{\\mathrm{d}x}$, avec :\n- $f_X(x) \\geq 0$ ;\n- $P(x_1 \\leq X \\leq x_2) = \\int_{x_1}^{x_2} f_X(x)\\, \\mathrm{d}x$ ;\n- $\\int_{-\\infty}^{+\\infty} f_X(x)\\, \\mathrm{d}x = 1$."
+    },
+    {
+      "key": "ts227-esperance-fonction",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Expression de $\\mathbb{E}[h(X)]$ pour une VA discrète, puis pour une VA continue ?",
+      "back": "- Discrète, valeurs $x_1, \\dots, x_N$ : $\\mathbb{E}[h(X)] = \\sum_{k=1}^{N} h(x_k)\\, P(X = x_k)$.\n- Continue, densité $f_X$ : $\\mathbb{E}[h(X)] = \\int_{\\mathbb{R}} h(x)\\, f_X(x)\\, \\mathrm{d}x$."
+    },
+    {
+      "key": "ts227-esperance-produit",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "$\\mathbb{E}[X + Y] = \\mathbb{E}[X] + \\mathbb{E}[Y]$ et $\\mathbb{E}[XY] = \\mathbb{E}[X]\\,\\mathbb{E}[Y]$ : sous quelle condition chacune est-elle vraie ?",
+      "back": "- $\\mathbb{E}[X + Y] = \\mathbb{E}[X] + \\mathbb{E}[Y]$ : toujours (linéarité, comme $\\mathbb{E}[aX + b] = a\\mathbb{E}[X] + b$).\n- $\\mathbb{E}[XY] = \\mathbb{E}[X]\\,\\mathbb{E}[Y]$ : si $X$ et $Y$ sont **indépendantes**."
+    },
+    {
+      "key": "ts227-variance",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Les deux expressions de la variance d'une VA, et la définition de l'écart-type ?",
+      "back": "$$\\mathrm{VAR}(X) = \\mathbb{E}\\left[|X - \\mathbb{E}[X]|^2\\right] = \\mathbb{E}\\left[|X|^2\\right] - \\left|\\mathbb{E}[X]\\right|^2$$\nL'écart-type est la racine carrée de la variance."
+    },
+    {
+      "key": "ts227-moment-ordre-2-discret",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Expression du moment d'ordre 2 $\\mathbb{E}[|X|^2]$ d'une VA discrète à valeurs $x_n$ ?",
+      "back": "$$\\mathbb{E}[|X|^2] = \\sum_{n} |x_n|^2\\, P(X = x_n)$$\nFormule de $\\mathbb{E}[h(X)]$ avec $h(x) = |x|^2$. (Les notes écrivent $x_0$ dans le terme général : indice corrigé en $x_n$.)"
+    },
+    {
+      "key": "ts227-exercice-va-pm1",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "$X \\in \\{-1, 1\\}$ avec $P(X = -1) = p$. Que valent $P(X = 1)$ et $\\mathbb{E}[X]$ ?",
+      "back": "$P(X = 1) = 1 - p$ et $\\mathbb{E}[X] = -p + (1 - p) = 1 - 2p$ (nulle pour $p = 1/2$)."
+    },
+    {
+      "key": "ts227-exercice-va-uniforme",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "$X$ a pour densité $\\frac{1}{2}$ sur $[0, 2]$ (0 ailleurs). Vérifier la normalisation et calculer $\\mathbb{E}[X]$.",
+      "back": "$\\int_0^2 \\frac{1}{2}\\, \\mathrm{d}x = 1$ ; $\\mathbb{E}[X] = \\int_0^2 \\frac{x}{2}\\, \\mathrm{d}x = 1$ (milieu de l'intervalle)."
+    },
+    {
+      "key": "ts227-exercice-bpsk-moments",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Symboles $A_n \\in \\{-g_0, g_0\\}$ équiprobables. Que valent $\\mathbb{E}[A_n]$ et $\\mathrm{VAR}(A_n)$ ?",
+      "back": "$\\mathbb{E}[A_n] = 0$ et $\\mathrm{VAR}(A_n) = \\mathbb{E}[|A_n|^2] - 0 = g_0^2$."
+    },
+    {
+      "key": "ts227-densite-gaussienne",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Densité de probabilité d'une VA $X \\sim \\mathcal{N}(\\mu, \\sigma^2)$ ?",
+      "back": "$$f_X(x) = \\frac{1}{\\sqrt{2\\pi\\sigma^2}}\\, e^{-\\frac{(x - \\mu)^2}{2\\sigma^2}}$$\n$\\mu$ : moyenne ; $\\sigma^2$ : variance."
+    },
+    {
+      "key": "ts227-gaussienne-affine",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "$X \\sim \\mathcal{N}(\\mu, \\sigma^2)$ et $Y = aX + b$. Quelle est la loi de $Y$ ?",
+      "back": "$Y \\sim \\mathcal{N}(a\\mu + b,\\ a^2\\sigma^2)$. Cas particulier : si $X \\sim \\mathcal{N}(0, 1)$, alors $\\sigma X + \\mu \\sim \\mathcal{N}(\\mu, \\sigma^2)$."
+    },
+    {
+      "key": "ts227-gaussienne-affine-piege",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Le support écrit $Y = aX + b \\sim \\mathcal{N}(a\\mu + b,\\ b^2\\sigma^2)$. Pourquoi est-ce faux, et comment le vérifier rapidement ?",
+      "back": "Une constante $b$ ne change pas la variance : $\\mathrm{VAR}(aX + b) = a^2\\sigma^2$. Contrôle : avec $X \\sim \\mathcal{N}(0, 1)$ et $Y = \\sigma X + \\mu$, la formule du support donnerait la variance $\\mu^2$ au lieu de $\\sigma^2$."
+    },
+    {
+      "key": "ts227-intervalles-confiance-gaussiens",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Pour une loi gaussienne, quelle probabilité contiennent les intervalles $\\mu \\pm \\sigma$ et $\\mu \\pm 3\\sigma$ ?",
+      "back": "- $\\pm\\sigma$ : $2\\Phi(1) - 1 \\approx 68{,}27\\ \\%$ (le support arrondit à 67 %).\n- $\\pm 3\\sigma$ : $2\\Phi(3) - 1 \\approx 99{,}73\\ \\%$ (le support arrondit à 99 %, le TD écrit 99,7 %)."
+    },
+    {
+      "key": "ts227-fonction-phi",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Définition de la fonction $\\Phi$ ?",
+      "back": "Fonction de répartition de la loi $\\mathcal{N}(0, 1)$ :\n$$\\Phi(u) = \\frac{1}{\\sqrt{2\\pi}} \\int_{-\\infty}^{u} e^{-\\frac{x^2}{2}}\\, \\mathrm{d}x$$"
+    },
+    {
+      "key": "ts227-exercice-rn-loi",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "$Z_n \\sim \\mathcal{N}(0, \\sigma^2)$ et $R_n = g_0 + Z_n$. Loi de $R_n$, et $P(R_n < 0)$ en fonction de $\\Phi$ ?",
+      "back": "$R_n \\sim \\mathcal{N}(g_0, \\sigma^2)$ ; en centrant et réduisant :\n$$P(R_n < 0) = \\Phi\\left(-\\frac{g_0}{\\sigma}\\right) = 1 - \\Phi\\left(\\frac{g_0}{\\sigma}\\right)$$"
+    },
+    {
+      "key": "ts227-exercice-rn-numerique",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "$R_n = g_0 + Z_n$, $Z_n \\sim \\mathcal{N}(0, \\sigma^2)$, avec $g_0 = 1$ et $\\sigma^2 = \\frac{1}{16}$ : que vaut $P(R_n < 0)$, et que représente-t-elle dans une chaîne bruitée ?",
+      "back": "$\\sigma = \\frac{1}{4}$, donc $P(R_n < 0) = \\Phi(-4) \\approx 3{,}2 \\cdot 10^{-5}$. C'est la probabilité de décider $-1$ alors que $+1$ a été émis, avec un seuil en 0."
+    },
+    {
+      "key": "ts227-processus-aleatoire",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Qu'est-ce qu'un processus aléatoire, et comment le note-t-on ?",
+      "back": "Une fonction de deux paramètres, une épreuve $\\omega$ et un temps : une VA qui dépend du temps (densité, moyenne, variance… peuvent varier avec $t$). Notation $X(\\omega, t)$ (temps continu) ou $X(\\omega, k)$ (temps discret), abrégée en $X(t)$, $X(k)$."
+    },
+    {
+      "key": "ts227-sl-signal-aleatoire",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "En quel sens le signal émis $s_l(t) = \\sum_m A_m h(t - m{T_s})$ est-il un processus aléatoire ? Avec une porte et des symboles $\\pm 1$, de quel type est-il ?",
+      "back": "Les symboles $A_m$ sont aléatoires : chaque épreuve $\\omega$ (suite tirée) donne une réalisation différente, et à $t$ fixé $s_l(t)$ est une VA. Avec porte et symboles $\\pm 1$ : **à temps continu, à valeurs discrètes**."
+    },
+    {
+      "key": "ts227-moyenne-processus",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Définition de la moyenne (d'ensemble) d'un processus aléatoire $X(t)$ ?",
+      "back": "$$m_X(t) = \\mathbb{E}[X(t)] = \\int_{-\\infty}^{+\\infty} x\\, f_{X(t)}(x)\\, \\mathrm{d}x$$\noù $f_{X(t)}$ est la densité de probabilité à l'instant $t$."
+    },
+    {
+      "key": "ts227-autocorrelation",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Définition de la fonction d'autocorrélation d'un processus aléatoire, sous la forme $R_X(t, \\tau)$ ?",
+      "back": "$$R_X(t, \\tau) = \\mathbb{E}\\left[X(t)\\, X^*(t - \\tau)\\right]$$\n(forme générale : $R_X(t_1, t_2) = \\mathbb{E}[X(t_1) X^*(t_2)]$, lien entre deux instants)."
+    },
+    {
+      "key": "ts227-stationnarite-ssl",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Quand un processus aléatoire est-il stationnaire au sens large (SSL) ?",
+      "back": "Quand sa moyenne et son autocorrélation ne dépendent pas de $t$ : $m_X(t) = m_X$ (constante) et $R_X(t, \\tau) = R_X(\\tau)$."
+    },
+    {
+      "key": "ts227-proprietes-autocorrelation",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Propriétés de $R_X(\\tau)$ pour un processus SSL (symétrie, maximum, puissance) ?",
+      "back": "- $X$ réel : $R_X(\\tau) = R_X(-\\tau)$ ; $X$ complexe : $R_X(\\tau) = R_X^*(-\\tau)$ (symétrie hermitienne).\n- $|R_X(\\tau)| \\leq R_X(0)$ pour tout $\\tau$.\n- Puissance moyenne : $P_X = \\mathbb{E}[|X(t)|^2] = R_X(0)$."
+    },
+    {
+      "key": "ts227-symetrie-hermitienne-demonstration",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Quelles étapes montrent que $R_X(\\tau) = R_X^*(-\\tau)$ pour un processus SSL ?",
+      "back": "- Écrire $\\mathbb{E}[X(t) X^*(t - \\tau)] = \\mathbb{E}[X^*(t) X(t - \\tau)]^*$.\n- Changement de variable $u = t - \\tau$ : $\\mathbb{E}[X^*(u + \\tau) X(u)]^*$.\n- Par stationnarité, $\\mathbb{E}[X(u) X^*(u + \\tau)] = R_X(-\\tau)$, d'où $R_X^*(-\\tau)$."
+    },
+    {
+      "key": "ts227-maximum-autocorrelation",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Quel argument montre que $|R_X(\\tau)| \\leq R_X(0)$ ?",
+      "back": "L'inégalité de Cauchy-Schwarz : $|\\mathbb{E}[X(t) X^*(t - \\tau)]|^2 \\leq \\mathbb{E}[|X(t)|^2]\\, \\mathbb{E}[|X(t - \\tau)|^2] = R_X(0)^2$."
+    },
+    {
+      "key": "ts227-wiener-khintchine",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Théorème de Wiener-Khintchine : expression de la DSP, et pour quels processus ?",
+      "back": "Pour un processus **stationnaire au sens large** à temps continu :\n$$\\Gamma_X(f) = \\operatorname{TF}(R_X(\\tau)) = \\int_{-\\infty}^{+\\infty} R_X(\\tau)\\, e^{-j2\\pi f\\tau}\\, \\mathrm{d}\\tau$$"
+    },
+    {
+      "key": "ts227-dsp-temps-discret",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Expression de la DSP d'un processus SSL à temps discret ?",
+      "back": "$$\\Gamma_X(f) = \\operatorname{TFD}(R_X(k)) = \\sum_{k \\in \\mathbb{Z}} R_X(k)\\, e^{-j2\\pi f k T_e}$$\n$T_e$ : période d'échantillonnage."
+    },
+    {
+      "key": "ts227-puissance-aire-dsp",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Quel lien y a-t-il entre la puissance moyenne d'un processus SSL et sa DSP ?",
+      "back": "Par TF inverse, $R_X(\\tau) = \\int \\Gamma_X(f)\\, e^{j2\\pi f\\tau}\\, \\mathrm{d}f$, donc\n$$P_X = R_X(0) = \\int_{-\\infty}^{+\\infty} \\Gamma_X(f)\\, \\mathrm{d}f$$\nLa puissance est l'aire sous la DSP."
+    },
+    {
+      "key": "ts227-dsp-energie-puissance",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Le support dit que la DSP « caractérise la distribution de l'énergie en fréquence ». Que répartit-elle exactement ?",
+      "back": "La **puissance** moyenne : un processus stationnaire de puissance finie a en général une énergie infinie."
+    },
+    {
+      "key": "ts227-bruit-blanc",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "DSP et autocorrélation d'un bruit blanc ; que signifie l'adjectif « gaussien » ?",
+      "back": "DSP constante $\\frac{N_0}{2}$ sur toutes les fréquences, donc $R(\\tau) = \\frac{N_0}{2}\\,\\delta(\\tau)$ (puissance totale infinie : modèle idéal). « Gaussien » porte sur la loi des valeurs du bruit, pas sur sa DSP."
+    },
+    {
+      "key": "ts227-bruit-blanc-puissance-bande",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Bruit blanc réel de DSP $\\frac{N_0}{2}$, filtré dans la bande $[f_p - B, f_p + B]$ (filtre passe-bande réel). Que vaut l'aire de cette bande sous la DSP, et la puissance totale du bruit filtré ?",
+      "back": "Aire de la bande positive : $\\frac{N_0}{2} \\times 2B = N_0 B$. La bande symétrique $[-f_p - B, -f_p + B]$ porte la même puissance : puissance totale $2 N_0 B$."
+    },
+    {
+      "key": "ts227-cyclostationnarite",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Quand un processus est-il cyclostationnaire (au sens large) de période ${T_s}$ ?",
+      "back": "Quand ses propriétés statistiques sont périodiques de période ${T_s}$ : $m_X(t) = m_X(t + {T_s})$ et $R_X(t, \\tau) = R_X(t + {T_s}, \\tau)$."
+    },
+    {
+      "key": "ts227-dsp-cyclostationnaire",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Comment obtient-on la DSP d'un processus cyclostationnaire de période ${T_s}$ ?",
+      "back": "TF de l'**autocorrélation moyennée** sur une période :\n$$\\tilde{R}_X(\\tau) = \\frac{1}{{T_s}} \\int_0^{{T_s}} R_X(t, \\tau)\\, \\mathrm{d}t, \\qquad \\Gamma_X(f) = \\operatorname{TF}(\\tilde{R}_X(\\tau))$$"
+    },
+    {
+      "key": "ts227-retard-aleatoire-stationnaire",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "$X(t)$ cyclostationnaire de période $T$, $Y(t) = X(t - \\theta)$ avec $\\theta \\sim \\mathcal{U}_{[0, T[}$ indépendant de $X$. Que peut-on dire de $Y$, et quel lien avec la DSP de $X$ ?",
+      "back": "$Y$ est **stationnaire** : $m_Y = \\frac{1}{T}\\int_0^T m_X(u)\\, \\mathrm{d}u$ (constante) et $R_Y(\\tau) = \\tilde{R}_X(\\tau)$. La DSP d'un processus cyclostationnaire est donc celle du processus rendu stationnaire par un retard aléatoire uniforme (on « oublie » l'origine des temps)."
+    },
+    {
+      "key": "ts227-filtrage-dsp",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Un processus $X$ passe dans un filtre linéaire invariant $h(t)$. Que vaut la DSP de la sortie $Y$, et que deviennent stationnarité et cyclostationnarité ?",
+      "back": "$$\\Gamma_Y(f) = |H(f)|^2\\, \\Gamma_X(f)$$\n$Y$ est un processus aléatoire qui conserve la stationnarité ou la cyclostationnarité de $X$."
+    },
+    {
+      "key": "ts227-bennett-conditions",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Expression de la formule de Bennett, et hypothèses nécessaires ?",
+      "back": "$$\\Gamma_X(f) = \\frac{|H(f)|^2}{{T_s}} \\sum_m R_A[m]\\, e^{-j2\\pi f m {T_s}}, \\qquad R_A[m] = \\mathbb{E}[A_n A^*_{n-m}]$$\nSymboles $A_m$ formant un processus **stationnaire** à temps discret, mis en forme par un filtre linéaire invariant $h(t)$ au rythme $1/{T_s}$ : $X(t) = \\sum_m A_m h(t - m{T_s})$."
+    },
+    {
+      "key": "ts227-bennett-cyclostationnaire",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Dans la démonstration de Bennett, comment montre-t-on que $s_l(t)$ est cyclostationnaire de période ${T_s}$ ?",
+      "back": "$m_{s_l}(t) = m_A \\sum_k h(t - k{T_s})$ et $R_{s_l}(t, \\tau) = \\sum_k \\sum_{k'} R_A[k - k']\\, h(t - k{T_s})\\, h^*(t - \\tau - k'{T_s})$ : remplacer $t$ par $t + {T_s}$ revient au changement d'indices $k \\leftarrow k - 1$ (et $k' \\leftarrow k' - 1$), qui laisse les sommes inchangées."
+    },
+    {
+      "key": "ts227-bennett-autocorrelation-moyennee",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Dans la démonstration de Bennett, que vaut l'autocorrélation moyennée de $s_l(t)$, et quelles étapes y mènent ?",
+      "back": "$$\\tilde{R}_{s_l}(\\tau) = \\frac{1}{{T_s}} \\sum_d R_A[d]\\, R_h(\\tau - d{T_s})$$\nPoser $d = k - k'$, intégrer sur $[0, {T_s}]$, changer $t \\leftarrow t - k{T_s}$, puis réunir les intervalles $[-k{T_s}, -(k - 1){T_s}]$ en une intégrale sur $\\mathbb{R}$ (Chasles)."
+    },
+    {
+      "key": "ts227-autocorrelation-deterministe",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Qu'est-ce que l'autocorrélation déterministe $R_h$ d'un filtre $h$, et quelle est sa transformée de Fourier ?",
+      "back": "$R_h(\\tau) = \\int h(t)\\, h^*(t - \\tau)\\, \\mathrm{d}t$, convolution de $h(t)$ et $h^*(-t)$ ; donc $\\operatorname{TF}(R_h)(f) = |H(f)|^2$. (La correction du TD la note $v(\\tau)$.)"
+    },
+    {
+      "key": "ts227-bennett-interpretation",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Comment interpréter la formule de Bennett, et pourquoi parle-t-on de filtre de « mise en forme » ?",
+      "back": "$\\Gamma_{s_l}(f) = \\Gamma_{s_a}(f)\\, |H(f)|^2$, avec $\\Gamma_{s_a}(f) = \\frac{1}{{T_s}}\\sum_d R_A[d]\\, e^{-j2\\pi f d{T_s}}$ DSP du signal des symboles. Le plus souvent $\\Gamma_{s_a}$ est constante, donc $\\Gamma_{s_l} \\propto |H|^2$ : $h$ fixe l'allure de la DSP, donc la **bande passante** de la transmission."
+    },
+    {
+      "key": "ts227-bennett-convention-td",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "L'énoncé du TD définit $R_A[k] = \\mathbb{E}(A_n A^*_{n+k})$. Que change cette convention dans la formule de Bennett ?",
+      "back": "L'exponentielle devient $e^{+j2\\pi f m{T_s}}$ (ou $R_A$ est remplacée par $R_A^*$) ; la DSP est la même. Bristol suit partout la convention du poly : $R_A[m] = \\mathbb{E}[A_n A^*_{n-m}]$, $e^{-j2\\pi f m{T_s}}$."
+    },
+    {
+      "key": "ts227-dsp-symboles-iid",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "DSP du signal émis pour des symboles iid centrés de variance $\\sigma_A^2$, et pourquoi ?",
+      "back": "$$\\Gamma_{s_l}(f) = \\sigma_A^2\\, \\frac{|H(f)|^2}{{T_s}}$$\nCar $R_A[0] = \\sigma_A^2$ et $R_A[d] = \\mathbb{E}[A_n]\\,\\mathbb{E}[A^*_{n-d}] = 0$ pour $d \\neq 0$."
+    },
+    {
+      "key": "ts227-puissance-signal-emis",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Puissance du signal émis $s_l(t)$ pour des symboles iid centrés de variance $\\sigma_A^2$ ?",
+      "back": "$$P_{s_l} = \\tilde{R}_{s_l}(0) = \\frac{\\sigma_A^2\\, E_h}{{T_s}}, \\qquad E_h = \\int |h(t)|^2\\, \\mathrm{d}t$$\nÉnergie moyenne par symbole divisée par la durée d'un symbole."
+    },
+    {
+      "key": "ts227-tf-porte-retardee",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Fonction de transfert $H(f)$ de la porte d'amplitude 1 sur $[0, {T_s}]$ (convention $e^{-j2\\pi ft}$) ?",
+      "back": "$$H(f) = e^{-j\\pi f{T_s}}\\, {T_s} \\operatorname{sinc}(f{T_s}), \\qquad \\operatorname{sinc}(x) = \\frac{\\sin(\\pi x)}{\\pi x}$$\n${T_s} \\operatorname{sinc}(f{T_s}) = \\frac{\\sin(\\pi f{T_s})}{\\pi f}$ est la TF de la porte centrée ; le retard de ${T_s}/2$ donne la phase."
+    },
+    {
+      "key": "ts227-dsp-porte",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "DSP du signal émis avec une mise en forme en porte de durée ${T_s}$ et des symboles iid centrés de variance $\\sigma_A^2$ ?",
+      "back": "$$\\Gamma_{s_l}(f) = \\sigma_A^2\\, {T_s} \\operatorname{sinc}^2(f{T_s})$$\nMaximum $\\sigma_A^2 {T_s}$ en $f = 0$ ; aire $\\sigma_A^2$ (puissance)."
+    },
+    {
+      "key": "ts227-dsp-porte-lobe",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Avec une porte de durée ${T_s}$, où s'annule la DSP, quelle bande occupe son lobe principal, et comment décroissent les lobes secondaires ?",
+      "back": "Zéros en $f = k/{T_s}$, $k \\neq 0$. Lobe principal $[-1/{T_s}, 1/{T_s}]$, soit $B = 1/{T_s}$ : deux fois la bande minimale de Nyquist $\\frac{1}{2{T_s}}$. Lobes secondaires en $1/f^2$ (lentement)."
+    },
+    {
+      "key": "ts227-dsp-porte-sommet-piege",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Les notes donnent au sommet de la DSP avec porte la valeur $\\frac{\\sigma_a^2}{{T_s}}$. Quelle est la bonne valeur, et comment la contrôler ?",
+      "back": "$\\sigma_a^2{T_s}$ (correction du TD) : $|H(0)|^2 = {T_s}^2$ pour une porte d'amplitude 1. Contrôle : l'aire $\\int \\sigma_a^2 {T_s} \\operatorname{sinc}^2(f{T_s})\\, \\mathrm{d}f = \\sigma_a^2$ doit être la puissance $\\sigma_a^2 E_h/{T_s}$, avec $E_h = {T_s}$."
+    },
+    {
+      "key": "ts227-phase-porte-piege",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "La correction du TD écrit $G(f) = e^{+j\\pi T_s f}\\, T_s \\operatorname{sinc}(T_s f)$ pour la porte sur $[0, T_s]$. Qu'en penser ?",
+      "back": "Avec la convention de la matière ($e^{-j2\\pi ft}$), un retard de ${T_s}/2$ donne $e^{-j\\pi f{T_s}}$ : le signe $+$ est corrigé. Le module, donc la DSP, n'en dépend pas."
+    },
+    {
+      "key": "ts227-exercice-moyenne-moyennee",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "Symboles stationnaires de moyenne $m_A$, filtre $h$ : que vaut la moyenne moyennée $\\bar{m}_{s_l} = \\frac{1}{{T_s}}\\int_0^{{T_s}} m_{s_l}(t)\\, \\mathrm{d}t$ ?",
+      "back": "$$\\bar{m}_{s_l} = \\frac{m_A}{{T_s}} \\int_{-\\infty}^{+\\infty} h(t)\\, \\mathrm{d}t$$\n(changement de variable $t \\leftarrow t - k{T_s}$, puis Chasles)."
+    },
+    {
+      "key": "ts227-exercice-dsp-2pam",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "DSP de $s_l(t)$ pour des symboles 2-PAM $\\{-1, 1\\}$ équiprobables et une porte d'amplitude 1 sur $[0, {T_s}[$ ?",
+      "back": "$m_A = 0$, $R_A[0] = 1$, $R_A[k \\neq 0] = 0$, donc\n$$\\Gamma_{s_l}(f) = \\frac{|H(f)|^2}{{T_s}} = {T_s} \\operatorname{sinc}^2({T_s} f)$$"
+    },
+    {
+      "key": "ts227-exercice-dsp-ook",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "DSP de $s_l(t)$ pour des symboles 2-OOK $\\{0, 1\\}$ équiprobables et une porte d'amplitude 1 sur $[0, {T_s}[$ ?",
+      "back": "$R_A[0] = \\frac{1}{2}$, $R_A[d \\neq 0] = \\frac{1}{4}$ ; formule sommatoire de Poisson, et $|H|^2$ nul en $k/{T_s}$ ($k \\neq 0$) :\n$$\\Gamma_{s_l}(f) = \\frac{{T_s}}{4} \\operatorname{sinc}^2(f{T_s}) + \\frac{1}{4}\\, \\delta(f)$$"
+    },
+    {
+      "key": "ts227-ook-raie-moyenne",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "D'où vient la raie $\\frac{1}{4}\\delta(f)$ dans la DSP de la 2-OOK, et que coûte-t-elle ?",
+      "back": "De la moyenne non nulle $m_A = \\frac{1}{2}$ : $A_k = \\frac{1}{2} + B_k$, $B_k$ centré (partie continue, 2-PAM de variance $\\frac14$), la moyenne donne une raie de puissance $m_A^2 = \\frac{1}{4}$. La moitié de la puissance ($\\frac12$) est dans la raie à $f = 0$, qui ne transporte pas d'information."
+    },
+    {
+      "key": "ts227-exercice-largeur-bande",
+      "chap": "Ch. 03 — DSP des signaux codés en ligne",
+      "front": "$f_e = 8\\ \\mathrm{kHz}$, $D_s = 2\\ \\mathrm{ksymboles/s}$, porte de durée ${T_s}$, 4-PAM. Allure de la DSP de $s_l[n]$, et largeur du lobe principal ?",
+      "back": "${T_s} = 0{,}5\\ \\mathrm{ms}$ : allure de $\\operatorname{sinc}^2(f{T_s})$ sur $[-4, 4]\\ \\mathrm{kHz}$, **périodisée** tous les $8\\ \\mathrm{kHz}$ (temps discret). Zéros aux multiples de $2\\ \\mathrm{kHz}$ : lobe principal $[-2, 2]\\ \\mathrm{kHz}$, largeur $4\\ \\mathrm{kHz}$ ($B = 1/{T_s} = 2\\ \\mathrm{kHz}$)."
     }
   ]
 }

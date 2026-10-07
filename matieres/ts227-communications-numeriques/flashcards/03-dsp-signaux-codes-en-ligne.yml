@@ -1,0 +1,613 @@
+# Flashcards — TS227, chapitre 3 : DSP des signaux codés en ligne.
+# Générées le 2026-10-07 à partir du cours validé (étape 8). Format : conventions.md § 10.
+# Conversion : python scripts/flashcards.py (écrit revision/cartes/ts227.json).
+# Rappels : un identifiant n'est jamais modifié ni réutilisé ; une carte supprimée
+# va dans ids-retires. Les lignes d'un même paragraphe sont jointes par le script ;
+# une ligne « - … » ou un bloc $$…$$ commencent une nouvelle ligne ; une ligne vide sépare deux paragraphes.
+matiere: ts227
+chapitre: 3
+cours: cours/03-dsp-signaux-codes-en-ligne.qmd
+ids-retires: []
+cartes:
+
+  # --- Objet du chapitre ---
+
+  - id: ts227-dsp-motivation
+    type: definition
+    question: |
+      Pourquoi ne caractérise-t-on pas la répartition fréquentielle de la puissance de $s_l(t)$
+      par sa transformée de Fourier $S_l(f)$, et quelle grandeur utilise-t-on à la place ?
+    reponse: |
+      $s_l(t)$ est **aléatoire** : $S_l(f)$ dépend du message tiré.
+      On veut une grandeur qui ne dépende que des **statistiques** du message :
+      la densité spectrale de puissance (DSP).
+    ref: sec-intro-dsp
+    source: officiel
+
+  # --- Rappels de probabilités ---
+
+  - id: ts227-variable-aleatoire
+    type: definition
+    question: |
+      Qu'est-ce qu'une variable aléatoire, et qu'est-ce qui distingue une VA discrète d'une VA continue ?
+    reponse: |
+      Une VA $X(\omega)$ traduit le résultat d'une expérience aléatoire ($\omega$ : épreuve).
+      - Discrète : valeurs dans un ensemble discret (ex. $\{-3, -1, 1, 3\}$).
+      - Continue : valeurs dans un ensemble continu (ex. $\mathbb{R}$, $[0, 1]$).
+    ref: def-variable-aleatoire
+    source: officiel
+
+  - id: ts227-loi-va-discrete
+    type: propriete
+    question: |
+      Qu'est-ce qui détermine entièrement la loi d'une VA discrète à valeurs dans $\{x_1, \dots, x_N\}$ ?
+    reponse: |
+      Les probabilités $P(X = x_i)$ pour tous les $x_i$, $i \in [1, N]$.
+    ref: sec-loi-probabilite
+    source: officiel
+
+  - id: ts227-probabilite-union
+    type: formule
+    question: |
+      Que vaut $P(X \in A \cup B)$ dans le cas général, et quand $A$ et $B$ sont disjoints ?
+    reponse: |
+      - Cas général : $P(X \in A) + P(X \in B) - P(X \in A \cap B)$.
+      - Si $A \cap B = \emptyset$ : $P(X \in A) + P(X \in B)$.
+    ref: prp-probabilite
+    source: officiel
+
+  - id: ts227-fonction-repartition
+    type: definition
+    question: |
+      Définition et propriétés de la fonction de répartition d'une VA réelle ?
+    reponse: |
+      $F_X(x) = P(X \leq x)$, à valeurs dans $[0, 1]$, croissante,
+      avec $F_X(-\infty) = 0$ et $F_X(+\infty) = 1$.
+    ref: def-fonction-repartition
+    source: officiel
+
+  - id: ts227-densite-probabilite
+    type: definition
+    question: |
+      Définition de la densité de probabilité $f_X$, et ses trois propriétés ?
+    reponse: |
+      $f_X(x) = \dfrac{\mathrm{d}F_X(x)}{\mathrm{d}x}$, avec :
+      - $f_X(x) \geq 0$ ;
+      - $P(x_1 \leq X \leq x_2) = \int_{x_1}^{x_2} f_X(x)\, \mathrm{d}x$ ;
+      - $\int_{-\infty}^{+\infty} f_X(x)\, \mathrm{d}x = 1$.
+    ref: def-densite-probabilite
+    source: officiel
+
+  - id: ts227-esperance-fonction
+    type: formule
+    question: |
+      Expression de $\E[h(X)]$ pour une VA discrète, puis pour une VA continue ?
+    reponse: |
+      - Discrète, valeurs $x_1, \dots, x_N$ : $\E[h(X)] = \sum_{k=1}^{N} h(x_k)\, P(X = x_k)$.
+      - Continue, densité $f_X$ : $\E[h(X)] = \int_{\mathbb{R}} h(x)\, f_X(x)\, \mathrm{d}x$.
+    ref: eq-esperance-fonction
+    source: officiel
+
+  - id: ts227-esperance-produit
+    type: condition
+    question: |
+      $\E[X + Y] = \E[X] + \E[Y]$ et $\E[XY] = \E[X]\,\E[Y]$ : sous quelle condition chacune est-elle vraie ?
+    reponse: |
+      - $\E[X + Y] = \E[X] + \E[Y]$ : toujours (linéarité, comme $\E[aX + b] = a\E[X] + b$).
+      - $\E[XY] = \E[X]\,\E[Y]$ : si $X$ et $Y$ sont **indépendantes**.
+    ref: prp-esperance
+    source: officiel
+
+  - id: ts227-variance
+    type: formule
+    question: |
+      Les deux expressions de la variance d'une VA, et la définition de l'écart-type ?
+    reponse: |
+      $$\mathrm{VAR}(X) = \E\left[|X - \E[X]|^2\right] = \E\left[|X|^2\right] - \left|\E[X]\right|^2$$
+      L'écart-type est la racine carrée de la variance.
+    ref: eq-variance
+    source: officiel
+
+  - id: ts227-moment-ordre-2-discret
+    type: formule
+    question: |
+      Expression du moment d'ordre 2 $\E[|X|^2]$ d'une VA discrète à valeurs $x_n$ ?
+    reponse: |
+      $$\E[|X|^2] = \sum_{n} |x_n|^2\, P(X = x_n)$$
+      Formule de $\E[h(X)]$ avec $h(x) = |x|^2$. (Les notes écrivent $x_0$ dans le terme général :
+      indice corrigé en $x_n$.)
+    ref: sec-variance
+    source: notes
+
+  - id: ts227-exercice-va-pm1
+    type: exercice
+    question: |
+      $X \in \{-1, 1\}$ avec $P(X = -1) = p$. Que valent $P(X = 1)$ et $\E[X]$ ?
+    reponse: |
+      $P(X = 1) = 1 - p$ et $\E[X] = -p + (1 - p) = 1 - 2p$ (nulle pour $p = 1/2$).
+    ref: exr-va-discrete-pm1
+    source: complement
+
+  - id: ts227-exercice-va-uniforme
+    type: exercice
+    question: |
+      $X$ a pour densité $\frac{1}{2}$ sur $[0, 2]$ (0 ailleurs). Vérifier la normalisation et calculer $\E[X]$.
+    reponse: |
+      $\int_0^2 \frac{1}{2}\, \mathrm{d}x = 1$ ; $\E[X] = \int_0^2 \frac{x}{2}\, \mathrm{d}x = 1$ (milieu de l'intervalle).
+    ref: exr-va-uniforme
+    source: complement
+
+  - id: ts227-exercice-bpsk-moments
+    type: exercice
+    question: |
+      Symboles $A_n \in \{-g_0, g_0\}$ équiprobables. Que valent $\E[A_n]$ et $\mathrm{VAR}(A_n)$ ?
+    reponse: |
+      $\E[A_n] = 0$ et $\mathrm{VAR}(A_n) = \E[|A_n|^2] - 0 = g_0^2$.
+    ref: exr-loi-uniforme-discrete
+    source: complement
+
+  # --- Loi gaussienne ---
+
+  - id: ts227-densite-gaussienne
+    type: formule
+    question: |
+      Densité de probabilité d'une VA $X \sim \mathcal{N}(\mu, \sigma^2)$ ?
+    reponse: |
+      $$f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\, e^{-\frac{(x - \mu)^2}{2\sigma^2}}$$
+      $\mu$ : moyenne ; $\sigma^2$ : variance.
+    ref: eq-densite-gaussienne
+    source: officiel
+
+  - id: ts227-gaussienne-affine
+    type: propriete
+    question: |
+      $X \sim \mathcal{N}(\mu, \sigma^2)$ et $Y = aX + b$. Quelle est la loi de $Y$ ?
+    reponse: |
+      $Y \sim \mathcal{N}(a\mu + b,\ a^2\sigma^2)$.
+      Cas particulier : si $X \sim \mathcal{N}(0, 1)$, alors $\sigma X + \mu \sim \mathcal{N}(\mu, \sigma^2)$.
+    ref: prp-loi-gaussienne
+    source: officiel
+
+  - id: ts227-gaussienne-affine-piege
+    type: piege
+    question: |
+      Le support écrit $Y = aX + b \sim \mathcal{N}(a\mu + b,\ b^2\sigma^2)$. Pourquoi est-ce faux,
+      et comment le vérifier rapidement ?
+    reponse: |
+      Une constante $b$ ne change pas la variance : $\mathrm{VAR}(aX + b) = a^2\sigma^2$.
+      Contrôle : avec $X \sim \mathcal{N}(0, 1)$ et $Y = \sigma X + \mu$, la formule du support
+      donnerait la variance $\mu^2$ au lieu de $\sigma^2$.
+    ref: prp-loi-gaussienne
+    source: officiel
+
+  - id: ts227-intervalles-confiance-gaussiens
+    type: resultat
+    question: |
+      Pour une loi gaussienne, quelle probabilité contiennent les intervalles $\mu \pm \sigma$ et $\mu \pm 3\sigma$ ?
+    reponse: |
+      - $\pm\sigma$ : $2\Phi(1) - 1 \approx 68{,}27\ \%$ (le support arrondit à 67 %).
+      - $\pm 3\sigma$ : $2\Phi(3) - 1 \approx 99{,}73\ \%$ (le support arrondit à 99 %, le TD écrit 99,7 %).
+    ref: prp-loi-gaussienne
+    source: officiel
+
+  - id: ts227-fonction-phi
+    type: definition
+    question: |
+      Définition de la fonction $\Phi$ ?
+    reponse: |
+      Fonction de répartition de la loi $\mathcal{N}(0, 1)$ :
+      $$\Phi(u) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{u} e^{-\frac{x^2}{2}}\, \mathrm{d}x$$
+    ref: eq-fonction-phi
+    source: officiel
+
+  - id: ts227-exercice-rn-loi
+    type: exercice
+    question: |
+      $Z_n \sim \mathcal{N}(0, \sigma^2)$ et $R_n = g_0 + Z_n$. Loi de $R_n$, et $P(R_n < 0)$ en fonction de $\Phi$ ?
+    reponse: |
+      $R_n \sim \mathcal{N}(g_0, \sigma^2)$ ; en centrant et réduisant :
+      $$P(R_n < 0) = \Phi\left(-\frac{g_0}{\sigma}\right) = 1 - \Phi\left(\frac{g_0}{\sigma}\right)$$
+    ref: exr-loi-gaussienne
+    source: complement
+
+  - id: ts227-exercice-rn-numerique
+    type: exercice
+    question: |
+      $R_n = g_0 + Z_n$, $Z_n \sim \mathcal{N}(0, \sigma^2)$, avec $g_0 = 1$ et $\sigma^2 = \frac{1}{16}$ :
+      que vaut $P(R_n < 0)$, et que représente-t-elle dans une chaîne bruitée ?
+    reponse: |
+      $\sigma = \frac{1}{4}$, donc $P(R_n < 0) = \Phi(-4) \approx 3{,}2 \cdot 10^{-5}$.
+      C'est la probabilité de décider $-1$ alors que $+1$ a été émis, avec un seuil en 0.
+    ref: exr-loi-gaussienne
+    source: complement
+
+  # --- Processus aléatoires, stationnarité ---
+
+  - id: ts227-processus-aleatoire
+    type: definition
+    question: |
+      Qu'est-ce qu'un processus aléatoire, et comment le note-t-on ?
+    reponse: |
+      Une fonction de deux paramètres, une épreuve $\omega$ et un temps : une VA qui dépend du temps
+      (densité, moyenne, variance… peuvent varier avec $t$).
+      Notation $X(\omega, t)$ (temps continu) ou $X(\omega, k)$ (temps discret), abrégée en $X(t)$, $X(k)$.
+    ref: def-processus-aleatoire
+    source: officiel
+
+  - id: ts227-sl-signal-aleatoire
+    type: relation
+    question: |
+      En quel sens le signal émis $s_l(t) = \sum_m A_m h(t - m\Ts)$ est-il un processus aléatoire ?
+      Avec une porte et des symboles $\pm 1$, de quel type est-il ?
+    reponse: |
+      Les symboles $A_m$ sont aléatoires : chaque épreuve $\omega$ (suite tirée) donne une réalisation
+      différente, et à $t$ fixé $s_l(t)$ est une VA.
+      Avec porte et symboles $\pm 1$ : **à temps continu, à valeurs discrètes**.
+    ref: sec-definition-processus
+    source: notes
+
+  - id: ts227-moyenne-processus
+    type: definition
+    question: |
+      Définition de la moyenne (d'ensemble) d'un processus aléatoire $X(t)$ ?
+    reponse: |
+      $$m_X(t) = \E[X(t)] = \int_{-\infty}^{+\infty} x\, f_{X(t)}(x)\, \mathrm{d}x$$
+      où $f_{X(t)}$ est la densité de probabilité à l'instant $t$.
+    ref: def-moyenne-processus
+    source: officiel
+
+  - id: ts227-autocorrelation
+    type: definition
+    question: |
+      Définition de la fonction d'autocorrélation d'un processus aléatoire, sous la forme $R_X(t, \tau)$ ?
+    reponse: |
+      $$R_X(t, \tau) = \E\left[X(t)\, X^*(t - \tau)\right]$$
+      (forme générale : $R_X(t_1, t_2) = \E[X(t_1) X^*(t_2)]$, lien entre deux instants).
+    ref: eq-autocorrelation
+    source: officiel
+
+  - id: ts227-stationnarite-ssl
+    type: definition
+    question: |
+      Quand un processus aléatoire est-il stationnaire au sens large (SSL) ?
+    reponse: |
+      Quand sa moyenne et son autocorrélation ne dépendent pas de $t$ :
+      $m_X(t) = m_X$ (constante) et $R_X(t, \tau) = R_X(\tau)$.
+    ref: def-stationnarite
+    source: officiel
+
+  - id: ts227-proprietes-autocorrelation
+    type: propriete
+    question: |
+      Propriétés de $R_X(\tau)$ pour un processus SSL (symétrie, maximum, puissance) ?
+    reponse: |
+      - $X$ réel : $R_X(\tau) = R_X(-\tau)$ ; $X$ complexe : $R_X(\tau) = R_X^*(-\tau)$ (symétrie hermitienne).
+      - $|R_X(\tau)| \leq R_X(0)$ pour tout $\tau$.
+      - Puissance moyenne : $P_X = \E[|X(t)|^2] = R_X(0)$.
+    ref: prp-autocorrelation-stationnaire
+    source: officiel
+
+  - id: ts227-symetrie-hermitienne-demonstration
+    type: raisonnement
+    question: |
+      Quelles étapes montrent que $R_X(\tau) = R_X^*(-\tau)$ pour un processus SSL ?
+    reponse: |
+      - Écrire $\E[X(t) X^*(t - \tau)] = \E[X^*(t) X(t - \tau)]^*$.
+      - Changement de variable $u = t - \tau$ : $\E[X^*(u + \tau) X(u)]^*$.
+      - Par stationnarité, $\E[X(u) X^*(u + \tau)] = R_X(-\tau)$, d'où $R_X^*(-\tau)$.
+    ref: prp-autocorrelation-stationnaire
+    source: notes
+
+  - id: ts227-maximum-autocorrelation
+    type: raisonnement
+    question: |
+      Quel argument montre que $|R_X(\tau)| \leq R_X(0)$ ?
+    reponse: |
+      L'inégalité de Cauchy-Schwarz :
+      $|\E[X(t) X^*(t - \tau)]|^2 \leq \E[|X(t)|^2]\, \E[|X(t - \tau)|^2] = R_X(0)^2$.
+    ref: prp-autocorrelation-stationnaire
+    source: complement
+
+  # --- DSP ---
+
+  - id: ts227-wiener-khintchine
+    type: formule
+    question: |
+      Théorème de Wiener-Khintchine : expression de la DSP, et pour quels processus ?
+    reponse: |
+      Pour un processus **stationnaire au sens large** à temps continu :
+      $$\Gamma_X(f) = \TF(R_X(\tau)) = \int_{-\infty}^{+\infty} R_X(\tau)\, e^{-j2\pi f\tau}\, \mathrm{d}\tau$$
+    ref: eq-wiener-khintchine
+    source: officiel
+
+  - id: ts227-dsp-temps-discret
+    type: formule
+    question: |
+      Expression de la DSP d'un processus SSL à temps discret ?
+    reponse: |
+      $$\Gamma_X(f) = \operatorname{TFD}(R_X(k)) = \sum_{k \in \mathbb{Z}} R_X(k)\, e^{-j2\pi f k T_e}$$
+      $T_e$ : période d'échantillonnage.
+    ref: def-dsp
+    source: officiel
+
+  - id: ts227-puissance-aire-dsp
+    type: relation
+    question: |
+      Quel lien y a-t-il entre la puissance moyenne d'un processus SSL et sa DSP ?
+    reponse: |
+      Par TF inverse, $R_X(\tau) = \int \Gamma_X(f)\, e^{j2\pi f\tau}\, \mathrm{d}f$, donc
+      $$P_X = R_X(0) = \int_{-\infty}^{+\infty} \Gamma_X(f)\, \mathrm{d}f$$
+      La puissance est l'aire sous la DSP.
+    ref: eq-puissance-dsp
+    source: notes
+
+  - id: ts227-dsp-energie-puissance
+    type: piege
+    question: |
+      Le support dit que la DSP « caractérise la distribution de l'énergie en fréquence ». Que répartit-elle exactement ?
+    reponse: |
+      La **puissance** moyenne : un processus stationnaire de puissance finie a en général une énergie infinie.
+    ref: def-dsp
+    source: complement
+
+  - id: ts227-bruit-blanc
+    type: definition
+    question: |
+      DSP et autocorrélation d'un bruit blanc ; que signifie l'adjectif « gaussien » ?
+    reponse: |
+      DSP constante $\frac{N_0}{2}$ sur toutes les fréquences, donc $R(\tau) = \frac{N_0}{2}\,\delta(\tau)$
+      (puissance totale infinie : modèle idéal).
+      « Gaussien » porte sur la loi des valeurs du bruit, pas sur sa DSP.
+    ref: sec-bruit-blanc
+    source: notes
+
+  - id: ts227-bruit-blanc-puissance-bande
+    type: piege
+    question: |
+      Bruit blanc réel de DSP $\frac{N_0}{2}$, filtré dans la bande $[f_p - B, f_p + B]$ (filtre passe-bande réel).
+      Que vaut l'aire de cette bande sous la DSP, et la puissance totale du bruit filtré ?
+    reponse: |
+      Aire de la bande positive : $\frac{N_0}{2} \times 2B = N_0 B$.
+      La bande symétrique $[-f_p - B, -f_p + B]$ porte la même puissance : puissance totale $2 N_0 B$.
+    ref: sec-bruit-blanc
+    source: complement
+
+  # --- Cyclostationnarité ---
+
+  - id: ts227-cyclostationnarite
+    type: definition
+    question: |
+      Quand un processus est-il cyclostationnaire (au sens large) de période $\Ts$ ?
+    reponse: |
+      Quand ses propriétés statistiques sont périodiques de période $\Ts$ :
+      $m_X(t) = m_X(t + \Ts)$ et $R_X(t, \tau) = R_X(t + \Ts, \tau)$.
+    ref: def-cyclostationnarite
+    source: officiel
+
+  - id: ts227-dsp-cyclostationnaire
+    type: formule
+    question: |
+      Comment obtient-on la DSP d'un processus cyclostationnaire de période $\Ts$ ?
+    reponse: |
+      TF de l'**autocorrélation moyennée** sur une période :
+      $$\tilde{R}_X(\tau) = \frac{1}{\Ts} \int_0^{\Ts} R_X(t, \tau)\, \mathrm{d}t, \qquad \Gamma_X(f) = \TF(\tilde{R}_X(\tau))$$
+    ref: eq-autocorrelation-moyennee
+    source: officiel
+
+  - id: ts227-retard-aleatoire-stationnaire
+    type: resultat
+    question: |
+      $X(t)$ cyclostationnaire de période $T$, $Y(t) = X(t - \theta)$ avec $\theta \sim \mathcal{U}_{[0, T[}$
+      indépendant de $X$. Que peut-on dire de $Y$, et quel lien avec la DSP de $X$ ?
+    reponse: |
+      $Y$ est **stationnaire** : $m_Y = \frac{1}{T}\int_0^T m_X(u)\, \mathrm{d}u$ (constante) et $R_Y(\tau) = \tilde{R}_X(\tau)$.
+      La DSP d'un processus cyclostationnaire est donc celle du processus rendu stationnaire
+      par un retard aléatoire uniforme (on « oublie » l'origine des temps).
+    ref: exm-dephasage-aleatoire
+    source: notes
+
+  # --- Filtrage et formule de Bennett ---
+
+  - id: ts227-filtrage-dsp
+    type: formule
+    question: |
+      Un processus $X$ passe dans un filtre linéaire invariant $h(t)$. Que vaut la DSP de la sortie $Y$,
+      et que deviennent stationnarité et cyclostationnarité ?
+    reponse: |
+      $$\Gamma_Y(f) = |H(f)|^2\, \Gamma_X(f)$$
+      $Y$ est un processus aléatoire qui conserve la stationnarité ou la cyclostationnarité de $X$.
+    ref: eq-filtrage-dsp
+    source: officiel
+
+  - id: ts227-bennett-conditions
+    type: formule
+    question: |
+      Expression de la formule de Bennett, et hypothèses nécessaires ?
+    reponse: |
+      $$\Gamma_X(f) = \frac{|H(f)|^2}{\Ts} \sum_m R_A[m]\, e^{-j2\pi f m \Ts}, \qquad R_A[m] = \E[A_n A^*_{n-m}]$$
+      Symboles $A_m$ formant un processus **stationnaire** à temps discret, mis en forme
+      par un filtre linéaire invariant $h(t)$ au rythme $1/\Ts$ : $X(t) = \sum_m A_m h(t - m\Ts)$.
+    ref: eq-bennett
+    source: officiel
+
+  - id: ts227-bennett-cyclostationnaire
+    type: raisonnement
+    question: |
+      Dans la démonstration de Bennett, comment montre-t-on que $s_l(t)$ est cyclostationnaire de période $\Ts$ ?
+    reponse: |
+      $m_{s_l}(t) = m_A \sum_k h(t - k\Ts)$ et $R_{s_l}(t, \tau) = \sum_k \sum_{k'} R_A[k - k']\, h(t - k\Ts)\, h^*(t - \tau - k'\Ts)$ :
+      remplacer $t$ par $t + \Ts$ revient au changement d'indices $k \leftarrow k - 1$ (et $k' \leftarrow k' - 1$),
+      qui laisse les sommes inchangées.
+    ref: thm-bennett
+    source: officiel
+
+  - id: ts227-bennett-autocorrelation-moyennee
+    type: raisonnement
+    question: |
+      Dans la démonstration de Bennett, que vaut l'autocorrélation moyennée de $s_l(t)$, et quelles étapes y mènent ?
+    reponse: |
+      $$\tilde{R}_{s_l}(\tau) = \frac{1}{\Ts} \sum_d R_A[d]\, R_h(\tau - d\Ts)$$
+      Poser $d = k - k'$, intégrer sur $[0, \Ts]$, changer $t \leftarrow t - k\Ts$, puis réunir les intervalles
+      $[-k\Ts, -(k - 1)\Ts]$ en une intégrale sur $\mathbb{R}$ (Chasles).
+    ref: thm-bennett
+    source: officiel
+
+  - id: ts227-autocorrelation-deterministe
+    type: definition
+    question: |
+      Qu'est-ce que l'autocorrélation déterministe $R_h$ d'un filtre $h$, et quelle est sa transformée de Fourier ?
+    reponse: |
+      $R_h(\tau) = \int h(t)\, h^*(t - \tau)\, \mathrm{d}t$, convolution de $h(t)$ et $h^*(-t)$ ;
+      donc $\TF(R_h)(f) = |H(f)|^2$. (La correction du TD la note $v(\tau)$.)
+    ref: thm-bennett
+    source: notes
+
+  - id: ts227-bennett-interpretation
+    type: relation
+    question: |
+      Comment interpréter la formule de Bennett, et pourquoi parle-t-on de filtre de « mise en forme » ?
+    reponse: |
+      $\Gamma_{s_l}(f) = \Gamma_{s_a}(f)\, |H(f)|^2$, avec $\Gamma_{s_a}(f) = \frac{1}{\Ts}\sum_d R_A[d]\, e^{-j2\pi f d\Ts}$
+      DSP du signal des symboles. Le plus souvent $\Gamma_{s_a}$ est constante, donc $\Gamma_{s_l} \propto |H|^2$ :
+      $h$ fixe l'allure de la DSP, donc la **bande passante** de la transmission.
+    ref: sec-formule-bennett
+    source: officiel
+
+  - id: ts227-bennett-convention-td
+    type: piege
+    question: |
+      L'énoncé du TD définit $R_A[k] = \E(A_n A^*_{n+k})$. Que change cette convention dans la formule de Bennett ?
+    reponse: |
+      L'exponentielle devient $e^{+j2\pi f m\Ts}$ (ou $R_A$ est remplacée par $R_A^*$) ; la DSP est la même.
+      Bristol suit partout la convention du poly : $R_A[m] = \E[A_n A^*_{n-m}]$, $e^{-j2\pi f m\Ts}$.
+    ref: sec-exercices-td-dsp
+    source: complement
+
+  - id: ts227-dsp-symboles-iid
+    type: formule
+    question: |
+      DSP du signal émis pour des symboles iid centrés de variance $\sigma_A^2$, et pourquoi ?
+    reponse: |
+      $$\Gamma_{s_l}(f) = \sigma_A^2\, \frac{|H(f)|^2}{\Ts}$$
+      Car $R_A[0] = \sigma_A^2$ et $R_A[d] = \E[A_n]\,\E[A^*_{n-d}] = 0$ pour $d \neq 0$.
+    ref: eq-dsp-iid-centres
+    source: officiel
+
+  - id: ts227-puissance-signal-emis
+    type: formule
+    question: |
+      Puissance du signal émis $s_l(t)$ pour des symboles iid centrés de variance $\sigma_A^2$ ?
+    reponse: |
+      $$P_{s_l} = \tilde{R}_{s_l}(0) = \frac{\sigma_A^2\, E_h}{\Ts}, \qquad E_h = \int |h(t)|^2\, \mathrm{d}t$$
+      Énergie moyenne par symbole divisée par la durée d'un symbole.
+    ref: cor-bennett-iid
+    source: complement
+
+  # --- Mise en forme par une porte ---
+
+  - id: ts227-tf-porte-retardee
+    type: formule
+    question: |
+      Fonction de transfert $H(f)$ de la porte d'amplitude 1 sur $[0, \Ts]$ (convention $e^{-j2\pi ft}$) ?
+    reponse: |
+      $$H(f) = e^{-j\pi f\Ts}\, \Ts \sinc(f\Ts), \qquad \sinc(x) = \frac{\sin(\pi x)}{\pi x}$$
+      $\Ts \sinc(f\Ts) = \frac{\sin(\pi f\Ts)}{\pi f}$ est la TF de la porte centrée ; le retard de $\Ts/2$ donne la phase.
+    ref: sec-dsp-porte
+    source: complement
+
+  - id: ts227-dsp-porte
+    type: formule
+    question: |
+      DSP du signal émis avec une mise en forme en porte de durée $\Ts$ et des symboles iid centrés de variance $\sigma_A^2$ ?
+    reponse: |
+      $$\Gamma_{s_l}(f) = \sigma_A^2\, \Ts \sinc^2(f\Ts)$$
+      Maximum $\sigma_A^2 \Ts$ en $f = 0$ ; aire $\sigma_A^2$ (puissance).
+    ref: eq-dsp-porte
+    source: officiel
+
+  - id: ts227-dsp-porte-lobe
+    type: propriete
+    question: |
+      Avec une porte de durée $\Ts$, où s'annule la DSP, quelle bande occupe son lobe principal,
+      et comment décroissent les lobes secondaires ?
+    reponse: |
+      Zéros en $f = k/\Ts$, $k \neq 0$. Lobe principal $[-1/\Ts, 1/\Ts]$, soit $B = 1/\Ts$ :
+      deux fois la bande minimale de Nyquist $\frac{1}{2\Ts}$. Lobes secondaires en $1/f^2$ (lentement).
+    ref: eq-dsp-porte
+    source: notes
+
+  - id: ts227-dsp-porte-sommet-piege
+    type: piege
+    question: |
+      Les notes donnent au sommet de la DSP avec porte la valeur $\frac{\sigma_a^2}{\Ts}$. Quelle est la bonne valeur,
+      et comment la contrôler ?
+    reponse: |
+      $\sigma_a^2\Ts$ (correction du TD) : $|H(0)|^2 = \Ts^2$ pour une porte d'amplitude 1.
+      Contrôle : l'aire $\int \sigma_a^2 \Ts \sinc^2(f\Ts)\, \mathrm{d}f = \sigma_a^2$ doit être la puissance $\sigma_a^2 E_h/\Ts$, avec $E_h = \Ts$.
+    ref: exm-dsp-porte
+    source: notes
+
+  - id: ts227-phase-porte-piege
+    type: piege
+    question: |
+      La correction du TD écrit $G(f) = e^{+j\pi T_s f}\, T_s \sinc(T_s f)$ pour la porte sur $[0, T_s]$. Qu'en penser ?
+    reponse: |
+      Avec la convention de la matière ($e^{-j2\pi ft}$), un retard de $\Ts/2$ donne $e^{-j\pi f\Ts}$ : le signe $+$
+      est corrigé. Le module, donc la DSP, n'en dépend pas.
+    ref: sec-dsp-porte
+    source: officiel
+
+  # --- Exercices du TD ---
+
+  - id: ts227-exercice-moyenne-moyennee
+    type: exercice
+    question: |
+      Symboles stationnaires de moyenne $m_A$, filtre $h$ : que vaut la moyenne moyennée
+      $\bar{m}_{s_l} = \frac{1}{\Ts}\int_0^{\Ts} m_{s_l}(t)\, \mathrm{d}t$ ?
+    reponse: |
+      $$\bar{m}_{s_l} = \frac{m_A}{\Ts} \int_{-\infty}^{+\infty} h(t)\, \mathrm{d}t$$
+      (changement de variable $t \leftarrow t - k\Ts$, puis Chasles).
+    ref: exr-td-bennett
+    source: officiel
+
+  - id: ts227-exercice-dsp-2pam
+    type: exercice
+    question: |
+      DSP de $s_l(t)$ pour des symboles 2-PAM $\{-1, 1\}$ équiprobables et une porte d'amplitude 1 sur $[0, \Ts[$ ?
+    reponse: |
+      $m_A = 0$, $R_A[0] = 1$, $R_A[k \neq 0] = 0$, donc
+      $$\Gamma_{s_l}(f) = \frac{|H(f)|^2}{\Ts} = \Ts \sinc^2(\Ts f)$$
+    ref: exr-td-dsp-2pam
+    source: officiel
+
+  - id: ts227-exercice-dsp-ook
+    type: exercice
+    question: |
+      DSP de $s_l(t)$ pour des symboles 2-OOK $\{0, 1\}$ équiprobables et une porte d'amplitude 1 sur $[0, \Ts[$ ?
+    reponse: |
+      $R_A[0] = \frac{1}{2}$, $R_A[d \neq 0] = \frac{1}{4}$ ; formule sommatoire de Poisson, et $|H|^2$ nul en $k/\Ts$ ($k \neq 0$) :
+      $$\Gamma_{s_l}(f) = \frac{\Ts}{4} \sinc^2(f\Ts) + \frac{1}{4}\, \delta(f)$$
+    ref: exr-td-dsp-ook
+    source: complement
+
+  - id: ts227-ook-raie-moyenne
+    type: relation
+    question: |
+      D'où vient la raie $\frac{1}{4}\delta(f)$ dans la DSP de la 2-OOK, et que coûte-t-elle ?
+    reponse: |
+      De la moyenne non nulle $m_A = \frac{1}{2}$ : $A_k = \frac{1}{2} + B_k$, $B_k$ centré (partie continue, 2-PAM de variance $\frac14$),
+      la moyenne donne une raie de puissance $m_A^2 = \frac{1}{4}$.
+      La moitié de la puissance ($\frac12$) est dans la raie à $f = 0$, qui ne transporte pas d'information.
+    ref: exr-td-dsp-ook
+    source: complement
+
+  - id: ts227-exercice-largeur-bande
+    type: exercice
+    question: |
+      $f_e = 8\ \mathrm{kHz}$, $D_s = 2\ \mathrm{ksymboles/s}$, porte de durée $\Ts$, 4-PAM.
+      Allure de la DSP de $s_l[n]$, et largeur du lobe principal ?
+    reponse: |
+      $\Ts = 0{,}5\ \mathrm{ms}$ : allure de $\sinc^2(f\Ts)$ sur $[-4, 4]\ \mathrm{kHz}$, **périodisée** tous les $8\ \mathrm{kHz}$ (temps discret).
+      Zéros aux multiples de $2\ \mathrm{kHz}$ : lobe principal $[-2, 2]\ \mathrm{kHz}$, largeur $4\ \mathrm{kHz}$ ($B = 1/\Ts = 2\ \mathrm{kHz}$).
+    ref: exr-td-largeur-bande
+    source: complement

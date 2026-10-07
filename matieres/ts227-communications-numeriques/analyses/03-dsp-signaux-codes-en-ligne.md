@@ -1,7 +1,7 @@
 # TS227 — Chapitre 3 — Rapport d'analyse des sources
 
 > Étapes 2 à 5 du workflow (`CONTEXTE_PROJET.md`, section 11), enchaînées dans la même session à la demande d'Armand (conversation « Bristol — TS227 Chapitre 3 — Rédaction », 7 octobre 2026).
-> Chapitre : *DSP des signaux codés en ligne*. Fichier : `cours/03-dsp-signaux-codes-en-ligne.qmd`. Statut : `redige`.
+> Chapitre : *DSP des signaux codés en ligne*. Fichier : `cours/03-dsp-signaux-codes-en-ligne.qmd`. Statut : `flashcards` (étapes 6 à 8, sections 17 et 18).
 > **Mis à jour le 7 octobre 2026 avec les réponses d'Armand (étape 3)** : voir la section 16, qui fait foi en cas d'écart avec les sections 0 à 15.
 > Règle appliquée : `conventions.md` § 14 (choix de forme, de figures et de rédaction appliqués par défaut et listés en section 12 ; questions bloquantes regroupées en section 14).
 
@@ -224,6 +224,7 @@ Points d'imprécision traités **sans bloc** (pas d'erreur de sens) :
 | poly, p. 77 | « Exercice - Loi uniforme discrète », « (ie P…) » | ponctuation harmonisée (« c'est-à-dire ») |
 | td-correction, p. 7 | « formule de Bennettt » ; « la DSP de $P_{s_l}(t)$ » | « Bennett » ; « la DSP de $s_l(t)$ » |
 | td-correction, p. 4 | « période » écrit « préiode » | non repris (titre de question reformulé) |
+| poly, p. 79 | « Soit $Z_n$ une VA vérifiant $Z \sim \mathcal{N}(0, \sigma^2)$ » (indice manquant) | « $Z_n \sim \mathcal{N}(0, \sigma^2)$ », comme les notes (ajouté à l'étape 6) |
 
 ---
 
@@ -277,3 +278,62 @@ Armand laisse le choix à Claude pour `av-esperance-exercice-bpsk` et `av-moment
 - `av-moment-ordre-2-notes` : $\E[|X|^2] = \sum_n h(x_n)^2 P(X = x_n)$ avec $h(x) = x$, soit $\sum_n |x_n|^2 P(X = x_n)$.
 
 Bilan final : **1 bloc ouvert** (`av-dsp-porte-notes`), **4 tranchés** (`av-variance-affine`, `av-esperance-exercice-bpsk`, `av-moment-ordre-2-notes`, `av-phase-tf-porte-td`), 4 identifiants retirés.
+
+---
+
+## 17. Vérification (étape 6, 7 octobre 2026)
+
+Conversation « Bristol — TS227 Chapitre 3 — Vérification et flashcards ». Statut passé à `verifie` ; fiche matière : VÉRIFIÉ.
+
+### 17.1 Exhaustivité
+
+- **Support** : pages 61 à 88 relues (texte extrait du PDF) : toutes les définitions, propriétés, formules et énoncés d'exercices utiles sont présents ; pages écartées conformes au choix 2 (section 12).
+- **Notes** : f. 2 v°, f. 4 v°, f. 5 r° et f. 5 v° relues sur les photos : tout le contenu pédagogique du chapitre 3 est repris (12 blocs *Notes de cours*). Non repris, comme prévu (section 5) : la moyenne écrite avec $\mathrm{d}t$, la puissance $\E[X^2(t)]$, les lignes barrées de f. 5 v°, le haut de f. 4 v° (filtre adapté, chapitre 4).
+- **TD** : énoncé p. 2 (ex. 2, q. 1-11) et p. 4 (ex. 5, hypothèses et q. 10-11), correction p. 4-9 : conformes. Ajout : normalisation en énergie du filtre dans les hypothèses de l'étude pratique (q. 6), sans effet sur la largeur de bande.
+
+### 17.2 Formules
+
+- 569 formules compilées sans erreur par MathJax 3.2.2, macros de `_macros.qmd` (macro inconnue comptée comme erreur).
+- Recalculés : symétrie hermitienne et son complément ; démonstration de Bennett (signe de l'exponentielle) ; exemple du retard aléatoire ($m_Y$ constante, $R_Y = \tilde{R}_X$) ; calcul des notes f. 5 v° ; DSP 2-PAM, 2-OOK (raie $\frac14\delta(f)$ par Poisson, puissance $\frac12$) ; puissance $\sigma_A^2E_h/\Ts$ ; étude pratique ($\Ts f_e = 4$, noyau $\left|\sin(\pi f\Ts)/\sin(\pi fT_e)\right|^2$, lobe principal de 4 kHz) ; $\Phi(-4) \approx 3{,}17\cdot10^{-5}$.
+- Aucune nouvelle erreur de fond trouvée.
+
+### 17.3 Catégories, références, figures
+
+- Catégories conformes ; aucun segment `.notes` en ligne ; aucune catégorie imbriquée dans une autre.
+- Labels uniques dans la matière ; toutes les références `@…` résolues ; identifiants `av-…` cités existants ; toutes les équations labellisées sont citées ; divs équilibrés.
+- 6 figures présentes (5 du chapitre + chaîne du chapitre 2), légendes avec origine.
+
+### 17.4 Corrections de forme appliquées (`conventions.md` § 14)
+
+1. « À retenir », bruit blanc : la règle « puissance = intégrale sur la bande, fréquences négatives comprises » était marquée *(notes)* ; elle relève du complément. Ligne réécrite (notes : niveau $N_0/2$, aire $N_0B$ ; complément : $2N_0B$, $\frac{N_0}{2}\delta(\tau)$).
+2. Bloc `av-dsp-porte-notes` : la mention « Armand ne sait pas… » placée entre **Problème** et **Proposition** déplacée après la proposition (ordre de `conventions.md` § 5.2).
+3. Complément de l'exemple de la porte : $\sigma_a^2$ des notes = $\sigma_A^2$ du reste du chapitre.
+4. Complément « Puissance du signal émis » : renvoi à la définition du TD ($P_{s_l} = \bar{R}_{s_l}(0)$) au lieu de `@eq-puissance-dsp`, établie pour un PA stationnaire.
+5. Exercice de l'étude pratique : normalisation en énergie du filtre ajoutée aux hypothèses.
+6. Correction orthographique p. 79 ($Z \to Z_n$) ajoutée à la section 13 ; ligne vide en double supprimée.
+
+### 17.5 Points bloquants restants
+
+- `av-dsp-porte-notes` (seul bloc ouvert) : à trancher à la validation. Proposition : sommet $\sigma_a^2\Ts$ (calcul, correction du TD, contrôle par la puissance).
+
+### 17.6 Non vérifié
+
+- Rendu Quarto (`quarto preview`) : segments et blocs tranchés, premier environnement `cor-` du site.
+
+---
+
+## 18. Validation et flashcards (étapes 7 et 8, 7 octobre 2026)
+
+### 18.1 Validation
+
+- `av-dsp-porte-notes` : **tranché** par Armand, « prendre les résultats du TD » : $\Gamma_{s_l}(f) = \sigma_a^2\Ts\sinc^2(f\Ts)$, sommet $\sigma_a^2\Ts$ (correction du TD, p. 8). Bloc passé en `.tranche` avec **Décision** ; légende de `fig-dsp-porte` et « À retenir » mises à jour (mention *à vérifier* retirée).
+- Chapitre **validé** par Armand (statut `valide`), choix par défaut des sections 12 et 17.4 compris.
+- Bilan des blocs : **0 ouvert**, **5 tranchés** (`av-variance-affine`, `av-esperance-exercice-bpsk`, `av-moment-ordre-2-notes`, `av-dsp-porte-notes`, `av-phase-tf-porte-td`) ; 4 identifiants retirés (section 16).
+
+### 18.2 Flashcards
+
+- Fichier : `flashcards/03-dsp-signaux-codes-en-ligne.yml`, **56 cartes** ; statut du chapitre : `flashcards`.
+- Types : definition 12, formule 14, propriete 4, condition 1, raisonnement 4, relation 4, resultat 2, piege 6, exercice 9. Sources : officiel 33, notes 9, complement 14.
+- Pièges issus des blocs tranchés : variance affine ($b^2\sigma^2$), sommet de la DSP avec porte ($\sigma_a^2/\Ts$), phase de la TF de la porte (correction du TD), indice $x_0$ des notes ; plus « énergie » / puissance, bande du bruit blanc ($N_0B$ / $2N_0B$), convention d'autocorrélation de l'énoncé du TD.
+- Contrôles : `python scripts/flashcards.py --verifier` sans erreur (117 cartes TS227) ; 300 formules des cartes compilées sans erreur par MathJax 3.2.2 ; `revision/cartes/ts227.json` régénéré (56 nouvelles clés, 0 disparue).
+- Non vérifié : rendu des cartes dans l'application (`quarto preview`).

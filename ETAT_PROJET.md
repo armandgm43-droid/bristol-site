@@ -11,7 +11,7 @@
 
 Le prototype est validé. Le premier chapitre de test est le **chapitre 2 de TS227** (*Principes de communication en l'absence de bruit*). Son **rapport d'analyse** est fait et **toutes ses questions sont tranchées** (étape 3, section 13 du rapport `matieres/ts227-communications-numeriques/analyses/02-communication-sans-bruit.md`). Le chapitre est **rédigé** (texte et figures, étapes 4 et 5) : statut `redige`. Vérification faite (étape 6, rapport section 13.10), points V1 à V6 tranchés et appliqués : le chapitre est **validé** par Armand (statut `valide`, rapport section 13.11). **Flashcards générées** (étape 8, 61 cartes, rapport section 13.12) : statut `flashcards`. Le premier chapitre est donc fait de bout en bout.
 
-**Chapitre 3 de TS227** (*DSP des signaux codés en ligne*) : analyse, rédaction et figures faites dans la même session (étapes 2 à 5), exercices du TD intégrés ; statut `redige`. Réponses d'Armand appliquées (rapport, section 16) : **1 bloc ouvert** (`av-dsp-porte-notes`), 4 tranchés, 4 levés.
+**Chapitre 3 de TS227** (*DSP des signaux codés en ligne*) : analyse, rédaction et figures (étapes 2 à 5), exercices du TD intégrés ; vérifié (étape 6, rapport § 17), **validé** par Armand, `av-dsp-porte-notes` tranché d'après la correction du TD ; **flashcards générées** (étape 8, 56 cartes, rapport § 18) : statut `flashcards`. 0 bloc ouvert, 5 tranchés, 4 levés.
 
 Révision : en local avec `quarto preview` (port fixe 4848, `http://localhost:4848/revision/`). Le paquet TS227 provisoire (clés `ts-…`) est abandonné (question 5) ; `revision/cartes/ts227.json` est généré par `scripts/flashcards.py`. L'ancien site de cartes (dépôt `bristol`) est **figé**.
 
@@ -48,10 +48,12 @@ Décision du 7 octobre 2026 : le site sera **publié à la fin pour les étudian
 - [x] Port de `quarto preview` fixé à 4848 dans `_quarto.yml` (progression de révision conservée) ; noté dans `architecture.md` § 6 et § 8.
 - [x] Correction de `architecture.md` (§ 6) et de ce fichier : l'export actuel de l'application exporte les **cartes**, pas la progression ; renvoi vers la tâche « export/import de la progression » de `TODO.md` (7 octobre 2026). `README.md` ne contenait pas ce conseil.
 - [x] TS227 chapitre 3 : rapport d'analyse, `cours/03-dsp-signaux-codes-en-ligne.qmd` (TD ex. 2 et ex. 5 q. 10-11 intégrés), 5 figures `figures/03-*.py` + SVG ; ajouté à `_quarto.yml` et à la fiche matière (convention $\sinc$, notations de l'autocorrélation) (7 octobre 2026).
+- [x] TS227 chapitre 3 vérifié (rapport § 17 : exhaustivité support/notes/TD, 569 formules, références ; 6 corrections de forme), validé, `av-dsp-porte-notes` tranché (7 octobre 2026).
+- [x] Flashcards du chapitre 3 de TS227 : `flashcards/03-dsp-signaux-codes-en-ligne.yml`, 56 cartes ; `scripts/flashcards.py` lancé : `ts227.json` = 117 cartes (61 + 56) ; statut `flashcards` (7 octobre 2026).
 
 ## 3. En cours
 
-- TS227 chapitre 3 : statut `redige` ; 1 bloc ouvert (`av-dsp-porte-notes`, rapport § 16.1) ; étape 6 (vérification) à faire.
+- Chapitre 3 de TS227 terminé (flashcards générées). À faire par Armand : contrôler le rendu du chapitre et des 56 cartes avec `quarto preview`.
 - Chapitre 2 de TS227 terminé (flashcards générées). À faire par Armand : contrôler le rendu des cartes dans l'application (`quarto preview`) et signaler les cartes à reprendre.
 
 ## 4. À faire
@@ -68,7 +70,7 @@ Voir `TODO.md`.
 |---|---|---|---|---|
 | 1 | Introduction | — | brouillon | — |
 | 2 | Principes de communication en l'absence de bruit | `cours/02-communication-sans-bruit.qmd` | **flashcards** (61 cartes) | 0 ouvert + 4 tranchés (`av-signe-tf-nyquist`, `av-centre-symetrie-nyquist`, `av-quiz-debit-porte`, `av-echelles-figure-cosinus-sureleve`) |
-| 3 | DSP des signaux codés en ligne | `cours/03-dsp-signaux-codes-en-ligne.qmd` | **redige** | 1 ouvert (`av-dsp-porte-notes`) + 4 tranchés (`av-variance-affine`, `av-esperance-exercice-bpsk`, `av-moment-ordre-2-notes`, `av-phase-tf-porte-td`) |
+| 3 | DSP des signaux codés en ligne | `cours/03-dsp-signaux-codes-en-ligne.qmd` | **flashcards** (56 cartes) | 0 ouvert + 5 tranchés (`av-variance-affine`, `av-esperance-exercice-bpsk`, `av-moment-ordre-2-notes`, `av-dsp-porte-notes`, `av-phase-tf-porte-td`) |
 | 4 | Transmission en présence de bruit | — | brouillon | — |
 | 5 | Transmission sur fréquence porteuse | — | brouillon | — |
 | 6 | Modulation et démodulation numériques | — | brouillon | — (à la rédaction : renvoi vers l'efficacité spectrale du chapitre 2) |
@@ -91,6 +93,7 @@ Remarque : « brouillon » signifie ici « sources officielles reçues, rien de 
 | Date | Décision | Où |
 |---|---|---|
 | 2026-10-07 | Correction : l'export de l'application ne contient que les cartes ; transfert de progression impossible tant que la tâche « export/import de la progression » n'est pas faite | `architecture.md` § 6 ; § 7 ci-dessous ; `TODO.md` |
+| 2026-10-07 | TS227 ch. 3 validé ; `av-dsp-porte-notes` tranché : résultats de la correction du TD ($\sigma_a^2\Ts\sinc^2(f\Ts)$, sommet $\sigma_a^2\Ts$) ; 56 flashcards | rapport ch. 3, § 18 |
 | 2026-10-07 | TS227 : $\sinc(x) = \sin(\pi x)/(\pi x)$ ; convention d'autocorrélation du poly ($t - \tau$, $n - m$) retenue partout, y compris pour le TD | fiche matière ; rapport ch. 3, § 16 |
 | 2026-10-07 | TS227 ch. 3 : variance affine $a^2\sigma^2$ (poly p. 78 corrigé) ; 67 %/99 % gardés comme arrondis ; $N_0B$ des notes = aire de la bande positive | rapport ch. 3, § 16 |
 | 2026-10-07 | Question 5 tranchée : paquet TS227 provisoire (`ts-…`) abandonné, nouvelles clés `ts227-<slug>` ; `ts227.json` généré par script | `CONTEXTE_PROJET.md` § 18.5, § 22, journal |
@@ -187,3 +190,4 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 | 2026-10-07 | Bristol — TS227 Chapitre 3 — Rédaction | Conseil erroné d'export de la progression corrigé (`architecture.md`, `ETAT_PROJET.md`, `TODO.md`) ; chapitre 3 : analyse, rédaction, 5 figures, TD ex. 2 et ex. 5 q. 10-11 intégrés ; 8 blocs ouverts + 1 tranché ; statut `redige` ; rapport, fiche matière, `_quarto.yml` mis à jour |
 | 2026-10-07 | Bristol — TS227 Chapitre 3 — Rédaction (suite) | Réponses d'Armand aux 8 questions appliquées : 2 tranchés, 4 levés, 3 ouverts ; fiche matière, rapport (§ 16) mis à jour |
 | 2026-10-07 | Bristol — TS227 Chapitre 3 — Rédaction (fin) | Blocs `av-esperance-exercice-bpsk` et `av-moment-ordre-2-notes` tranchés (choix laissé à Claude) ; reste 1 bloc ouvert |
+| 2026-10-07 | Bristol — TS227 Chapitre 3 — Vérification et flashcards | Vérification (rapport § 17, 6 corrections de forme, aucune erreur de fond) ; `av-dsp-porte-notes` tranché (TD) ; chapitre validé ; 56 cartes (`flashcards/03-dsp-signaux-codes-en-ligne.yml`) ; `flashcards.py` lancé (117 cartes TS227) ; statut `flashcards` ; rapport (§ 17-18), fiche matière, `ETAT_PROJET.md`, `TODO.md`, `CONTEXTE_PROJET.md` mis à jour |

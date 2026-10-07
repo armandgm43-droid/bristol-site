@@ -815,6 +815,7 @@ Un paquet provisoire de **129 cartes** (`ts227.json`, clés `ts-<section>-NN`) a
 **Décision du 7 octobre 2026 (question 5) : ce paquet est abandonné.** Les cartes de TS227 sont générées chapitre par chapitre à partir des cours validés, avec de nouvelles clés au format de `conventions.md` (`ts227-<slug>`). Le paquet `revision/cartes/ts227.json` est désormais **produit par `scripts/flashcards.py`** ; les 129 anciennes cartes en disparaissent, avec leur progression. Le préfixe `ts-` reste réservé et n'est jamais réutilisé.
 
 Chapitre 2 : 61 cartes (`flashcards/02-communication-sans-bruit.yml`, 7 octobre 2026).
+Chapitre 3 : 56 cartes (`flashcards/03-dsp-signaux-codes-en-ligne.yml`, 7 octobre 2026).
 
 ---
 
@@ -937,6 +938,7 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 | 2026-10-07 | Question 5 : paquet TS227 provisoire (clés `ts-…`) **abandonné** ; nouvelles clés `ts227-<slug>` ; `ts227.json` généré par `scripts/flashcards.py` | La progression ne se transfère pas de toute façon (nouvelle adresse) ; cartes issues des cours validés seulement |
 | 2026-10-07 | Ancien site de cartes (dépôt `bristol`, GitHub Pages) **figé** ; révision en local avec `quarto preview`, port fixé à **4848** | La progression (`localStorage`) dépend de l'adresse : un port fixe la conserve d'un lancement à l'autre |
 | 2026-10-07 | TS227 ch. 2 : 61 flashcards générées (statut `flashcards`) ; labels `eq-signal-yl` et `eq-efficacite-spectrale` retirés (V5) | Étape 8 ; `conventions.md` § 7.2 |
+| 2026-10-07 | TS227 ch. 3 validé (`av-dsp-porte-notes` tranché d'après la correction du TD) ; 56 flashcards générées (statut `flashcards`) | Étapes 6 à 8 ; rapport ch. 3, § 17-18 |
 
 ---
 
@@ -1003,9 +1005,10 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 - [x] Chapitre de test vérifié
 - [x] Chapitre de test validé (7 octobre 2026)
 - [x] Flashcards du chapitre de test (61 cartes, 7 octobre 2026)
+- [x] Chapitre 3 : rédigé, vérifié, validé, flashcards (56 cartes, 7 octobre 2026)
 
 ## Prochaines étapes
-1. Réviser les cartes du chapitre 2 avec `quarto preview` (http://localhost:4848/revision/) et signaler les cartes à reprendre.
+1. Réviser les cartes des chapitres 2 et 3 avec `quarto preview` (http://localhost:4848/revision/) et signaler les cartes à reprendre.
 2. Écrire `scripts/verifier.py` (vérifications de `architecture.md` § 7).
-3. Analyse du chapitre suivant de TS227.
+3. Analyse du chapitre suivant de TS227 (chapitre 4, transmission en présence de bruit).
 4. Avant toute publication : accès réservé, accord des enseignants, page « À propos », export et import de la progression.

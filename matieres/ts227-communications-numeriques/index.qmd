@@ -20,7 +20,7 @@ number-sections: false
 |---|---|---|
 | 1 | Introduction | BROUILLON |
 | 2 | [Principes de communication en l'absence de bruit](cours/02-communication-sans-bruit.qmd) | FLASHCARDS GÉNÉRÉES |
-| 3 | [DSP des signaux codés en ligne](cours/03-dsp-signaux-codes-en-ligne.qmd) | RÉDIGÉ |
+| 3 | [DSP des signaux codés en ligne](cours/03-dsp-signaux-codes-en-ligne.qmd) | FLASHCARDS GÉNÉRÉES |
 | 4 | Transmission en présence de bruit | BROUILLON |
 | 5 | Transmission sur fréquence porteuse | BROUILLON |
 | 6 | Modulation et démodulation numériques | BROUILLON |
