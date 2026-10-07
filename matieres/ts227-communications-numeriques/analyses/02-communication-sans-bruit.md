@@ -480,3 +480,47 @@ Relecture complète par Claude, selon `CONTEXTE_PROJET.md` § 11 (étape 6) : te
 Bilan des blocs *À vérifier* : **0 ouvert**, **4 tranchés** (`av-signe-tf-nyquist`, `av-centre-symetrie-nyquist`, `av-echelles-figure-cosinus-sureleve`, `av-quiz-debit-porte`).
 
 Nouvelle règle pour les chapitres suivants : `conventions.md` § 14 (choix par défaut appliqués et listés ici ; questions réservées aux points bloquants).
+
+### 13.12 Étape 8 — Flashcards (7 octobre 2026)
+
+Décision d'Armand (question ouverte 5) : nouvelles clés au format de `conventions.md` (`ts227-<slug>`) ; le paquet provisoire (129 cartes `ts-…`) est abandonné. Fichier : `flashcards/02-communication-sans-bruit.yml`, **61 cartes**, converties par `scripts/flashcards.py` dans `revision/cartes/ts227.json`.
+
+| Type | Cartes | | Source | Cartes |
+|---|---|---|---|---|
+| definition | 13 | | officiel | 39 |
+| formule | 13 | | notes | 13 |
+| propriete | 8 | | complement | 9 |
+| exercice | 8 | | | |
+| raisonnement | 4 | | | |
+| piege | 4 | | | |
+| relation | 4 | | | |
+| condition | 3 | | | |
+| resultat | 2 | | | |
+| methode | 2 | | | |
+
+**V5 — tri des équations labellisées jamais citées** (`conventions.md` § 7.2 : on ne labellise qu'une équation citée, reprise dans « À retenir » ou visée par une flashcard) :
+
+| Label | Décision |
+|---|---|
+| `eq-signal-sb` | conservé : visé par `ts227-signal-sb` |
+| `eq-signal-sa` | conservé : visé par `ts227-signal-sa` |
+| `eq-m-nb` | conservé : visé par `ts227-nombre-symboles` |
+| `eq-signal-rl` | conservé : visé par `ts227-signal-filtre-reception` |
+| `eq-rn-sans-bruit` | conservé : visé par `ts227-rn-sans-bruit` |
+| `eq-signal-yl` | **retiré** (la carte `ts227-modele-canal` vise la forme non labellisée $y_l = h_c \star s_l + z_l$, par `sec-canal-filtre-reception`) |
+| `eq-efficacite-spectrale` | **retiré** (la carte `ts227-efficacite-spectrale` vise `def-efficacite-spectrale`, qui ne contient que cette équation) |
+
+Les deux labels retirés n'avaient jamais été publiés ; ils ne sont pas réutilisés. Toutes les équations labellisées restantes sont citées dans le chapitre ou visées par une carte.
+
+**Choix appliqués par défaut** (`conventions.md` § 14) :
+
+- une carte par notion ; listes longues découpées (chaîne de transmission : codeur en ligne, réception, canal) ;
+- les points *À vérifier* tranchés donnent trois cartes `piege` ou d'exercice : `ts227-convention-tf` (AV1), `ts227-centre-symetrie-ordonnee` (AV2), `ts227-exercice-debit-max-porte` (AV4, unité corrigée signalée) ; AV9 (échelles d'une figure) ne donne pas de carte ;
+- les exercices du support (quiz) deviennent des cartes `exercice` sans les choix du QCM ; la justification (complément) est donnée dans la réponse ;
+- `source` : catégorie dominante du contenu de la réponse ; `ts227-etiquetage-gray` en `complement` (propriété de Gray et intérêt rédigés en complément ; le nom vient des notes) ;
+- pas de carte sur : le contenu du *Complément* d'introduction, l'expression complète du cosinus surélevé (seule sa bande est demandée), la valeur estimée $\beta \approx 0{,}35$ (lecture de figure, pas une valeur du cours), la puissance des constellations OOK et antipodale (calcul évident, carte `ts227-ook-antipodale` suffisante) ;
+- le paquet garde la couleur de l'ancien `ts227.json` (`#FFF0A6`) ; nom du paquet : titre de la fiche matière.
+
+**Vérifications** : `scripts/flashcards.py` sans erreur (identifiants, types, `ref` présents dans le chapitre, astérisques, formules en ligne) ; les 247 formules du paquet compilées sans erreur par MathJax 3.2.2 (même version que l'application), macros développées ; aucun antislash ni accolade hors formule. **Non vérifié** : l'affichage dans l'application (à contrôler avec `quarto preview`).
+
+Statut du chapitre : `flashcards` (front matter et fiche matière).

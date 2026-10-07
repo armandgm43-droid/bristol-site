@@ -32,19 +32,31 @@
 - [x] Vérification par Claude (7 octobre 2026, rapport section 13.10).
 - [x] Trancher et appliquer les points V1 à V6 du rapport (section 13.11).
 - [x] Validation par Armand (7 octobre 2026).
-- [ ] Trancher la question ouverte 5 (clés `ts-…`) avant de générer les flashcards.
-- [ ] Flashcards du chapitre validé (`flashcards/NN-slug.yml`).
+- [x] Trancher la question ouverte 5 (clés `ts-…`) : paquet provisoire abandonné, nouvelles clés (7 octobre 2026).
+- [x] Flashcards du chapitre validé (`flashcards/02-communication-sans-bruit.yml`, 61 cartes) ; V5 trié (7 octobre 2026).
+- [ ] Contrôler les cartes dans l'application avec `quarto preview` (http://localhost:4848/revision/) : rendu des formules, cartes à reprendre.
 
 ## Priorité 3 — Outillage
 
-- [ ] `scripts/flashcards.py` : conversion YAML → `revision/cartes/*.json`, avec traitement des macros.
+- [x] `scripts/flashcards.py` : conversion YAML → `revision/cartes/*.json`, avec traitement des macros et contrôles (7 octobre 2026).
+- [x] Fixer le port de `quarto preview` (4848) pour conserver la progression de révision (7 octobre 2026).
+- [ ] Si besoin : exporter la progression des paquets hérités depuis l'ancien site (figé) et l'importer dans l'application locale.
 - [ ] `scripts/verifier.py` : vérifications listées dans `architecture.md` §7.
 - [ ] Rendu PDF des quatre catégories (filtre Lua ou `tcolorbox`), et macros dans l'en-tête LaTeX.
 - [ ] Application de révision : lien « Voir dans le cours » (champ `ref`).
 
+## Avant la publication (pour la promo)
+
+- [ ] Mettre en place l'accès réservé par liste d'e-mails (question 1 ; solution privilégiée : Cloudflare Pages + Cloudflare Access).
+- [ ] Demander l'accord des enseignants concernés.
+- [ ] Rédiger la page « À propos » : quatre catégories, origine des notes.
+- [ ] Application de révision : export et import de la **progression** (pas seulement des cartes).
+- [ ] Relire les pages à publier : aucun contenu personnel ou sans rapport avec le cours.
+
 ## Plus tard
 
-- [ ] Trancher l'hébergement et les droits (question 1), et l'organisation des dépôts (question 2).
+- [ ] Trancher l'organisation des dépôts (question 2).
+- [ ] Prévoir un moyen pour les camarades de signaler une erreur ou de proposer des notes (question 13).
 - [ ] TS227 chapitre 6 : renvoyer vers l'efficacité spectrale du chapitre 2 (`02-communication-sans-bruit.qmd`).
 - [ ] Vérifier si rtajan.github.io contient une version plus récente du poly ou d'autres ressources.
 - [ ] Phase 2 : préciser la correspondance des numéros de questions entre l'énoncé et la correction du TD (versions différentes).

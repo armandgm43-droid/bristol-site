@@ -11,6 +11,12 @@ project:
     - "revision/**"
     # Jetons de DA : aussi lus par revision/index.html (../assets/bristol-tokens.css).
     - "assets/bristol-tokens.css"
+  # Port fixe pour quarto preview : la progression de révision (localStorage) est
+  # propre à l'adresse http://localhost:4848. Ne pas changer ce port, ne pas passer
+  # par 127.0.0.1 (autre adresse, progression vide). Voir architecture.md § 6 et § 8.
+  preview:
+    port: 4848
+    browser: true
 
 lang: fr
 

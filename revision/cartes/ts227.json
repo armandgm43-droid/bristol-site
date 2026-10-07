@@ -1,780 +1,372 @@
 {
- "deck": "Communications numériques (TS227)",
- "color": "#FFF0A6",
- "items": [
-  {
-   "key": "ts-intro-01",
-   "chap": "Chaîne de transmission",
-   "front": "Transmission en bande de base vs en bande transposée ?",
-   "back": "Bande de base : autour de la fréquence $f_p = 0$ Hz, privilégiée en filaire.\nBande transposée : autour d'une porteuse $f_p > 0$, privilégiée en sans fil."
-  },
-  {
-   "key": "ts-intro-02",
-   "chap": "Chaîne de transmission",
-   "front": "Éléments du modèle de Shannon et Weaver (1948) ?",
-   "back": "Source → émetteur → canal → récepteur → destination. L'émetteur convertit le message en signal adapté au canal ; le récepteur fait l'inverse, et c'est là que les erreurs de transmission apparaissent."
-  },
-  {
-   "key": "ts-intro-03",
-   "chap": "Chaîne de transmission",
-   "front": "Apports de Nyquist (1924) et de Shannon (1948) ?",
-   "back": "Nyquist : débit maximal sans interférence entre symboles dans une bande donnée.\nShannon : définition formelle des transmissions sans erreur."
-  },
-  {
-   "key": "ts-intro-04",
-   "chap": "Chaîne de transmission",
-   "front": "Blocs de la chaîne en bande de base, dans l'ordre ?",
-   "back": "Émission : association bits → symboles, filtre de mise en forme $h(t)$.\nCanal : filtre $h_c(t)$ et bruit $z_l(t)$.\nRéception : filtre $h_a(t)$, échantillonnage aux instants $nT_s$, décision, association symboles → bits."
-  },
-  {
-   "key": "ts-intro-05",
-   "chap": "Chaîne de transmission",
-   "front": "Notations des filtres : cours vs TD ?",
-   "back": "Cours : mise en forme $h(t)$, réception $h_a(t)$, filtre global $g = h \\star h_c \\star h_a$.\nTD : mise en forme $g(t)$, réception $g_a(t)$, filtre global $v(t)$.\nCes cartes suivent les notations du cours."
-  },
-  {
-   "key": "ts-intro-06",
-   "chap": "Chaîne de transmission",
-   "front": "Expression du signal reçu $y_l(t)$ ?",
-   "back": "$$y_l(t) = (h_c \\star s_l)(t) + z_l(t) = \\sum_m a_m (h_c \\star h)(t - mT_s) + z_l(t)$$"
-  },
-  {
-   "key": "ts-intro-07",
-   "chap": "Chaîne de transmission",
-   "front": "Expression du signal après filtre de réception $r_l(t)$ ?",
-   "back": "$$r_l(t) = \\sum_m a_m\\, g(t - mT_s) + z'_l(t)$$\navec $g = h_a \\star h_c \\star h$ le filtre global et $z'_l = h_a \\star z_l$ le bruit filtré."
-  },
-  {
-   "key": "ts-intro-08",
-   "chap": "Chaîne de transmission",
-   "front": "Modèle équivalent entre $a_n$ et $r_n$ après échantillonnage ?",
-   "back": "$$r_n = a_n g_0 + \\sum_{m \\neq 0} a_{n-m}\\, g_m + z'_n$$\navec $g_m = g(mT_s)$. Premier terme : symbole utile. Somme : interférence entre symboles. Dernier terme : bruit."
-  },
-  {
-   "key": "ts-sym-01",
-   "chap": "Symboles, débits, décision",
-   "front": "Relation entre le nombre de symboles $M$ et le nombre de bits par symbole $n_b$ ?",
-   "back": "$M = 2^{n_b}$, soit $n_b = \\log_2 M$."
-  },
-  {
-   "key": "ts-sym-02",
-   "chap": "Symboles, débits, décision",
-   "front": "Relation entre débit binaire et débit symbole ?",
-   "back": "$D_b = n_b D_s$, avec $D_b = 1/T_b$ et $D_s = 1/T_s$ ; donc $T_s = n_b T_b$."
-  },
-  {
-   "key": "ts-sym-03",
-   "chap": "Symboles, débits, décision",
-   "front": "Constellation 4-PAM, $D_b = 1$ Mbit/s : débit symbole ?",
-   "back": "$D_s = 0{,}5$ Msymbole/s, car chaque symbole porte 2 bits."
-  },
-  {
-   "key": "ts-sym-04",
-   "chap": "Symboles, débits, décision",
-   "front": "Qu'est-ce qu'une constellation ?",
-   "back": "L'ensemble des $M$ symboles possibles, représentés dans le plan complexe. Symboles réels en bande de base, complexes en bande transposée."
-  },
-  {
-   "key": "ts-sym-05",
-   "chap": "Symboles, débits, décision",
-   "front": "Expressions de $s_b(t)$ et $s_a(t)$ ?",
-   "back": "$s_b(t) = \\sum_k b_k\\, \\delta(t - kT_b)$ et $s_a(t) = \\sum_m a_m\\, \\delta(t - mT_s)$ : des peignes de Dirac pondérés par les bits et par les symboles."
-  },
-  {
-   "key": "ts-sym-06",
-   "chap": "Symboles, débits, décision",
-   "front": "Expression du signal émis $s_l(t)$ ?",
-   "back": "$$s_l(t) = (h \\star s_a)(t) = \\sum_m a_m\\, h(t - mT_s)$$"
-  },
-  {
-   "key": "ts-sym-07",
-   "chap": "Symboles, débits, décision",
-   "front": "Hypothèse sur les bits $b_k$ de la source ?",
-   "back": "Variables aléatoires iid suivant une loi de Bernoulli : $P(b_k = 0) = p_0$ et $P(b_k = 1) = p_1 = 1 - p_0$."
-  },
-  {
-   "key": "ts-sym-08",
-   "chap": "Symboles, débits, décision",
-   "front": "Étiquetage de Gray : définition ?",
-   "back": "Deux symboles voisins ont des étiquettes binaires qui ne diffèrent que d'un bit."
-  },
-  {
-   "key": "ts-sym-09",
-   "chap": "Symboles, débits, décision",
-   "front": "Pourquoi utiliser un étiquetage de Gray ?",
-   "back": "Les erreurs les plus probables se font entre symboles voisins : avec Gray, chacune ne coûte qu'un bit. Il minimise $P_b$ à $P_s$ donnée."
-  },
-  {
-   "key": "ts-sym-10",
-   "chap": "Symboles, débits, décision",
-   "front": "Étiquetage de Gray de la 4-PAM du cours ?",
-   "back": "[00] → −3, [01] → −1, [11] → 1, [10] → 3."
-  },
-  {
-   "key": "ts-sym-11",
-   "chap": "Symboles, débits, décision",
-   "front": "Symboles d'une 8-PAM et étiquetage de Gray du TD ?",
-   "back": "Symboles ±1, ±3, ±5, ±7.\nDe −7 à 7 : 000, 001, 011, 010, 110, 111, 101, 100."
-  },
-  {
-   "key": "ts-sym-12",
-   "chap": "Symboles, débits, décision",
-   "front": "Principe du bloc de décision ?",
-   "back": "Il regarde dans quelle région de décision tombe $r_n$ et décide le symbole correspondant $\\hat{a}_n$. Les seuils ne sont pas forcément à mi-distance des symboles."
-  },
-  {
-   "key": "ts-sym-13",
-   "chap": "Symboles, débits, décision",
-   "front": "4-PAM {−3, −1, 1, 3}, seuils (−2,5 ; 0,5 ; 1,5) : symboles décidés pour $r = [1{,}2 ;\\ -4 ;\\ 2{,}1]$ ?",
-   "back": "$\\hat{a} = [1, -3, 3]$."
-  },
-  {
-   "key": "ts-nyq-01",
-   "chap": "IES et critère de Nyquist",
-   "front": "Qu'est-ce que l'interférence entre symboles (IES) ?",
-   "back": "La contribution des autres symboles ($a_{n-1}$, $a_{n+1}$…) à l'échantillon $r_n$ du symbole d'intérêt. Due à un mauvais choix du couple $(h, h_a)$, elle peut empêcher une transmission sans erreur même sans bruit ni canal."
-  },
-  {
-   "key": "ts-nyq-02",
-   "chap": "IES et critère de Nyquist",
-   "front": "Condition d'absence d'IES sur les échantillons du filtre global ?",
-   "back": "$g_0 \\neq 0$ et $g_m = g(mT_s) = 0$ pour tout $m \\neq 0$."
-  },
-  {
-   "key": "ts-nyq-03",
-   "chap": "IES et critère de Nyquist",
-   "front": "Critère de Nyquist, version temporelle ?",
-   "back": "$$g(t)\\,\\mathrm{III}_{T_s}(t) = g_0\\, \\delta(t)$$\nÉchantillonné à $T_s$, le filtre global n'est non nul qu'en 0."
-  },
-  {
-   "key": "ts-nyq-04",
-   "chap": "IES et critère de Nyquist",
-   "front": "Critère de Nyquist, version fréquentielle ?",
-   "back": "$$\\frac{1}{T_s} \\sum_m G\\left(f - \\frac{m}{T_s}\\right) = g_0$$\nLa somme des copies du spectre décalées de $1/T_s$ est constante."
-  },
-  {
-   "key": "ts-nyq-05",
-   "chap": "IES et critère de Nyquist",
-   "front": "Que devient le critère de Nyquist si $G(f)$ est à support dans $[-1/T_s, 1/T_s]$ ?",
-   "back": "$G(f)$ doit présenter, sur $[0, 1/T_s]$, une symétrie centrale autour du point situé à la fréquence $\\frac{1}{2T_s}$ et à mi-hauteur (noté $(\\frac{1}{2T_s}, \\frac{g_0}{2})$ dans le poly)."
-  },
-  {
-   "key": "ts-nyq-06",
-   "chap": "IES et critère de Nyquist",
-   "front": "Qu'appelle-t-on fréquence de Nyquist ?",
-   "back": "$f = \\dfrac{1}{2T_s}$, soit la moitié du débit symbole."
-  },
-  {
-   "key": "ts-nyq-07",
-   "chap": "IES et critère de Nyquist",
-   "front": "Bande minimale pour transmettre sans IES au débit $D_s$ ?",
-   "back": "$D_s/2 = \\frac{1}{2T_s}$, atteinte par un filtre global en porte de largeur $1/T_s$ (sinus cardinal en temps). Un filtre plus étroit ne peut pas vérifier le critère."
-  },
-  {
-   "key": "ts-nyq-08",
-   "chap": "IES et critère de Nyquist",
-   "front": "Allure du filtre de Nyquist donné en exemple dans le cours ?",
-   "back": "Un filtre de type cosinus surélevé : maximum en 0, passages par zéro à tous les multiples non nuls de $T_s$, spectre à support borné avec des flancs symétriques autour de $\\frac{1}{2T_s}$."
-  },
-  {
-   "key": "ts-nyq-09",
-   "chap": "IES et critère de Nyquist",
-   "front": "Porte de durée $T_s$ suivie de son filtre adapté : le filtre global vérifie-t-il Nyquist ?",
-   "back": "Oui : c'est un triangle de base $2T_s$, maximal à l'instant de décision et nul aux autres multiples de $T_s$."
-  },
-  {
-   "key": "ts-oeil-01",
-   "chap": "Diagramme de l'œil",
-   "front": "Qu'est-ce que le diagramme de l'œil ?",
-   "back": "La superposition des tranches du signal reçu $r_l(t)$, d'une ou deux durées symbole, synchronisées sur l'horloge symbole."
-  },
-  {
-   "key": "ts-oeil-02",
-   "chap": "Diagramme de l'œil",
-   "front": "Que lit-on sur un diagramme de l'œil ?",
-   "back": "Absence d'IES : toutes les traces passent par les mêmes points aux instants d'échantillonnage.\nOuverture verticale : robustesse au bruit.\nOuverture horizontale : robustesse aux décalages de l'instant d'échantillonnage."
-  },
-  {
-   "key": "ts-proba-01",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Variance : définition et formule pratique ?",
-   "back": "$\\mathrm{VAR}(X) = E\\left[|X - E[X]|^2\\right] = E\\left[|X|^2\\right] - |E[X]|^2$. L'écart-type en est la racine."
-  },
-  {
-   "key": "ts-proba-02",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Propriétés de l'espérance ?",
-   "back": "Linéarité : $E[aX + b] = aE[X] + b$ et $E[X + Y] = E[X] + E[Y]$.\nSi X et Y sont indépendantes : $E[XY] = E[X]E[Y]$."
-  },
-  {
-   "key": "ts-proba-03",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Symboles BPSK $\\pm g_0$ équiprobables : moyenne et variance ?",
-   "back": "$E[A] = 0$ et $\\mathrm{VAR}(A) = g_0^2$."
-  },
-  {
-   "key": "ts-proba-04",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Densité de probabilité d'une gaussienne $\\mathcal{N}(\\mu, \\sigma^2)$ ?",
-   "back": "$$f_X(x) = \\frac{1}{\\sqrt{2\\pi\\sigma^2}}\\, e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}$$"
-  },
-  {
-   "key": "ts-proba-05",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Si $X \\sim \\mathcal{N}(\\mu, \\sigma^2)$, loi de $Y = aX + b$ ?",
-   "back": "$Y \\sim \\mathcal{N}(a\\mu + b,\\ a^2\\sigma^2)$.\nLe poly écrit $b^2\\sigma^2$ : c'est une coquille."
-  },
-  {
-   "key": "ts-proba-06",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Probabilité qu'une gaussienne soit à $\\pm\\sigma$ et à $\\pm 3\\sigma$ de sa moyenne ?",
-   "back": "Environ 68 % à $\\pm\\sigma$ et 99,7 % à $\\pm 3\\sigma$ (le poly arrondit à 67 % et 99 %)."
-  },
-  {
-   "key": "ts-proba-07",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Fonction $Q$ : définition et lien avec $\\Phi$ ?",
-   "back": "$$Q(x) = \\frac{1}{\\sqrt{2\\pi}} \\int_x^{+\\infty} e^{-u^2/2}\\, du = 1 - \\Phi(x)$$\nC'est la probabilité qu'une $\\mathcal{N}(0,1)$ dépasse x : décroissante, $Q(0) = 1/2$."
-  },
-  {
-   "key": "ts-proba-08",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "$R_n = g_0 + Z_n$ avec $Z_n \\sim \\mathcal{N}(0, \\sigma^2)$ : loi de $R_n$ et $P(R_n < 0)$ ?",
-   "back": "$R_n \\sim \\mathcal{N}(g_0, \\sigma^2)$ et $P(R_n < 0) = \\Phi(-g_0/\\sigma) = Q(g_0/\\sigma)$."
-  },
-  {
-   "key": "ts-proba-09",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Fonction d'autocorrélation d'un processus aléatoire ?",
-   "back": "$R_X(t, \\tau) = E\\left[X(t)\\, X^*(t - \\tau)\\right]$ : elle caractérise le lien entre deux instants du processus."
-  },
-  {
-   "key": "ts-proba-10",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Stationnarité au sens large : définition ?",
-   "back": "Moyenne constante et autocorrélation qui ne dépend que de l'écart : $m_X(t) = m_X$ et $R_X(t, \\tau) = R_X(\\tau)$."
-  },
-  {
-   "key": "ts-proba-11",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Propriétés de $R_X(\\tau)$ pour un processus stationnaire au sens large ?",
-   "back": "Signal réel : paire. Signal complexe : $R_X(\\tau) = R_X^*(-\\tau)$.\nMaximum en 0 : $|R_X(\\tau)| \\leq R_X(0)$.\nPuissance moyenne : $P_X = E[|X(t)|^2] = R_X(0)$."
-  },
-  {
-   "key": "ts-proba-12",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Théorème de Wiener-Khintchine ?",
-   "back": "Pour un processus stationnaire au sens large, la DSP est la transformée de Fourier de l'autocorrélation :\n$$\\Gamma_X(f) = \\int R_X(\\tau)\\, e^{-j2\\pi f \\tau}\\, d\\tau$$\n(transformée à temps discret de $R_X[k]$ pour un processus discret)."
-  },
-  {
-   "key": "ts-proba-13",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Processus cyclostationnaire de période $T_s$ : définition ?",
-   "back": "Moyenne et autocorrélation périodiques en t : $m_X(t + T_s) = m_X(t)$ et $R_X(t + T_s, \\tau) = R_X(t, \\tau)$."
-  },
-  {
-   "key": "ts-proba-14",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Comment calculer la DSP d'un processus cyclostationnaire ?",
-   "back": "C'est la TF de l'autocorrélation moyennée sur une période :\n$$\\tilde{R}_X(\\tau) = \\frac{1}{T_s} \\int_0^{T_s} R_X(t, \\tau)\\, dt$$"
-  },
-  {
-   "key": "ts-proba-15",
-   "chap": "Probabilités et processus aléatoires",
-   "front": "Formule de filtrage d'un processus aléatoire ?",
-   "back": "Si $y = h \\star x$, y conserve la stationnarité ou la cyclostationnarité de x, et $\\Gamma_Y(f) = |H(f)|^2\\, \\Gamma_X(f)$."
-  },
-  {
-   "key": "ts-dsp-01",
-   "chap": "DSP des signaux codés en ligne",
-   "front": "Pourquoi caractériser le spectre de $s_l(t)$ par sa DSP plutôt que par sa transformée de Fourier ?",
-   "back": "$s_l(t)$ est aléatoire : sa TF dépend du message tiré. La DSP ne dépend que des statistiques du message."
-  },
-  {
-   "key": "ts-dsp-02",
-   "chap": "DSP des signaux codés en ligne",
-   "front": "Pourquoi $s_l(t)$ est-il cyclostationnaire de période $T_s$ ?",
-   "back": "Sa moyenne $m_A \\sum_k h(t - kT_s)$ et son autocorrélation sont inchangées quand on remplace t par $t + T_s$ (changement d'indice $k \\to k - 1$). Elles dépendent de la position de t dans la période symbole."
-  },
-  {
-   "key": "ts-dsp-03",
-   "chap": "DSP des signaux codés en ligne",
-   "front": "Moyenne de $s_l(t)$, et sa moyenne sur une période ?",
-   "back": "$m_{s_l}(t) = m_A \\sum_k h(t - kT_s)$ et $\\bar{m}_{s_l} = \\dfrac{m_A}{T_s} \\displaystyle\\int h(t)\\, dt$."
-  },
-  {
-   "key": "ts-dsp-04",
-   "chap": "DSP des signaux codés en ligne",
-   "front": "Autocorrélation moyennée de $s_l(t)$ ?",
-   "back": "$$\\bar{R}_{s_l}(\\tau) = \\frac{1}{T_s} \\sum_d R_A[d]\\, R_h(\\tau - dT_s)$$\navec $R_h(\\tau) = \\int h(t)\\, h^*(t - \\tau)\\, dt$, dont la TF est $|H(f)|^2$."
-  },
-  {
-   "key": "ts-dsp-05",
-   "chap": "DSP des signaux codés en ligne",
-   "front": "Formule de Bennett ?",
-   "back": "$$\\Gamma_{s_l}(f) = \\frac{|H(f)|^2}{T_s} \\sum_m R_A[m]\\, e^{-j2\\pi f m T_s}$$"
-  },
-  {
-   "key": "ts-dsp-06",
-   "chap": "DSP des signaux codés en ligne",
-   "front": "Interprétation de la formule de Bennett ?",
-   "back": "La DSP de $s_l$ est celle du peigne de symboles $s_a(t)$ multipliée par $|H(f)|^2$ : c'est h qui donne sa forme au spectre et fixe la bande occupée, d'où son nom de filtre de mise en forme."
-  },
-  {
-   "key": "ts-dsp-07",
-   "chap": "DSP des signaux codés en ligne",
-   "front": "DSP de $s_l$ pour des symboles iid, centrés, de variance $\\sigma_A^2$ ?",
-   "back": "$$\\Gamma_{s_l}(f) = \\sigma_A^2\\, \\frac{|H(f)|^2}{T_s}$$\ncar $R_A[m] = \\sigma_A^2\\, \\delta[m]$."
-  },
-  {
-   "key": "ts-dsp-08",
-   "chap": "DSP des signaux codés en ligne",
-   "front": "Module de la TF de la porte $h(t) = 1$ sur $[0, T_s]$ ?",
-   "back": "$|H(f)| = T_s\\, |\\mathrm{sinc}(f T_s)|$ avec $\\mathrm{sinc}(x) = \\frac{\\sin(\\pi x)}{\\pi x}$, plus une phase linéaire due au retard de $T_s/2$."
-  },
-  {
-   "key": "ts-dsp-09",
-   "chap": "DSP des signaux codés en ligne",
-   "front": "DSP d'une 2-PAM ±1 iid avec une porte de durée $T_s$ ?",
-   "back": "$$\\Gamma_{s_l}(f) = T_s\\, \\mathrm{sinc}^2(f T_s)$$\nLobe principal de $-1/T_s$ à $1/T_s$, zéros aux multiples non nuls de $1/T_s$."
-  },
-  {
-   "key": "ts-dsp-10",
-   "chap": "DSP des signaux codés en ligne",
-   "front": "DSP d'une OOK {0, 1} iid équiprobable avec une porte de durée $T_s$ ?",
-   "back": "$m_A = 1/2$, $\\sigma_A^2 = 1/4$, et $R_A[k] = \\sigma_A^2 \\delta[k] + m_A^2$ :\n$$\\Gamma_{s_l}(f) = \\frac{T_s}{4}\\, \\mathrm{sinc}^2(f T_s) + \\frac{1}{4}\\, \\delta(f)$$\nLa moyenne non nulle crée une raie en 0 ; les autres raies tombent sur les zéros du sinc."
-  },
-  {
-   "key": "ts-dsp-11",
-   "chap": "DSP des signaux codés en ligne",
-   "front": "Effet d'une moyenne des symboles non nulle sur la DSP ?",
-   "back": "Des raies (Dirac) apparaissent aux multiples de $1/T_s$, pondérées par $|H(k/T_s)|^2$ : de la puissance dépensée qui ne transporte pas d'information."
-  },
-  {
-   "key": "ts-dsp-12",
-   "chap": "DSP des signaux codés en ligne",
-   "front": "Puissance de $s_l(t)$ pour des symboles iid centrés ?",
-   "back": "$$P = \\int \\Gamma_{s_l}(f)\\, df = \\frac{\\sigma_A^2 E_h}{T_s}$$\navec $E_h = \\int |h(t)|^2 dt$ (Parseval)."
-  },
-  {
-   "key": "ts-pe-01",
-   "chap": "Probabilité d'erreur",
-   "front": "Définitions de $P_s$ et $P_b$ ?",
-   "back": "$P_s = P(\\hat{A}_n \\neq A_n)$ : probabilité d'erreur symbole.\n$P_b = P(\\hat{B}_k \\neq B_k)$ : probabilité d'erreur binaire."
-  },
-  {
-   "key": "ts-pe-02",
-   "chap": "Probabilité d'erreur",
-   "front": "Décomposition de $P_b$ par les probabilités totales, cas binaire ?",
-   "back": "$$P_b = p_0\\, P(\\hat{B} = 1 \\mid B = 0) + p_1\\, P(\\hat{B} = 0 \\mid B = 1)$$"
-  },
-  {
-   "key": "ts-pe-03",
-   "chap": "Probabilité d'erreur",
-   "front": "Modèle du signal reçu dans le cas binaire, sous le critère de Nyquist ?",
-   "back": "$R_n = g_0 A_n + Z'_n$, avec $A_n \\in \\{-1, 1\\}$ iid et $Z'_n \\sim \\mathcal{N}(0, \\sigma^2)$ indépendant des symboles."
-  },
-  {
-   "key": "ts-pe-04",
-   "chap": "Probabilité d'erreur",
-   "front": "Seuil de décision optimal pour une modulation binaire $\\pm g_0$ ?",
-   "back": "$$\\gamma^* = \\frac{\\sigma^2}{2 g_0} \\ln\\frac{p_0}{1 - p_0}$$\nIl vaut 0 si les symboles sont équiprobables."
-  },
-  {
-   "key": "ts-pe-05",
-   "chap": "Probabilité d'erreur",
-   "front": "Comment évolue le seuil optimal quand $p_0 \\to 1$ ou $p_0 \\to 0$ ?",
-   "back": "$\\gamma^* \\to +\\infty$ si $p_0 \\to 1$, et $\\gamma^* \\to -\\infty$ si $p_0 \\to 0$ : il se déplace vers le symbole le moins probable, ce qui élargit la région du plus probable."
-  },
-  {
-   "key": "ts-pe-06",
-   "chap": "Probabilité d'erreur",
-   "front": "Comment trouve-t-on le seuil optimal ?",
-   "back": "En annulant la dérivée de $P_b(\\gamma)$, ce qui donne $\\frac{f_Z(\\gamma - g_0)}{f_Z(\\gamma + g_0)} = \\frac{p_0}{p_1}$, puis en remplaçant $f_Z$ par la densité gaussienne."
-  },
-  {
-   "key": "ts-pe-07",
-   "chap": "Probabilité d'erreur",
-   "front": "$P_b$ d'une 2-PAM $\\pm g_0$ équiprobable, seuil en 0 ?",
-   "back": "$$P_b = Q\\left(\\frac{g_0}{\\sigma}\\right)$$"
-  },
-  {
-   "key": "ts-pe-08",
-   "chap": "Probabilité d'erreur",
-   "front": "Pire valeur possible de $P_b$ pour une décision binaire ?",
-   "back": "0,5 : on ne fait pas mieux que le hasard. Une décision avec $P_b > 0{,}5$ s'améliorerait en inversant toutes les décisions."
-  },
-  {
-   "key": "ts-pe-09",
-   "chap": "Probabilité d'erreur",
-   "front": "Seuil optimal pour des symboles {0, $g_0$} équiprobables ?",
-   "back": "$\\gamma = g_0/2$, à mi-distance (0,5 si $g_0 = 1$)."
-  },
-  {
-   "key": "ts-pe-10",
-   "chap": "Probabilité d'erreur",
-   "front": "Qu'appelle-t-on RSB dans le cas binaire ?",
-   "back": "Le rapport d'amplitudes $g_0/\\sigma$, souvent exprimé en dB : $20 \\log_{10}(g_0/\\sigma)$. $P_b$ est une fonction décroissante du RSB."
-  },
-  {
-   "key": "ts-pe-11",
-   "chap": "Probabilité d'erreur",
-   "front": "Lien entre $P_b$ et $P_s$ pour une modulation binaire ?",
-   "back": "$P_b = P_s$."
-  },
-  {
-   "key": "ts-pe-12",
-   "chap": "Probabilité d'erreur",
-   "front": "$P_s$ d'une modulation M-aire à symboles équiprobables ?",
-   "back": "$$P_s = \\frac{1}{M} \\sum_{i} P(\\hat{A}_n \\neq A_n \\mid A_n = a_i)$$"
-  },
-  {
-   "key": "ts-pe-13",
-   "chap": "Probabilité d'erreur",
-   "front": "4-PAM {−3, −1, 1, 3} équiprobable : seuils optimaux ?",
-   "back": "$(-2g_0,\\ 0,\\ 2g_0)$, au milieu de chaque intervalle."
-  },
-  {
-   "key": "ts-pe-14",
-   "chap": "Probabilité d'erreur",
-   "front": "4-PAM : probabilité d'erreur pour un symbole extrême, pour un symbole intérieur, et $P_s$ ?",
-   "back": "Extrême : $Q(g_0/\\sigma)$, un seul voisin.\nIntérieur : $2Q(g_0/\\sigma)$, deux voisins.\nD'où $P_s = \\frac{3}{2} Q(g_0/\\sigma)$."
-  },
-  {
-   "key": "ts-pe-15",
-   "chap": "Probabilité d'erreur",
-   "front": "$P_s$ d'une M-PAM équiprobable ?",
-   "back": "$$P_s = 2\\, \\frac{M-1}{M}\\, Q\\left(\\frac{g_0}{\\sigma}\\right)$$\n$M = 2$ : $Q(g_0/\\sigma)$. $M \\to \\infty$ : $2Q(g_0/\\sigma)$."
-  },
-  {
-   "key": "ts-pe-16",
-   "chap": "Probabilité d'erreur",
-   "front": "À $g_0/\\sigma$ fixé, $P_s$ d'une M-PAM croît-elle avec M ? Peut-elle dépasser 1 ?",
-   "back": "Elle croît avec M, mais reste toujours inférieure à 1."
-  },
-  {
-   "key": "ts-pe-17",
-   "chap": "Probabilité d'erreur",
-   "front": "Lien entre $P_b$ et $P_s$ pour une modulation M-aire ?",
-   "back": "Pour tout étiquetage : $P_b \\geq \\dfrac{P_s}{\\log_2 M}$.\nAvec un étiquetage de Gray : $P_b \\simeq \\dfrac{P_s}{\\log_2 M}$."
-  },
-  {
-   "key": "ts-pe-18",
-   "chap": "Probabilité d'erreur",
-   "front": "$P_b$ d'une M-PAM avec étiquetage de Gray, en fonction de $g_0/\\sigma$ ?",
-   "back": "$$P_b = 2\\, \\frac{M-1}{M \\log_2 M}\\, Q\\left(\\frac{g_0}{\\sigma}\\right)$$"
-  },
-  {
-   "key": "ts-fa-01",
-   "chap": "Récepteur optimal et filtre adapté",
-   "front": "Qu'est-ce qu'un filtre adapté ?",
-   "back": "Le filtre de réception linéaire qui maximise le rapport $g_0/\\sigma$ aux instants de décision $nT_s$, et donc minimise $P_b$."
-  },
-  {
-   "key": "ts-fa-02",
-   "chap": "Récepteur optimal et filtre adapté",
-   "front": "Expression du filtre adapté à $h(t)$ ?",
-   "back": "$h_a(t) = \\lambda\\, h^*(-t)$, avec $\\lambda \\neq 0$ quelconque : il ne change pas les performances."
-  },
-  {
-   "key": "ts-fa-03",
-   "chap": "Récepteur optimal et filtre adapté",
-   "front": "Expression de $g_0$ à partir de h et $h_a$ ?",
-   "back": "$$g_0 = \\int h(u)\\, h_a(-u)\\, du = \\int H(f)\\, H_a(f)\\, df$$"
-  },
-  {
-   "key": "ts-fa-04",
-   "chap": "Récepteur optimal et filtre adapté",
-   "front": "Variance du bruit après le filtre de réception, pour un bruit blanc de DSP $N_0/2$ ?",
-   "back": "$$\\sigma^2 = \\frac{N_0}{2} \\int |H_a(f)|^2 df = \\frac{N_0}{2} \\int |h_a(t)|^2 dt$$\nFormule de filtrage, puis égalité de Parseval."
-  },
-  {
-   "key": "ts-fa-05",
-   "chap": "Récepteur optimal et filtre adapté",
-   "front": "Quel outil prouve que le filtre adapté est optimal ?",
-   "back": "L'inégalité de Cauchy-Schwarz : $\\left(\\int uv\\right)^2 \\leq \\int u^2 \\int v^2$, avec égalité si $u = \\lambda v$. Appliquée à $g_0^2/\\sigma^2$, elle donne $h_a(t) = \\lambda h(-t)$."
-  },
-  {
-   "key": "ts-fa-06",
-   "chap": "Récepteur optimal et filtre adapté",
-   "front": "RSB maximal obtenu avec le filtre adapté ?",
-   "back": "$$\\left(\\frac{g_0^2}{\\sigma^2}\\right)_{max} = \\frac{2 E_h}{N_0} \\quad \\text{avec } E_h = \\int |h(t)|^2 dt$$"
-  },
-  {
-   "key": "ts-fa-07",
-   "chap": "Récepteur optimal et filtre adapté",
-   "front": "Filtre global obtenu avec le filtre adapté ?",
-   "back": "L'autocorrélation déterministe de h : $g(t) = R_h(t) = \\int h(u)\\, h^*(u - t)\\, du$, maximale en 0."
-  },
-  {
-   "key": "ts-fa-08",
-   "chap": "Récepteur optimal et filtre adapté",
-   "front": "Problème de causalité du filtre adapté, et solution ?",
-   "back": "Si h est causal, $h^*(-t)$ ne l'est pas. On le retarde d'une durée $T_h$ au moins égale à la longueur de h : $h_a(t) = h^*(T_h - t)$. Le filtre global devient $R_h(t - T_h)$, et l'instant optimal de décision est $t = T_h$."
-  },
-  {
-   "key": "ts-fa-09",
-   "chap": "Récepteur optimal et filtre adapté",
-   "front": "Conséquence de la causalité des filtres sur la réception du premier symbole ?",
-   "back": "Il n'est disponible qu'après le retard $D$ (au moins la durée de h) : on échantillonne aux instants $D + nT_s$, avec une latence de D."
-  },
-  {
-   "key": "ts-fa-10",
-   "chap": "Récepteur optimal et filtre adapté",
-   "front": "Qu'est-ce qu'un filtre demi-Nyquist ?",
-   "back": "Un filtre tel que $H(f) = H_a(f) = \\sqrt{N_y(f)}$, où $N_y$ vérifie Nyquist : le même filtre à l'émission et à la réception réalise à la fois l'absence d'IES et le filtrage adapté (canal plat, g à symétrie paire). Exemple : la racine de cosinus surélevé."
-  },
-  {
-   "key": "ts-fa-11",
-   "chap": "Récepteur optimal et filtre adapté",
-   "front": "Autocorrélation du bruit en sortie du filtre adapté, puis après échantillonnage ?",
-   "back": "$R_{z'}(\\tau) = \\frac{N_0}{2} R_{h_a}(\\tau) = \\frac{N_0}{2}\\, g(\\tau)$.\nAux instants $kT_s$ : $\\frac{N_0}{2}\\, g_0\\, \\delta_k$."
-  },
-  {
-   "key": "ts-fa-12",
-   "chap": "Récepteur optimal et filtre adapté",
-   "front": "Propriétés du bruit après filtre adapté et échantillonnage ?",
-   "back": "Gaussien (filtrage linéaire d'un bruit gaussien), centré, décorrélé d'un échantillon à l'autre (g vérifie Nyquist), de variance $\\sigma^2 = \\frac{N_0}{2}\\, g_0$."
-  },
-  {
-   "key": "ts-eb-01",
-   "chap": "Pb et Eb/N0",
-   "front": "Définition de $E_b$ ?",
-   "back": "L'énergie moyenne par bit d'information : $E_b = P\\, T_b = P / D_b$, avec P la puissance moyenne du signal émis."
-  },
-  {
-   "key": "ts-eb-02",
-   "chap": "Pb et Eb/N0",
-   "front": "$E_b$ en fonction de h et des symboles ?",
-   "back": "$$E_b = \\frac{\\sigma_a^2 E_h}{\\log_2 M}$$\ncar $P = \\sigma_a^2 E_h / T_s$ et $T_b = T_s / \\log_2 M$."
-  },
-  {
-   "key": "ts-eb-03",
-   "chap": "Pb et Eb/N0",
-   "front": "Variance des symboles d'une M-PAM {±1, ±3, …} ?",
-   "back": "$\\sigma_a^2 = \\dfrac{M^2 - 1}{3}$, soit 5 pour une 4-PAM."
-  },
-  {
-   "key": "ts-eb-04",
-   "chap": "Pb et Eb/N0",
-   "front": "$P_b$ d'une 2-PAM (BPSK) avec récepteur optimal ?",
-   "back": "$$P_b = Q\\left(\\sqrt{\\frac{2 E_b}{N_0}}\\right)$$"
-  },
-  {
-   "key": "ts-eb-05",
-   "chap": "Pb et Eb/N0",
-   "front": "Étapes pour démontrer $P_b = Q\\left(\\sqrt{2E_b/N_0}\\right)$ en BPSK ?",
-   "back": "$P_b = Q(g_0/\\sigma)$. Avec le filtre adapté, $g_0 = E_h$ et $\\sigma^2 = \\frac{N_0}{2} E_h$. De plus $P = E_h/T_s$ et $T_s = T_b$, donc $E_b = E_h$. D'où $\\frac{g_0^2}{\\sigma^2} = \\frac{2E_h}{N_0} = \\frac{2E_b}{N_0}$."
-  },
-  {
-   "key": "ts-eb-06",
-   "chap": "Pb et Eb/N0",
-   "front": "$P_{b,min}$ d'une M-PAM en fonction de $E_h/N_0$ ?",
-   "back": "$$P_{b,min} = 2\\, \\frac{M-1}{M \\log_2 M}\\, Q\\left(\\sqrt{\\frac{2 E_h}{N_0}}\\right)$$"
-  },
-  {
-   "key": "ts-eb-07",
-   "chap": "Pb et Eb/N0",
-   "front": "$P_{b,min}$ d'une M-PAM en fonction de $E_b/N_0$ ?",
-   "back": "$$P_{b,min} = 2\\, \\frac{M-1}{M \\log_2 M}\\, Q\\left(\\sqrt{\\frac{6 \\log_2 M}{M^2 - 1} \\frac{E_b}{N_0}}\\right)$$"
-  },
-  {
-   "key": "ts-eb-08",
-   "chap": "Pb et Eb/N0",
-   "front": "À $E_b/N_0$ fixé, comment évolue $P_b$ d'une M-PAM quand M augmente ?",
-   "back": "Elle se dégrade nettement : pour garder la même qualité, il faut plus d'énergie par bit quand M augmente."
-  },
-  {
-   "key": "ts-rf-01",
-   "chap": "Transmission sur porteuse",
-   "front": "Pourquoi transmettre sur une fréquence porteuse ?",
-   "back": "Pour des raisons physiques (taille des antennes, propagation des ondes dans l'air), pour les débits atteignables, et pour respecter les bandes des standards."
-  },
-  {
-   "key": "ts-rf-02",
-   "chap": "Transmission sur porteuse",
-   "front": "Enveloppe complexe d'un signal passe-bande : définition ?",
-   "back": "Le signal complexe $s_l(t) = p(t) + j q(t)$ tel que $s(t) = \\mathrm{Re}\\left(s_l(t)\\, e^{j2\\pi f_c t}\\right)$. Tout signal réel passe-bande en possède une, unique."
-  },
-  {
-   "key": "ts-rf-03",
-   "chap": "Transmission sur porteuse",
-   "front": "Écriture de s(t) avec les voies I et Q ?",
-   "back": "$$s(t) = p(t)\\cos(2\\pi f_c t) - q(t)\\sin(2\\pi f_c t)$$\np module la porteuse en phase (I), q celle en quadrature (Q)."
-  },
-  {
-   "key": "ts-rf-04",
-   "chap": "Transmission sur porteuse",
-   "front": "Pourquoi le spectre d'un signal réel pour $f \\geq 0$ suffit-il ?",
-   "back": "Sa TF a une symétrie hermitienne $S(f) = S^*(-f)$ : module pair, phase impaire."
-  },
-  {
-   "key": "ts-rf-05",
-   "chap": "Transmission sur porteuse",
-   "front": "Effet de la multiplication par $e^{j2\\pi f_c t}$ sur le spectre ?",
-   "back": "Une translation : $\\mathrm{TF}\\left(s(t)\\, e^{j2\\pi f_c t}\\right) = S(f - f_c)$."
-  },
-  {
-   "key": "ts-rf-06",
-   "chap": "Transmission sur porteuse",
-   "front": "Architecture d'un démodulateur I/Q cohérent ?",
-   "back": "y(t) est multiplié par $2\\cos(2\\pi f_c t)$ sur la voie I et par $-2\\sin(2\\pi f_c t)$ sur la voie Q, puis chaque voie est filtrée en passe-bas : $y_l = y_{l,I} + j\\, y_{l,Q}$."
-  },
-  {
-   "key": "ts-rf-07",
-   "chap": "Transmission sur porteuse",
-   "front": "Pourquoi un filtre passe-bas sur chaque voie du démodulateur I/Q ?",
-   "back": "Les produits de sinusoïdes créent des termes autour de $2f_c$. Le passe-bas (coupure inférieure à $2f_c$) ne garde que la bande de base : $y_{l,I} = \\sum_k A_k h(t - kT_s)\\cos\\varphi_k$ et $y_{l,Q} = \\sum_k A_k h(t - kT_s)\\sin\\varphi_k$."
-  },
-  {
-   "key": "ts-rf-08",
-   "chap": "Transmission sur porteuse",
-   "front": "Deux méthodes pour extraire l'enveloppe complexe d'un signal reçu ?",
-   "back": "Le filtrage de Hilbert, et les projections orthogonales (démodulateur I/Q), seule méthode étudiée dans le cours."
-  },
-  {
-   "key": "ts-rf-09",
-   "chap": "Transmission sur porteuse",
-   "front": "Modèle de canal utilisé pour la transmission sur porteuse ?",
-   "back": "Un passe-bande idéal : $H_c(f) = 1$ si $|f - f_c| \\leq B_c/2$, 0 sinon ($B_c$ : bande passante ou bande de cohérence). Bruit blanc gaussien, et bande B du signal inférieure ou égale à $B_c$."
-  },
-  {
-   "key": "ts-rf-10",
-   "chap": "Transmission sur porteuse",
-   "front": "Modèle du signal reçu en bande transposée (Nyquist, filtre adapté) ?",
-   "back": "$r_n = g_0 A_n e^{j\\varphi_n} + z'_n$. Les résultats sur l'IES et le filtre adapté restent valables avec des symboles complexes : filtres demi-Nyquist, $h_a(t) = \\lambda h^*(-t)$."
-  },
-  {
-   "key": "ts-mod-01",
-   "chap": "Modulations numériques",
-   "front": "Qu'appelle-t-on modulation numérique ?",
-   "back": "L'association d'une étiquette binaire à un symbole complexe $S_k = A_k e^{j\\varphi_k}$. La démodulation numérique est l'opération inverse."
-  },
-  {
-   "key": "ts-mod-02",
-   "chap": "Modulations numériques",
-   "front": "Les quatre familles de modulations numériques ?",
-   "back": "M-ASK (amplitude, équivalent de la M-PAM), M-PSK (phase), M-APK (amplitude et phase, dont les M-QAM), M-FSK (fréquence)."
-  },
-  {
-   "key": "ts-mod-03",
-   "chap": "Modulations numériques",
-   "front": "Expression générale de s(t) pour une modulation numérique ?",
-   "back": "$$s(t) = \\sum_n A_n\\, h(t - nT_s) \\cos(2\\pi f_c t + \\varphi_n)$$"
-  },
-  {
-   "key": "ts-mod-04",
-   "chap": "Modulations numériques",
-   "front": "Symboles d'une M-PSK ?",
-   "back": "Amplitude constante $A_n = 1$ et $\\varphi_n = \\frac{2\\pi i}{M} + \\varphi_{ini}$, $i \\in \\{0, \\dots, M-1\\}$. Ex. QPSK avec $\\varphi_{ini} = \\pi/4$."
-  },
-  {
-   "key": "ts-mod-05",
-   "chap": "Modulations numériques",
-   "front": "Symboles d'une M-QAM ?",
-   "back": "Un cas particulier de M-APK où les symboles forment une grille rectangulaire : $\\pm 1 \\pm j$, $\\pm 3 \\pm j$, $\\pm 1 \\pm 3j$, $\\pm 3 \\pm 3j$… pour une 16-QAM."
-  },
-  {
-   "key": "ts-mod-06",
-   "chap": "Modulations numériques",
-   "front": "Pourquoi les M-APK offrent-elles le meilleur compromis puissance / $P_b$ à bande fixée ?",
-   "back": "Quand M augmente, une M-ASK consomme de plus en plus d'énergie, et la $P_b$ d'une M-PSK se dégrade (symboles de plus en plus proches sur le cercle). Les M-APK utilisent tout le plan."
-  },
-  {
-   "key": "ts-mod-07",
-   "chap": "Modulations numériques",
-   "front": "Principe d'une M-FSK ?",
-   "back": "Amplitude constante, c'est la fréquence qui change :\n$$s(t) = \\sum_n h(t - nT_s)\\cos\\left(2\\pi (f_c + f_n) t + \\varphi_{ini}\\right)$$\navec $f_n \\in \\left\\{(2i - (M-1))\\frac{\\Delta f}{2}\\right\\}$, $f_n \\ll f_c$, $\\Delta f$ l'écart entre porteuses adjacentes."
-  },
-  {
-   "key": "ts-mod-08",
-   "chap": "Modulations numériques",
-   "front": "$P_b$ d'une M-PSK (formule du cours) ?",
-   "back": "$$P_b = 2Q\\left(\\sqrt{2 \\log_2 M \\sin^2\\left(\\frac{\\pi}{M}\\right) \\frac{E_b}{N_0}}\\right)$$\nApproximation valable pour $M \\geq 4$ (elle correspond en fait à $P_s$). Pour la BPSK : $P_b = Q\\left(\\sqrt{2E_b/N_0}\\right)$."
-  },
-  {
-   "key": "ts-mod-09",
-   "chap": "Modulations numériques",
-   "front": "$P_b$ d'une M-FSK (formule du cours) ?",
-   "back": "$$P_b = 2Q\\left(\\sqrt{\\frac{E_b}{N_0}}\\right)$$"
-  },
-  {
-   "key": "ts-mod-10",
-   "chap": "Modulations numériques",
-   "front": "BPSK, QPSK et 8-PSK : comparaison de $P_b$ à $E_b/N_0$ égal ?",
-   "back": "BPSK et QPSK ont la même $P_b$ en fonction de $E_b/N_0$ (la QPSK transmet deux fois plus de bits dans la même bande). La 8-PSK est moins bonne."
-  },
-  {
-   "key": "ts-mod-11",
-   "chap": "Modulations numériques",
-   "front": "Efficacité spectrale : définition et unité ?",
-   "back": "$\\eta = D_b / B$, en bit/s/Hz. Les M-QAM d'ordre élevé ont une grande efficacité spectrale mais demandent plus de $E_b/N_0$ ; la capacité de Shannon borne la région atteignable."
-  },
-  {
-   "key": "ts-mod-12",
-   "chap": "Modulations numériques",
-   "front": "Objectifs à concilier dans la conception d'un système de communication numérique ?",
-   "back": "Maximiser l'efficacité spectrale ; minimiser $P_b$, la puissance émise ($E_b$), la bande B et la complexité. Ils sont contradictoires : il faut trouver le meilleur compromis."
-  },
-  {
-   "key": "ts-td-01",
-   "chap": "Exercices du TD",
-   "front": "8-PAM avec l'étiquetage de Gray du TD : symboles associés à b = [1,1,1,0,0,1,0,0,0] ?",
-   "back": "[3, −5, −7] : 111 → 3, 001 → −5, 000 → −7."
-  },
-  {
-   "key": "ts-td-02",
-   "chap": "Exercices du TD",
-   "front": "8-PAM à $R_s = 1$ Msymbole/s : débit binaire ?",
-   "back": "3 Mbit/s, car chaque symbole porte 3 bits."
-  },
-  {
-   "key": "ts-td-03",
-   "chap": "Exercices du TD",
-   "front": "Seuils de décision d'une 8-PAM {±1, …, ±7} équiprobable ?",
-   "back": "À mi-distance des symboles : −6, −4, −2, 0, 2, 4, 6."
-  },
-  {
-   "key": "ts-td-04",
-   "chap": "Exercices du TD",
-   "front": "8-PAM du TD : décisions pour $r_l = [3{,}8 ;\\ -1{,}1 ;\\ -7{,}4]$ ?",
-   "back": "Symboles [3, −1, −7], soit les bits 111 010 000."
-  },
-  {
-   "key": "ts-td-05",
-   "chap": "Exercices du TD",
-   "front": "$f_e = 8$ kHz et $D_s = 2$ ksymboles/s : nombre d'échantillons par symbole, et vecteur g de la porte ?",
-   "back": "$F_{se} = T_s / T_e = 4$, et $g = [1\\ 1\\ 1\\ 1]$."
-  },
-  {
-   "key": "ts-td-06",
-   "chap": "Exercices du TD",
-   "front": "Comment normaliser l'énergie du filtre $g = [1\\ 1\\ 1\\ 1]$ ?",
-   "back": "Diviser par $\\sqrt{\\sum g^2} = \\sqrt{F_{se}} = 2$ : $g = [0{,}5\\ 0{,}5\\ 0{,}5\\ 0{,}5]$."
-  },
-  {
-   "key": "ts-td-07",
-   "chap": "Exercices du TD",
-   "front": "b = [0100100111] en 4-PAM, $T_s = 0{,}5$ ms : $T_b$, nombre de symboles, et vecteur S ?",
-   "back": "$T_b = T_s/2 = 0{,}25$ ms et 5 symboles. Avec l'étiquetage de Gray du cours (00 → −3, 01 → −1, 11 → 1, 10 → 3) : S = [−1, −3, 3, −1, 1], de dimension 1 × 5 et de période $T_s$."
-  },
-  {
-   "key": "ts-td-08",
-   "chap": "Exercices du TD",
-   "front": "Pourquoi la convolution directe de g avec S ne donne-t-elle pas $s_l[n]$, et comment corriger ?",
-   "back": "S est au rythme $T_s$ et g au rythme $T_e$ : les symboles se chevauchent. Il faut d'abord sur-échantillonner S en insérant $F_{se} - 1$ zéros entre deux symboles, puis convoluer avec g."
-  },
-  {
-   "key": "ts-td-09",
-   "chap": "Exercices du TD",
-   "front": "Largeur du lobe principal de la DSP avec une porte de durée $T_s = 0{,}5$ ms ?",
-   "back": "$2/T_s = 4$ kHz, de −2 kHz à 2 kHz."
-  },
-  {
-   "key": "ts-td-10",
-   "chap": "Exercices du TD",
-   "front": "4-PAM {±1, ±3} avec filtres normalisés et bruit de variance 1/16 : la transmission est-elle fiable ?",
-   "back": "$\\sigma = 0{,}25$, donc $\\pm 3\\sigma = \\pm 0{,}75$ autour de chaque symbole. Les seuils (0, ±2) sont à distance 1 > 0,75 : les nuages ne se chevauchent pas, la transmission est fiable ($P_s = 1{,}5\\, Q(4) \\approx 5 \\times 10^{-5}$)."
-  }
- ]
+  "deck": "TS227 — Introduction aux communications numériques",
+  "color": "#FFF0A6",
+  "items": [
+    {
+      "key": "ts227-bande-base-transposee",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Qu'est-ce qui distingue une transmission en bande de base d'une transmission en bande transposée, et dans quel type de transmission chacune est-elle privilégiée ?",
+      "back": "- Bande de base : autour de la fréquence porteuse $f_p = 0\\ \\mathrm{Hz}$ ; privilégiée en filaire.\n- Bande transposée : autour d'une porteuse $f_p > 0\\ \\mathrm{Hz}$ ; privilégiée en sans fil."
+    },
+    {
+      "key": "ts227-codeur-en-ligne",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "De quels deux blocs est formé le codeur en ligne de la chaîne en bande de base, et quel signal produit-il ?",
+      "back": "L'association bits → symboles ($b_k \\to a_n$), puis le filtre de mise en forme $h(t)$. Il produit le signal émis $s_l(t)$."
+    },
+    {
+      "key": "ts227-chaine-reception",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Dans l'ordre, quels blocs traverse le signal reçu $y_l(t)$ jusqu'aux bits estimés, et quel signal sort de chacun ?",
+      "back": "- filtre de réception $h_a(t)$ → $r_l(t)$ ;\n- échantillonneur aux instants $n{T_s}$ → $r_n$ ;\n- décision → $\\hat{a}_n$ ;\n- association symboles → bits → $\\hat{b}_k$.\n\nDécision + association symboles → bits = décodeur en ligne."
+    },
+    {
+      "key": "ts227-modele-canal",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Dans le modèle de la chaîne, comment le canal agit-il sur le signal émis $s_l(t)$ ?",
+      "back": "$$y_l(t) = [h_c \\star s_l](t) + z_l(t)$$\nFiltrage par la réponse impulsionnelle $h_c(t)$ du canal, puis ajout du bruit $z_l(t)$, processus aléatoire gaussien blanc et réel."
+    },
+    {
+      "key": "ts227-hypotheses-bits",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Quelles hypothèses fait-on sur les bits $b_k$ émis par la source ?",
+      "back": "Variables aléatoires discrètes **indépendantes et identiquement distribuées** (iid) : $b_k \\in \\{0, 1\\}$ suit une loi de Bernoulli, $P(b_k = 0) = p_0$, $P(b_k = 1) = p_1 = 1 - p_0$."
+    },
+    {
+      "key": "ts227-signal-sb",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Expression du signal à temps continu $s_b(t)$ associé aux bits $b_k$ ?",
+      "back": "$$s_b(t) = \\sum_{k=-\\infty}^{+\\infty} b_k\\, \\delta(t - k{T_b})$$\nPeigne d'impulsions de Dirac de poids $b_k$ ; ${T_b}$ est le temps bit (en s)."
+    },
+    {
+      "key": "ts227-debit-binaire",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Définition et unité du débit binaire ?",
+      "back": "$D_b = \\dfrac{1}{{T_b}}$, en bits/s (${T_b}$ : temps bit). Exemple : ${T_b} = 1\\ \\mu\\mathrm{s} \\Rightarrow D_b = 1\\ \\mathrm{Mbit/s}$."
+    },
+    {
+      "key": "ts227-nombre-symboles",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Combien de symboles compte une constellation dont les étiquettes binaires ont $n_b$ bits ?",
+      "back": "$M = 2^{n_b}$ symboles, soit $n_b = \\log_2 M$."
+    },
+    {
+      "key": "ts227-symboles-reels-complexes",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Les symboles d'une constellation sont-ils réels ou complexes ?",
+      "back": "Réels pour une communication en bande de base, complexes en bande transposée."
+    },
+    {
+      "key": "ts227-pam",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Que désigne une constellation « $M$-PAM » ?",
+      "back": "Une constellation **réelle** à $M$ niveaux (*pulse amplitude modulation*). Exemple du cours : la 4-PAM $\\{-3, -1, 1, 3\\}$."
+    },
+    {
+      "key": "ts227-etiquetage-gray",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Qu'est-ce qu'un étiquetage (*mapping*) de Gray, et quel est son intérêt ?",
+      "back": "Deux symboles voisins ont des étiquettes qui ne diffèrent que d'**un seul bit**. Une erreur entre symboles voisins n'entraîne alors qu'une seule erreur binaire (chapitre 4)."
+    },
+    {
+      "key": "ts227-gray-4pam",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Donner l'étiquetage de Gray de la 4-PAM $\\{-3, -1, 1, 3\\}$ utilisé dans le cours.",
+      "back": "`00` → $-3$, `01` → $-1$, `11` → $1$, `10` → $3$."
+    },
+    {
+      "key": "ts227-signal-sa",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Expression du signal à temps continu $s_a(t)$ associé aux symboles $a_n$ ?",
+      "back": "$$s_a(t) = \\sum_{m=-\\infty}^{+\\infty} a_m\\, \\delta(t - m{T_s})$$\n${T_s}$ est le temps symbole (en s)."
+    },
+    {
+      "key": "ts227-debit-symbole",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Définition et unité du débit symbole ?",
+      "back": "$D_s = \\dfrac{1}{{T_s}}$, en symboles/s (${T_s}$ : temps symbole)."
+    },
+    {
+      "key": "ts227-debit-binaire-symbole",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Quelle relation lie le débit binaire $D_b$ au débit symbole $D_s$, et pourquoi ?",
+      "back": "$D_b = n_b D_s = \\log_2 M \\cdot D_s$. Chaque symbole transporte $n_b$ bits : ${T_s} = n_b {T_b}$."
+    },
+    {
+      "key": "ts227-exercice-debit-symbole",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Avec la 4-PAM, si le débit binaire est $D_b = 1\\ \\mathrm{Mbit/s}$, quel est le débit symbole ?",
+      "back": "$D_s = 0{,}5\\ \\mathrm{Msymbole/s}$ : $M = 4$, donc $n_b = 2$ et $D_s = D_b / n_b$."
+    },
+    {
+      "key": "ts227-debit-fournisseur-bande",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "D'après l'enseignant, lequel des débits $D_b$ et $D_s$ est « vendu par le fournisseur », et lequel est lié à la bande passante ?",
+      "back": "$D_b$ est vendu par le fournisseur ; $D_s$ est lié à la bande passante (le critère de Nyquist impose $D_s \\leq 2B$)."
+    },
+    {
+      "key": "ts227-signal-emis",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Expression du signal émis $s_l(t)$ en fonction des symboles et du filtre de mise en forme, et hypothèse faite sur ce filtre ?",
+      "back": "$$s_l(t) = (h \\star s_a)(t) = \\sum_{m=-\\infty}^{+\\infty} a_m\\, h(t - m{T_s})$$\n$h(t)$ est un filtre linéaire invariant par décalage."
+    },
+    {
+      "key": "ts227-mise-en-forme-porte",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Avec un filtre de mise en forme en porte de durée ${T_s}$, à quoi ressemble le signal émis $s_l(t)$ ?",
+      "back": "Chaque impulsion $a_m\\, \\delta(t - m{T_s})$ devient un **palier** de hauteur $a_m$ sur $[m{T_s}, (m+1){T_s}[$."
+    },
+    {
+      "key": "ts227-ook-antipodale",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "À puissance moyenne égale ($0{,}5\\ \\mathrm{W}$), comparer l'écart entre les deux symboles de la constellation antipodale et de l'OOK.",
+      "back": "- antipodale $\\{-\\sqrt{1/2},\\ \\sqrt{1/2}\\}$ : écart $\\sqrt{2}$ ;\n- OOK (*On Off Keying*) $\\{0, 1\\}$ : écart $1$.\n\nL'antipodale sépare mieux ses symboles, ce qui conditionne la robustesse au bruit (chapitre 4)."
+    },
+    {
+      "key": "ts227-manchester-filtre",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Forme du filtre de mise en forme $h(t)$ du code Manchester ?",
+      "back": "Une constante positive sur $[0, {T_s}/2]$, la constante opposée sur $[{T_s}/2, {T_s}]$ : une transition au milieu du symbole. Avec une amplitude $\\pm 1$ :\n$$h(t) = \\Pi_{{T_s}/2}\\!\\left(t - \\frac{{T_s}}{4}\\right) - \\Pi_{{T_s}/2}\\!\\left(t - \\frac{3{T_s}}{4}\\right)$$"
+    },
+    {
+      "key": "ts227-manchester-proprietes",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Quelles deux propriétés du signal codé Manchester ont été notées en cours ?",
+      "back": "- **moyenne nulle** : $\\int h(t)\\,\\mathrm{d}t = 0$ ;\n- **pas de séquence constante** : une transition au milieu de chaque symbole, même quand des symboles identiques se suivent."
+    },
+    {
+      "key": "ts227-filtre-global",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Définition du filtre global $g(t)$ de la chaîne ? Que devient-il sans déformation par le canal ?",
+      "back": "$g(t) = [h_a \\star h_c \\star h](t)$. Sans déformation ($h_c(t) = \\delta(t)$) : $g(t) = [h \\star h_a](t)$."
+    },
+    {
+      "key": "ts227-signal-filtre-reception",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Expression du signal $r_l(t)$ en sortie du filtre de réception, en fonction du filtre global ?",
+      "back": "$$r_l(t) = \\sum_{m=-\\infty}^{+\\infty} a_m\\, g(t - m{T_s}) + z'_l(t)$$\noù $z'_l(t) = [h_a \\star z_l](t)$ est le bruit filtré par le filtre de réception."
+    },
+    {
+      "key": "ts227-modele-discret",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Modèle discret équivalent entre les symboles $a_n$ et les échantillons $r_n$ ?",
+      "back": "$$r_n = a_n g_0 + \\sum_{m \\neq 0} a_{n-m}\\, g_m + z'_n$$\navec $r_n = r_l(n{T_s})$, $g_m = g(m{T_s})$ et $z'_n = z'_l(n{T_s})$."
+    },
+    {
+      "key": "ts227-modele-discret-indice",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Comment passe-t-on de $r_n = \\sum_m a_m\\, g\\big((n - m){T_s}\\big) + z'_n$ au modèle discret équivalent ?",
+      "back": "Changement d'indice $m \\to n - m$, puis séparation du terme $m = 0$, qui donne $a_n g_0$."
+    },
+    {
+      "key": "ts227-decision",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Comment le bloc de décision estime-t-il le symbole $\\hat{a}_n$ ?",
+      "back": "Il détermine dans quelle **région de décision** se trouve l'échantillon $r_n$ ; les régions sont séparées par des **seuils** de décision. Il estime ainsi la valeur de $a_n$ la plus probable."
+    },
+    {
+      "key": "ts227-seuils-non-equidistants",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Les seuils de décision sont-ils toujours placés à égale distance des symboles ?",
+      "back": "Non, pas forcément. Exemple du support pour la 4-PAM : seuils en $-2{,}5$, $0{,}5$ et $1{,}5$. Le choix optimal en présence de bruit est vu au chapitre 4."
+    },
+    {
+      "key": "ts227-exercice-seuils",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "4-PAM $\\{-3, -1, 1, 3\\}$, seuils $(-2{,}5;\\ 0{,}5;\\ 1{,}5)$, échantillons reçus $\\mathbf{r} = [1{,}2;\\ -4;\\ 2{,}1]$. Quels symboles sont décidés ?",
+      "back": "$\\hat{\\mathbf{a}} = [1;\\ -3;\\ 3]$ : $1{,}2 \\in [0{,}5;\\ 1{,}5]$, $-4 < -2{,}5$, $2{,}1 > 1{,}5$."
+    },
+    {
+      "key": "ts227-ies-definition",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Qu'est-ce que l'interférence entre symboles (IES) ?",
+      "back": "L'interférence générée par les symboles $\\dots, a_{n-1}, a_{n+1}, \\dots$ sur la réception du **symbole d'intérêt** $a_n$."
+    },
+    {
+      "key": "ts227-rn-sans-bruit",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Sans bruit et sans déformation par le canal, décomposer l'échantillon $r_n$ et nommer ses deux termes.",
+      "back": "$$r_n = \\underbrace{g_0\\, a_n}_{\\text{symbole d'intérêt}} + \\underbrace{\\sum_{m \\neq 0} g_m\\, a_{n-m}}_{\\text{IES}}$$\nHypothèses : $h_c(t) = \\delta(t)$, donc $g = h \\star h_a$, et $z'_n = 0$."
+    },
+    {
+      "key": "ts227-annulation-ies",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "À quelle condition sur les échantillons $g_m$ du filtre global l'IES est-elle annulée ? Que vaut alors $r_n$ sans bruit ?",
+      "back": "$g_0 \\neq 0$ et $g_m = 0$ pour tout $m \\neq 0$. Sans bruit, $r_n = g_0\\, a_n$."
+    },
+    {
+      "key": "ts227-ies-sans-bruit",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "En l'absence de bruit et de filtre de canal ($h_c(t) = \\delta(t)$), une communication est-elle forcément sans erreur ?",
+      "back": "Non : l'IES peut rendre la communication sans erreur impossible. Elle résulte d'un **mauvais choix du couple** $(h(t), h_a(t))$."
+    },
+    {
+      "key": "ts227-peigne-dirac",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Définition du peigne de Dirac $\\text{Ш}_{{T_s}}(t)$ ?",
+      "back": "$$\\text{Ш}_{{T_s}}(t) = \\sum_{m} \\delta(t - m{T_s})$$\nPeigne d'impulsions de Dirac de période ${T_s}$."
+    },
+    {
+      "key": "ts227-nyquist-temporel",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Énoncé du critère de Nyquist, version temporelle ?",
+      "back": "Si le filtre global $g(t) = (h \\star h_a)(t)$ vérifie\n$$g(t)\\, \\text{Ш}_{{T_s}}(t) = g_0\\, \\delta(t)$$\nalors il n'y a pas d'IES à la réception."
+    },
+    {
+      "key": "ts227-nyquist-temporel-demonstration",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Démonstration du critère de Nyquist temporel : quelle égalité montre que « $g(m{T_s}) = 0$ pour tout $m \\neq 0$ » équivaut à $g(t)\\, \\text{Ш}_{{T_s}}(t) = g_0\\, \\delta(t)$ ?",
+      "back": "$$g(t)\\, \\text{Ш}_{{T_s}}(t) = \\sum_m g(t)\\, \\delta(t - m{T_s}) = \\sum_m g(m{T_s})\\, \\delta(t - m{T_s})$$\nIl ne reste que le terme $m = 0$ si et seulement si $g(m{T_s}) = 0$ pour tout $m \\neq 0$."
+    },
+    {
+      "key": "ts227-nyquist-temporel-graphique",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Graphiquement, que doit faire $g(t)$ pour vérifier le critère de Nyquist temporel ?",
+      "back": "Sa forme est quelconque, mais il doit **passer par zéro à tous les instants $m{T_s}$, $m \\neq 0$** (avec $g_0 \\neq 0$)."
+    },
+    {
+      "key": "ts227-nyquist-frequentiel",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Énoncé du critère de Nyquist, version fréquentielle ?",
+      "back": "Si $G(f) = H(f)\\, H_a(f)$, transformée de Fourier du filtre global, vérifie\n$$\\frac{1}{{T_s}} \\sum_{m=-\\infty}^{\\infty} G\\!\\left(f - \\frac{m}{{T_s}}\\right) = g_0$$\nalors il n'y a pas d'IES. Graphiquement : la somme des répliques de $G$, décalées de multiples de $1/{T_s}$, est constante."
+    },
+    {
+      "key": "ts227-nyquist-frequentiel-demonstration",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Pour passer du critère de Nyquist temporel au critère fréquentiel, quels résultats sur la transformée de Fourier utilise-t-on ?",
+      "back": "- le produit devient une convolution : $G(f) \\star \\operatorname{TF}[\\text{Ш}_{{T_s}}](f) = g_0$ ;\n- la TF d'un peigne est un peigne : $\\operatorname{TF}[\\text{Ш}_{{T_s}}] = \\frac{1}{{T_s}}\\, \\text{Ш}_{1/{T_s}}$ ;\n- la convolution par $\\delta(f - m/{T_s})$ décale : $G(f) \\star \\delta(f - m/{T_s}) = G(f - m/{T_s})$."
+    },
+    {
+      "key": "ts227-convention-tf",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Le poly écrit (p. 40) $G(f) = \\int g(t)\\, e^{+j2\\pi ft}\\, \\mathrm{d}t$. Est-ce la convention de la matière ?",
+      "back": "Non, c'est une coquille. Convention de TS227 :\n$$\\operatorname{TF}[x](f) = \\int_{-\\infty}^{+\\infty} x(t)\\, e^{-j2\\pi ft}\\, \\mathrm{d}t$$\nLe critère de Nyquist n'en dépend pas."
+    },
+    {
+      "key": "ts227-regle-symetrie",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Règle de symétrie : si $G(f)$ est à support borné $[-1/{T_s}, 1/{T_s}]$, que devient le critère de Nyquist fréquentiel ?",
+      "back": "Le point $\\left(\\dfrac{1}{2{T_s}}, \\dfrac{g_0{T_s}}{2}\\right)$ est un **centre de symétrie** pour $G(f)$, $f \\in [0, 1/{T_s}]$ (avec $G$ réelle et paire)."
+    },
+    {
+      "key": "ts227-symetrie-hypothese",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Quelle hypothèse, non formulée par le support, faut-il pour passer de $G(f) + G(f - 1/{T_s}) = g_0{T_s}$ à une symétrie centrale de $G$ ?",
+      "back": "$G$ **réelle et paire** (c'est-à-dire $g$ réel et pair) : alors $G(f - 1/{T_s}) = G(1/{T_s} - f)$, d'où $G(f) + G(1/{T_s} - f) = g_0{T_s}$."
+    },
+    {
+      "key": "ts227-centre-symetrie-ordonnee",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Le poly donne $\\left(\\dfrac{1}{2{T_s}}, \\dfrac{g_0}{2}\\right)$ comme centre de symétrie de $G$. Pourquoi l'ordonnée est-elle fausse ?",
+      "back": "Sur $[0, 1/{T_s}]$, le critère donne $G(f) + G(f - 1/{T_s}) = g_0{T_s}$ : l'ordonnée est $\\dfrac{g_0{T_s}}{2}$ (égale à $G(0)/2$ si $G(\\pm 1/{T_s}) = 0$). Contrôle par les dimensions : $G$ s'exprime en unité de $g$ multipliée par des secondes."
+    },
+    {
+      "key": "ts227-frequence-nyquist",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Qu'appelle-t-on fréquence de Nyquist ?",
+      "back": "$f = \\dfrac{1}{2{T_s}}$. C'est aussi la bande minimale d'un filtre global sans IES."
+    },
+    {
+      "key": "ts227-bande-minimale",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Quelle est la bande minimale d'un filtre global de support $[-B, B]$ vérifiant le critère de Nyquist ?",
+      "back": "$$B \\geq \\frac{1}{2{T_s}}$$\nLa bande minimale est la fréquence de Nyquist."
+    },
+    {
+      "key": "ts227-bande-minimale-demonstration",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Quel argument démontre $B \\geq \\dfrac{1}{2{T_s}}$ ?",
+      "back": "Les répliques doivent **se chevaucher** pour que leur somme soit constante. La réplique centrée en $1/{T_s}$ commence en $1/{T_s} - B$ ; elle chevauche $G(f)$, qui s'arrête en $B$, si $1/{T_s} - B \\leq B$, soit $2B \\geq 1/{T_s}$."
+    },
+    {
+      "key": "ts227-bande-minimale-spectre",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Quelle forme de $G(f)$ permet d'atteindre exactement la bande minimale $\\dfrac{1}{2{T_s}}$ ?",
+      "back": "Un spectre **rectangulaire**, constant sur $\\left[-\\dfrac{1}{2{T_s}}, \\dfrac{1}{2{T_s}}\\right]$ : les répliques se juxtaposent exactement."
+    },
+    {
+      "key": "ts227-debit-symbole-max",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "À bande $B$ donnée, quel débit symbole maximal le critère de Nyquist autorise-t-il ?",
+      "back": "$D_s = \\dfrac{1}{{T_s}} \\leq 2B$."
+    },
+    {
+      "key": "ts227-efficacite-spectrale",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Définition et unité de l'efficacité spectrale ?",
+      "back": "$\\eta = \\dfrac{D_b}{B}$, en bits·s⁻¹·Hz⁻¹, où $D_b = n_b D_s$ est le débit binaire et $B$ la bande occupée."
+    },
+    {
+      "key": "ts227-efficacite-spectrale-max",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Efficacité spectrale maximale d'une transmission sans IES en bande de base, et conditions ? Et en bande transposée ?",
+      "back": "En bande de base, avec la bande minimale $B = \\frac{1}{2{T_s}}$ et $D_b = \\frac{\\log_2 M}{{T_s}}$ : $\\eta \\leq 2 \\log_2 M$ bits·s⁻¹·Hz⁻¹. En bande transposée (bande $2B$ autour de la porteuse) : $\\eta \\leq \\log_2 M$."
+    },
+    {
+      "key": "ts227-cosinus-sureleve-bande",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Bande d'un filtre en cosinus surélevé de facteur de retombée $\\beta$ ? Cas $\\beta = 0$ et $\\beta = 1$ ?",
+      "back": "$B = \\dfrac{1 + \\beta}{2{T_s}}$, $\\beta \\in [0, 1]$. $\\beta = 0$ : bande minimale $\\frac{1}{2{T_s}}$ (spectre rectangulaire) ; $\\beta = 1$ : $\\frac{1}{{T_s}}$."
+    },
+    {
+      "key": "ts227-exercice-nyquist-porte",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "$g(t)$ vaut 10 sur $[0, 1[\\ \\mathrm{ms}$ et 0 ailleurs ($g(1\\ \\mathrm{ms}) = 0$). Vérifie-t-il le critère de Nyquist si ${T_s} = 1\\ \\mathrm{ms}$ ?",
+      "back": "Oui : $g_0 = 10 \\neq 0$ et $g(m{T_s}) = 0$ pour tout $m \\neq 0$, en particulier $g(1\\ \\mathrm{ms}) = 0$. La réponse dépend de la valeur prise aux discontinuités."
+    },
+    {
+      "key": "ts227-exercice-nyquist-triangle-temps",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "$g(t)$ est un triangle de sommet $g(0) = 10$ et de support $[-1, 1]\\ \\mathrm{ms}$. Vérifie-t-il le critère de Nyquist si ${T_s} = 0{,}5\\ \\mathrm{ms}$ ?",
+      "back": "Non : $g({T_s}) = g(0{,}5\\ \\mathrm{ms}) = 5 \\neq 0$."
+    },
+    {
+      "key": "ts227-exercice-nyquist-triangle-frequence",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "$G(f)$ est un triangle de sommet $G(0) = 10$ et de support $[-1000, 1000]\\ \\mathrm{Hz}$. Vérifie-t-il le critère de Nyquist si ${T_s} = 1\\ \\mathrm{ms}$ ?",
+      "back": "Oui : les répliques, décalées de $1000\\ \\mathrm{Hz}$, se compensent et leur somme vaut 10 partout. Centre de symétrie $(500\\ \\mathrm{Hz},\\ 5)$, avec $g_0 = \\int G = 10^4$ et $\\frac{g_0{T_s}}{2} = 5$."
+    },
+    {
+      "key": "ts227-exercice-debit-max-triangle",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "$g(t)$ est un triangle de sommet $g(0) = 10$ et de support $[-1, 1]\\ \\mathrm{ms}$. Quel est le débit symbole maximal sans IES ?",
+      "back": "$1\\ \\mathrm{ksymbole/s}$ : $g(m{T_s}) = 0$ pour tout $m \\neq 0$ si et seulement si ${T_s} \\geq 1\\ \\mathrm{ms}$."
+    },
+    {
+      "key": "ts227-exercice-debit-max-porte",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "$h(t)$ vaut 10 sur $[0, 1[\\ \\mathrm{ms}$ et 0 ailleurs, et $h_a(t) = h(t)$. Quel est le débit symbole maximal sans IES ?",
+      "back": "$1\\ \\mathrm{ksymbole/s}$ : $g = h \\star h$ est un triangle de support $[0, 2]\\ \\mathrm{ms}$, de sommet en $t = 1\\ \\mathrm{ms}$ ; on échantillonne en $1\\ \\mathrm{ms} + n{T_s}$. (Le poly écrit « Msymboles/s » : coquille d'unité.)"
+    },
+    {
+      "key": "ts227-filtre-global-non-centre",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Si le maximum du filtre global $g(t)$ est en $t_0 \\neq 0$ (cas d'un filtre causal), comment applique-t-on le modèle discret et le critère de Nyquist ?",
+      "back": "On échantillonne aux instants $t_0 + n{T_s}$, et on raisonne sur le filtre recentré $g(t + t_0)$."
+    },
+    {
+      "key": "ts227-oeil-construction",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Comment construit-on un diagramme de l'œil ?",
+      "back": "On découpe le signal reçu $r_l(t)$ en tranches de durée $2{T_s}$, synchronisées sur l'horloge symbole (centrées sur les instants d'échantillonnage), puis on superpose toutes les tranches."
+    },
+    {
+      "key": "ts227-oeil-absence-ies",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Comment lit-on l'absence d'IES sur un diagramme de l'œil ?",
+      "back": "À l'instant d'échantillonnage, les courbes se croisent en **points uniques** (2 pour une constellation binaire, $M$ pour $M$ niveaux). Avec de l'IES, ces points s'étalent et l'œil se ferme."
+    },
+    {
+      "key": "ts227-oeil-ouverture-verticale",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Que traduit l'ouverture **verticale** de l'œil ?",
+      "back": "La robustesse au bruit."
+    },
+    {
+      "key": "ts227-oeil-ouverture-horizontale",
+      "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
+      "front": "Que traduit l'ouverture **horizontale** de l'œil ?",
+      "back": "La robustesse aux déphasages de l'échantillonneur."
+    }
+  ]
 }

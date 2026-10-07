@@ -341,11 +341,18 @@ La matière et le chapitre sont déclarés **une fois en tête de fichier** et v
 - Mise en forme autorisée (celle de l'application de révision) : `**gras**`, `*italique*`, `` `code` ``, `$…$`, `$$…$$`.
 - En dehors du code et des formules, **jamais d'astérisque isolé** sur une ligne (il serait pris pour de l'italique).
 - En YAML, écrire `question` et `reponse` en bloc `|` : les antislashs du LaTeX n'ont alors pas à être doublés.
-- Les macros de `_macros.qmd` ne sont pas connues de l'application de révision : le script de conversion les remplace (voir `architecture.md`) ; en attendant, écrire la forme développée dans les cartes.
+- Les macros de `_macros.qmd` (`\Ts`, `\Tb`, `\TF`…) s'écrivent dans les cartes **comme dans le cours** : l'application de révision ne les connaît pas, mais `scripts/flashcards.py` les développe à la conversion.
+- Une formule en ligne `$…$` tient sur **une seule ligne** (l'application ne reconnaît pas une formule en ligne coupée) ; le script le contrôle.
+- Sauts de ligne, comme en Markdown : les lignes d'un même paragraphe sont jointes par le script. Une nouvelle ligne commence devant une ligne `- …` (liste) et autour d'un bloc `$$…$$` ; une ligne vide sépare deux paragraphes.
+- Typographie du cours : espace insécable avant `: ; ! ?`.
 
 ### 10.5 Conversion vers l'application
 
-Le script `scripts/` (à écrire) produit un paquet par matière au format de `revision/cartes/*.json` : `key` ← `id`, `chap` ← « Ch. NN — titre », `front` ← `question`, `back` ← `reponse`. Les cartes sont écrites dans l'ordre des fichiers.
+`python scripts/flashcards.py` produit un paquet par matière, `revision/cartes/<matiere>.json`, au format de l'application : `key` ← `id`, `chap` ← « Ch. NN — titre » (titre du front matter du chapitre), `front` ← `question`, `back` ← `reponse`, `deck` ← titre de la fiche matière. Les cartes sont écrites dans l'ordre des chapitres, puis dans l'ordre des fichiers. Le fichier de la matière est ajouté à `revision/cartes/index.json` s'il n'y figure pas.
+
+Le script **n'écrit rien** au moindre problème : champ obligatoire manquant ou inconnu, identifiant non conforme, en double ou présent dans un `ids-retires` de la matière, préfixe hérité, type ou source inconnus, `ref` introuvable dans le chapitre visé, astérisque isolé, formule en ligne coupée. `--verifier` fait les contrôles sans écrire. Détails : `architecture.md` § 7.
+
+Le paquet généré est le **contenu complet** de la matière : ne jamais le modifier à la main (la modification serait écrasée au lancement suivant).
 
 ---
 
@@ -377,6 +384,8 @@ Le script `scripts/` (à écrire) produit un paquet par matière au format de `r
 | 2026-10-07 | Fautes d'orthographe sans effet sur le sens corrigées sans bloc, listées dans le rapport d'analyse | Nouveau (§ 5.3) |
 | 2026-10-07 | Direction artistique unique « fiche bristol » pour le site et l'application ; jetons dans `assets/bristol-tokens.css` ; mode sombre | Nouveau (§ 13) |
 | 2026-10-07 | Choix par défaut appliqués par Claude (forme, figures, rédaction) et listés dans le rapport ; questions à Armand réservées aux points bloquants | Nouveau (§ 14), décision d'Armand après la vérification du ch. 2 de TS227 |
+| 2026-10-07 | Flashcards : macros écrites comme dans le cours (développées par le script), formules en ligne sur une ligne, sauts de ligne façon Markdown ; conversion par `scripts/flashcards.py` | Précise § 10.4 et § 10.5 (remplace « écrire la forme développée ») |
+| 2026-10-07 | Paquet TS227 provisoire (préfixe `ts-`) abandonné ; le préfixe reste réservé | Question ouverte 5 |
 
 ---
 

@@ -61,7 +61,7 @@ Répartition des rôles entre les fichiers de mémoire :
 
 ## 1. Présentation générale
 
-**Bristol** est un projet personnel d'Armand : une **base de connaissances complète pour ses études d'ingénieur**, utilisable pendant plusieurs années.
+**Bristol** est un projet personnel d'Armand : une **base de connaissances complète pour ses études d'ingénieur**, utilisable pendant plusieurs années. Il sera **partagé avec les étudiants de sa promo** une fois publié (voir [section 5.4](#54-hébergement-et-droits)).
 
 Le nom vient des fiches bristol, les fiches cartonnées utilisées pour réviser. Il désigne à l'origine l'application de flashcards du projet (voir [section 20](#20-lexistant--lapplication-bristol-actuelle)) et, désormais, l'ensemble du site.
 
@@ -256,15 +256,19 @@ Les cours sont écrits dans des fichiers `.qmd` (Markdown enrichi). Quarto les t
 
 ### 5.4 Hébergement et droits
 
-- Le site pourra être hébergé sur **GitHub Pages** (l'application de flashcards l'est déjà) ou sur une autre solution.
-- **Attention :** un site GitHub Pages est **public**, même si le dépôt est privé (sauf offre GitHub Enterprise).
+- **Le site sera publié à la fin** et utilisé par les étudiants de la promo d'Armand, pas seulement par lui (décision du 2026-10-07).
 - Le site contiendra des contenus dérivés des supports des enseignants (texte, figures). Cela pose une question de **droits** et, potentiellement, de règlement de l'école.
-- **Décision : le site de cours ne doit pas être publié tant que la question des droits n'est pas clarifiée.**
-- Options identifiées, non tranchées :
-  1. demander l'accord des enseignants concernés ;
-  2. héberger derrière une authentification (par exemple Cloudflare Pages + Cloudflare Access, qui propose une offre gratuite pour un petit nombre d'utilisateurs) ;
-  3. utiliser le site uniquement en local (`quarto preview`) ;
-  4. publier seulement les parties qui ne reprennent pas les supports.
+- **Décision : le site de cours n'est publié que si deux conditions sont réunies :**
+  1. **accès réservé** à une liste d'adresses e-mail (solution privilégiée : Cloudflare Pages + Cloudflare Access, qui propose une offre gratuite pour un petit nombre d'utilisateurs) ;
+  2. **accord des enseignants** concernés pour les contenus dérivés de leurs supports.
+- Tant que ces conditions ne sont pas réunies : utilisation **en local uniquement** (`quarto preview`), rien n'est publié.
+- **Attention :** un site GitHub Pages est **public**, même si le dépôt est privé (sauf offre GitHub Enterprise). Il ne convient donc pas au site de cours.
+- Option de repli, non tranchée : si un enseignant refuse, ne publier de sa matière que les parties qui ne reprennent pas ses supports.
+- À faire **avant la publication** :
+  - une page « À propos » qui explique les quatre catégories et l'origine des notes ;
+  - l'export et l'import de la **progression** dans l'application de révision (la progression est stockée dans le navigateur, voir [section 20.2](#202-deux-versions)).
+- Les pages publiées ne contiennent **aucun contenu personnel ou sans rapport avec le cours**.
+- Plus tard : un moyen pour les camarades de signaler une erreur ou de proposer des notes ([question ouverte 13](#22-questions-ouvertes)).
 - Dans tous les cas, les sources brutes (PDF, scans) ne sont jamais publiées.
 
 ### 5.5 Rendu mathématique
@@ -804,9 +808,13 @@ Le découpage en chapitres Bristol suit ce plan (décision du 2026-10-07), même
   - Des solutions ont été produites par Claude (paquet de flashcards provisoire).
   - Pour l'étude pratique, l'étiquetage de la 4-PAM n'est pas donné par l'énoncé : celui du cours a été supposé (00 → −3, 01 → −1, 11 → 1, 10 → 3).
 
-### 18.5 Flashcards provisoires existantes
+### 18.5 Flashcards
 
-Un paquet de **129 cartes** (`ts227.json`, clés `ts-<section>-NN`) a été généré à partir du poly et du TD, **avant** la mise en place de la méthode Bristol. Il est **provisoire** : il sera remplacé par des cartes générées à partir des chapitres validés. Voir la question ouverte sur la conservation de la progression ([section 22](#22-questions-ouvertes)).
+Un paquet provisoire de **129 cartes** (`ts227.json`, clés `ts-<section>-NN`) avait été généré à partir du poly et du TD, **avant** la mise en place de la méthode Bristol.
+
+**Décision du 7 octobre 2026 (question 5) : ce paquet est abandonné.** Les cartes de TS227 sont générées chapitre par chapitre à partir des cours validés, avec de nouvelles clés au format de `conventions.md` (`ts227-<slug>`). Le paquet `revision/cartes/ts227.json` est désormais **produit par `scripts/flashcards.py`** ; les 129 anciennes cartes en disparaissent, avec leur progression. Le préfixe `ts-` reste réservé et n'est jamais réutilisé.
+
+Chapitre 2 : 61 cartes (`flashcards/02-communication-sans-bruit.yml`, 7 octobre 2026).
 
 ---
 
@@ -816,7 +824,7 @@ Un paquet de **129 cartes** (`ts227.json`, clés `ts-<section>-NN`) a été gén
 2. **Ne pas corriger silencieusement** une source.
 3. **Ne pas supprimer** une information importante des notes.
 4. **Ne pas générer les flashcards définitives** avant la validation du cours.
-5. **Ne pas publier les supports** (ni les contenus qui en dérivent) sans avoir vérifié les droits.
+5. **Ne publier les supports** (ni les contenus qui en dérivent) **qu'avec l'accord des enseignants et derrière un accès réservé** à la promo (voir § 5.4) ; aucun contenu personnel ou sans rapport avec le cours dans les pages publiées.
 6. **Ne pas dépendre d'une conversation unique** : tout ce qui compte est dans les fichiers.
 7. **Conserver des identifiants stables** : fichiers, labels, flashcards.
 8. **Privilégier la maintenabilité** à la rapidité.
@@ -848,10 +856,11 @@ Avant le projet de site, Bristol existait déjà comme **application de flashcar
 
 | Version | Hébergement | Stockage de la progression | Arrivée des cartes |
 |---|---|---|---|
-| **GitHub** (version de référence d'Armand) | Dépôt GitHub d'Armand | Navigateur (`localStorage`), donc **propre à chaque appareil** | Fichiers `cartes/*.json` listés dans `cartes/index.json`, lus à chaque ouverture |
+| **Locale** (version de référence d'Armand depuis le 7 octobre 2026) | `revision/` du dépôt `bristol-site`, servie par `quarto preview` à l'adresse fixe `http://localhost:4848/revision/` | Navigateur (`localStorage`), **propre à chaque appareil et à l'adresse** | Fichiers `cartes/*.json` listés dans `cartes/index.json`, lus à chaque ouverture ; `ts227.json` produit par `scripts/flashcards.py` |
+| GitHub Pages (ancien site, dépôt `bristol`) | Dépôt public `armandgm43-droid/bristol` | Navigateur (`localStorage`) | **Figé** depuis le 7 octobre 2026 : plus aucune modification |
 | claude.ai | Artifact publié : https://claude.ai/artifact/Kdg6LnEv1Ewz5HoU8ysotM | Compte Claude (base de données de l'artifact) | Dépôt direct par Claude dans une « boîte de réception » |
 
-Décision : utiliser **une seule** des deux versions pour réviser, la version GitHub.
+Décision : utiliser **une seule** version pour réviser. Depuis le 7 octobre 2026, c'est la **version locale** (`quarto preview`, port fixé à 4848 dans `_quarto.yml`, voir `architecture.md` § 6). L'ancien site GitHub Pages est **figé** : Armand n'y touche plus, et Claude ne prépare plus de fichiers pour lui.
 
 ### 20.3 Format des paquets (`cartes/<paquet>.json`)
 
@@ -885,11 +894,11 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 | `vhdl.json` | VHDL | 90 | `vhdl-` | Connaissances générales (pas de cours fourni) |
 | `c-unix.json` | C et Unix | 108 | `cu-` | Connaissances générales (pas de cours fourni) |
 | `latex.json` | LaTeX | 92 | `latex-` | Connaissances générales |
-| `ts227.json` | Communications numériques (TS227) | 129 | `ts-` | Poly + TD + correction (provisoire, voir 18.5) |
+| ~~`ts227.json`~~ | ~~Communications numériques (TS227)~~ | ~~129~~ | `ts-` | **Abandonné** le 7 octobre 2026 (voir 18.5) : `ts227.json` est désormais généré par `scripts/flashcards.py` (clés `ts227-…`) |
 
 ### 20.5 Évolutions prévues de l'application
 
-- générer les fichiers `cartes/*.json` à partir des flashcards du site (`matieres/*/flashcards/`) par un script ;
+- ~~générer les fichiers `cartes/*.json` à partir des flashcards du site (`matieres/*/flashcards/`) par un script~~ : fait (`scripts/flashcards.py`, 7 octobre 2026) ;
 - lien « Voir dans le cours » sur chaque carte (champ `ref`) ;
 - révision d'un seul chapitre, et mode « veille d'examen » ;
 - à plus long terme : synchronisation de la progression entre appareils.
@@ -920,6 +929,14 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 | 2026-10-07 | Fautes d'orthographe sans effet sur le sens corrigées sans bloc, listées dans le rapport d'analyse | Éviter d'encombrer le cours (voir `conventions.md` §5.3) |
 | 2026-10-07 | Claude applique ses choix par défaut (forme, figures, rédaction) et les liste dans le rapport ; questions à Armand réservées aux points bloquants | Alléger les étapes 3 et 7 (voir `conventions.md` §14) |
 | 2026-10-07 | TS227 ch. 2 validé par Armand (statut `valide`) | Premier chapitre de bout en bout jusqu'à l'étape 7 |
+| 2026-10-07 | Le site sera **publié** à la fin et utilisé par d'autres étudiants de la promo, pas seulement par Armand | Partager la base de connaissances ; oriente la question 1, ouvre la question 13 |
+| 2026-10-07 | Publication du site de cours conditionnée à un **accès réservé** (liste d'e-mails) et à l'**accord des enseignants** ; en attendant, local uniquement (voir § 5.4 et règle 19.5) | Droits sur les supports des enseignants |
+| 2026-10-07 | Règle renforcée : **aucun contenu personnel ou sans rapport avec le cours** dans les pages publiées | Pages lues par d'autres étudiants |
+| 2026-10-07 | Page « À propos » prévue : explique les quatre catégories et l'origine des notes | Lecteurs qui ne connaissent pas les conventions du projet |
+| 2026-10-07 | TODO avant publication : export et import de la **progression** dans l'application de révision | Progression stockée dans le navigateur (`localStorage`), propre à chaque appareil et à l'adresse du site |
+| 2026-10-07 | Question 5 : paquet TS227 provisoire (clés `ts-…`) **abandonné** ; nouvelles clés `ts227-<slug>` ; `ts227.json` généré par `scripts/flashcards.py` | La progression ne se transfère pas de toute façon (nouvelle adresse) ; cartes issues des cours validés seulement |
+| 2026-10-07 | Ancien site de cartes (dépôt `bristol`, GitHub Pages) **figé** ; révision en local avec `quarto preview`, port fixé à **4848** | La progression (`localStorage`) dépend de l'adresse : un port fixe la conserve d'un lancement à l'autre |
+| 2026-10-07 | TS227 ch. 2 : 61 flashcards générées (statut `flashcards`) ; labels `eq-signal-yl` et `eq-efficacite-spectrale` retirés (V5) | Étape 8 ; `conventions.md` § 7.2 |
 
 ---
 
@@ -929,14 +946,19 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 
 1. **Hébergement du site de cours** : public avec accord des enseignants, privé derrière une authentification, ou local uniquement ?
    *Règle provisoire : utilisation en local uniquement (`quarto preview`), rien n'est publié.*
+   *Orientation (2026-10-07) : le site sera publié pour la promo ; privilégier un accès réservé par liste d'e-mails (ex. Cloudflare Access) et demander l'accord des enseignants. La règle provisoire s'applique tant que la question n'est pas tranchée.*
 2. **Dépôt** : un seul dépôt (site + application de révision), ou deux dépôts ? Les sources brutes restent dans tous les cas hors du dépôt public.
 3. ~~**Classes des quatre catégories**~~ : *tranchée le 2026-10-06, voir le journal des décisions.*
 4. ~~**Format des flashcards**~~ : *tranchée le 2026-10-06, voir le journal des décisions.*
-5. **Paquet TS227 provisoire** : réutiliser les anciennes clés `ts-…` pour les cartes équivalentes, afin de conserver la progression, ou repartir de nouveaux identifiants ?
+5. ~~**Paquet TS227 provisoire**~~ : *tranchée le 2026-10-07 : paquet abandonné, nouvelles clés `ts227-<slug>` (voir 18.5 et le journal des décisions).*
 6. **Paquets hérités** (réseaux, anglais, VHDL, C et Unix, LaTeX) : les migrer vers le nouveau système, ou les conserver tels quels ?
-   *Règle provisoire : conservés tels quels dans `revision/cartes/`, avec leurs clés actuelles ; leurs préfixes (`res-`, `ang-`, `vhdl-`, `cu-`, `latex-`, `ts-`) sont réservés.*
+   *Règle provisoire : conservés tels quels dans `revision/cartes/`, avec leurs clés actuelles ; leurs préfixes (`res-`, `ang-`, `vhdl-`, `cu-`, `latex-`, `ts-`) sont réservés (`ts-` : paquet TS227 abandonné, préfixe jamais réutilisé).*
 7. ~~**Premier chapitre de test de TS227**~~ : *tranchée le 2026-10-07 : chapitre 2.*
 8. **Synchronisation de la progression** entre appareils : nécessaire à terme, solution à choisir.
+
+*Les questions 9 à 12 (déjà tranchées) sont suivies dans `ETAT_PROJET.md`, section 8.*
+
+13. **Retours des camarades** (plus tard) : comment les étudiants de la promo peuvent-ils signaler une erreur ou proposer des notes ?
 
 ---
 
@@ -950,19 +972,29 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 - [x] `conventions.md`, `architecture.md`, `ETAT_PROJET.md`, `TODO.md` créés
 - [x] Prototype Quarto (squelette du site, page de démonstration `demo-conventions.qmd`)
 - [x] Navigation (barre de navigation, barre latérale TS227, fiche matière)
-- [x] Styles des blocs des quatre catégories en HTML
+- [x] Styles des blocs des quatre catégories en HTML (dont les blocs tranchés `✓ Corrigé`)
 - [ ] Styles des blocs des quatre catégories en PDF
 - [x] Macros LaTeX communes (`_macros.qmd`)
 - [x] Format des flashcards et des identifiants
-- [ ] Scripts : conversion des flashcards, vérifications automatiques
+- [x] Direction artistique unique site + application (« fiche bristol »), mode sombre
+- [x] Dépôt Git initialisé (dépôt privé `armandgm43-droid/bristol-site`)
+- [x] Script de conversion des flashcards (`scripts/flashcards.py`, avec contrôles)
+- [ ] Script de vérifications automatiques (`scripts/verifier.py`)
+- [x] Révision en local : `quarto preview` sur le port fixe 4848 ; ancien site GitHub Pages figé
 - [ ] Lien « Voir dans le cours » dans l'application de révision
-- [ ] Dépôt Git initialisé
-- [ ] Décision sur l'hébergement et les droits (provisoirement : local uniquement)
+
+## Publication (pour la promo)
+- [x] Décision : site publié à la fin, pour les étudiants de la promo (7 octobre 2026)
+- [ ] Accès réservé par liste d'e-mails (question 1 ; solution privilégiée : Cloudflare Access)
+- [ ] Accord des enseignants
+- [ ] Page « À propos » (quatre catégories, origine des notes)
+- [ ] Export et import de la progression dans l'application de révision
+- [ ] Signalement d'erreurs et propositions de notes par les camarades (question 13, plus tard)
 
 ## TS227
 - [x] Supports officiels reçus (poly, TD, correction partielle)
 - [x] Fiche matière avec table des notations
-- [x] Poly copié dans `sources/ts227/support/` (TD et correction : non)
+- [x] Poly, TD et correction copiés dans `sources/ts227/support/`
 - [x] Premier chapitre de test choisi : chapitre 2
 - [x] Notes manuscrites de ce chapitre reçues (non datées)
 - [x] Chapitre de test analysé (rapport : `matieres/ts227-communications-numeriques/analyses/02-communication-sans-bruit.md`)
@@ -970,10 +1002,10 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 - [x] Chapitre de test rédigé
 - [x] Chapitre de test vérifié
 - [x] Chapitre de test validé (7 octobre 2026)
-- [ ] Flashcards du chapitre de test
+- [x] Flashcards du chapitre de test (61 cartes, 7 octobre 2026)
 
 ## Prochaines étapes
-1. Initialiser le dépôt Git et copier les sources TS227 dans `sources/`.
-2. Choisir le premier chapitre de test de TS227 (question ouverte 7), puis fournir le support et les notes correspondantes pour l'étape d'analyse.
-3. Écrire les scripts de vérification et de conversion des flashcards avant la génération des premières cartes.
-4. Trancher la question de l'hébergement et des droits avant toute publication.
+1. Réviser les cartes du chapitre 2 avec `quarto preview` (http://localhost:4848/revision/) et signaler les cartes à reprendre.
+2. Écrire `scripts/verifier.py` (vérifications de `architecture.md` § 7).
+3. Analyse du chapitre suivant de TS227.
+4. Avant toute publication : accès réservé, accord des enseignants, page « À propos », export et import de la progression.

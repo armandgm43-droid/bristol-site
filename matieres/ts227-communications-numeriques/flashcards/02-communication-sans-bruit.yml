@@ -1,0 +1,665 @@
+# Flashcards — TS227, chapitre 2 : Principes de communication en l'absence de bruit.
+# Générées le 2026-10-07 à partir du cours validé (étape 8). Format : conventions.md § 10.
+# Conversion : python scripts/flashcards.py (écrit revision/cartes/ts227.json).
+# Rappels : un identifiant n'est jamais modifié ni réutilisé ; une carte supprimée
+# va dans ids-retires. Les lignes d'un même paragraphe sont jointes par le script ;
+# une ligne « - … » ou un bloc $$…$$ commencent une nouvelle ligne ; une ligne vide sépare deux paragraphes.
+matiere: ts227
+chapitre: 2
+cours: cours/02-communication-sans-bruit.qmd
+ids-retires: []
+cartes:
+
+  # --- Bande de base, chaîne de transmission ---
+
+  - id: ts227-bande-base-transposee
+    type: definition
+    question: |
+      Qu'est-ce qui distingue une transmission en bande de base d'une transmission
+      en bande transposée, et dans quel type de transmission chacune est-elle privilégiée ?
+    reponse: |
+      - Bande de base : autour de la fréquence porteuse $f_p = 0\ \mathrm{Hz}$ ; privilégiée en filaire.
+      - Bande transposée : autour d'une porteuse $f_p > 0\ \mathrm{Hz}$ ; privilégiée en sans fil.
+    ref: sec-bande-base-transposee
+    source: officiel
+
+  - id: ts227-codeur-en-ligne
+    type: definition
+    question: |
+      De quels deux blocs est formé le codeur en ligne de la chaîne en bande de base,
+      et quel signal produit-il ?
+    reponse: |
+      L'association bits → symboles ($b_k \to a_n$), puis le filtre de mise en forme $h(t)$.
+      Il produit le signal émis $s_l(t)$.
+    ref: sec-chaine-bande-de-base
+    source: officiel
+
+  - id: ts227-chaine-reception
+    type: definition
+    question: |
+      Dans l'ordre, quels blocs traverse le signal reçu $y_l(t)$ jusqu'aux bits estimés,
+      et quel signal sort de chacun ?
+    reponse: |
+      - filtre de réception $h_a(t)$ → $r_l(t)$ ;
+      - échantillonneur aux instants $n\Ts$ → $r_n$ ;
+      - décision → $\hat{a}_n$ ;
+      - association symboles → bits → $\hat{b}_k$.
+
+      Décision + association symboles → bits = décodeur en ligne.
+    ref: sec-chaine-bande-de-base
+    source: officiel
+
+  - id: ts227-modele-canal
+    type: formule
+    question: |
+      Dans le modèle de la chaîne, comment le canal agit-il sur le signal émis $s_l(t)$ ?
+    reponse: |
+      $$y_l(t) = [h_c \star s_l](t) + z_l(t)$$
+      Filtrage par la réponse impulsionnelle $h_c(t)$ du canal, puis ajout du bruit $z_l(t)$,
+      processus aléatoire gaussien blanc et réel.
+    ref: sec-canal-filtre-reception
+    source: officiel
+
+  # --- Bits, symboles, débits ---
+
+  - id: ts227-hypotheses-bits
+    type: definition
+    question: |
+      Quelles hypothèses fait-on sur les bits $b_k$ émis par la source ?
+    reponse: |
+      Variables aléatoires discrètes **indépendantes et identiquement distribuées** (iid) :
+      $b_k \in \{0, 1\}$ suit une loi de Bernoulli, $P(b_k = 0) = p_0$, $P(b_k = 1) = p_1 = 1 - p_0$.
+    ref: def-bits-sb
+    source: officiel
+
+  - id: ts227-signal-sb
+    type: formule
+    question: |
+      Expression du signal à temps continu $s_b(t)$ associé aux bits $b_k$ ?
+    reponse: |
+      $$s_b(t) = \sum_{k=-\infty}^{+\infty} b_k\, \delta(t - k\Tb)$$
+      Peigne d'impulsions de Dirac de poids $b_k$ ; $\Tb$ est le temps bit (en s).
+    ref: eq-signal-sb
+    source: officiel
+
+  - id: ts227-debit-binaire
+    type: formule
+    question: |
+      Définition et unité du débit binaire ?
+    reponse: |
+      $D_b = \dfrac{1}{\Tb}$, en bits/s ($\Tb$ : temps bit).
+      Exemple : $\Tb = 1\ \mu\mathrm{s} \Rightarrow D_b = 1\ \mathrm{Mbit/s}$.
+    ref: eq-debit-binaire
+    source: officiel
+
+  - id: ts227-nombre-symboles
+    type: formule
+    question: |
+      Combien de symboles compte une constellation dont les étiquettes binaires ont $n_b$ bits ?
+    reponse: |
+      $M = 2^{n_b}$ symboles, soit $n_b = \log_2 M$.
+    ref: eq-m-nb
+    source: officiel
+
+  - id: ts227-symboles-reels-complexes
+    type: propriete
+    question: |
+      Les symboles d'une constellation sont-ils réels ou complexes ?
+    reponse: |
+      Réels pour une communication en bande de base, complexes en bande transposée.
+    ref: def-constellation
+    source: officiel
+
+  - id: ts227-pam
+    type: definition
+    question: |
+      Que désigne une constellation « $M$-PAM » ?
+    reponse: |
+      Une constellation **réelle** à $M$ niveaux (*pulse amplitude modulation*).
+      Exemple du cours : la 4-PAM $\{-3, -1, 1, 3\}$.
+    ref: exm-4pam-gray
+    source: notes
+
+  - id: ts227-etiquetage-gray
+    type: definition
+    question: |
+      Qu'est-ce qu'un étiquetage (*mapping*) de Gray, et quel est son intérêt ?
+    reponse: |
+      Deux symboles voisins ont des étiquettes qui ne diffèrent que d'**un seul bit**.
+      Une erreur entre symboles voisins n'entraîne alors qu'une seule erreur binaire (chapitre 4).
+    ref: exm-4pam-gray
+    source: complement
+
+  - id: ts227-gray-4pam
+    type: exercice
+    question: |
+      Donner l'étiquetage de Gray de la 4-PAM $\{-3, -1, 1, 3\}$ utilisé dans le cours.
+    reponse: |
+      `00` → $-3$, `01` → $-1$, `11` → $1$, `10` → $3$.
+    ref: exm-4pam-gray
+    source: officiel
+
+  - id: ts227-signal-sa
+    type: formule
+    question: |
+      Expression du signal à temps continu $s_a(t)$ associé aux symboles $a_n$ ?
+    reponse: |
+      $$s_a(t) = \sum_{m=-\infty}^{+\infty} a_m\, \delta(t - m\Ts)$$
+      $\Ts$ est le temps symbole (en s).
+    ref: eq-signal-sa
+    source: officiel
+
+  - id: ts227-debit-symbole
+    type: formule
+    question: |
+      Définition et unité du débit symbole ?
+    reponse: |
+      $D_s = \dfrac{1}{\Ts}$, en symboles/s ($\Ts$ : temps symbole).
+    ref: eq-debit-symbole
+    source: officiel
+
+  - id: ts227-debit-binaire-symbole
+    type: relation
+    question: |
+      Quelle relation lie le débit binaire $D_b$ au débit symbole $D_s$, et pourquoi ?
+    reponse: |
+      $D_b = n_b D_s = \log_2 M \cdot D_s$.
+      Chaque symbole transporte $n_b$ bits : $\Ts = n_b \Tb$.
+    ref: eq-db-nb-ds
+    source: officiel
+
+  - id: ts227-exercice-debit-symbole
+    type: exercice
+    question: |
+      Avec la 4-PAM, si le débit binaire est $D_b = 1\ \mathrm{Mbit/s}$, quel est le débit symbole ?
+    reponse: |
+      $D_s = 0{,}5\ \mathrm{Msymbole/s}$ : $M = 4$, donc $n_b = 2$ et $D_s = D_b / n_b$.
+    ref: exr-debit-symbole-4pam
+    source: officiel
+
+  - id: ts227-debit-fournisseur-bande
+    type: relation
+    question: |
+      D'après l'enseignant, lequel des débits $D_b$ et $D_s$ est « vendu par le fournisseur »,
+      et lequel est lié à la bande passante ?
+    reponse: |
+      $D_b$ est vendu par le fournisseur ; $D_s$ est lié à la bande passante
+      (le critère de Nyquist impose $D_s \leq 2B$).
+    ref: sec-symboles-debit-symbole
+    source: notes
+
+  # --- Mise en forme ---
+
+  - id: ts227-signal-emis
+    type: formule
+    question: |
+      Expression du signal émis $s_l(t)$ en fonction des symboles et du filtre de mise en forme,
+      et hypothèse faite sur ce filtre ?
+    reponse: |
+      $$s_l(t) = (h \star s_a)(t) = \sum_{m=-\infty}^{+\infty} a_m\, h(t - m\Ts)$$
+      $h(t)$ est un filtre linéaire invariant par décalage.
+    ref: eq-signal-sl
+    source: officiel
+
+  - id: ts227-mise-en-forme-porte
+    type: propriete
+    question: |
+      Avec un filtre de mise en forme en porte de durée $\Ts$, à quoi ressemble le signal émis $s_l(t)$ ?
+    reponse: |
+      Chaque impulsion $a_m\, \delta(t - m\Ts)$ devient un **palier** de hauteur $a_m$
+      sur $[m\Ts, (m+1)\Ts[$.
+    ref: fig-signaux-sa-sl
+    source: officiel
+
+  - id: ts227-ook-antipodale
+    type: relation
+    question: |
+      À puissance moyenne égale ($0{,}5\ \mathrm{W}$), comparer l'écart entre les deux symboles
+      de la constellation antipodale et de l'OOK.
+    reponse: |
+      - antipodale $\{-\sqrt{1/2},\ \sqrt{1/2}\}$ : écart $\sqrt{2}$ ;
+      - OOK (*On Off Keying*) $\{0, 1\}$ : écart $1$.
+
+      L'antipodale sépare mieux ses symboles, ce qui conditionne la robustesse au bruit (chapitre 4).
+    ref: fig-ook-antipodale
+    source: notes
+
+  - id: ts227-manchester-filtre
+    type: definition
+    question: |
+      Forme du filtre de mise en forme $h(t)$ du code Manchester ?
+    reponse: |
+      Une constante positive sur $[0, \Ts/2]$, la constante opposée sur $[\Ts/2, \Ts]$ :
+      une transition au milieu du symbole. Avec une amplitude $\pm 1$ :
+      $$h(t) = \Pi_{\Ts/2}\!\left(t - \frac{\Ts}{4}\right) - \Pi_{\Ts/2}\!\left(t - \frac{3\Ts}{4}\right)$$
+    ref: exm-manchester
+    source: notes
+
+  - id: ts227-manchester-proprietes
+    type: propriete
+    question: |
+      Quelles deux propriétés du signal codé Manchester ont été notées en cours ?
+    reponse: |
+      - **moyenne nulle** : $\int h(t)\,\mathrm{d}t = 0$ ;
+      - **pas de séquence constante** : une transition au milieu de chaque symbole,
+        même quand des symboles identiques se suivent.
+    ref: exm-manchester
+    source: notes
+
+  # --- Filtre global, modèle discret, décision ---
+
+  - id: ts227-filtre-global
+    type: definition
+    question: |
+      Définition du filtre global $g(t)$ de la chaîne ? Que devient-il sans déformation par le canal ?
+    reponse: |
+      $g(t) = [h_a \star h_c \star h](t)$.
+      Sans déformation ($h_c(t) = \delta(t)$) : $g(t) = [h \star h_a](t)$.
+    ref: eq-filtre-global
+    source: officiel
+
+  - id: ts227-signal-filtre-reception
+    type: formule
+    question: |
+      Expression du signal $r_l(t)$ en sortie du filtre de réception, en fonction du filtre global ?
+    reponse: |
+      $$r_l(t) = \sum_{m=-\infty}^{+\infty} a_m\, g(t - m\Ts) + z'_l(t)$$
+      où $z'_l(t) = [h_a \star z_l](t)$ est le bruit filtré par le filtre de réception.
+    ref: eq-signal-rl
+    source: officiel
+
+  - id: ts227-modele-discret
+    type: formule
+    question: |
+      Modèle discret équivalent entre les symboles $a_n$ et les échantillons $r_n$ ?
+    reponse: |
+      $$r_n = a_n g_0 + \sum_{m \neq 0} a_{n-m}\, g_m + z'_n$$
+      avec $r_n = r_l(n\Ts)$, $g_m = g(m\Ts)$ et $z'_n = z'_l(n\Ts)$.
+    ref: eq-modele-discret
+    source: officiel
+
+  - id: ts227-modele-discret-indice
+    type: raisonnement
+    question: |
+      Comment passe-t-on de $r_n = \sum_m a_m\, g\big((n - m)\Ts\big) + z'_n$ au modèle discret équivalent ?
+    reponse: |
+      Changement d'indice $m \to n - m$, puis séparation du terme $m = 0$, qui donne $a_n g_0$.
+    ref: eq-modele-discret
+    source: complement
+
+  - id: ts227-decision
+    type: definition
+    question: |
+      Comment le bloc de décision estime-t-il le symbole $\hat{a}_n$ ?
+    reponse: |
+      Il détermine dans quelle **région de décision** se trouve l'échantillon $r_n$ ;
+      les régions sont séparées par des **seuils** de décision. Il estime ainsi la valeur
+      de $a_n$ la plus probable.
+    ref: sec-decision
+    source: officiel
+
+  - id: ts227-seuils-non-equidistants
+    type: piege
+    question: |
+      Les seuils de décision sont-ils toujours placés à égale distance des symboles ?
+    reponse: |
+      Non, pas forcément. Exemple du support pour la 4-PAM : seuils en $-2{,}5$, $0{,}5$ et $1{,}5$.
+      Le choix optimal en présence de bruit est vu au chapitre 4.
+    ref: sec-decision
+    source: officiel
+
+  - id: ts227-exercice-seuils
+    type: exercice
+    question: |
+      4-PAM $\{-3, -1, 1, 3\}$, seuils $(-2{,}5;\ 0{,}5;\ 1{,}5)$, échantillons reçus
+      $\mathbf{r} = [1{,}2;\ -4;\ 2{,}1]$. Quels symboles sont décidés ?
+    reponse: |
+      $\hat{\mathbf{a}} = [1;\ -3;\ 3]$ : $1{,}2 \in [0{,}5;\ 1{,}5]$, $-4 < -2{,}5$, $2{,}1 > 1{,}5$.
+    ref: exr-seuils-decision
+    source: officiel
+
+  # --- Interférence entre symboles ---
+
+  - id: ts227-ies-definition
+    type: definition
+    question: |
+      Qu'est-ce que l'interférence entre symboles (IES) ?
+    reponse: |
+      L'interférence générée par les symboles $\dots, a_{n-1}, a_{n+1}, \dots$
+      sur la réception du **symbole d'intérêt** $a_n$.
+    ref: def-ies
+    source: officiel
+
+  - id: ts227-rn-sans-bruit
+    type: formule
+    question: |
+      Sans bruit et sans déformation par le canal, décomposer l'échantillon $r_n$ et nommer ses deux termes.
+    reponse: |
+      $$r_n = \underbrace{g_0\, a_n}_{\text{symbole d'intérêt}} + \underbrace{\sum_{m \neq 0} g_m\, a_{n-m}}_{\text{IES}}$$
+      Hypothèses : $h_c(t) = \delta(t)$, donc $g = h \star h_a$, et $z'_n = 0$.
+    ref: eq-rn-sans-bruit
+    source: officiel
+
+  - id: ts227-annulation-ies
+    type: condition
+    question: |
+      À quelle condition sur les échantillons $g_m$ du filtre global l'IES est-elle annulée ?
+      Que vaut alors $r_n$ sans bruit ?
+    reponse: |
+      $g_0 \neq 0$ et $g_m = 0$ pour tout $m \neq 0$.
+      Sans bruit, $r_n = g_0\, a_n$.
+    ref: eq-annulation-ies
+    source: officiel
+
+  - id: ts227-ies-sans-bruit
+    type: piege
+    question: |
+      En l'absence de bruit et de filtre de canal ($h_c(t) = \delta(t)$), une communication
+      est-elle forcément sans erreur ?
+    reponse: |
+      Non : l'IES peut rendre la communication sans erreur impossible. Elle résulte d'un
+      **mauvais choix du couple** $(h(t), h_a(t))$.
+    ref: sec-recapitulatif-nyquist
+    source: officiel
+
+  # --- Critère de Nyquist ---
+
+  - id: ts227-peigne-dirac
+    type: definition
+    question: |
+      Définition du peigne de Dirac $\text{Ш}_{\Ts}(t)$ ?
+    reponse: |
+      $$\text{Ш}_{\Ts}(t) = \sum_{m} \delta(t - m\Ts)$$
+      Peigne d'impulsions de Dirac de période $\Ts$.
+    ref: sec-nyquist-temporel
+    source: notes
+
+  - id: ts227-nyquist-temporel
+    type: formule
+    question: |
+      Énoncé du critère de Nyquist, version temporelle ?
+    reponse: |
+      Si le filtre global $g(t) = (h \star h_a)(t)$ vérifie
+      $$g(t)\, \text{Ш}_{\Ts}(t) = g_0\, \delta(t)$$
+      alors il n'y a pas d'IES à la réception.
+    ref: eq-nyquist-temporel
+    source: officiel
+
+  - id: ts227-nyquist-temporel-demonstration
+    type: raisonnement
+    question: |
+      Démonstration du critère de Nyquist temporel : quelle égalité montre que
+      « $g(m\Ts) = 0$ pour tout $m \neq 0$ » équivaut à $g(t)\, \text{Ш}_{\Ts}(t) = g_0\, \delta(t)$ ?
+    reponse: |
+      $$g(t)\, \text{Ш}_{\Ts}(t) = \sum_m g(t)\, \delta(t - m\Ts) = \sum_m g(m\Ts)\, \delta(t - m\Ts)$$
+      Il ne reste que le terme $m = 0$ si et seulement si $g(m\Ts) = 0$ pour tout $m \neq 0$.
+    ref: thm-nyquist-temporel
+    source: notes
+
+  - id: ts227-nyquist-temporel-graphique
+    type: propriete
+    question: |
+      Graphiquement, que doit faire $g(t)$ pour vérifier le critère de Nyquist temporel ?
+    reponse: |
+      Sa forme est quelconque, mais il doit **passer par zéro à tous les instants $m\Ts$, $m \neq 0$**
+      (avec $g_0 \neq 0$).
+    ref: thm-nyquist-temporel
+    source: notes
+
+  - id: ts227-nyquist-frequentiel
+    type: formule
+    question: |
+      Énoncé du critère de Nyquist, version fréquentielle ?
+    reponse: |
+      Si $G(f) = H(f)\, H_a(f)$, transformée de Fourier du filtre global, vérifie
+      $$\frac{1}{\Ts} \sum_{m=-\infty}^{\infty} G\!\left(f - \frac{m}{\Ts}\right) = g_0$$
+      alors il n'y a pas d'IES. Graphiquement : la somme des répliques de $G$,
+      décalées de multiples de $1/\Ts$, est constante.
+    ref: eq-nyquist-frequentiel
+    source: officiel
+
+  - id: ts227-nyquist-frequentiel-demonstration
+    type: raisonnement
+    question: |
+      Pour passer du critère de Nyquist temporel au critère fréquentiel, quels résultats
+      sur la transformée de Fourier utilise-t-on ?
+    reponse: |
+      - le produit devient une convolution : $G(f) \star \TF[\text{Ш}_{\Ts}](f) = g_0$ ;
+      - la TF d'un peigne est un peigne : $\TF[\text{Ш}_{\Ts}] = \frac{1}{\Ts}\, \text{Ш}_{1/\Ts}$ ;
+      - la convolution par $\delta(f - m/\Ts)$ décale : $G(f) \star \delta(f - m/\Ts) = G(f - m/\Ts)$.
+    ref: thm-nyquist-frequentiel
+    source: notes
+
+  - id: ts227-convention-tf
+    type: piege
+    question: |
+      Le poly écrit (p. 40) $G(f) = \int g(t)\, e^{+j2\pi ft}\, \mathrm{d}t$.
+      Est-ce la convention de la matière ?
+    reponse: |
+      Non, c'est une coquille. Convention de TS227 :
+      $$\TF[x](f) = \int_{-\infty}^{+\infty} x(t)\, e^{-j2\pi ft}\, \mathrm{d}t$$
+      Le critère de Nyquist n'en dépend pas.
+    ref: av-signe-tf-nyquist
+    source: officiel
+
+  - id: ts227-regle-symetrie
+    type: propriete
+    question: |
+      Règle de symétrie : si $G(f)$ est à support borné $[-1/\Ts, 1/\Ts]$, que devient
+      le critère de Nyquist fréquentiel ?
+    reponse: |
+      Le point $\left(\dfrac{1}{2\Ts}, \dfrac{g_0\Ts}{2}\right)$ est un **centre de symétrie**
+      pour $G(f)$, $f \in [0, 1/\Ts]$ (avec $G$ réelle et paire).
+    ref: prp-symetrie-nyquist
+    source: officiel
+
+  - id: ts227-symetrie-hypothese
+    type: condition
+    question: |
+      Quelle hypothèse, non formulée par le support, faut-il pour passer de
+      $G(f) + G(f - 1/\Ts) = g_0\Ts$ à une symétrie centrale de $G$ ?
+    reponse: |
+      $G$ **réelle et paire** (c'est-à-dire $g$ réel et pair) : alors $G(f - 1/\Ts) = G(1/\Ts - f)$,
+      d'où $G(f) + G(1/\Ts - f) = g_0\Ts$.
+    ref: prp-symetrie-nyquist
+    source: complement
+
+  - id: ts227-centre-symetrie-ordonnee
+    type: piege
+    question: |
+      Le poly donne $\left(\dfrac{1}{2\Ts}, \dfrac{g_0}{2}\right)$ comme centre de symétrie de $G$.
+      Pourquoi l'ordonnée est-elle fausse ?
+    reponse: |
+      Sur $[0, 1/\Ts]$, le critère donne $G(f) + G(f - 1/\Ts) = g_0\Ts$ : l'ordonnée est
+      $\dfrac{g_0\Ts}{2}$ (égale à $G(0)/2$ si $G(\pm 1/\Ts) = 0$).
+      Contrôle par les dimensions : $G$ s'exprime en unité de $g$ multipliée par des secondes.
+    ref: av-centre-symetrie-nyquist
+    source: officiel
+
+  - id: ts227-frequence-nyquist
+    type: definition
+    question: |
+      Qu'appelle-t-on fréquence de Nyquist ?
+    reponse: |
+      $f = \dfrac{1}{2\Ts}$. C'est aussi la bande minimale d'un filtre global sans IES.
+    ref: def-frequence-nyquist
+    source: officiel
+
+  - id: ts227-bande-minimale
+    type: resultat
+    question: |
+      Quelle est la bande minimale d'un filtre global de support $[-B, B]$ vérifiant le critère de Nyquist ?
+    reponse: |
+      $$B \geq \frac{1}{2\Ts}$$
+      La bande minimale est la fréquence de Nyquist.
+    ref: eq-bande-minimale
+    source: notes
+
+  - id: ts227-bande-minimale-demonstration
+    type: raisonnement
+    question: |
+      Quel argument démontre $B \geq \dfrac{1}{2\Ts}$ ?
+    reponse: |
+      Les répliques doivent **se chevaucher** pour que leur somme soit constante.
+      La réplique centrée en $1/\Ts$ commence en $1/\Ts - B$ ; elle chevauche $G(f)$, qui s'arrête en $B$,
+      si $1/\Ts - B \leq B$, soit $2B \geq 1/\Ts$.
+    ref: prp-bande-minimale
+    source: notes
+
+  - id: ts227-bande-minimale-spectre
+    type: condition
+    question: |
+      Quelle forme de $G(f)$ permet d'atteindre exactement la bande minimale $\dfrac{1}{2\Ts}$ ?
+    reponse: |
+      Un spectre **rectangulaire**, constant sur $\left[-\dfrac{1}{2\Ts}, \dfrac{1}{2\Ts}\right]$ :
+      les répliques se juxtaposent exactement.
+    ref: sec-bande-minimale
+    source: complement
+
+  - id: ts227-debit-symbole-max
+    type: relation
+    question: |
+      À bande $B$ donnée, quel débit symbole maximal le critère de Nyquist autorise-t-il ?
+    reponse: |
+      $D_s = \dfrac{1}{\Ts} \leq 2B$.
+    ref: sec-bande-minimale
+    source: complement
+
+  - id: ts227-efficacite-spectrale
+    type: definition
+    question: |
+      Définition et unité de l'efficacité spectrale ?
+    reponse: |
+      $\eta = \dfrac{D_b}{B}$, en bits·s⁻¹·Hz⁻¹, où $D_b = n_b D_s$ est le débit binaire
+      et $B$ la bande occupée.
+    ref: def-efficacite-spectrale
+    source: notes
+
+  - id: ts227-efficacite-spectrale-max
+    type: resultat
+    question: |
+      Efficacité spectrale maximale d'une transmission sans IES en bande de base, et conditions ?
+      Et en bande transposée ?
+    reponse: |
+      En bande de base, avec la bande minimale $B = \frac{1}{2\Ts}$ et $D_b = \frac{\log_2 M}{\Ts}$ :
+      $\eta \leq 2 \log_2 M$ bits·s⁻¹·Hz⁻¹.
+      En bande transposée (bande $2B$ autour de la porteuse) : $\eta \leq \log_2 M$.
+    ref: sec-efficacite-spectrale
+    source: complement
+
+  - id: ts227-cosinus-sureleve-bande
+    type: formule
+    question: |
+      Bande d'un filtre en cosinus surélevé de facteur de retombée $\beta$ ? Cas $\beta = 0$ et $\beta = 1$ ?
+    reponse: |
+      $B = \dfrac{1 + \beta}{2\Ts}$, $\beta \in [0, 1]$.
+      $\beta = 0$ : bande minimale $\frac{1}{2\Ts}$ (spectre rectangulaire) ; $\beta = 1$ : $\frac{1}{\Ts}$.
+    ref: exm-cosinus-sureleve
+    source: complement
+
+  # --- Exercices sur le critère de Nyquist ---
+
+  - id: ts227-exercice-nyquist-porte
+    type: exercice
+    question: |
+      $g(t)$ vaut 10 sur $[0, 1[\ \mathrm{ms}$ et 0 ailleurs ($g(1\ \mathrm{ms}) = 0$).
+      Vérifie-t-il le critère de Nyquist si $\Ts = 1\ \mathrm{ms}$ ?
+    reponse: |
+      Oui : $g_0 = 10 \neq 0$ et $g(m\Ts) = 0$ pour tout $m \neq 0$, en particulier $g(1\ \mathrm{ms}) = 0$.
+      La réponse dépend de la valeur prise aux discontinuités.
+    ref: exr-nyquist-porte
+    source: officiel
+
+  - id: ts227-exercice-nyquist-triangle-temps
+    type: exercice
+    question: |
+      $g(t)$ est un triangle de sommet $g(0) = 10$ et de support $[-1, 1]\ \mathrm{ms}$.
+      Vérifie-t-il le critère de Nyquist si $\Ts = 0{,}5\ \mathrm{ms}$ ?
+    reponse: |
+      Non : $g(\Ts) = g(0{,}5\ \mathrm{ms}) = 5 \neq 0$.
+    ref: exr-nyquist-triangle-temps
+    source: officiel
+
+  - id: ts227-exercice-nyquist-triangle-frequence
+    type: exercice
+    question: |
+      $G(f)$ est un triangle de sommet $G(0) = 10$ et de support $[-1000, 1000]\ \mathrm{Hz}$.
+      Vérifie-t-il le critère de Nyquist si $\Ts = 1\ \mathrm{ms}$ ?
+    reponse: |
+      Oui : les répliques, décalées de $1000\ \mathrm{Hz}$, se compensent et leur somme vaut 10 partout.
+      Centre de symétrie $(500\ \mathrm{Hz},\ 5)$, avec $g_0 = \int G = 10^4$ et $\frac{g_0\Ts}{2} = 5$.
+    ref: exr-nyquist-triangle-frequence
+    source: officiel
+
+  - id: ts227-exercice-debit-max-triangle
+    type: exercice
+    question: |
+      $g(t)$ est un triangle de sommet $g(0) = 10$ et de support $[-1, 1]\ \mathrm{ms}$.
+      Quel est le débit symbole maximal sans IES ?
+    reponse: |
+      $1\ \mathrm{ksymbole/s}$ : $g(m\Ts) = 0$ pour tout $m \neq 0$ si et seulement si $\Ts \geq 1\ \mathrm{ms}$.
+    ref: exr-debit-max-triangle
+    source: officiel
+
+  - id: ts227-exercice-debit-max-porte
+    type: exercice
+    question: |
+      $h(t)$ vaut 10 sur $[0, 1[\ \mathrm{ms}$ et 0 ailleurs, et $h_a(t) = h(t)$.
+      Quel est le débit symbole maximal sans IES ?
+    reponse: |
+      $1\ \mathrm{ksymbole/s}$ : $g = h \star h$ est un triangle de support $[0, 2]\ \mathrm{ms}$,
+      de sommet en $t = 1\ \mathrm{ms}$ ; on échantillonne en $1\ \mathrm{ms} + n\Ts$.
+      (Le poly écrit « Msymboles/s » : coquille d'unité.)
+    ref: exr-debit-max-porte
+    source: officiel
+
+  - id: ts227-filtre-global-non-centre
+    type: methode
+    question: |
+      Si le maximum du filtre global $g(t)$ est en $t_0 \neq 0$ (cas d'un filtre causal),
+      comment applique-t-on le modèle discret et le critère de Nyquist ?
+    reponse: |
+      On échantillonne aux instants $t_0 + n\Ts$, et on raisonne sur le filtre recentré $g(t + t_0)$.
+    ref: exr-debit-max-porte
+    source: complement
+
+  # --- Diagramme de l'œil ---
+
+  - id: ts227-oeil-construction
+    type: methode
+    question: |
+      Comment construit-on un diagramme de l'œil ?
+    reponse: |
+      On découpe le signal reçu $r_l(t)$ en tranches de durée $2\Ts$, synchronisées sur l'horloge
+      symbole (centrées sur les instants d'échantillonnage), puis on superpose toutes les tranches.
+    ref: sec-diagramme-oeil
+    source: complement
+
+  - id: ts227-oeil-absence-ies
+    type: propriete
+    question: |
+      Comment lit-on l'absence d'IES sur un diagramme de l'œil ?
+    reponse: |
+      À l'instant d'échantillonnage, les courbes se croisent en **points uniques**
+      (2 pour une constellation binaire, $M$ pour $M$ niveaux). Avec de l'IES, ces points s'étalent
+      et l'œil se ferme.
+    ref: sec-diagramme-oeil
+    source: notes
+
+  - id: ts227-oeil-ouverture-verticale
+    type: propriete
+    question: |
+      Que traduit l'ouverture **verticale** de l'œil ?
+    reponse: |
+      La robustesse au bruit.
+    ref: sec-diagramme-oeil
+    source: officiel
+
+  - id: ts227-oeil-ouverture-horizontale
+    type: propriete
+    question: |
+      Que traduit l'ouverture **horizontale** de l'œil ?
+    reponse: |
+      La robustesse aux déphasages de l'échantillonneur.
+    ref: sec-diagramme-oeil
+    source: officiel

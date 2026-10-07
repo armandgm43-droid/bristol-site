@@ -17,7 +17,7 @@ Chapitres .qmd ──────────────► quarto render ─�
         │                                          ▲
         ▼                                          │ copié tel quel
 Flashcards .yml ──► script de conversion ──► revision/cartes/*.json
-                    (à écrire)                     │
+                    scripts/flashcards.py          │
                                                    ▼
                                      revision/index.html (application)
 ```
@@ -49,13 +49,15 @@ Bristol/
 │       ├── analyses/         rapports d'analyse des chapitres (.md, non rendus)
 │       ├── cours/        chapitres .qmd (02-communication-sans-bruit.qmd)
 │       ├── figures/      sources .py/.tex et rendus .svg (12 figures du ch. 2)
-│       ├── flashcards/  td/  tp/  annales/  corriges/   (vides)
+│       ├── flashcards/   cartes YAML (02-communication-sans-bruit.yml : 61 cartes)
+│       ├── td/  tp/  annales/  corriges/   (vides)
 ├── revision/
 │   ├── index.html            application de flashcards (fichier unique)
 │   └── cartes/
 │       ├── index.json        liste des paquets à charger
-│       └── *.json            paquets (6 paquets hérités)
-├── scripts/                  (vide)
+│       └── *.json            paquets : 5 hérités + ts227.json (généré par scripts/flashcards.py)
+├── scripts/
+│   └── flashcards.py         conversion YAML → revision/cartes/<matiere>.json
 └── sources/                  sources brutes, ignorées par Git
     ├── LISEZMOI.txt
     └── ts227/
@@ -142,7 +144,7 @@ Les valeurs claires et sombres sont écrites deux fois dans ce même fichier (bl
 
 - Bloc `$$ \newcommand… $$` dans un div `.hidden`, inclus en haut de chaque page par `{{< include /_macros.qmd >}}`.
 - Fonctionne pour le HTML (MathJax). Pour le PDF, il faudra aussi injecter les macros dans l'en-tête LaTeX (`include-in-header`).
-- L'application de révision ne lit pas ce fichier : le script de conversion des flashcards devra soit développer les macros, soit les déclarer dans la configuration MathJax de l'application.
+- L'application de révision ne lit pas ce fichier : `scripts/flashcards.py` **développe les macros** dans le texte des cartes (lecture des `\newcommand` de `_macros.qmd`, entre accolades si le corps contient `_` ou `^` : `x_\Ts` → `x_{T_s}`). Une nouvelle macro est donc prise en compte sans modifier le script.
 
 ---
 
@@ -152,7 +154,13 @@ Les valeurs claires et sombres sont écrites deux fois dans ce même fichier (bl
 - Barre de navigation : même dessin que celle du site (`conventions.md` § 13.6). Liens écrits en dur dans le `<header class="site-head">` : à tenir alignés sur `website.navbar` de `_quarto.yml`. « Révisions » ramène à la liste des paquets sans recharger la page ; « Bristol » et les autres liens mènent aux pages du site. Script de navigation séparé du script de l'application (il ne touche ni aux paquets ni à la progression).
 - Mode sombre : les feuilles (liste, dialogues) deviennent sombres ; les fiches de révision restent en papier clair (jetons `--card-…`, redéfinis sur `.study`).
 - Maths : MathJax 3.2.2 (`tex-svg`) chargé depuis `cdn.jsdelivr.net`.
-- Progression : `localStorage`, clé `bristol:v1` (format `{ v: 1, decks }`). Elle est **propre au navigateur et à l'adresse du site** : changer d'hébergement ou de domaine repart d'une progression vide, sauf export puis import.
+- Progression : `localStorage`, clé `bristol:v1` (format `{ v: 1, decks }`). Elle est **propre au navigateur et à l'adresse du site** (protocole + nom d'hôte + port) : changer d'hébergement, de domaine ou de port repart d'une progression vide, sauf export puis import.
+- **Révision en local (depuis le 7 octobre 2026)** : `quarto preview` sert le site sur un **port fixe, 4848** (`project.preview.port` dans `_quarto.yml`, avec `browser: true`). L'application est donc toujours à l'adresse `http://localhost:4848/revision/` et la progression est retrouvée d'un lancement à l'autre.
+  - Ne pas changer ce port, ni lancer `quarto preview --port …` : autre adresse, progression vide.
+  - Toujours passer par `localhost`, pas par `127.0.0.1` (autre adresse pour le navigateur).
+  - Si le port 4848 est déjà pris (un autre `quarto preview` ouvert), fermer l'autre aperçu plutôt que de changer de port.
+  - Après `python scripts/flashcards.py`, relancer `quarto preview` (ou recharger la page si l'aperçu a recopié `revision/`) : les paquets sont relus à l'ouverture de l'application.
+  - La progression reste propre au navigateur et à l'ordinateur : pas de synchronisation (question ouverte 8). L'export de l'application sert de sauvegarde.
 - Chargement des paquets : à l'ouverture, lecture de `cartes/index.json` puis de chaque fichier listé (`fetch`, sans cache). Ne fonctionne pas en `file://` : passer par `quarto preview` ou un serveur local.
 - Format d'un paquet :
 
@@ -172,17 +180,17 @@ Les valeurs claires et sombres sont écrites deux fois dans ce même fichier (bl
 | `vhdl.json` | VHDL | 90 | `vhdl-` |
 | `c-unix.json` | C et Unix | 108 | `cu-` |
 | `latex.json` | LaTeX | 92 | `latex-` |
-| `ts227.json` | Communications numériques (TS227) | 129 | `ts-` |
+| `ts227.json` | TS227 — Introduction aux communications numériques | 61 (ch. 2) | `ts227-` — **généré** par `scripts/flashcards.py` ; remplace le paquet provisoire (129 cartes `ts-`, abandonné le 7 octobre 2026) |
 
 ---
 
-## 7. Scripts (`scripts/`, à écrire)
+## 7. Scripts (`scripts/`)
 
 Langage : **Python 3** avec **PyYAML** (seule dépendance prévue).
 
 | Script | Rôle |
 |---|---|
-| `flashcards.py` | Convertit `matieres/*/flashcards/*.yml` en `revision/cartes/<matiere>.json` et met à jour `cartes/index.json` |
+| `flashcards.py` | **Écrit (7 octobre 2026).** Convertit `matieres/*/flashcards/*.yml` en `revision/cartes/<matiere>.json` et ajoute le paquet à `cartes/index.json` s'il manque. Contrôles avant écriture (rien n'est écrit au moindre problème) : champs obligatoires et inconnus ; `matiere` cohérent avec le dossier ; nom du fichier = nom du chapitre ; identifiants `<matiere>-<slug>` uniques dans la matière, absents des `ids-retires`, sans préfixe hérité ; types et sources valides ; `ref` présent dans le chapitre (ou `NN-slug.qmd#label`) ; astérisque isolé ; formule en ligne coupée. Transformations : macros développées, lignes jointes façon Markdown (`conventions.md` § 10.4). Couleur du paquet : celle du fichier existant, sinon `#FFF0A6`. Option `--verifier` : contrôles seuls |
 | `verifier.py` | Vérifications : front matter complet et statut valide ; labels uniques dans la matière ; `ref` des cartes qui pointent vers un label existant ; identifiants de cartes uniques dans la matière et absents de tous les `ids-retires` de la matière ; types de cartes valides ; astérisques isolés ; liste des blocs `#av-…` restants |
 
 Le script de vérification sera lancé avant chaque commit (à la main, puis éventuellement en *pre-commit hook*).
@@ -193,9 +201,9 @@ Le script de vérification sera lancé avant chaque commit (à la main, puis év
 
 | Commande | Effet |
 |---|---|
-| `quarto preview` | aperçu local, rechargé à chaque modification |
+| `quarto preview` | aperçu local, rechargé à chaque modification, toujours sur `http://localhost:4848` (port fixe, voir § 6) |
 | `quarto render` | génère le site complet dans `_site/` |
-| `python scripts/flashcards.py` | (à venir) régénère les paquets de cartes |
+| `python scripts/flashcards.py` | régénère les paquets de cartes (`--verifier` : contrôles seuls) |
 | `python scripts/verifier.py` | (à venir) vérifications automatiques |
 
 Pour un site de plusieurs centaines de pages : rendu d'un seul fichier (`quarto render chemin/fichier.qmd`) pendant la rédaction, et `freeze: auto` dès que des figures sont calculées en Python dans les pages.
@@ -224,6 +232,6 @@ Pour un site de plusieurs centaines de pages : rendu d'un seul fichier (`quarto 
 | Dépôt | Visibilité | Contenu | Remarque |
 |---|---|---|---|
 | `armandgm43-droid/bristol-site` | **privé** | **dépôt du projet** : ce dossier (site Quarto, application dans `revision/`, fichiers de mémoire) | dépôt de référence |
-| `armandgm43-droid/bristol` | public (GitHub Pages) | **ancien site de cartes** (application de révision seule) | toujours en ligne ; **ne pas confondre** avec le dépôt du projet |
+| `armandgm43-droid/bristol` | public (GitHub Pages) | **ancien site de cartes** (application de révision seule) | **figé** depuis le 7 octobre 2026 : plus aucune modification ; **ne pas confondre** avec le dépôt du projet |
 
-L'avenir de l'ancien dépôt `bristol` (garder, remplacer par une copie de `revision/`, archiver) reste lié à la question ouverte 2 et au problème connu 13 de `ETAT_PROJET.md` (l'application dépend désormais de `../assets/bristol-tokens.css`).
+La révision se fait désormais en local (§ 6). L'ancien dépôt `bristol` n'est plus mis à jour ; son sort (archiver, supprimer) pourra être décidé avec la question ouverte 2.

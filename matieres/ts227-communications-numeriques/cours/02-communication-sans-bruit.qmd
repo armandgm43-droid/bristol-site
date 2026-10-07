@@ -4,7 +4,7 @@ matiere: ts227
 chapitre: 2
 enseignants: ["Romain Tajan"]
 annee: "2026-2027"
-statut: valide
+statut: flashcards
 date-modified: 2026-10-07
 sources:
   - id: poly
@@ -287,7 +287,7 @@ ce qui peut se réécrire
 
 $$
 y_l(t) = \sum_{m=-\infty}^{+\infty} a_m\, [h_c \star h](t - m\Ts) + z_l(t) .
-$$ {#eq-signal-yl}
+$$
 
 $h_a(t) \in \mathbb{R}$ est le **filtre de réception** (filtre linéaire invariant par décalage) [poly, p. 30] :
 
@@ -582,7 +582,7 @@ L'**efficacité spectrale** d'une transmission de débit binaire $D_b$ occupant 
 
 $$
 \eta = \frac{D_b}{B} \qquad \text{en bits} \cdot \mathrm{s}^{-1} \cdot \mathrm{Hz}^{-1} ,
-$$ {#eq-efficacite-spectrale}
+$$
 
 où $D_b = n_b D_s$ [notes, f. 3 r°].
 :::
