@@ -36,11 +36,20 @@
 - [x] Flashcards du chapitre validé (`flashcards/02-communication-sans-bruit.yml`, 61 cartes) ; V5 trié (7 octobre 2026).
 - [ ] Contrôler les cartes dans l'application avec `quarto preview` (http://localhost:4848/revision/) : rendu des formules, cartes à reprendre.
 
+## Priorité 2 bis — TS227 chapitre 3
+
+- [x] Analyse, rédaction et figures (étapes 2 à 5) ; TD ex. 2 et ex. 5 q. 10-11 intégrés (7 octobre 2026).
+- [x] Répondre aux 8 questions bloquantes (7 octobre 2026, rapport section 16).
+- [x] Blocs `av-esperance-exercice-bpsk` et `av-moment-ordre-2-notes` tranchés (7 octobre 2026).
+- [ ] Trancher `av-dsp-porte-notes` à la validation (proposition : sommet $\sigma_a^2 T_s$) et revoir les choix par défaut (rapport, section 12).
+- [ ] Contrôler le rendu avec `quarto preview` (segments `[$…$]{.a-verifier}`, premier environnement `cor-` du site).
+- [ ] Vérification par Claude (étape 6), puis validation (étape 7) et flashcards (étape 8).
+
 ## Priorité 3 — Outillage
 
 - [x] `scripts/flashcards.py` : conversion YAML → `revision/cartes/*.json`, avec traitement des macros et contrôles (7 octobre 2026).
 - [x] Fixer le port de `quarto preview` (4848) pour conserver la progression de révision (7 octobre 2026).
-- [ ] Si besoin : exporter la progression des paquets hérités depuis l'ancien site (figé) et l'importer dans l'application locale.
+- [ ] Si besoin : transférer la progression des paquets hérités de l'ancien site (figé) vers l'application locale. **Impossible avec l'export actuel** (cartes seulement) : dépend de la tâche « export/import de la progression » (section « Avant la publication »).
 - [ ] `scripts/verifier.py` : vérifications listées dans `architecture.md` §7.
 - [ ] Rendu PDF des quatre catégories (filtre Lua ou `tcolorbox`), et macros dans l'en-tête LaTeX.
 - [ ] Application de révision : lien « Voir dans le cours » (champ `ref`).

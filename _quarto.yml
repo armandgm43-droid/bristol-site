@@ -43,6 +43,7 @@ website:
         - section: "Cours"
           contents:
             - matieres/ts227-communications-numeriques/cours/02-communication-sans-bruit.qmd
+            - matieres/ts227-communications-numeriques/cours/03-dsp-signaux-codes-en-ligne.qmd
         # Ajouter les chapitres au fur et à mesure, dans l'ordre :
         # - section: "Cours"
         #   contents:

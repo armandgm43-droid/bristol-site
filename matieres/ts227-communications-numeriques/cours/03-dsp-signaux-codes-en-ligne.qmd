@@ -1,0 +1,867 @@
+---
+title: "DSP des signaux codés en ligne"
+matiere: ts227
+chapitre: 3
+enseignants: ["Romain Tajan"]
+annee: "2026-2027"
+statut: redige
+date-modified: 2026-10-07
+sources:
+  - id: poly
+    fichier: poly_ts227.pdf
+    nature: officielle
+    version: "2025-10-09"
+    pages: "61-88"
+  - id: notes
+    fichier: notes/date-inconnue.pdf
+    nature: personnelle
+    seance: inconnue
+    pages: "f. 2 v° (bas), f. 4 v° (bas), f. 5 r°, f. 5 v°"
+  - id: td
+    fichier: TD_TS_227.pdf
+    nature: officielle
+    version: "2020-2021"
+    pages: "2, 4 (ex. 2 ; ex. 5, q. 10-11)"
+  - id: td-correction
+    fichier: correction_TD_TS_227.pdf
+    nature: officielle
+    version: "2021-01-06"
+    pages: "4-9"
+---
+
+{{< include /_macros.qmd >}}
+
+<!-- Étapes 2 à 5 (analyse, rédaction, figures) faites le 2026-10-07 dans la même session.
+     Rapport : ../analyses/03-dsp-signaux-codes-en-ligne.md. Sources des figures : ../figures/03-*.py (matplotlib) ;
+     la chaîne de transmission réutilise ../figures/02-chaine-bande-de-base.svg. -->
+
+## Introduction {#sec-intro-dsp}
+
+![Chaîne de transmission en bande de base : on étudie ici la répartition en fréquence de la puissance du signal émis $s_l(t)$. D'après le support [poly, p. 63] (même schéma que [poly, p. 19]), redessinée ; figure commune avec le chapitre 2.](../figures/02-chaine-bande-de-base.svg){#fig-chaine-dsp}
+
+Dans cette partie, on s'intéresse à la **répartition sur les fréquences de la puissance** du signal $s_l(t)$ [poly, p. 63].
+
+En pratique, cette répartition serait obtenue en calculant $S_l(f) = \TF(s_l(t))$. Or, le signal $s_l(t)$ étant **aléatoire**, $S_l(f)$ dépend du « tirage » de $s_l(t)$. On souhaite donc définir une grandeur qui dépend **uniquement des statistiques du message envoyé**, et non du message envoyé lui-même.
+
+::: {.complement}
+Cette grandeur est la **densité spectrale de puissance** (DSP). Le chapitre suit le support : rappels de probabilités (@sec-rappels-probabilites), processus aléatoires, stationnarité et DSP (@sec-processus-aleatoires), signaux cyclostationnaires (@sec-cyclostationnarite), puis **formule de Bennett**, qui donne la DSP d'un signal codé en ligne (@sec-bennett), et son application à une mise en forme en porte (@sec-dsp-porte). Les exercices du TD qui portent sur ce chapitre sont regroupés en @sec-exercices-td-dsp.
+:::
+
+::: {.notes}
+**Ordre du cours.** En cours, les rappels de probabilités ont été donnés au début de la partie « III Transmission en présence de bruit » [notes, f. 2 v°], et les processus aléatoires et la DSP n'ont été traités qu'après le filtre adapté (chapitre 4) [notes, f. 4 v° et f. 5 r°]. Bristol suit l'ordre du support.
+:::
+
+## Rappels de probabilités {#sec-rappels-probabilites}
+
+### Variable aléatoire {#sec-variable-aleatoire}
+
+::: {#def-variable-aleatoire}
+## Variable aléatoire
+
+Une **variable aléatoire** (VA) traduit le résultat d'une expérience faisant intervenir le hasard ; on la note $X(\omega)$, où $\omega$ est appelé une **épreuve**. Les VA considérées dans ce cours peuvent être continues ou discrètes [poly, p. 70].
+
+- Une VA **discrète** $X$ ne peut prendre sa valeur que dans un ensemble discret $\mathcal{X}$. Exemples : $\mathcal{X} = \{0, 1\}$, $\{-1, 1\}$, $\{-3, -1, 1, 3\}$, $\{1, 2, 3, 4, 5, 6\}$.
+- Une VA **continue** $X$ ne peut prendre sa valeur que dans un ensemble continu $\mathcal{X}$. Exemples : $\mathcal{X} = \mathbb{R}$, $\mathbb{C}$, $[0, 1]$.
+:::
+
+### Probabilité et loi de probabilité {#sec-loi-probabilite}
+
+Soit $X$ une VA définie sur $\mathcal{X}$ et $A$ un ensemble mesurable de $\mathcal{X}$. On note $P(X \in A)$ la probabilité que la VA $X$ appartienne à l'ensemble $A$ [poly, p. 71].
+
+::: {#prp-probabilite}
+## Propriétés d'une probabilité
+
+- $P(X \in A) \in [0, 1]$ ;
+- $P(X \in \mathcal{X}) = 1$ et $P(X \in \emptyset) = 0$ ;
+- pour deux ensembles $A$ et $B$ : $P(X \in A \cup B) = P(X \in A) + P(X \in B) - P(X \in A \cap B)$ ;
+- pour deux ensembles **disjoints** ($A \cap B = \emptyset$) : $P(X \in A \cup B) = P(X \in A) + P(X \in B)$.
+:::
+
+**Cas des VA discrètes.** Si $\mathcal{X} = \{x_1, x_2, \dots, x_N\}$, la loi de probabilité d'une VA discrète est entièrement déterminée par les probabilités $P(X = x_i)$ pour tous les $x_i$, $i \in [1, N]$ [poly, p. 71].
+
+### Fonction de répartition et densité de probabilité {#sec-repartition-densite}
+
+::: {#def-fonction-repartition}
+## Fonction de répartition
+
+Si $X$ est une VA réelle ($\mathcal{X} \subset \mathbb{R}$), sa **fonction de répartition** est
+
+$$
+F_X(x) = P(X \leq x) .
+$$
+
+Propriétés [poly, p. 72] : $F_X(x) \in [0, 1]$ ; $F_X(-\infty) = 0$ et $F_X(+\infty) = 1$ ; si $x_1 \geq x_2$, alors $F_X(x_1) \geq F_X(x_2)$ (fonction croissante).
+:::
+
+::: {#def-densite-probabilite}
+## Densité de probabilité
+
+La **densité de probabilité** de $X$ est
+
+$$
+f_X(x) = \frac{\mathrm{d}F_X(x)}{\mathrm{d}x} .
+$$
+
+Propriétés [poly, p. 72] :
+
+- $f_X(x) \geq 0$ ;
+- $P(x_1 \leq X \leq x_2) = \int_{x_1}^{x_2} f_X(x)\, \mathrm{d}x$ ;
+- $P(-\infty \leq X \leq +\infty) = \int_{-\infty}^{+\infty} f_X(x)\, \mathrm{d}x = 1$.
+:::
+
+### Espérance {#sec-esperance}
+
+::: {#def-esperance}
+## Espérance
+
+**VA discrète** [poly, p. 73]. Pour une VA discrète $X$ à valeurs dans $\mathcal{X} = \{x_1, \dots, x_N\}$ :
+
+$$
+\E[X] = \sum_{k=1}^{N} x_k\, P(X = x_k),
+\qquad
+\E[h(X)] = \sum_{k=1}^{N} h(x_k)\, P(X = x_k)
+$$
+
+pour toute fonction $h$.
+
+**VA continue.** Pour une VA $X$ continue de densité $f_X$ :
+
+$$
+\E[X] = \int_{\mathbb{R}} x\, f_X(x)\, \mathrm{d}x,
+\qquad
+\E[h(X)] = \int_{\mathbb{R}} h(x)\, f_X(x)\, \mathrm{d}x .
+$$ {#eq-esperance-fonction}
+:::
+
+::: {#prp-esperance}
+## Propriétés de l'espérance
+
+- $\E[aX + b] = a\E[X] + b$ ;
+- pour deux VA $X$ et $Y$ : $\E[X + Y] = \E[X] + \E[Y]$ ;
+- pour deux VA $X$ et $Y$ **indépendantes** : $\E[XY] = \E[X]\,\E[Y]$ [poly, p. 74].
+:::
+
+::: {#exr-va-discrete-pm1}
+## VA discrète [poly, p. 75]
+
+On considère $\mathcal{X} = \{-1, 1\}$ et une VA $X$ telle que $P(X = -1) = p$, $p \in [0, 1]$. Que vaut $P(X = 1)$ ? Que vaut $\E[X]$ ?
+:::
+
+::: {.complement}
+Solution (le support ne donne pas de réponse) : $P(X = 1) = 1 - p$, car les deux probabilités somment à 1, et $\E[X] = (-1)\, p + 1 \cdot (1 - p) = 1 - 2p$. En particulier $\E[X] = 0$ pour des symboles équiprobables ($p = 1/2$).
+:::
+
+::: {#exr-va-uniforme}
+## VA continue [poly, p. 75]
+
+On considère $\mathcal{X} = \mathbb{R}$ et une VA $X$ de densité de probabilité
+
+$$
+f_X(x) =
+\begin{cases}
+\frac{1}{2} & \text{si } x \in [0, 2], \\
+0 & \text{sinon.}
+\end{cases}
+$$
+
+Montrer que $\int_{-\infty}^{+\infty} f_X(x)\, \mathrm{d}x = 1$. Que vaut $\E[X]$ ?
+:::
+
+::: {.complement}
+Solution (le support ne donne pas de réponse) : $\int_{-\infty}^{+\infty} f_X(x)\, \mathrm{d}x = \int_0^2 \frac{1}{2}\, \mathrm{d}x = 1$, et $\E[X] = \int_0^2 \frac{x}{2}\, \mathrm{d}x = \left[\frac{x^2}{4}\right]_0^2 = 1$, le milieu de l'intervalle.
+:::
+
+### Variance {#sec-variance}
+
+::: {#def-variance}
+## Variance et écart-type
+
+La **variance** d'une VA est définie par [poly, p. 76]
+
+$$
+\mathrm{VAR}(X) = \E\!\left[\,|X - \E[X]|^2\,\right] = \E\!\left[|X|^2\right] - \left|\E[X]\right|^2 .
+$$ {#eq-variance}
+
+L'**écart-type** est la racine carrée de la variance.
+:::
+
+::: {.notes}
+Au tableau [notes, f. 2 v°], la variance est écrite $\mathrm{Var}(X) = \E[|X|^2] - \E[X]^2$, ce qui coïncide avec @eq-variance pour une VA réelle. Le moment d'ordre 2 $\E[|X|^2]$ est ensuite développé pour une VA discrète (voir le bloc ci-dessous).
+:::
+
+::: {.a-verifier .tranche #av-moment-ordre-2-notes}
+**Source** [notes, f. 2 v°] : « $\E[|X|^2] = \sum_{n=0}^{N-1} h(x_0)^2\, P(X = x_0)$ » (lecture confirmée par Armand, 2026-10-07 : indice $x_0$ et terme $h(\cdot)^2$).
+
+**Problème** : l'indice de sommation est $n$, mais le terme général est écrit avec $x_0$ : tel quel, chaque terme de la somme est identique. Le terme $h(x_n)^2$ donne $\E[|X|^2]$ si $h$ est l'identité (VA réelle) ; avec une fonction $h$ quelconque, il donne $\E[h(X)^2]$.
+
+**Proposition** : indice $x_n$ dans le terme général, $\sum_{n=0}^{N-1} h(x_n)^2\, P(X = x_n)$ avec $h(x) = x$, c'est-à-dire $\E[|X|^2] = \sum_{n} |x_n|^2\, P(X = x_n)$ (formule de $\E[h(X)]$ de la @def-esperance appliquée à $|x|^2$).
+
+**Décision** : proposition retenue (Armand a laissé le choix à Claude, 2026-10-07).
+:::
+
+::: {#exr-loi-uniforme-discrete}
+## Loi uniforme discrète [poly, p. 77]
+
+On considère qu'une transmission s'effectue en utilisant des symboles BPSK. Ces symboles sont tirés aléatoirement dans un alphabet $\{-g_0, g_0\}$. Soit $A_n$ la VA représentant l'envoi d'un symbole ; on suppose $A_n$ uniformément distribué, c'est-à-dire $P(A_n = g_0) = P(A_n = -g_0) = \frac{1}{2}$. Que vaut $\E[A_n]$ (énoncé corrigé : le support écrit $\E[X]$, bloc `av-esperance-exercice-bpsk`) ? Que vaut $\mathrm{VAR}(A_n)$ ?
+:::
+
+::: {.a-verifier .tranche #av-esperance-exercice-bpsk}
+**Source** [poly, p. 77] : « que vaut $\E[X]$ ? ».
+
+**Problème** : l'exercice ne définit pas de VA $X$ ; la seule VA de l'énoncé est $A_n$.
+
+**Proposition** : lire « que vaut $\E[A_n]$ ? ».
+
+**Décision** : proposition retenue (Armand a laissé le choix à Claude, 2026-10-07).
+:::
+
+::: {.complement}
+Solution (le support ne donne pas de réponse) : $\E[A_n] = \frac{1}{2}\, g_0 + \frac{1}{2}\,(-g_0) = 0$, puis $\mathrm{VAR}(A_n) = \E[|A_n|^2] - |\E[A_n]|^2 = g_0^2 - 0 = g_0^2$.
+
+Les symboles « BPSK » (*binary phase shift keying*, chapitre 6) sont ici, en bande de base, les deux symboles antipodaux $\pm g_0$ d'une 2-PAM.
+:::
+
+### Loi gaussienne {#sec-loi-gaussienne}
+
+::: {#def-loi-gaussienne}
+## Loi gaussienne
+
+La densité de probabilité d'une VA $X$ **gaussienne** de moyenne $\mu$ et de variance $\sigma^2$ est [poly, p. 78]
+
+$$
+f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\, e^{-\frac{(x - \mu)^2}{2\sigma^2}} .
+$$ {#eq-densite-gaussienne}
+
+On note $X \sim \mathcal{N}(\mu, \sigma^2)$.
+:::
+
+::: {#prp-loi-gaussienne}
+## Propriétés de la loi gaussienne
+
+D'après [poly, p. 78] :
+
+- soient $X$ et $Y$ telles que $X \sim \mathcal{N}(\mu, \sigma^2)$ et $Y = aX + b$ ; alors $Y \sim \mathcal{N}(a\mu + b,\ a^2\sigma^2)$ (variance corrigée : le support écrit $b^2\sigma^2$, bloc `av-variance-affine`) ;
+- en particulier, si $X \sim \mathcal{N}(0, 1)$ et $Y = \sigma X + \mu$, alors $Y \sim \mathcal{N}(\mu, \sigma^2)$ ;
+- intervalles de confiance : $\pm\sigma \to 67\ \%$ et $\pm 3\sigma \to 99\ \%$ (valeurs arrondies, voir le complément ci-dessous).
+
+On note
+
+$$
+\Phi(u) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{u} e^{-\frac{x^2}{2}}\, \mathrm{d}x
+$$ {#eq-fonction-phi}
+
+la fonction de répartition de la loi $\mathcal{N}(0, 1)$.
+:::
+
+::: {.a-verifier .tranche #av-variance-affine}
+**Source** [poly, p. 78] : « soient $X$ et $Y$ telles que $X \sim \mathcal{N}(\mu, \sigma^2)$ et $Y = aX + b$, alors $Y \sim \mathcal{N}(a\mu + b, b^2\sigma^2)$ ».
+
+**Problème** : $\mathrm{VAR}(aX + b) = \E[|aX + b - a\mu - b|^2] = a^2\sigma^2$ ; la constante $b$ ne change pas la variance. La deuxième propriété du support (cas $a = \sigma$, $b = \mu$, variance $\sigma^2$) est d'ailleurs cohérente avec $a^2\sigma^2$, pas avec $b^2\sigma^2$, qui donnerait $\mu^2$.
+
+**Proposition** : $Y \sim \mathcal{N}(a\mu + b,\ a^2\sigma^2)$.
+
+**Décision** : correction retenue par Armand (2026-10-07).
+:::
+
+::: {.complement}
+**Valeurs exactes des intervalles.** Pour une loi gaussienne, $P(|X - \mu| \leq \sigma) = 2\Phi(1) - 1 \approx 68{,}27\ \%$ et $P(|X - \mu| \leq 3\sigma) = 2\Phi(3) - 1 \approx 99{,}73\ \%$. Les valeurs du support et des notes (67 % et 99 %) sont des arrondis par défaut ; on trouve aussi couramment 68 % et 99,7 %, valeur employée par l'énoncé du TD (« $\pm 3\sigma$, soit 99,7 % de confiance ») [td, p. 4, ex. 5, q. 12].
+:::
+
+![Densité de la loi gaussienne $\mathcal{N}(\mu, \sigma^2)$ et intervalles $\mu \pm \sigma$ et $\mu \pm 3\sigma$. D'après le support [poly, p. 78] et les notes de cours [notes, f. 2 v°], redessinée. Reconstruite : les probabilités indiquées (68,3 % et 99,7 %, en gris) sont calculées ; le support et les notes donnent les valeurs arrondies 67 % et 99 %.](../figures/03-loi-gaussienne.svg){#fig-loi-gaussienne}
+
+::: {.notes}
+Au tableau [notes, f. 2 v°], la densité gaussienne est dessinée en cloche, avec les intervalles $\pm\sigma$ (« 67 % ») et $\pm 3\sigma$ (« 99 % ») marqués sous la courbe (@fig-loi-gaussienne).
+:::
+
+::: {#exr-loi-gaussienne}
+## Loi gaussienne [poly, p. 79]
+
+Soit $Z_n$ une VA vérifiant $Z_n \sim \mathcal{N}(0, \sigma^2)$, et $R_n$ la VA définie par $R_n = g_0 + Z_n$.
+
+1. Quelle est la loi de $R_n$ ?
+2. Calculer la probabilité $P(R_n < 0)$ en utilisant la fonction $\Phi$.
+3. On suppose $g_0 = 1$ et $\sigma^2 = \frac{1}{16}$ : évaluer $P(R_n < 0)$ dans ce cas.
+:::
+
+::: {.notes}
+Cet exercice a été posé au tableau [notes, f. 2 v°] (« Soit $Z_n \sim \mathcal{N}(0, \sigma^2)$, $R_n = g_0 + Z_n$ ») ; les notes s'arrêtent à l'énoncé.
+:::
+
+::: {.complement}
+Solution (aucune source ne la donne) :
+
+1. $R_n = 1 \cdot Z_n + g_0$ est une transformation affine de $Z_n$ avec $a = 1$, $b = g_0$ : $R_n \sim \mathcal{N}(g_0, \sigma^2)$. (Avec la formule écrite p. 78, on obtiendrait à tort la variance $g_0^2\sigma^2$ : voir `av-variance-affine`.)
+2. $\frac{R_n - g_0}{\sigma} \sim \mathcal{N}(0, 1)$, donc
+   $$
+   P(R_n < 0) = P\!\left(\frac{R_n - g_0}{\sigma} < -\frac{g_0}{\sigma}\right) = \Phi\!\left(-\frac{g_0}{\sigma}\right) = 1 - \Phi\!\left(\frac{g_0}{\sigma}\right).
+   $$
+3. $\sigma = \frac{1}{4}$, donc $P(R_n < 0) = \Phi(-4) \approx 3{,}2 \cdot 10^{-5}$.
+
+Dans le modèle du chapitre 2, $R_n = g_0 + Z_n$ est l'échantillon reçu quand le symbole $+1$ est émis sur une chaîne bruitée ; $P(R_n < 0)$ est alors la probabilité de décider à tort $-1$ avec un seuil en 0 (chapitre 4).
+:::
+
+## Processus aléatoires {#sec-processus-aleatoires}
+
+### Définition {#sec-definition-processus}
+
+::: {#def-processus-aleatoire}
+## Processus aléatoire
+
+Un **processus aléatoire** (PA), ou signal aléatoire, peut être considéré comme une fonction de deux paramètres : un évènement $\omega$ et un temps $t$ [poly, p. 81].
+
+C'est une VA qui dépend du temps, dont la densité de probabilité, la moyenne, la variance… peuvent varier en fonction du temps. Un PA est noté $X(\omega, t)$ (processus **à temps continu**) ou $X(\omega, k)$ (processus **à temps discret**). Par la suite, on omet la variable $\omega$ et on note $X(t)$ et $X(k)$ (ou $X_k$).
+:::
+
+**Remarque** : un PA peut être à valeurs discrètes ou continues, et à temps discret ou continu [poly, p. 81].
+
+::: {.notes}
+**Le signal émis est un signal aléatoire** [notes, f. 4 v°]. On s'intéresse désormais au signal
+
+$$
+s_l(t) = \sum_{m=-\infty}^{+\infty} A_m\, h(t - m\Ts),
+$$
+
+où les $A_m$ sont les **symboles envoyés** et $h(t)$ la **réponse impulsionnelle du filtre d'émission**. C'est un signal aléatoire : chaque épreuve $\omega$ (suite de symboles tirée) en donne une réalisation différente. Avec $h(t)$ porte d'amplitude 1 sur $[0, \Ts]$ et des symboles $\pm 1$, $s_l(t)$ est **à temps continu et à valeurs discrètes** (@fig-realisations-signal-aleatoire).
+:::
+
+![Deux réalisations $\omega_0$ et $\omega_1$ du signal aléatoire $s_l(t)$ (symboles $\pm 1$, filtre $h(t)$ en porte d'amplitude 1 sur $[0, \Ts]$) ; à un instant $t$ fixé, $s_l(t)$ est une variable aléatoire. D'après les notes de cours [notes, f. 4 v°], redessinée. Reconstruite : les suites de symboles sont tirées au hasard, les notes n'en donnent qu'un croquis.](../figures/03-realisations-signal-aleatoire.svg){#fig-realisations-signal-aleatoire}
+
+::: {.complement}
+Notation : dans ce chapitre, les symboles sont notés en majuscules, $A_m$, pour souligner que ce sont des variables aléatoires (comme dans le support, p. 87) ; ce sont les $a_n$ du chapitre 2.
+:::
+
+### Moyenne et fonction d'autocorrélation {#sec-moyenne-autocorrelation}
+
+En général, on caractérise un PA par sa **moyenne** et sa **fonction d'autocorrélation** [poly, p. 82].
+
+::: {#def-moyenne-processus}
+## Moyenne d'un processus
+
+La **moyenne d'ensemble** (moyenne spatiale, ou espérance) d'un PA est
+
+$$
+m_X(t) = \E[X(t)] = \int_{-\infty}^{+\infty} x\, f_{X(t)}(x)\, \mathrm{d}x ,
+$$
+
+où $f_{X(t)}(x)$ est la densité de probabilité à l'instant $t$ [poly, p. 82].
+:::
+
+::: {#def-autocorrelation}
+## Fonction d'autocorrélation
+
+La **fonction d'autocorrélation** d'un PA est [poly, p. 83]
+
+$$
+R_X(t_1, t_2) = \E\!\left[X(t_1)\, X^*(t_2)\right] .
+$$
+
+On préfère souvent écrire
+
+$$
+R_X(t, \tau) = \E\!\left[X(t)\, X^*(t - \tau)\right] .
+$$ {#eq-autocorrelation}
+
+La fonction d'autocorrélation caractérise le lien entre deux instants $t_1$ et $t_2$ d'un PA.
+:::
+
+Généralement, on est conduit à émettre des hypothèses sur le PA afin de simplifier les calculs de sa moyenne et de son autocorrélation : c'est l'**hypothèse de stationnarité** [poly, p. 83].
+
+### Stationnarité au sens large {#sec-stationnarite}
+
+::: {#def-stationnarite}
+## Stationnarité au sens large
+
+Un PA est dit **stationnaire au sens large** (SSL) si sa moyenne et sa fonction d'autocorrélation ne dépendent pas de $t$ [poly, p. 84] :
+
+- $m_X(t) = m_X$ (constante) ;
+- $R_X(t, \tau) = R_X(\tau)$.
+:::
+
+::: {#prp-autocorrelation-stationnaire}
+## Propriétés de $R_X(\tau)$
+
+Pour un PA stationnaire au sens large [poly, p. 84] :
+
+- si $X(t) \in \mathbb{R}$, $R_X(\tau) = R_X(-\tau)$ (parité) ;
+- si $X(t) \in \mathbb{C}$, $R_X(\tau) = R_X^*(-\tau)$ (symétrie hermitienne) ;
+- pour tout $\tau$, $|R_X(\tau)| \leq R_X(0)$ (maximum en 0).
+
+La **puissance moyenne** du PA est
+
+$$
+P_X = \E\!\left[|X(t)|^2\right] = R_X(0) .
+$$ {#eq-puissance-moyenne}
+:::
+
+:::: {.notes}
+::: {.proof}
+Démonstration de la symétrie hermitienne faite au tableau [notes, f. 5 r°], avec le changement de variable $u = t - \tau$ :
+
+$$
+R_X(\tau) = \E\!\left[X(t)\, X^*(t - \tau)\right]
+= \E\!\left[X^*(t)\, X(t - \tau)\right]^*
+= \E\!\left[X^*(u + \tau)\, X(u)\right]^*
+= R_X^*(-\tau) .
+$$
+:::
+::::
+
+::: {.complement}
+Dernière égalité : $\E[X(u)\, X^*(u + \tau)] = \E[X(u)\, X^*(u - (-\tau))] = R_X(-\tau)$, qui ne dépend pas de $u$ par stationnarité. Pour un PA réel, la conjugaison disparaît et l'on retrouve la parité.
+
+**Maximum en 0** (non démontré dans les sources) : par l'inégalité de Cauchy-Schwarz, $|\E[X(t)\, X^*(t - \tau)]|^2 \leq \E[|X(t)|^2]\, \E[|X(t - \tau)|^2] = R_X(0)^2$.
+:::
+
+### Densité spectrale de puissance {#sec-dsp}
+
+::: {#def-dsp}
+## Densité spectrale de puissance
+
+La **densité spectrale de puissance** (DSP) caractérise la distribution de l'énergie en fréquence d'un PA. C'est le pendant de la transformée de Fourier pour les signaux non aléatoires (déterministes) [poly, p. 85].
+
+Pour les PA stationnaires au sens large, le **théorème de Wiener-Khintchine** montre que la DSP s'obtient en calculant la transformée de Fourier de la fonction d'autocorrélation :
+
+$$
+\Gamma_X(f) = \TF(R_X(\tau)) = \int_{-\infty}^{+\infty} R_X(\tau)\, e^{-j2\pi f\tau}\, \mathrm{d}\tau
+$$ {#eq-wiener-khintchine}
+
+pour les PA à temps continu, et
+
+$$
+\Gamma_X(f) = \operatorname{TFD}(R_X(k)) = \sum_{k \in \mathbb{Z}} R_X(k)\, e^{-j2\pi f k T_e}
+$$
+
+pour les PA à temps discret, où $T_e$ est la période d'échantillonnage.
+:::
+
+::: {.complement}
+Un PA stationnaire de puissance finie a en général une énergie infinie : c'est bien sa **puissance** (moyenne) que la DSP répartit en fréquence, comme son nom l'indique ; le mot « énergie » du support est à prendre en ce sens.
+:::
+
+::: {.notes}
+**Remarque faite en cours** [notes, f. 5 r°]. Par transformée de Fourier inverse,
+
+$$
+R_X(\tau) = \int_{-\infty}^{+\infty} \Gamma_X(f)\, e^{j2\pi f\tau}\, \mathrm{d}f ,
+\qquad \text{d'où} \qquad
+R_X(0) = \int_{-\infty}^{+\infty} \Gamma_X(f)\, \mathrm{d}f .
+$$ {#eq-puissance-dsp}
+:::
+
+::: {.complement}
+Avec @eq-puissance-moyenne, @eq-puissance-dsp signifie que **la puissance moyenne est l'aire sous la DSP** : $P_X = \int \Gamma_X(f)\, \mathrm{d}f$. La puissance contenue dans une bande de fréquences est l'intégrale de la DSP sur cette bande (en comptant les fréquences négatives et positives).
+:::
+
+#### Exemple : bruit blanc gaussien {#sec-bruit-blanc}
+
+::: {.notes}
+**Bruit blanc gaussien** [notes, f. 5 r°]. Au tableau, la DSP du bruit blanc est dessinée **constante**, de niveau $\frac{N_0}{2}$ sur toutes les fréquences. La bande $[f_p - B,\ f_p + B]$, autour d'une fréquence $f_p$, est hachurée, avec l'indication « $N_0 B$ » (aire hachurée : $\frac{N_0}{2} \times 2B$) (@fig-bruit-blanc).
+:::
+
+![DSP d'un bruit blanc, constante de niveau $N_0/2$ ; bande $[f_p - B, f_p + B]$ hachurée. D'après les notes de cours [notes, f. 5 r°], redessinée. Reconstruite : la bande symétrique des fréquences négatives $[-f_p - B, -f_p + B]$ est ajoutée en pointillés gris.](../figures/03-bruit-blanc.svg){#fig-bruit-blanc}
+
+::: {.complement}
+**Aire hachurée et puissance totale.** L'aire hachurée vaut $\frac{N_0}{2} \times 2B = N_0 B$ : c'est la puissance portée par les fréquences **positives** de la bande. La DSP d'un bruit réel étant paire, la bande symétrique $[-f_p - B, -f_p + B]$ porte la même puissance (en pointillés gris sur la @fig-bruit-blanc) : par @eq-puissance-dsp, la puissance totale d'un bruit réel filtré dans cette bande (filtre passe-bande réel) est $2 N_0 B$.
+:::
+
+::: {.complement}
+Un bruit **blanc** a une DSP constante sur toutes les fréquences, donc une autocorrélation $R_X(\tau) = \frac{N_0}{2}\,\delta(\tau)$ et une puissance totale infinie : c'est un modèle idéal, utilisé à travers des bandes finies. L'adjectif **gaussien** porte sur la loi des valeurs du bruit, pas sur sa DSP. Le bruit $z_l(t)$ de la chaîne (chapitre 2) est de ce type ; il est étudié au chapitre 4.
+:::
+
+### Processus cyclostationnaires {#sec-cyclostationnarite}
+
+Sur la couche PHY, les signaux que nous manipulons sont souvent **cyclostationnaires** [poly, p. 86].
+
+::: {#def-cyclostationnarite}
+## Processus cyclostationnaire
+
+Un PA est dit **cyclostationnaire** (au sens large) de période $\Ts$ si ses propriétés statistiques sont périodiques de période $\Ts$ [poly, p. 86] :
+
+- $m_X(t) = m_X(t + \Ts)$ ;
+- $R_X(t, \tau) = R_X(t + \Ts, \tau)$.
+:::
+
+::: {#def-dsp-cyclostationnaire}
+## DSP d'un processus cyclostationnaire
+
+Pour les PA cyclostationnaires au sens large, la DSP s'obtient en calculant [poly, p. 86]
+
+$$
+\Gamma_X(f) = \TF(\tilde{R}_X(\tau)) = \int_{-\infty}^{+\infty} \tilde{R}_X(\tau)\, e^{-j2\pi f\tau}\, \mathrm{d}\tau ,
+$$ {#eq-dsp-cyclostationnaire}
+
+où
+
+$$
+\tilde{R}_X(\tau) = \frac{1}{\Ts} \int_0^{\Ts} R_X(t, \tau)\, \mathrm{d}t
+$$ {#eq-autocorrelation-moyennee}
+
+est l'**autocorrélation moyennée** sur une période de cyclostationnarité.
+:::
+
+:::: {.notes}
+::: {#exm-dephasage-aleatoire}
+## Cyclostationnaire décalé d'un retard aléatoire
+
+Exercice fait au tableau [notes, f. 5 r°]. Soit $X(t)$ un PA cyclostationnaire de période $T$. On pose
+
+$$
+Y(t) = X(t - \theta), \qquad \theta \text{ indépendant de } X(t), \quad \theta \sim \mathcal{U}_{[0, T[} .
+$$
+
+Résultat annoncé : $Y(t)$ est **stationnaire**, et « $m_Y(t)$ périodique, avec : »
+
+$$
+m_Y(t) = \E[Y(t)] = \E[X(t - \theta)] = \E_\theta\!\left[\E[X(t - \theta) \mid \theta]\right] = \frac{1}{T} \int_0^{T} m_X(t - \theta)\, \mathrm{d}\theta .
+$$
+
+Les notes s'arrêtent après ce calcul.
+:::
+::::
+
+
+::: {.complement}
+**Fin du calcul.** Les notes écrivent « $m_Y(t)$ périodique » (lecture confirmée par Armand) ; le calcul montre plus précisément que $m_Y$ est **constante**, ce qui est cohérent avec la stationnarité annoncée (une constante est périodique de toute période). En effet, comme $m_X$ est périodique de période $T$, l'intégrale de $m_X(t - \theta)$ sur une période ne dépend pas de $t$ :
+
+$$
+m_Y = \frac{1}{T} \int_0^{T} m_X(u)\, \mathrm{d}u \quad \text{(constante).}
+$$
+
+De même, $R_Y(t, \tau) = \E[X(t - \theta)\, X^*(t - \theta - \tau)] = \frac{1}{T} \int_0^T R_X(t - \theta, \tau)\, \mathrm{d}\theta = \tilde{R}_X(\tau)$, indépendant de $t$ : $Y$ est stationnaire au sens large, et son autocorrélation est l'**autocorrélation moyennée** de $X$ (@eq-autocorrelation-moyennee, avec $T = \Ts$). Cet exemple justifie la définition @eq-dsp-cyclostationnaire : la DSP d'un PA cyclostationnaire est celle du PA stationnaire obtenu en lui appliquant un retard aléatoire uniforme sur une période, ce qui revient à oublier l'origine des temps.
+:::
+
+## Filtrage et formule de Bennett {#sec-bennett}
+
+### Filtrage d'un processus aléatoire {#sec-filtrage-processus}
+
+::: {#prp-filtrage-processus}
+## Formule du filtrage d'un PA
+
+D'après [poly, p. 87] :
+
+- le signal $y(t)$ obtenu par filtrage d'un PA $x(t)$ par le filtre linéaire invariant par décalage $h(t)$ est un PA ;
+- $y(t)$ conserve les propriétés de stationnarité, de cyclostationnarité de $x(t)$.
+
+On montre en particulier que
+
+$$
+\Gamma_Y(f) = |H(f)|^2\, \Gamma_X(f) .
+$$ {#eq-filtrage-dsp}
+:::
+
+### Formule de Bennett {#sec-formule-bennett}
+
+::: {#thm-bennett}
+## Formule de Bennett
+
+Soit $A_m$ un processus aléatoire à temps discret stationnaire et $X(t)$ défini par
+
+$$
+X(t) = \sum_{m=-\infty}^{+\infty} A_m\, h(t - m\Ts) .
+$$
+
+Alors [poly, p. 87] :
+
+- $X(t)$ est cyclostationnaire de période $\Ts$ ;
+- la DSP de $X(t)$ est donnée par
+
+$$
+\Gamma_X(f) = \frac{1}{\Ts} \sum_{m=-\infty}^{+\infty} R_A[m]\, e^{-j2\pi f m\Ts}\, |H(f)|^2 .
+$$ {#eq-bennett}
+:::
+
+::: {.complement}
+**Définition de $R_A[m]$** (le support ne la donne pas p. 87) : avec la convention de @eq-autocorrelation, $R_A[m] = \E[A_n\, A^*_{n-m}]$. C'est la convention de la correction du TD [td-correction, p. 5 et 8] et des notes ; elle donne bien le signe $-$ de l'exponentielle de @eq-bennett (voir la démonstration ci-dessous). L'énoncé du TD utilise l'autre convention (voir @sec-exercices-td-dsp).
+
+**Conditions d'application** : symboles formant un processus stationnaire (au sens large) à temps discret, mis en forme au rythme $1/\Ts$ par un filtre linéaire invariant $h(t)$ ; $X(t)$ est le signal émis $s_l(t)$ de la chaîne de transmission.
+:::
+
+Démonstration, d'après la correction du TD [td-correction, p. 4 à 7]. Le TD note $g(t)$ le filtre de mise en forme et $s_s(t)$ le signal des symboles : on les écrit ici $h(t)$ et $s_a(t)$ (notations du cours). On suppose $h$ borné et à support borné, de sorte que les sommes ne comportent qu'un nombre fini de termes non nuls, ce qui permet d'échanger espérance et sommes [td-correction, p. 4-5].
+
+::: {.proof}
+**Moyenne.** Avec $m_A = \E(A_k)$ :
+
+$$
+m_{s_l}(t) = \E(s_l(t)) = \sum_{k=-\infty}^{+\infty} \E(A_k)\, h(t - k\Ts) = m_A \sum_{k=-\infty}^{+\infty} h(t - k\Ts) .
+$$
+
+Elle est périodique de période $\Ts$ : $m_{s_l}(t + \Ts) = m_A \sum_k h(t - (k - 1)\Ts) = m_{s_l}(t)$ (changement d'indice $k \leftarrow k - 1$).
+
+**Autocorrélation.**
+
+$$
+R_{s_l}(t, \tau) = \E(s_l(t)\, s_l^*(t - \tau))
+= \sum_{k} \sum_{k'} \E(A_k A^*_{k'})\, h(t - k\Ts)\, h^*(t - \tau - k'\Ts)
+= \sum_{k} \sum_{k'} R_A[k - k']\, h(t - k\Ts)\, h^*(t - \tau - k'\Ts) .
+$$
+
+Le changement d'indices $k \leftarrow k - 1$, $k' \leftarrow k' - 1$ montre que $R_{s_l}(t + \Ts, \tau) = R_{s_l}(t, \tau)$ : $s_l(t)$ est **cyclostationnaire** de période $\Ts$. Avec $d = k - k'$ :
+
+$$
+R_{s_l}(t, \tau) = \sum_{k} \sum_{d} R_A[d]\, h(t - k\Ts)\, h^*(t - \tau - k\Ts + d\Ts) .
+$$
+
+**Autocorrélation moyennée.** En intégrant sur une période, puis avec $t \leftarrow t - k\Ts$ et la relation de Chasles (les intervalles $[-k\Ts, -(k-1)\Ts]$ recouvrent $\mathbb{R}$) :
+
+$$
+\tilde{R}_{s_l}(\tau) = \frac{1}{\Ts} \int_0^{\Ts} R_{s_l}(t, \tau)\, \mathrm{d}t
+= \frac{1}{\Ts} \sum_{d} R_A[d] \int_{-\infty}^{+\infty} h(t)\, h^*(t - (\tau - d\Ts))\, \mathrm{d}t
+= \frac{1}{\Ts} \sum_{d} R_A[d]\, R_h(\tau - d\Ts),
+$$
+
+où $R_h(\tau) = \int h(t)\, h^*(t - \tau)\, \mathrm{d}t$ est l'autocorrélation (déterministe) de $h$. C'est la convolution de $h(t)$ et de $h^*(-t)$, donc $\TF(R_h)(f) = H(f)\, H^*(f) = |H(f)|^2$.
+
+**DSP.** Par @eq-dsp-cyclostationnaire, et puisqu'un retard $d\Ts$ multiplie la transformée de Fourier par $e^{-j2\pi f d\Ts}$ :
+
+$$
+\Gamma_{s_l}(f) = \frac{1}{\Ts} \sum_{d} R_A[d]\, e^{-j2\pi f d\Ts}\, |H(f)|^2 .
+$$
+:::
+
+::: {.notes}
+Les notes appellent $R_h(\tau)$ la « **fonction d'autocorrélation déterministe** de $h(t)$ », écrite $R_h(t) = \int h(\tau)\, h^*(\tau - t)\, \mathrm{d}\tau$ [notes, f. 4 v°] (dans le calcul du filtre adapté, chapitre 4).
+:::
+
+::: {.complement}
+Notation : la correction du TD écrit cette autocorrélation $v(\tau)$ [td-correction, p. 6] ; ce n'est pas le filtre global $v(t)$ de l'énoncé du TD (le $g(t)$ du cours). Le cours Bristol la note $R_h(\tau)$, comme les notes.
+:::
+
+**Interprétation** [td-correction, p. 7]. La DSP de $s_l(t)$ est le produit de la DSP du signal des symboles $s_a(t)$,
+
+$$
+\Gamma_{s_a}(f) = \frac{1}{\Ts} \sum_{d=-\infty}^{+\infty} R_A[d]\, e^{-j2\pi f d\Ts},
+$$
+
+et du module carré $|H(f)|^2$ de la fonction de transfert du filtre de mise en forme. Cette relation explique le nom de « filtre de **mise en forme** » : dans la plupart des cas, $\Gamma_{s_a}(f)$ est constante, donc $\Gamma_{s_l}(f) \propto |H(f)|^2$. Choisir $H(f)$ revient à choisir l'allure de la DSP du signal transmis ; en particulier, **$h$ détermine la bande passante** de la transmission (l'ensemble des fréquences sur lesquelles elle est effectuée).
+
+::: {#cor-bennett-iid}
+## Symboles indépendants et centrés
+
+Si les symboles sont **indépendants, identiquement distribués et de moyenne nulle**, $R_A[0] = \sigma_A^2 = \E(|A_n|^2)$ et $R_A[d] = 0$ pour $d \neq 0$, d'où [td-correction, p. 8]
+
+$$
+\Gamma_{s_l}(f) = \sigma_A^2\, \frac{|H(f)|^2}{\Ts} .
+$$ {#eq-dsp-iid-centres}
+:::
+
+::: {.notes}
+Le même résultat est obtenu au tableau par un calcul direct [notes, f. 5 v°] : voir @sec-dsp-porte.
+:::
+
+::: {.complement}
+**Puissance du signal émis.** Par @eq-puissance-dsp, $P_{s_l} = \tilde{R}_{s_l}(0) = \frac{1}{\Ts} \sum_d R_A[d]\, R_h(-d\Ts)$. Pour des symboles iid centrés, $P_{s_l} = \frac{\sigma_A^2}{\Ts}\, R_h(0) = \frac{\sigma_A^2 E_h}{\Ts}$, où $E_h = \int |h(t)|^2\, \mathrm{d}t$ est l'énergie du filtre de mise en forme : énergie moyenne par symbole, divisée par la durée d'un symbole.
+:::
+
+## Exemple : mise en forme par une porte {#sec-dsp-porte}
+
+::: {#exm-dsp-porte}
+## DSP avec un filtre porte [poly, p. 88]
+
+On considère la chaîne de transmission de la @fig-chaine-dsp. Calculer la DSP de $s_l(t)$ lorsque $h(t)$ est le filtre porte entre $0$ et $\Ts$.
+:::
+
+::: {.complement}
+Le support ne précise ni l'amplitude de la porte ni la loi des symboles. Les notes [notes, f. 5 v°] et le TD [td, p. 2] prennent une porte d'amplitude 1 ; les notes supposent des symboles centrés et indépendants.
+:::
+
+:::: {.notes}
+::: {.proof}
+Calcul fait au tableau [notes, f. 5 v°], avec $s_l(t) = \sum_m A_m\, h(t - m\Ts)$.
+
+**Moyenne.** $h$ étant déterministe,
+
+$$
+m_{s_l}(t) = \E[s_l(t)] = \sum_m \E[A_m\, h(t - m\Ts)] = \sum_m \E[A_m]\, h(t - m\Ts) .
+$$
+
+On suppose $\E[A_m] = 0$ ; donc $m_{s_l}(t) = 0$.
+
+**Autocorrélation.**
+
+$$
+R_{s_l}(t, \tau) = \sum_m \sum_{m'} \E[A_m A^*_{m'}]\, h(t - m\Ts)\, h^*(t - \tau - m'\Ts) .
+$$
+
+On suppose $A_m$ indépendant de $A_{m'}$ si $m \neq m'$. Alors $\E[A_m A^*_{m'}] = 0$ si $m \neq m'$ et $\E[|A_m|^2] = \sigma_a^2$ si $m = m'$, donc
+
+$$
+R_{s_l}(t, \tau) = \sum_m \sigma_a^2\, h(t - m\Ts)\, h^*(t - \tau - m\Ts) .
+$$
+
+**Cyclostationnarité.**
+
+$$
+R_{s_l}(t - \Ts, \tau) = \sum_m \sigma_a^2\, h(t - \Ts - m\Ts)\, h^*(t - \tau - m\Ts - \Ts) = R_{s_l}(t, \tau) .
+$$
+
+**Autocorrélation moyennée**, avec $u = t - m\Ts$ :
+
+$$
+\tilde{R}_{s_l}(\tau) = \frac{1}{\Ts} \int_0^{\Ts} R_{s_l}(t, \tau)\, \mathrm{d}t
+= \frac{\sigma_a^2}{\Ts} \sum_m \int_{-m\Ts}^{-m\Ts + \Ts} h(u)\, h^*(u - \tau)\, \mathrm{d}u
+= \frac{\sigma_a^2}{\Ts} \int h(u)\, h^*(u - \tau)\, \mathrm{d}u
+= \frac{\sigma_a^2}{\Ts}\, R_h(\tau) .
+$$
+
+**DSP.**
+
+$$
+\Gamma_{s_l}(f) = \TF(\tilde{R}_{s_l}(\tau)) = \frac{\sigma_a^2}{\Ts}\, |H(f)|^2 ,
+$$
+
+avec $h(t) = \Pi_{\Ts}\!\left(t - \frac{\Ts}{2}\right)$ et la transformée de la porte $\frac{\sin(\pi f \Ts)}{\pi f}$. La DSP est dessinée en lobe principal sur $[-1/\Ts, 1/\Ts]$, avec des lobes secondaires, et la bande est notée $B = 1/\Ts$ (entourée).
+:::
+::::
+
+::: {.a-verifier #av-dsp-porte-notes}
+**Source** [notes, f. 5 v°] : sous $|H(f)|^2$, l'accolade « $\sinc(f\Ts)$ » ; transformée de la porte écrite « $\Pi_{\Ts}(f) = \frac{\sin(\pi f T)}{\pi f}$ » ; sur le dessin de la DSP, valeur au sommet « $\frac{\sigma_a^2}{\Ts}$ ».
+
+**Problème** : avec une porte d'amplitude 1 et de durée $\Ts$, $H(f) = \Ts \sinc(f\Ts)\, e^{-j\pi f\Ts}$ (avec $\sinc(x) = \frac{\sin(\pi x)}{\pi x}$), donc $|H(f)|^2 = \Ts^2 \sinc^2(f\Ts)$ et non $\sinc(f\Ts)$ ; la DSP vaut alors $\sigma_a^2 \Ts \sinc^2(f\Ts)$, de valeur maximale $\sigma_a^2 \Ts$ en $f = 0$, et non $\frac{\sigma_a^2}{\Ts}$. La correction du TD donne $\Gamma_{s_l}(f) = \Ts \sinc^2(\Ts f)$ pour $\sigma_A^2 = 1$ [td-correction, p. 8], ce qui confirme $\sigma_a^2\Ts$. Contrôle par la puissance : $\int \sigma_a^2 \Ts \sinc^2(f\Ts)\, \mathrm{d}f = \sigma_a^2$, puissance attendue ($E_h = \Ts$, voir @cor-bennett-iid).
+
+Armand ne sait pas ce que l'enseignant a dit sur ce point (2026-10-07) : le bloc reste ouvert.
+
+**Proposition** : $\Gamma_{s_l}(f) = \sigma_a^2\, \Ts \sinc^2(f\Ts)$, maximum $\sigma_a^2\Ts$ (le « $\frac{\sigma_a^2}{\Ts}$ » du dessin correspondrait à $|H(0)|^2 = 1$, c'est-à-dire à une porte d'amplitude $1/\Ts$).
+:::
+
+::: {.complement}
+**Calcul complet de $H(f)$.** $h(t) = \Pi_{\Ts}(t - \Ts/2)$ ; avec la convention de la TF de la matière ($e^{-j2\pi ft}$),
+
+$$
+\TF[\Pi_{\Ts}](f) = \int_{-\Ts/2}^{\Ts/2} e^{-j2\pi ft}\, \mathrm{d}t = \frac{\sin(\pi f\Ts)}{\pi f} = \Ts \sinc(f\Ts),
+\qquad
+H(f) = e^{-j\pi f\Ts}\, \Ts \sinc(f\Ts),
+$$
+
+d'où, pour des symboles iid centrés de variance $\sigma_A^2$ (@eq-dsp-iid-centres) :
+
+$$
+\Gamma_{s_l}(f) = \sigma_A^2\, \Ts \sinc^2(f\Ts) .
+$$ {#eq-dsp-porte}
+
+La DSP s'annule aux fréquences $k/\Ts$, $k \neq 0$. Son **lobe principal** occupe $[-1/\Ts, 1/\Ts]$ : c'est la bande $B = 1/\Ts$ des notes (au sens du support $[-B, B]$ du chapitre 2), soit deux fois la bande minimale de Nyquist $\frac{1}{2\Ts}$. Les lobes secondaires décroissent lentement, en $1/f^2$.
+:::
+
+![DSP du signal émis avec un filtre de mise en forme en porte de durée $\Ts$ et des symboles iid centrés de variance $\sigma_A^2$ : $\Gamma_{s_l}(f) = \sigma_A^2 \Ts \sinc^2(f\Ts)$ ; lobe principal sur $[-1/\Ts, 1/\Ts]$. D'après les notes de cours [notes, f. 5 v°] et la correction du TD [td-correction, p. 9], redessinée. Axes normalisés ($f\Ts$, $\Gamma_{s_l}/(\sigma_A^2 \Ts)$), échelle linéaire ; la valeur au sommet suit la proposition du bloc `av-dsp-porte-notes`.](../figures/03-dsp-porte.svg){#fig-dsp-porte}
+
+::: {.a-verifier .tranche #av-phase-tf-porte-td}
+**Source** [td-correction, p. 8] : « $G(f) = e^{j\pi T_s f}\, \mathcal{F}(\Pi_{T_s}(t)) = e^{j\pi T_s f}\, T_s \sinc(T_s f)$ » pour $g(t) = \Pi_{T_s}(t - T_s/2)$.
+
+**Problème** : un retard de $\Ts/2$ multiplie la transformée de Fourier par $e^{-j\pi f\Ts}$ avec la convention $\TF[x](f) = \int x(t)\, e^{-j2\pi ft}\, \mathrm{d}t$ ; le signe $+$ correspond à l'autre convention. Le module, donc la DSP ($\Ts \sinc^2(\Ts f)$), n'en dépend pas.
+
+**Proposition** : $H(f) = e^{-j\pi f\Ts}\, \Ts \sinc(f\Ts)$.
+
+**Décision** : convention de la TF de la matière, $e^{-j2\pi ft}$, retenue par Armand (2026-10-07, fiche matière) ; le signe de la correction du TD est corrigé en conséquence.
+:::
+
+## Exercices du TD {#sec-exercices-td-dsp}
+
+Les exercices suivants viennent du TD « Transmissions en bande de base » [td] ; ils sont écrits avec les notations du cours (le TD note $g(t)$ le filtre de mise en forme, $s_s(t)$ le signal des symboles et $R_s$ le débit symbole ; voir la table des notations de la fiche matière).
+
+::: {.complement}
+**Convention d'autocorrélation.** L'énoncé du TD définit $R_A[k] = \E(A_n A^*_{n+k})$ et $R_{s_l}(t, \tau) = \E(s_l(t)\, s_l^*(t + \tau))$ [td, p. 2] ; sa correction [td-correction, p. 5 et 8], le support [poly, p. 83] et les notes [notes, f. 5 r°] utilisent $\E(s_l(t)\, s_l^*(t - \tau))$ et $R_A[k] = \E(A_n A^*_{n-k})$. Le cours suit partout cette seconde convention (décision d'Armand, 2026-10-07), y compris dans l'exercice ci-dessous. Avec la convention de l'énoncé, la formule de Bennett s'écrirait avec $e^{+j2\pi f m\Ts}$ (ou $R_A^*[m]$) : la DSP obtenue est la même, et pour des symboles réels $R_A$ est pair.
+:::
+
+::: {#exr-td-bennett}
+## Cyclostationnarité et DSP [td, p. 2, ex. 2, q. 1-9]
+
+Soit $\{A_k\}_{k \in \mathbb{Z}}$ la séquence des symboles délivrée par le codeur en ligne. Les symboles forment un processus à temps discret stationnaire de moyenne $m_A = \E(A_k)$ et d'autocorrélation $R_A[k]$. Cette séquence est transmise avec un débit symbole $D_s = 1/\Ts$ ; le signal à temps continu correspondant est $s_a(t) = \sum_{k=-\infty}^{+\infty} A_k\, \delta(t - k\Ts)$.
+
+1. Exprimer $s_l(t)$ à partir des $A_k$ et de la réponse impulsionnelle $h(t)$ du filtre de mise en forme.
+2. Calculer $m_{s_l}(t) = \E(s_l(t))$.
+3. Montrer que la fonction $t \mapsto m_{s_l}(t)$ est périodique de période $\Ts$.
+4. Calculer $\bar{m}_{s_l} = \frac{1}{\Ts} \int_0^{\Ts} m_{s_l}(t)\, \mathrm{d}t$.
+5. Calculer la fonction d'autocorrélation $R_{s_l}(t, \tau)$.
+6. Montrer que la fonction $t \mapsto R_{s_l}(t, \tau)$ est périodique de période $\Ts$.
+7. Calculer la fonction d'autocorrélation moyennée $\bar{R}_{s_l}(\tau) = \frac{1}{\Ts} \int_0^{\Ts} R_{s_l}(t, \tau)\, \mathrm{d}t$.
+8. En déduire la puissance de $s_l(t)$, définie par $P_{s_l} = \bar{R}_{s_l}(0)$.
+9. Démontrer la formule de Bennett en calculant la DSP de $s_l(t)$.
+:::
+
+::: {.solution}
+Correction du TD [td-correction, p. 4-7] : questions 1 à 3, 5 à 7 et 9, voir la démonstration du @thm-bennett ($s_l(t) = \sum_k A_k\, h(t - k\Ts)$ ; $\bar{R}_{s_l}$ est l'autocorrélation moyennée $\tilde{R}_{s_l}$ de @eq-autocorrelation-moyennee). Question 4 :
+
+$$
+\bar{m}_{s_l} = \frac{1}{\Ts} \int_0^{\Ts} m_{s_l}(t)\, \mathrm{d}t = \frac{m_A}{\Ts} \sum_{k} \int_{-k\Ts}^{-(k-1)\Ts} h(t)\, \mathrm{d}t = \frac{m_A}{\Ts} \int_{-\infty}^{+\infty} h(t)\, \mathrm{d}t
+$$
+
+(changement de variable $t \leftarrow t - k\Ts$, puis relation de Chasles).
+:::
+
+::: {.complement}
+Question 8 (sans corrigé) : $P_{s_l} = \bar{R}_{s_l}(0) = \frac{1}{\Ts} \sum_d R_A[d]\, R_h(-d\Ts)$ ; pour des symboles iid centrés, $P_{s_l} = \sigma_A^2 E_h / \Ts$ (voir le complément qui suit @cor-bennett-iid).
+:::
+
+::: {#exr-td-dsp-2pam}
+## DSP d'une 2-PAM [td, p. 2, ex. 2, q. 10]
+
+Calculer et représenter la DSP du signal $s_l(t)$ pour les hypothèses suivantes :
+
+- les symboles sont 2-PAM ($A_k \in \{-1, 1\}$), uniformément et identiquement distribués ;
+- le filtre de mise en forme vaut $h(t) = 1$ si $0 \leq t < \Ts$, 0 sinon.
+:::
+
+::: {.solution}
+Correction du TD [td-correction, p. 7-8]. $\E(A_k) = 1 \times 0{,}5 + (-1) \times 0{,}5 = 0$ ; $R_A[k] = \E(|A_n|^2) = 1$ si $k = 0$ et $R_A[k] = \E(A_n)\,\E(A^*_{n-k}) = 0$ sinon. Donc $\sum_d R_A[d]\, e^{-j2\pi f d\Ts} = 1$ et $\Gamma_{s_l}(f) = \frac{|H(f)|^2}{\Ts}$. Avec $H(f) = e^{-j\pi f\Ts}\, \Ts \sinc(f\Ts)$ (bloc `av-phase-tf-porte-td`) :
+
+$$
+\Gamma_{s_l}(f) = \Ts \sinc^2(\Ts f) .
+$$
+
+La correction trace cette DSP en marquant la **bande passante** sur le lobe principal $[-1/\Ts, 1/\Ts]$ [td-correction, p. 9] (@fig-dsp-2pam-ook, en haut).
+:::
+
+::: {#exr-td-dsp-ook}
+## DSP d'une 2-OOK [td, p. 2, ex. 2, q. 11]
+
+Même question pour des symboles 2-OOK (*On Off Keying*, $A_k \in \{0, 1\}$), uniformément et identiquement distribués, avec le même filtre de mise en forme.
+:::
+
+::: {.complement}
+Solution (la correction du TD n'en donne pas) :
+
+- $m_A = \frac{1}{2}$ ; $R_A[0] = \E(|A_n|^2) = \frac{1}{2}$ ; pour $d \neq 0$, $R_A[d] = \E(A_n)\,\E(A^*_{n-d}) = \frac{1}{4}$ (symboles indépendants) ;
+- donc $\sum_d R_A[d]\, e^{-j2\pi f d\Ts} = \frac{1}{4} + \frac{1}{4} \sum_d e^{-j2\pi f d\Ts} = \frac{1}{4} + \frac{1}{4\Ts} \sum_k \delta\!\left(f - \frac{k}{\Ts}\right)$, par la formule sommatoire de Poisson ;
+- avec $|H(f)|^2 = \Ts^2 \sinc^2(f\Ts)$, qui s'annule en $f = k/\Ts$ pour $k \neq 0$ :
+
+$$
+\Gamma_{s_l}(f) = \frac{\Ts}{4} \sinc^2(f\Ts) + \frac{1}{4}\, \delta(f) .
+$$
+
+Interprétation : $A_k = \frac{1}{2} + B_k$ avec $B_k \in \{-\frac{1}{2}, \frac{1}{2}\}$ centré. La partie centrée donne une DSP continue, celle d'une 2-PAM de variance $\frac{1}{4}$ ; la moyenne $m_A = \frac{1}{2}$ donne une composante continue, la raie $\frac{1}{4}\,\delta(f)$ (puissance $m_A^2 = \frac{1}{4}$). Puissance totale : $\frac{1}{4} + \frac{1}{4} = \frac{1}{2} = \E(|A_k|^2)$. À puissance égale, la moitié de la puissance de l'OOK est dépensée dans la raie à $f = 0$, qui ne transporte pas d'information (comparer avec la constellation antipodale du chapitre 2).
+:::
+
+![DSP de la 2-PAM $\{-1, 1\}$ (en haut) et de la 2-OOK $\{0, 1\}$ (en bas), avec un filtre de mise en forme en porte d'amplitude 1 sur $[0, \Ts[$. La flèche représente la raie $\frac{1}{4}\,\delta(f)$, de poids $\frac{1}{4}$ (sa hauteur n'est pas à l'échelle). Exercices du TD [td, p. 2, ex. 2, q. 10-11] ; 2-PAM d'après la correction du TD [td-correction, p. 9], redessinée ; 2-OOK : reconstruite (complément, aucune source ne la donne). Axes normalisés ($f\Ts$, $\Gamma_{s_l}/\Ts$), échelle linéaire.](../figures/03-dsp-2pam-ook.svg){#fig-dsp-2pam-ook}
+
+::: {#exr-td-largeur-bande}
+## Étude pratique : DSP et largeur de bande [td, p. 4, ex. 5, q. 10-11]
+
+Hypothèses de l'étude pratique : fréquence d'échantillonnage $f_e = 1/T_e = 8\ \mathrm{kHz}$ ; filtre de mise en forme en porte de durée $\Ts$ (celui de l'exercice précédent), échantillonné à $T_e$ ; débit symbole $D_s = 2\ \mathrm{ksymboles/s}$, donc $\Ts = 0{,}5\ \mathrm{ms}$ ; symboles 4-PAM, $A_k \in \{\pm 1, \pm 3\}$.
+
+10. Représenter l'allure de la DSP de $s_l[n]$.
+11. Si l'on définit la largeur de bande de $s_l[n]$ comme la largeur du lobe principal de la DSP, combien vaut-elle ?
+:::
+
+::: {.complement}
+Solution (aucune source ne la donne) :
+
+- Le filtre échantillonné compte $\Ts f_e = 4$ échantillons égaux. Pour des symboles 4-PAM équiprobables et indépendants, $m_A = 0$ et $\sigma_A^2 = \frac{1}{4}(1 + 9 + 9 + 1) = 5$ : par @eq-dsp-iid-centres, la DSP a l'allure de $|H(f)|^2$, c'est-à-dire, sur $[-f_e/2, f_e/2] = [-4, 4]\ \mathrm{kHz}$, celle d'un $\sinc^2(f\Ts)$ (exactement $\left|\frac{\sin(\pi f \Ts)}{\sin(\pi f T_e)}\right|^2$ pour le filtre échantillonné), **périodisée** de période $f_e = 8\ \mathrm{kHz}$ puisque $s_l[n]$ est à temps discret.
+- Elle s'annule aux multiples de $1/\Ts = 2\ \mathrm{kHz}$ (sauf aux multiples de $f_e$) : le lobe principal occupe $[-2, 2]\ \mathrm{kHz}$. Sa largeur est donc $2/\Ts = 4\ \mathrm{kHz}$ ; avec la convention $[-B, B]$ du cours, $B = 1/\Ts = 2\ \mathrm{kHz}$ (@eq-dsp-porte).
+:::
+
+## À retenir {#sec-retenir-dsp}
+
+Origine : support officiel, sauf mention *(notes)*, *(TD)* ou *(complément)*. Les points marqués *(à vérifier)* dépendent d'un bloc encore ouvert.
+
+- **Objet du chapitre** : $s_l(t)$ est aléatoire ; on caractérise la répartition fréquentielle de sa puissance par une grandeur qui ne dépend que des statistiques des symboles, la DSP (@sec-intro-dsp).
+- **Espérance, variance** : $\E[h(X)] = \sum_k h(x_k) P(X = x_k)$ ou $\int h(x) f_X(x)\, \mathrm{d}x$ (@def-esperance, @eq-esperance-fonction) ; $\mathrm{VAR}(X) = \E[|X|^2] - |\E[X]|^2$ (@eq-variance) ; $\E[XY] = \E[X]\,\E[Y]$ **si $X$ et $Y$ sont indépendantes** (@prp-esperance).
+- **Loi gaussienne** : densité @eq-densite-gaussienne ; $aX + b \sim \mathcal{N}(a\mu + b,\ a^2\sigma^2)$ (variance corrigée, le support écrit $b^2\sigma^2$) ; $\pm\sigma \to 67\ \%$ et $\pm 3\sigma \to 99\ \%$, arrondis de $68{,}27\ \%$ et $99{,}73\ \%$ *(valeurs exactes : complément)* (@prp-loi-gaussienne) ; $\Phi$ fonction de répartition de $\mathcal{N}(0, 1)$ (@eq-fonction-phi).
+- **Autocorrélation** : $R_X(t, \tau) = \E[X(t)\, X^*(t - \tau)]$ (@eq-autocorrelation).
+- **Stationnarité au sens large** : $m_X$ constante et $R_X(t, \tau) = R_X(\tau)$ (@def-stationnarite) ; alors $R_X(\tau) = R_X^*(-\tau)$, $|R_X(\tau)| \leq R_X(0)$, $P_X = R_X(0)$ (@prp-autocorrelation-stationnaire).
+- **DSP (Wiener-Khintchine)** : pour un PA SSL, $\Gamma_X(f) = \TF(R_X(\tau))$ (@eq-wiener-khintchine) ; la puissance est l'aire sous la DSP, $R_X(0) = \int \Gamma_X(f)\, \mathrm{d}f$ (@eq-puissance-dsp) *(notes)*.
+- **Bruit blanc** : DSP constante $N_0/2$ *(notes)* ; puissance dans une bande = intégrale de la DSP sur la bande, fréquences négatives comprises : bande $[f_p - B, f_p + B]$ hachurée, aire $N_0 B$ *(notes)* ; puissance totale d'un bruit réel dans cette bande, $2 N_0 B$ *(complément)*.
+- **Cyclostationnarité** : $m_X$ et $R_X(\cdot, \tau)$ périodiques de période $\Ts$ (@def-cyclostationnarite) ; DSP = TF de l'autocorrélation moyennée $\tilde{R}_X(\tau) = \frac{1}{\Ts}\int_0^{\Ts} R_X(t, \tau)\, \mathrm{d}t$ (@def-dsp-cyclostationnaire). Un retard aléatoire uniforme sur une période rend le processus stationnaire, d'autocorrélation $\tilde{R}_X$ (@exm-dephasage-aleatoire) *(notes, complément)*.
+- **Filtrage** : $\Gamma_Y(f) = |H(f)|^2\, \Gamma_X(f)$ ; le filtrage conserve stationnarité et cyclostationnarité (@prp-filtrage-processus, @eq-filtrage-dsp).
+- **Formule de Bennett** : si les symboles $A_m$ forment un processus **stationnaire** à temps discret, $X(t) = \sum_m A_m h(t - m\Ts)$ est **cyclostationnaire** de période $\Ts$ et $\Gamma_X(f) = \frac{|H(f)|^2}{\Ts} \sum_m R_A[m]\, e^{-j2\pi f m\Ts}$, avec $R_A[m] = \E[A_n A^*_{n-m}]$ (@thm-bennett) ; démonstration *(TD)*.
+- **Symboles iid centrés** : $\Gamma_{s_l}(f) = \sigma_A^2\, |H(f)|^2 / \Ts$ (@cor-bennett-iid) *(TD, notes)* ; la DSP a la forme de $|H(f)|^2$ : le filtre de mise en forme fixe la bande occupée *(TD)*.
+- **Porte de durée $\Ts$** : $\Gamma_{s_l}(f) = \sigma_A^2 \Ts \sinc^2(f\Ts)$, avec $\sinc(x) = \frac{\sin \pi x}{\pi x}$ ; lobe principal $[-1/\Ts, 1/\Ts]$, soit $B = 1/\Ts$ (@eq-dsp-porte) *(notes, TD ; à vérifier : `av-dsp-porte-notes`)*.
+- **Symboles non centrés** (OOK) : la moyenne $m_A$ crée des raies dans la DSP ; avec une porte, $\Gamma_{s_l}(f) = \frac{\Ts}{4}\sinc^2(f\Ts) + \frac{1}{4}\delta(f)$ (@exr-td-dsp-ook) *(complément)*.

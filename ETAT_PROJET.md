@@ -11,6 +11,8 @@
 
 Le prototype est validé. Le premier chapitre de test est le **chapitre 2 de TS227** (*Principes de communication en l'absence de bruit*). Son **rapport d'analyse** est fait et **toutes ses questions sont tranchées** (étape 3, section 13 du rapport `matieres/ts227-communications-numeriques/analyses/02-communication-sans-bruit.md`). Le chapitre est **rédigé** (texte et figures, étapes 4 et 5) : statut `redige`. Vérification faite (étape 6, rapport section 13.10), points V1 à V6 tranchés et appliqués : le chapitre est **validé** par Armand (statut `valide`, rapport section 13.11). **Flashcards générées** (étape 8, 61 cartes, rapport section 13.12) : statut `flashcards`. Le premier chapitre est donc fait de bout en bout.
 
+**Chapitre 3 de TS227** (*DSP des signaux codés en ligne*) : analyse, rédaction et figures faites dans la même session (étapes 2 à 5), exercices du TD intégrés ; statut `redige`. Réponses d'Armand appliquées (rapport, section 16) : **1 bloc ouvert** (`av-dsp-porte-notes`), 4 tranchés, 4 levés.
+
 Révision : en local avec `quarto preview` (port fixe 4848, `http://localhost:4848/revision/`). Le paquet TS227 provisoire (clés `ts-…`) est abandonné (question 5) ; `revision/cartes/ts227.json` est généré par `scripts/flashcards.py`. L'ancien site de cartes (dépôt `bristol`) est **figé**.
 
 Décision du 7 octobre 2026 : le site sera **publié à la fin pour les étudiants de la promo**, derrière un accès réservé et avec l'accord des enseignants (`CONTEXTE_PROJET.md` § 5.4).
@@ -44,10 +46,13 @@ Décision du 7 octobre 2026 : le site sera **publié à la fin pour les étudian
 - [x] Flashcards du chapitre 2 de TS227 : `flashcards/02-communication-sans-bruit.yml`, 61 cartes ; V5 trié (2 labels retirés) ; statut `flashcards` (7 octobre 2026).
 - [x] `scripts/flashcards.py` : conversion YAML → `revision/cartes/<matiere>.json`, contrôles, macros développées ; lancé : `ts227.json` régénéré (61 cartes `ts227-…`, les 129 cartes `ts-…` disparaissent).
 - [x] Port de `quarto preview` fixé à 4848 dans `_quarto.yml` (progression de révision conservée) ; noté dans `architecture.md` § 6 et § 8.
+- [x] Correction de `architecture.md` (§ 6) et de ce fichier : l'export actuel de l'application exporte les **cartes**, pas la progression ; renvoi vers la tâche « export/import de la progression » de `TODO.md` (7 octobre 2026). `README.md` ne contenait pas ce conseil.
+- [x] TS227 chapitre 3 : rapport d'analyse, `cours/03-dsp-signaux-codes-en-ligne.qmd` (TD ex. 2 et ex. 5 q. 10-11 intégrés), 5 figures `figures/03-*.py` + SVG ; ajouté à `_quarto.yml` et à la fiche matière (convention $\sinc$, notations de l'autocorrélation) (7 octobre 2026).
 
 ## 3. En cours
 
-- Rien. Chapitre 2 de TS227 terminé (flashcards générées). À faire par Armand : contrôler le rendu des cartes dans l'application (`quarto preview`) et signaler les cartes à reprendre.
+- TS227 chapitre 3 : statut `redige` ; 1 bloc ouvert (`av-dsp-porte-notes`, rapport § 16.1) ; étape 6 (vérification) à faire.
+- Chapitre 2 de TS227 terminé (flashcards générées). À faire par Armand : contrôler le rendu des cartes dans l'application (`quarto preview`) et signaler les cartes à reprendre.
 
 ## 4. À faire
 
@@ -63,7 +68,7 @@ Voir `TODO.md`.
 |---|---|---|---|---|
 | 1 | Introduction | — | brouillon | — |
 | 2 | Principes de communication en l'absence de bruit | `cours/02-communication-sans-bruit.qmd` | **flashcards** (61 cartes) | 0 ouvert + 4 tranchés (`av-signe-tf-nyquist`, `av-centre-symetrie-nyquist`, `av-quiz-debit-porte`, `av-echelles-figure-cosinus-sureleve`) |
-| 3 | DSP des signaux codés en ligne | — | brouillon | — |
+| 3 | DSP des signaux codés en ligne | `cours/03-dsp-signaux-codes-en-ligne.qmd` | **redige** | 1 ouvert (`av-dsp-porte-notes`) + 4 tranchés (`av-variance-affine`, `av-esperance-exercice-bpsk`, `av-moment-ordre-2-notes`, `av-phase-tf-porte-td`) |
 | 4 | Transmission en présence de bruit | — | brouillon | — |
 | 5 | Transmission sur fréquence porteuse | — | brouillon | — |
 | 6 | Modulation et démodulation numériques | — | brouillon | — (à la rédaction : renvoi vers l'efficacité spectrale du chapitre 2) |
@@ -85,6 +90,9 @@ Remarque : « brouillon » signifie ici « sources officielles reçues, rien de 
 
 | Date | Décision | Où |
 |---|---|---|
+| 2026-10-07 | Correction : l'export de l'application ne contient que les cartes ; transfert de progression impossible tant que la tâche « export/import de la progression » n'est pas faite | `architecture.md` § 6 ; § 7 ci-dessous ; `TODO.md` |
+| 2026-10-07 | TS227 : $\sinc(x) = \sin(\pi x)/(\pi x)$ ; convention d'autocorrélation du poly ($t - \tau$, $n - m$) retenue partout, y compris pour le TD | fiche matière ; rapport ch. 3, § 16 |
+| 2026-10-07 | TS227 ch. 3 : variance affine $a^2\sigma^2$ (poly p. 78 corrigé) ; 67 %/99 % gardés comme arrondis ; $N_0B$ des notes = aire de la bande positive | rapport ch. 3, § 16 |
 | 2026-10-07 | Question 5 tranchée : paquet TS227 provisoire (`ts-…`) abandonné, nouvelles clés `ts227-<slug>` ; `ts227.json` généré par script | `CONTEXTE_PROJET.md` § 18.5, § 22, journal |
 | 2026-10-07 | Ancien site de cartes (dépôt `bristol`) figé ; révision en local, `quarto preview` sur le port fixe 4848 | `CONTEXTE_PROJET.md` § 20.2 ; `architecture.md` § 6, § 10 ; `_quarto.yml` |
 | 2026-10-07 | Flashcards : macros écrites comme dans le cours (développées par le script), sauts de ligne façon Markdown | `conventions.md` § 10.4, § 10.5 |
@@ -126,7 +134,7 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 9. ~~Rendu des blocs tranchés~~ : stylé le 7 octobre 2026 dans `assets/bristol.scss` (jetons `--cat-verifier…`, clair et sombre), exemple dans `demo-conventions.qmd`. Rendu à contrôler avec `quarto preview`.
 16. **Deux dépôts GitHub à ne pas confondre** : `armandgm43-droid/bristol-site` (privé) est le dépôt du projet ; `armandgm43-droid/bristol` est l'ancien site de cartes, toujours en ligne avec GitHub Pages mais **figé** depuis le 7 octobre 2026 (voir `architecture.md` § 10).
 13. ~~**Application de révision liée au site**~~ : sans objet depuis que l'ancien site est figé (plus de copie isolée de `revision/`). Rappel : `revision/index.html` charge `../assets/bristol-tokens.css` ; à garder en tête si l'application est un jour copiée ailleurs.
-17. **Progression de révision locale** : liée à `http://localhost:4848` et au navigateur. Changer de port, passer par `127.0.0.1` ou changer de navigateur repart de zéro (export puis import pour transférer). La progression de l'ancien site GitHub Pages ne se transfère pas automatiquement (export depuis l'ancien site, import en local, si besoin pour les paquets hérités).
+17. **Progression de révision locale** : liée à `http://localhost:4848` et au navigateur. Changer de port, passer par `127.0.0.1` ou changer de navigateur repart de zéro. La progression de l'ancien site GitHub Pages ne se transfère pas non plus. **L'export actuel de l'application exporte les cartes, pas la progression** : aucun transfert n'est possible tant que la tâche « export/import de la progression » de `TODO.md`, section « Avant la publication » n'est pas faite (corrigé le 7 octobre 2026).
 18. **Rendu des cartes non contrôlé dans le navigateur** : les 247 formules du paquet TS227 compilent sans erreur avec MathJax 3.2.2 (contrôle de Claude), mais l'affichage réel dans l'application reste à vérifier avec `quarto preview`.
 14. **Liens de la barre de navigation écrits deux fois** : `website.navbar` de `_quarto.yml` et en-tête de `revision/index.html`, à garder alignés.
 15. **MathJax** : le site (Quarto 1.10) charge MathJax 4, l'application MathJax 3.2.2 ; même syntaxe LaTeX courante. `CONTEXTE_PROJET.md` § 5.5 et § 20.1 mis à jour le 7 octobre 2026. Une formule qui s'affiche différemment dans les deux reste possible : à signaler si elle apparaît.
@@ -135,7 +143,7 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 8. **Notes non datées** : dates inconnues, définitivement ; convention `date-inconnue.pdf` adoptée.
 3. ~~Version de Quarto inconnue~~ : 1.10.19, notée dans `architecture.md` § 9.
 4. **Rendu PDF des quatre catégories** non implémenté.
-5. **Progression des révisions liée à l'adresse du site** (`localStorage`) : déplacer l'application vers un autre hébergement fera repartir de zéro, sauf export puis import. À prendre en compte avant de choisir l'hébergement. **Export et import de la progression à faire avant la publication** (décision du 7 octobre 2026, `TODO.md`).
+5. **Progression des révisions liée à l'adresse du site** (`localStorage`) : déplacer l'application vers un autre hébergement fera repartir de zéro (l'export actuel ne contient que les cartes, pas la progression). À prendre en compte avant de choisir l'hébergement. **Export et import de la progression à faire avant la publication** (décision du 7 octobre 2026, `TODO.md`).
 6. **Polices et MathJax chargés depuis Internet** (Google Fonts, jsDelivr) : sans connexion, polices de repli et pas de formules dans l'application de révision.
 7. ~~**Paquet `ts227.json` hérité**~~ : réglé (question 5) ; le fichier est désormais généré par `scripts/flashcards.py`, les cartes `ts-…` disparaissent à la prochaine ouverture de l'application.
 
@@ -176,3 +184,6 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 | 2026-10-07 | Bristol — TS227 Chapitre 2 — Vérification (suite) | V1-V6 tranchés et appliqués (β ≈ 0,35, F10 et F11 régénérées ; F12 refaite en spectre rectangulaire ; bloc AV8 levé ; Ш en notes) ; chapitre **validé** ; nouvelle règle `conventions.md` § 14 (choix par défaut, questions bloquantes seulement) |
 | 2026-10-07 | Bristol — Publication pour la promo | Décision : site publié pour la promo (accès réservé + accord des enseignants) ; `CONTEXTE_PROJET.md` (§ 1, § 5.4, règle 19.5, journal, questions 1 et 13, « État actuel »), `ETAT_PROJET.md` et `TODO.md` mis à jour |
 | 2026-10-07 | Bristol — TS227 Chapitre 2 — Flashcards | Question 5 tranchée ; 61 cartes (`flashcards/02-communication-sans-bruit.yml`) ; V5 trié ; `scripts/flashcards.py` écrit et lancé (`ts227.json` régénéré) ; port de `quarto preview` fixé à 4848 ; ancien site figé ; statut `flashcards` ; `CONTEXTE_PROJET.md`, `conventions.md`, `architecture.md`, `ETAT_PROJET.md`, `TODO.md`, rapport (13.12), fiche matière mis à jour |
+| 2026-10-07 | Bristol — TS227 Chapitre 3 — Rédaction | Conseil erroné d'export de la progression corrigé (`architecture.md`, `ETAT_PROJET.md`, `TODO.md`) ; chapitre 3 : analyse, rédaction, 5 figures, TD ex. 2 et ex. 5 q. 10-11 intégrés ; 8 blocs ouverts + 1 tranché ; statut `redige` ; rapport, fiche matière, `_quarto.yml` mis à jour |
+| 2026-10-07 | Bristol — TS227 Chapitre 3 — Rédaction (suite) | Réponses d'Armand aux 8 questions appliquées : 2 tranchés, 4 levés, 3 ouverts ; fiche matière, rapport (§ 16) mis à jour |
+| 2026-10-07 | Bristol — TS227 Chapitre 3 — Rédaction (fin) | Blocs `av-esperance-exercice-bpsk` et `av-moment-ordre-2-notes` tranchés (choix laissé à Claude) ; reste 1 bloc ouvert |

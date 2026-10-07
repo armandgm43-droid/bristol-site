@@ -154,13 +154,13 @@ Les valeurs claires et sombres sont écrites deux fois dans ce même fichier (bl
 - Barre de navigation : même dessin que celle du site (`conventions.md` § 13.6). Liens écrits en dur dans le `<header class="site-head">` : à tenir alignés sur `website.navbar` de `_quarto.yml`. « Révisions » ramène à la liste des paquets sans recharger la page ; « Bristol » et les autres liens mènent aux pages du site. Script de navigation séparé du script de l'application (il ne touche ni aux paquets ni à la progression).
 - Mode sombre : les feuilles (liste, dialogues) deviennent sombres ; les fiches de révision restent en papier clair (jetons `--card-…`, redéfinis sur `.study`).
 - Maths : MathJax 3.2.2 (`tex-svg`) chargé depuis `cdn.jsdelivr.net`.
-- Progression : `localStorage`, clé `bristol:v1` (format `{ v: 1, decks }`). Elle est **propre au navigateur et à l'adresse du site** (protocole + nom d'hôte + port) : changer d'hébergement, de domaine ou de port repart d'une progression vide, sauf export puis import.
+- Progression : `localStorage`, clé `bristol:v1` (format `{ v: 1, decks }`). Elle est **propre au navigateur et à l'adresse du site** (protocole + nom d'hôte + port) : changer d'hébergement, de domaine ou de port repart d'une progression vide. **L'export actuel de l'application exporte les cartes (texte recto/verso), pas la progression** : il ne permet pas de la transférer. Transfert de la progression : tâche « export/import de la progression » de `TODO.md`, section « Avant la publication » (pas encore fait).
 - **Révision en local (depuis le 7 octobre 2026)** : `quarto preview` sert le site sur un **port fixe, 4848** (`project.preview.port` dans `_quarto.yml`, avec `browser: true`). L'application est donc toujours à l'adresse `http://localhost:4848/revision/` et la progression est retrouvée d'un lancement à l'autre.
   - Ne pas changer ce port, ni lancer `quarto preview --port …` : autre adresse, progression vide.
   - Toujours passer par `localhost`, pas par `127.0.0.1` (autre adresse pour le navigateur).
   - Si le port 4848 est déjà pris (un autre `quarto preview` ouvert), fermer l'autre aperçu plutôt que de changer de port.
   - Après `python scripts/flashcards.py`, relancer `quarto preview` (ou recharger la page si l'aperçu a recopié `revision/`) : les paquets sont relus à l'ouverture de l'application.
-  - La progression reste propre au navigateur et à l'ordinateur : pas de synchronisation (question ouverte 8). L'export de l'application sert de sauvegarde.
+  - La progression reste propre au navigateur et à l'ordinateur : pas de synchronisation (question ouverte 8). L'export actuel de l'application ne sauvegarde que les cartes, **pas la progression** : voir la tâche « export/import de la progression » de `TODO.md`, section « Avant la publication ».
 - Chargement des paquets : à l'ouverture, lecture de `cartes/index.json` puis de chaque fichier listé (`fetch`, sans cache). Ne fonctionne pas en `file://` : passer par `quarto preview` ou un serveur local.
 - Format d'un paquet :
 

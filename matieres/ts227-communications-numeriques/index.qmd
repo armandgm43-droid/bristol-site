@@ -20,7 +20,7 @@ number-sections: false
 |---|---|---|
 | 1 | Introduction | BROUILLON |
 | 2 | [Principes de communication en l'absence de bruit](cours/02-communication-sans-bruit.qmd) | FLASHCARDS GÉNÉRÉES |
-| 3 | DSP des signaux codés en ligne | BROUILLON |
+| 3 | [DSP des signaux codés en ligne](cours/03-dsp-signaux-codes-en-ligne.qmd) | RÉDIGÉ |
 | 4 | Transmission en présence de bruit | BROUILLON |
 | 5 | Transmission sur fréquence porteuse | BROUILLON |
 | 6 | Modulation et démodulation numériques | BROUILLON |
@@ -41,11 +41,19 @@ Le cours Bristol suit les notations **du cours** (poly). Correspondance avec le 
 | Filtre de réception | $h_a(t)$ | $g_a(t)$ | $h_a(t)$ |
 | Filtre global | $g(t) = (h \star h_c \star h_a)(t)$ | $v(t)$ | $g(t)$ |
 | Échantillon reçu | $r_n$ | $r_l[n]$ | $r_n$, $R_n$ |
+| Symboles vus comme variables aléatoires (ch. 3) | $A_m$ | $A_k$ | $A_m$ |
+| Autocorrélation d'un processus | $R_X(t, \tau) = \E[X(t)\, X^*(t - \tau)]$ | énoncé : $\E(s_l(t)\, s_l^*(t + \tau))$ ; correction : comme le cours | comme le cours |
+| Autocorrélation des symboles | $R_A[m] = \E[A_n A^*_{n-m}]$ (convention retenue, ch. 3) | énoncé : $\E(A_n A^*_{n+k})$ ; correction : comme le cours | comme le cours |
+| Autocorrélation moyennée | $\tilde{R}_X(\tau)$ | $\bar{R}_{s_l}(\tau)$ | $\tilde{R}_{s_l}(\tau)$ |
+| Autocorrélation déterministe du filtre de mise en forme | $R_h(\tau)$ (ch. 3) | $v(\tau)$ (correction, p. 6 ; ce n'est **pas** le filtre global $v(t)$ de l'énoncé) | $R_h(\tau)$ |
+| Variance des symboles centrés | $\sigma_A^2$ | $\sigma_A^2$ (correction) | $\sigma_a^2$ |
 
 ## Conventions de la matière
 
 - **Transformée de Fourier** : $\TF[x](f) = \int_{-\infty}^{+\infty} x(t)\,e^{-j2\pi ft}\,\mathrm{d}t$, inverse $x(t) = \int_{-\infty}^{+\infty} X(f)\,e^{+j2\pi ft}\,\mathrm{d}f$. C'est la convention du poly (p. 85-87) et des notes ; la p. 40 du poly, qui écrit $e^{+j2\pi ft}$, est traitée comme une coquille (bloc tranché `av-signe-tf-nyquist`, chapitre 2).
 - **Porte** : $\Pi_T(t)$ désigne la porte de largeur $T$ centrée en 0 (notation des notes de cours).
+- **Sinus cardinal** : $\sinc(x) = \frac{\sin(\pi x)}{\pi x}$, donc $\TF[\Pi_T](f) = T \sinc(fT)$ (correction du TD, p. 8 ; notes, f. 5 v°). Utilisé à partir du chapitre 3.
+- **Autocorrélation** : convention du poly, $R_X(t, \tau) = \E[X(t)\, X^*(t - \tau)]$ et $R_A[m] = \E[A_n A^*_{n-m}]$ ; l'énoncé du TD utilise l'autre convention (décision d'Armand du 2026-10-07, chapitre 3, section des exercices du TD).
 - **Numéros de page** cités : pages du PDF.
 
 ## Sources
