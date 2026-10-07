@@ -1,0 +1,141 @@
+# Flashcards — TS227, chapitre 1 : Introduction.
+# Générées le 2026-10-07 à partir du cours validé (étape 8). Format : conventions.md § 10.
+# Conversion : python scripts/flashcards.py (écrit revision/cartes/ts227.json).
+# Rappels : un identifiant n'est jamais modifié ni réutilisé ; une carte supprimée
+# va dans ids-retires. Les lignes d'un même paragraphe sont jointes par le script ;
+# une ligne « - … » ou un bloc $$…$$ commencent une nouvelle ligne ; une ligne vide sépare deux paragraphes.
+matiere: ts227
+chapitre: 1
+cours: cours/01-introduction.qmd
+ids-retires: []
+cartes:
+
+  # --- Définitions ---
+
+  - id: ts227-telecommunication-definition
+    type: definition
+    question: |
+      Qu'est-ce qu'une télécommunication (définition citée par le cours) ?
+    reponse: |
+      La transmission, l'émission ou la réception d'informations par fil, radioélectricité,
+      optique ou d'autres systèmes électromagnétiques (définition du Larousse).
+    ref: def-telecommunication
+    source: officiel
+
+  - id: ts227-numerique-definition
+    type: definition
+    question: |
+      Dans « communications numériques », à quoi fait référence le mot **numérique** ?
+    reponse: |
+      Au contenu transmis : un signal **échantillonné et quantifié**, que l'on peut donc voir
+      comme une suite de symboles, dont le bit est l'unité.
+    ref: def-communications-numeriques
+    source: officiel
+
+  # --- Historique ---
+
+  - id: ts227-historique-nyquist
+    type: resultat
+    question: |
+      Quel apport le cours attribue-t-il à Nyquist (1924) ?
+    reponse: |
+      Le débit maximal pour des communications **sans interférence entre symboles** dans une bande donnée
+      (origine du critère de Nyquist du chapitre 2).
+    ref: tbl-historique
+    source: officiel
+
+  - id: ts227-historique-shannon-weaver
+    type: resultat
+    question: |
+      Quel apport le cours attribue-t-il à Shannon et Weaver (1948) ?
+    reponse: |
+      Une définition formelle pour les transmissions sans perte (sans erreur) : le modèle
+      source – émetteur – canal – récepteur – destination.
+    ref: tbl-historique
+    source: officiel
+
+  # --- Modèle OSI ---
+
+  - id: ts227-osi-couche-physique
+    type: definition
+    question: |
+      Quel est le rôle de la couche 1 du modèle OSI, et pourquoi concerne-t-elle ce cours ?
+    reponse: |
+      Couche **physique** : transmission des signaux sous forme numérique ou analogique.
+      Le cours de communications numériques se place à cette couche (PHY) : transformer des bits
+      en signal adapté au support, et retrouver les bits à partir du signal reçu.
+    ref: tbl-couches-osi
+    source: complement
+
+  - id: ts227-osi-couches-2-3
+    type: definition
+    question: |
+      Quel type d'adressage gèrent la couche 2 (liaison) et la couche 3 (réseau) du modèle OSI ?
+    reponse: |
+      - Couche 2 : adressage **physique** (adresse MAC).
+      - Couche 3 : parcours des données et adressage **logique** (adresse IP).
+    ref: tbl-couches-osi
+    source: officiel
+
+  - id: ts227-osi-regroupement-couches
+    type: relation
+    question: |
+      Qu'est-ce qui distingue les couches 1-2 des couches 3-4 du modèle OSI ?
+    reponse: |
+      - Couches 1-2 : communication physique entre deux machines **directement connectées**.
+      - Couches 3-4 : communications entre deux machines **non directement connectées**.
+    ref: tbl-couches-osi
+    source: officiel
+
+  - id: ts227-osi-presentation-session
+    type: definition
+    question: |
+      Rôles des couches 6 (présentation) et 5 (session) du modèle OSI ?
+    reponse: |
+      - Présentation : représentation et format des données (codage, compression, chiffrement).
+      - Session : ouverture, gestion et fermeture des échanges entre applications.
+
+      (Rôles usuels : le support donne par erreur la description de la couche 7 aux trois couches hautes.)
+    ref: sec-modele-osi
+    source: complement
+
+  # --- Modèle de Shannon et Weaver ---
+
+  - id: ts227-shannon-weaver-chaine
+    type: definition
+    question: |
+      Quels sont les cinq éléments du modèle de Shannon et Weaver, et que circule-t-il entre eux ?
+    reponse: |
+      Source d'information → *message* → émetteur → *signal* → canal → *signal reçu*
+      → récepteur → *message reçu* → destination.
+    ref: fig-shannon-weaver
+    source: officiel
+
+  - id: ts227-role-emetteur
+    type: definition
+    question: |
+      Rôle de l'émetteur dans le modèle de Shannon et Weaver ?
+    reponse: |
+      Convertir les messages délivrés par la source d'information en signaux pouvant être transmis dans le canal.
+    ref: sec-emetteur
+    source: officiel
+
+  - id: ts227-canal-exemples
+    type: definition
+    question: |
+      Qu'est-ce que le canal, et quels exemples le cours en donne-t-il ?
+    reponse: |
+      Le média de propagation entre l'émetteur et le récepteur : câble coaxial, paire torsadée, air
+      (ondes électromagnétiques, ondes sonores…).
+    ref: sec-canal
+    source: officiel
+
+  - id: ts227-role-recepteur
+    type: definition
+    question: |
+      Rôle du récepteur, et quelle mise en garde le cours fait-il à son sujet ?
+    reponse: |
+      Il convertit le signal reçu en message compréhensible par la **destination**.
+      C'est là que des **erreurs de transmission** peuvent intervenir (dues au bruit, chapitre 4).
+    ref: sec-recepteur
+    source: officiel

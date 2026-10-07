@@ -4,7 +4,7 @@ matiere: ts227
 chapitre: 4
 enseignants: ["Romain Tajan"]
 annee: "2026-2027"
-statut: redige
+statut: flashcards
 date-modified: 2026-10-07
 sources:
   - id: poly
@@ -107,8 +107,8 @@ La probabilité d'erreur binaire est ensuite écrite $P_b = P(\hat{B}_k \neq B_k
 **Problème** : il manque les probabilités a priori $P(B_k = 1)$ et $P(B_k = 0)$ devant les deux termes. Telle quelle, la somme peut dépasser 1 (elle vaut 2 pour une décision toujours fausse). Le support [poly, p. 93] écrit ces poids, et les notes les réintroduisent plus loin ($p_0$ et $1 - p_0$, f. 3 v°). La marque sur le $B_k$ de la condition est sans doute parasite (on conditionne par le bit émis, pas par le bit décidé).
 
 **Proposition** : $P_b = P(B_k = 1)\, P(\hat{B}_k = 0 \mid B_k = 1) + P(B_k = 0)\, P(\hat{B}_k = 1 \mid B_k = 0)$ (@eq-pb-definition) ; pour des bits équiprobables, $P_b = \frac{1}{2}\left[P(\hat{B}_k = 0 \mid B_k = 1) + P(\hat{B}_k = 1 \mid B_k = 0)\right]$.
-**Décision** : proposition retenue : poids $P(B_k = 1)$ et $P(B_k = 0)$ rétablis, marque sur le $B_k$ conditionnant considérée comme parasite (Armand a laissé le choix à Claude, 2026-10-07).
 
+**Décision** : proposition retenue : poids $P(B_k = 1)$ et $P(B_k = 0)$ rétablis, marque sur le $B_k$ conditionnant considérée comme parasite (Armand a laissé le choix à Claude, 2026-10-07).
 :::
 
 ## Cas d'une modulation binaire {#sec-modulation-binaire}
@@ -215,8 +215,8 @@ $$
 **Problème** : p. 107, la dérivée de @eq-pb-gamma par rapport à $\gamma$ est évaluée en $\gamma$ (dérivée d'une intégrale par rapport à sa borne) : la variable d'intégration $z$ ne doit plus apparaître, et la suite du calcul est bien écrite en $\gamma$. Les notes écrivent la dérivée en $\gamma$ [notes, f. 3 v°]. P. 128, l'intégrale est en $u$ et l'élément différentiel est écrit $\mathrm{d}t$.
 
 **Proposition** : p. 107, $-p_0 f_Z(\gamma + g_0) + p_1 f_Z(\gamma - g_0) = 0$ ; p. 128, $\int h(u)\, h_a(-u)\, \mathrm{d}u$. C'est ce qui est écrit dans ce chapitre.
-**Décision** : corrections retenues ($z \to \gamma$ p. 107, $\mathrm{d}t \to \mathrm{d}u$ p. 128) (Armand a laissé le choix à Claude, 2026-10-07).
 
+**Décision** : corrections retenues ($z \to \gamma$ p. 107, $\mathrm{d}t \to \mathrm{d}u$ p. 128) (Armand a laissé le choix à Claude, 2026-10-07).
 :::
 
 Comme le bruit considéré est gaussien, centré, de variance $\sigma^2$,
@@ -294,8 +294,8 @@ Réponse du support : $0{,}5$. Réponse retenue : $\gamma^* = \frac{g_0}{2}$, qu
 **Problème** : les deux symboles reçus sans bruit sont $0$ et $g_0$ ; pour des symboles équiprobables et un bruit gaussien, le seuil optimal est leur milieu, $\gamma^* = \frac{g_0}{2}$ (même calcul que @eq-seuil-optimal, après translation de $\frac{g_0}{2}$). La réponse $0{,}5$ n'est juste que si $g_0 = 1$, ce que l'énoncé ne précise pas ($g_0 \in \mathbb{R}^+$ quelconque).
 
 **Proposition** : réponse $\gamma^* = \frac{g_0}{2}$, soit $0{,}5$ pour $g_0 = 1$ ; ajouter « $g_0 = 1$ » à l'énoncé, ou garder l'énoncé et donner $\frac{g_0}{2}$ comme réponse.
-**Décision** : réponse retenue $\gamma^* = \frac{g_0}{2}$ ; la réponse du support, $0{,}5$, correspond au cas $g_0 = 1$ (Armand a laissé le choix à Claude, 2026-10-07).
 
+**Décision** : réponse retenue $\gamma^* = \frac{g_0}{2}$ ; la réponse du support, $0{,}5$, correspond au cas $g_0 = 1$ (Armand a laissé le choix à Claude, 2026-10-07).
 :::
 
 ::: {#exr-pire-probabilite}
@@ -314,8 +314,8 @@ Réponse du support : $0$. Réponse retenue : $0{,}5$ (bloc `av-quiz-pire-probab
 **Problème** : une probabilité d'erreur nulle est le **meilleur** cas. Une probabilité de 1 n'est pas non plus la pire : une décision toujours fausse devient toujours juste en inversant les décisions. Le pire cas est $P_b = 0{,}5$ : la décision ne vaut pas mieux qu'un tirage à pile ou face, et ne porte aucune information sur le bit émis ($+\infty$ n'est pas une probabilité).
 
 **Proposition** : réponse C, $0{,}5$.
-**Décision** : réponse retenue : C, $0{,}5$ (Armand a laissé le choix à Claude, 2026-10-07).
 
+**Décision** : réponse retenue : C, $0{,}5$ (Armand a laissé le choix à Claude, 2026-10-07).
 :::
 
 ### Probabilité d'erreur pour des symboles équiprobables {#sec-pb-equiprobable}
@@ -337,8 +337,8 @@ $$ {#eq-pb-binaire}
 **Problème** : le facteur $0{,}5$ du premier terme, présent à la première et à la troisième ligne, manque à la deuxième. Le résultat final n'en dépend pas.
 
 **Proposition** : $0{,}5 \int_0^{+\infty} \dots$ au premier terme de la deuxième ligne (écrit ainsi ci-dessus).
-**Décision** : facteur $0{,}5$ rétabli (Armand a laissé le choix à Claude, 2026-10-07).
 
+**Décision** : facteur $0{,}5$ rétabli (Armand a laissé le choix à Claude, 2026-10-07).
 :::
 
 ::: {.complement}
@@ -365,8 +365,8 @@ $$
 **Problème** : avec $x$ au numérateur, $Q(0) = 0$ et $Q$ n'est plus une probabilité ; le calcul de @eq-pb-binaire donne un coefficient $\frac{1}{\sqrt{2\pi}}$.
 
 **Proposition** : $Q(x) = \frac{1}{\sqrt{2\pi}} \int_x^{+\infty} e^{-\frac{u^2}{2}}\, \mathrm{d}u$.
-**Décision** : lecture « 1 » retenue : $Q(x) = \frac{1}{\sqrt{2\pi}} \int_x^{+\infty} e^{-u^2/2}\, \mathrm{d}u$ (Armand a laissé le choix à Claude, 2026-10-07).
 
+**Décision** : lecture « 1 » retenue : $Q(x) = \frac{1}{\sqrt{2\pi}} \int_x^{+\infty} e^{-u^2/2}\, \mathrm{d}u$ (Armand a laissé le choix à Claude, 2026-10-07).
 :::
 
 ::: {.complement}
@@ -419,7 +419,7 @@ Constellation : $\mathcal{A} = \{-3, -1, 1, 3\}$ [poly, p. 116-119]. Comme pour 
 - les seuils optimaux $(\gamma_0, \gamma_1, \gamma_2)$ dépendent de toutes les probabilités $P(A_n = a_i)$ ;
 - si tous les symboles sont équiprobables, les seuils optimaux se trouvent **au milieu de chaque intervalle** : $(\gamma_0, \gamma_1, \gamma_2) = (-2g_0, 0, 2g_0)$.
 
-On en déduit les probabilités conditionnelles.
+On en déduit les probabilités conditionnelles, où $P(\text{erreur} \mid A_n = a_i) = P(\hat{A}_n \neq A_n \mid A_n = a_i)$ [poly, p. 117-118].
 
 **Aux extrémités** :
 
@@ -585,8 +585,12 @@ $$ {#eq-g0-filtres}
 
 avec $H(f)$ et $H_a(f)$ les transformées de Fourier de $h$ et $h_a$.
 
+::: {.notes}
+Au tableau [notes, f. 4 v°] : $g(t) = \int G(f)\, e^{j2\pi ft}\, \mathrm{d}f$ (transformée de Fourier inverse du filtre global).
+:::
+
 ::: {.complement}
-$g_0 = g(0) = \int h(u)\, h_a(0 - u)\, \mathrm{d}u$ (définition de la convolution), et $g(0) = \int G(f)\, e^{j2\pi f \cdot 0}\, \mathrm{d}f = \int H(f)\, H_a(f)\, \mathrm{d}f$ par transformée de Fourier inverse (écrite au tableau, $g(t) = \int G(f)\, e^{j2\pi ft}\, \mathrm{d}f$ [notes, f. 4 v°]). Le canal est supposé sans déformation ($h_c = \delta$).
+$g_0 = g(0) = \int h(u)\, h_a(0 - u)\, \mathrm{d}u$ (définition de la convolution), et $g(0) = \int G(f)\, e^{j2\pi f \cdot 0}\, \mathrm{d}f = \int H(f)\, H_a(f)\, \mathrm{d}f$ par transformée de Fourier inverse. Le canal est supposé sans déformation ($h_c = \delta$).
 :::
 
 ### Variance du bruit filtré {#sec-variance-bruit-filtre}
@@ -613,8 +617,8 @@ où la seconde égalité est obtenue en utilisant l'égalité de Parseval.
 **Problème** : la variance cherchée est celle du bruit **filtré** puis échantillonné, $Z'_n = Z'_l(n\Ts)$, pas celle du bruit blanc $Z_l$, dont la puissance est infinie (chapitre 3, [bruit blanc](03-dsp-signaux-codes-en-ligne.qmd#sec-bruit-blanc)). La suite du calcul porte bien sur $Z'_l$.
 
 **Proposition** : $\sigma^2 = R_{Z'_n}(0) = \E\left[|Z'_l(n\Ts)|^2\right]$.
-**Décision** : correction retenue, $\sigma^2 = \E[|Z'_l(n\Ts)|^2]$ (Armand a laissé le choix à Claude, 2026-10-07).
 
+**Décision** : correction retenue, $\sigma^2 = \E[|Z'_l(n\Ts)|^2]$ (Armand a laissé le choix à Claude, 2026-10-07).
 :::
 
 ::: {.complement}
@@ -702,8 +706,8 @@ D'après [poly, p. 130] :
 **Problème** : retarder de $T_h$ le filtre adapté $h^*(-t)$ donne $h^*(-(t - T_h)) = h^*(T_h - t)$ : il manque le **retournement temporel**. Avec $h_a(t) = h(t - T_h)$, on obtiendrait $g = h \star h(\cdot - T_h)$, qui n'est pas $R_h(t - T_h)$ en général (pour une porte, un triangle centré en $2T_h$ au lieu de $T_h$). Les autres sources écrivent le retournement : la correction du TD, $g_c(t) = g^*(D - t)$ avec $D \geq T_s$ [td-correction, p. 9], l'énoncé du TD, $g_a(t) = g(T_s - t)$ [td, p. 3], et les notes, qui dessinent $h^*(-t)$ décalé de $D \geq \Ts$ [notes, f. 4 v°].
 
 **Proposition** : $h_a(t) = h^*(T_h - t)$, d'où $g(t) = R_h(t - T_h)$ (la conclusion du support est alors juste).
-**Décision** : correction retenue, $h_a(t) = h^*(T_h - t)$, conforme aux notes et au TD (Armand a laissé le choix à Claude, 2026-10-07).
 
+**Décision** : correction retenue, $h_a(t) = h^*(T_h - t)$, conforme aux notes et au TD (Armand a laissé le choix à Claude, 2026-10-07).
 :::
 
 ::: {.complement}
@@ -833,7 +837,7 @@ Dans la correction, le filtre adapté causal est noté $g_c(t)$ ; il est noté i
 Solutions des questions 3 et 4 (la correction n'en donne pas) :
 
 3. Aux instants $D + k\Ts$, $g(D + k\Ts) = \Ts$ si $k = 0$ et $0$ si $k \neq 0$ (le triangle s'annule à $D \pm \Ts$ et au-delà) : $g$ vérifie le critère de Nyquist ([version temporelle](02-communication-sans-bruit.qmd#thm-nyquist-temporel)) pour des instants d'échantillonnage $D + n\Ts$, avec $g_0 = \Ts = E_h$.
-4. Le symbole $A_0$, émis à partir de $t = 0$, n'est disponible au maximum de $g$ qu'à l'instant $t = D \geq \Ts$ : la réception du premier symbole est **retardée** de $D$, et l'échantillonneur doit être calé sur les instants $D + n\Ts$. Un échantillonnage aux instants $n\Ts$ avec $D = \Ts$ donnerait en $t = 0$ un échantillon sans symbole ($g(-D) = 0$), puis chaque symbole avec une période de retard.
+4. Le symbole $A_0$, émis à partir de $t = 0$, n'est disponible au maximum de $g$ qu'à l'instant $t = D \geq \Ts$ : la réception du premier symbole est **retardée** de $D$, et l'échantillonneur doit être calé sur les instants $D + n\Ts$. Un échantillonnage aux instants $n\Ts$ avec $D = \Ts$ donnerait en $t = 0$ un échantillon sans symbole ($A_0$ y contribue par $g(0) = 0$), puis chaque symbole avec une période de retard.
 
 La correction contient aussi une question de tracé des signaux $s_l(t)$, $r_l(t)$ et $r_l[n]$ (question 4 de la correction), absente de l'énoncé et sans corrigé ; elle n'est pas reprise.
 :::
@@ -909,8 +913,8 @@ $$
 **Problème** : sachant $A_n = 1$, $r_l[n] = v(0) + n'_l[n] \sim \mathcal{N}(v(0), \sigma^2)$ : l'exposant est $-(r - v(0))^2/(2\sigma^2)$. Avec le signe $+$, le changement de variable donnerait la borne $-v(0)/\sigma$ et le résultat $1 - Q(v(0)/\sigma)$, alors que la correction écrit ensuite la borne $v(0)/\sigma$ et le résultat $Q(\cdot)$, qui sont justes. Le second terme ($A_n = -1$, exposant $(r + v(0))^2$) est correct.
 
 **Proposition** : $e^{-\frac{(r - v(0))^2}{2\sigma^2}}$ au premier terme (écrit ainsi dans la solution).
-**Décision** : correction retenue (Armand a laissé le choix à Claude, 2026-10-07).
 
+**Décision** : correction retenue (Armand a laissé le choix à Claude, 2026-10-07).
 :::
 
 ::: {.a-verifier .tranche #av-dsp-bruit-filtre-td}
@@ -919,8 +923,8 @@ $$
 **Problème** : la DSP de sortie (bruit filtré $n'_l$) est le produit de $|G_a|^2$ par la DSP d'**entrée**, celle du bruit blanc $n_l$ ; telle quelle, l'égalité définit $\Gamma_{n'_l}$ en fonction d'elle-même. La valeur finale $\frac{N_0}{2}|G_a(f)|^2$ est juste.
 
 **Proposition** : $\Gamma_{n'_l}(f) = |G_a(f)|^2\, \Gamma_{n_l}(f) = \frac{N_0}{2} |G_a(f)|^2$.
-**Décision** : correction retenue (Armand a laissé le choix à Claude, 2026-10-07).
 
+**Décision** : correction retenue (Armand a laissé le choix à Claude, 2026-10-07).
 :::
 
 ::: {.complement}
@@ -937,8 +941,8 @@ Solutions des questions 3 et 4 (aucune source ne les donne), sous réserve du bl
 **Problème** : un bruit blanc de DSP $\frac{N_0}{2}$ a une puissance infinie ; ses échantillons n'ont une variance finie que si le bruit est limité en bande avant l'échantillonnage. Pour un bruit limité à $[-f_e/2, f_e/2]$, la variance vaut $\frac{N_0 f_e}{2}$ et non $\frac{N_0}{2}$, sauf si $f_e = 1$ (ou $T_e = 1$). L'énoncé ne précise ni la limitation de bande ni la normalisation ; la question est peut-être liée à l'autre version du TD (la correction n'a pas cette question).
 
 **Proposition** : interpréter la question avec un bruit limité à $[-f_e/2, f_e/2]$ et des fréquences normalisées ($T_e = 1$), et écrire en général $\sigma_{n_l}^2 = \frac{N_0}{2T_e}$ (solution du complément ci-dessus).
-**Décision** : interprétation retenue : bruit limité à $[-f_e/2, f_e/2]$, $\sigma_{n_l}^2 = \frac{N_0}{2T_e}$, égal à $\frac{N_0}{2}$ pour $T_e = 1$ (Armand a laissé le choix à Claude, 2026-10-07).
 
+**Décision** : interprétation retenue : bruit limité à $[-f_e/2, f_e/2]$, $\sigma_{n_l}^2 = \frac{N_0}{2T_e}$, égal à $\frac{N_0}{2}$ pour $T_e = 1$ (Armand a laissé le choix à Claude, 2026-10-07).
 :::
 
 ::: {#exr-td-constellation-bruitee}

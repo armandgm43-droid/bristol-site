@@ -50,9 +50,11 @@
 
 - [x] Analyse, rédaction et figures (étapes 2 à 5) des chapitres 4 et 1 ; TD ex. 3, ex. 4 et ex. 5 q. 12-13 intégrés au ch. 4 (7 octobre 2026).
 - [x] Questions bloquantes tranchées (choix laissé à Claude, 13 blocs tranchés, rapports § 16) (7 octobre 2026).
-- [ ] Revoir les choix par défaut (§ 12 des deux rapports) à la validation.
+- [x] Revoir les choix par défaut (§ 12 des deux rapports) à la validation (validés avec les chapitres, 7 octobre 2026).
 - [ ] Contrôler le rendu avec `quarto preview` (ch. 4 : définition `def-fonction-q` et tableau dans un bloc `.notes`, segment orange p. 130 ; ch. 1 : exposants et segments dans les tableaux).
-- [ ] Vérification (étape 6), validation (étape 7), flashcards (étape 8) des chapitres 1 et 4.
+- [x] Vérification (étape 6, rapports § 17), validation (étape 7) et flashcards (étape 8 : 12 + 57 cartes) des chapitres 1 et 4 (7 octobre 2026).
+- [ ] Contrôler les 69 cartes des chapitres 1 et 4 dans l'application (`quarto preview`, http://localhost:4848/revision/).
+- [ ] Facultatif : noter $r_n$ (au lieu de $r_l[n]$) l'abscisse de `figures/04-constellation-bruitee.py`, pour l'accorder à la légende.
 
 ## Priorité 3 — Outillage
 

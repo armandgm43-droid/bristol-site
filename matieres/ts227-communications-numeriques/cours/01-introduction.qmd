@@ -4,7 +4,7 @@ matiere: ts227
 chapitre: 1
 enseignants: ["Romain Tajan"]
 annee: "2026-2027"
-statut: redige
+statut: flashcards
 date-modified: 2026-10-07
 sources:
   - id: poly
@@ -108,8 +108,8 @@ Les couches se regroupent ainsi [poly, p. 9] :
 **Problème** : les trois couches hautes reçoivent la même description, qui est celle de la couche Application ; c'est vraisemblablement un copier-coller. Le regroupement donné juste en dessous (« service final / format des données / application ») distingue d'ailleurs trois rôles.
 
 **Proposition** : rôles usuels du modèle OSI (connaissances générales, non tirées des sources) : couche 6, **Présentation** : représentation et format des données (codage, compression, chiffrement) ; couche 5, **Session** : ouverture, gestion et fermeture des échanges (sessions) entre applications ; couche 7 inchangée.
-**Décision** : proposition retenue : rôles usuels des couches 6 (Présentation) et 5 (Session) (Armand a laissé le choix à Claude, 2026-10-07).
 
+**Décision** : proposition retenue : rôles usuels des couches 6 (Présentation) et 5 (Session) (Armand a laissé le choix à Claude, 2026-10-07).
 :::
 
 ::: {.complement}
@@ -156,8 +156,8 @@ Le **récepteur** convertit un signal reçu en message compréhensible par la de
 **Problème** : dans le modèle (@fig-shannon-weaver), le message reçu est remis à la **destination**, pas à la source ; « la sources » est aussi incorrect grammaticalement. Deux lectures sont possibles : « compréhensible par la destination » (lecture du schéma), ou « dans le format de la source » (le message reçu doit avoir la même forme que le message émis).
 
 **Proposition** : « Le récepteur convertit un signal reçu en message compréhensible par la destination. »
-**Décision** : proposition retenue : « compréhensible par la destination » (Armand a laissé le choix à Claude, 2026-10-07).
 
+**Décision** : proposition retenue : « compréhensible par la destination » (Armand a laissé le choix à Claude, 2026-10-07).
 :::
 
 ::: {.complement}

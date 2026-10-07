@@ -816,6 +816,8 @@ Un paquet provisoire de **129 cartes** (`ts227.json`, clés `ts-<section>-NN`) a
 
 Chapitre 2 : 61 cartes (`flashcards/02-communication-sans-bruit.yml`, 7 octobre 2026).
 Chapitre 3 : 56 cartes (`flashcards/03-dsp-signaux-codes-en-ligne.yml`, 7 octobre 2026).
+Chapitre 1 : 12 cartes (`flashcards/01-introduction.yml`, 7 octobre 2026).
+Chapitre 4 : 57 cartes (`flashcards/04-transmission-presence-bruit.yml`, 7 octobre 2026).
 
 ---
 
@@ -939,6 +941,7 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 | 2026-10-07 | Ancien site de cartes (dépôt `bristol`, GitHub Pages) **figé** ; révision en local avec `quarto preview`, port fixé à **4848** | La progression (`localStorage`) dépend de l'adresse : un port fixe la conserve d'un lancement à l'autre |
 | 2026-10-07 | TS227 ch. 2 : 61 flashcards générées (statut `flashcards`) ; labels `eq-signal-yl` et `eq-efficacite-spectrale` retirés (V5) | Étape 8 ; `conventions.md` § 7.2 |
 | 2026-10-07 | TS227 ch. 3 validé (`av-dsp-porte-notes` tranché d'après la correction du TD) ; 56 flashcards générées (statut `flashcards`) | Étapes 6 à 8 ; rapport ch. 3, § 17-18 |
+| 2026-10-07 | TS227 ch. 1 et 4 vérifiés et validés ; 12 et 57 flashcards générées (statut `flashcards`) ; paquet TS227 : 186 cartes | Étapes 6 à 8 ; rapports ch. 1 et 4, § 17-18 |
 
 ---
 
@@ -1006,9 +1009,10 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 - [x] Chapitre de test validé (7 octobre 2026)
 - [x] Flashcards du chapitre de test (61 cartes, 7 octobre 2026)
 - [x] Chapitre 3 : rédigé, vérifié, validé, flashcards (56 cartes, 7 octobre 2026)
+- [x] Chapitres 1 et 4 : rédigés, vérifiés, validés, flashcards (12 et 57 cartes, 7 octobre 2026)
 
 ## Prochaines étapes
-1. Réviser les cartes des chapitres 2 et 3 avec `quarto preview` (http://localhost:4848/revision/) et signaler les cartes à reprendre.
+1. Réviser les cartes des chapitres 1 à 4 avec `quarto preview` (http://localhost:4848/revision/) et signaler les cartes à reprendre.
 2. Écrire `scripts/verifier.py` (vérifications de `architecture.md` § 7).
-3. Analyse du chapitre suivant de TS227 (chapitre 4, transmission en présence de bruit).
+3. Analyse du chapitre suivant de TS227 (chapitre 5, transmission sur fréquence porteuse).
 4. Avant toute publication : accès réservé, accord des enseignants, page « À propos », export et import de la progression.

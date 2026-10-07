@@ -3,7 +3,7 @@
 > Où en est le projet. Mis à jour **à la fin de chaque session de travail**.
 > Vision et méthode : `CONTEXTE_PROJET.md`. Règles : `conventions.md`. Technique : `architecture.md`. Tâches : `TODO.md`.
 >
-> Dernière mise à jour : 7 octobre 2026 (chapitres 1 et 4 rédigés).
+> Dernière mise à jour : 7 octobre 2026 (chapitres 1 et 4 vérifiés, validés, flashcards).
 
 ---
 
@@ -13,7 +13,7 @@ Le prototype est validé. Le premier chapitre de test est le **chapitre 2 de TS2
 
 **Chapitre 3 de TS227** (*DSP des signaux codés en ligne*) : analyse, rédaction et figures (étapes 2 à 5), exercices du TD intégrés ; vérifié (étape 6, rapport § 17), **validé** par Armand, `av-dsp-porte-notes` tranché d'après la correction du TD ; **flashcards générées** (étape 8, 56 cartes, rapport § 18) : statut `flashcards`. 0 bloc ouvert, 5 tranchés, 4 levés.
 
-**Chapitres 1 et 4 de TS227** (*Introduction* ; *Transmission en présence de bruit*) : analyse, rédaction et figures (étapes 2 à 5) dans la même session ; TD ex. 3, ex. 4 et ex. 5 q. 12-13 intégrés au chapitre 4 ; chapitre 1 rédigé à partir du **poly seul** (aucune note). Statut `redige`. Questions bloquantes tranchées (Armand a laissé le choix à Claude) : 0 bloc ouvert, 2 tranchés (ch. 1) et 11 tranchés (ch. 4) ; rapports, § 16.
+**Chapitres 1 et 4 de TS227** (*Introduction* ; *Transmission en présence de bruit*) : analyse, rédaction et figures (étapes 2 à 5) dans la même session ; TD ex. 3, ex. 4 et ex. 5 q. 12-13 intégrés au chapitre 4 ; chapitre 1 rédigé à partir du **poly seul** (aucune note). Questions bloquantes tranchées (Armand a laissé le choix à Claude) : 0 bloc ouvert, 2 tranchés (ch. 1) et 11 tranchés (ch. 4) ; rapports, § 16. Vérifiés (étape 6, rapports § 17 : aucun point bloquant, 7 corrections de forme), **validés** par Armand, **flashcards générées** (étape 8 : 12 cartes ch. 1, 57 cartes ch. 4 ; rapports § 18) : statut `flashcards`. `ts227.json` = 186 cartes.
 
 Révision : en local avec `quarto preview` (port fixe 4848, `http://localhost:4848/revision/`). Le paquet TS227 provisoire (clés `ts-…`) est abandonné (question 5) ; `revision/cartes/ts227.json` est généré par `scripts/flashcards.py`. L'ancien site de cartes (dépôt `bristol`) est **figé**.
 
@@ -53,10 +53,11 @@ Décision du 7 octobre 2026 : le site sera **publié à la fin pour les étudian
 - [x] TS227 chapitre 3 vérifié (rapport § 17 : exhaustivité support/notes/TD, 569 formules, références ; 6 corrections de forme), validé, `av-dsp-porte-notes` tranché (7 octobre 2026).
 - [x] TS227 chapitres 1 et 4 : rapports d'analyse, `cours/01-introduction.qmd` et `cours/04-transmission-presence-bruit.qmd`, figures `figures/01-shannon-weaver.tex` (TikZ) et `figures/04-*.py` (7 matplotlib) + SVG ; TD ex. 3, 4 et ex. 5 q. 12-13 intégrés ; `_quarto.yml` et fiche matière (statuts, notations du ch. 4) mis à jour (7 octobre 2026).
 - [x] Flashcards du chapitre 3 de TS227 : `flashcards/03-dsp-signaux-codes-en-ligne.yml`, 56 cartes ; `scripts/flashcards.py` lancé : `ts227.json` = 117 cartes (61 + 56) ; statut `flashcards` (7 octobre 2026).
+- [x] TS227 chapitres 1 et 4 vérifiés (rapports § 17 : exhaustivité poly/notes/TD, 803 formules, références, figures ; 7 corrections de forme, dont la ligne **Décision** des 13 blocs tranchés), validés, flashcards (`flashcards/01-introduction.yml`, 12 cartes ; `flashcards/04-transmission-presence-bruit.yml`, 57 cartes) ; `flashcards.py` lancé : `ts227.json` = 186 cartes ; statut `flashcards` (7 octobre 2026).
 
 ## 3. En cours
 
-- Chapitres 1 et 4 de TS227 rédigés (statut `redige`), blocs tranchés ; prochaine étape : vérification (étape 6), puis validation.
+- Chapitres 1 et 4 de TS227 terminés (flashcards générées). À faire par Armand : contrôler le rendu des chapitres et des 69 cartes avec `quarto preview`.
 - Chapitre 3 de TS227 terminé (flashcards générées). À faire par Armand : contrôler le rendu du chapitre et des 56 cartes avec `quarto preview`.
 - Chapitre 2 de TS227 terminé (flashcards générées). À faire par Armand : contrôler le rendu des cartes dans l'application (`quarto preview`) et signaler les cartes à reprendre.
 
@@ -72,10 +73,10 @@ Voir `TODO.md`.
 
 | N° | Chapitre (plan du poly) | Fichier | Statut | Blocs *À vérifier* ouverts |
 |---|---|---|---|---|
-| 1 | Introduction | `cours/01-introduction.qmd` | **redige** (poly seul) | 0 ouvert + 2 tranchés (`av-osi-couches-identiques`, `av-recepteur-destination`) |
+| 1 | Introduction | `cours/01-introduction.qmd` | **flashcards** (12 cartes ; poly seul) | 0 ouvert + 2 tranchés (`av-osi-couches-identiques`, `av-recepteur-destination`) |
 | 2 | Principes de communication en l'absence de bruit | `cours/02-communication-sans-bruit.qmd` | **flashcards** (61 cartes) | 0 ouvert + 4 tranchés (`av-signe-tf-nyquist`, `av-centre-symetrie-nyquist`, `av-quiz-debit-porte`, `av-echelles-figure-cosinus-sureleve`) |
 | 3 | DSP des signaux codés en ligne | `cours/03-dsp-signaux-codes-en-ligne.qmd` | **flashcards** (56 cartes) | 0 ouvert + 5 tranchés (`av-variance-affine`, `av-esperance-exercice-bpsk`, `av-moment-ordre-2-notes`, `av-dsp-porte-notes`, `av-phase-tf-porte-td`) |
-| 4 | Transmission en présence de bruit | `cours/04-transmission-presence-bruit.qmd` | **redige** | 0 ouvert + 11 tranchés (`av-pb-notes-probabilites-a-priori`, `av-variables-muettes`, `av-quiz-seuil-ook`, `av-quiz-pire-probabilite`, `av-facteur-calcul-pb`, `av-definition-q-notes`, `av-variance-bruit-filtre`, `av-filtre-adapte-causal`, `av-densite-conditionnelle-td`, `av-dsp-bruit-filtre-td`, `av-variance-bruit-discret-td`) |
+| 4 | Transmission en présence de bruit | `cours/04-transmission-presence-bruit.qmd` | **flashcards** (57 cartes) | 0 ouvert + 11 tranchés (`av-pb-notes-probabilites-a-priori`, `av-variables-muettes`, `av-quiz-seuil-ook`, `av-quiz-pire-probabilite`, `av-facteur-calcul-pb`, `av-definition-q-notes`, `av-variance-bruit-filtre`, `av-filtre-adapte-causal`, `av-densite-conditionnelle-td`, `av-dsp-bruit-filtre-td`, `av-variance-bruit-discret-td`) |
 | 5 | Transmission sur fréquence porteuse | — | brouillon | — |
 | 6 | Modulation et démodulation numériques | — | brouillon | — (à la rédaction : renvoi vers l'efficacité spectrale du chapitre 2) |
 
@@ -96,6 +97,7 @@ Remarque : « brouillon » signifie ici « sources officielles reçues, rien de 
 
 | Date | Décision | Où |
 |---|---|---|
+| 2026-10-07 | TS227 ch. 1 et 4 vérifiés (aucun point bloquant) et validés ; 12 + 57 flashcards | rapports ch. 1 et ch. 4, § 17-18 |
 | 2026-10-07 | TS227 ch. 1 et 4 : 13 propositions des rapports retenues (choix laissé à Claude), blocs tranchés ; notamment filtre adapté causal $h^*(T_h - t)$ (p. 130) et « pire » $P_b$ = 0,5 (p. 111) | rapports ch. 1 et ch. 4, § 16 |
 | 2026-10-07 | Correction : l'export de l'application ne contient que les cartes ; transfert de progression impossible tant que la tâche « export/import de la progression » n'est pas faite | `architecture.md` § 6 ; § 7 ci-dessous ; `TODO.md` |
 | 2026-10-07 | TS227 ch. 3 validé ; `av-dsp-porte-notes` tranché : résultats de la correction du TD ($\sigma_a^2\Ts\sinc^2(f\Ts)$, sommet $\sigma_a^2\Ts$) ; 56 flashcards | rapport ch. 3, § 18 |
@@ -143,7 +145,7 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 16. **Deux dépôts GitHub à ne pas confondre** : `armandgm43-droid/bristol-site` (privé) est le dépôt du projet ; `armandgm43-droid/bristol` est l'ancien site de cartes, toujours en ligne avec GitHub Pages mais **figé** depuis le 7 octobre 2026 (voir `architecture.md` § 10).
 13. ~~**Application de révision liée au site**~~ : sans objet depuis que l'ancien site est figé (plus de copie isolée de `revision/`). Rappel : `revision/index.html` charge `../assets/bristol-tokens.css` ; à garder en tête si l'application est un jour copiée ailleurs.
 17. **Progression de révision locale** : liée à `http://localhost:4848` et au navigateur. Changer de port, passer par `127.0.0.1` ou changer de navigateur repart de zéro. La progression de l'ancien site GitHub Pages ne se transfère pas non plus. **L'export actuel de l'application exporte les cartes, pas la progression** : aucun transfert n'est possible tant que la tâche « export/import de la progression » de `TODO.md`, section « Avant la publication » n'est pas faite (corrigé le 7 octobre 2026).
-18. **Rendu des cartes non contrôlé dans le navigateur** : les 247 formules du paquet TS227 compilent sans erreur avec MathJax 3.2.2 (contrôle de Claude), mais l'affichage réel dans l'application reste à vérifier avec `quarto preview`.
+18. **Rendu des cartes non contrôlé dans le navigateur** : les formules du paquet TS227 (186 cartes ; 313 pour les ch. 1 et 4) compilent sans erreur avec MathJax 3.2.2 (contrôle de Claude), mais l'affichage réel dans l'application reste à vérifier avec `quarto preview`.
 14. **Liens de la barre de navigation écrits deux fois** : `website.navbar` de `_quarto.yml` et en-tête de `revision/index.html`, à garder alignés.
 15. **MathJax** : le site (Quarto 1.10) charge MathJax 4, l'application MathJax 3.2.2 ; même syntaxe LaTeX courante. `CONTEXTE_PROJET.md` § 5.5 et § 20.1 mis à jour le 7 octobre 2026. Une formule qui s'affiche différemment dans les deux reste possible : à signaler si elle apparaît.
 10. ~~Dossier vide `sources/ts227/notes/a-dater/`~~ : supprimé par Armand.
@@ -197,3 +199,4 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 | 2026-10-07 | Bristol — TS227 Chapitre 3 — Rédaction (fin) | Blocs `av-esperance-exercice-bpsk` et `av-moment-ordre-2-notes` tranchés (choix laissé à Claude) ; reste 1 bloc ouvert |
 | 2026-10-07 | Bristol — TS227 Chapitres 1 et 4 — Rédaction | Étapes 2 à 5 des chapitres 4 puis 1 : rapports d'analyse, 2 chapitres (statut `redige`), 8 figures, TD ex. 3, 4, 5 q. 12-13 intégrés ; 13 questions bloquantes, tranchées (choix laissé à Claude) : 13 blocs tranchés ; `_quarto.yml`, fiche matière, `ETAT_PROJET.md`, `TODO.md` mis à jour |
 | 2026-10-07 | Bristol — TS227 Chapitre 3 — Vérification et flashcards | Vérification (rapport § 17, 6 corrections de forme, aucune erreur de fond) ; `av-dsp-porte-notes` tranché (TD) ; chapitre validé ; 56 cartes (`flashcards/03-dsp-signaux-codes-en-ligne.yml`) ; `flashcards.py` lancé (117 cartes TS227) ; statut `flashcards` ; rapport (§ 17-18), fiche matière, `ETAT_PROJET.md`, `TODO.md`, `CONTEXTE_PROJET.md` mis à jour |
+| 2026-10-07 | Bristol — TS227 Chapitres 1 et 4 — Vérification et flashcards | Vérification (rapports § 17 : poly, notes relues sur photos, TD et correction, 803 formules, figures ; 7 corrections de forme, aucun point bloquant) ; chapitres validés ; 12 + 57 cartes ; `flashcards.py` lancé (186 cartes TS227) ; statut `flashcards` ; rapports (§ 17-18), fiche matière, `ETAT_PROJET.md`, `TODO.md`, `CONTEXTE_PROJET.md` mis à jour |

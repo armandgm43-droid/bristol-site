@@ -3,6 +3,78 @@
   "color": "#FFF0A6",
   "items": [
     {
+      "key": "ts227-telecommunication-definition",
+      "chap": "Ch. 01 — Introduction",
+      "front": "Qu'est-ce qu'une télécommunication (définition citée par le cours) ?",
+      "back": "La transmission, l'émission ou la réception d'informations par fil, radioélectricité, optique ou d'autres systèmes électromagnétiques (définition du Larousse)."
+    },
+    {
+      "key": "ts227-numerique-definition",
+      "chap": "Ch. 01 — Introduction",
+      "front": "Dans « communications numériques », à quoi fait référence le mot **numérique** ?",
+      "back": "Au contenu transmis : un signal **échantillonné et quantifié**, que l'on peut donc voir comme une suite de symboles, dont le bit est l'unité."
+    },
+    {
+      "key": "ts227-historique-nyquist",
+      "chap": "Ch. 01 — Introduction",
+      "front": "Quel apport le cours attribue-t-il à Nyquist (1924) ?",
+      "back": "Le débit maximal pour des communications **sans interférence entre symboles** dans une bande donnée (origine du critère de Nyquist du chapitre 2)."
+    },
+    {
+      "key": "ts227-historique-shannon-weaver",
+      "chap": "Ch. 01 — Introduction",
+      "front": "Quel apport le cours attribue-t-il à Shannon et Weaver (1948) ?",
+      "back": "Une définition formelle pour les transmissions sans perte (sans erreur) : le modèle source – émetteur – canal – récepteur – destination."
+    },
+    {
+      "key": "ts227-osi-couche-physique",
+      "chap": "Ch. 01 — Introduction",
+      "front": "Quel est le rôle de la couche 1 du modèle OSI, et pourquoi concerne-t-elle ce cours ?",
+      "back": "Couche **physique** : transmission des signaux sous forme numérique ou analogique. Le cours de communications numériques se place à cette couche (PHY) : transformer des bits en signal adapté au support, et retrouver les bits à partir du signal reçu."
+    },
+    {
+      "key": "ts227-osi-couches-2-3",
+      "chap": "Ch. 01 — Introduction",
+      "front": "Quel type d'adressage gèrent la couche 2 (liaison) et la couche 3 (réseau) du modèle OSI ?",
+      "back": "- Couche 2 : adressage **physique** (adresse MAC).\n- Couche 3 : parcours des données et adressage **logique** (adresse IP)."
+    },
+    {
+      "key": "ts227-osi-regroupement-couches",
+      "chap": "Ch. 01 — Introduction",
+      "front": "Qu'est-ce qui distingue les couches 1-2 des couches 3-4 du modèle OSI ?",
+      "back": "- Couches 1-2 : communication physique entre deux machines **directement connectées**.\n- Couches 3-4 : communications entre deux machines **non directement connectées**."
+    },
+    {
+      "key": "ts227-osi-presentation-session",
+      "chap": "Ch. 01 — Introduction",
+      "front": "Rôles des couches 6 (présentation) et 5 (session) du modèle OSI ?",
+      "back": "- Présentation : représentation et format des données (codage, compression, chiffrement).\n- Session : ouverture, gestion et fermeture des échanges entre applications.\n\n(Rôles usuels : le support donne par erreur la description de la couche 7 aux trois couches hautes.)"
+    },
+    {
+      "key": "ts227-shannon-weaver-chaine",
+      "chap": "Ch. 01 — Introduction",
+      "front": "Quels sont les cinq éléments du modèle de Shannon et Weaver, et que circule-t-il entre eux ?",
+      "back": "Source d'information → *message* → émetteur → *signal* → canal → *signal reçu* → récepteur → *message reçu* → destination."
+    },
+    {
+      "key": "ts227-role-emetteur",
+      "chap": "Ch. 01 — Introduction",
+      "front": "Rôle de l'émetteur dans le modèle de Shannon et Weaver ?",
+      "back": "Convertir les messages délivrés par la source d'information en signaux pouvant être transmis dans le canal."
+    },
+    {
+      "key": "ts227-canal-exemples",
+      "chap": "Ch. 01 — Introduction",
+      "front": "Qu'est-ce que le canal, et quels exemples le cours en donne-t-il ?",
+      "back": "Le média de propagation entre l'émetteur et le récepteur : câble coaxial, paire torsadée, air (ondes électromagnétiques, ondes sonores…)."
+    },
+    {
+      "key": "ts227-role-recepteur",
+      "chap": "Ch. 01 — Introduction",
+      "front": "Rôle du récepteur, et quelle mise en garde le cours fait-il à son sujet ?",
+      "back": "Il convertit le signal reçu en message compréhensible par la **destination**. C'est là que des **erreurs de transmission** peuvent intervenir (dues au bruit, chapitre 4)."
+    },
+    {
       "key": "ts227-bande-base-transposee",
       "chap": "Ch. 02 — Principes de communication en l'absence de bruit",
       "front": "Qu'est-ce qui distingue une transmission en bande de base d'une transmission en bande transposée, et dans quel type de transmission chacune est-elle privilégiée ?",
@@ -703,6 +775,348 @@
       "chap": "Ch. 03 — DSP des signaux codés en ligne",
       "front": "$f_e = 8\\ \\mathrm{kHz}$, $D_s = 2\\ \\mathrm{ksymboles/s}$, porte de durée ${T_s}$, 4-PAM. Allure de la DSP de $s_l[n]$, et largeur du lobe principal ?",
       "back": "${T_s} = 0{,}5\\ \\mathrm{ms}$ : allure de $\\operatorname{sinc}^2(f{T_s})$ sur $[-4, 4]\\ \\mathrm{kHz}$, **périodisée** tous les $8\\ \\mathrm{kHz}$ (temps discret). Zéros aux multiples de $2\\ \\mathrm{kHz}$ : lobe principal $[-2, 2]\\ \\mathrm{kHz}$, largeur $4\\ \\mathrm{kHz}$ ($B = 1/{T_s} = 2\\ \\mathrm{kHz}$)."
+    },
+    {
+      "key": "ts227-probabilite-erreur-symbole",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Définition de la probabilité d'erreur symbole $P_s$, et sa décomposition selon le symbole émis ?",
+      "back": "Probabilité que le symbole décidé $\\hat{A}_n$ diffère du symbole émis $A_n$ :\n$$P_s = P(\\hat{A}_n \\neq A_n) = \\sum_{a \\in \\mathcal{A}} P(A_n = a)\\, P(\\hat{A}_n \\neq A_n \\mid A_n = a)$$\n(formule des probabilités totales)."
+    },
+    {
+      "key": "ts227-probabilite-erreur-binaire",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Expression de la probabilité d'erreur binaire $P_b$ en fonction des probabilités conditionnelles ?",
+      "back": "$$P_b = P(B_n = 0)\\, P(\\hat{B}_n = 1 \\mid B_n = 0) + P(B_n = 1)\\, P(\\hat{B}_n = 0 \\mid B_n = 1)$$"
+    },
+    {
+      "key": "ts227-pb-poids-a-priori-piege",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Pourquoi ne peut-on pas écrire $P_b = P(\\hat{B}_n = 0 \\mid B_n = 1) + P(\\hat{B}_n = 1 \\mid B_n = 0)$ ?",
+      "back": "Il manque les probabilités a priori $P(B_n = 1)$ et $P(B_n = 0)$ devant chaque terme : sans elles, la somme peut dépasser 1 (elle vaut 2 pour une décision toujours fausse). Pour des bits équiprobables, chaque terme est pondéré par $\\frac{1}{2}$."
+    },
+    {
+      "key": "ts227-modele-bruit",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Expression de l'échantillon reçu $R_n$ en présence de bruit, et hypothèses du cas binaire ?",
+      "back": "$$R_n = g_0 A_n + Z'_n$$\n- $g$ vérifie le critère de Nyquist ($g(k{T_s}) = g_0 \\delta_k$), $g_0 > 0$ ;\n- bits iid, $P(B_n = 0) = p_0$ ; symboles iid dans $\\{-1, 1\\}$ ($0 \\to -1$, $1 \\to 1$) ;\n- $Z'_n \\sim \\mathcal{N}(0, \\sigma^2)$, indépendant des symboles."
+    },
+    {
+      "key": "ts227-exercice-loi-conditionnelle",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "$A \\in \\{-1, 1\\}$, $Z \\sim \\mathcal{N}(0, \\sigma^2)$ indépendants, $R = g_0 A + Z$. Loi de $R$ sachant $A = 1$ ?",
+      "back": "$\\mathcal{N}(g_0, \\sigma^2)$ : sachant $A = 1$, $R = g_0 + Z$ est une simple translation de $Z$."
+    },
+    {
+      "key": "ts227-exercice-erreur-conditionnelle",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Règle : $R \\geq \\gamma \\Rightarrow \\hat{A} = 1$, sinon $\\hat{A} = -1$. Probabilité d'erreur sachant $A = 1$ ?",
+      "back": "$P(R < \\gamma \\mid A = 1)$ : sachant $A = 1$, on se trompe si l'on décide $-1$. Sans le conditionnement, on mélangerait les deux symboles émis."
+    },
+    {
+      "key": "ts227-binaire-pb-egal-ps",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Quel lien entre $P_b$ et $P_s$ pour une modulation binaire ($M = 2$) ?",
+      "back": "$P_b = P_s$ : un symbole porte un seul bit."
+    },
+    {
+      "key": "ts227-pb-fonction-seuil",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Expression de $P_b(\\gamma)$ pour des symboles $\\pm g_0$ et un seuil $\\gamma$ ($f_Z$ : densité du bruit) ?",
+      "back": "$$P_b(\\gamma) = p_0 \\int_{\\gamma}^{+\\infty} f_Z(z + g_0)\\, \\mathrm{d}z + p_1 \\int_{-\\infty}^{\\gamma} f_Z(z - g_0)\\, \\mathrm{d}z$$\nPremier terme : bit 0 émis ($-g_0$), décidé 1 ; second : bit 1 émis ($+g_0$), décidé 0."
+    },
+    {
+      "key": "ts227-seuil-optimal-condition",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Quelle équation vérifie le seuil $\\gamma$ qui minimise $P_b(\\gamma)$ ?",
+      "back": "On annule la dérivée (dérivée d'une intégrale par rapport à sa borne) :\n$$-p_0 f_Z(\\gamma + g_0) + p_1 f_Z(\\gamma - g_0) = 0 \\iff \\frac{f_Z(\\gamma - g_0)}{f_Z(\\gamma + g_0)} = \\frac{p_0}{p_1}$$"
+    },
+    {
+      "key": "ts227-seuil-optimal",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Expression du seuil optimal $\\gamma^*(p_0)$ en binaire, et conditions d'application ?",
+      "back": "$$\\gamma^*(p_0) = \\frac{\\sigma^2}{2 g_0} \\ln\\left(\\frac{p_0}{1 - p_0}\\right)$$\nSymboles $\\pm g_0$ (bit 0 → $-g_0$), bruit gaussien centré de variance $\\sigma^2$, $p_0 = P(B_n = 0)$. Le « log » du support est le logarithme népérien."
+    },
+    {
+      "key": "ts227-seuil-optimal-calcul",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Étape clé du calcul de $\\gamma^*$ : que donne le logarithme de $\\frac{1 - p_0}{p_0} = \\frac{f_Z(\\gamma + g_0)}{f_Z(\\gamma - g_0)}$ pour un bruit gaussien ?",
+      "back": "$$\\ln\\frac{1 - p_0}{p_0} = \\frac{(\\gamma - g_0)^2 - (\\gamma + g_0)^2}{2\\sigma^2} = -\\frac{2\\gamma g_0}{\\sigma^2}$$\nd'où $\\gamma = \\frac{\\sigma^2}{2g_0} \\ln\\frac{p_0}{1 - p_0}$."
+    },
+    {
+      "key": "ts227-seuil-optimal-limites",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Valeurs de $\\gamma^*(p_0)$ quand $p_0 \\to 0$, $p_0 \\to 1$ et $p_0 = 0{,}5$ ?",
+      "back": "$-\\infty$, $+\\infty$ et $0$ : pour des bits équiprobables, le seuil est **au milieu** des deux symboles."
+    },
+    {
+      "key": "ts227-seuil-mediatrice",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "À quelles conditions le seuil optimal est-il la médiatrice entre les deux symboles ?",
+      "back": "Si $p_0 = p_1 = 0{,}5$ **et** si le bruit est gaussien."
+    },
+    {
+      "key": "ts227-seuil-deplacement",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Si $p_0 > \\frac{1}{2}$, dans quel sens se déplace le seuil optimal, et de combien selon le bruit ?",
+      "back": "Vers $+g_0$ : la région de décision du symbole le plus probable ($-g_0$) s'agrandit. Le déplacement est proportionnel à $\\sigma^2$ : à faible bruit, le seuil reste près du milieu."
+    },
+    {
+      "key": "ts227-exercice-seuil-ook",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "$A \\in \\{0, 1\\}$ uniforme, $R = g_0 A + Z$, $Z \\sim \\mathcal{N}(0, \\sigma^2)$. Seuil optimal $\\gamma$ ?",
+      "back": "$\\gamma^* = \\frac{g_0}{2}$, milieu de $0$ et $g_0$. Le support répond $0{,}5$, valable seulement pour $g_0 = 1$."
+    },
+    {
+      "key": "ts227-pire-probabilite-erreur",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Quelle est la « pire » probabilité d'erreur d'une décision binaire : 0, 0,5 ou 1 ?",
+      "back": "$0{,}5$ : la décision ne vaut pas mieux qu'un pile ou face. 0 est le meilleur cas, et 1 n'est pas le pire (il suffit d'inverser les décisions). Le support marque 0 par erreur."
+    },
+    {
+      "key": "ts227-pb-binaire-q",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "$P_b$ d'une modulation binaire $\\pm g_0$, bits équiprobables, seuil optimal, bruit $\\mathcal{N}(0, \\sigma^2)$ ?",
+      "back": "$$P_b = Q\\left(\\frac{g_0}{\\sigma}\\right)$$"
+    },
+    {
+      "key": "ts227-pb-binaire-changement-variable",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Dans le calcul de $P_b = Q(g_0/\\sigma)$, quel changement de variable fait apparaître $Q$ dans le terme $0{,}5\\int_0^{+\\infty} f_Z(z + g_0)\\,\\mathrm{d}z$ ?",
+      "back": "$z' = \\frac{z + g_0}{\\sigma}$ : la borne $0$ devient $\\frac{g_0}{\\sigma}$ et la densité devient celle de $\\mathcal{N}(0, 1)$. Le second terme donne la même valeur par symétrie, d'où $0{,}5 Q + 0{,}5 Q = Q$."
+    },
+    {
+      "key": "ts227-fonction-q",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Définition de la fonction $Q(x)$ ?",
+      "back": "$$Q(x) = \\frac{1}{\\sqrt{2\\pi}} \\int_x^{+\\infty} e^{-\\frac{u^2}{2}}\\, \\mathrm{d}u$$\nProbabilité qu'une variable $\\mathcal{N}(0, 1)$ dépasse $x$."
+    },
+    {
+      "key": "ts227-fonction-q-proprietes",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Lien entre $Q$ et $\\Phi$, et valeurs ou propriétés utiles de $Q$ ?",
+      "back": "$Q(x) = 1 - \\Phi(x)$ ; $Q$ décroissante ; $Q(0) = \\frac{1}{2}$ ; $Q(-x) = 1 - Q(x)$ ; $Q(x) < \\frac{1}{2}$ pour $x > 0$."
+    },
+    {
+      "key": "ts227-rsb-definition",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Qu'appelle-t-on rapport signal sur bruit (RSB) dans le modèle $R_n = g_0 A_n + Z'_n$ ?",
+      "back": "Le rapport $\\frac{g_0}{\\sigma}$, rapport d'**amplitudes**, habituellement exprimé en dB. On le rencontre aussi comme rapport d'énergies $\\frac{E_b}{N_0}$."
+    },
+    {
+      "key": "ts227-rsb-decibel",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Pourquoi l'abscisse de la courbe $P_b = Q(g_0/\\sigma)$ est-elle $20\\log_{10}(g_0/\\sigma)$ et non $10\\log_{10}$ ?",
+      "back": "Le décibel s'applique à un rapport de **puissances** ($10\\log_{10}$). $\\frac{g_0}{\\sigma}$ est un rapport d'amplitudes : $10\\log_{10}\\frac{g_0^2}{\\sigma^2} = 20\\log_{10}\\frac{g_0}{\\sigma}$."
+    },
+    {
+      "key": "ts227-ps-equiprobables",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Expression de $P_s$ pour une constellation de $M$ symboles équiprobables ?",
+      "back": "$$P_s = \\frac{1}{M} \\sum_{i=0}^{M-1} P(\\hat{A}_n \\neq A_n \\mid A_n = a_i)$$\nChaque terme est la probabilité d'erreur si $a_i$ est envoyé."
+    },
+    {
+      "key": "ts227-seuils-4pam",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Seuils optimaux de la 4-PAM $\\{-3, -1, 1, 3\\}$ (multipliée par $g_0$), symboles équiprobables ?",
+      "back": "$(\\gamma_0, \\gamma_1, \\gamma_2) = (-2g_0, 0, 2g_0)$ : au milieu de chaque intervalle. Si les symboles ne sont pas équiprobables, les seuils dépendent de toutes les probabilités $P(A_n = a_i)$."
+    },
+    {
+      "key": "ts227-ps-4pam",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "$P_s$ de la 4-PAM équiprobable, et probabilité d'erreur conditionnelle des symboles extrêmes et intérieurs ?",
+      "back": "Extrêmes : $Q(g_0/\\sigma)$ (un voisin) ; intérieurs : $2Q(g_0/\\sigma)$ (deux voisins).\n$$P_s = \\frac{1}{4}(Q + 2Q + 2Q + Q) = \\frac{3}{2} Q\\left(\\frac{g_0}{\\sigma}\\right)$$"
+    },
+    {
+      "key": "ts227-ps-mpam",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "$P_s$ d'une $M$-PAM, et conditions d'application ?",
+      "back": "$$P_s = 2\\, \\frac{M - 1}{M}\\, Q\\left(\\frac{g_0}{\\sigma}\\right)$$\nSymboles équiprobables espacés de $2g_0$, seuils au milieu des intervalles, bruit gaussien centré de variance $\\sigma^2$ indépendant des symboles. Cas $M \\to \\infty$ : $P_s \\to 2Q(g_0/\\sigma)$."
+    },
+    {
+      "key": "ts227-ps-mpam-demonstration",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Argument de dénombrement qui donne $P_s = 2\\frac{M-1}{M}Q(g_0/\\sigma)$ pour la $M$-PAM ?",
+      "back": "2 points au bord, d'erreur $Q$ ; $M - 2$ points à deux voisins, d'erreur $2Q$ :\n$$P_s = \\frac{2Q + 2(M - 2)Q}{M} = 2\\,\\frac{M - 1}{M}\\, Q$$"
+    },
+    {
+      "key": "ts227-exercice-ps-croissante",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "$M$-PAM équiprobable, $g_0 = 1$, $\\sigma > 0$. $P_s$ est-elle croissante en $M$ ? Est-elle toujours $< 1$ ?",
+      "back": "Les deux : $\\frac{M - 1}{M} = 1 - \\frac{1}{M}$ croît avec $M$, et $Q(1/\\sigma) < \\frac{1}{2}$ donne $P_s < 2 \\cdot \\frac{1}{2} = 1$."
+    },
+    {
+      "key": "ts227-pb-ps-inegalite",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Quelle inégalité relie $P_b$ et $P_s$ pour un étiquetage quelconque, et que devient-elle avec un étiquetage de Gray ?",
+      "back": "$P_b \\geq \\frac{P_s}{\\log_2 M}$ (une erreur symbole fausse au moins un bit). Gray : $P_b \\simeq \\frac{P_s}{\\log_2 M}$, car à fort RSB les erreurs se font vers un voisin, qui ne diffère que d'un bit."
+    },
+    {
+      "key": "ts227-pb-mpam",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "$P_b$ de la $M$-PAM en fonction de $g_0/\\sigma$, et validité ?",
+      "back": "$$P_b \\simeq 2\\, \\frac{M - 1}{M \\log_2 M}\\, Q\\left(\\frac{g_0}{\\sigma}\\right)$$\nApproximation : étiquetage de Gray, RSB suffisant (le support écrit « = ») ; exacte pour $M = 2$."
+    },
+    {
+      "key": "ts227-gray-miroir",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Comment construire l'étiquetage de Gray de $2M$ symboles à partir de celui de $M$ symboles ? Exemple pour $M = 4$.",
+      "back": "Recopier la liste des étiquettes en **miroir**, puis ajouter un bit de tête 0 à la première moitié et 1 à la seconde. $M = 2$ : 0, 1 → $M = 4$ : 00, 01, 11, 10."
+    },
+    {
+      "key": "ts227-filtre-adapte-definition",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Qu'est-ce qu'un filtre adapté, et pourquoi le cherche-t-on ?",
+      "back": "Le filtre linéaire de réception qui **maximise** $\\frac{g_0}{\\sigma}$ aux instants de décision $n{T_s}$. $P_b$ décroît avec $\\frac{g_0}{\\sigma}$ : le maximiser minimise $P_b$."
+    },
+    {
+      "key": "ts227-g0-filtres",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Expression de $g_0$ en fonction de $h$ et $h_a$ (temps et fréquence), canal sans déformation ?",
+      "back": "$$g_0 = \\int h(u)\\, h_a(-u)\\, \\mathrm{d}u = \\int H(f)\\, H_a(f)\\, \\mathrm{d}f$$\n($g_0 = g(0)$, puis transformée de Fourier inverse en $t = 0$.)"
+    },
+    {
+      "key": "ts227-variance-bruit-filtre",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Variance $\\sigma^2$ du bruit après le filtre de réception $h_a$, pour un bruit blanc de DSP $\\frac{N_0}{2}$ ?",
+      "back": "$$\\sigma^2 = \\frac{N_0}{2} \\int |H_a(f)|^2\\, \\mathrm{d}f = \\frac{N_0}{2} \\int |h_a(t)|^2\\, \\mathrm{d}t$$\n($\\Gamma_{Z'_l} = \\frac{N_0}{2}|H_a|^2$, puis égalité de Parseval.)"
+    },
+    {
+      "key": "ts227-bruit-filtre-gaussien",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Pourquoi le bruit en sortie du filtre de réception est-il gaussien, centré, et de variance finie ?",
+      "back": "Gaussien : filtrage linéaire d'un processus gaussien. Centré : moyenne $m_{Z_l} H_a(0) = 0$. Variance finie : le filtre limite la bande du bruit blanc, dont la puissance est infinie."
+    },
+    {
+      "key": "ts227-filtre-adapte-cauchy-schwarz",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Quelle inégalité donne le filtre adapté, et avec quelles fonctions $u$ et $v$ l'applique-t-on ?",
+      "back": "Cauchy-Schwarz : $\\left(\\int u v\\right)^2 \\leq \\int u^2 \\int v^2$, égalité si $u = \\lambda v$. Avec $u(t) = h(t)$ et $v(t) = h_a(-t)$ : $\\frac{g_0^2}{\\sigma^2} \\leq \\frac{2}{N_0}\\int |h|^2$, égalité pour $h_a(t) = \\lambda h(-t)$."
+    },
+    {
+      "key": "ts227-filtre-adapte",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Expression du filtre adapté au filtre de mise en forme $h(t)$ ?",
+      "back": "$$h_a(t) = h^*(-t)$$\n(à un coefficient $\\lambda$ près) : version retournée et conjuguée de $h$."
+    },
+    {
+      "key": "ts227-rsb-max",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Valeur maximale de $\\frac{g_0^2}{\\sigma^2}$ obtenue avec le filtre adapté ?",
+      "back": "$$\\left(\\frac{g_0^2}{\\sigma^2}\\right)_{\\max} = \\frac{2E_h}{N_0}, \\qquad E_h = \\int |h(t)|^2\\, \\mathrm{d}t$$"
+    },
+    {
+      "key": "ts227-filtre-adapte-lambda",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Le coefficient $\\lambda$ de $h_a(t) = \\lambda h^*(-t)$ change-t-il les performances ? Que donne $\\lambda = \\frac{1}{R_h(0)}$ ?",
+      "back": "Non : $\\lambda$ multiplie à la fois $g_0$ et $\\sigma$, donc $g_0/\\sigma$ ne change pas. Choix usuels : $\\lambda = 1$ (alors $g_0 = E_h$) ou $\\lambda = \\frac{1}{R_h(0)} = \\frac{1}{E_h}$ (alors $g_0 = 1$)."
+    },
+    {
+      "key": "ts227-filtre-global-adapte",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Avec le filtre adapté $h_a(t) = \\lambda h^*(-t)$, que valent le filtre global $g(t)$ et $G(f)$ ?",
+      "back": "$g(t) = \\lambda R_h(t)$ : autocorrélation déterministe de $h$, maximale en 0 ; $G(f) = \\lambda |H(f)|^2$."
+    },
+    {
+      "key": "ts227-filtre-adapte-causal",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Comment rend-on le filtre adapté causal, et à quel instant faut-il alors décider ?",
+      "back": "On le retarde de $T_h \\geq$ durée de $h$ : $h_a(t) = h^*(T_h - t)$. Alors $g(t) = R_h(t - T_h)$, maximal en $t = T_h$ : on échantillonne en $T_h + n{T_s}$."
+    },
+    {
+      "key": "ts227-filtre-adapte-causal-piege",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Le support écrit le filtre adapté causal $h_a(t) = h(t - T_h)$. Quelle est l'erreur ?",
+      "back": "Il manque le **retournement temporel** : retarder $h^*(-t)$ de $T_h$ donne $h^*(T_h - t)$. Avec $h(t - T_h)$, on n'obtient pas $g(t) = R_h(t - T_h)$."
+    },
+    {
+      "key": "ts227-pb-min-eh",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "$P_{b,\\min}$ de la $M$-PAM avec filtre adapté, en fonction de $E_h$ et $N_0$ ?",
+      "back": "$$P_{b,\\min} = 2\\, \\frac{M - 1}{M \\log_2 M}\\, Q\\left(\\sqrt{\\frac{2E_h}{N_0}}\\right)$$\nOn remplace $\\frac{g_0}{\\sigma}$ par $\\sqrt{2E_h/N_0}$ ; mêmes conditions que pour $P_b$ (Gray, fort RSB)."
+    },
+    {
+      "key": "ts227-filtre-demi-nyquist",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Qu'est-ce qu'un filtre demi-Nyquist, et sous quelles conditions l'utilise-t-on ?",
+      "back": "Un filtre tel que $H(f) = H_a(f) = \\sqrt{N_y(f)}$, avec $N_y$ vérifiant le critère de Nyquist : même filtre à l'émission et à la réception. Conditions : canal plat, $g(t)$ à symétrie paire."
+    },
+    {
+      "key": "ts227-demi-nyquist-filtre-adapte",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Pourquoi choisir $|H(f)|^2 = N_y(f)$ avec un filtre adapté donne-t-il à la fois l'absence d'IES et le RSB maximal ?",
+      "back": "Le filtre adapté donne $G(f) = |H(f)|^2 = N_y(f)$ : $g$ vérifie le critère de Nyquist (pas d'IES) et le RSB est maximal. Exemple usuel : la racine de cosinus surélevé."
+    },
+    {
+      "key": "ts227-energie-bit",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Définition de l'énergie par bit $E_b$ ?",
+      "back": "Énergie moyenne par bit d'information transmis : $E_b = P\\, {T_b} = \\frac{P}{D_b}$, $P$ étant la puissance moyenne du signal utile transmis."
+    },
+    {
+      "key": "ts227-eb-energie-filtre",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Expression de $E_b$ en fonction de $E_h$ pour des symboles iid centrés de variance $\\sigma_a^2$ ?",
+      "back": "$P = \\frac{\\sigma_a^2 E_h}{{T_s}}$ (Bennett et Parseval), et ${T_s} = \\log_2(M)\\, {T_b}$, d'où\n$$E_b = \\frac{\\sigma_a^2 E_h}{\\log_2 M}$$"
+    },
+    {
+      "key": "ts227-pb-min-eb-n0",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "$P_{b,\\min}$ en fonction de $\\frac{E_b}{N_0}$ et de $\\sigma_a^2$ ?",
+      "back": "$$P_{b,\\min} = 2\\, \\frac{M - 1}{M \\log_2 M}\\, Q\\left(\\sqrt{\\frac{2 \\log_2 M}{\\sigma_a^2}\\, \\frac{E_b}{N_0}}\\right)$$"
+    },
+    {
+      "key": "ts227-variance-mpam",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Variance $\\sigma_a^2$ des symboles d'une $M$-PAM $\\{\\pm 1, \\pm 3, \\dots, \\pm(M-1)\\}$ équiprobable ? Valeurs pour $M = 2$ et $M = 4$ ?",
+      "back": "$\\sigma_a^2 = \\frac{M^2 - 1}{3}$ : 1 pour $M = 2$, 5 pour $M = 4$."
+    },
+    {
+      "key": "ts227-pb-min-mpam",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "$P_{b,\\min}$ de la $M$-PAM en fonction de $\\frac{E_b}{N_0}$ seulement ?",
+      "back": "$$P_{b,\\min} = 2\\, \\frac{M - 1}{M \\log_2 M}\\, Q\\left(\\sqrt{\\frac{6 \\log_2 M}{M^2 - 1}\\, \\frac{E_b}{N_0}}\\right)$$"
+    },
+    {
+      "key": "ts227-pb-bpsk-eb-n0",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "$P_b$ d'une 2-PAM avec récepteur optimal, en fonction de $\\frac{E_b}{N_0}$ ? Lien avec $\\frac{g_0}{\\sigma}$ ?",
+      "back": "$P_b = Q\\left(\\sqrt{\\frac{2E_b}{N_0}}\\right)$ ; $\\frac{g_0}{\\sigma} = \\sqrt{2E_b/N_0}$, soit $20\\log_{10}\\frac{g_0}{\\sigma} = 10\\log_{10}\\frac{E_b}{N_0} + 3\\ \\mathrm{dB}$."
+    },
+    {
+      "key": "ts227-pb-influence-m",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "À $\\frac{E_b}{N_0}$ fixé, comment évolue $P_{b,\\min}$ de la $M$-PAM quand $M$ augmente, et quel est le compromis ?",
+      "back": "$P_b$ augmente avec $M$ (à 10 dB : $\\approx 4 \\cdot 10^{-6}$ pour $M = 2$, $\\approx 2 \\cdot 10^{-3}$ pour $M = 4$). Augmenter $M$ améliore l'efficacité spectrale mais demande plus d'énergie par bit."
+    },
+    {
+      "key": "ts227-exercice-filtre-adapte-porte",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "$h$ porte de durée ${T_s}$, filtre adapté causal $h^*(D - t)$ avec $D \\geq {T_s}$. Que vaut le filtre global $g(t)$ ?",
+      "back": "Un triangle de sommet ${T_s}$ en $t = D$, nul hors de $[D - {T_s}, D + {T_s}]$. Il vérifie le critère de Nyquist aux instants $D + n{T_s}$, avec $g_0 = {T_s} = E_h$."
+    },
+    {
+      "key": "ts227-exercice-causalite-premier-symbole",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Qu'entraîne la causalité des filtres de mise en forme et adapté sur la réception du premier symbole ?",
+      "back": "Elle est **retardée** de $D$ : $A_0$ n'atteint le maximum de $g$ qu'en $t = D \\geq {T_s}$, et l'échantillonneur doit être calé sur les instants $D + n{T_s}$."
+    },
+    {
+      "key": "ts227-exercice-bruit-echantillonne",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Autocorrélation des échantillons $z'_l[k]$ du bruit en sortie de filtre adapté, échantillonnés à ${T_s}$ ?",
+      "back": "$R_{z'_l}[k] = \\frac{N_0}{2}\\, g(k{T_s}) = \\frac{N_0}{2}\\, g(0)\\, \\delta_k$ ($g$ de Nyquist) : bruit stationnaire, décorrélé, de variance $\\sigma^2 = \\frac{N_0}{2} g(0)$."
+    },
+    {
+      "key": "ts227-bruit-blanc-echantillons-piege",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "Pourquoi « $\\sigma_{z_l}^2 = \\frac{N_0}{2}$ » pour les échantillons d'un bruit blanc demande-t-il une hypothèse ?",
+      "back": "Un bruit blanc a une puissance infinie. Limité à $[-f_e/2, f_e/2]$ avant échantillonnage, ses échantillons ont la variance $\\frac{N_0}{2T_e}$, égale à $\\frac{N_0}{2}$ seulement si $T_e = 1$."
+    },
+    {
+      "key": "ts227-exercice-fiabilite-4pam",
+      "chap": "Ch. 04 — Transmission en présence de bruit",
+      "front": "4-PAM $\\{\\pm 1, \\pm 3\\}$, $g_0 = 1$, $\\sigma^2 = \\frac{1}{16}$. Les intervalles $\\pm 3\\sigma$ se chevauchent-ils ? Que vaut $P_s$ ?",
+      "back": "$\\sigma = \\frac{1}{4}$ : intervalles $[A - 0{,}75, A + 0{,}75]$, disjoints et sans seuil. $P_s = 2 \\cdot \\frac{3}{4}\\, Q(4) \\approx 4{,}8 \\cdot 10^{-5}$ : transmission fiable."
     }
   ]
 }

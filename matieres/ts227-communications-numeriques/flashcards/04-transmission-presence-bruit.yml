@@ -1,0 +1,592 @@
+# Flashcards — TS227, chapitre 4 : Transmission en présence de bruit.
+# Générées le 2026-10-07 à partir du cours validé (étape 8). Format : conventions.md § 10.
+# Conversion : python scripts/flashcards.py (écrit revision/cartes/ts227.json).
+# Rappels : un identifiant n'est jamais modifié ni réutilisé ; une carte supprimée
+# va dans ids-retires. Les lignes d'un même paragraphe sont jointes par le script ;
+# une ligne « - … » ou un bloc $$…$$ commencent une nouvelle ligne ; une ligne vide sépare deux paragraphes.
+matiere: ts227
+chapitre: 4
+cours: cours/04-transmission-presence-bruit.qmd
+ids-retires: []
+cartes:
+
+  # --- Probabilités d'erreur ---
+
+  - id: ts227-probabilite-erreur-symbole
+    type: definition
+    question: |
+      Définition de la probabilité d'erreur symbole $P_s$, et sa décomposition selon le symbole émis ?
+    reponse: |
+      Probabilité que le symbole décidé $\hat{A}_n$ diffère du symbole émis $A_n$ :
+      $$P_s = P(\hat{A}_n \neq A_n) = \sum_{a \in \mathcal{A}} P(A_n = a)\, P(\hat{A}_n \neq A_n \mid A_n = a)$$
+      (formule des probabilités totales).
+    ref: eq-ps-definition
+    source: officiel
+
+  - id: ts227-probabilite-erreur-binaire
+    type: formule
+    question: |
+      Expression de la probabilité d'erreur binaire $P_b$ en fonction des probabilités conditionnelles ?
+    reponse: |
+      $$P_b = P(B_n = 0)\, P(\hat{B}_n = 1 \mid B_n = 0) + P(B_n = 1)\, P(\hat{B}_n = 0 \mid B_n = 1)$$
+    ref: eq-pb-definition
+    source: officiel
+
+  - id: ts227-pb-poids-a-priori-piege
+    type: piege
+    question: |
+      Pourquoi ne peut-on pas écrire $P_b = P(\hat{B}_n = 0 \mid B_n = 1) + P(\hat{B}_n = 1 \mid B_n = 0)$ ?
+    reponse: |
+      Il manque les probabilités a priori $P(B_n = 1)$ et $P(B_n = 0)$ devant chaque terme :
+      sans elles, la somme peut dépasser 1 (elle vaut 2 pour une décision toujours fausse).
+      Pour des bits équiprobables, chaque terme est pondéré par $\frac{1}{2}$.
+    ref: def-probabilite-erreur-binaire
+    source: notes
+
+  # --- Cas binaire ---
+
+  - id: ts227-modele-bruit
+    type: formule
+    question: |
+      Expression de l'échantillon reçu $R_n$ en présence de bruit, et hypothèses du cas binaire ?
+    reponse: |
+      $$R_n = g_0 A_n + Z'_n$$
+      - $g$ vérifie le critère de Nyquist ($g(k\Ts) = g_0 \delta_k$), $g_0 > 0$ ;
+      - bits iid, $P(B_n = 0) = p_0$ ; symboles iid dans $\{-1, 1\}$ ($0 \to -1$, $1 \to 1$) ;
+      - $Z'_n \sim \mathcal{N}(0, \sigma^2)$, indépendant des symboles.
+    ref: eq-modele-bruit
+    source: officiel
+
+  - id: ts227-exercice-loi-conditionnelle
+    type: exercice
+    question: |
+      $A \in \{-1, 1\}$, $Z \sim \mathcal{N}(0, \sigma^2)$ indépendants, $R = g_0 A + Z$.
+      Loi de $R$ sachant $A = 1$ ?
+    reponse: |
+      $\mathcal{N}(g_0, \sigma^2)$ : sachant $A = 1$, $R = g_0 + Z$ est une simple translation de $Z$.
+    ref: exr-loi-conditionnelle
+    source: officiel
+
+  - id: ts227-exercice-erreur-conditionnelle
+    type: exercice
+    question: |
+      Règle : $R \geq \gamma \Rightarrow \hat{A} = 1$, sinon $\hat{A} = -1$.
+      Probabilité d'erreur sachant $A = 1$ ?
+    reponse: |
+      $P(R < \gamma \mid A = 1)$ : sachant $A = 1$, on se trompe si l'on décide $-1$.
+      Sans le conditionnement, on mélangerait les deux symboles émis.
+    ref: exr-probabilite-erreur-conditionnelle
+    source: officiel
+
+  - id: ts227-binaire-pb-egal-ps
+    type: propriete
+    question: |
+      Quel lien entre $P_b$ et $P_s$ pour une modulation binaire ($M = 2$) ?
+    reponse: |
+      $P_b = P_s$ : un symbole porte un seul bit.
+    ref: sec-seuil-optimal
+    source: officiel
+
+  - id: ts227-pb-fonction-seuil
+    type: formule
+    question: |
+      Expression de $P_b(\gamma)$ pour des symboles $\pm g_0$ et un seuil $\gamma$ ($f_Z$ : densité du bruit) ?
+    reponse: |
+      $$P_b(\gamma) = p_0 \int_{\gamma}^{+\infty} f_Z(z + g_0)\, \mathrm{d}z + p_1 \int_{-\infty}^{\gamma} f_Z(z - g_0)\, \mathrm{d}z$$
+      Premier terme : bit 0 émis ($-g_0$), décidé 1 ; second : bit 1 émis ($+g_0$), décidé 0.
+    ref: eq-pb-gamma
+    source: officiel
+
+  - id: ts227-seuil-optimal-condition
+    type: raisonnement
+    question: |
+      Quelle équation vérifie le seuil $\gamma$ qui minimise $P_b(\gamma)$ ?
+    reponse: |
+      On annule la dérivée (dérivée d'une intégrale par rapport à sa borne) :
+      $$-p_0 f_Z(\gamma + g_0) + p_1 f_Z(\gamma - g_0) = 0 \iff \frac{f_Z(\gamma - g_0)}{f_Z(\gamma + g_0)} = \frac{p_0}{p_1}$$
+    ref: sec-seuil-optimal
+    source: officiel
+
+  - id: ts227-seuil-optimal
+    type: formule
+    question: |
+      Expression du seuil optimal $\gamma^*(p_0)$ en binaire, et conditions d'application ?
+    reponse: |
+      $$\gamma^*(p_0) = \frac{\sigma^2}{2 g_0} \ln\left(\frac{p_0}{1 - p_0}\right)$$
+      Symboles $\pm g_0$ (bit 0 → $-g_0$), bruit gaussien centré de variance $\sigma^2$, $p_0 = P(B_n = 0)$.
+      Le « log » du support est le logarithme népérien.
+    ref: eq-seuil-optimal
+    source: officiel
+
+  - id: ts227-seuil-optimal-calcul
+    type: raisonnement
+    question: |
+      Étape clé du calcul de $\gamma^*$ : que donne le logarithme de $\frac{1 - p_0}{p_0} = \frac{f_Z(\gamma + g_0)}{f_Z(\gamma - g_0)}$ pour un bruit gaussien ?
+    reponse: |
+      $$\ln\frac{1 - p_0}{p_0} = \frac{(\gamma - g_0)^2 - (\gamma + g_0)^2}{2\sigma^2} = -\frac{2\gamma g_0}{\sigma^2}$$
+      d'où $\gamma = \frac{\sigma^2}{2g_0} \ln\frac{p_0}{1 - p_0}$.
+    ref: sec-seuil-optimal
+    source: notes
+
+  - id: ts227-seuil-optimal-limites
+    type: propriete
+    question: |
+      Valeurs de $\gamma^*(p_0)$ quand $p_0 \to 0$, $p_0 \to 1$ et $p_0 = 0{,}5$ ?
+    reponse: |
+      $-\infty$, $+\infty$ et $0$ : pour des bits équiprobables, le seuil est **au milieu** des deux symboles.
+    ref: fig-seuil-optimal
+    source: officiel
+
+  - id: ts227-seuil-mediatrice
+    type: condition
+    question: |
+      À quelles conditions le seuil optimal est-il la médiatrice entre les deux symboles ?
+    reponse: |
+      Si $p_0 = p_1 = 0{,}5$ **et** si le bruit est gaussien.
+    ref: sec-seuil-optimal
+    source: notes
+
+  - id: ts227-seuil-deplacement
+    type: relation
+    question: |
+      Si $p_0 > \frac{1}{2}$, dans quel sens se déplace le seuil optimal, et de combien selon le bruit ?
+    reponse: |
+      Vers $+g_0$ : la région de décision du symbole le plus probable ($-g_0$) s'agrandit.
+      Le déplacement est proportionnel à $\sigma^2$ : à faible bruit, le seuil reste près du milieu.
+    ref: eq-seuil-optimal
+    source: complement
+
+  - id: ts227-exercice-seuil-ook
+    type: exercice
+    question: |
+      $A \in \{0, 1\}$ uniforme, $R = g_0 A + Z$, $Z \sim \mathcal{N}(0, \sigma^2)$.
+      Seuil optimal $\gamma$ ?
+    reponse: |
+      $\gamma^* = \frac{g_0}{2}$, milieu de $0$ et $g_0$.
+      Le support répond $0{,}5$, valable seulement pour $g_0 = 1$.
+    ref: exr-seuil-ook
+    source: officiel
+
+  - id: ts227-pire-probabilite-erreur
+    type: piege
+    question: |
+      Quelle est la « pire » probabilité d'erreur d'une décision binaire : 0, 0,5 ou 1 ?
+    reponse: |
+      $0{,}5$ : la décision ne vaut pas mieux qu'un pile ou face.
+      0 est le meilleur cas, et 1 n'est pas le pire (il suffit d'inverser les décisions).
+      Le support marque 0 par erreur.
+    ref: exr-pire-probabilite
+    source: officiel
+
+  - id: ts227-pb-binaire-q
+    type: formule
+    question: |
+      $P_b$ d'une modulation binaire $\pm g_0$, bits équiprobables, seuil optimal, bruit $\mathcal{N}(0, \sigma^2)$ ?
+    reponse: |
+      $$P_b = Q\left(\frac{g_0}{\sigma}\right)$$
+    ref: eq-pb-binaire
+    source: officiel
+
+  - id: ts227-pb-binaire-changement-variable
+    type: raisonnement
+    question: |
+      Dans le calcul de $P_b = Q(g_0/\sigma)$, quel changement de variable fait apparaître $Q$ dans le terme $0{,}5\int_0^{+\infty} f_Z(z + g_0)\,\mathrm{d}z$ ?
+    reponse: |
+      $z' = \frac{z + g_0}{\sigma}$ : la borne $0$ devient $\frac{g_0}{\sigma}$ et la densité devient celle de $\mathcal{N}(0, 1)$.
+      Le second terme donne la même valeur par symétrie, d'où $0{,}5 Q + 0{,}5 Q = Q$.
+    ref: sec-pb-equiprobable
+    source: complement
+
+  - id: ts227-fonction-q
+    type: definition
+    question: |
+      Définition de la fonction $Q(x)$ ?
+    reponse: |
+      $$Q(x) = \frac{1}{\sqrt{2\pi}} \int_x^{+\infty} e^{-\frac{u^2}{2}}\, \mathrm{d}u$$
+      Probabilité qu'une variable $\mathcal{N}(0, 1)$ dépasse $x$.
+    ref: def-fonction-q
+    source: notes
+
+  - id: ts227-fonction-q-proprietes
+    type: propriete
+    question: |
+      Lien entre $Q$ et $\Phi$, et valeurs ou propriétés utiles de $Q$ ?
+    reponse: |
+      $Q(x) = 1 - \Phi(x)$ ; $Q$ décroissante ; $Q(0) = \frac{1}{2}$ ; $Q(-x) = 1 - Q(x)$ ; $Q(x) < \frac{1}{2}$ pour $x > 0$.
+    ref: def-fonction-q
+    source: complement
+
+  - id: ts227-rsb-definition
+    type: definition
+    question: |
+      Qu'appelle-t-on rapport signal sur bruit (RSB) dans le modèle $R_n = g_0 A_n + Z'_n$ ?
+    reponse: |
+      Le rapport $\frac{g_0}{\sigma}$, rapport d'**amplitudes**, habituellement exprimé en dB.
+      On le rencontre aussi comme rapport d'énergies $\frac{E_b}{N_0}$.
+    ref: def-rsb
+    source: officiel
+
+  - id: ts227-rsb-decibel
+    type: piege
+    question: |
+      Pourquoi l'abscisse de la courbe $P_b = Q(g_0/\sigma)$ est-elle $20\log_{10}(g_0/\sigma)$ et non $10\log_{10}$ ?
+    reponse: |
+      Le décibel s'applique à un rapport de **puissances** ($10\log_{10}$). $\frac{g_0}{\sigma}$ est un rapport d'amplitudes :
+      $10\log_{10}\frac{g_0^2}{\sigma^2} = 20\log_{10}\frac{g_0}{\sigma}$.
+    ref: def-rsb
+    source: notes
+
+  # --- Cas M-aire ---
+
+  - id: ts227-ps-equiprobables
+    type: formule
+    question: |
+      Expression de $P_s$ pour une constellation de $M$ symboles équiprobables ?
+    reponse: |
+      $$P_s = \frac{1}{M} \sum_{i=0}^{M-1} P(\hat{A}_n \neq A_n \mid A_n = a_i)$$
+      Chaque terme est la probabilité d'erreur si $a_i$ est envoyé.
+    ref: eq-ps-equiprobables
+    source: officiel
+
+  - id: ts227-seuils-4pam
+    type: resultat
+    question: |
+      Seuils optimaux de la 4-PAM $\{-3, -1, 1, 3\}$ (multipliée par $g_0$), symboles équiprobables ?
+    reponse: |
+      $(\gamma_0, \gamma_1, \gamma_2) = (-2g_0, 0, 2g_0)$ : au milieu de chaque intervalle.
+      Si les symboles ne sont pas équiprobables, les seuils dépendent de toutes les probabilités $P(A_n = a_i)$.
+    ref: exm-4pam-bruit
+    source: officiel
+
+  - id: ts227-ps-4pam
+    type: resultat
+    question: |
+      $P_s$ de la 4-PAM équiprobable, et probabilité d'erreur conditionnelle des symboles extrêmes et intérieurs ?
+    reponse: |
+      Extrêmes : $Q(g_0/\sigma)$ (un voisin) ; intérieurs : $2Q(g_0/\sigma)$ (deux voisins).
+      $$P_s = \frac{1}{4}(Q + 2Q + 2Q + Q) = \frac{3}{2} Q\left(\frac{g_0}{\sigma}\right)$$
+    ref: eq-ps-4pam
+    source: officiel
+
+  - id: ts227-ps-mpam
+    type: formule
+    question: |
+      $P_s$ d'une $M$-PAM, et conditions d'application ?
+    reponse: |
+      $$P_s = 2\, \frac{M - 1}{M}\, Q\left(\frac{g_0}{\sigma}\right)$$
+      Symboles équiprobables espacés de $2g_0$, seuils au milieu des intervalles, bruit gaussien centré
+      de variance $\sigma^2$ indépendant des symboles. Cas $M \to \infty$ : $P_s \to 2Q(g_0/\sigma)$.
+    ref: eq-ps-mpam
+    source: officiel
+
+  - id: ts227-ps-mpam-demonstration
+    type: raisonnement
+    question: |
+      Argument de dénombrement qui donne $P_s = 2\frac{M-1}{M}Q(g_0/\sigma)$ pour la $M$-PAM ?
+    reponse: |
+      2 points au bord, d'erreur $Q$ ; $M - 2$ points à deux voisins, d'erreur $2Q$ :
+      $$P_s = \frac{2Q + 2(M - 2)Q}{M} = 2\,\frac{M - 1}{M}\, Q$$
+    ref: prp-ps-mpam
+    source: notes
+
+  - id: ts227-exercice-ps-croissante
+    type: exercice
+    question: |
+      $M$-PAM équiprobable, $g_0 = 1$, $\sigma > 0$. $P_s$ est-elle croissante en $M$ ? Est-elle toujours $< 1$ ?
+    reponse: |
+      Les deux : $\frac{M - 1}{M} = 1 - \frac{1}{M}$ croît avec $M$, et $Q(1/\sigma) < \frac{1}{2}$ donne $P_s < 2 \cdot \frac{1}{2} = 1$.
+    ref: exr-ps-croissante
+    source: officiel
+
+  - id: ts227-pb-ps-inegalite
+    type: relation
+    question: |
+      Quelle inégalité relie $P_b$ et $P_s$ pour un étiquetage quelconque, et que devient-elle avec un étiquetage de Gray ?
+    reponse: |
+      $P_b \geq \frac{P_s}{\log_2 M}$ (une erreur symbole fausse au moins un bit).
+      Gray : $P_b \simeq \frac{P_s}{\log_2 M}$, car à fort RSB les erreurs se font vers un voisin, qui ne diffère que d'un bit.
+    ref: prp-pb-ps
+    source: officiel
+
+  - id: ts227-pb-mpam
+    type: formule
+    question: |
+      $P_b$ de la $M$-PAM en fonction de $g_0/\sigma$, et validité ?
+    reponse: |
+      $$P_b \simeq 2\, \frac{M - 1}{M \log_2 M}\, Q\left(\frac{g_0}{\sigma}\right)$$
+      Approximation : étiquetage de Gray, RSB suffisant (le support écrit « = ») ; exacte pour $M = 2$.
+    ref: eq-pb-mpam
+    source: officiel
+
+  - id: ts227-gray-miroir
+    type: methode
+    question: |
+      Comment construire l'étiquetage de Gray de $2M$ symboles à partir de celui de $M$ symboles ? Exemple pour $M = 4$.
+    reponse: |
+      Recopier la liste des étiquettes en **miroir**, puis ajouter un bit de tête 0 à la première moitié et 1 à la seconde.
+      $M = 2$ : 0, 1 → $M = 4$ : 00, 01, 11, 10.
+    ref: tbl-gray-miroir
+    source: notes
+
+  # --- Récepteur optimal ---
+
+  - id: ts227-filtre-adapte-definition
+    type: definition
+    question: |
+      Qu'est-ce qu'un filtre adapté, et pourquoi le cherche-t-on ?
+    reponse: |
+      Le filtre linéaire de réception qui **maximise** $\frac{g_0}{\sigma}$ aux instants de décision $n\Ts$.
+      $P_b$ décroît avec $\frac{g_0}{\sigma}$ : le maximiser minimise $P_b$.
+    ref: def-filtre-adapte
+    source: officiel
+
+  - id: ts227-g0-filtres
+    type: formule
+    question: |
+      Expression de $g_0$ en fonction de $h$ et $h_a$ (temps et fréquence), canal sans déformation ?
+    reponse: |
+      $$g_0 = \int h(u)\, h_a(-u)\, \mathrm{d}u = \int H(f)\, H_a(f)\, \mathrm{d}f$$
+      ($g_0 = g(0)$, puis transformée de Fourier inverse en $t = 0$.)
+    ref: eq-g0-filtres
+    source: officiel
+
+  - id: ts227-variance-bruit-filtre
+    type: formule
+    question: |
+      Variance $\sigma^2$ du bruit après le filtre de réception $h_a$, pour un bruit blanc de DSP $\frac{N_0}{2}$ ?
+    reponse: |
+      $$\sigma^2 = \frac{N_0}{2} \int |H_a(f)|^2\, \mathrm{d}f = \frac{N_0}{2} \int |h_a(t)|^2\, \mathrm{d}t$$
+      ($\Gamma_{Z'_l} = \frac{N_0}{2}|H_a|^2$, puis égalité de Parseval.)
+    ref: eq-variance-bruit-filtre
+    source: officiel
+
+  - id: ts227-bruit-filtre-gaussien
+    type: propriete
+    question: |
+      Pourquoi le bruit en sortie du filtre de réception est-il gaussien, centré, et de variance finie ?
+    reponse: |
+      Gaussien : filtrage linéaire d'un processus gaussien. Centré : moyenne $m_{Z_l} H_a(0) = 0$.
+      Variance finie : le filtre limite la bande du bruit blanc, dont la puissance est infinie.
+    ref: sec-variance-bruit-filtre
+    source: complement
+
+  - id: ts227-filtre-adapte-cauchy-schwarz
+    type: raisonnement
+    question: |
+      Quelle inégalité donne le filtre adapté, et avec quelles fonctions $u$ et $v$ l'applique-t-on ?
+    reponse: |
+      Cauchy-Schwarz : $\left(\int u v\right)^2 \leq \int u^2 \int v^2$, égalité si $u = \lambda v$.
+      Avec $u(t) = h(t)$ et $v(t) = h_a(-t)$ : $\frac{g_0^2}{\sigma^2} \leq \frac{2}{N_0}\int |h|^2$, égalité pour $h_a(t) = \lambda h(-t)$.
+    ref: thm-filtre-adapte
+    source: officiel
+
+  - id: ts227-filtre-adapte
+    type: formule
+    question: |
+      Expression du filtre adapté au filtre de mise en forme $h(t)$ ?
+    reponse: |
+      $$h_a(t) = h^*(-t)$$
+      (à un coefficient $\lambda$ près) : version retournée et conjuguée de $h$.
+    ref: eq-filtre-adapte
+    source: officiel
+
+  - id: ts227-rsb-max
+    type: resultat
+    question: |
+      Valeur maximale de $\frac{g_0^2}{\sigma^2}$ obtenue avec le filtre adapté ?
+    reponse: |
+      $$\left(\frac{g_0^2}{\sigma^2}\right)_{\max} = \frac{2E_h}{N_0}, \qquad E_h = \int |h(t)|^2\, \mathrm{d}t$$
+    ref: eq-rsb-max
+    source: officiel
+
+  - id: ts227-filtre-adapte-lambda
+    type: propriete
+    question: |
+      Le coefficient $\lambda$ de $h_a(t) = \lambda h^*(-t)$ change-t-il les performances ? Que donne $\lambda = \frac{1}{R_h(0)}$ ?
+    reponse: |
+      Non : $\lambda$ multiplie à la fois $g_0$ et $\sigma$, donc $g_0/\sigma$ ne change pas.
+      Choix usuels : $\lambda = 1$ (alors $g_0 = E_h$) ou $\lambda = \frac{1}{R_h(0)} = \frac{1}{E_h}$ (alors $g_0 = 1$).
+    ref: thm-filtre-adapte
+    source: notes
+
+  - id: ts227-filtre-global-adapte
+    type: relation
+    question: |
+      Avec le filtre adapté $h_a(t) = \lambda h^*(-t)$, que valent le filtre global $g(t)$ et $G(f)$ ?
+    reponse: |
+      $g(t) = \lambda R_h(t)$ : autocorrélation déterministe de $h$, maximale en 0 ; $G(f) = \lambda |H(f)|^2$.
+    ref: sec-filtre-adapte-causal
+    source: notes
+
+  - id: ts227-filtre-adapte-causal
+    type: formule
+    question: |
+      Comment rend-on le filtre adapté causal, et à quel instant faut-il alors décider ?
+    reponse: |
+      On le retarde de $T_h \geq$ durée de $h$ : $h_a(t) = h^*(T_h - t)$.
+      Alors $g(t) = R_h(t - T_h)$, maximal en $t = T_h$ : on échantillonne en $T_h + n\Ts$.
+    ref: sec-filtre-adapte-causal
+    source: officiel
+
+  - id: ts227-filtre-adapte-causal-piege
+    type: piege
+    question: |
+      Le support écrit le filtre adapté causal $h_a(t) = h(t - T_h)$. Quelle est l'erreur ?
+    reponse: |
+      Il manque le **retournement temporel** : retarder $h^*(-t)$ de $T_h$ donne $h^*(T_h - t)$.
+      Avec $h(t - T_h)$, on n'obtient pas $g(t) = R_h(t - T_h)$.
+    ref: sec-filtre-adapte-causal
+    source: officiel
+
+  - id: ts227-pb-min-eh
+    type: formule
+    question: |
+      $P_{b,\min}$ de la $M$-PAM avec filtre adapté, en fonction de $E_h$ et $N_0$ ?
+    reponse: |
+      $$P_{b,\min} = 2\, \frac{M - 1}{M \log_2 M}\, Q\left(\sqrt{\frac{2E_h}{N_0}}\right)$$
+      On remplace $\frac{g_0}{\sigma}$ par $\sqrt{2E_h/N_0}$ ; mêmes conditions que pour $P_b$ (Gray, fort RSB).
+    ref: eq-pb-min-eh
+    source: officiel
+
+  # --- Demi-Nyquist ---
+
+  - id: ts227-filtre-demi-nyquist
+    type: definition
+    question: |
+      Qu'est-ce qu'un filtre demi-Nyquist, et sous quelles conditions l'utilise-t-on ?
+    reponse: |
+      Un filtre tel que $H(f) = H_a(f) = \sqrt{N_y(f)}$, avec $N_y$ vérifiant le critère de Nyquist :
+      même filtre à l'émission et à la réception. Conditions : canal plat, $g(t)$ à symétrie paire.
+    ref: def-filtre-demi-nyquist
+    source: officiel
+
+  - id: ts227-demi-nyquist-filtre-adapte
+    type: relation
+    question: |
+      Pourquoi choisir $|H(f)|^2 = N_y(f)$ avec un filtre adapté donne-t-il à la fois l'absence d'IES et le RSB maximal ?
+    reponse: |
+      Le filtre adapté donne $G(f) = |H(f)|^2 = N_y(f)$ : $g$ vérifie le critère de Nyquist (pas d'IES)
+      et le RSB est maximal. Exemple usuel : la racine de cosinus surélevé.
+    ref: def-filtre-demi-nyquist
+    source: complement
+
+  # --- Lien entre Pb et Eb/N0 ---
+
+  - id: ts227-energie-bit
+    type: definition
+    question: |
+      Définition de l'énergie par bit $E_b$ ?
+    reponse: |
+      Énergie moyenne par bit d'information transmis : $E_b = P\, \Tb = \frac{P}{D_b}$,
+      $P$ étant la puissance moyenne du signal utile transmis.
+    ref: eq-energie-bit
+    source: officiel
+
+  - id: ts227-eb-energie-filtre
+    type: formule
+    question: |
+      Expression de $E_b$ en fonction de $E_h$ pour des symboles iid centrés de variance $\sigma_a^2$ ?
+    reponse: |
+      $P = \frac{\sigma_a^2 E_h}{\Ts}$ (Bennett et Parseval), et $\Ts = \log_2(M)\, \Tb$, d'où
+      $$E_b = \frac{\sigma_a^2 E_h}{\log_2 M}$$
+    ref: eq-puissance-signal-emis
+    source: officiel
+
+  - id: ts227-pb-min-eb-n0
+    type: formule
+    question: |
+      $P_{b,\min}$ en fonction de $\frac{E_b}{N_0}$ et de $\sigma_a^2$ ?
+    reponse: |
+      $$P_{b,\min} = 2\, \frac{M - 1}{M \log_2 M}\, Q\left(\sqrt{\frac{2 \log_2 M}{\sigma_a^2}\, \frac{E_b}{N_0}}\right)$$
+    ref: eq-pb-min-eb-n0
+    source: officiel
+
+  - id: ts227-variance-mpam
+    type: resultat
+    question: |
+      Variance $\sigma_a^2$ des symboles d'une $M$-PAM $\{\pm 1, \pm 3, \dots, \pm(M-1)\}$ équiprobable ? Valeurs pour $M = 2$ et $M = 4$ ?
+    reponse: |
+      $\sigma_a^2 = \frac{M^2 - 1}{3}$ : 1 pour $M = 2$, 5 pour $M = 4$.
+    ref: eq-pb-min-mpam
+    source: officiel
+
+  - id: ts227-pb-min-mpam
+    type: formule
+    question: |
+      $P_{b,\min}$ de la $M$-PAM en fonction de $\frac{E_b}{N_0}$ seulement ?
+    reponse: |
+      $$P_{b,\min} = 2\, \frac{M - 1}{M \log_2 M}\, Q\left(\sqrt{\frac{6 \log_2 M}{M^2 - 1}\, \frac{E_b}{N_0}}\right)$$
+    ref: eq-pb-min-mpam
+    source: officiel
+
+  - id: ts227-pb-bpsk-eb-n0
+    type: resultat
+    question: |
+      $P_b$ d'une 2-PAM avec récepteur optimal, en fonction de $\frac{E_b}{N_0}$ ? Lien avec $\frac{g_0}{\sigma}$ ?
+    reponse: |
+      $P_b = Q\left(\sqrt{\frac{2E_b}{N_0}}\right)$ ; $\frac{g_0}{\sigma} = \sqrt{2E_b/N_0}$,
+      soit $20\log_{10}\frac{g_0}{\sigma} = 10\log_{10}\frac{E_b}{N_0} + 3\ \mathrm{dB}$.
+    ref: exr-td-probabilite-erreur
+    source: officiel
+
+  - id: ts227-pb-influence-m
+    type: relation
+    question: |
+      À $\frac{E_b}{N_0}$ fixé, comment évolue $P_{b,\min}$ de la $M$-PAM quand $M$ augmente, et quel est le compromis ?
+    reponse: |
+      $P_b$ augmente avec $M$ (à 10 dB : $\approx 4 \cdot 10^{-6}$ pour $M = 2$, $\approx 2 \cdot 10^{-3}$ pour $M = 4$).
+      Augmenter $M$ améliore l'efficacité spectrale mais demande plus d'énergie par bit.
+    ref: fig-pb-eb-n0
+    source: complement
+
+  # --- Exercices du TD ---
+
+  - id: ts227-exercice-filtre-adapte-porte
+    type: exercice
+    question: |
+      $h$ porte de durée $\Ts$, filtre adapté causal $h^*(D - t)$ avec $D \geq \Ts$. Que vaut le filtre global $g(t)$ ?
+    reponse: |
+      Un triangle de sommet $\Ts$ en $t = D$, nul hors de $[D - \Ts, D + \Ts]$.
+      Il vérifie le critère de Nyquist aux instants $D + n\Ts$, avec $g_0 = \Ts = E_h$.
+    ref: exr-td-filtre-adapte
+    source: officiel
+
+  - id: ts227-exercice-causalite-premier-symbole
+    type: exercice
+    question: |
+      Qu'entraîne la causalité des filtres de mise en forme et adapté sur la réception du premier symbole ?
+    reponse: |
+      Elle est **retardée** de $D$ : $A_0$ n'atteint le maximum de $g$ qu'en $t = D \geq \Ts$,
+      et l'échantillonneur doit être calé sur les instants $D + n\Ts$.
+    ref: exr-td-filtre-adapte
+    source: complement
+
+  - id: ts227-exercice-bruit-echantillonne
+    type: exercice
+    question: |
+      Autocorrélation des échantillons $z'_l[k]$ du bruit en sortie de filtre adapté, échantillonnés à $\Ts$ ?
+    reponse: |
+      $R_{z'_l}[k] = \frac{N_0}{2}\, g(k\Ts) = \frac{N_0}{2}\, g(0)\, \delta_k$ ($g$ de Nyquist) :
+      bruit stationnaire, décorrélé, de variance $\sigma^2 = \frac{N_0}{2} g(0)$.
+    ref: exr-td-probabilite-erreur
+    source: officiel
+
+  - id: ts227-bruit-blanc-echantillons-piege
+    type: piege
+    question: |
+      Pourquoi « $\sigma_{z_l}^2 = \frac{N_0}{2}$ » pour les échantillons d'un bruit blanc demande-t-il une hypothèse ?
+    reponse: |
+      Un bruit blanc a une puissance infinie. Limité à $[-f_e/2, f_e/2]$ avant échantillonnage,
+      ses échantillons ont la variance $\frac{N_0}{2T_e}$, égale à $\frac{N_0}{2}$ seulement si $T_e = 1$.
+    ref: exr-td-probabilite-erreur
+    source: complement
+
+  - id: ts227-exercice-fiabilite-4pam
+    type: exercice
+    question: |
+      4-PAM $\{\pm 1, \pm 3\}$, $g_0 = 1$, $\sigma^2 = \frac{1}{16}$. Les intervalles $\pm 3\sigma$ se chevauchent-ils ? Que vaut $P_s$ ?
+    reponse: |
+      $\sigma = \frac{1}{4}$ : intervalles $[A - 0{,}75, A + 0{,}75]$, disjoints et sans seuil.
+      $P_s = 2 \cdot \frac{3}{4}\, Q(4) \approx 4{,}8 \cdot 10^{-5}$ : transmission fiable.
+    ref: exr-td-constellation-bruitee
+    source: complement

@@ -1,7 +1,7 @@
 # TS227 — Chapitre 4 — Rapport d'analyse des sources
 
 > Étapes 2 à 5 du workflow (`CONTEXTE_PROJET.md`, section 11), enchaînées dans la même session que le chapitre 1, à la demande d'Armand (conversation « Bristol — TS227 Chapitres 1 et 4 — Rédaction », 7 octobre 2026).
-> Chapitre : *Transmission en présence de bruit*. Fichier : `cours/04-transmission-presence-bruit.qmd`. Statut : `redige`.
+> Chapitre : *Transmission en présence de bruit*. Fichier : `cours/04-transmission-presence-bruit.qmd`. Statut : `flashcards` (étapes 6 à 8, sections 17-18).
 > Règle appliquée : `conventions.md` § 14 (choix de forme, de figures et de rédaction appliqués par défaut, section 12 ; questions bloquantes en section 14).
 
 ---
@@ -11,7 +11,7 @@
 - Le support couvre le chapitre 4 aux **pages 89 à 138** du PDF (diapositives 79 à 119/161). Après suppression des pages de plan, des écrans « Sortez vos téléphones » et des animations (p. 90-93, 95-97, 101-106 et 135-136 se complètent ou se répètent), il reste environ **30 pages utiles**.
 - Notes : **f. 3 r° (bas), f. 3 v°, f. 4 r°, f. 4 v° (haut)**. Elles apportent le calcul complet du seuil optimal, la démonstration de la généralisation à la M-PAM (« 2 points au bord, M − 2 points avec 2 voisins »), la **définition de la fonction Q** (absente du support), la **construction de Gray en miroir**, les choix de $\lambda$ du filtre adapté et le dessin du filtre adapté causal.
 - TD intégré : **ex. 3** (filtre adapté, causalité), **ex. 4** (probabilité d'erreur, bruit filtré, $E_b/N_0$), **ex. 5, q. 12-13** (bruit et fiabilité). Les questions 1-2 et 4-5 de l'ex. 4 de la correction sont reprises ; ex. 3 q. 3-4, ex. 4 q. 3-4 et ex. 5 q. 12-13 n'ont pas de corrigé (solutions en *Complément*).
-- Blocs *À vérifier* : **11 ouverts**, 0 tranché (section 7) : 6 sur le support, 2 sur les notes, 3 sur le TD. **11 questions bloquantes** (section 14).
+- Blocs *À vérifier* : 11 ouverts à l'analyse (section 7 : 6 sur le support, 2 sur les notes, 3 sur le TD), **tous tranchés** à l'étape 3 (section 16).
 - 7 nouvelles figures matplotlib ; la chaîne de transmission réutilise la figure du chapitre 2.
 
 Citations : `[poly, p. N]` = page du PDF ; `[notes, f. 3 v°]` ; `[td, p. N]` ; `[td-correction, p. N]`. Réponses des quiz : lues dans le code `#QDLE#…#` de chaque diapositive (l'astérisque suit la bonne réponse ; convention vérifiée sur les quiz p. 25, 34 et 51 déjà traités au chapitre 2).
@@ -297,3 +297,43 @@ Armand laisse le choix à Claude (« corrige avec ce que tu trouves le plus logi
 | 11 | `av-variance-bruit-discret-td` | bande limitée, $\sigma^2 = N_0/(2T_e)$ | bloc tranché |
 
 Bilan : **0 bloc ouvert, 11 tranchés**. Contrôles après modification : 801 formules (ch. 1 et 4) compilées sans erreur par MathJax 3.2.2 ; divs équilibrés. Les choix par défaut de la section 12 restent à revoir à la validation.
+
+---
+
+## 17. Vérification (étape 6, 7 octobre 2026)
+
+Conversation « Bristol — TS227 Chapitres 1 et 4 — Vérification et flashcards ».
+
+**Exhaustivité.**
+
+- **Poly p. 89-138** relu page à page (texte extrait du PDF) : définitions de $P_s$ et $P_b$, hypothèses, 5 quiz, calcul du seuil optimal, cas particuliers, calcul de $P_b$, RSB, cas M-aire (4-PAM, généralisation, $P_b$/$P_s$, Gray), récepteur optimal (p. 125-130), demi-Nyquist (p. 132), $E_b/N_0$ (p. 134-138) : tout est repris. Seul manque relevé : l'égalité $P(\text{erreur} \mid A_n = a_i) = P(\hat{A}_n \neq A_n \mid A_n = a_i)$ des p. 117-118, ajoutée.
+- **Notes f. 2 v° à f. 4 v°** relues sur les photos : tout le contenu du chapitre 4 est repris (14 blocs `.notes`). L'exercice du bas du f. 2 v° ($Z_n \sim \mathcal{N}(0, \sigma^2)$, $R_n = g_0 + Z_n$) est déjà au chapitre 3 (`exr-loi-gaussienne`) ; le haut du f. 3 r° (critère de Nyquist, efficacité spectrale) relève du chapitre 2 ; le bas du f. 4 v° ($s_l(t)$ aléatoire), du chapitre 3.
+- **TD** (énoncé p. 3-4) et **correction** (p. 9-14) relus : ex. 3, ex. 4 et ex. 5 q. 12-13 complets ; correspondance des questions exacte ; $h_c = \delta$ vient de la correction (« $h_l(t) = \delta(t)$ »).
+
+**Formules.** 803 formules (ch. 1 et 4) compilées sans erreur (MathJax 3.2.2, macros de `_macros.qmd`). Recalculés : $\gamma^*$ (support et notes), $P_s$ 4-PAM et M-PAM, $\sigma_a^2 = (M^2 - 1)/3$, $P_{b,\min}$ ; $Q(1) \approx 0{,}159$, $Q(\sqrt{10}) \approx 7{,}8 \cdot 10^{-4}$, $Q(\sqrt{20}) \approx 3{,}9 \cdot 10^{-6}$, $P_{b,\min}(M = 4, 10\ \mathrm{dB}) \approx 1{,}8 \cdot 10^{-3}$, $Q(4)$ ; triangle $v(t)$ ; solutions TD ex. 4 q. 2, 5-7. Aucune erreur.
+
+**Catégories.** Texte du support sans marquage ; 14 blocs `.notes`, chacun cité par feuillet ; compléments C1-C23 ; 11 blocs tranchés complets (Source, Problème, Proposition, Décision). Une citation des notes ($g(t) = \int G(f) e^{j2\pi ft}\, \mathrm{d}f$, f. 4 v°) était dans un bloc *Complément* : déplacée dans un bloc `.notes`.
+
+**Références.** Toutes les références `@…` résolues ; liens vers les chapitres 2 et 3 résolus ; identifiants `av-…` cités existants ; labels uniques ; divs équilibrés ; toutes les équations labellisées sont citées.
+
+**Figures.** Les 7 SVG du chapitre (et la chaîne du ch. 2) relus en image : courbes conformes aux formules et au support (p. 103, 108, 113, 116-119, 138), légendes avec origine. Remarque sans correction : l'abscisse de `04-constellation-bruitee` est notée $r_l[n]$ (notation du TD), la légende dit $r_n$.
+
+**Corrections de forme appliquées** (`conventions.md` § 14) :
+
+1. 11 blocs tranchés : ligne **Décision** séparée de **Proposition** par une ligne vide.
+2. Citation des notes sortie du complément de $g_0$ (nouveau bloc `.notes`).
+3. TD ex. 3 q. 4 (complément) : « $g(-D) = 0$ » → « $A_0$ y contribue par $g(0) = 0$ » (c'est $g(0)$ qui intervient).
+4. Égalité des p. 117-118 ajoutée (exemple 4-PAM).
+5. Section 0 de ce rapport mise à jour.
+
+**Points bloquants : aucun.** Statut : `verifie`.
+
+---
+
+## 18. Validation et flashcards (étapes 7 et 8, 7 octobre 2026)
+
+- **Validation** : chapitre validé par Armand (« validé »), y compris les choix par défaut de la section 12. Statut `valide`.
+- **Flashcards** : `flashcards/04-transmission-presence-bruit.yml`, **57 cartes**, générées à partir du cours validé (`conventions.md` § 10) ; `ids-retires: []`. Toutes les `ref` pointent vers un label du chapitre.
+- Répartition (ch. 4) : 16 formules, 8 exercices, 6 définitions, 5 pièges, 5 propriétés, 5 raisonnements, 5 relations, 5 résultats, 1 condition, 1 méthode ; 9 cartes issues des notes.
+- `python scripts/flashcards.py` lancé : `revision/cartes/ts227.json` = **186 cartes** (ch. 1 : 12, ch. 2 : 61, ch. 3 : 56, ch. 4 : 57), 69 nouvelles clés, 0 clé disparue. Formules des cartes des ch. 1 et 4 (313) compilées sans erreur avec MathJax 3.2.2, après développement des macros.
+- Statut final : `flashcards`.

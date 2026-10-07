@@ -1,7 +1,7 @@
 # TS227 — Chapitre 1 — Rapport d'analyse des sources
 
 > Étapes 2 à 5 du workflow (`CONTEXTE_PROJET.md`, section 11), enchaînées dans la même session que le chapitre 4 (conversation « Bristol — TS227 Chapitres 1 et 4 — Rédaction », 7 octobre 2026).
-> Chapitre : *Introduction*. Fichier : `cours/01-introduction.qmd`. Statut : `redige`.
+> Chapitre : *Introduction*. Fichier : `cours/01-introduction.qmd`. Statut : `flashcards` (étapes 6 à 8, sections 17-18).
 > Règle appliquée : `conventions.md` § 14.
 
 ---
@@ -11,7 +11,7 @@
 - Le support couvre le chapitre 1 aux **pages 1 à 14** du PDF (diapositives 1 à 14/161) ; après suppression de la page de titre et des 5 pages de plan, il reste **8 pages utiles** (p. 2, 5, 7, 9, 11-14).
 - **Aucune note de cours ne porte sur ce chapitre** : les notes commencent au feuillet 1 recto par le contenu du chapitre 2 (signal $s_b(t)$, voir le rapport du chapitre 2). Le chapitre est **rédigé à partir du poly seul** ; il ne contient aucun bloc `.notes`.
 - Aucun exercice du TD ne porte sur ce chapitre ; le support n'y contient ni quiz ni démonstration.
-- Blocs *À vérifier* : **2 ouverts** (section 7) ; **2 questions bloquantes** (section 14).
+- Blocs *À vérifier* : 2 ouverts à l'analyse (section 7), **tranchés** à l'étape 3 (section 16) : 0 ouvert, 2 tranchés.
 - 1 figure TikZ (modèle de Shannon et Weaver) ; historique et couches OSI en tableaux.
 
 ---
@@ -162,3 +162,33 @@ Armand laisse le choix à Claude : les deux propositions sont retenues, les bloc
 | 2 | `av-recepteur-destination` | « compréhensible par la destination » | texte corrigé, mention du texte du support |
 
 Bilan : **0 bloc ouvert, 2 tranchés**.
+
+---
+
+## 17. Vérification (étape 6, 7 octobre 2026)
+
+Conversation « Bristol — TS227 Chapitres 1 et 4 — Vérification et flashcards ».
+
+**Exhaustivité.** Poly p. 1-14 relu page à page contre le chapitre : définition, historique, OSI (7 couches et regroupements), modèle de Shannon et Weaver (p. 11-14) : tout est repris. Aucune note, aucun exercice du TD.
+
+**Formules et faits.** 2 formules ; compléments historiques (Nyquist 1924/1928, Shannon 1948, livre de 1949) cohérents avec le support ; « couche PHY » employée par le support aux p. 86 (ch. 3) et 113 (ch. 4), comme l'indique le complément.
+
+**Catégories.** Texte du support sans marquage ; 7 compléments ; 0 bloc `.notes` (aucune note) ; 2 blocs tranchés, chacun avec Source, Problème, Proposition, Décision.
+
+**Références et figure.** Toutes les références `@…` et les liens vers le chapitre 2 résolus ; labels uniques dans la matière ; divs équilibrés ; formules compilées sans erreur (MathJax 3.2.2, macros de `_macros.qmd`). Figure `01-shannon-weaver.svg` relue en image : conforme au schéma des p. 11-14.
+
+**Corrections de forme appliquées** (`conventions.md` § 14) :
+
+1. Blocs tranchés : ligne **Décision** séparée de **Proposition** par une ligne vide (elle formait un seul paragraphe), comme aux chapitres 2 et 3.
+2. Section 0 de ce rapport mise à jour (« 2 ouverts » → tranchés).
+
+**Points bloquants : aucun.** Statut : `verifie`.
+
+---
+
+## 18. Validation et flashcards (étapes 7 et 8, 7 octobre 2026)
+
+- **Validation** : chapitre validé par Armand (« validé »), y compris les choix par défaut de la section 12. Statut `valide`.
+- **Flashcards** : `flashcards/01-introduction.yml`, **12 cartes**, générées à partir du cours validé (`conventions.md` § 10) ; `ids-retires: []`. Toutes les `ref` pointent vers un label du chapitre.
+- `python scripts/flashcards.py` lancé : `revision/cartes/ts227.json` = **186 cartes** (ch. 1 : 12, ch. 2 : 61, ch. 3 : 56, ch. 4 : 57), 69 nouvelles clés, 0 clé disparue. Formules des cartes des ch. 1 et 4 (313) compilées sans erreur avec MathJax 3.2.2, après développement des macros.
+- Statut final : `flashcards`.
