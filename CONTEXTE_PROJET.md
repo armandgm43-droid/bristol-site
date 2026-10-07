@@ -797,9 +797,9 @@ Le découpage en chapitres Bristol suit ce plan (décision du 2026-10-07), même
 
 - p. 78 : loi de $Y = aX + b$ donnée avec la variance $b^2\sigma^2$ ; la variance correcte est $a^2\sigma^2$ ;
 - p. 78 : intervalles de confiance gaussiens donnés à 67 % (±σ) et 99 % (±3σ) ; valeurs usuelles ≈ 68 % et 99,7 % ;
-- p. 130 : filtre adapté causal écrit $h_a(t) = h(t - T_h)$ ; il manque le retournement temporel, $h_a(t) = h^*(T_h - t)$, comme dans le TD ;
+- p. 130 : filtre adapté causal écrit $h_a(t) = h(t - T_h)$ ; il manque le retournement temporel, $h_a(t) = h^*(T_h - t)$, comme dans le TD (*tranché le 2026-10-07 : corrigé, bloc `av-filtre-adapte-causal`, ch. 4*) ;
 - p. 153 : la formule de $P_b$ de la M-PSK est en réalité une approximation de $P_s$, valable pour $M \geq 4$ ; pour la BPSK, $P_b = Q\left(\sqrt{2E_b/N_0}\right)$ ;
-- p. 111 : la réponse marquée comme correcte au quiz sur la « pire » probabilité d'erreur binaire est à vérifier sur la diapositive ; la valeur attendue est 0,5.
+- p. 111 : la réponse marquée comme correcte au quiz sur la « pire » probabilité d'erreur binaire est à vérifier sur la diapositive ; la valeur attendue est 0,5 (*tranché le 2026-10-07 : la réponse marquée est 0 dans le code du quiz, corrigée en 0,5, bloc `av-quiz-pire-probabilite`, ch. 4*).
 
 **Dans la correction du TD :**
 

@@ -42,8 +42,10 @@ website:
         - matieres/ts227-communications-numeriques/index.qmd
         - section: "Cours"
           contents:
+            - matieres/ts227-communications-numeriques/cours/01-introduction.qmd
             - matieres/ts227-communications-numeriques/cours/02-communication-sans-bruit.qmd
             - matieres/ts227-communications-numeriques/cours/03-dsp-signaux-codes-en-ligne.qmd
+            - matieres/ts227-communications-numeriques/cours/04-transmission-presence-bruit.qmd
         # Ajouter les chapitres au fur et à mesure, dans l'ordre :
         # - section: "Cours"
         #   contents:

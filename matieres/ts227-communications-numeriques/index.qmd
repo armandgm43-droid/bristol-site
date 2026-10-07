@@ -18,10 +18,10 @@ number-sections: false
 
 | N° | Chapitre | Statut |
 |---|---|---|
-| 1 | Introduction | BROUILLON |
+| 1 | [Introduction](cours/01-introduction.qmd) | RÉDIGÉ |
 | 2 | [Principes de communication en l'absence de bruit](cours/02-communication-sans-bruit.qmd) | FLASHCARDS GÉNÉRÉES |
 | 3 | [DSP des signaux codés en ligne](cours/03-dsp-signaux-codes-en-ligne.qmd) | FLASHCARDS GÉNÉRÉES |
-| 4 | Transmission en présence de bruit | BROUILLON |
+| 4 | [Transmission en présence de bruit](cours/04-transmission-presence-bruit.qmd) | RÉDIGÉ |
 | 5 | Transmission sur fréquence porteuse | BROUILLON |
 | 6 | Modulation et démodulation numériques | BROUILLON |
 
@@ -46,7 +46,12 @@ Le cours Bristol suit les notations **du cours** (poly). Correspondance avec le 
 | Autocorrélation des symboles | $R_A[m] = \E[A_n A^*_{n-m}]$ (convention retenue, ch. 3) | énoncé : $\E(A_n A^*_{n+k})$ ; correction : comme le cours | comme le cours |
 | Autocorrélation moyennée | $\tilde{R}_X(\tau)$ | $\bar{R}_{s_l}(\tau)$ | $\tilde{R}_{s_l}(\tau)$ |
 | Autocorrélation déterministe du filtre de mise en forme | $R_h(\tau)$ (ch. 3) | $v(\tau)$ (correction, p. 6 ; ce n'est **pas** le filtre global $v(t)$ de l'énoncé) | $R_h(\tau)$ |
-| Variance des symboles centrés | $\sigma_A^2$ | $\sigma_A^2$ (correction) | $\sigma_a^2$ |
+| Variance des symboles centrés | $\sigma_A^2$ (ch. 3) ; $\sigma_a^2$ (poly p. 135-137, ch. 4) | $\sigma_A^2$ (correction) | $\sigma_a^2$ |
+| Bits, symboles, échantillons vus comme variables aléatoires (ch. 4) | $B_n$, $A_n$, $R_n$, $Z'_n$ | $B_n$, $A_n$, $r_l[n]$, $n'_l[n]$ | $B_n$, $A_n$, $R_n$, $Z_n$ ou $Z'_n$ |
+| Densité du bruit échantillonné (ch. 4) | $f_{Z'}$ (p. 104-106), $f_Z$ (p. 107) ; Bristol : $f_Z$ | — | $f_Z$ |
+| Seuil de décision (ch. 4) | $\gamma$ | $\gamma$ désigne $g_0^2/\sigma^2$ (ex. 4, q. 2) ; Bristol : $\rho$ | $\gamma$ |
+| Filtre adapté causal (ch. 4) | $h_a(t) = h(t - T_h)$ (p. 130, corrigé en $h^*(T_h - t)$, bloc tranché `av-filtre-adapte-causal`) | $g_a(t) = g(T_s - t)$ ; $g_c(t) = g^*(D - t)$ (correction) | $h^*(-t)$ retardé de $D$ |
+| Canal (p. 132) | $H_l(f)$ (ailleurs $h_c(t)$) | $h_l(t)$ | — |
 
 ## Conventions de la matière
 

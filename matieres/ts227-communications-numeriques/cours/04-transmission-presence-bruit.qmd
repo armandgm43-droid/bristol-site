@@ -1,0 +1,978 @@
+---
+title: "Transmission en présence de bruit"
+matiere: ts227
+chapitre: 4
+enseignants: ["Romain Tajan"]
+annee: "2026-2027"
+statut: redige
+date-modified: 2026-10-07
+sources:
+  - id: poly
+    fichier: poly_ts227.pdf
+    nature: officielle
+    version: "2025-10-09"
+    pages: "89-138"
+  - id: notes
+    fichier: notes/date-inconnue.pdf
+    nature: personnelle
+    seance: inconnue
+    pages: "f. 3 r° (bas), f. 3 v°, f. 4 r°, f. 4 v° (haut)"
+  - id: td
+    fichier: TD_TS_227.pdf
+    nature: officielle
+    version: "2020-2021"
+    pages: "3-4 (ex. 3 ; ex. 4 ; ex. 5, q. 12-13)"
+  - id: td-correction
+    fichier: correction_TD_TS_227.pdf
+    nature: officielle
+    version: "2021-01-06"
+    pages: "9-14"
+---
+
+{{< include /_macros.qmd >}}
+
+<!-- Étapes 2 à 5 (analyse, rédaction, figures) faites le 2026-10-07 dans la même session que le chapitre 1.
+     Rapport : ../analyses/04-transmission-presence-bruit.md. Sources des figures : ../figures/04-*.py (matplotlib) ;
+     la chaîne de transmission réutilise ../figures/02-chaine-bande-de-base.svg. -->
+
+## Introduction {#sec-intro-bruit}
+
+![Chaîne de transmission en bande de base : le bruit $z_l(t)$ s'ajoute au signal en sortie du canal. D'après le support [poly, p. 95] (même schéma que [poly, p. 19]), redessinée ; figure commune avec le chapitre 2.](../figures/02-chaine-bande-de-base.svg){#fig-chaine-bruit}
+
+::: {.complement}
+Au chapitre 2, le critère de Nyquist permet de supprimer l'interférence entre symboles : en l'absence de bruit, l'échantillon reçu vaut alors $r_n = g_0 a_n$ et la décision est toujours juste. Ce chapitre réintroduit le **bruit** $z_l(t)$ de la chaîne (@fig-chaine-bruit) et répond à trois questions :
+
+1. comment mesurer la qualité d'une transmission : **probabilités d'erreur** symbole et binaire (@sec-probabilites-erreur) ;
+2. comment décider au mieux, connaissant les échantillons reçus : **seuils optimaux**, d'abord pour une modulation binaire (@sec-modulation-binaire), puis $M$-aire (@sec-modulation-m-aire) ;
+3. comment choisir le filtre de réception : **filtre adapté** (@sec-recepteur-optimal), filtres demi-Nyquist (@sec-demi-nyquist), et expression finale de la probabilité d'erreur en fonction de $E_b/N_0$ (@sec-pb-eb-n0).
+
+Le chapitre utilise les rappels de probabilités du chapitre 3 (loi gaussienne, fonction $\Phi$) et, pour le bruit filtré, la DSP et la formule du filtrage des processus aléatoires. Les exercices du TD qui portent sur ce chapitre sont regroupés en @sec-exercices-td-bruit.
+:::
+
+::: {.notes}
+**Ordre du cours.** En cours, ce chapitre a été traité **avant** le chapitre 3 : la partie « III Transmission en présence de bruit » commence par les rappels de probabilités [notes, f. 2 v°], se poursuit par les probabilités d'erreur, le seuil optimal et la $M$-PAM [notes, f. 3 r° à f. 4 r°], puis le filtre adapté [notes, f. 4 v°] ; les processus aléatoires et la DSP ne viennent qu'ensuite. Bristol suit l'ordre du support.
+:::
+
+## Probabilités d'erreur {#sec-probabilites-erreur}
+
+::: {#def-probabilite-erreur-symbole}
+## Probabilité d'erreur symbole
+
+La **probabilité d'erreur symbole** est la probabilité qu'un symbole décidé au récepteur (« symbole reçu ») $\hat{A}_n$ soit différent du symbole émis $A_n$ correspondant [poly, p. 90-91] :
+
+$$
+P_s = P(\hat{A}_n \neq A_n) = \sum_{a \in \mathcal{A}} P(A_n = a)\, P(\hat{A}_n \neq A_n \mid A_n = a) .
+$$ {#eq-ps-definition}
+:::
+
+::: {#def-probabilite-erreur-binaire}
+## Probabilité d'erreur binaire
+
+La **probabilité d'erreur binaire** est la probabilité qu'un bit décidé au récepteur (« bit reçu ») $\hat{B}_n$ soit différent du bit émis $B_n$ correspondant [poly, p. 90-93] :
+
+$$
+\begin{aligned}
+P_b = P(\hat{B}_n \neq B_n)
+&= P(B_n = 0)\, P(\hat{B}_n \neq B_n \mid B_n = 0) + P(B_n = 1)\, P(\hat{B}_n \neq B_n \mid B_n = 1) \\
+&= P(B_n = 0)\, P(\hat{B}_n = 1 \mid B_n = 0) + P(B_n = 1)\, P(\hat{B}_n = 0 \mid B_n = 1) .
+\end{aligned}
+$$ {#eq-pb-definition}
+:::
+
+::: {.complement}
+Ces décompositions sont la **formule des probabilités totales** : les évènements $\{A_n = a\}$, $a \in \mathcal{A}$, sont disjoints et leur réunion est certaine. Les symboles, les bits et le bruit étant aléatoires, on les note ici en majuscules ($A_n$, $B_n$, $R_n$, $Z'_n$), comme au chapitre 3 ; ce sont les $a_n$, $b_k$, $r_n$, $z'_n$ du chapitre 2.
+:::
+
+:::: {.notes}
+Au tableau [notes, f. 3 r°], l'erreur symbole est écrite comme une **réunion d'évènements** :
+
+$$
+\text{erreur symbole} = \{A_n = a_0 \text{ et } \hat{A}_n \neq a_0\} \cup \{A_n = a_1 \text{ et } \hat{A}_n \neq a_1\} \cup \dots \cup \{A_n = a_{M-1} \text{ et } \hat{A}_n \neq a_{M-1}\},
+$$
+
+d'où
+
+$$
+P\Big(\bigcup_{m=0}^{M-1} \{A_n = a_m \text{ et } \hat{A}_n \neq a_m\}\Big)
+= \sum_{m=0}^{M-1} P(A_n = a_m \text{ et } \hat{A}_n \neq a_m)
+= \sum_{m=0}^{M-1} P(\hat{A}_n \neq a_m \mid A_n = a_m)\, P(A_n = a_m) .
+$$
+
+La probabilité d'erreur binaire est ensuite écrite $P_b = P(\hat{B}_k \neq B_k)$, développée sans les probabilités a priori (voir le bloc ci-dessous).
+::::
+
+::: {.a-verifier .tranche #av-pb-notes-probabilites-a-priori}
+**Source** [notes, f. 3 r°] : « $P_b = P(\hat{B}_k \neq B_k) = P(\hat{B}_k = 0 \mid B_k = 1) + P(\hat{B}_k = 1 \mid B_k = 0)$ » (le $B_k$ de la condition du premier terme porte une marque en forme d'accent circonflexe, et une lettre barrée précède le second terme).
+
+**Problème** : il manque les probabilités a priori $P(B_k = 1)$ et $P(B_k = 0)$ devant les deux termes. Telle quelle, la somme peut dépasser 1 (elle vaut 2 pour une décision toujours fausse). Le support [poly, p. 93] écrit ces poids, et les notes les réintroduisent plus loin ($p_0$ et $1 - p_0$, f. 3 v°). La marque sur le $B_k$ de la condition est sans doute parasite (on conditionne par le bit émis, pas par le bit décidé).
+
+**Proposition** : $P_b = P(B_k = 1)\, P(\hat{B}_k = 0 \mid B_k = 1) + P(B_k = 0)\, P(\hat{B}_k = 1 \mid B_k = 0)$ (@eq-pb-definition) ; pour des bits équiprobables, $P_b = \frac{1}{2}\left[P(\hat{B}_k = 0 \mid B_k = 1) + P(\hat{B}_k = 1 \mid B_k = 0)\right]$.
+**Décision** : proposition retenue : poids $P(B_k = 1)$ et $P(B_k = 0)$ rétablis, marque sur le $B_k$ conditionnant considérée comme parasite (Armand a laissé le choix à Claude, 2026-10-07).
+
+:::
+
+## Cas d'une modulation binaire {#sec-modulation-binaire}
+
+### Hypothèses et modèle {#sec-hypotheses-binaire}
+
+On considère la chaîne de la @fig-chaine-bruit sous les hypothèses suivantes [poly, p. 95-97] :
+
+- le filtre global $g(t) = (h \star h_c \star h_a)(t)$ vérifie le critère de Nyquist ($g(k\Ts) = g_0\, \delta_k$) ; le signal reçu échantillonné s'écrit alors
+
+$$
+R_n = g_0 A_n + Z'_n \ ;
+$$ {#eq-modele-bruit}
+
+- les bits $B_k$ sont indépendants et identiquement distribués, tels que $P(B_k = 0) = p_0$ et $P(B_k = 1) = p_1 = 1 - p_0$ ;
+- les symboles $A_n$ sont indépendants et identiquement distribués dans $\mathcal{A} = \{-1, 1\}$ ;
+- les échantillons de bruit $Z'_n$ sont indépendants des symboles émis $A_n$, et $Z'_n \sim \mathcal{N}(0, \sigma^2)$.
+
+On suppose pour la suite $g_0 \in \mathbb{R}^+$ [poly, p. 101].
+
+::: {.complement}
+@eq-modele-bruit est le modèle discret du chapitre 2 ([équation du modèle discret](02-communication-sans-bruit.qmd#eq-modele-discret)) dont le terme d'IES est nul grâce au critère de Nyquist ; il reste le bruit filtré et échantillonné $Z'_n$, dont la variance $\sigma^2$ dépend du filtre de réception (@sec-recepteur-optimal).
+:::
+
+::: {.notes}
+Au tableau [notes, f. 3 r° et f. 3 v°] : « On a en présence de bruit $R_n = g_0 A_n + Z'_n$ », avec l'association bits → symboles dessinée sur un axe : $B_n = 0 \to A_n = -1$ et $B_n = 1 \to A_n = 1$. C'est aussi l'association de la correction du TD [td-correction, p. 11].
+:::
+
+::: {#exr-loi-conditionnelle}
+## Loi conditionnelle [poly, p. 99]
+
+Soit $A$ une variable aléatoire dans l'alphabet de symboles BPSK $\{-1, 1\}$, et $Z$ une variable aléatoire telle que $Z \sim \mathcal{N}(0, \sigma^2)$ ; $A$ et $Z$ sont indépendants. On définit $R = g_0 A + Z$, $g_0 \in \mathbb{R}^+$. Quelle est la loi de $R$ conditionnellement à $A = 1$ ?
+:::
+
+::: {.solution}
+Réponse du support : $\mathcal{N}(g_0, \sigma^2)$.
+:::
+
+::: {.complement}
+Justification : sachant $A = 1$, $R = g_0 + Z$ est une transformation affine de $Z$ ($a = 1$, $b = g_0$) ; par la propriété de la loi gaussienne du chapitre 3 (variance $a^2\sigma^2$, [loi gaussienne](03-dsp-signaux-codes-en-ligne.qmd#prp-loi-gaussienne)), $R \sim \mathcal{N}(g_0, \sigma^2)$. L'indépendance de $A$ et $Z$ garantit que la loi de $Z$ n'est pas modifiée par le conditionnement.
+:::
+
+::: {#exr-probabilite-erreur-conditionnelle}
+## Erreur conditionnelle [poly, p. 100]
+
+Avec les mêmes hypothèses, que vaut la probabilité d'erreur conditionnellement à $A = 1$ si la décision est prise selon la règle : $R \geq \gamma \Rightarrow \hat{A} = 1$ et $R < \gamma \Rightarrow \hat{A} = -1$ ?
+:::
+
+::: {.solution}
+Réponse du support : $P(R < \gamma \mid A = 1)$.
+:::
+
+::: {.complement}
+Justification : sachant $A = 1$, il y a erreur si et seulement si l'on décide $\hat{A} = -1$, c'est-à-dire si $R < \gamma$. La réponse $P(R < \gamma)$, sans conditionnement, mélangerait les deux symboles émis.
+:::
+
+### Règle de décision et seuil optimal {#sec-seuil-optimal}
+
+**Décision** [poly, p. 101] :
+
+- $R_n \geq \gamma \Rightarrow \hat{A}_n = 1$, $\hat{B}_n = 1$ ;
+- $R_n < \gamma \Rightarrow \hat{A}_n = -1$, $\hat{B}_n = 0$.
+
+**Remarque** : dans le cas binaire ($M = 2$), $P_b = P_s$.
+
+Comment choisir $\gamma$ afin de minimiser $P_b$ [poly, p. 102] ? On reprend @eq-pb-definition :
+
+$$
+P_b = p_0\, P(\hat{B}_n = 1 \mid B_n = 0) + p_1\, P(\hat{B}_n = 0 \mid B_n = 1) .
+$$
+
+On note $f_Z$ la densité de probabilité du bruit $Z'_n$.
+
+- Si $B_n = 0$, $R_n = -g_0 + Z'_n$, de densité $f_Z(z + g_0)$, et
+  $$
+  P(\hat{B}_n = 1 \mid B_n = 0) = P(R_n \geq \gamma \mid B_n = 0) = P(-g_0 + Z'_n \geq \gamma) = \int_{\gamma}^{+\infty} f_Z(z + g_0)\, \mathrm{d}z .
+  $$
+- Si $B_n = 1$, $R_n = g_0 + Z'_n$, de densité $f_Z(z - g_0)$, et
+  $$
+  P(\hat{B}_n = 0 \mid B_n = 1) = P(R_n \leq \gamma \mid B_n = 1) = P(g_0 + Z'_n \leq \gamma) = \int_{-\infty}^{\gamma} f_Z(z - g_0)\, \mathrm{d}z .
+  $$
+
+On obtient finalement [poly, p. 103-107]
+
+$$
+P_b(\gamma) = p_0 \int_{\gamma}^{+\infty} f_Z(z + g_0)\, \mathrm{d}z + p_1 \int_{-\infty}^{\gamma} f_Z(z - g_0)\, \mathrm{d}z .
+$$ {#eq-pb-gamma}
+
+![Densités de $R_n$ sachant le bit émis, seuil $\gamma$ et probabilités d'erreur conditionnelles (aires colorées). D'après le support [poly, p. 103 à 106], redessinée. Paramètres choisis : $g_0 = 2$, $\sigma = 1{,}3$, $\gamma = 0{,}5$.](../figures/04-densites-conditionnelles.svg){#fig-densites-conditionnelles}
+
+::: {.complement}
+Notation : le support écrit $f_{Z'}$ (p. 104-106) puis $f_Z$ (p. 107), les notes $f_Z$ ; il s'agit dans tous les cas de la densité du bruit échantillonné $Z'_n$. Les deux inégalités larges de la règle de décision du support ($R_n \geq \gamma$ et $R_n \leq \gamma$, p. 101) se recouvrent en $R_n = \gamma$ ; cet évènement est de probabilité nulle pour un bruit à densité, donc sans effet sur $P_b$ (on a écrit $R_n < \gamma$ dans la règle).
+:::
+
+**Choix optimal de $\gamma^*(p_0)$** [poly, p. 107]. Minimiser $P_b$ revient à annuler $\frac{\mathrm{d}P_b(\gamma)}{\mathrm{d}\gamma}$, ainsi :
+
+$$
+-p_0 f_Z(\gamma + g_0) + p_1 f_Z(\gamma - g_0) = 0 \Rightarrow \frac{f_Z(\gamma - g_0)}{f_Z(\gamma + g_0)} = \frac{p_0}{p_1} .
+$$
+
+::: {.a-verifier .tranche #av-variables-muettes}
+**Source** [poly, p. 107] : « $-p_0 f_Z(z + g_0) + p_1 f_Z(z - g_0) = 0 \Rightarrow \frac{f_Z(\gamma - g_0)}{f_Z(\gamma + g_0)} = \frac{p_0}{p_1}$ » ; [poly, p. 128] : « $\frac{g_0^2}{\sigma^2} = \frac{\left(\int_{-\infty}^{+\infty} h(u)\, h_a(-u)\, \mathrm{d}t\right)^2}{\dots}$ ».
+
+**Problème** : p. 107, la dérivée de @eq-pb-gamma par rapport à $\gamma$ est évaluée en $\gamma$ (dérivée d'une intégrale par rapport à sa borne) : la variable d'intégration $z$ ne doit plus apparaître, et la suite du calcul est bien écrite en $\gamma$. Les notes écrivent la dérivée en $\gamma$ [notes, f. 3 v°]. P. 128, l'intégrale est en $u$ et l'élément différentiel est écrit $\mathrm{d}t$.
+
+**Proposition** : p. 107, $-p_0 f_Z(\gamma + g_0) + p_1 f_Z(\gamma - g_0) = 0$ ; p. 128, $\int h(u)\, h_a(-u)\, \mathrm{d}u$. C'est ce qui est écrit dans ce chapitre.
+**Décision** : corrections retenues ($z \to \gamma$ p. 107, $\mathrm{d}t \to \mathrm{d}u$ p. 128) (Armand a laissé le choix à Claude, 2026-10-07).
+
+:::
+
+Comme le bruit considéré est gaussien, centré, de variance $\sigma^2$,
+
+$$
+f_Z(z) = \frac{1}{\sigma\sqrt{2\pi}}\, e^{-\frac{z^2}{2\sigma^2}},
+$$
+
+et l'on en déduit le **seuil optimal** [poly, p. 107]
+
+$$
+\gamma^*(p_0) = \frac{\sigma^2}{2 g_0}\, \ln\!\left(\frac{p_0}{1 - p_0}\right) .
+$$ {#eq-seuil-optimal}
+
+:::: {.notes}
+::: {.proof}
+Calcul fait au tableau [notes, f. 3 v°]. Avec $p_1 = 1 - p_0$,
+
+$$
+\frac{\mathrm{d}P_b}{\mathrm{d}\gamma} = -p_0 f_Z(\gamma + g_0) + (1 - p_0)\, f_Z(\gamma - g_0) = 0
+\iff \frac{1 - p_0}{p_0} = \frac{f_Z(\gamma + g_0)}{f_Z(\gamma - g_0)}
+= \frac{e^{-\frac{(\gamma + g_0)^2}{2\sigma^2}}}{e^{-\frac{(\gamma - g_0)^2}{2\sigma^2}}} .
+$$
+
+En passant au logarithme :
+
+$$
+\ln\!\left(\frac{1 - p_0}{p_0}\right) = \frac{(\gamma - g_0)^2}{2\sigma^2} - \frac{(\gamma + g_0)^2}{2\sigma^2} = -\frac{4\gamma g_0}{2\sigma^2} = -\frac{2\gamma g_0}{\sigma^2}
+\iff \ln\!\left(\frac{p_0}{1 - p_0}\right) = \frac{2\gamma g_0}{\sigma^2},
+$$
+
+d'où $\gamma = \frac{\sigma^2}{2g_0} \ln\!\left(\frac{p_0}{1 - p_0}\right)$ (encadré), où $\frac{p_0}{1 - p_0} = \frac{P(B_n = 0)}{P(B_n = 1)}$ est le rapport des probabilités **a priori**.
+
+Le même feuillet détaille l'un des termes de $P_b$ : si $B_n = 0$, alors $A_n = -1$, $R_n = -g_0 + Z_n$ et
+
+$$
+P(\hat{B}_n = 1 \mid B_n = 0) = P(R_n \geq \gamma \mid B_n = 0) = P(-g_0 + Z_n \geq \gamma) = P(Z_n \geq \gamma + g_0) = \int_{\gamma + g_0}^{+\infty} f_Z(z)\, \mathrm{d}z .
+$$
+:::
+::::
+
+::: {.complement}
+Le « $\log$ » du support (p. 107) est le logarithme **népérien** $\ln$, comme dans les notes : c'est lui qui provient de l'exponentielle gaussienne. La condition $\frac{\mathrm{d}P_b}{\mathrm{d}\gamma} = 0$ donne bien un **minimum** : la dérivée $-p_0 f_Z(\gamma + g_0) + p_1 f_Z(\gamma - g_0)$ a le signe de $\frac{2\gamma g_0}{\sigma^2} - \ln\frac{p_0}{p_1}$ (après division par $p_0 f_Z(\gamma + g_0) > 0$ et passage au logarithme), négatif avant $\gamma^*$ et positif après.
+:::
+
+![Seuil optimal $\gamma^*(p_0)$, normalisé par $\sigma^2/(2g_0)$. D'après le support [poly, p. 108], redessinée (courbe recalculée à partir de @eq-seuil-optimal ; axe vertical normalisé).](../figures/04-seuil-optimal.svg){#fig-seuil-optimal}
+
+**Cas particuliers** [poly, p. 108] (@fig-seuil-optimal) :
+
+- $\lim_{p_0 \to 0} \gamma^*(p_0) = -\infty$ ;
+- $\lim_{p_0 \to 1} \gamma^*(p_0) = +\infty$ ;
+- $\gamma^*(0{,}5) = 0$ : si les symboles sont équiprobables ($p_0 = p_1$), le seuil est au milieu.
+
+::: {.notes}
+Formulation du tableau [notes, f. 3 v°] : si $p_0 = p_1 = 0{,}5$ **et le bruit est gaussien**, alors le seuil est la **médiatrice** entre les deux symboles.
+:::
+
+::: {.complement}
+Interprétation : si le bit 0 (symbole $-g_0$) est plus probable ($p_0 > \frac{1}{2}$), le seuil se déplace vers $+g_0$, ce qui agrandit la région de décision de $-g_0$. Le déplacement est proportionnel à $\sigma^2$ : à faible bruit, le seuil reste près du milieu, car les observations l'emportent sur les probabilités a priori.
+:::
+
+::: {#exr-seuil-ook}
+## Seuil optimal pour des symboles $\{0, 1\}$ [poly, p. 110]
+
+Soit $A$ une variable aléatoire dans l'alphabet de symboles $\{0, 1\}$, $Z \sim \mathcal{N}(0, \sigma^2)$, $A$ et $Z$ indépendants, et $R = g_0 A + Z$, $g_0 \in \mathbb{R}^+$. Règle de décision : $R \geq \gamma \Rightarrow \hat{A} = 1$ et $R < \gamma \Rightarrow \hat{A} = 0$. Si $A$ est distribuée de manière uniforme, quelle est la valeur optimale de $\gamma$ pour minimiser la probabilité d'erreur binaire ? (Propositions : $+\infty$ ; $1$ ; $0{,}5$ ; $0$.)
+:::
+
+::: {.solution}
+Réponse du support : $0{,}5$. Réponse retenue : $\gamma^* = \frac{g_0}{2}$, qui vaut $0{,}5$ pour $g_0 = 1$ (bloc `av-quiz-seuil-ook`).
+:::
+
+::: {.a-verifier .tranche #av-quiz-seuil-ook}
+**Source** [poly, p. 110] : réponse marquée C, « 0.5 » (code du quiz « #QDLE#Q#ABC\*D#60# »).
+
+**Problème** : les deux symboles reçus sans bruit sont $0$ et $g_0$ ; pour des symboles équiprobables et un bruit gaussien, le seuil optimal est leur milieu, $\gamma^* = \frac{g_0}{2}$ (même calcul que @eq-seuil-optimal, après translation de $\frac{g_0}{2}$). La réponse $0{,}5$ n'est juste que si $g_0 = 1$, ce que l'énoncé ne précise pas ($g_0 \in \mathbb{R}^+$ quelconque).
+
+**Proposition** : réponse $\gamma^* = \frac{g_0}{2}$, soit $0{,}5$ pour $g_0 = 1$ ; ajouter « $g_0 = 1$ » à l'énoncé, ou garder l'énoncé et donner $\frac{g_0}{2}$ comme réponse.
+**Décision** : réponse retenue $\gamma^* = \frac{g_0}{2}$ ; la réponse du support, $0{,}5$, correspond au cas $g_0 = 1$ (Armand a laissé le choix à Claude, 2026-10-07).
+
+:::
+
+::: {#exr-pire-probabilite}
+## Pire probabilité d'erreur [poly, p. 111]
+
+Avec les mêmes hypothèses, quelle est la « pire » valeur pour la probabilité d'erreur d'une décision binaire ? (Propositions : $1$ ; $0$ ; $0{,}5$ ; $+\infty$.)
+:::
+
+::: {.solution}
+Réponse du support : $0$. Réponse retenue : $0{,}5$ (bloc `av-quiz-pire-probabilite`).
+:::
+
+::: {.a-verifier .tranche #av-quiz-pire-probabilite}
+**Source** [poly, p. 111] : réponse marquée B, « 0 » (code du quiz « #QDLE#Q#AB\*CD#60# »). Point déjà relevé dans `CONTEXTE_PROJET.md` (§ 18.4).
+
+**Problème** : une probabilité d'erreur nulle est le **meilleur** cas. Une probabilité de 1 n'est pas non plus la pire : une décision toujours fausse devient toujours juste en inversant les décisions. Le pire cas est $P_b = 0{,}5$ : la décision ne vaut pas mieux qu'un tirage à pile ou face, et ne porte aucune information sur le bit émis ($+\infty$ n'est pas une probabilité).
+
+**Proposition** : réponse C, $0{,}5$.
+**Décision** : réponse retenue : C, $0{,}5$ (Armand a laissé le choix à Claude, 2026-10-07).
+
+:::
+
+### Probabilité d'erreur pour des symboles équiprobables {#sec-pb-equiprobable}
+
+Avec $p_0 = p_1 = 0{,}5$ et le seuil optimal $\gamma = 0$, on obtient [poly, p. 112] :
+
+$$
+\begin{aligned}
+P_b &= 0{,}5 \int_0^{+\infty} f_Z(z + g_0)\, \mathrm{d}z + 0{,}5 \int_{-\infty}^{0} f_Z(z - g_0)\, \mathrm{d}z \\
+&= 0{,}5 \int_0^{+\infty} \frac{1}{\sigma\sqrt{2\pi}}\, e^{-\frac{(z + g_0)^2}{2\sigma^2}}\, \mathrm{d}z + 0{,}5 \int_{-\infty}^{0} \frac{1}{\sigma\sqrt{2\pi}}\, e^{-\frac{(z - g_0)^2}{2\sigma^2}}\, \mathrm{d}z \\
+&= 0{,}5 \int_{g_0/\sigma}^{+\infty} \frac{1}{\sqrt{2\pi}}\, e^{-\frac{z'^2}{2}}\, \mathrm{d}z' + 0{,}5 \int_{g_0/\sigma}^{+\infty} \frac{1}{\sqrt{2\pi}}\, e^{-\frac{z'^2}{2}}\, \mathrm{d}z' \\
+&= Q\!\left(\frac{g_0}{\sigma}\right) .
+\end{aligned}
+$$ {#eq-pb-binaire}
+
+::: {.a-verifier .tranche #av-facteur-calcul-pb}
+**Source** [poly, p. 112], deuxième ligne du calcul : « $= \int_0^{+\infty} \frac{1}{\sigma\sqrt{2\pi}}\, e^{\frac{-(z+g_0)^2}{2\sigma^2}}\, \mathrm{d}z + 0.5 \int_{-\infty}^{0} \dots$ ».
+
+**Problème** : le facteur $0{,}5$ du premier terme, présent à la première et à la troisième ligne, manque à la deuxième. Le résultat final n'en dépend pas.
+
+**Proposition** : $0{,}5 \int_0^{+\infty} \dots$ au premier terme de la deuxième ligne (écrit ainsi ci-dessus).
+**Décision** : facteur $0{,}5$ rétabli (Armand a laissé le choix à Claude, 2026-10-07).
+
+:::
+
+::: {.complement}
+**Étapes du calcul.** Premier terme : changement de variable $z' = \frac{z + g_0}{\sigma}$ ; la borne $z = 0$ devient $z' = \frac{g_0}{\sigma}$. Second terme : $z' = -\frac{z - g_0}{\sigma}$ ; les bornes $z = -\infty$ et $z = 0$ deviennent $z' = +\infty$ et $z' = \frac{g_0}{\sigma}$, et le changement de signe de $\mathrm{d}z$ remet les bornes dans l'ordre. Les deux termes sont égaux par symétrie : la probabilité d'erreur est la même quel que soit le bit émis.
+:::
+
+:::: {.notes}
+::: {#def-fonction-q}
+## Fonction $Q$
+
+Définition donnée au tableau [notes, f. 4 r°] :
+
+$$
+Q(x) = \frac{1}{\sqrt{2\pi}} \int_x^{+\infty} e^{-\frac{u^2}{2}}\, \mathrm{d}u,
+$$
+
+(numérateur lu « 1 », bloc `av-definition-q-notes`). Le support utilise $Q$ sans la définir.
+:::
+::::
+
+::: {.a-verifier .tranche #av-definition-q-notes}
+**Source** [notes, f. 4 r°] : « $Q(x) = \frac{x}{\sqrt{2\pi}} \int_x^{+\infty} e^{-\frac{u^2}{2}}\, \mathrm{d}u$ » : le numérateur se lit comme un « $x$ », écrit comme la borne inférieure de l'intégrale (il peut aussi s'agir d'un « 1 » mal formé).
+
+**Problème** : avec $x$ au numérateur, $Q(0) = 0$ et $Q$ n'est plus une probabilité ; le calcul de @eq-pb-binaire donne un coefficient $\frac{1}{\sqrt{2\pi}}$.
+
+**Proposition** : $Q(x) = \frac{1}{\sqrt{2\pi}} \int_x^{+\infty} e^{-\frac{u^2}{2}}\, \mathrm{d}u$.
+**Décision** : lecture « 1 » retenue : $Q(x) = \frac{1}{\sqrt{2\pi}} \int_x^{+\infty} e^{-u^2/2}\, \mathrm{d}u$ (Armand a laissé le choix à Claude, 2026-10-07).
+
+:::
+
+::: {.complement}
+Avec le coefficient $\frac{1}{\sqrt{2\pi}}$, $Q(x)$ est la probabilité qu'une variable $\mathcal{N}(0, 1)$ dépasse $x$ : $Q(x) = 1 - \Phi(x)$, où $\Phi$ est la fonction de répartition de $\mathcal{N}(0, 1)$ du chapitre 3 ([fonction $\Phi$](03-dsp-signaux-codes-en-ligne.qmd#eq-fonction-phi)). Propriétés utiles : $Q$ est décroissante, $Q(0) = \frac{1}{2}$, $Q(-x) = 1 - Q(x)$, $Q(x) < \frac{1}{2}$ pour $x > 0$. Exemple : $Q(4) \approx 3{,}2 \cdot 10^{-5}$ (exercice de la loi gaussienne du chapitre 3, [exercice](03-dsp-signaux-codes-en-ligne.qmd#exr-loi-gaussienne)).
+:::
+
+![Probabilité d'erreur binaire $P_b = Q(g_0/\sigma)$ en fonction de $20 \log_{10}(g_0/\sigma)$. D'après le support [poly, p. 113], redessinée (courbe recalculée à partir de @eq-pb-binaire).](../figures/04-pb-rsb.svg){#fig-pb-rsb}
+
+::: {#def-rsb}
+## Rapport signal sur bruit
+
+Le rapport $\frac{g_0}{\sigma}$ est appelé **rapport signal sur bruit** (RSB, ou SNR pour *signal-to-noise ratio*). C'est un paramètre important pour la couche PHY. Il est habituellement exprimé en dB. Ici, $\frac{g_0}{\sigma}$ est un **rapport d'amplitudes**. On le rencontre également comme un rapport d'énergies noté $\frac{E_b}{N_0}$ (@sec-pb-eb-n0) [poly, p. 113].
+:::
+
+::: {.notes}
+Au tableau [notes, f. 3 v°] : le décibel s'applique à un **rapport de puissances**, $10 \log_{10}(\cdot)$.
+:::
+
+::: {.complement}
+Les deux écritures sont cohérentes : $\frac{g_0}{\sigma}$ est un rapport d'amplitudes, donc $\frac{g_0^2}{\sigma^2}$ est un rapport de puissances, et $10 \log_{10}\frac{g_0^2}{\sigma^2} = 20 \log_{10}\frac{g_0}{\sigma}$ : c'est l'abscisse de la @fig-pb-rsb. $P_b$ décroît très vite avec le RSB : environ $1{,}6 \cdot 10^{-1}$ à 0 dB, $7{,}8 \cdot 10^{-4}$ à 10 dB.
+:::
+
+## Cas d'une modulation M-aire {#sec-modulation-m-aire}
+
+### Probabilité d'erreur symbole {#sec-ps-m-aire}
+
+Supposons que la constellation soit $\mathcal{A} = \{a_0, \dots, a_{M-1}\}$. Alors $P_s$ s'écrit [poly, p. 115]
+
+$$
+P_s = P(\hat{A}_n \neq A_n) = \sum_{i=0}^{M-1} P(A_n = a_i)\, P(\hat{A}_n \neq A_n \mid A_n = a_i) .
+$$
+
+Si de plus les symboles sont équiprobables, $\forall i,\ P(A_n = a_i) = \frac{1}{M}$, il vient
+
+$$
+P_s = \frac{1}{M} \sum_{i=0}^{M-1} P(\hat{A}_n \neq A_n \mid A_n = a_i) .
+$$ {#eq-ps-equiprobables}
+
+::: {.notes}
+Au tableau [notes, f. 4 r°], le terme $P(\hat{A}_n \neq a_m \mid A_n = a_m)$ est désigné comme la « probabilité d'erreur si $a_m$ est envoyé ».
+:::
+
+### Exemple de la 4-PAM {#sec-exemple-4pam-bruit}
+
+::: {#exm-4pam-bruit}
+## 4-PAM, $M = 4$
+
+Constellation : $\mathcal{A} = \{-3, -1, 1, 3\}$ [poly, p. 116-119]. Comme pour le cas binaire :
+
+- les seuils optimaux $(\gamma_0, \gamma_1, \gamma_2)$ dépendent de toutes les probabilités $P(A_n = a_i)$ ;
+- si tous les symboles sont équiprobables, les seuils optimaux se trouvent **au milieu de chaque intervalle** : $(\gamma_0, \gamma_1, \gamma_2) = (-2g_0, 0, 2g_0)$.
+
+On en déduit les probabilités conditionnelles.
+
+**Aux extrémités** :
+
+$$
+P(\text{erreur} \mid A_n = a_0) = \int_{\gamma_0}^{+\infty} f_{Z'}(z - a_0 g_0)\, \mathrm{d}z,
+\qquad
+P(\text{erreur} \mid A_n = a_3) = \int_{-\infty}^{\gamma_2} f_{Z'}(z - a_3 g_0)\, \mathrm{d}z .
+$$
+
+**À l'intérieur** :
+
+$$
+\begin{aligned}
+P(\text{erreur} \mid A_n = a_1) &= \int_{-\infty}^{\gamma_0} f_{Z'}(z - a_1 g_0)\, \mathrm{d}z + \int_{\gamma_1}^{+\infty} f_{Z'}(z - a_1 g_0)\, \mathrm{d}z, \\
+P(\text{erreur} \mid A_n = a_2) &= \int_{-\infty}^{\gamma_1} f_{Z'}(z - a_2 g_0)\, \mathrm{d}z + \int_{\gamma_2}^{+\infty} f_{Z'}(z - a_2 g_0)\, \mathrm{d}z .
+\end{aligned}
+$$
+
+À l'instar des résultats obtenus dans le cas binaire, on trouve (en utilisant les seuils optimaux)
+
+$$
+P(\text{erreur} \mid A_n = a_0) = P(\text{erreur} \mid A_n = a_3) = Q\!\left(\frac{g_0}{\sigma}\right),
+\qquad
+P(\text{erreur} \mid A_n = a_1) = P(\text{erreur} \mid A_n = a_2) = 2Q\!\left(\frac{g_0}{\sigma}\right) .
+$$
+
+Ainsi, pour $M = 4$ :
+
+$$
+P_s = \frac{3}{2}\, Q\!\left(\frac{g_0}{\sigma}\right) .
+$$ {#eq-ps-4pam}
+:::
+
+![Densités de $R_n$ sachant chacun des symboles de la 4-PAM équiprobable, et seuils optimaux $\gamma_0$, $\gamma_1$, $\gamma_2$ ; en couleur, la probabilité d'erreur sachant $A_n = a_1$ (deux queues). D'après le support [poly, p. 116 à 119], redessinée. Paramètres choisis : $g_0 = 1$, $\sigma = 0{,}6$.](../figures/04-seuils-4pam.svg){#fig-seuils-4pam}
+
+::: {.complement}
+Chaque symbole est à la distance $g_0$ des seuils qui l'entourent (par exemple $a_1 g_0 = -g_0$, seuils $-2g_0$ et $0$). Une queue gaussienne au-delà d'une distance $g_0$ vaut $Q(g_0/\sigma)$, comme dans le cas binaire : les deux symboles des extrémités n'ont qu'un voisin (une queue), les deux symboles intérieurs en ont deux (deux queues).
+:::
+
+::: {.notes}
+Calcul fait au tableau [notes, f. 4 r°], pour $M = 4$ :
+
+$$
+P_s = \frac{1}{4}\left(P(\hat{A}_n \neq a_0 \mid A_n = a_0) + P(\hat{A}_n \neq a_1 \mid A_n = a_1) + \dots\right)
+= \frac{1}{4}\left[Q\!\left(\frac{g_0}{\sigma}\right) + 2Q\!\left(\frac{g_0}{\sigma}\right) + 2Q\!\left(\frac{g_0}{\sigma}\right) + Q\!\left(\frac{g_0}{\sigma}\right)\right]
+= \frac{3}{2}\, Q\!\left(\frac{g_0}{\sigma}\right) .
+$$
+:::
+
+### Généralisation à la M-PAM {#sec-generalisation-mpam}
+
+::: {#prp-ps-mpam}
+## Probabilité d'erreur symbole de la M-PAM
+
+Quel que soit $M$, pour une $M$-PAM à symboles équiprobables et seuils optimaux [poly, p. 120] :
+
+$$
+P_s = 2\, \frac{M - 1}{M}\, Q\!\left(\frac{g_0}{\sigma}\right) .
+$$ {#eq-ps-mpam}
+
+Cas particuliers :
+
+- $M = 2$ : $P_s = Q\!\left(\frac{g_0}{\sigma}\right)$ ;
+- $M = 4$ : $P_s = \frac{3}{2}\, Q\!\left(\frac{g_0}{\sigma}\right)$ ;
+- $M \to \infty$ : $P_s \to 2Q\!\left(\frac{g_0}{\sigma}\right)$.
+:::
+
+:::: {.notes}
+::: {.proof}
+Démonstration faite au tableau [notes, f. 4 r°], sur la constellation $\{\dots, -3g_0, -g_0, g_0, 3g_0, \dots\}$ : il y a **2 points au bord**, qui ont une probabilité d'erreur $Q(g_0/\sigma)$, et **$M - 2$ points avec deux voisins**, qui ont une probabilité d'erreur $2Q(g_0/\sigma)$. Donc
+
+$$
+P_s = \frac{2Q\!\left(\frac{g_0}{\sigma}\right) + 2(M - 2)\, Q\!\left(\frac{g_0}{\sigma}\right)}{M} = 2\, \frac{M - 1}{M}\, Q\!\left(\frac{g_0}{\sigma}\right) .
+$$
+:::
+::::
+
+::: {.complement}
+Conditions d'application : symboles équiprobables, régulièrement espacés de $2g_0$ (constellation $\{\pm 1, \pm 3, \dots, \pm(M - 1)\}$ multipliée par $g_0$), seuils au milieu des intervalles, bruit gaussien centré de variance $\sigma^2$ indépendant des symboles.
+:::
+
+::: {#exr-ps-croissante}
+## Propriétés de $P_s$ [poly, p. 122]
+
+Pour une $M$-PAM à symboles équiprobables, $P_s = 2\frac{M - 1}{M} Q\!\left(\frac{g_0}{\sigma}\right)$. Soit $\sigma^2 \in \mathbb{R}^{+*}$ et $g_0 = 1$. Laquelle de ces affirmations est correcte ? (A) $P_s$ est une fonction croissante de $M$ ; (B) $\forall M$, $P_s < 1$ ; (C) ni A ni B ; (D) A et B.
+:::
+
+::: {.solution}
+Réponse du support : D (A et B).
+:::
+
+::: {.complement}
+Justification : $\frac{M - 1}{M} = 1 - \frac{1}{M}$ croît avec $M$, donc $P_s$ aussi (à $g_0$ et $\sigma$ fixés, ajouter des symboles en gardant leur espacement multiplie les voisins). Et $Q(1/\sigma) < \frac{1}{2}$ pour $\sigma > 0$, donc $P_s < 2 \cdot 1 \cdot \frac{1}{2} = 1$.
+:::
+
+### Probabilité d'erreur binaire de la M-PAM {#sec-pb-mpam}
+
+::: {#prp-pb-ps}
+## Lien entre $P_b$ et $P_s$
+
+Pour un étiquetage quelconque, on peut montrer l'inégalité [poly, p. 123]
+
+$$
+P_b \geq \frac{P_s}{\log_2(M)} .
+$$
+
+Pour un **étiquetage de Gray**,
+
+$$
+P_b \simeq \frac{P_s}{\log_2(M)} .
+$$
+
+Ainsi, quel que soit $M$, on trouve
+
+$$
+P_b = 2\, \frac{M - 1}{\log_2(M)\, M}\, Q\!\left(\frac{g_0}{\sigma}\right) .
+$$ {#eq-pb-mpam}
+:::
+
+::: {.complement}
+**Justification et conditions.** Une erreur symbole fausse au moins un des $\log_2(M)$ bits du symbole, d'où $P_b \geq P_s/\log_2(M)$ (et $P_b \leq P_s$). À fort RSB, presque toutes les erreurs symbole se font vers un **symbole voisin** ; avec un étiquetage de Gray, deux voisins ne diffèrent que d'un bit, si bien qu'une erreur symbole ne fausse qu'un bit : $P_b \simeq P_s/\log_2(M)$. @eq-pb-mpam est donc une **approximation**, valable pour un étiquetage de Gray et un RSB suffisant, bien que le support l'écrive avec le signe $=$ ; pour $M = 2$, elle est exacte ($P_b = P_s$). Il en va de même des expressions de $P_{b,\min}$ qui en découlent (@eq-pb-min-eh, @eq-pb-min-eb-n0, @eq-pb-min-mpam).
+:::
+
+::: {.notes}
+**Construction de l'étiquetage de Gray « en miroir »** [notes, f. 4 r°]. On passe de $M$ à $2M$ symboles en recopiant la liste des étiquettes en miroir, puis en ajoutant un bit de tête 0 à la première moitié et 1 à la seconde (@tbl-gray-miroir).
+
+| $M$ | Étiquettes, de gauche à droite (première moitié \| seconde moitié) |
+|---|---|
+| 2 | 0 \| 1 |
+| 4 | 00, 01 \| 11, 10 |
+| 8 | 000, 001, 011, 010 \| 110, 111, 101, 100 |
+
+: Construction en miroir de l'étiquetage de Gray, d'après les notes de cours [notes, f. 4 r°]. {#tbl-gray-miroir}
+
+Remarque du tableau [notes, f. 4 r°] : $g_0$ et $\sigma$ **dépendent du choix des filtres** $h$ et $h_a$.
+:::
+
+::: {.complement}
+L'étiquetage de la 8-PAM ainsi obtenu est celui de la correction du TD (exercice 1 : $000 \to -7$, …, $100 \to 7$) ; celui de la 4-PAM est celui du cours (chapitre 2, [constellation 4-PAM](02-communication-sans-bruit.qmd#exm-4pam-gray)). Deux étiquettes voisines diffèrent d'un seul bit, y compris de part et d'autre du « miroir ».
+:::
+
+## Récepteur optimal {#sec-recepteur-optimal}
+
+### Principe {#sec-principe-filtre-adapte}
+
+Précédemment, on a montré que la probabilité d'erreur binaire $P_b$ était une fonction décroissante du rapport $\frac{g_0}{\sigma}$. Ainsi, maximiser $\frac{g_0}{\sigma}$ revient à minimiser $P_b$ [poly, p. 125].
+
+::: {#def-filtre-adapte}
+## Filtre adapté
+
+Un **filtre adapté** (*matched filter*) est un filtre linéaire qui maximise le rapport $\frac{g_0}{\sigma}$ aux instants de décision $n\Ts$ [poly, p. 125].
+:::
+
+### Expression de $g_0$ {#sec-expression-g0}
+
+Si $g(t) = (h \star h_a)(t)$ vérifie le critère de Nyquist, alors $R_n = g_0 A_n + Z'_n$, où $g_0$ est défini par [poly, p. 126]
+
+$$
+g_0 = \int_{-\infty}^{\infty} h(u)\, h_a(-u)\, \mathrm{d}u
+\qquad \text{ou encore} \qquad
+g_0 = \int_{-\infty}^{\infty} H(f)\, H_a(f)\, \mathrm{d}f,
+$$ {#eq-g0-filtres}
+
+avec $H(f)$ et $H_a(f)$ les transformées de Fourier de $h$ et $h_a$.
+
+::: {.complement}
+$g_0 = g(0) = \int h(u)\, h_a(0 - u)\, \mathrm{d}u$ (définition de la convolution), et $g(0) = \int G(f)\, e^{j2\pi f \cdot 0}\, \mathrm{d}f = \int H(f)\, H_a(f)\, \mathrm{d}f$ par transformée de Fourier inverse (écrite au tableau, $g(t) = \int G(f)\, e^{j2\pi ft}\, \mathrm{d}f$ [notes, f. 4 v°]). Le canal est supposé sans déformation ($h_c = \delta$).
+:::
+
+### Variance du bruit filtré {#sec-variance-bruit-filtre}
+
+On définit $Z_l(t)$ comme un processus aléatoire stationnaire, gaussien, centré, dont la DSP vérifie $\Gamma_{Z_l}(f) = \frac{N_0}{2}$ ; $Z'_l(t)$ est sa sortie par le filtre de réception $h_a(t)$, et $Z'_n$ son échantillon à l'instant $n\Ts$ [poly, p. 127]. On cherche à déterminer $\sigma^2 = R_{Z'_n}(0)$.
+
+En utilisant la formule de filtrage, on obtient $m_{Z'_l}(t) = 0$ et
+
+$$
+\Gamma_{Z'_l}(f) = \frac{N_0}{2}\, |H_a(f)|^2 .
+$$
+
+En utilisant la DSP de $Z'_l(t)$, on obtient
+
+$$
+\sigma^2 = \frac{N_0}{2} \int_{-\infty}^{+\infty} |H_a(f)|^2\, \mathrm{d}f = \frac{N_0}{2} \int_{-\infty}^{+\infty} |h_a(t)|^2\, \mathrm{d}t,
+$$ {#eq-variance-bruit-filtre}
+
+où la seconde égalité est obtenue en utilisant l'égalité de Parseval.
+
+::: {.a-verifier .tranche #av-variance-bruit-filtre}
+**Source** [poly, p. 127] : « On cherche à déterminer $\sigma^2 = R_{Z'_n}(0) = \E\left[|Z_l(nT_s)|^2\right]$ ».
+
+**Problème** : la variance cherchée est celle du bruit **filtré** puis échantillonné, $Z'_n = Z'_l(n\Ts)$, pas celle du bruit blanc $Z_l$, dont la puissance est infinie (chapitre 3, [bruit blanc](03-dsp-signaux-codes-en-ligne.qmd#sec-bruit-blanc)). La suite du calcul porte bien sur $Z'_l$.
+
+**Proposition** : $\sigma^2 = R_{Z'_n}(0) = \E\left[|Z'_l(n\Ts)|^2\right]$.
+**Décision** : correction retenue, $\sigma^2 = \E[|Z'_l(n\Ts)|^2]$ (Armand a laissé le choix à Claude, 2026-10-07).
+
+:::
+
+::: {.complement}
+Les étapes s'appuient sur le chapitre 3 : le filtrage conserve la stationnarité, la moyenne de sortie est $m_{Z_l} H_a(0) = 0$, et $\Gamma_{Z'_l} = |H_a|^2\, \Gamma_{Z_l}$ ([formule du filtrage](03-dsp-signaux-codes-en-ligne.qmd#eq-filtrage-dsp)) ; la puissance est l'aire sous la DSP, $\sigma^2 = R_{Z'_l}(0) = \int \Gamma_{Z'_l}(f)\, \mathrm{d}f$ ([puissance et DSP](03-dsp-signaux-codes-en-ligne.qmd#eq-puissance-dsp)). Le bruit filtré est **gaussien**, car obtenu par filtrage linéaire d'un processus gaussien (correction du TD, @exr-td-probabilite-erreur). Contrairement au bruit blanc, sa variance est finie : le filtre de réception limite la bande du bruit.
+:::
+
+### Expression du filtre adapté {#sec-expression-filtre-adapte}
+
+::: {#thm-filtre-adapte}
+## Filtre adapté
+
+En remplaçant $g_0$ et $\sigma$, on obtient [poly, p. 128]
+
+$$
+\frac{g_0^2}{\sigma^2} = \frac{\left(\int_{-\infty}^{+\infty} h(u)\, h_a(-u)\, \mathrm{d}u\right)^2}{\frac{N_0}{2} \int_{-\infty}^{+\infty} |h_a(t)|^2\, \mathrm{d}t} .
+$$
+
+En utilisant l'inégalité de Cauchy-Schwarz,
+
+$$
+\left(\int_{-\infty}^{+\infty} u(t)\, v(t)\, \mathrm{d}t\right)^2 \leq \int_{-\infty}^{+\infty} u(t)^2\, \mathrm{d}t \int_{-\infty}^{+\infty} v(t)^2\, \mathrm{d}t,
+$$
+
+avec égalité si $u(x) = \lambda v(x)$, on en déduit
+
+$$
+\left(\frac{g_0^2}{\sigma^2}\right)_{\max} = \frac{2}{N_0} \int_{-\infty}^{+\infty} |h(t)|^2\, \mathrm{d}t, \quad \text{pour } h_a(t) = \lambda h(-t)\ (\forall \lambda \in \mathbb{R}^+) .
+$$
+
+Le RSB est maximal pour [poly, p. 129]
+
+$$
+h_a(t) = h^*(-t) .
+$$ {#eq-filtre-adapte}
+
+En notant $E_h = \int_{\mathbb{R}} |h(t)|^2\, \mathrm{d}t$ l'énergie du filtre de mise en forme :
+
+$$
+\left(\frac{g_0^2}{\sigma^2}\right)_{\max} = \frac{2E_h}{N_0} .
+$$ {#eq-rsb-max}
+:::
+
+::: {.complement}
+**Application de Cauchy-Schwarz** (étape non détaillée par le support) : on pose $u(t) = h(t)$ et $v(t) = h_a(-t)$, de sorte que $\int u\, v = \int h(u)\, h_a(-u)\, \mathrm{d}u$ et $\int v^2 = \int |h_a|^2$ (changement de variable $t \to -t$). Le dénominateur se simplifie avec $\int v^2$, et il reste $\frac{g_0^2}{\sigma^2} \leq \frac{2}{N_0} \int |h|^2$. L'égalité a lieu pour $h_a(-t) = \lambda h(t)$, c'est-à-dire $h_a(t) = \lambda h(-t)$.
+
+**Le coefficient $\lambda$.** Le rapport $g_0/\sigma$ ne dépend pas de $\lambda$ (il multiplie $g_0$ et $\sigma$) : $\lambda$ peut être choisi à convenance, la correction du TD prenant $\lambda \in \mathbb{C}^*$ et en général $\lambda = 1$ [td-correction, p. 9]. Le support impose $\lambda \in \mathbb{R}^+$, ce qui garde $g_0 > 0$, hypothèse de la règle de décision (@sec-hypotheses-binaire). Pour un filtre $h$ **complexe**, l'inégalité de Cauchy-Schwarz s'écrit avec $|\int u\, v|^2 \leq \int |u|^2 \int |v|^2$, égalité pour $v = \lambda u^*$ : d'où le conjugué de @eq-filtre-adapte ; pour $h$ réel, $h^*(-t) = h(-t)$.
+:::
+
+::: {.notes}
+Au tableau [notes, f. 4 v°] : « Après calculs on a : $h_a(t) = \lambda h^*(-t)$ » (encadré), qui « maximise $\frac{g_0}{\sigma}$ $\Rightarrow$ minimise la proba d'erreur ». Avec ce choix,
+
+$$
+g(t) = \int h(\tau)\, h_a(t - \tau)\, \mathrm{d}\tau = \lambda \int h(\tau)\, h^*(\tau - t)\, \mathrm{d}\tau = \lambda R_h(t),
+\qquad
+G(f) = \lambda\, |H(f)|^2,
+$$
+
+où $R_h$ est la « fonction d'autocorrélation déterministe de $h(t)$ ». En marge, deux choix de $\lambda$ : $\lambda = 1$, ou $\lambda = \frac{1}{R_h(0)}$.
+:::
+
+::: {.complement}
+Avec $\lambda = \frac{1}{R_h(0)} = \frac{1}{E_h}$, le filtre global vaut $g(0) = g_0 = 1$ : les échantillons reçus sont alors directement à l'échelle de la constellation ($R_n = A_n + Z'_n$). Avec $\lambda = 1$, $g_0 = E_h$.
+:::
+
+**Probabilité d'erreur minimale.** De plus, la probabilité d'erreur binaire est donnée par [poly, p. 129]
+
+$$
+P_{b,\min} = 2\, \frac{M - 1}{M \log_2(M)}\, Q\!\left(\sqrt{\frac{2E_h}{N_0}}\right) .
+$$ {#eq-pb-min-eh}
+
+::: {.complement}
+@eq-pb-min-eh s'obtient en remplaçant $\frac{g_0}{\sigma}$ par sa valeur maximale $\sqrt{2E_h/N_0}$ (@eq-rsb-max) dans @eq-pb-mpam : mêmes conditions (M-PAM, symboles équiprobables, étiquetage de Gray, approximation à fort RSB pour $M > 2$).
+:::
+
+### Remarques : filtre global et causalité {#sec-filtre-adapte-causal}
+
+D'après [poly, p. 130] :
+
+- le filtre global $g(t) = \int_{\mathbb{R}} h(u)\, h_a(t - u)\, \mathrm{d}u = \int_{\mathbb{R}} h(u)\, h(u - t)\, \mathrm{d}u = R_h(t)$ est l'**autocorrélation déterministe** de $h(t)$ ;
+- $h(t)$ causal $\Rightarrow$ $h_a(t)$ non causal. En pratique, on rend ce filtre causal en retardant sa réponse impulsionnelle d'une durée $T \geq T_h$ ($T_h$ étant la « longueur » de $h(t)$). En général on prend $h_a(t) = h^*(T_h - t)$ (formule corrigée : le support écrit $h(t - T_h)$, bloc `av-filtre-adapte-causal`). Donc $g(t) = R_h(t - T_h)$, ce qui implique que l'instant optimal de décision est en $t = T_h$, car $R_h(t)$ est maximal en zéro.
+
+::: {.a-verifier .tranche #av-filtre-adapte-causal}
+**Source** [poly, p. 130] : « En général on prend $h_a(t) = h(t - T_h)$. Donc $g(t) = R_h(t - T_h)$ ». Point déjà relevé dans `CONTEXTE_PROJET.md` (§ 18.4).
+
+**Problème** : retarder de $T_h$ le filtre adapté $h^*(-t)$ donne $h^*(-(t - T_h)) = h^*(T_h - t)$ : il manque le **retournement temporel**. Avec $h_a(t) = h(t - T_h)$, on obtiendrait $g = h \star h(\cdot - T_h)$, qui n'est pas $R_h(t - T_h)$ en général (pour une porte, un triangle centré en $2T_h$ au lieu de $T_h$). Les autres sources écrivent le retournement : la correction du TD, $g_c(t) = g^*(D - t)$ avec $D \geq T_s$ [td-correction, p. 9], l'énoncé du TD, $g_a(t) = g(T_s - t)$ [td, p. 3], et les notes, qui dessinent $h^*(-t)$ décalé de $D \geq \Ts$ [notes, f. 4 v°].
+
+**Proposition** : $h_a(t) = h^*(T_h - t)$, d'où $g(t) = R_h(t - T_h)$ (la conclusion du support est alors juste).
+**Décision** : correction retenue, $h_a(t) = h^*(T_h - t)$, conforme aux notes et au TD (Armand a laissé le choix à Claude, 2026-10-07).
+
+:::
+
+::: {.complement}
+Pour la première remarque, l'égalité $h_a(t - u) = h(u - t)$ suppose $h$ réel ($h_a(t) = h(-t)$) ; dans le cas complexe, $g(t) = \int h(u)\, h^*(u - t)\, \mathrm{d}u = R_h(t)$, avec la définition de $R_h$ du chapitre 3. $R_h$ est maximal en 0 (inégalité de Cauchy-Schwarz) et vaut $R_h(0) = E_h$ : avec le filtre adapté non causal, on échantillonne en $t = n\Ts$ et $g_0 = E_h$ ; avec le filtre retardé de $T_h$, on échantillonne en $T_h + n\Ts$ (comme pour le retard d'échantillonnage du chapitre 2, [exercice du débit maximal](02-communication-sans-bruit.qmd#exr-debit-max-porte)).
+:::
+
+![Filtre adapté à une porte $h(t)$ de durée $\Ts$ : (a) $h(t)$, filtre adapté non causal $h^*(-t)$ et filtre adapté causal $h^*(D - t)$ ; (b) filtre global $g(t) = R_h(t - D)$, triangle de sommet $\Ts$ en $t = D$, et ses échantillons aux instants $n\Ts$ (nuls sauf en $D$ : critère de Nyquist vérifié aux instants $D + n\Ts$). D'après les notes de cours [notes, f. 4 v°] et la correction du TD [td-correction, p. 10-11, fig. 4 à 6], redessinée. Retard choisi : $D = \Ts$.](../figures/04-filtre-adapte-porte.svg){#fig-filtre-adapte-porte}
+
+::: {.notes}
+Au tableau [notes, f. 4 v°], pour $h(t)$ porte sur $[0, \Ts]$ : $h^*(-t)$ est dessiné sur $[-\Ts, 0]$, puis décalé d'un retard $D$ pour le rendre causal, avec la condition encadrée $D \geq \Ts$ ; le filtre global est dessiné en triangle sur $[-\Ts, \Ts]$ (@fig-filtre-adapte-porte).
+:::
+
+## Partage optimal du canal de Nyquist {#sec-demi-nyquist}
+
+Dans le cas où la réponse en fréquence du canal $H_l(f)$ peut être considérée comme « plate » (hypothèse de cette section), la réponse globale du système est $G(f) = H(f)\, H_a(f)$. Afin d'avoir un canal de Nyquist $N_y(f)$, une solution simple consiste à prendre [poly, p. 132]
+
+$$
+H(f) = H_a(f) = \sqrt{N_y(f)} .
+$$
+
+On va donc utiliser le même filtre à l'émission et à la réception. Ce résultat ne pourra être mis en œuvre que si $g(t)$ possède une symétrie paire.
+
+::: {#def-filtre-demi-nyquist}
+## Filtre demi-Nyquist
+
+On appelle **filtre demi-Nyquist** un filtre $h(t)$ tel que $H(f) = \sqrt{N_y(f)}$, où $N_y(f)$ vérifie le critère de Nyquist [poly, p. 132].
+:::
+
+::: {.complement}
+**Lien avec le filtre adapté.** Avec le filtre adapté, $H_a(f) = H^*(f)$ (TF de $h^*(-t)$), donc $G(f) = |H(f)|^2$ : le filtre global est réel, positif et pair. Choisir $|H(f)|^2 = N_y(f)$, avec $N_y$ vérifiant le critère de Nyquist (chapitre 2, [version fréquentielle](02-communication-sans-bruit.qmd#thm-nyquist-frequentiel)), donne à la fois l'**absence d'IES** et le **RSB maximal**. Prendre en plus $H = H_a$ suppose $H$ réelle, c'est-à-dire $h$ réel et pair (au retard près) : c'est le sens de la condition de symétrie paire du support. Exemple usuel (non cité par le support) : le filtre en **racine de cosinus surélevé**, dont le carré est le cosinus surélevé du chapitre 2 ([exemple](02-communication-sans-bruit.qmd#exm-cosinus-sureleve)).
+
+Notation : le support note ici $H_l(f)$ le canal, noté $h_c(t)$ ailleurs dans le cours ($h_l(t)$ dans le TD).
+
+La correction du TD emploie le même terme : le filtre adapté de l'exercice 4 y est qualifié de « demi-Nyquist » [td-correction, p. 13].
+:::
+
+## Lien entre $P_b$ et $E_b/N_0$ {#sec-pb-eb-n0}
+
+Dans les parties précédentes, on a montré @eq-pb-min-eh. On cherche maintenant à exprimer $P_{b,\min}$ en fonction de $\frac{E_b}{N_0}$ [poly, p. 134].
+
+::: {#def-energie-bit}
+## Énergie par bit
+
+$E_b$ est l'**énergie moyenne par bit d'information** transmis, définie par [poly, p. 134]
+
+$$
+E_b = P\, \Tb = \frac{P}{D_b},
+$$ {#eq-energie-bit}
+
+où $P$ représente la puissance moyenne du signal utile transmis et $\Tb$ est le temps bit.
+:::
+
+Le signal transmis s'écrit $s_l(t) = \sum_n A_n\, h(t - n\Ts)$. Comme $s_l(t)$ est un signal cyclostationnaire, on montre que $P = \int_{\mathbb{R}} \Gamma_{s_l}(f)\, \mathrm{d}f$. On a montré précédemment que $\Gamma_{s_l}(f) = \frac{\sigma_a^2\, |H(f)|^2}{\Ts}$ ; en conséquence [poly, p. 135],
+
+$$
+P = \frac{\sigma_a^2\, E_h}{\Ts} .
+$$ {#eq-puissance-signal-emis}
+
+::: {.complement}
+Conditions : $\Gamma_{s_l}(f) = \sigma_a^2 |H(f)|^2/\Ts$ est la formule de Bennett pour des symboles **indépendants, identiquement distribués et centrés** de variance $\sigma_a^2$ (notée $\sigma_A^2$ au chapitre 3, [corollaire](03-dsp-signaux-codes-en-ligne.qmd#cor-bennett-iid)) ; $\int |H(f)|^2\, \mathrm{d}f = E_h$ par l'égalité de Parseval. C'est le résultat du complément « Puissance du signal émis » du chapitre 3.
+:::
+
+Ainsi [poly, p. 137] :
+
+$$
+E_b = P\, \Tb = \frac{\sigma_a^2 E_h}{\Ts}\, \Tb = \frac{\sigma_a^2 E_h}{\log_2(M)} .
+$$
+
+On en déduit
+
+$$
+P_{b,\min} = 2\, \frac{M - 1}{M \log_2(M)}\, Q\!\left(\sqrt{\frac{2 \log_2(M)}{\sigma_a^2}\, \frac{E_b}{N_0}}\right) .
+$$ {#eq-pb-min-eb-n0}
+
+Pour une $M$-PAM, $\sigma_a^2 = \frac{M^2 - 1}{3}$. On en déduit
+
+$$
+P_{b,\min} = 2\, \frac{M - 1}{M \log_2(M)}\, Q\!\left(\sqrt{\frac{6 \log_2(M)}{M^2 - 1}\, \frac{E_b}{N_0}}\right) .
+$$ {#eq-pb-min-mpam}
+
+![Probabilité d'erreur binaire minimale $P_{b,\min}$ de la $M$-PAM en fonction de $E_b/N_0$ (dB), pour $M = 2, 4, 8, 16$ ; repères à 10 dB et $P_b = 10^{-2}$. D'après le support [poly, p. 138], redessinée (courbes recalculées à partir de @eq-pb-min-mpam).](../figures/04-pb-eb-n0.svg){#fig-pb-eb-n0}
+
+::: {.complement}
+**Étapes et vérifications.**
+
+- $\Ts = \log_2(M)\, \Tb$ (chapitre 2, $D_b = n_b D_s$ avec $n_b = \log_2 M$), d'où $\frac{\Tb}{\Ts} = \frac{1}{\log_2 M}$.
+- $E_h = \frac{\log_2(M)\, E_b}{\sigma_a^2}$, et $\frac{2E_h}{N_0} = \frac{2\log_2(M)}{\sigma_a^2}\frac{E_b}{N_0}$ dans @eq-pb-min-eh.
+- Variance de la $M$-PAM $\{\pm 1, \pm 3, \dots, \pm(M - 1)\}$ équiprobable : $\sigma_a^2 = \frac{2}{M}\sum_{k=1}^{M/2} (2k - 1)^2 = \frac{M^2 - 1}{3}$ ; $\sigma_a^2 = 1$ pour $M = 2$, $5$ pour $M = 4$.
+- **Cas binaire** ($M = 2$) : $P_{b,\min} = Q\!\left(\sqrt{\frac{2E_b}{N_0}}\right)$, résultat de la correction du TD (@exr-td-probabilite-erreur). Le RSB d'amplitude vaut alors $\frac{g_0}{\sigma} = \sqrt{2E_b/N_0}$, soit $20\log_{10}\frac{g_0}{\sigma} = 10\log_{10}\frac{E_b}{N_0} + 3\ \mathrm{dB}$.
+- **Lecture de la @fig-pb-eb-n0** : à $E_b/N_0$ fixé, $P_b$ augmente avec $M$ ; à 10 dB, $P_b \approx 3{,}9 \cdot 10^{-6}$ pour $M = 2$ et $\approx 2 \cdot 10^{-3}$ pour $M = 4$. Augmenter $M$ augmente l'efficacité spectrale (chapitre 2) mais demande plus d'énergie par bit pour la même probabilité d'erreur.
+:::
+
+## Exercices du TD {#sec-exercices-td-bruit}
+
+Les exercices suivants viennent du TD « Transmissions en bande de base » [td] ; ils sont écrits avec les notations du cours lorsque c'est possible (le TD note $g(t)$ le filtre de mise en forme, $g_a(t)$ le filtre de réception, $v(t)$ le filtre global, $n_l(t)$ le bruit et $r_l[n]$ l'échantillon reçu ; voir la table des notations de la fiche matière). L'énoncé et la correction ne suivent pas la même version du TD : les numéros de questions sont ceux de l'**énoncé**, la correspondance avec la correction est indiquée.
+
+::: {#exr-td-filtre-adapte}
+## Critère de Nyquist et filtrage adapté [td, p. 3, ex. 3]
+
+Le canal de propagation est supposé à bande passante infinie ($h_c(t) = \delta(t)$), et le filtre de mise en forme est la porte $h(t) = 1$ si $0 \leq t < \Ts$, 0 sinon.
+
+1. Donner l'expression mathématique du filtre $h_a(t)$ adapté à $h(t)$. Que faut-il faire pour rendre ce filtre causal ?
+2. Rappeler le résultat de la convolution $g(t)$ de $h(t)$ avec son filtre adapté causal $h_a(t) = h(\Ts - t)$.
+3. Montrer que $g(t)$ est un filtre de Nyquist.
+4. Qu'entraîne la causalité des couples de filtres (mise en forme et adapté) sur la réception du premier symbole à estimer ?
+:::
+
+::: {.solution}
+Correction du TD [td-correction, p. 9-11] (questions 1 et 2).
+
+1. Le filtre adapté est le filtre de réception qui maximise le rapport signal à bruit aux instants des décisions : $h_a(t) = \lambda h^*(-t)$, avec $\lambda \in \mathbb{C}^*$ ; $\lambda$ ne change pas les performances du récepteur, et un choix courant est $\lambda = 1$. Filtre adapté **causal** : $h_{a,c}(t) = h^*(D - t)$, avec un retard $D \geq \Ts$ ; si $h$ avait un support de durée $\Delta$, il faudrait choisir $D \geq \Delta$.
+2. $g(t) = \int h(u)\, h^*(D - t + u)\, \mathrm{d}u = \int_{t - D}^{t - D + \Ts} h(u)\, \mathrm{d}u$, d'où
+   $$
+   g(t) =
+   \begin{cases}
+   t - D + \Ts & \text{si } t \in [D - \Ts, D], \\
+   -t + D + \Ts & \text{si } t \in [D, D + \Ts], \\
+   0 & \text{sinon :}
+   \end{cases}
+   $$
+   un triangle de sommet $\Ts$ en $t = D$ (@fig-filtre-adapte-porte).
+:::
+
+::: {.complement}
+Dans la correction, le filtre adapté causal est noté $g_c(t)$ ; il est noté ici $h_{a,c}(t)$, pour ne pas le confondre avec le filtre du canal $h_c(t)$ du cours. L'énoncé prend $D = \Ts$ (question 2).
+
+Solutions des questions 3 et 4 (la correction n'en donne pas) :
+
+3. Aux instants $D + k\Ts$, $g(D + k\Ts) = \Ts$ si $k = 0$ et $0$ si $k \neq 0$ (le triangle s'annule à $D \pm \Ts$ et au-delà) : $g$ vérifie le critère de Nyquist ([version temporelle](02-communication-sans-bruit.qmd#thm-nyquist-temporel)) pour des instants d'échantillonnage $D + n\Ts$, avec $g_0 = \Ts = E_h$.
+4. Le symbole $A_0$, émis à partir de $t = 0$, n'est disponible au maximum de $g$ qu'à l'instant $t = D \geq \Ts$ : la réception du premier symbole est **retardée** de $D$, et l'échantillonneur doit être calé sur les instants $D + n\Ts$. Un échantillonnage aux instants $n\Ts$ avec $D = \Ts$ donnerait en $t = 0$ un échantillon sans symbole ($g(-D) = 0$), puis chaque symbole avec une période de retard.
+
+La correction contient aussi une question de tracé des signaux $s_l(t)$, $r_l(t)$ et $r_l[n]$ (question 4 de la correction), absente de l'énoncé et sans corrigé ; elle n'est pas reprise.
+:::
+
+::: {#exr-td-probabilite-erreur}
+## Probabilité d'erreur et récepteur optimal [td, p. 3, ex. 4]
+
+Hypothèses : le filtre de réception $h_a(t)$ est le filtre adapté à $h(t)$ ; le filtre global $g(t)$ vérifie le critère de Nyquist ; le bruit $z_l(t)$ est blanc, gaussien, de DSP $\Gamma_{z_l}(f) = \frac{N_0}{2}$ ; le bruit $z'_l[k]$ en sortie de filtre adapté et d'échantillonnage au rythme $\Ts$ est gaussien, de moyenne nulle et de variance $\sigma^2$. La correction précise l'association $B_n = 0 \Rightarrow A_n = -1$, $B_n = 1 \Rightarrow A_n = 1$ [td-correction, p. 11].
+
+1. Exprimer $r_n$, le $n$-ième échantillon de $r_l(t)$ échantillonné à $\Ts$, à partir de $A_n$, de $g(t)$ et du bruit.
+2. Démontrer l'expression de la probabilité d'erreur binaire $P_b$ en fonction de $\rho = \frac{g_0^2}{\sigma^2}$ pour une 2-PAM.
+3. Démontrer que $\sigma_{z_l}^2 = \frac{N_0}{2}$.
+4. Calculer la fonction d'autocorrélation des échantillons discrets $z_l(kT_e) = z_l[k]$ du bruit blanc gaussien $z_l(t)$.
+5. Faire le même calcul à partir des échantillons discrets du bruit filtré, $z'_l(k\Ts) = z'_l[k] = \sum_{n} z_l[n]\, h_a[k - n]$. Le résultat est-il en accord avec la formule du filtrage des processus aléatoires ?
+6. Quelle est la densité de probabilité du bruit filtré ? Justifier.
+7. Déduire des questions précédentes l'expression de $P_b$ en fonction de $\frac{E_b}{N_0}$ pour une 2-PAM, dans le cadre d'un récepteur optimal.
+:::
+
+::: {.complement}
+Notations : l'énoncé note $\gamma = \frac{g_0^2}{\sigma^2}$ le rapport de la question 2 ; il est noté ici $\rho$, pour ne pas le confondre avec le seuil de décision $\gamma$ du cours. Correspondance des questions avec la correction [td-correction, p. 11-14] : q. 1 et 2 identiques ; q. 5 et 6 traitées dans les questions 3 et 4 de la correction ; q. 7 = question 5 de la correction ; q. 3 et 4 sans corrigé.
+:::
+
+::: {.solution}
+Correction du TD [td-correction, p. 11-14].
+
+**1.** $r_l(t) = \sum_k A_k\, g(t - k\Ts)$ (plus le bruit filtré), d'où $r_n = \sum_k A_k\, g((n - k)\Ts) + z'_l[n] = A_n\, g(0) + z'_l[n]$ par le critère de Nyquist.
+
+**2.** Par la formule des probabilités totales, $P_{b,n} = P(\hat{B}_n = 0 \mid B_n = 1)\, P(B_n = 1) + P(\hat{B}_n = 1 \mid B_n = 0)\, P(B_n = 0)$. La décision $\hat{B}_n = 1$ est prise si et seulement si $r_n \geq 0$ ; avec des bits équiprobables,
+
+$$
+P_{b,n} = 0{,}5\, P(r_n < 0 \mid A_n = 1) + 0{,}5\, P(r_n \geq 0 \mid A_n = -1) .
+$$
+
+Pour le premier terme,
+
+$$
+P(r_n < 0 \mid A_n = 1) = \int_{-\infty}^{0} \frac{1}{\sqrt{2\pi\sigma^2}}\, e^{-\frac{(r - g(0))^2}{2\sigma^2}}\, \mathrm{d}r = \int_{g(0)/\sigma}^{+\infty} \frac{1}{\sqrt{2\pi}}\, e^{-\frac{r^2}{2}}\, \mathrm{d}r = Q\!\left(\sqrt{\frac{g(0)^2}{\sigma^2}}\right)
+$$
+
+(densité corrigée, voir `av-densite-conditionnelle-td`), et de même $P(r_n \geq 0 \mid A_n = -1) = Q\!\left(\sqrt{g(0)^2/\sigma^2}\right)$. L'expression ne dépend pas de $n$ :
+
+$$
+P_b = Q\!\left(\sqrt{\frac{g_0^2}{\sigma^2}}\right) = Q(\sqrt{\rho}) .
+$$
+
+**5 et 6** (questions 3 et 4 de la correction). Le bruit en sortie de filtre adapté est $z'_l(t) = \int z_l(u)\, h_a(t - u)\, \mathrm{d}u$. Sa DSP est $\Gamma_{z'_l}(f) = |H_a(f)|^2\, \Gamma_{z_l}(f) = \frac{N_0}{2} |H_a(f)|^2$ (DSP corrigée, voir `av-dsp-bruit-filtre-td`), d'où
+
+$$
+R_{z'_l}(\tau) = \frac{N_0}{2}\, R_{h_a}(\tau),
+\qquad R_{h_a}(\tau) = \int h_a(u)\, h_a^*(u - \tau)\, \mathrm{d}u = g(\tau)
+$$
+
+puisque $h_a(t) = h^*(-t)$. Pour les échantillons au rythme $\Ts$ :
+
+$$
+R_{z'_l}[k] = \E\!\left(z'_l[n]\, z'^*_l[n - k]\right) = R_{z'_l}(k\Ts) = \frac{N_0}{2}\, g(k\Ts) = \frac{N_0}{2}\, g(0)\, \delta_k .
+$$
+
+Le bruit en sortie de filtre adapté (demi-Nyquist) et d'échantillonneur est donc stationnaire, décorrélé, de variance $\frac{N_0}{2} g(0)$ : les hypothèses de l'énoncé sont bonnes avec $\sigma^2 = \frac{N_0}{2} g(0)$. Il est gaussien, car $z_l(t)$ est gaussien et le filtrage est linéaire, et centré, car $z_l(t)$ l'est : $\E(z'_l[k]) = 0$.
+
+**7** (question 5 de la correction). $E_b = P\Tb$, avec $P = \int \Gamma_{s_l}(f)\, \mathrm{d}f = \frac{1}{\Ts}\int |H(f)|^2\, \mathrm{d}f = \frac{1}{\Ts}\int G(f)\, \mathrm{d}f = \frac{g(0)}{\Ts}$ (DSP de la 2-PAM du chapitre 3). Avec $N_0 = \frac{2\sigma^2}{g(0)}$ et $\Ts = \Tb$ pour une modulation binaire :
+
+$$
+\frac{E_b}{N_0} = \frac{g(0)^2\, \Tb}{2\sigma^2\, \Ts} = \frac{g(0)^2}{2\sigma^2},
+\qquad\text{d'où}\qquad
+P_b = Q\!\left(\sqrt{\frac{2E_b}{N_0}}\right) .
+$$
+:::
+
+::: {.a-verifier .tranche #av-densite-conditionnelle-td}
+**Source** [td-correction, p. 12] : « $P(r_l[n] < 0 \mid A_n = 1) = \int_{-\infty}^{0} \frac{1}{\sqrt{2\pi\sigma^2}}\, e^{-\frac{(r + v(0))^2}{2\sigma^2}}\, \mathrm{d}r$ ».
+
+**Problème** : sachant $A_n = 1$, $r_l[n] = v(0) + n'_l[n] \sim \mathcal{N}(v(0), \sigma^2)$ : l'exposant est $-(r - v(0))^2/(2\sigma^2)$. Avec le signe $+$, le changement de variable donnerait la borne $-v(0)/\sigma$ et le résultat $1 - Q(v(0)/\sigma)$, alors que la correction écrit ensuite la borne $v(0)/\sigma$ et le résultat $Q(\cdot)$, qui sont justes. Le second terme ($A_n = -1$, exposant $(r + v(0))^2$) est correct.
+
+**Proposition** : $e^{-\frac{(r - v(0))^2}{2\sigma^2}}$ au premier terme (écrit ainsi dans la solution).
+**Décision** : correction retenue (Armand a laissé le choix à Claude, 2026-10-07).
+
+:::
+
+::: {.a-verifier .tranche #av-dsp-bruit-filtre-td}
+**Source** [td-correction, p. 13] : « $\Gamma_{n'_l}(f) = |G_a(f)|^2\, \Gamma_{n'_l}(f) = \frac{N_0}{2} |G_a(f)|^2$ ».
+
+**Problème** : la DSP de sortie (bruit filtré $n'_l$) est le produit de $|G_a|^2$ par la DSP d'**entrée**, celle du bruit blanc $n_l$ ; telle quelle, l'égalité définit $\Gamma_{n'_l}$ en fonction d'elle-même. La valeur finale $\frac{N_0}{2}|G_a(f)|^2$ est juste.
+
+**Proposition** : $\Gamma_{n'_l}(f) = |G_a(f)|^2\, \Gamma_{n_l}(f) = \frac{N_0}{2} |G_a(f)|^2$.
+**Décision** : correction retenue (Armand a laissé le choix à Claude, 2026-10-07).
+
+:::
+
+::: {.complement}
+Solutions des questions 3 et 4 (aucune source ne les donne), sous réserve du bloc ci-dessous.
+
+**4.** $R_{z_l}[k] = \E(z_l[n]\, z_l^*[n - k]) = R_{z_l}(kT_e) = \frac{N_0}{2}\, \delta(kT_e)$ : les échantillons d'un bruit blanc sont **décorrélés** ($R_{z_l}[k] = 0$ pour $k \neq 0$), mais leur variance $R_{z_l}[0]$ est infinie en théorie, comme la puissance du bruit blanc. En pratique, le bruit est d'abord limité à la bande $[-f_e/2, f_e/2]$ (filtre anti-repliement idéal) : $R_{z_l}(\tau) = \frac{N_0}{2} f_e \sinc(f_e \tau)$, qui s'annule aux instants $kT_e$, $k \neq 0$, d'où $R_{z_l}[k] = \frac{N_0 f_e}{2}\, \delta_k$.
+
+**3.** Avec cette limitation de bande, $\sigma_{z_l}^2 = R_{z_l}[0] = \frac{N_0 f_e}{2} = \frac{N_0}{2 T_e}$ ; on trouve $\frac{N_0}{2}$ pour $f_e = 1$ (fréquences normalisées par la fréquence d'échantillonnage).
+:::
+
+::: {.a-verifier .tranche #av-variance-bruit-discret-td}
+**Source** [td, p. 3, ex. 4, q. 3] : « Démontrer que $\sigma_{n_l}^2 = \frac{N_0}{2}$ » (question sans corrigé).
+
+**Problème** : un bruit blanc de DSP $\frac{N_0}{2}$ a une puissance infinie ; ses échantillons n'ont une variance finie que si le bruit est limité en bande avant l'échantillonnage. Pour un bruit limité à $[-f_e/2, f_e/2]$, la variance vaut $\frac{N_0 f_e}{2}$ et non $\frac{N_0}{2}$, sauf si $f_e = 1$ (ou $T_e = 1$). L'énoncé ne précise ni la limitation de bande ni la normalisation ; la question est peut-être liée à l'autre version du TD (la correction n'a pas cette question).
+
+**Proposition** : interpréter la question avec un bruit limité à $[-f_e/2, f_e/2]$ et des fréquences normalisées ($T_e = 1$), et écrire en général $\sigma_{n_l}^2 = \frac{N_0}{2T_e}$ (solution du complément ci-dessus).
+**Décision** : interprétation retenue : bruit limité à $[-f_e/2, f_e/2]$, $\sigma_{n_l}^2 = \frac{N_0}{2T_e}$, égal à $\frac{N_0}{2}$ pour $T_e = 1$ (Armand a laissé le choix à Claude, 2026-10-07).
+
+:::
+
+::: {#exr-td-constellation-bruitee}
+## Étude pratique : bruit et fiabilité [td, p. 4, ex. 5, q. 12-13]
+
+Hypothèses de l'étude pratique (exercice des DSP du chapitre 3, [étude pratique](03-dsp-signaux-codes-en-ligne.qmd#exr-td-largeur-bande)) : 4-PAM, $A_k \in \{\pm 1, \pm 3\}$, filtres de mise en forme et de réception en porte, normalisés en énergie.
+
+12. On considère que la variance du bruit vaut $\sigma_{z_l}^2 = 1/16$ ; tracer dans ce cas la constellation des symboles détectés $r_n$ dans un intervalle de confiance de $\pm 3\sigma$ autour de chaque symbole possible (soit 99,7 % de confiance).
+13. Dans les conditions de bruit précédentes, que pensez-vous de la fiabilité de cette communication numérique ?
+:::
+
+::: {.complement}
+Solution (aucune source ne la donne), en interprétant $\sigma^2 = 1/16$ comme la variance du bruit sur les échantillons détectés (filtres normalisés en énergie, donc $g_0 = 1$ et $r_n = A_n + Z'_n$) :
+
+12. $\sigma = \frac{1}{4}$ : les échantillons reçus se trouvent, avec 99,7 % de confiance, dans les intervalles $[A - 0{,}75,\ A + 0{,}75]$ autour de chaque symbole $A \in \{-3, -1, 1, 3\}$ (@fig-constellation-bruitee). Ces intervalles sont **disjoints** et ne contiennent aucun seuil optimal ($-2$, $0$, $2$).
+13. Chaque symbole est à la distance $g_0 = 1 = 4\sigma$ du seuil le plus proche : par @eq-ps-mpam, $P_s = 2 \cdot \frac{3}{4}\, Q(4) \approx 4{,}8 \cdot 10^{-5}$, et avec un étiquetage de Gray $P_b \approx P_s/2 \approx 2{,}4 \cdot 10^{-5}$ (@eq-pb-mpam). La communication est donc fiable : pour les 5 symboles de la séquence de l'étude pratique, la probabilité d'au moins une erreur est d'environ $2{,}4 \cdot 10^{-4}$.
+:::
+
+![Échantillons reçus $r_n$ d'une 4-PAM avec un bruit d'écart-type $\sigma = 1/4$ (400 tirages, ordonnée sans signification), intervalles $\pm 3\sigma$ (rectangles) autour des symboles (croix). Exercice du TD [td, p. 4, ex. 5, q. 12]. Reconstruite (aucune source ne donne de solution) : échantillons simulés (graine 4) ; seuils optimaux $-2$, $0$, $2$ ajoutés en pointillés gris.](../figures/04-constellation-bruitee.svg){#fig-constellation-bruitee}
+
+## À retenir {#sec-retenir-bruit}
+
+Origine : support officiel, sauf mention *(notes)*, *(TD)* ou *(complément)* ; *(corrigé)* signale une correction de source (bloc tranché).
+
+- **Probabilités d'erreur** : $P_s = P(\hat{A}_n \neq A_n) = \sum_a P(A_n = a) P(\hat{A}_n \neq A_n \mid A_n = a)$ (@eq-ps-definition), soit $\frac{1}{M}\sum_i P(\hat{A}_n \neq A_n \mid A_n = a_i)$ pour des symboles équiprobables (@eq-ps-equiprobables) ; $P_b = p_0 P(\hat{B}_n = 1 \mid B_n = 0) + p_1 P(\hat{B}_n = 0 \mid B_n = 1)$ (@eq-pb-definition) ; en binaire, $P_b = P_s$.
+- **Modèle en présence de bruit** : si $g$ vérifie le critère de Nyquist, $R_n = g_0 A_n + Z'_n$, $Z'_n \sim \mathcal{N}(0, \sigma^2)$ indépendant des symboles (@eq-modele-bruit).
+- **Seuil optimal binaire** ($\pm g_0$, bruit gaussien) : $\gamma^* = \frac{\sigma^2}{2g_0} \ln\frac{p_0}{1 - p_0}$ (@eq-seuil-optimal) ; symboles équiprobables : seuil au milieu, $\gamma^* = 0$ *(notes : médiatrice, si le bruit est gaussien)*.
+- **$P_b$ binaire, équiprobable** : $P_b = Q(g_0/\sigma)$ (@eq-pb-binaire), avec $Q(x) = \frac{1}{\sqrt{2\pi}}\int_x^{+\infty} e^{-u^2/2}\, \mathrm{d}u = 1 - \Phi(x)$ *(notes ; $Q = 1 - \Phi$ : complément)* (@def-fonction-q).
+- **RSB** : $g_0/\sigma$, rapport d'amplitudes, en dB $20\log_{10}(g_0/\sigma)$ (@def-rsb).
+- **$M$-PAM équiprobable** (espacement $2g_0$, seuils au milieu) : $P_s = 2\frac{M - 1}{M} Q(g_0/\sigma)$ (@eq-ps-mpam) ; $\frac{3}{2}Q(g_0/\sigma)$ pour $M = 4$ (@eq-ps-4pam) ; démonstration : 2 points au bord, $M - 2$ points à deux voisins *(notes)*.
+- **$P_b$ et $P_s$** : $P_b \geq P_s/\log_2 M$ ; Gray : $P_b \simeq P_s/\log_2 M$, d'où $P_b \simeq 2\frac{M - 1}{M\log_2 M} Q(g_0/\sigma)$ (@eq-pb-mpam) *(approximation à fort RSB : complément)* ; construction de Gray en miroir *(notes)* (@tbl-gray-miroir).
+- **Gain du filtre global** : $g_0 = \int h(u)\, h_a(-u)\, \mathrm{d}u = \int H(f)\, H_a(f)\, \mathrm{d}f$ (@eq-g0-filtres).
+- **Variance du bruit filtré** : $\sigma^2 = \frac{N_0}{2}\int |h_a(t)|^2\, \mathrm{d}t$ (@eq-variance-bruit-filtre).
+- **Filtre adapté** : $h_a(t) = \lambda h^*(-t)$ maximise $g_0/\sigma$ (@thm-filtre-adapte, @eq-filtre-adapte) ; $(g_0^2/\sigma^2)_{\max} = 2E_h/N_0$ (@eq-rsb-max) ; filtre global $g = \lambda R_h$, $G = \lambda |H|^2$ *(notes)* ; version causale $h^*(T_h - t)$, échantillonnage en $T_h + n\Ts$ *(corrigé : le support écrit $h(t - T_h)$)*.
+- **Filtre demi-Nyquist** : $H = H_a = \sqrt{N_y}$, canal plat, $g$ pair (@def-filtre-demi-nyquist).
+- **Énergie par bit** : $E_b = P\Tb$ (@eq-energie-bit) ; $P = \sigma_a^2 E_h/\Ts$ pour des symboles iid centrés (@eq-puissance-signal-emis).
+- **$P_b$ en fonction de $E_b/N_0$** : $P_{b,\min} = 2\frac{M - 1}{M\log_2 M} Q\!\left(\sqrt{\frac{6\log_2 M}{M^2 - 1}\frac{E_b}{N_0}}\right)$ pour la $M$-PAM (@eq-pb-min-mpam) ; $Q(\sqrt{2E_b/N_0})$ en binaire *(TD)*.
