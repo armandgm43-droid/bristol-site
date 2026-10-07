@@ -274,6 +274,19 @@ div.a-verifier {
 }
 div.a-verifier::before { content: "? À vérifier"; color: var(--cat-verifier); }
 
+/* Bloc tranché (conventions.md § 5.2) : la source a été corrigée, la décision
+   reste visible. Même famille de couleur (jetons --cat-verifier…), filet plus
+   fin et fond plus pâle ; étiquette « ✓ Corrigé ». Clair et sombre : les
+   jetons changent seuls, aucune couleur en dur. */
+div.a-verifier.tranche {
+  border-left-width: 2px;
+  background: color-mix(in srgb, var(--cat-verifier-bg) 50%, transparent);
+}
+div.a-verifier.tranche::before {
+  content: "✓ Corrigé";
+  color: color-mix(in srgb, var(--cat-verifier) 80%, var(--ink-soft));
+}
+
 /* Segments dans une phrase */
 span.notes { color: var(--cat-notes); }
 span.notes::before { content: "✎ "; font-size: 0.85em; }

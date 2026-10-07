@@ -1,7 +1,7 @@
 """Figure F10 — Règle de symétrie du critère de Nyquist (TS227, chapitre 2).
 D'après le support [poly, p. 41], redessinée, avec l'ordonnée du centre corrigée (g0·Ts/2 au lieu de g0/2,
 bloc av-centre-symetrie-nyquist). Axes normalisés (f·Ts, G/(g0·Ts)).
-Cosinus surélevé de facteur de retombée beta = 0,2 : valeur estimée à partir de la figure du support."""
+Cosinus surélevé de facteur de retombée beta = 0,35 : valeur estimée à partir de la figure du support."""
 import matplotlib
 matplotlib.use("svg")
 import matplotlib.pyplot as plt
@@ -36,7 +36,7 @@ def cosinus_sureleve(x, beta):
     x = np.abs(x); a, b = (1 - beta) / 2, (1 + beta) / 2
     return np.where(x <= a, 1.0, np.where(x <= b, 0.5 * (1 + np.cos(np.pi / beta * (x - a))), 0.0))
 
-beta = 0.2
+beta = 0.35
 x = np.linspace(0, 1, 1001)
 fig, ax = plt.subplots(figsize=(5.2, 3.0))
 ax.plot(x, cosinus_sureleve(x, beta), color=BLEU)

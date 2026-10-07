@@ -4,7 +4,7 @@ matiere: ts227
 chapitre: 2
 enseignants: ["Romain Tajan"]
 annee: "2026-2027"
-statut: redige
+statut: valide
 date-modified: 2026-10-07
 sources:
   - id: poly
@@ -251,21 +251,13 @@ L'enseignant compare, pour une même puissance moyenne $P = 0{,}5\ \mathrm{W}$ 
 Avec des symboles équiprobables, la puissance moyenne vaut $\frac{1}{2}\left(\frac{1}{2} + \frac{1}{2}\right) = 0{,}5$ pour la constellation antipodale et $\frac{1}{2}(0^2 + 1^2) = 0{,}5$ pour l'OOK : les deux constellations ont bien la même puissance. À puissance égale, la constellation antipodale écarte davantage ses symboles ($\sqrt{2} > 1$) ; on verra au chapitre 4 que cet écart conditionne la robustesse au bruit.
 :::
 
-::: {.a-verifier #av-exemples-mise-en-forme-manquants}
-**Source** [notes, f. 1 v°] : l'exemple du code Manchester est titré « Exemple 3 : Code Manchester ».
-
-**Problème** : les exemples 1 et 2 ne figurent dans aucune des sources fournies (ni le support, ni les notes). Le cours Bristol ne fait aucune hypothèse sur leur contenu.
-
-**Proposition** : compléter si une autre source (notes d'un camarade, enregistrement, site de l'enseignant) permet de les retrouver.
-:::
-
 :::: {.notes}
 ::: {#exm-manchester}
 ## Code Manchester
 
 ![Porte $\Pi_{\Ts/2}(t)$ et filtre de mise en forme $h(t)$ du code Manchester. D'après les notes de cours [notes, f. 1 v°], redessinée. Reconstruite : l'amplitude $\pm 1$ est choisie (les notes ne la donnent pas).](../figures/02-manchester.svg){#fig-manchester}
 
-Cet exemple est titré « Exemple 3 » dans les notes. Le filtre de mise en forme $h(t)$ vaut une constante positive sur $[0, \Ts/2]$ et la constante opposée sur $[\Ts/2, \Ts]$ ; il est construit à partir de la porte $\Pi_{\Ts/2}(t)$, de largeur $\Ts/2$ (bornes $\pm\Ts/4$) [notes, f. 1 v°].
+Cet exemple est titré « Exemple 3 » dans les notes ; les exemples 1 et 2 ne figurent pas dans les notes. Le filtre de mise en forme $h(t)$ vaut une constante positive sur $[0, \Ts/2]$ et la constante opposée sur $[\Ts/2, \Ts]$ ; il est construit à partir de la porte $\Pi_{\Ts/2}(t)$, de largeur $\Ts/2$ (bornes $\pm\Ts/4$) [notes, f. 1 v°].
 
 Propriétés notées en cours : le signal est **à moyenne nulle** et **ne fait pas de séquence constante**.
 :::
@@ -412,7 +404,9 @@ Au tableau [notes, f. 1 v°], la détection est présentée comme la « mise en
 
 ### Version temporelle {#sec-nyquist-temporel}
 
-On note $\text{Ш}_{\Ts}(t) = \sum_{m} \delta(t - m\Ts)$ le peigne de Dirac de période $\Ts$.
+::: {.notes}
+On note $\text{Ш}_{\Ts}(t) = \sum_{m} \delta(t - m\Ts)$ le peigne de Dirac de période $\Ts$ [notes, f. 1 v°].
+:::
 
 ::: {#thm-nyquist-temporel}
 ## Critère de Nyquist, version temporelle
@@ -540,7 +534,7 @@ $$
 ce qui exprime exactement que le point $\left(\frac{1}{2\Ts}, \frac{g_0\Ts}{2}\right)$ est centre de symétrie de la courbe de $G$ sur $[0, 1/\Ts]$. Le support ne formule pas cette hypothèse, mais tous ses exemples la vérifient.
 :::
 
-![Règle de symétrie : sur $[0, 1/\Ts]$, $G(f)$ est symétrique par rapport au point $\left(\frac{1}{2\Ts}, \frac{g_0\Ts}{2}\right)$. D'après le support [poly, p. 41], redessinée avec l'ordonnée du centre corrigée ($g_0\Ts/2$ au lieu de $g_0/2$, bloc `av-centre-symetrie-nyquist`). Facteur de retombée 0,2 : valeur estimée à partir de la figure du support.](../figures/02-symetrie-nyquist.svg){#fig-symetrie-nyquist}
+![Règle de symétrie : sur $[0, 1/\Ts]$, $G(f)$ est symétrique par rapport au point $\left(\frac{1}{2\Ts}, \frac{g_0\Ts}{2}\right)$. D'après le support [poly, p. 41], redessinée avec l'ordonnée du centre corrigée ($g_0\Ts/2$ au lieu de $g_0/2$, bloc `av-centre-symetrie-nyquist`). Facteur de retombée 0,35 : valeur estimée à partir de la figure du support.](../figures/02-symetrie-nyquist.svg){#fig-symetrie-nyquist}
 
 ::: {#def-frequence-nyquist}
 ## Fréquence de Nyquist
@@ -572,7 +566,7 @@ Enfin, $B \geq \frac{1}{2\Ts}$.
 :::
 ::::
 
-![Bande minimale : la réplique $G(f - 1/\Ts)$ doit chevaucher $G(f)$, d'où $1/\Ts - B \leq B$. D'après les notes de cours [notes, f. 2 r° et f. 3 r°], redessinée. Reconstruite : forme du spectre choisie pour l'illustration (cosinus surélevé de facteur de retombée 0,4).](../figures/02-bande-minimale.svg){#fig-bande-minimale}
+![Bande minimale : avec un spectre rectangulaire de bande $B = \frac{1}{2\Ts}$, la réplique $G(f - 1/\Ts)$ commence exactement là où $G(f)$ s'arrête ($1/\Ts - B = B$). D'après les notes de cours [notes, f. 2 r°], redessinée.](../figures/02-bande-minimale.svg){#fig-bande-minimale}
 
 ::: {.complement}
 La bande minimale est donc la fréquence de Nyquist (@def-frequence-nyquist). Elle n'est atteinte qu'avec un spectre rectangulaire, $G(f)$ constant sur $\left[-\frac{1}{2\Ts}, \frac{1}{2\Ts}\right]$ : les répliques se juxtaposent alors exactement. Cela éclaire la remarque de l'enseignant liant le débit symbole à la bande passante (@sec-symboles-debit-symbole) : à bande $B$ donnée, le critère de Nyquist limite le débit symbole à $D_s = 1/\Ts \leq 2B$.
@@ -627,7 +621,7 @@ En conclusion [poly, p. 52] :
 ::: {#exm-cosinus-sureleve}
 ## Exemple de filtre de mise en forme [poly, p. 43-45]
 
-![Exemple de filtre de Nyquist (cosinus surélevé) : à gauche, $g(t)$ s'annule à tous les instants $m\Ts$, $m \neq 0$ ; à droite, la somme des répliques de $G(f)$ est constante. D'après le support [poly, p. 43-45] et les notes de cours [notes, f. 2 r°], redessinée. Axes normalisés ($t/\Ts$ et $g(t)/g_0$ ; $f\Ts$ et $G(f)/(g_0\Ts)$), car les échelles des deux graphes du support ne sont pas cohérentes (bloc `av-echelles-figure-cosinus-sureleve`). Facteur de retombée 0,2 : valeur estimée à partir de la figure du support.](../figures/02-cosinus-sureleve.svg){#fig-cosinus-sureleve}
+![Exemple de filtre de Nyquist (cosinus surélevé) : à gauche, $g(t)$ s'annule à tous les instants $m\Ts$, $m \neq 0$ ; à droite, la somme des répliques de $G(f)$ est constante. D'après le support [poly, p. 43-45] et les notes de cours [notes, f. 2 r°], redessinée. Axes normalisés ($t/\Ts$ et $g(t)/g_0$ ; $f\Ts$ et $G(f)/(g_0\Ts)$), car les échelles des deux graphes du support ne sont pas cohérentes (bloc `av-echelles-figure-cosinus-sureleve`). Facteur de retombée 0,35 : valeur estimée à partir de la figure du support.](../figures/02-cosinus-sureleve.svg){#fig-cosinus-sureleve}
 
 Le support présente un filtre global $g(t)$ et sa réponse en fréquence $G(f)$, avec $\Ts = 1\ \mathrm{ms}$ :
 
@@ -663,7 +657,7 @@ $$
 
 Sa bande est $B = \frac{1 + \beta}{2\Ts}$ : elle vaut la bande minimale $\frac{1}{2\Ts}$ pour $\beta = 0$ (spectre rectangulaire) et $\frac{1}{\Ts}$ pour $\beta = 1$. La courbe vérifie la règle de symétrie (@prp-symetrie-nyquist).
 
-**Valeur estimée à partir de la figure** (ce n'est pas une valeur du cours) : $G$ est plat jusqu'à environ $400\ \mathrm{Hz}$ et nul à partir d'environ $600\ \mathrm{Hz}$, avec $1/\Ts = 1000\ \mathrm{Hz}$, ce qui correspond à $\beta \approx 0{,}2$.
+**Valeur estimée à partir de la figure** (ce n'est pas une valeur du cours) : $G$ est plat jusqu'à environ $300\ \mathrm{Hz}$, vaut la moitié de son maximum en $500\ \mathrm{Hz}$ et s'annule vers $700\ \mathrm{Hz}$, avec $1/\Ts = 1000\ \mathrm{Hz}$, ce qui correspond à $\beta \approx 0{,}35$ (entre 0,3 et 0,4). La figure de la p. 41 montre la même forme.
 :::
 
 ### Exercices sur le critère de Nyquist {#sec-exercices-nyquist}
@@ -791,6 +785,6 @@ Origine : support officiel, sauf mention *(notes)* ou *(complément)*.
 - **Fréquence de Nyquist** : $\frac{1}{2\Ts}$ (@def-frequence-nyquist).
 - **Bande minimale** : un filtre global de support $[-B, B]$ vérifiant le critère a $B \geq \frac{1}{2\Ts}$ (@prp-bande-minimale) *(notes)*.
 - **Efficacité spectrale** : $\eta = D_b / B$ en bits·s⁻¹·Hz⁻¹ (@def-efficacite-spectrale) *(notes)* ; en bande de base, avec la bande minimale, $\eta \leq 2\log_2 M$ ; en bande transposée, $\eta \leq \log_2 M$ *(complément)*.
-- **Cosinus surélevé** : bande $\frac{1 + \beta}{2\Ts}$, $\beta \in [0, 1]$ *(complément)*.
+- **Cosinus surélevé** : bande $\frac{1 + \beta}{2\Ts}$, $\beta \in [0, 1]$ (@exm-cosinus-sureleve) *(complément)*.
 - **Diagramme de l'œil** : croisements en points uniques ⇒ absence d'IES ; ouverture verticale ⇒ robustesse au bruit ; ouverture horizontale ⇒ robustesse aux déphasages de l'échantillonneur (@sec-diagramme-oeil).
-- **Filtre non centré** : si le maximum de $g$ est en $t_0 \neq 0$, on échantillonne en $t_0 + n\Ts$ *(complément)*.
+- **Filtre non centré** : si le maximum de $g$ est en $t_0 \neq 0$, on échantillonne en $t_0 + n\Ts$ (@exr-debit-max-porte) *(complément)*.

@@ -390,7 +390,7 @@ Autres choix de rédaction à valider :
 
 - introduction du chapitre écrite en *Complément* (aucune source ne la fournit) ;
 - Manchester : expression avec des portes d'amplitude ±1 et conventions G. E. Thomas / IEEE 802.3 en *Complément* (C1) ;
-- cosinus surélevé : expression de $G(f)$ donnée en *Complément* (C4), $eta pprox 0{,}2$ présenté comme « valeur estimée à partir de la figure » ;
+- cosinus surélevé : expression de $G(f)$ donnée en *Complément* (C4), $\beta \approx 0{,}2$ présenté comme « valeur estimée à partir de la figure » ;
 - exercices : énoncé (support), « Réponse du support » en `.solution`, justification en *Complément* ; pour le quiz p. 51, le bloc tranché est placé entre l'énoncé et la solution ;
 - section « À retenir » : origine indiquée par les mentions *(notes)* et *(complément)*.
 
@@ -432,3 +432,51 @@ Vérifications : rendu Quarto sans avertissement (12 figures numérotées, réf�
 3. Rapports d'analyse : `matieres/<matiere>/analyses/NN-slug.md` (§ 2).
 4. Blocs *À vérifier* tranchés : classe `.tranche` et ligne **Décision** (§ 5.2).
 5. Fautes d'orthographe sans effet sur le sens : corrigées sans bloc, listées dans le rapport d'analyse (§ 5.3).
+
+### 13.10 Étape 6 — Vérification (7 octobre 2026)
+
+Relecture complète par Claude, selon `CONTEXTE_PROJET.md` § 11 (étape 6) : texte du poly p. 15-60 extrait page par page, figures du poly et feuillets f. 1 r° à f. 3 r° relus en image, 12 figures reconstruites relues.
+
+**Résultats**
+
+| Contrôle | Résultat |
+|---|---|
+| Exhaustivité, support | Toutes les pages utiles (section 2) sont reprises ; pages écartées confirmées (plans, doublons d'animation, « Sortez vos téléphones », sondage p. 26) |
+| Exhaustivité, notes | Tout le contenu de f. 1 r° à f. 3 r° (haut) est repris ou explicitement écarté comme redondant (section 5) |
+| Réponses des quiz | p. 25 (A), p. 34 (D), p. 47 (A), p. 48 (B), p. 49 (A), p. 50 (A), p. 51 (A) : conformes au marquage du support |
+| Formules | Cohérentes : dimensions de la règle de symétrie, exercice p. 49 ($g_0 = 10^4$, centre $(500\ \text{Hz}, 5)$), expression du cosinus surélevé ($\int G = g_0$), bornes d'efficacité spectrale, changement d'indice du modèle discret |
+| Quatre catégories | Correctes dans l'ensemble ; un point mineur (V4) |
+| Blocs *À vérifier* | 1 ouvert (`av-exemples-mise-en-forme-manquants`), 4 tranchés, tous au format Source / Problème / Proposition (/ Décision) |
+| Références croisées | Toutes les références `@…` du chapitre pointent vers un label existant ; labels uniques |
+| Figures | Légendes avec origine ; éléments ajoutés en pointillés gris `#7E889B` (F9) ; choix de reconstruction signalés dans les légendes. **Erreur de lecture du facteur de retombée** (V1) |
+
+**Corrections faites pendant la vérification (sans effet sur le fond)**
+
+- Section « À retenir » : liens ajoutés vers `@exm-cosinus-sureleve` et `@exr-debit-max-porte` (deux lignes n'en avaient pas).
+- Section 13.8 de ce rapport : caractères de contrôle à la place de `\beta \approx` (« `eta pprox` ») corrigés.
+
+**Points à trancher par Armand (étape 7)**
+
+- **V1 — Facteur de retombée estimé : ≈ 0,35, pas ≈ 0,2.** Mesure sur les figures p. 41 et p. 43 (agrandies) : $G$ est plat jusqu'à ≈ 300 Hz, vaut 8,9 à 400 Hz, 5 à 500 Hz, 1,1 à 600 Hz et s'annule vers 700 Hz ; les deux figures montrent le même filtre. Un cosinus surélevé de $\beta = 0{,}35$ passe par ces points (8,9 / 5 / 1,1), et son premier lobe temporel (≈ −0,16 vers $t = \pm 1{,}5\ \text{ms}$) correspond au graphe temporel p. 43 (≈ −0,15). La lecture « plat jusqu'à 400 Hz, nul à partir de 600 Hz » (C4, section 9) était fausse. Proposition : « $\beta \approx 0{,}35$ (entre 0,3 et 0,4), valeur estimée à partir de la figure » dans le *Complément* de l'exemple et les légendes de F10 et F11, puis régénération de F10 et F11 avec $\beta = 0{,}35$. Ce n'est pas une erreur du support : correction d'un *Complément*, sans bloc *À vérifier*.
+- **V2 — Bloc ouvert `av-exemples-mise-en-forme-manquants`.** Ce n'est pas une erreur de source mais un manque. Options : le garder ouvert (le chapitre reste avec un bloc ouvert) ; ou le lever (convention § 5.2, « ce n'était pas une erreur ») et le remplacer par une phrase dans le bloc `.notes` de l'exemple : « les exemples 1 et 2 ne figurent pas dans les notes ».
+- **V3 — Choix des figures encore à valider** (section 13.9) : formes choisies pour F9 ($\beta = 0{,}5$), F12 ($\beta = 0{,}4$, alors que f. 2 r° dessine des spectres rectangulaires et f. 3 r° des spectres arrondis), paramètres de F14, graduation symbolique de F10.
+- **V4 — Définition du peigne de Dirac** (« On note $\text{Ш}_{\Ts}(t) = \sum_m \delta(t - m\Ts)$… », section du critère temporel) : écrite en texte normal, alors que le support emploie $\text{Ш}_{\Ts}$ sans le définir ; l'écriture $\sum_m \delta(t - m\Ts)$ vient des notes [f. 1 v°]. Proposition : segment `[…]{.notes}`.
+- **V5 — Équations labellisées jamais citées** (`conventions.md` § 7.2) : `eq-signal-sb`, `eq-signal-sa`, `eq-m-nb`, `eq-signal-yl`, `eq-signal-rl`, `eq-rn-sans-bruit`, `eq-efficacite-spectrale`. Proposition : les garder (cibles probables des flashcards, rien n'est encore publié) et retirer à l'étape 8 celles qu'aucune carte ne vise.
+- **V6 — Statut** : passer à `verifie` une fois V1 corrigé (et V4 si retenu).
+
+**Non vérifié dans cette session** : le rendu Quarto (Quarto n'est pas disponible dans l'environnement de Claude). À contrôler avec `quarto preview` : chapitre 2, et blocs tranchés de `demo-conventions.qmd` en clair et en sombre.
+
+### 13.11 Étape 7 — Décisions d'Armand et validation (7 octobre 2026)
+
+| Point | Décision | Application |
+|---|---|---|
+| V1 | $\beta \approx 0{,}35$, « valeur estimée à partir de la figure » | *Complément* de l'exemple du cosinus surélevé réécrit (plat jusqu'à ≈ 300 Hz, moitié en 500 Hz, nul vers 700 Hz ; même forme p. 41) ; légendes de F10 et F11 ; F10 et F11 régénérées avec $\beta = 0{,}35$. Remplace la valeur 0,2 de C4 (section 9) et de 13.4 |
+| V2 | Bloc levé : ce n'était pas une erreur, seulement un manque | `av-exemples-mise-en-forme-manquants` supprimé ; phrase ajoutée dans le bloc *Notes de cours* de l'exemple Manchester : « les exemples 1 et 2 ne figurent pas dans les notes ». Identifiant retiré, jamais réutilisé |
+| V3 | Choix des figures validés, sauf F12 | F12 suit les notes [f. 2 r°] : spectres rectangulaires, $B = 1/(2\Ts)$ ($\beta = 0$), répliques juxtaposées ; script, figure et légende refaits |
+| V4 | Définition du peigne de Dirac en *Notes de cours* | Bloc `.notes`, citation [notes, f. 1 v°] |
+| V5 | Équations labellisées conservées | Tri à l'étape 8 (flashcards) |
+| V6 | Chapitre **validé** par Armand (relecture des blocs *Notes de cours*) | Statut `valide` dans le front matter et sur la fiche matière |
+
+Bilan des blocs *À vérifier* : **0 ouvert**, **4 tranchés** (`av-signe-tf-nyquist`, `av-centre-symetrie-nyquist`, `av-echelles-figure-cosinus-sureleve`, `av-quiz-debit-porte`).
+
+Nouvelle règle pour les chapitres suivants : `conventions.md` § 14 (choix par défaut appliqués et listés ici ; questions réservées aux points bloquants).

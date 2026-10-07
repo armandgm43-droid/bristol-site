@@ -178,7 +178,7 @@ Contenu obligatoire, dans cet ordre :
 :::
 ```
 
-- Rendu d'un bloc tranché (à implémenter dans `assets/bristol.scss`) : étiquette **`✓ Corrigé`** au lieu de `? À vérifier`, filet plus discret, même famille de couleur.
+- Rendu d'un bloc tranché (`assets/bristol.scss`, jetons `--cat-verifier…`, clair et sombre) : étiquette **`✓ Corrigé`** au lieu de `? À vérifier`, filet de 2 px au lieu de 4 px, fond deux fois plus pâle, même famille de couleur. Exemple : `demo-conventions.qmd`.
 
 ### 5.3 Fautes d'orthographe des sources
 
@@ -376,6 +376,7 @@ Le script `scripts/` (à écrire) produit un paquet par matière au format de `r
 | 2026-10-07 | Blocs *À vérifier* tranchés : classe `.tranche` + **Décision**, toujours visibles quand la source est corrigée | Modifie la règle « un bloc levé disparaît » ; rendu `✓ Corrigé` à styler |
 | 2026-10-07 | Fautes d'orthographe sans effet sur le sens corrigées sans bloc, listées dans le rapport d'analyse | Nouveau (§ 5.3) |
 | 2026-10-07 | Direction artistique unique « fiche bristol » pour le site et l'application ; jetons dans `assets/bristol-tokens.css` ; mode sombre | Nouveau (§ 13) |
+| 2026-10-07 | Choix par défaut appliqués par Claude (forme, figures, rédaction) et listés dans le rapport ; questions à Armand réservées aux points bloquants | Nouveau (§ 14), décision d'Armand après la vérification du ch. 2 de TS227 |
 
 ---
 
@@ -442,4 +443,32 @@ En mode sombre, chaque catégorie garde sa **famille de couleur** (bleu, gris, o
 
 - Même dessin sur le site et dans l'application : « Bristol » souligné de rouge (lien vers l'accueil), puis Matières, Révisions, Conventions, et à droite le bouton clair/sombre. L'application y ajoute son indicateur d'enregistrement ; le site, la recherche.
 - Les liens de l'application sont écrits dans `revision/index.html` : toute modification de `website.navbar` dans `_quarto.yml` doit y être reportée (voir `architecture.md`, § 6).
+
+---
+
+## 14. Questions à Armand et choix par défaut
+
+Règle fixée par Armand le 7 octobre 2026, valable pour tous les chapitres suivants.
+
+### 14.1 Choix appliqués sans question
+
+Pour les **choix de forme, de figures et de rédaction**, Claude applique lui-même sa réponse par défaut, sans attendre de validation. Exemples :
+
+- plan du chapitre, ordre des notions, découpage en sections ;
+- catégorie d'un passage quand elle découle des règles (§ 5 et `CONTEXTE_PROJET.md` § 7) ;
+- compléments d'explication (bloc *Complément*) : étape de calcul, hypothèse implicite, nom usuel d'une notion ;
+- présentation des quiz en exercices, fautes d'orthographe sans effet sur le sens (§ 5.3) ;
+- figures : outil, forme choisie pour une illustration, paramètres d'une simulation, normalisation des axes, fusion ou omission d'une figure redondante.
+
+Chaque choix est **listé dans le rapport d'analyse du chapitre** (section « Choix appliqués par défaut »), avec sa justification, pour qu'Armand puisse le revoir à la validation. Un choix qui concerne une figure est aussi signalé dans sa légende (§ 9).
+
+### 14.2 Questions bloquantes
+
+Claude ne pose à Armand que les questions **bloquantes** :
+
+- **lecture douteuse des notes** : mot, indice, signe, exposant ou schéma illisible ou ambigu ;
+- **contradiction entre sources** (support, notes, TD…) ;
+- **erreur qui touche au sens** : formule, valeur, unité, réponse de quiz, définition.
+
+Ces points passent toujours par un bloc *À vérifier* tant qu'ils ne sont pas tranchés (§ 5.2). Les règles de fond ne changent pas : ne rien inventer, ne rien corriger silencieusement (`CONTEXTE_PROJET.md` § 19). Une information manquante qui ne relève d'aucun de ces trois cas est signalée dans le cours (bloc *Notes de cours* ou *Complément* selon le cas) et dans le rapport, sans question.
 

@@ -1,7 +1,7 @@
 """Figure F11 — Exemple de filtre de Nyquist (cosinus surélevé), en temps et en fréquence (TS227, chapitre 2).
 D'après le support [poly, p. 43-45] et les notes [notes, f. 2 r°], redessinée.
 Axes normalisés (t/Ts, g/g0 ; f·Ts, G/(g0·Ts)), décision d'Armand du 2026-10-07 (bloc
-av-echelles-figure-cosinus-sureleve). beta = 0,2 : valeur estimée à partir de la figure du support."""
+av-echelles-figure-cosinus-sureleve). beta = 0,35 : valeur estimée à partir de la figure du support."""
 import matplotlib
 matplotlib.use("svg")
 import matplotlib.pyplot as plt
@@ -44,7 +44,7 @@ def cosinus_sureleve_temps(u, beta):
     val = np.sinc(u) * np.cos(np.pi * beta * u) / np.where(sing, 1, den)
     return np.where(sing, np.pi / 4 * np.sinc(1 / (2 * beta)), val)
 
-beta = 0.2
+beta = 0.35
 fig, (at, af) = plt.subplots(1, 2, figsize=(7.2, 2.9))
 u = np.linspace(-5, 5, 2001)
 at.plot(u, cosinus_sureleve_temps(u, beta), color=BLEU)

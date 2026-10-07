@@ -42,6 +42,18 @@ Le support (p. 78) donne pour $Y = aX + b$ la loi $\mathcal{N}(a\mu + b,\ b^2\si
 **Correction proposée :** la variance est $a^2\sigma^2$.
 :::
 
+Une fois la question tranchée par Armand, si la source est corrigée, le bloc reste visible avec la classe `.tranche` et une ligne **Décision** (`conventions.md`, § 5.2) :
+
+::: {.a-verifier .tranche #av-demo-tranche}
+**Source** [poly, p. 78] : « $Y \sim \mathcal{N}(a\mu + b,\ b^2\sigma^2)$ ».
+
+**Problème** : la variance d'une transformation affine est $a^2\sigma^2$.
+
+**Proposition** : $Y \sim \mathcal{N}(a\mu + b,\ a^2\sigma^2)$.
+
+**Décision** : exemple de démonstration (bloc tranché).
+:::
+
 ## Références croisées {#sec-demo-refs}
 
 Voir la @def-demo-cyclo, l'@eq-demo-bennett et la @sec-demo-notes.

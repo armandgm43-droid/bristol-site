@@ -269,7 +269,10 @@ Les cours sont écrits dans des fichiers `.qmd` (Markdown enrichi). Quarto les t
 
 ### 5.5 Rendu mathématique
 
-- Moteur : **MathJax 3** (par défaut dans Quarto, et déjà utilisé par l'application de flashcards). Une même syntaxe LaTeX fonctionne donc dans le cours et dans les cartes.
+- Moteur : **MathJax**, avec deux versions différentes :
+  - le **site** utilise **MathJax 4**, chargé par défaut par Quarto 1.10 ;
+  - l'**application de flashcards** utilise **MathJax 3.2.2** (`tex-svg`, chargé depuis jsDelivr).
+- La syntaxe LaTeX courante est la même dans les deux versions : une formule écrite pour le cours fonctionne dans les cartes. Une formule qui s'affiche mal dans l'une des deux est à signaler (voir `architecture.md`, § 3 et § 6).
 - Macros communes (`\Ts`, `\sinc`, `\E`…) : définies **une seule fois** dans `_macros.qmd` (inclus en haut de chaque page par `{{< include /_macros.qmd >}}`) et utilisées partout. Ne pas redéfinir localement une macro existante.
 
 ---
@@ -582,7 +585,8 @@ cartes:
 - les figures importantes, avec leur source ;
 - les incohérences, contradictions et coquilles ;
 - les passages illisibles ou ambigus ;
-- les **questions à poser à Armand**.
+- les **questions bloquantes à poser à Armand** (lecture douteuse des notes, contradiction entre sources, erreur qui touche au sens) ;
+- les **choix appliqués par défaut** (forme, figures, rédaction), sans question (`conventions.md` § 14).
 
 **3. Identification des différences.** Armand répond aux questions du rapport. Les points restés ouverts seront traités en *À vérifier*.
 
@@ -647,7 +651,7 @@ Bristol — TS227 Chapitre 1 — Flashcards
 ### 12.5 Ce que Claude doit faire spontanément
 
 - Signaler les incertitudes plutôt que de les masquer.
-- Poser une question quand une information manque, plutôt que de la supposer.
+- Poser une question quand le point est bloquant (lecture douteuse des notes, contradiction entre sources, erreur qui touche au sens) ; pour les choix de forme, de figures et de rédaction, appliquer la réponse par défaut et la lister dans le rapport (`conventions.md` § 14).
 - Proposer la mise à jour des fichiers de mémoire quand une décision est prise.
 - Respecter les conventions existantes, et proposer explicitement toute nouvelle convention avant de l'appliquer.
 
@@ -837,7 +841,7 @@ Avant le projet de site, Bristol existait déjà comme **application de flashcar
 - Fonctions : paquets, ajout, modification et suppression de cartes, recherche, import et export texte (compatible Anki et Quizlet), annulation de la dernière réponse, raccourcis clavier.
 - Rendu des cartes :
   - sous-ensemble de Markdown : `**gras**`, `*italique*`, code entre accents graves ;
-  - LaTeX via **MathJax 3** (`$…$` et `$$…$$`) ;
+  - LaTeX via **MathJax 3.2.2** (`$…$` et `$$…$$`) ;
   - le code est protégé : ni formule ni mise en forme n'y est interprétée.
 
 ### 20.2 Deux versions
@@ -914,6 +918,8 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 | 2026-10-07 | TS227 : ordre et numérotation des chapitres du poly conservés, même si le cours a traité le bruit avant la DSP | Repères communs avec le support ; ordre réel signalé dans la fiche matière |
 | 2026-10-07 | Correction d'une source tranchée par Armand : bloc *À vérifier* conservé avec la classe `.tranche` et une ligne **Décision** | Aucune correction silencieuse (voir `conventions.md` §5.2) |
 | 2026-10-07 | Fautes d'orthographe sans effet sur le sens corrigées sans bloc, listées dans le rapport d'analyse | Éviter d'encombrer le cours (voir `conventions.md` §5.3) |
+| 2026-10-07 | Claude applique ses choix par défaut (forme, figures, rédaction) et les liste dans le rapport ; questions à Armand réservées aux points bloquants | Alléger les étapes 3 et 7 (voir `conventions.md` §14) |
+| 2026-10-07 | TS227 ch. 2 validé par Armand (statut `valide`) | Premier chapitre de bout en bout jusqu'à l'étape 7 |
 
 ---
 
@@ -961,9 +967,9 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 - [x] Notes manuscrites de ce chapitre reçues (non datées)
 - [x] Chapitre de test analysé (rapport : `matieres/ts227-communications-numeriques/analyses/02-communication-sans-bruit.md`)
 - [x] Différences tranchées (étape 3, section 13 du rapport)
-- [ ] Chapitre de test rédigé
-- [ ] Chapitre de test vérifié
-- [ ] Chapitre de test validé
+- [x] Chapitre de test rédigé
+- [x] Chapitre de test vérifié
+- [x] Chapitre de test validé (7 octobre 2026)
 - [ ] Flashcards du chapitre de test
 
 ## Prochaines étapes

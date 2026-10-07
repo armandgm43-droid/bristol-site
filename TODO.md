@@ -11,7 +11,7 @@
 - [x] Initialiser le dépôt Git et faire un premier commit.
 - [x] Copier le poly TS227 dans `sources/ts227/support/`.
 - [x] Copier `TD_TS_227.pdf` et `correction_TD_TS_227.pdf` dans `sources/ts227/support/` (inventoriés).
-- [ ] Noter la version de Quarto dans `architecture.md` (`quarto --version`).
+- [x] Noter la version de Quarto dans `architecture.md` (1.10.19, § 9).
 - [x] Ajouter `prp-title: "Propriété"` dans la section `crossref` de `_quarto.yml`.
 - [ ] Vérifier le rendu de `demo-conventions.qmd` avec `quarto preview`.
 - [x] Choisir le premier chapitre de test de TS227 (question ouverte 7) : chapitre 2.
@@ -25,10 +25,13 @@
 - [x] Répondre aux 16 questions du rapport — étape 3 (décisions : section 13 du rapport).
 - [x] Rédaction du chapitre `cours/02-communication-sans-bruit.qmd` selon la section 13 du rapport, ajout dans `_quarto.yml` et dans la fiche matière (texte ; 7 octobre 2026).
 - [x] Trancher le nouveau bloc `av-echelles-figure-cosinus-sureleve` et valider les choix de rédaction (7 octobre 2026 : axes normalisés ; choix validés).
-- [ ] Styler les blocs tranchés `.a-verifier.tranche` (étiquette `✓ Corrigé`) dans `assets/bristol.scss`, et les ajouter à `demo-conventions.qmd`.
+- [x] Styler les blocs tranchés `.a-verifier.tranche` (étiquette `✓ Corrigé`) dans `assets/bristol.scss`, et les ajouter à `demo-conventions.qmd` (7 octobre 2026).
+- [ ] Contrôler avec `quarto preview` le rendu des blocs tranchés (clair et sombre) et du chapitre 2.
 - [x] Figures du chapitre (12 SVG : 11 matplotlib + 1 TikZ ; F4 omise, F8 fusionnée avec F11) ; statut `redige` (7 octobre 2026).
-- [ ] Valider les choix des figures listés en section 13.9 du rapport (paramètres choisis pour F9, F12, F14 ; normalisation de F10).
-- [ ] Vérification par Claude, puis validation par Armand.
+- [x] Valider les choix des figures listés en section 13.9 du rapport (validés ; F12 refaite en spectre rectangulaire).
+- [x] Vérification par Claude (7 octobre 2026, rapport section 13.10).
+- [x] Trancher et appliquer les points V1 à V6 du rapport (section 13.11).
+- [x] Validation par Armand (7 octobre 2026).
 - [ ] Trancher la question ouverte 5 (clés `ts-…`) avant de générer les flashcards.
 - [ ] Flashcards du chapitre validé (`flashcards/NN-slug.yml`).
 

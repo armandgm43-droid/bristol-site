@@ -47,7 +47,9 @@ Bristol/
 │   └── ts227-communications-numeriques/
 │       ├── index.qmd         fiche matière
 │       ├── analyses/         rapports d'analyse des chapitres (.md, non rendus)
-│       ├── cours/  figures/  flashcards/  td/  tp/  annales/  corriges/   (vides)
+│       ├── cours/        chapitres .qmd (02-communication-sans-bruit.qmd)
+│       ├── figures/      sources .py/.tex et rendus .svg (12 figures du ch. 2)
+│       ├── flashcards/  td/  tp/  annales/  corriges/   (vides)
 ├── revision/
 │   ├── index.html            application de flashcards (fichier unique)
 │   └── cartes/
@@ -130,7 +132,7 @@ Les valeurs claires et sombres sont écrites deux fois dans ce même fichier (bl
 - Blocs `div.notes`, `div.complement`, `div.a-verifier` : filet à gauche + étiquette en `::before` + fond teinté, couleurs `--cat-…`. Segments `span.…` : couleur + symbole.
 - Impression (`@media print`) : feuille blanche, mêmes repères, sans fond.
 - Figures (`main.content figure img`) : fond `--figure-bg` et marge `--figure-pad`, nulle en clair ; en sombre, les SVG à couleurs fixes restent lisibles sur un fond blanc.
-- Blocs tranchés (`.a-verifier.tranche`, étiquette `✓ Corrigé`) : **pas encore stylés**.
+- Blocs tranchés (`.a-verifier.tranche`) : étiquette `✓ Corrigé`, filet de 2 px au lieu de 4 px, fond `--cat-verifier-bg` mélangé à 50 % de transparent (`color-mix`) ; mêmes jetons `--cat-verifier…`, donc clair et sombre sans couleur en dur. Exemple dans `demo-conventions.qmd`.
 - **Rendu PDF (LaTeX) : pas encore fait.** Il faudra un filtre Lua ou des environnements LaTeX (`tcolorbox`) qui reproduisent filet et étiquette ; reprendre alors les couleurs claires de `bristol-tokens.css`.
 - Polices et MathJax viennent d'Internet (Google Fonts, jsDelivr) : sans connexion, polices de repli et formules non rendues.
 
@@ -209,7 +211,7 @@ Pour un site de plusieurs centaines de pages : rendu d'un seul fichier (`quarto 
 | PyYAML | 6.x | scripts |
 | matplotlib | 3.10 (rendu des figures du ch. 2 de TS227) | figures : `python3 figures/NN-slug.py` écrit le `.svg` voisin |
 | LaTeX (TinyTeX ou TeX Live) + dvisvgm | TeX Live 2022, dvisvgm 2.13 (rendu des figures du ch. 2) | schémas TikZ : `latex` dans un dossier temporaire, puis `dvisvgm --no-fonts --exact-bbox` (commande en tête de chaque `.tex`) ; PDF plus tard |
-| Git | à préciser | dépôt pas encore initialisé |
+| Git | à préciser | dépôt initialisé (commit `501e006`) ; dépôt GitHub : voir § 10 |
 
 ---
 
@@ -217,4 +219,11 @@ Pour un site de plusieurs centaines de pages : rendu d'un seul fichier (`quarto 
 
 **Non décidé** (question ouverte 1 de `CONTEXTE_PROJET.md`). En attendant : **utilisation locale uniquement** (`quarto preview`), conformément à la règle « pas de publication avant clarification des droits ».
 
-L'application de révision est aujourd'hui hébergée sur GitHub Pages, depuis le dépôt GitHub d'Armand ; ce dossier-ci n'est pas encore un dépôt Git. L'organisation en un ou deux dépôts reste à trancher (question ouverte 2).
+### Dépôts GitHub
+
+| Dépôt | Visibilité | Contenu | Remarque |
+|---|---|---|---|
+| `armandgm43-droid/bristol-site` | **privé** | **dépôt du projet** : ce dossier (site Quarto, application dans `revision/`, fichiers de mémoire) | dépôt de référence |
+| `armandgm43-droid/bristol` | public (GitHub Pages) | **ancien site de cartes** (application de révision seule) | toujours en ligne ; **ne pas confondre** avec le dépôt du projet |
+
+L'avenir de l'ancien dépôt `bristol` (garder, remplacer par une copie de `revision/`, archiver) reste lié à la question ouverte 2 et au problème connu 13 de `ETAT_PROJET.md` (l'application dépend désormais de `../assets/bristol-tokens.css`).

@@ -19,7 +19,7 @@ number-sections: false
 | N° | Chapitre | Statut |
 |---|---|---|
 | 1 | Introduction | BROUILLON |
-| 2 | [Principes de communication en l'absence de bruit](cours/02-communication-sans-bruit.qmd) | RÉDIGÉ |
+| 2 | [Principes de communication en l'absence de bruit](cours/02-communication-sans-bruit.qmd) | VALIDÉ |
 | 3 | DSP des signaux codés en ligne | BROUILLON |
 | 4 | Transmission en présence de bruit | BROUILLON |
 | 5 | Transmission sur fréquence porteuse | BROUILLON |
