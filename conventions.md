@@ -117,7 +117,7 @@ Un retour en arrière est explicite et noté dans `ETAT_PROJET.md`.
 
 ## 5. Les quatre catégories
 
-Classes **figées** (déjà stylées dans `assets/bristol.scss`) :
+Classes **figées** (déjà stylées dans `assets/bristol.scss`, couleurs tirées des jetons `--cat-…` de `assets/bristol-tokens.css`, voir § 13) :
 
 | Catégorie | Classe | Bloc | Segment dans une phrase |
 |---|---|---|---|
@@ -279,7 +279,7 @@ Exemples : `eq-bennett`, `fig-diagramme-oeil-nrz`, `def-filtre-adapte`, `sec-cri
   - « D'après le support [poly, p. X]. »
   - « D'après les notes de cours [notes-AAAA-MM-JJ, p. Y], redessinée. »
   - « Reconstruite : … ajouté (en pointillés gris). »
-- Éléments ajoutés par rapport à la source : **pointillés gris `#7E889B`** (la couleur de la catégorie *Complément*).
+- Éléments ajoutés par rapport à la source : **pointillés gris `#7E889B`** (la couleur de la catégorie *Complément* en mode clair, jeton `--cat-complement`). Les figures SVG gardent cette valeur fixe : elles ne changent pas avec le mode sombre, où elles sont posées sur un fond blanc (jeton `--figure-bg`, § 13).
 - Courbes Python : matplotlib, police sans empattement, texte en français, axes titrés avec unités, export `svg`.
 
 ---
@@ -375,3 +375,71 @@ Le script `scripts/` (à écrire) produit un paquet par matière au format de `r
 | 2026-10-07 | Rapports d'analyse dans `matieres/<matiere>/analyses/NN-slug.md` | Rapport ch. 2, Q14 |
 | 2026-10-07 | Blocs *À vérifier* tranchés : classe `.tranche` + **Décision**, toujours visibles quand la source est corrigée | Modifie la règle « un bloc levé disparaît » ; rendu `✓ Corrigé` à styler |
 | 2026-10-07 | Fautes d'orthographe sans effet sur le sens corrigées sans bloc, listées dans le rapport d'analyse | Nouveau (§ 5.3) |
+| 2026-10-07 | Direction artistique unique « fiche bristol » pour le site et l'application ; jetons dans `assets/bristol-tokens.css` ; mode sombre | Nouveau (§ 13) |
+
+---
+
+## 13. Direction artistique
+
+Une seule direction artistique pour le site Quarto et l'application de révision : **une fiche bristol posée sur un bureau**. Elle vient de l'application ; le site l'a reprise le 7 octobre 2026.
+
+### 13.1 Source unique : les jetons
+
+- Toutes les couleurs, polices, tailles de texte et espacements partagés sont définis **une seule fois**, sous forme de variables CSS (« jetons »), dans `assets/bristol-tokens.css`.
+- `assets/bristol.scss` (thème Quarto) et `revision/index.html` (application) n'écrivent **aucune couleur en dur** : ils utilisent `var(--…)`.
+- Changer une couleur = modifier le jeton, à un seul endroit. Ajouter un jeton = l'ajouter dans ce fichier, avec un commentaire, puis le signaler ici.
+- Exception assumée : les figures SVG (§ 9) gardent leurs couleurs fixes ; en mode sombre, elles sont affichées sur un fond blanc avec une marge (`--figure-bg`, `--figure-pad`), comme une fiche posée sur la feuille.
+
+### 13.2 Métaphore et surfaces
+
+| Surface | Jetons | Où | Mode clair | Mode sombre |
+|---|---|---|---|---|
+| **Bureau** | `--desk`, `--desk-ink`, `--desk-muted`, `--desk-pen`, `--desk-line` | fond de page, barre de navigation, barres latérales, sommaire | gris-bleu `#E2E7ED` | bleu nuit `#1B2231` |
+| **Feuille** | `--paper`, `--ink`, `--ink-soft`, `--ink-faint`, `--pen`, `--field…` | contenu d'une page du site, liste des paquets, dialogues | blanc | feuille sombre `#232B3B` |
+| **Fiche** | `--card-ink…`, `--card-rule-blue`, teinte du paquet | cartes de révision | papier clair | **reste en papier clair** |
+
+Repères graphiques, communs au site et à l'application :
+
+- **ligne rouge** (`--rule-red`, épaisseur `--rule-red-width`) : sous le titre d'une page ou d'une feuille, sous le mot « Bristol » et sous le lien actif de la barre de navigation ;
+- **lignes bleues** (`--rule-blue`) : sous les titres de section, entre les lignes d'un tableau ou d'une liste, comme les lignes d'une fiche ;
+- **bleu encre** (`--pen`) : liens et actions.
+
+### 13.3 Typographie et espacements
+
+| Rôle | Jeton | Valeur |
+|---|---|---|
+| Titres, noms de paquets, texte des cartes | `--serif` | *Literata* |
+| Texte courant, interface | `--sans` | *Atkinson Hyperlegible* |
+| Code | `--mono` | police à chasse fixe du système |
+| Taille de référence (1 rem) | `--font-size-root` | 16 px, identique site et application |
+| Texte des pages de cours | `--font-size-reading` | 1,0625 rem (17 px) |
+| Liens de la barre de navigation | `--font-size-nav` | 0,95 rem |
+| Espacements | `--space-1` à `--space-7` | 0,25 / 0,5 / 0,75 / 1 / 1,5 / 2 / 3 rem |
+| Rayons | `--radius-paper`, `--radius-control` | 4 px (feuilles, fiches), 6 px (boutons, champs) |
+| Barre de navigation | `--nav-height` | 3,5 rem |
+
+Les polices sont chargées depuis Google Fonts par `assets/bristol-tokens.css` (une seule déclaration pour les deux).
+
+### 13.4 Les quatre catégories
+
+Formes, étiquettes et symboles **inchangés** (§ 5) : filet plein bleu `✎ Notes de cours`, filet gris pointillé `+ Complément`, filet orange `? À vérifier`.
+
+| Catégorie | Jetons | Mode clair | Mode sombre |
+|---|---|---|---|
+| Notes de cours | `--cat-notes`, `--cat-notes-bg` | `#23489A` (inchangé) | `#A9BFF2` |
+| Complément | `--cat-complement`, `--cat-complement-ink`, `--cat-complement-bg` | `#7E889B` / `#5A6478` (inchangés) | `#8792A6` / `#B4BDCC` |
+| À vérifier | `--cat-verifier`, `--cat-verifier-bg` | `#C2610C` (inchangé) | `#F0A15C` |
+
+En mode sombre, chaque catégorie garde sa **famille de couleur** (bleu, gris, orange), éclaircie pour rester lisible sur la feuille sombre. Les trois indices redondants (filet, étiquette, fond) sont conservés dans les deux modes.
+
+### 13.5 Mode sombre
+
+- Par défaut, le site et l'application suivent la préférence du système.
+- Le bouton clair/sombre de la barre de navigation enregistre un choix explicite dans `localStorage`, clé `quarto-color-scheme` (`alternate` = sombre, `default` = clair) : **le même choix vaut pour le site et pour l'application**.
+- Les formules (MathJax) prennent la couleur du texte : elles restent lisibles dans les deux modes.
+
+### 13.6 Barre de navigation commune
+
+- Même dessin sur le site et dans l'application : « Bristol » souligné de rouge (lien vers l'accueil), puis Matières, Révisions, Conventions, et à droite le bouton clair/sombre. L'application y ajoute son indicateur d'enregistrement ; le site, la recherche.
+- Les liens de l'application sont écrits dans `revision/index.html` : toute modification de `website.navbar` dans `_quarto.yml` doit y être reportée (voir `architecture.md`, § 6).
+

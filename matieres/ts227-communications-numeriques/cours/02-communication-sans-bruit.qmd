@@ -4,7 +4,7 @@ matiere: ts227
 chapitre: 2
 enseignants: ["Romain Tajan"]
 annee: "2026-2027"
-statut: analyse          # passe à « redige » quand les figures (étape 5) sont intégrées
+statut: redige
 date-modified: 2026-10-07
 sources:
   - id: poly
@@ -21,9 +21,8 @@ sources:
 
 {{< include /_macros.qmd >}}
 
-<!-- Étape 4 (rédaction) faite le 2026-10-07. Les figures F1 à F14 du rapport d'analyse
-     (analyses/02-communication-sans-bruit.md, section 6) sont à intégrer à l'étape 5 :
-     leur emplacement est marqué par un commentaire « FIGURE Fn ». -->
+<!-- Étape 4 (rédaction) et étape 5 (figures) faites le 2026-10-07. Sources des figures : ../figures/02-*.py (matplotlib)
+     et ../figures/02-chaine-bande-de-base.tex (TikZ). F4 omise (redondante avec F3) ; F8 fusionnée avec F11. -->
 
 ## Introduction {#sec-intro-sans-bruit}
 
@@ -59,7 +58,7 @@ La suite du chapitre traite de la bande de base. La transmission sur fréquence 
 
 ## Chaîne de transmission en bande de base {#sec-chaine-bande-de-base}
 
-<!-- FIGURE F1 : chaîne de transmission en bande de base (schéma-bloc), d'après [poly, p. 19]. -->
+![Architecture simplifiée d'une communication en bande de base. D'après le support [poly, p. 19], redessinée.](../figures/02-chaine-bande-de-base.svg){#fig-chaine-bande-de-base}
 
 L'architecture simplifiée d'une communication en bande de base comporte les blocs suivants [poly, p. 19] :
 
@@ -108,8 +107,6 @@ Exemple : $\Tb = 1\ \mu\mathrm{s} \Rightarrow D_b = 1\ \mathrm{Mbit/s}$ [poly, 
 Au tableau [notes, f. 1 r°], $s_b(t)$ est dessiné comme un peigne d'impulsions de Dirac aux instants $k\Tb$, de poids $b_k$ : une impulsion de poids 1 aux instants où le bit vaut 1, aucune impulsion quand il vaut 0.
 :::
 
-<!-- FIGURE F4 : peigne s_b(t) [notes, f. 1 r°] — faible utilité, à omettre ou à fusionner avec F3 (rapport, section 6). -->
-
 ### Association bits → symboles et constellation {#sec-association-bits-symboles}
 
 ::: {#def-constellation}
@@ -130,7 +127,7 @@ symboles. L'ensemble de ces symboles s'appelle une **constellation**.
 ::: {#exm-4pam-gray}
 ## Constellation à 4 niveaux [poly, p. 22]
 
-<!-- FIGURE F2 : constellation 4-PAM avec étiquettes de Gray, d'après [poly, p. 22] et [notes, f. 1 r°]. -->
+![Constellation 4-PAM et étiquetage de Gray. D'après le support [poly, p. 22] et les notes de cours [notes, f. 1 r°], redessinée.](../figures/02-constellation-4pam.svg){#fig-constellation-4pam}
 
 Les symboles $-3$, $-1$, $1$ et $3$ sont placés sur l'axe réel (« voie en phase »), avec les étiquettes :
 
@@ -227,8 +224,7 @@ $$ {#eq-signal-sl}
 
 Le support illustre $s_a(t)$ et $s_l(t)$ pour une suite de symboles de la 4-PAM, avec $\Ts = 1\ \mathrm{ms}$ et un filtre $h(t)$ en forme de porte de durée $\Ts$ : chaque impulsion $a_m\,\delta(t - m\Ts)$ devient un palier de hauteur $a_m$ sur $[m\Ts, (m+1)\Ts[$ [poly, p. 28].
 
-<!-- FIGURE F3 : s_a(t) et s_l(t), d'après [poly, p. 28]. Séquence lue sur la figure :
-     1, 3, -3, -1, 1, -1, -1, -3, 1, -1 (t = 0 à 9 ms) ; h = porte de hauteur 1 sur [0, Ts[. -->
+![Signal $s_a(t)$ (impulsions de poids $a_m$) et signal émis $s_l(t)$, avec un filtre de mise en forme en porte de durée $\Ts = 1\ \mathrm{ms}$. D'après le support [poly, p. 28], redessinée ; la séquence de symboles est lue sur la figure du support.](../figures/02-signaux-sa-sl.svg){#fig-signaux-sa-sl}
 
 ::: {.notes}
 Dans les notes [notes, f. 1 r°], le signal émis est noté $s_e(t)$ (le cours Bristol suit la notation $s_l(t)$ du support) et introduit comme le résultat du « blocage du signal échantillonné » :
@@ -243,7 +239,7 @@ $$
 ::: {.notes}
 **Comparaison de deux constellations binaires à puissance égale** [notes, f. 1 r°].
 
-<!-- FIGURE F6 : constellations OOK et antipodale à même puissance, d'après [notes, f. 1 r°], redessinée. -->
+![Constellations antipodale et OOK de même puissance moyenne. D'après les notes de cours [notes, f. 1 r°], redessinée.](../figures/02-ook-antipodale.svg){#fig-ook-antipodale}
 
 L'enseignant compare, pour une même puissance moyenne $P = 0{,}5\ \mathrm{W}$ :
 
@@ -267,7 +263,7 @@ Avec des symboles équiprobables, la puissance moyenne vaut $\frac{1}{2}\left(\f
 ::: {#exm-manchester}
 ## Code Manchester
 
-<!-- FIGURE F7 : h(t) du code Manchester, d'après [notes, f. 1 v°], redessinée. -->
+![Porte $\Pi_{\Ts/2}(t)$ et filtre de mise en forme $h(t)$ du code Manchester. D'après les notes de cours [notes, f. 1 v°], redessinée. Reconstruite : l'amplitude $\pm 1$ est choisie (les notes ne la donnent pas).](../figures/02-manchester.svg){#fig-manchester}
 
 Cet exemple est titré « Exemple 3 » dans les notes. Le filtre de mise en forme $h(t)$ vaut une constante positive sur $[0, \Ts/2]$ et la constante opposée sur $[\Ts/2, \Ts]$ ; il est construit à partir de la porte $\Pi_{\Ts/2}(t)$, de largeur $\Ts/2$ (bornes $\pm\Ts/4$) [notes, f. 1 v°].
 
@@ -341,7 +337,7 @@ Le passage de la première à la seconde expression est le changement d'indice $
 
 Afin d'**estimer la valeur du symbole $a_n$ la plus probable**, notée $\hat{a}_n$, le bloc de **décision** détermine dans quelle **région de décision** se situe l'échantillon $r_n$ [poly, p. 32]. Les régions sont séparées par des **seuils** (ou frontières) de décision.
 
-<!-- FIGURE F5 : régions et seuils de décision de la 4-PAM, seuils -2,5 ; 0,5 ; 1,5, d'après [poly, p. 32 et 34]. -->
+![Régions et seuils de décision de la 4-PAM ; la croix est un échantillon $r_n$ reçu. D'après le support [poly, p. 32 et 34], redessinée.](../figures/02-regions-decision.svg){#fig-regions-decision}
 
 Sur l'exemple du support (4-PAM de l'@exm-4pam-gray), les seuils sont placés en $-2{,}5$, $0{,}5$ et $1{,}5$ : on décide $\hat{a}_n = -3$ si $r_n < -2{,}5$, $\hat{a}_n = -1$ entre $-2{,}5$ et $0{,}5$, $\hat{a}_n = 1$ entre $0{,}5$ et $1{,}5$, et $\hat{a}_n = 3$ au-delà de $1{,}5$ (« si $r_n$ tombe ici, on décide $\hat{a}_n = 3$ »).
 
@@ -430,8 +426,6 @@ $$ {#eq-nyquist-temporel}
 alors il n'y aura pas d'IES à la réception [poly, p. 39].
 :::
 
-<!-- FIGURE F8 : g(t) s'annulant aux instants mTs, d'après [notes, f. 1 v°] — à fusionner avec F11 (rapport, section 6). -->
-
 :::: {.notes}
 ::: {.proof}
 Démonstration faite au tableau [notes, f. 1 v°]. On souhaite $g_m = 0$ pour tout $m \in \mathbb{Z}^*$, soit $g(m\Ts) = 0$ pour tout $m \in \mathbb{Z}^*$. Or
@@ -442,7 +436,7 @@ $$
 
 On veut donc que, pour tout $m \in \mathbb{Z}^*$, $g(m\Ts) = 0$ : il ne reste que le terme $m = 0$, et la condition s'écrit $g(t)\, \text{Ш}_{\Ts}(t) = g_0\, \delta(t)$.
 
-Graphiquement, $g(t)$ peut avoir n'importe quelle forme, pourvu qu'il passe par zéro à tous les instants $m\Ts$, $m \neq 0$.
+Graphiquement, $g(t)$ peut avoir n'importe quelle forme, pourvu qu'il passe par zéro à tous les instants $m\Ts$, $m \neq 0$ (exemple : @fig-cosinus-sureleve, à gauche).
 :::
 ::::
 
@@ -500,7 +494,7 @@ $$
 \frac{1}{\Ts} \sum_m G\!\left(f - \frac{m}{\Ts}\right) = g_0 .
 $$
 
-Graphiquement : la somme des répliques $G(f)$, $G(f - 1/\Ts)$, $G(f + 1/\Ts)$… de $G$, décalées de multiples de $1/\Ts$, doit être constante.
+Graphiquement : la somme des répliques $G(f)$, $G(f - 1/\Ts)$, $G(f + 1/\Ts)$… de $G$, décalées de multiples de $1/\Ts$, doit être constante (@fig-repliques-nyquist).
 :::
 ::::
 
@@ -508,7 +502,7 @@ Graphiquement : la somme des répliques $G(f)$, $G(f - 1/\Ts)$, $G(f + 1/\Ts)$�
 Dernière étape, non écrite au tableau : la convolution par une impulsion de Dirac décalée décale la fonction, $G(f) \star \delta(f - m/\Ts) = G(f - m/\Ts)$.
 :::
 
-<!-- FIGURE F9 : répliques G(f - m/Ts) qui se chevauchent, d'après [notes, f. 2 r° et f. 3 r°], redessinée. -->
+![Répliques $G(f - m/\Ts)$ d'un filtre vérifiant le critère de Nyquist, et leur somme, constante. D'après les notes de cours [notes, f. 2 r° et f. 3 r°], redessinée. Reconstruite : la forme de $G$ (cosinus surélevé de facteur de retombée 0,5) est choisie pour l'illustration, les notes n'en donnent qu'un croquis ; répliques $m = \pm 2$ ajoutées (pointillés gris).](../figures/02-repliques-nyquist.svg){#fig-repliques-nyquist}
 
 ### Règle de symétrie et fréquence de Nyquist {#sec-symetrie-nyquist}
 
@@ -546,8 +540,7 @@ $$
 ce qui exprime exactement que le point $\left(\frac{1}{2\Ts}, \frac{g_0\Ts}{2}\right)$ est centre de symétrie de la courbe de $G$ sur $[0, 1/\Ts]$. Le support ne formule pas cette hypothèse, mais tous ses exemples la vérifient.
 :::
 
-<!-- FIGURE F10 : symétrie de G(f) autour de (1/(2Ts), g0 Ts/2), d'après [poly, p. 41] ;
-     axe gradué en g0 Ts/2, légende mentionnant la correction (bloc av-centre-symetrie-nyquist). -->
+![Règle de symétrie : sur $[0, 1/\Ts]$, $G(f)$ est symétrique par rapport au point $\left(\frac{1}{2\Ts}, \frac{g_0\Ts}{2}\right)$. D'après le support [poly, p. 41], redessinée avec l'ordonnée du centre corrigée ($g_0\Ts/2$ au lieu de $g_0/2$, bloc `av-centre-symetrie-nyquist`). Facteur de retombée 0,2 : valeur estimée à partir de la figure du support.](../figures/02-symetrie-nyquist.svg){#fig-symetrie-nyquist}
 
 ::: {#def-frequence-nyquist}
 ## Fréquence de Nyquist
@@ -579,7 +572,7 @@ Enfin, $B \geq \frac{1}{2\Ts}$.
 :::
 ::::
 
-<!-- FIGURE F12 : bande minimale (spectres rectangulaires de support [-B, B] et répliques en 1/Ts), d'après [notes, f. 2 r° et f. 3 r°], redessinée. -->
+![Bande minimale : la réplique $G(f - 1/\Ts)$ doit chevaucher $G(f)$, d'où $1/\Ts - B \leq B$. D'après les notes de cours [notes, f. 2 r° et f. 3 r°], redessinée. Reconstruite : forme du spectre choisie pour l'illustration (cosinus surélevé de facteur de retombée 0,4).](../figures/02-bande-minimale.svg){#fig-bande-minimale}
 
 ::: {.complement}
 La bande minimale est donc la fréquence de Nyquist (@def-frequence-nyquist). Elle n'est atteinte qu'avec un spectre rectangulaire, $G(f)$ constant sur $\left[-\frac{1}{2\Ts}, \frac{1}{2\Ts}\right]$ : les répliques se juxtaposent alors exactement. Cela éclaire la remarque de l'enseignant liant le débit symbole à la bande passante (@sec-symboles-debit-symbole) : à bande $B$ donnée, le critère de Nyquist limite le débit symbole à $D_s = 1/\Ts \leq 2B$.
@@ -634,8 +627,7 @@ En conclusion [poly, p. 52] :
 ::: {#exm-cosinus-sureleve}
 ## Exemple de filtre de mise en forme [poly, p. 43-45]
 
-<!-- FIGURE F11 : filtre de Nyquist en temps et en fréquence, avec les échantillons g(mTs) et les répliques,
-     d'après [poly, p. 43-45] et [notes, f. 2 r°]. Voir le bloc av-echelles-figure-cosinus-sureleve. -->
+![Exemple de filtre de Nyquist (cosinus surélevé) : à gauche, $g(t)$ s'annule à tous les instants $m\Ts$, $m \neq 0$ ; à droite, la somme des répliques de $G(f)$ est constante. D'après le support [poly, p. 43-45] et les notes de cours [notes, f. 2 r°], redessinée. Axes normalisés ($t/\Ts$ et $g(t)/g_0$ ; $f\Ts$ et $G(f)/(g_0\Ts)$), car les échelles des deux graphes du support ne sont pas cohérentes (bloc `av-echelles-figure-cosinus-sureleve`). Facteur de retombée 0,2 : valeur estimée à partir de la figure du support.](../figures/02-cosinus-sureleve.svg){#fig-cosinus-sureleve}
 
 Le support présente un filtre global $g(t)$ et sa réponse en fréquence $G(f)$, avec $\Ts = 1\ \mathrm{ms}$ :
 
@@ -647,12 +639,14 @@ Le support présente un filtre global $g(t)$ et sa réponse en fréquence $G(f)$
 L'exemple est esquissé au tableau [notes, f. 2 r°] : une impulsion centrale et des oscillations qui s'annulent aux multiples de $\Ts$.
 :::
 
-::: {.a-verifier #av-echelles-figure-cosinus-sureleve}
+::: {.a-verifier .tranche #av-echelles-figure-cosinus-sureleve}
 **Source** [poly, p. 43-45] : le graphe temporel donne $g(0) = 1$ ; le graphe fréquentiel donne $G(0) = 10$ ; l'axe des temps montre des annulations aux multiples de $1\ \mathrm{ms}$, donc $\Ts = 1\ \mathrm{ms}$.
 
-**Problème** : avec la règle de symétrie corrigée, la somme des répliques vaut $g_0\Ts$, et $G(0) = g_0\Ts$ quand $G(\pm 1/\Ts) = 0$. Avec $g_0 = 1$ et $\Ts = 10^{-3}\ \mathrm{s}$, on attendrait $G(0) = 10^{-3}$, pas 10. Les deux graphes ne semblent pas tracés avec la même normalisation (point relevé pendant la rédaction, absent du rapport d'analyse).
+**Problème** : avec la règle de symétrie corrigée, la somme des répliques vaut $g_0\Ts$, et $G(0) = g_0\Ts$ quand $G(\pm 1/\Ts) = 0$. Avec $g_0 = 1$ et $\Ts = 10^{-3}\ \mathrm{s}$, on attendrait $G(0) = 10^{-3}$, pas 10. Les deux graphes ne semblent pas tracés avec la même normalisation (point relevé pendant la rédaction).
 
-**Proposition** : les échelles absolues ne jouent aucun rôle dans l'exemple ; la figure reconstruite (F11) normalise les deux axes ($g(t)/g_0$ et $G(f)/(g_0\Ts)$) et le signale dans sa légende.
+**Proposition** : les échelles absolues ne jouent aucun rôle dans l'exemple ; la figure reconstruite normalise les deux axes ($g(t)/g_0$ et $G(f)/(g_0\Ts)$) et le signale dans sa légende.
+
+**Décision** : axes normalisés ($f\Ts$ et $G(f)/(g_0\Ts)$, ainsi que $t/\Ts$ et $g(t)/g_0$) dans la figure redessinée (@fig-cosinus-sureleve), expliqués dans sa légende ; décision d'Armand (2026-10-07).
 :::
 
 ::: {.complement}
@@ -674,7 +668,7 @@ Sa bande est $B = \frac{1 + \beta}{2\Ts}$ : elle vaut la bande minimale $\frac{
 
 ### Exercices sur le critère de Nyquist {#sec-exercices-nyquist}
 
-<!-- FIGURE F13 : filtres des exercices (porte, triangles), d'après [poly, p. 47-51]. -->
+![Filtres des exercices : (a) @exr-nyquist-porte ; (b) @exr-nyquist-triangle-temps et @exr-debit-max-triangle ; (c) @exr-nyquist-triangle-frequence ; (d) @exr-debit-max-porte. Points pleins : valeur prise ; points vides : valeur exclue. D'après le support [poly, p. 47 à 51], redessinée.](../figures/02-exercices-nyquist.svg){#fig-exercices-nyquist}
 
 ::: {#exr-nyquist-porte}
 ## Porte [poly, p. 47]
@@ -760,10 +754,9 @@ Ici $g(t)$ n'est **pas centré en 0** : son maximum est en $t_0 = 1\ \mathrm{ms
 
 ## Diagramme de l'œil {#sec-diagramme-oeil}
 
-<!-- FIGURE F14 : construction et lecture du diagramme de l'œil, d'après [poly, p. 56 et 60] et [notes, f. 2 v°] ;
-     paramètres du support inconnus (simulation à paramétrer, voir le rapport, C6). -->
+![Construction (a) et lecture (b) du diagramme de l'œil : les tranches de durée $2\Ts$ du signal reçu, centrées sur les instants d'échantillonnage, sont superposées. D'après le support [poly, p. 56 et 60] et les notes de cours [notes, f. 2 v°]. Reconstruite par simulation : les paramètres (symboles binaires $\pm 1$, $\Ts = 1\ \mathrm{ms}$, cosinus surélevé de facteur de retombée 0,5) sont choisis, le support ne les donne pas.](../figures/02-diagramme-oeil.svg){#fig-diagramme-oeil}
 
-Le support présente le diagramme de l'œil à partir d'un signal de durée $30\ \mathrm{ms}$ : le signal est découpé en tranches successives, qui sont superposées sur une même fenêtre de temps allant de $-1$ à $1\ \mathrm{ms}$ [poly, p. 56]. Sur l'exemple, les courbes passent toutes par les niveaux $-1$ et $1$ à l'instant central.
+Le support présente le diagramme de l'œil à partir d'un signal de durée $30\ \mathrm{ms}$ : le signal est découpé en tranches successives, qui sont superposées sur une même fenêtre de temps allant de $-1$ à $1\ \mathrm{ms}$ [poly, p. 56] (@fig-diagramme-oeil). Sur l'exemple, les courbes passent toutes par les niveaux $-1$ et $1$ à l'instant central.
 
 ::: {.complement}
 **Construction.** Le diagramme de l'œil s'obtient en découpant le signal $r_l(t)$ en tranches de durée $2\Ts$, synchronisées sur l'horloge symbole (chaque tranche est centrée sur un instant d'échantillonnage), puis en superposant toutes ces tranches. Sur l'exemple du support, la fenêtre de $2\ \mathrm{ms}$ correspond à $\Ts = 1\ \mathrm{ms}$ et les deux niveaux $\pm 1$ à une constellation binaire.

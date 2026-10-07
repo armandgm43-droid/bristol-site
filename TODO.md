@@ -24,9 +24,10 @@
 - [x] Analyse du chapitre de test : rapport d'analyse et questions.
 - [x] Répondre aux 16 questions du rapport — étape 3 (décisions : section 13 du rapport).
 - [x] Rédaction du chapitre `cours/02-communication-sans-bruit.qmd` selon la section 13 du rapport, ajout dans `_quarto.yml` et dans la fiche matière (texte ; 7 octobre 2026).
-- [ ] Trancher le nouveau bloc `av-echelles-figure-cosinus-sureleve` (rapport ch. 2, section 13.8) et valider les choix de rédaction listés en 13.8.
+- [x] Trancher le nouveau bloc `av-echelles-figure-cosinus-sureleve` et valider les choix de rédaction (7 octobre 2026 : axes normalisés ; choix validés).
 - [ ] Styler les blocs tranchés `.a-verifier.tranche` (étiquette `✓ Corrigé`) dans `assets/bristol.scss`, et les ajouter à `demo-conventions.qmd`.
-- [ ] Figures du chapitre (Python ou TikZ, en SVG) : F1 à F14, emplacements marqués `<!-- FIGURE Fn -->` dans le `.qmd` ; puis statut `redige`.
+- [x] Figures du chapitre (12 SVG : 11 matplotlib + 1 TikZ ; F4 omise, F8 fusionnée avec F11) ; statut `redige` (7 octobre 2026).
+- [ ] Valider les choix des figures listés en section 13.9 du rapport (paramètres choisis pour F9, F12, F14 ; normalisation de F10).
 - [ ] Vérification par Claude, puis validation par Armand.
 - [ ] Trancher la question ouverte 5 (clés `ts-…`) avant de générer les flashcards.
 - [ ] Flashcards du chapitre validé (`flashcards/NN-slug.yml`).

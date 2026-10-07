@@ -1,0 +1,163 @@
+/* ==========================================================================
+   Bristol — jetons de direction artistique (source unique)
+   --------------------------------------------------------------------------
+   Utilisé par :
+     - le site Quarto (inclus par _quarto.yml, consommé par assets/bristol.scss) ;
+     - l'application de révision (revision/index.html, <link> vers ce fichier).
+   Toute couleur, police ou mesure partagée est définie ICI et nulle part
+   ailleurs. Voir conventions.md (§ 13) et architecture.md (§ 4).
+
+   Métaphore : une fiche bristol posée sur un bureau.
+     bureau  (--desk…)   fond de page, barre de navigation, barres latérales
+     feuille (--paper…)  surface de lecture : contenu d'une page, listes, dialogues
+     fiche   (--card-…)  carte de révision : reste du papier clair, même en mode sombre
+   Repères : ligne rouge (--rule-red) sous les titres, lignes bleues
+   (--rule-blue) comme une fiche lignée, encre bleue (--pen) pour les liens
+   et les actions.
+
+   Mode sombre, trois déclencheurs (même préférence pour le site et l'app) :
+     1. préférence du système (prefers-color-scheme), par défaut ;
+     2. choix explicite, mémorisé dans localStorage « quarto-color-scheme »
+        (« alternate » = sombre, « default » = clair) :
+        - site Quarto : classe body.quarto-dark / body.quarto-light ;
+        - application : attribut <html data-theme="dark|light">.
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap");
+
+/* ---------- Valeurs indépendantes du mode ---------- */
+:root {
+  /* Polices */
+  --serif: "Literata", Georgia, "Times New Roman", serif;          /* titres, cartes */
+  --sans: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* texte courant, interface */
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;     /* code */
+
+  /* Tailles de texte */
+  --font-size-root: 16px;        /* 1 rem, identique sur le site et dans l'app */
+  --font-size-reading: 1.0625rem; /* texte courant des pages de cours (17 px) */
+  --font-size-nav: .95rem;       /* liens de la barre de navigation */
+
+  /* Échelle d'espacement (multiples de 0,25 rem) */
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+
+  /* Formes et mesures */
+  --radius-paper: 4px;      /* feuilles, fiches */
+  --radius-control: 6px;    /* boutons, champs */
+  --rule-red-width: 2px;    /* ligne rouge sous un titre */
+  --nav-height: 3.5rem;     /* barre de navigation commune */
+  --measure: 46rem;         /* largeur maximale d'une feuille de lecture */
+  --lh: 2rem;               /* interligne des fiches (lignes bleues) */
+
+  /* Réponses de révision (boutons pastel, identiques dans les deux modes) */
+  --again:#B3303E; --again-bg:#FBE4E7;
+  --hard:#8A5B08;  --hard-bg:#F8ECD2;
+  --good:#23489A;  --good-bg:#E1E9F8;
+  --easy:#246A49;  --easy-bg:#DCEFE4;
+
+  /* Fiche de révision : papier clair dans les deux modes */
+  --card-ink:#1C2740; --card-ink-soft:#4A5670; --card-ink-faint:#7E889B;
+  --card-rule-blue:#C3D5EB;
+}
+
+/* ---------- Mode clair (par défaut) ---------- */
+:root {
+  --desk:#E2E7ED; --desk-ink:#26324A; --desk-muted:#5A667B;
+  --desk-pen:#233C80; --desk-on-pen:#FFFFFF; --desk-line:#C9D1DC;
+
+  --paper:#FFFFFF; --field:#FBFCFD; --field-border:#B7C1CF;
+  --ink:#1C2740; --ink-soft:#4A5670; --ink-faint:#7E889B;
+  --pen:#233C80; --pen-hover:#1A2E63; --on-pen:#FFFFFF;
+  --rule-red:#D8465B; --rule-blue:#C3D5EB;
+  --danger:#B3303E; --danger-bg:#FBE4E7;
+  --code-bg:#EEF2F8;
+  --figure-bg:#FFFFFF; --figure-pad:0px;   /* figures SVG (couleurs fixes, fond clair) */
+
+  /* Compteurs (nouvelles, en cours, à revoir) : sur la feuille, puis sur le bureau */
+  --cn:#23489A; --cl:#B3303E; --cr:#246A49;
+  --dn:#23489A; --dl:#B3303E; --dr:#246A49;
+
+  /* Les quatre catégories (CONTEXTE_PROJET.md § 7) : filet + étiquette + fond */
+  --cat-notes:#23489A;           /* bleu encre */
+  --cat-notes-bg:rgba(35,72,154,.05);
+  --cat-complement:#7E889B;      /* gris (filet) */
+  --cat-complement-ink:#5A6478;  /* gris (étiquette, texte) */
+  --cat-complement-bg:rgba(126,136,155,.06);
+  --cat-verifier:#C2610C;        /* orange */
+  --cat-verifier-bg:rgba(194,97,12,.07);
+
+  --shadow:0 1px 1px rgba(28,39,64,.08), 0 12px 30px -16px rgba(28,39,64,.38);
+  --paper-mix:100%;
+  color-scheme:light;
+}
+
+/* ---------- Mode sombre : jeu de valeurs (appliqué par les sélecteurs ci-dessous) ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --desk:#1B2231; --desk-ink:#DCE2EC; --desk-muted:#9BA6B9;
+    --desk-pen:#A9BFF2; --desk-on-pen:#12192A; --desk-line:#2E3950;
+    --paper:#232B3B; --field:#1B2231; --field-border:#4A5670;
+    --ink:#DCE2EC; --ink-soft:#AEB8C9; --ink-faint:#8792A6;
+    --pen:#A9BFF2; --pen-hover:#C6D5F7; --on-pen:#12192A;
+    --rule-red:#E0697B; --rule-blue:#34415A;
+    --danger:#F2A0A9; --danger-bg:rgba(242,160,169,.12);
+    --code-bg:#2B3446;
+  --figure-bg:#FFFFFF; --figure-pad:.75rem; /* figure posée sur une fiche blanche (fond des SVG matplotlib) */
+    --cn:#A9BFF2; --cl:#F2A0A9; --cr:#8FD2AE;
+    --dn:#A9BFF2; --dl:#F2A0A9; --dr:#8FD2AE;
+    --cat-notes:#A9BFF2; --cat-notes-bg:rgba(169,191,242,.08);
+    --cat-complement:#8792A6; --cat-complement-ink:#B4BDCC; --cat-complement-bg:rgba(135,146,166,.09);
+    --cat-verifier:#F0A15C; --cat-verifier-bg:rgba(240,161,92,.10);
+    --card-rule-blue:#B3C4DB;
+    --shadow:0 1px 1px rgba(0,0,0,.35), 0 16px 34px -14px rgba(0,0,0,.7);
+    --paper-mix:88%;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"],
+:root:has(> body.quarto-dark) {
+  --desk:#1B2231; --desk-ink:#DCE2EC; --desk-muted:#9BA6B9;
+  --desk-pen:#A9BFF2; --desk-on-pen:#12192A; --desk-line:#2E3950;
+  --paper:#232B3B; --field:#1B2231; --field-border:#4A5670;
+  --ink:#DCE2EC; --ink-soft:#AEB8C9; --ink-faint:#8792A6;
+  --pen:#A9BFF2; --pen-hover:#C6D5F7; --on-pen:#12192A;
+  --rule-red:#E0697B; --rule-blue:#34415A;
+  --danger:#F2A0A9; --danger-bg:rgba(242,160,169,.12);
+  --code-bg:#2B3446;
+  --figure-bg:#FFFFFF; --figure-pad:.75rem; /* figure posée sur une fiche blanche (fond des SVG matplotlib) */
+  --cn:#A9BFF2; --cl:#F2A0A9; --cr:#8FD2AE;
+  --dn:#A9BFF2; --dl:#F2A0A9; --dr:#8FD2AE;
+  --cat-notes:#A9BFF2; --cat-notes-bg:rgba(169,191,242,.08);
+  --cat-complement:#8792A6; --cat-complement-ink:#B4BDCC; --cat-complement-bg:rgba(135,146,166,.09);
+  --cat-verifier:#F0A15C; --cat-verifier-bg:rgba(240,161,92,.10);
+  --card-rule-blue:#B3C4DB;
+  --shadow:0 1px 1px rgba(0,0,0,.35), 0 16px 34px -14px rgba(0,0,0,.7);
+  --paper-mix:88%;
+  color-scheme:dark;
+}
+/* Choix « clair » explicite du site alors que le système est en sombre */
+:root:has(> body.quarto-light) {
+  --desk:#E2E7ED; --desk-ink:#26324A; --desk-muted:#5A667B;
+  --desk-pen:#233C80; --desk-on-pen:#FFFFFF; --desk-line:#C9D1DC;
+  --paper:#FFFFFF; --field:#FBFCFD; --field-border:#B7C1CF;
+  --ink:#1C2740; --ink-soft:#4A5670; --ink-faint:#7E889B;
+  --pen:#233C80; --pen-hover:#1A2E63; --on-pen:#FFFFFF;
+  --rule-red:#D8465B; --rule-blue:#C3D5EB;
+  --danger:#B3303E; --danger-bg:#FBE4E7;
+  --code-bg:#EEF2F8;
+  --figure-bg:#FFFFFF; --figure-pad:0px;   /* figures SVG (couleurs fixes, fond clair) */
+  --cn:#23489A; --cl:#B3303E; --cr:#246A49;
+  --dn:#23489A; --dl:#B3303E; --dr:#246A49;
+  --cat-notes:#23489A; --cat-notes-bg:rgba(35,72,154,.05);
+  --cat-complement:#7E889B; --cat-complement-ink:#5A6478; --cat-complement-bg:rgba(126,136,155,.06);
+  --cat-verifier:#C2610C; --cat-verifier-bg:rgba(194,97,12,.07);
+  --card-rule-blue:#C3D5EB;
+  --shadow:0 1px 1px rgba(28,39,64,.08), 0 12px 30px -16px rgba(28,39,64,.38);
+  --paper-mix:100%;
+  color-scheme:light;
+}

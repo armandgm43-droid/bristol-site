@@ -1,0 +1,11 @@
+/* ==========================================================================
+   Bristol — marqueur du thème sombre (Quarto)
+   Ne contient AUCUNE couleur : les valeurs du mode sombre sont dans
+   assets/bristol-tokens.css. Ce fichier sert seulement à signaler à Quarto
+   que la feuille compilée est le thème sombre (commentaire sentinelle
+   ci-dessous), pour que la classe body.quarto-dark soit posée et que le
+   bouton clair/sombre fonctionne.
+   ========================================================================== */
+
+/*-- scss:rules --*/
+/*! dark */

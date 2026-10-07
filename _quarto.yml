@@ -9,6 +9,8 @@ project:
   # L'application de révision est copiée telle quelle dans le site.
   resources:
     - "revision/**"
+    # Jetons de DA : aussi lus par revision/index.html (../assets/bristol-tokens.css).
+    - "assets/bristol-tokens.css"
 
 lang: fr
 
@@ -44,6 +46,11 @@ format:
   html:
     theme:
       light: [cosmo, assets/bristol.scss]
+      dark: [cosmo, assets/bristol.scss, assets/bristol-sombre.scss]
+    # Mode sombre : suit le système, sauf choix explicite (bouton de la barre).
+    respect-user-color-scheme: true
+    # Couleurs, polices, espacements : source unique, partagée avec revision/.
+    css: assets/bristol-tokens.css
     toc: true
     toc-title: "Sur cette page"
     number-sections: true

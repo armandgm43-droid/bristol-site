@@ -1,22 +1,250 @@
-/*-- scss:defaults --*/
-$font-family-sans-serif: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
-$headings-font-family: "Literata", Georgia, serif;
-$link-color: #23489A;
+/* ==========================================================================
+   Bristol — thème Quarto
+   Les couleurs, polices et espacements viennent de assets/bristol-tokens.css
+   (source unique, partagée avec revision/index.html). Ce fichier n'y fait
+   référence que par var(--…) : ne jamais y écrire une couleur en dur.
+   Le même fichier sert au thème clair et au thème sombre (_quarto.yml) :
+   c'est le jeu de jetons actif qui change, pas les règles.
+   ========================================================================== */
 
-/* Couleurs des quatre catégories (voir CONTEXTE_PROJET.md, section 7) */
-$notes-color: #23489A;       /* bleu encre */
-$complement-color: #7E889B;  /* gris */
-$verifier-color: #C2610C;    /* orange */
+/*-- scss:defaults --*/
+// Polices : seules valeurs passées à Bootstrap (des chaînes, pas des couleurs).
+$font-family-sans-serif: var(--sans);
+$headings-font-family: var(--serif);
+$font-family-monospace: var(--mono);
+$headings-font-weight: 600;
 
 /*-- scss:rules --*/
-@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Literata:opsz,wght@7..72,500;7..72,600&display=swap");
 
-/* Blocs : filet + étiquette + fond, trois indices redondants */
+/* ---------- Bootstrap : variables CSS branchées sur les jetons ---------- */
+:root {
+  --bs-body-bg: var(--desk);
+  --bs-body-color: var(--ink);
+  --bs-emphasis-color: var(--ink);
+  --bs-heading-color: var(--ink);
+  --bs-secondary-color: var(--ink-soft);
+  --bs-tertiary-color: var(--ink-faint);
+  --bs-border-color: var(--rule-blue);
+  --bs-code-color: var(--ink);
+  --bs-link-color: var(--pen);
+  --bs-link-hover-color: var(--pen-hover);
+}
+:root { --bs-root-font-size: var(--font-size-root); font-size: var(--font-size-root); }
+body { --bs-body-font-size: var(--font-size-reading); font-size: var(--font-size-reading); }
+html, body {
+  background-color: var(--desk);
+  color: var(--desk-ink);
+}
+body { font-family: var(--sans); }
+::selection { background: color-mix(in srgb, var(--pen) 22%, transparent); }
+:focus-visible { outline: 3px solid color-mix(in srgb, var(--pen) 55%, transparent); outline-offset: 2px; }
+
+a { color: var(--pen); text-underline-offset: .18em; text-decoration-thickness: 1px; }
+a:hover { color: var(--pen-hover); }
+
+/* ---------- Barre de navigation commune (même dessin que revision/) ---------- */
+#quarto-header {
+  background: var(--desk);
+  border-bottom: 1px solid var(--desk-line);
+  box-shadow: none;
+}
+#quarto-header .navbar {
+  background: var(--desk) !important;
+  min-height: var(--nav-height);
+  padding: 0;
+}
+#quarto-header .navbar-container { padding-left: var(--space-4); padding-right: var(--space-4); }
+#quarto-header .navbar-brand-container { margin: 0; }
+#quarto-header .navbar-brand { margin: 0 var(--space-4) 0 0; padding: 0; overflow: visible; }
+#quarto-header .navbar-brand-container { overflow: visible; }
+#quarto-header .navbar-brand,
+#quarto-header .navbar-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: var(--desk-ink) !important;
+}
+#quarto-header .navbar-title {
+  text-decoration: underline;
+  text-decoration-color: var(--rule-red);
+  text-decoration-thickness: var(--rule-red-width);
+  text-underline-offset: .3em;
+}
+#quarto-header .navbar-nav .nav-link {
+  color: var(--desk-ink) !important;
+  font-weight: 700;
+  font-size: var(--font-size-nav);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-control);
+}
+#quarto-header .navbar-nav .nav-link:hover {
+  background: color-mix(in srgb, var(--desk-ink) 9%, transparent);
+}
+#quarto-header .navbar-nav .nav-link.active .menu-text {
+  text-decoration: underline;
+  text-decoration-color: var(--rule-red);
+  text-decoration-thickness: var(--rule-red-width);
+  text-underline-offset: .45em;
+}
+#quarto-header .quarto-color-scheme-toggle,
+#quarto-header .quarto-color-scheme-toggle .bi::before { color: var(--desk-ink) !important; }
+/* Bouton clair/sombre : même icône que dans revision/, à la couleur de l'encre du bureau */
+#quarto-header .quarto-color-scheme-toggle .bi::before {
+  width: 1.25rem; height: 1.25rem; vertical-align: -.2em;
+  background: currentColor !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M11 4a4 4 0 0 1 0 8H8a5 5 0 0 0 2-4 5 5 0 0 0-2-4zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8M0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5'/%3E%3C/svg%3E") no-repeat center / contain;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M11 4a4 4 0 0 1 0 8H8a5 5 0 0 0 2-4 5 5 0 0 0-2-4zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8M0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+#quarto-header .quarto-color-scheme-toggle.alternate .bi::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8'/%3E%3C/svg%3E");
+}
+#quarto-header .quarto-color-scheme-toggle .bi,
+#quarto-header .aa-DetachedSearchButton .aa-SearchButtonIcon svg,
+#quarto-header .navbar-toggler .bi,
+#quarto-header #quarto-search .bi {
+  color: var(--desk-ink) !important;
+  fill: var(--desk-ink) !important;
+}
+#quarto-header .navbar-toggler { border-color: var(--desk-line); }
+#quarto-header #quarto-search .aa-DetachedSearchButton,
+#quarto-header #quarto-search .aa-DetachedSearchButtonIcon,
+#quarto-header #quarto-search svg { color: var(--desk-ink) !important; }
+#quarto-header .navbar-collapse { background: var(--desk); }
+
+/* Barre secondaire (mobile : fil d'Ariane et bouton de la barre latérale) */
+.quarto-secondary-nav, #quarto-header .quarto-secondary-nav {
+  background: var(--desk) !important;
+  color: var(--desk-ink);
+  border-bottom: 1px solid var(--desk-line);
+  box-shadow: none !important;
+}
+.quarto-secondary-nav .breadcrumb-item, .quarto-secondary-nav .breadcrumb-item a,
+.quarto-secondary-nav .quarto-btn-toggle, .quarto-secondary-nav .bi { color: var(--desk-ink) !important; }
+
+/* ---------- Feuille de lecture : le contenu est une feuille posée sur le bureau ---------- */
+main.content {
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: var(--radius-paper);
+  box-shadow: var(--shadow);
+  padding: var(--space-6) var(--space-6) var(--space-7);
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+@media (max-width: 767.98px) {
+  main.content { padding: var(--space-5) var(--space-4) var(--space-6); margin-top: var(--space-3); }
+}
+
+/* Titre de page : ligne rouge, comme l'en-tête d'une fiche */
+#title-block-header {
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: var(--rule-red-width) solid var(--rule-red);
+}
+#title-block-header .title {
+  font-family: var(--serif);
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: var(--space-2);
+}
+#title-block-header .subtitle,
+#title-block-header .quarto-title-meta-heading,
+#title-block-header .quarto-title-meta-contents { color: var(--ink-soft); }
+#title-block-header .quarto-title-meta { margin-top: var(--space-3); }
+
+/* Titres de section : serif, ligne bleue de fiche */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3 { font-family: var(--serif); color: var(--ink); font-weight: 600; }
+main.content h2, main.content .h2 {
+  border-bottom: 1px solid var(--rule-blue);
+  padding-bottom: var(--space-2);
+  margin-top: var(--space-7);
+}
+main.content h3 { margin-top: var(--space-6); }
+main.content h2 .header-section-number,
+main.content h3 .header-section-number { color: var(--ink-faint); font-weight: 500; }
+.anchorjs-link { color: var(--ink-faint) !important; }
+
+/* Tableaux */
+main.content table { --bs-table-bg: transparent; --bs-table-color: var(--ink); color: var(--ink); border-color: var(--rule-blue); }
+main.content table > thead { border-bottom: 1.5px solid var(--ink-faint) !important; }
+main.content .table > :not(caption) > * > * { border-bottom-color: var(--rule-blue); color: var(--ink); }
+
+/* Code */
+code:not(.sourceCode) { color: var(--ink); background: var(--code-bg); padding: .05em .3em; border-radius: 3px; }
+div.sourceCode, pre.sourceCode { background: var(--code-bg) !important; border: 0; border-radius: var(--radius-control); }
+
+/* Environnements (définition, théorème…) et démonstrations */
+main.content .theorem > p:first-child > span:first-child,
+main.content .proof > p:first-child > span:first-child { color: var(--ink); }
+main.content hr { border-color: var(--rule-blue); opacity: 1; }
+
+/* Formules : même couleur que le texte, défilement horizontal si trop larges */
+mjx-container { color: inherit; }
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; }
+
+/* Figures et légendes.
+   Les SVG ont des couleurs fixes (conventions.md § 9) : en mode sombre, ils sont
+   posés sur un papier clair (--figure-bg), comme une fiche sur la feuille. */
+main.content .quarto-figure img, main.content figure img {
+  background: var(--figure-bg);
+  padding: var(--figure-pad);
+  border-radius: var(--radius-paper);
+}
+figcaption, .figure-caption { color: var(--ink-soft); }
+
+/* ---------- Bureau : barre latérale, sommaire, navigation de page ---------- */
+#quarto-sidebar, .sidebar.sidebar-navigation, .sidebar-navigation {
+  background: transparent !important;
+  color: var(--desk-ink);
+  border: 0 !important;
+}
+#quarto-sidebar .sidebar-title,
+#quarto-sidebar .sidebar-item-text,
+#quarto-sidebar .sidebar-link { color: var(--desk-ink); }
+#quarto-sidebar .sidebar-link.active,
+#quarto-sidebar .sidebar-link.active .sidebar-item-text { color: var(--desk-pen); font-weight: 700; }
+#quarto-sidebar .sidebar-title { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; }
+#quarto-sidebar .sidebar-section .sidebar-item-text { font-weight: 700; }
+
+#TOC, nav#TOC, #quarto-margin-sidebar { color: var(--desk-ink); }
+#TOC #toc-title, #quarto-margin-sidebar h2 { color: var(--desk-ink); font-family: var(--serif); border: 0; }
+#TOC .nav-link, #quarto-margin-sidebar .nav-link { color: var(--desk-muted); }
+#TOC .nav-link.active, #quarto-margin-sidebar .nav-link.active,
+#TOC ul > li > a.nav-link.active, .sidebar nav[role=doc-toc] ul > li > a.active {
+  color: var(--desk-pen) !important; border-left-color: var(--desk-pen) !important; font-weight: 700;
+}
+#TOC ul { border-left-color: var(--desk-line); }
+
+.nav-page .pagination-link, .page-navigation a { color: var(--desk-pen); }
+.page-navigation { border-top: 1px solid var(--desk-line); }
+#quarto-back-to-top { background: var(--paper); color: var(--ink); border-color: var(--rule-blue); }
+
+/* Recherche */
+.aa-DetachedOverlay .aa-DetachedContainer, .aa-Panel, .aa-Form, .aa-DetachedFormContainer {
+  background: var(--paper) !important; color: var(--ink) !important;
+}
+.aa-Form { border-color: var(--field-border) !important; }
+.aa-Input { color: var(--ink) !important; }
+.aa-Item { color: var(--ink) !important; }
+.aa-Item[aria-selected="true"], .aa-Item:hover { background: color-mix(in srgb, var(--pen) 10%, transparent) !important; }
+.aa-DetachedCancelButton { color: var(--pen) !important; border-color: var(--field-border) !important; }
+#quarto-search-results .search-result-text, .aa-Panel mark, .search-match { color: var(--ink) !important; }
+.quarto-search-overlay, .aa-DetachedOverlay { background: rgba(18,25,40,.5) !important; }
+
+/* ==========================================================================
+   Les quatre catégories (CONTEXTE_PROJET.md § 7, conventions.md § 5)
+   Trois indices redondants : filet + étiquette + fond teinté.
+   Seules les couleurs passent par les jetons ; formes et libellés inchangés.
+   ========================================================================== */
+
+/* Blocs */
 div.notes, div.complement, div.a-verifier {
   position: relative;
   margin: 1.25rem 0;
   padding: 2rem 1rem 0.75rem 1.1rem;
-  border-radius: 0 6px 6px 0;
+  border-radius: 0 var(--radius-control) var(--radius-control) 0;
 }
 div.notes::before, div.complement::before, div.a-verifier::before {
   position: absolute;
@@ -25,34 +253,37 @@ div.notes::before, div.complement::before, div.a-verifier::before {
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.01em;
+  font-family: var(--sans);
 }
 
 div.notes {
-  border-left: 4px solid $notes-color;
-  background: rgba(35, 72, 154, 0.05);
+  border-left: 4px solid var(--cat-notes);
+  background: var(--cat-notes-bg);
 }
-div.notes::before { content: "✎ Notes de cours"; color: $notes-color; }
+div.notes::before { content: "✎ Notes de cours"; color: var(--cat-notes); }
 
 div.complement {
-  border-left: 3px dashed $complement-color;
-  background: rgba(126, 136, 155, 0.06);
+  border-left: 3px dashed var(--cat-complement);
+  background: var(--cat-complement-bg);
 }
-div.complement::before { content: "+ Complément"; color: #5A6478; }
+div.complement::before { content: "+ Complément"; color: var(--cat-complement-ink); }
 
 div.a-verifier {
-  border-left: 4px solid $verifier-color;
-  background: rgba(194, 97, 12, 0.07);
+  border-left: 4px solid var(--cat-verifier);
+  background: var(--cat-verifier-bg);
 }
-div.a-verifier::before { content: "? À vérifier"; color: $verifier-color; }
+div.a-verifier::before { content: "? À vérifier"; color: var(--cat-verifier); }
 
 /* Segments dans une phrase */
-span.notes { color: $notes-color; }
+span.notes { color: var(--cat-notes); }
 span.notes::before { content: "✎ "; font-size: 0.85em; }
-span.complement { color: #5A6478; font-style: italic; }
+span.complement { color: var(--cat-complement-ink); font-style: italic; }
 span.complement::before { content: "+ "; font-style: normal; }
-span.a-verifier { color: $verifier-color; text-decoration: underline wavy; text-underline-offset: 3px; }
+span.a-verifier { color: var(--cat-verifier); text-decoration: underline wavy; text-underline-offset: 3px; }
 
-/* Impression : mêmes repères, sans fond */
+/* ---------- Impression : feuille blanche, mêmes repères, sans fond ---------- */
 @media print {
+  html, body { background: #fff; }
+  main.content { box-shadow: none; padding: 0; margin: 0; }
   div.notes, div.complement, div.a-verifier { background: none; }
 }

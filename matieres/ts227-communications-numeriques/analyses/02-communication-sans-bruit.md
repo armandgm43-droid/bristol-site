@@ -398,6 +398,33 @@ Corrections orthographiques supplémentaires sans bloc : voir le tableau de la s
 
 Vérifications faites : rendu Quarto sans avertissement de référence croisée ; 417 formules compilées sans erreur par MathJax 3 (avec les macros de `_macros.qmd`) ; labels uniques ; imbrication des blocs conforme à `conventions.md` § 5.1 ; règle de symétrie, exercice p. 49 et cosinus surélevé vérifiés numériquement.
 
+### 13.9 Étape 5 — Figures (7 octobre 2026)
+
+Décisions d'Armand (7 octobre 2026) : `av-echelles-figure-cosinus-sureleve` (AV9) **tranché**, axes normalisés ($f\Ts$ et $G(f)/(g_0\Ts)$) dans F11, expliqués dans la légende ; le bloc reste visible avec la classe `.tranche`. Les choix de rédaction de la section 13.8 sont validés.
+
+Bilan des blocs *À vérifier* : **1 ouvert** (`av-exemples-mise-en-forme-manquants`), **4 tranchés**.
+
+| Figure | Fichier (`figures/`) | Label | Outil | Remarque |
+|---|---|---|---|---|
+| F1 | `02-chaine-bande-de-base.tex` | `fig-chaine-bande-de-base` | TikZ → SVG | |
+| F2 | `02-constellation-4pam.py` | `fig-constellation-4pam` | matplotlib | |
+| F3 | `02-signaux-sa-sl.py` | `fig-signaux-sa-sl` | matplotlib | séquence lue sur la figure du poly |
+| F4 | — | — | — | **omise** (redondante avec F3) |
+| F5 | `02-regions-decision.py` | `fig-regions-decision` | matplotlib | croix en $r_n = 1{,}7$, position lue sur le poly |
+| F6 | `02-ook-antipodale.py` | `fig-ook-antipodale` | matplotlib | les croix sans légende des notes en $\pm 1$ ne sont pas reprises |
+| F7 | `02-manchester.py` | `fig-manchester` | matplotlib | amplitude $\pm 1$ choisie (légende) |
+| F8 | — | — | — | **fusionnée** avec F11 (échantillons $g(m\Ts)$) |
+| F9 | `02-repliques-nyquist.py` | `fig-repliques-nyquist` | matplotlib | forme choisie : cosinus surélevé $\beta = 0{,}5$ ; répliques $m = \pm 2$ ajoutées en pointillés gris |
+| F10 | `02-symetrie-nyquist.py` | `fig-symetrie-nyquist` | matplotlib | ordonnée du centre corrigée ; axes gradués en $1/\Ts$ et $g_0\Ts$ (pas les valeurs numériques du poly) |
+| F11 | `02-cosinus-sureleve.py` | `fig-cosinus-sureleve` | matplotlib | axes normalisés (décision AV9) ; $\beta = 0{,}2$ estimé |
+| F12 | `02-bande-minimale.py` | `fig-bande-minimale` | matplotlib | forme choisie : $\beta = 0{,}4$ |
+| F13 | `02-exercices-nyquist.py` | `fig-exercices-nyquist` | matplotlib | une figure à 4 panneaux pour les 5 exercices |
+| F14 | `02-diagramme-oeil.py` | `fig-diagramme-oeil` | matplotlib (simulation) | paramètres choisis : binaire $\pm 1$, $\Ts = 1$ ms, $\beta = 0{,}5$, graine fixée |
+
+**À valider par Armand** : les paramètres choisis pour F9, F12 et F14 (signalés dans les légendes) et la graduation symbolique de F10.
+
+Vérifications : rendu Quarto sans avertissement (12 figures numérotées, références `@fig-…` résolues) ; figures relues visuellement.
+
 ### 13.7 Conventions ajoutées à `conventions.md`
 
 1. Pages citées : numérotation du PDF (§ 3.1).
