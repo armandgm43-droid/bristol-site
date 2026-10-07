@@ -6,7 +6,7 @@
 > Phrase de démarrage type :
 > « Lis `CONTEXTE_PROJET.md`, `conventions.md` et `ETAT_PROJET.md`, puis reprends le projet à partir de son état actuel. »
 >
-> Dernière mise à jour : 6 octobre 2026.
+> Dernière mise à jour : 7 octobre 2026.
 
 ---
 
@@ -386,7 +386,7 @@ Utilisé lorsque :
 
 - **Rendu :** bloc avec **filet orange**, étiquette **`? À vérifier`**.
 - Contenu attendu : ce que dit la source (citée fidèlement, avec sa référence), le problème identifié, et si possible la **correction proposée**, présentée comme une proposition.
-- Un bloc *À vérifier* est **levé** une fois la question tranchée par Armand : le contenu est alors réintégré dans la bonne catégorie, et la décision notée dans `ETAT_PROJET.md` si elle est importante.
+- Une fois la question tranchée par Armand : si la **source est corrigée**, le bloc reste visible comme bloc *tranché* (classe `.tranche`, ligne **Décision**, étiquette `✓ Corrigé`) ; si ce n'était **pas une erreur**, le bloc est levé et son contenu réintégré dans la bonne catégorie. La décision est notée dans le rapport d'analyse du chapitre (et dans `ETAT_PROJET.md` si elle est importante). Détail : `conventions.md`, §5.2.
 
 ### 7.5 Mise en œuvre
 
@@ -761,7 +761,7 @@ Un chapitre ne revient en arrière qu'explicitement (par exemple de VALIDÉ à R
 | `poly_ts227.pdf` | Officielle | « Introduction aux communications numériques », Romain Tajan, slides au format poly, 180 pages (version du 9 octobre 2025) |
 | `TD_TS_227.pdf` | Officielle | TD « Transmissions en bande de base », Guillaume Ferré et Romain Tajan, 2020/2021, 4 pages |
 | `correction_TD_TS_227.pdf` | Officielle | Correction partielle du TD, 15 pages |
-| Notes manuscrites | Personnelle | **Pas encore fournies** |
+| Notes manuscrites | Personnelle | 5 feuillets recto-verso, date inconnue (`sources/ts227/notes/date-inconnue.pdf`) ; couvrent les chapitres 2, 3 et 4 |
 
 ### 18.3 Plan du support officiel
 
@@ -773,7 +773,7 @@ Un chapitre ne revient en arrière qu'explicitement (par exemple de VALIDÉ à R
 6. Modulation et démodulation numériques (ASK, PSK, APK/QAM, FSK, performances, efficacité spectrale) ;
 7. Conclusion.
 
-Le découpage en chapitres Bristol suivra a priori ce plan. À confirmer lors de l'analyse.
+Le découpage en chapitres Bristol suit ce plan (décision du 2026-10-07), même si l'enseignant a traité le chapitre 4 avant le chapitre 3 en 2026-2027.
 
 ### 18.4 Points déjà connus (à traiter lors de la rédaction)
 
@@ -795,7 +795,7 @@ Le découpage en chapitres Bristol suivra a priori ce plan. À confirmer lors de
 
 **Dans la correction du TD :**
 
-- le terme de phase de la TF de la porte est écrit $e^{+j\pi T_s f}$ ; cela dépend de la convention de signe de la TF (le poly utilise $e^{+j2\pi f t}$ à la p. 40, convention à clarifier) ;
+- le terme de phase de la TF de la porte est écrit $e^{+j\pi T_s f}$ ; cela dépend de la convention de signe de la TF. *Tranché le 2026-10-07 : convention $e^{-j2\pi ft}$ (celle du poly p. 85-87 et des notes) ; la p. 40 du poly est une coquille* ;
 - les questions 5 et 6 de l'exercice 1, la question 6 de l'exercice 2 (DSP de l'OOK), les questions 3 à 5 de l'exercice 3 et toute l'étude pratique **n'ont pas de corrigé**.
   - Des solutions ont été produites par Claude (paquet de flashcards provisoire).
   - Pour l'étude pratique, l'étiquetage de la 4-PAM n'est pas donné par l'énoncé : celui du cours a été supposé (00 → −3, 01 → −1, 11 → 1, 10 → 3).
@@ -910,6 +910,10 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 | 2026-10-06 | Flashcards en YAML, un fichier par chapitre ; identifiants `<matiere>-<slug>`, uniques dans la matière, sans numéro de chapitre (question 4) | Un identifiant ne dépend pas de la position de la carte, comme les labels |
 | 2026-10-06 | Macros communes dans `_macros.qmd` (et non `_macros.tex`) | Fichier inclus directement dans les pages Quarto |
 | 2026-10-06 | Conventions détaillées figées dans `conventions.md` (front matter, statuts, labels, blocs *À vérifier* identifiés par `#av-slug`) | Voir `conventions.md`, section 12 |
+| 2026-10-07 | Prototype validé ; premier chapitre de test : TS227 chapitre 2 (question 7) | Test plus représentatif de la fusion support et notes |
+| 2026-10-07 | TS227 : ordre et numérotation des chapitres du poly conservés, même si le cours a traité le bruit avant la DSP | Repères communs avec le support ; ordre réel signalé dans la fiche matière |
+| 2026-10-07 | Correction d'une source tranchée par Armand : bloc *À vérifier* conservé avec la classe `.tranche` et une ligne **Décision** | Aucune correction silencieuse (voir `conventions.md` §5.2) |
+| 2026-10-07 | Fautes d'orthographe sans effet sur le sens corrigées sans bloc, listées dans le rapport d'analyse | Éviter d'encombrer le cours (voir `conventions.md` §5.3) |
 
 ---
 
@@ -925,7 +929,7 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 5. **Paquet TS227 provisoire** : réutiliser les anciennes clés `ts-…` pour les cartes équivalentes, afin de conserver la progression, ou repartir de nouveaux identifiants ?
 6. **Paquets hérités** (réseaux, anglais, VHDL, C et Unix, LaTeX) : les migrer vers le nouveau système, ou les conserver tels quels ?
    *Règle provisoire : conservés tels quels dans `revision/cartes/`, avec leurs clés actuelles ; leurs préfixes (`res-`, `ang-`, `vhdl-`, `cu-`, `latex-`, `ts-`) sont réservés.*
-7. **Premier chapitre de test de TS227** : le chapitre 1 (introduction) est léger en contenu ; le chapitre 2 (critère de Nyquist) serait un test plus représentatif de la fusion slides et notes. À décider avec les notes disponibles.
+7. ~~**Premier chapitre de test de TS227**~~ : *tranchée le 2026-10-07 : chapitre 2.*
 8. **Synchronisation de la progression** entre appareils : nécessaire à terme, solution à choisir.
 
 ---
@@ -952,10 +956,11 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 ## TS227
 - [x] Supports officiels reçus (poly, TD, correction partielle)
 - [x] Fiche matière avec table des notations
-- [ ] Supports copiés dans `sources/ts227/support/`
-- [ ] Premier chapitre de test choisi (question ouverte 7)
-- [ ] Notes manuscrites de ce chapitre reçues
-- [ ] Chapitre de test analysé
+- [x] Poly copié dans `sources/ts227/support/` (TD et correction : non)
+- [x] Premier chapitre de test choisi : chapitre 2
+- [x] Notes manuscrites de ce chapitre reçues (non datées)
+- [x] Chapitre de test analysé (rapport : `matieres/ts227-communications-numeriques/analyses/02-communication-sans-bruit.md`)
+- [x] Différences tranchées (étape 3, section 13 du rapport)
 - [ ] Chapitre de test rédigé
 - [ ] Chapitre de test vérifié
 - [ ] Chapitre de test validé

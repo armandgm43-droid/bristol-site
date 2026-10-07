@@ -4,7 +4,7 @@
 > À lire avec `CONTEXTE_PROJET.md` (le *pourquoi*) et `ETAT_PROJET.md` (l'état du projet).
 > Ces conventions s'appliquent à **toutes les matières**. Ce qui est propre à une matière (notations, convention de la TF…) va dans sa fiche matière, pas ici.
 >
-> Dernière mise à jour : 6 octobre 2026.
+> Dernière mise à jour : 7 octobre 2026.
 
 Toute nouvelle convention est **proposée explicitement** avant d'être appliquée, puis ajoutée ici et dans le [journal des conventions](#12-journal-des-conventions).
 
@@ -34,11 +34,13 @@ Règle générale : **minuscules, sans accents, mots séparés par des tirets**.
 | Figure (rendu) | même nom, `.svg` | `figures/03-dsp-nrz.svg` |
 | TD, TP, annales (phase 2, provisoire) | `td/tdNN-slug.qmd`, `tp/tpNN-slug.qmd`, `annales/AAAA-session.qmd` | `td/td01-bande-de-base.qmd`, `annales/2025-janvier.qmd` |
 | Sources brutes (hors dépôt) | `sources/<code>/support/…`, `sources/<code>/notes/AAAA-MM-JJ.pdf` | `sources/ts227/notes/2026-09-15.pdf` |
+| Notes sans date de séance (hors dépôt) | `sources/<code>/notes/date-inconnue.pdf`, photos dans `sources/<code>/notes/date-inconnue/feuillet-N-recto.jpg` / `-verso.jpg` | `sources/ts227/notes/date-inconnue.pdf` |
+| Rapport d'analyse d'un chapitre | `analyses/NN-slug.md` (même slug que le chapitre ; `.md`, donc non rendu par Quarto) | `matieres/ts227-communications-numeriques/analyses/02-communication-sans-bruit.md` |
 
 - `NN` : numéro sur deux chiffres (`01`, `02`…).
 - Le slug du chapitre décrit son contenu en 2 à 5 mots.
 - **Un fichier publié n'est jamais renommé** (voir `CONTEXTE_PROJET.md`, section 4.3). Si c'est indispensable : redirection + note dans `ETAT_PROJET.md`.
-- Les notes manuscrites sont nommées par **date de séance**, un PDF par séance.
+- Les notes manuscrites sont nommées par **date de séance**, un PDF par séance. Si la date est inconnue : `date-inconnue.pdf`, pages dans l'ordre des feuillets (recto puis verso), les photos d'origine étant gardées dans `date-inconnue/`.
 
 ---
 
@@ -75,6 +77,8 @@ sources:                                      # obligatoire : au moins une sourc
 
 - `date-modified` est un champ standard de Quarto : il est affiché sur la page.
 - L'`id` d'une source sert à la citer dans le texte : `[poly, p. 78]`, `[notes-2026-09-22, p. 3]`.
+- **Numéros de page** : toujours ceux **du PDF** (1 à N), jamais les numéros imprimés sur les diapositives (« 36/161 »).
+- Notes sans date : `seance: inconnue`, `id: notes` (ou `notes-…` s'il y en a plusieurs), et citation par feuillet : `[notes, f. 1 v°]`.
 - La ligne `{{< include /_macros.qmd >}}` suit **toujours** le front matter.
 
 ### 3.2 Fiche matière (`index.qmd`)
@@ -120,7 +124,7 @@ Classes **figées** (déjà stylées dans `assets/bristol.scss`) :
 | Support officiel | *(aucune)* | texte normal | texte normal |
 | Notes de cours | `.notes` | `::: {.notes}` | `[texte]{.notes}` |
 | Complément | `.complement` | `::: {.complement}` | `[texte]{.complement}` |
-| À vérifier | `.a-verifier` | `::: {.a-verifier #av-slug}` | `[texte]{.a-verifier}` |
+| À vérifier | `.a-verifier` | `::: {.a-verifier #av-slug}` ; tranché : `::: {.a-verifier .tranche #av-slug}` (§ 5.2) | `[texte]{.a-verifier}` |
 
 ### 5.1 Règles d'usage
 
@@ -156,7 +160,31 @@ Contenu obligatoire, dans cet ordre :
 
 - Citer la source **fidèlement**, sans la corriger.
 - La *Proposition* est facultative si aucune correction fiable n'est possible.
-- Un bloc levé par Armand disparaît : son contenu est réintégré dans la bonne catégorie, l'identifiant `av-…` n'est pas réutilisé, et la décision est notée dans `ETAT_PROJET.md` si elle est importante.
+- Une question tranchée par Armand se traite de deux façons :
+  - **la source est corrigée** (coquille, erreur de formule, de réponse…) : le bloc **reste visible** et devient un bloc *tranché*, avec la classe `.tranche` et une quatrième partie **Décision**. Une correction de source n'est jamais silencieuse ;
+  - **ce n'était pas une erreur** (lecture incertaine confirmée, condition simplement manquante…) : le bloc disparaît, son contenu est réintégré dans la bonne catégorie (texte normal, `.notes` ou `.complement`).
+- Dans les deux cas, l'identifiant `av-…` n'est jamais réutilisé, et la décision est notée dans le rapport d'analyse du chapitre (et dans `ETAT_PROJET.md` si elle est importante).
+- Un bloc **ouvert** est un bloc `.a-verifier` sans `.tranche` : c'est ce que comptent les scripts.
+
+```markdown
+::: {.a-verifier .tranche #av-centre-symetrie-nyquist}
+**Source** [poly, p. 41] : « Le point $(\frac{1}{2T_s}, \frac{g_0}{2})$ est un centre de symétrie pour $G(f)$ ».
+
+**Problème** : avec $\frac{1}{T_s}\sum_m G(f - m/T_s) = g_0$, l'ordonnée du centre est $g_0 T_s/2$.
+
+**Proposition** : $(\frac{1}{2T_s}, \frac{g_0 T_s}{2})$.
+
+**Décision** : correction retenue par Armand (2026-10-07).
+:::
+```
+
+- Rendu d'un bloc tranché (à implémenter dans `assets/bristol.scss`) : étiquette **`✓ Corrigé`** au lieu de `? À vérifier`, filet plus discret, même famille de couleur.
+
+### 5.3 Fautes d'orthographe des sources
+
+- Une faute d'orthographe ou de typographie **sans effet sur le sens** (accord, accent, mot manquant évident dans un titre, nom propre mal orthographié dans les notes) est corrigée **sans bloc**.
+- Chaque correction de ce type est **listée dans le rapport d'analyse** du chapitre (source, texte d'origine, texte corrigé).
+- Tout ce qui touche au sens (formule, valeur, unité, réponse, définition) reste traité en *À vérifier*.
 
 ---
 
@@ -342,3 +370,8 @@ Le script `scripts/` (à écrire) produit un paquet par matière au format de `r
 | 2026-10-06 | Identifiants de cartes `<matiere>-<slug>`, uniques dans la matière, sans numéro de chapitre | Modifie la proposition du contexte (`<matiere>-c<NN>-<slug>`) |
 | 2026-10-06 | Macros dans `_macros.qmd` (et non `_macros.tex`) | Fichier existant |
 | 2026-10-06 | Pas de callouts Quarto pour le contenu ; section « À retenir » en fin de chapitre | |
+| 2026-10-07 | Pages citées : numérotation du PDF | Rapport d'analyse TS227 ch. 2, Q8 |
+| 2026-10-07 | Notes sans date : `date-inconnue.pdf`, `seance: inconnue`, citation par feuillet | Rapport ch. 2, décision 13.1 |
+| 2026-10-07 | Rapports d'analyse dans `matieres/<matiere>/analyses/NN-slug.md` | Rapport ch. 2, Q14 |
+| 2026-10-07 | Blocs *À vérifier* tranchés : classe `.tranche` + **Décision**, toujours visibles quand la source est corrigée | Modifie la règle « un bloc levé disparaît » ; rendu `✓ Corrigé` à styler |
+| 2026-10-07 | Fautes d'orthographe sans effet sur le sens corrigées sans bloc, listées dans le rapport d'analyse | Nouveau (§ 5.3) |

@@ -1,0 +1,803 @@
+---
+title: "Principes de communication en l'absence de bruit"
+matiere: ts227
+chapitre: 2
+enseignants: ["Romain Tajan"]
+annee: "2026-2027"
+statut: analyse          # passe à « redige » quand les figures (étape 5) sont intégrées
+date-modified: 2026-10-07
+sources:
+  - id: poly
+    fichier: poly_ts227.pdf
+    nature: officielle
+    version: "2025-10-09"
+    pages: "15-60"
+  - id: notes
+    fichier: notes/date-inconnue.pdf
+    nature: personnelle
+    seance: inconnue
+    pages: "f. 1 r° – f. 3 r°"
+---
+
+{{< include /_macros.qmd >}}
+
+<!-- Étape 4 (rédaction) faite le 2026-10-07. Les figures F1 à F14 du rapport d'analyse
+     (analyses/02-communication-sans-bruit.md, section 6) sont à intégrer à l'étape 5 :
+     leur emplacement est marqué par un commentaire « FIGURE Fn ». -->
+
+## Introduction {#sec-intro-sans-bruit}
+
+::: {.complement}
+Ce chapitre décrit la chaîne de transmission numérique **en bande de base** et en donne un modèle mathématique, depuis les bits émis par la source jusqu'aux symboles décidés par le récepteur.
+
+On se place ici **en l'absence de bruit** et de déformation par le canal. Le seul obstacle à une transmission sans erreur est alors l'**interférence entre symboles** (IES), qui dépend du choix des filtres d'émission et de réception. Le **critère de Nyquist** donne une condition sur ces filtres pour supprimer l'IES ; il impose une **bande passante minimale** et conduit à la notion d'**efficacité spectrale**. Le **diagramme de l'œil** permet enfin de visualiser l'IES sur un signal réel.
+
+Le bruit, déjà présent dans le modèle de la chaîne (@sec-chaine-bande-de-base), est étudié au chapitre 4.
+:::
+
+## Bande de base et bande transposée {#sec-bande-base-transposee}
+
+Il existe deux grandes familles de systèmes de communications numériques : la transmission en bande de base et la transmission en bande transposée [poly, p. 17].
+
+::: {#def-bande-de-base}
+## Transmission en bande de base
+
+Une transmission est dite **en bande de base** lorsqu'elle s'effectue autour de la fréquence porteuse $f_p = 0\ \mathrm{Hz}$.
+
+Ce mode de transmission est celui privilégié dans les transmissions filaires.
+:::
+
+::: {#def-bande-transposee}
+## Transmission en bande transposée
+
+Une transmission est dite **en bande transposée** lorsqu'elle s'effectue autour d'une fréquence porteuse $f_p > 0\ \mathrm{Hz}$.
+
+Ce mode de transmission est celui privilégié dans les transmissions sans fil.
+:::
+
+La suite du chapitre traite de la bande de base. La transmission sur fréquence porteuse fait l'objet du chapitre 5.
+
+## Chaîne de transmission en bande de base {#sec-chaine-bande-de-base}
+
+<!-- FIGURE F1 : chaîne de transmission en bande de base (schéma-bloc), d'après [poly, p. 19]. -->
+
+L'architecture simplifiée d'une communication en bande de base comporte les blocs suivants [poly, p. 19] :
+
+- à l'émission, le **codeur en ligne**, formé de l'**association bits → symboles** (qui transforme les bits $b_k$, de signal associé $s_b(t)$, en symboles $a_n$, de signal associé $s_a(t)$) et du **filtre de mise en forme** $h(t)$, qui produit le signal émis $s_l(t)$ ;
+- le **canal**, de réponse impulsionnelle $h_c(t)$, à la sortie duquel s'ajoute le bruit $z_l(t)$ ; le signal reçu est $y_l(t)$ ;
+- le **filtre de réception** $h_a(t)$, qui produit $r_l(t)$ ;
+- l'**échantillonneur**, aux instants $n\Ts$, qui produit les échantillons $r_n$ ;
+- le **décodeur en ligne**, formé du bloc de **décision** (qui produit les symboles estimés $\hat{a}_n$) et de l'**association symboles → bits** (qui produit les bits estimés $\hat{b}_k$, remis au destinataire).
+
+Les sections suivantes définissent chacun de ces signaux.
+
+## Modélisation des signaux {#sec-modelisation-signaux}
+
+### Bits et débit binaire {#sec-bits-debit-binaire}
+
+::: {#def-bits-sb}
+## Bits $b_k$ et signal $s_b(t)$
+
+Le signal à temps discret $b_k$ représente la séquence de bits d'information transmis par la source. Ces bits sont considérés comme des variables aléatoires discrètes **indépendantes et identiquement distribuées** (iid) :
+
+- $b_k \in \{0, 1\}$ suit une loi de Bernoulli ;
+- $P(b_k = 0) = p_0$, $P(b_k = 1) = p_1$, avec $p_0 = 1 - p_1$ et $p_0 \in [0, 1]$.
+
+$s_b(t)$ est le signal à temps continu associé à $b_k$ :
+
+$$
+s_b(t) = \sum_{k=-\infty}^{+\infty} b_k\, \delta(t - k\Tb)
+$$ {#eq-signal-sb}
+
+où $\Tb$, le **temps bit**, s'exprime en secondes.
+:::
+
+::: {#def-debit-binaire}
+## Débit binaire
+
+Le débit binaire, exprimé en bits/s, est l'inverse du temps bit :
+
+$$
+D_b = \frac{1}{\Tb}
+$$ {#eq-debit-binaire}
+:::
+
+Exemple : $\Tb = 1\ \mu\mathrm{s} \Rightarrow D_b = 1\ \mathrm{Mbit/s}$ [poly, p. 21].
+
+::: {.notes}
+Au tableau [notes, f. 1 r°], $s_b(t)$ est dessiné comme un peigne d'impulsions de Dirac aux instants $k\Tb$, de poids $b_k$ : une impulsion de poids 1 aux instants où le bit vaut 1, aucune impulsion quand il vaut 0.
+:::
+
+<!-- FIGURE F4 : peigne s_b(t) [notes, f. 1 r°] — faible utilité, à omettre ou à fusionner avec F3 (rapport, section 6). -->
+
+### Association bits → symboles et constellation {#sec-association-bits-symboles}
+
+::: {#def-constellation}
+## Association bits → symboles, constellation
+
+Le bloc d'association bits → symboles associe un **symbole** à chaque **étiquette binaire** de $n_b$ bits. Pour des étiquettes de $n_b$ bits, on a
+
+$$
+M = 2^{n_b}
+$$ {#eq-m-nb}
+
+symboles. L'ensemble de ces symboles s'appelle une **constellation**.
+
+- Pour une communication en bande de base, les symboles sont **réels**.
+- Pour une communication en bande transposée, les symboles sont **complexes**.
+:::
+
+::: {#exm-4pam-gray}
+## Constellation à 4 niveaux [poly, p. 22]
+
+<!-- FIGURE F2 : constellation 4-PAM avec étiquettes de Gray, d'après [poly, p. 22] et [notes, f. 1 r°]. -->
+
+Les symboles $-3$, $-1$, $1$ et $3$ sont placés sur l'axe réel (« voie en phase »), avec les étiquettes :
+
+| Étiquette | `00` | `01` | `11` | `10` |
+|---|---|---|---|---|
+| Symbole | $-3$ | $-1$ | $1$ | $3$ |
+
+Ici $n_b = 2$ et $M = 4$.
+:::
+
+::: {.notes}
+**Vocabulaire donné en cours** [notes, f. 1 r°] :
+
+- l'étiquetage de l'@exm-4pam-gray est appelé étiquetage (*mapping*) **de Gray** ;
+- une constellation réelle à $M$ niveaux de ce type est une **PAM** (*pulse amplitude modulation*) ; l'exemple est donc une 4-PAM.
+:::
+
+::: {.complement}
+Dans l'étiquetage de Gray, deux symboles voisins ont des étiquettes qui ne diffèrent que d'un seul bit (`00`–`01`, `01`–`11`, `11`–`10`). L'intérêt de cette propriété apparaît au chapitre 4 : une erreur entre symboles voisins n'entraîne alors qu'une seule erreur binaire.
+:::
+
+### Symboles et débit symbole {#sec-symboles-debit-symbole}
+
+::: {#def-symboles-sa}
+## Symboles $a_n$ et signal $s_a(t)$
+
+Les symboles obtenus en sortie de l'association bits → symboles sont notés $a_n$. $s_a(t)$ est le signal à temps continu associé aux $a_n$ :
+
+$$
+s_a(t) = \sum_{m=-\infty}^{+\infty} a_m\, \delta(t - m\Ts)
+$$ {#eq-signal-sa}
+
+où $\Ts$, le **temps symbole**, s'exprime en secondes.
+:::
+
+::: {#def-debit-symbole}
+## Débit symbole
+
+Le débit symbole, exprimé en symboles/s, est l'inverse du temps symbole :
+
+$$
+D_s = \frac{1}{\Ts}
+$$ {#eq-debit-symbole}
+:::
+
+Chaque symbole transportant $n_b$ bits, le débit binaire s'obtient à partir du débit symbole par
+
+$$
+D_b = n_b D_s .
+$$ {#eq-db-nb-ds}
+
+Exemple : $\Ts = 1\ \mu\mathrm{s} \Rightarrow D_s = 1\ \mathrm{Msymbole/s}$ ; si $n_b = 2$, alors $D_b = n_b D_s = 2\ \mathrm{Mbit/s}$ [poly, p. 23].
+
+::: {.notes}
+**Calcul fait au tableau** [notes, f. 1 r°]. Un symbole regroupe $n_b$ bits, donc
+
+$$
+\Ts = n_b \Tb ,
+$$
+
+puis
+
+$$
+D_s = \frac{1}{\Ts} = \frac{1}{n_b \Tb} = \frac{D_b}{n_b} ,
+\qquad \text{soit} \qquad
+D_b = \log_2 M \cdot D_s = n_b D_s .
+$$
+
+Exemples donnés en cours :
+
+- pour la 4-PAM de l'@exm-4pam-gray, $n_b = 2$, donc $\Ts = 2\Tb$ ;
+- pour $M = 16 = 2^4$, $n_b = 4$, donc $\Ts = 4\Tb$.
+
+**Remarques de l'enseignant** : le débit binaire $D_b$ est la grandeur « vendue par le fournisseur » ; le débit symbole $D_s$ est lié à la **bande passante** (voir @sec-bande-minimale).
+:::
+
+### Filtre de mise en forme et signal émis {#sec-mise-en-forme}
+
+::: {#def-filtre-mise-en-forme}
+## Filtre de mise en forme
+
+$h(t)$ est le **filtre de mise en forme à l'émission**. C'est un filtre linéaire invariant par décalage, donc le signal émis s'écrit
+
+$$
+s_l(t) = (h \star s_a)(t)
+$$
+
+où $\star$ désigne le produit de convolution. Comme $s_a(t) = \sum_{m=-\infty}^{+\infty} a_m\, \delta(t - m\Ts)$,
+
+$$
+s_l(t) = \sum_{m=-\infty}^{+\infty} a_m\, h(t - m\Ts) .
+$$ {#eq-signal-sl}
+:::
+
+Le support illustre $s_a(t)$ et $s_l(t)$ pour une suite de symboles de la 4-PAM, avec $\Ts = 1\ \mathrm{ms}$ et un filtre $h(t)$ en forme de porte de durée $\Ts$ : chaque impulsion $a_m\,\delta(t - m\Ts)$ devient un palier de hauteur $a_m$ sur $[m\Ts, (m+1)\Ts[$ [poly, p. 28].
+
+<!-- FIGURE F3 : s_a(t) et s_l(t), d'après [poly, p. 28]. Séquence lue sur la figure :
+     1, 3, -3, -1, 1, -1, -1, -3, 1, -1 (t = 0 à 9 ms) ; h = porte de hauteur 1 sur [0, Ts[. -->
+
+::: {.notes}
+Dans les notes [notes, f. 1 r°], le signal émis est noté $s_e(t)$ (le cours Bristol suit la notation $s_l(t)$ du support) et introduit comme le résultat du « blocage du signal échantillonné » :
+
+$$
+s_e(t) = \sum_m a_m\, h(t - m\Ts) = \dots + a_0\, h(t) + a_1\, h(t - \Ts) + a_2\, h(t - 2\Ts) + \dots
+$$
+:::
+
+#### Exemples de mises en forme {#sec-exemples-mise-en-forme}
+
+::: {.notes}
+**Comparaison de deux constellations binaires à puissance égale** [notes, f. 1 r°].
+
+<!-- FIGURE F6 : constellations OOK et antipodale à même puissance, d'après [notes, f. 1 r°], redessinée. -->
+
+L'enseignant compare, pour une même puissance moyenne $P = 0{,}5\ \mathrm{W}$ :
+
+- la constellation **antipodale** $\left\{-\sqrt{1/2},\ \sqrt{1/2}\right\}$, dont les deux symboles sont séparés de $\sqrt{2}$ ;
+- la constellation **OOK** (*On Off Keying*) $\{0, 1\}$, étiquettes `[0]` et `[1]`, dont les deux symboles sont séparés de $1$.
+:::
+
+::: {.complement}
+Avec des symboles équiprobables, la puissance moyenne vaut $\frac{1}{2}\left(\frac{1}{2} + \frac{1}{2}\right) = 0{,}5$ pour la constellation antipodale et $\frac{1}{2}(0^2 + 1^2) = 0{,}5$ pour l'OOK : les deux constellations ont bien la même puissance. À puissance égale, la constellation antipodale écarte davantage ses symboles ($\sqrt{2} > 1$) ; on verra au chapitre 4 que cet écart conditionne la robustesse au bruit.
+:::
+
+::: {.a-verifier #av-exemples-mise-en-forme-manquants}
+**Source** [notes, f. 1 v°] : l'exemple du code Manchester est titré « Exemple 3 : Code Manchester ».
+
+**Problème** : les exemples 1 et 2 ne figurent dans aucune des sources fournies (ni le support, ni les notes). Le cours Bristol ne fait aucune hypothèse sur leur contenu.
+
+**Proposition** : compléter si une autre source (notes d'un camarade, enregistrement, site de l'enseignant) permet de les retrouver.
+:::
+
+:::: {.notes}
+::: {#exm-manchester}
+## Code Manchester
+
+<!-- FIGURE F7 : h(t) du code Manchester, d'après [notes, f. 1 v°], redessinée. -->
+
+Cet exemple est titré « Exemple 3 » dans les notes. Le filtre de mise en forme $h(t)$ vaut une constante positive sur $[0, \Ts/2]$ et la constante opposée sur $[\Ts/2, \Ts]$ ; il est construit à partir de la porte $\Pi_{\Ts/2}(t)$, de largeur $\Ts/2$ (bornes $\pm\Ts/4$) [notes, f. 1 v°].
+
+Propriétés notées en cours : le signal est **à moyenne nulle** et **ne fait pas de séquence constante**.
+:::
+::::
+
+::: {.complement}
+**Expression de $h(t)$.** Les notes ne donnent que le dessin et pas l'amplitude ; avec une amplitude $\pm 1$ :
+
+$$
+h(t) = \Pi_{\Ts/2}\!\left(t - \frac{\Ts}{4}\right) - \Pi_{\Ts/2}\!\left(t - \frac{3\Ts}{4}\right).
+$$
+
+- Moyenne nulle : $\int h(t)\,\mathrm{d}t = 0$, chaque symbole contribue autant de positif que de négatif.
+- Pas de séquence constante : chaque symbole présente une transition au milieu de sa durée, même lorsque des symboles identiques se suivent.
+- Deux conventions existent pour le sens de la transition associé à chaque bit : dans celle de G. E. Thomas, le bit 1 est codé par une transition descendante au milieu du symbole ; dans celle de la norme IEEE 802.3 (Ethernet), par une transition montante. Dans l'écriture @eq-signal-sl, avec $a_m \in \{-1, 1\}$ et le $h(t)$ ci-dessus, ce choix revient au choix de l'association bit → symbole.
+:::
+
+### Canal, filtre de réception et filtre global {#sec-canal-filtre-reception}
+
+$h_c(t)$ est la réponse impulsionnelle du canal de propagation, et $z_l(t)$ un processus aléatoire gaussien blanc et réel. Le signal reçu s'écrit [poly, p. 29]
+
+$$
+y_l(t) = [h_c \star s_l](t) + z_l(t) ,
+$$
+
+ce qui peut se réécrire
+
+$$
+y_l(t) = \sum_{m=-\infty}^{+\infty} a_m\, [h_c \star h](t - m\Ts) + z_l(t) .
+$$ {#eq-signal-yl}
+
+$h_a(t) \in \mathbb{R}$ est le **filtre de réception** (filtre linéaire invariant par décalage) [poly, p. 30] :
+
+$$
+r_l(t) = [h_a \star y_l](t) = \sum_{m=-\infty}^{+\infty} a_m\, g(t - m\Ts) + z'_l(t)
+$$ {#eq-signal-rl}
+
+::: {#def-filtre-global}
+## Filtre global
+
+$$
+g(t) = [h_a \star h_c \star h](t)
+$$ {#eq-filtre-global}
+
+est le **filtre équivalent** de la chaîne de communication, et $z'_l(t) = [h_a \star z_l](t)$ est le bruit filtré par le filtre de réception.
+:::
+
+### Échantillonnage et modèle discret équivalent {#sec-echantillonnage}
+
+Après échantillonnage au temps $\Ts$, on obtient [poly, p. 31]
+
+$$
+r_n = r_l(n\Ts) = \sum_{m=-\infty}^{+\infty} a_m\, g\big((n - m)\Ts\big) + z'_l(n\Ts) .
+$$
+
+Le **modèle équivalent** entre $a_n$ et $r_n$ est alors
+
+$$
+r_n = a_n g_0 + \sum_{\substack{m=-\infty \\ m \neq 0}}^{\infty} a_{n-m}\, g_m + z'_n
+$$ {#eq-modele-discret}
+
+où $g_n = g(n\Ts)$ et $z'_n = z'_l(n\Ts)$.
+
+::: {.complement}
+Le passage de la première à la seconde expression est le changement d'indice $m \to n - m$ dans la somme, puis la séparation du terme $m = 0$.
+:::
+
+### Décision {#sec-decision}
+
+Afin d'**estimer la valeur du symbole $a_n$ la plus probable**, notée $\hat{a}_n$, le bloc de **décision** détermine dans quelle **région de décision** se situe l'échantillon $r_n$ [poly, p. 32]. Les régions sont séparées par des **seuils** (ou frontières) de décision.
+
+<!-- FIGURE F5 : régions et seuils de décision de la 4-PAM, seuils -2,5 ; 0,5 ; 1,5, d'après [poly, p. 32 et 34]. -->
+
+Sur l'exemple du support (4-PAM de l'@exm-4pam-gray), les seuils sont placés en $-2{,}5$, $0{,}5$ et $1{,}5$ : on décide $\hat{a}_n = -3$ si $r_n < -2{,}5$, $\hat{a}_n = -1$ entre $-2{,}5$ et $0{,}5$, $\hat{a}_n = 1$ entre $0{,}5$ et $1{,}5$, et $\hat{a}_n = 3$ au-delà de $1{,}5$ (« si $r_n$ tombe ici, on décide $\hat{a}_n = 3$ »).
+
+**Remarque** : les frontières de décision ne sont pas forcément à égale distance des symboles.
+
+::: {.complement}
+Le choix des seuils qui minimise la probabilité d'erreur en présence de bruit est étudié au chapitre 4.
+:::
+
+### Exercices {#sec-exercices-modelisation}
+
+::: {#exr-debit-symbole-4pam}
+## Débit symbole [poly, p. 25]
+
+Pour la constellation de l'@exm-4pam-gray, si le débit binaire est $D_b = 1\ \mathrm{Mbit/s}$, quel est le débit symbole $D_s$ ?
+:::
+
+::: {.solution}
+Réponse du support : $D_s = 0{,}5\ \mathrm{Msymbole/s}$.
+:::
+
+::: {.complement}
+Justification : la constellation a $M = 4$ symboles, donc $n_b = 2$, et $D_s = D_b / n_b = 0{,}5\ \mathrm{Msymbole/s}$ (@eq-db-nb-ds).
+:::
+
+::: {#exr-seuils-decision}
+## Décision [poly, p. 34]
+
+Pour la 4-PAM de l'@exm-4pam-gray, on suppose les seuils de décision $(-2{,}5;\ 0{,}5;\ 1{,}5)$. Si les échantillons reçus sont $\mathbf{r} = [1{,}2;\ -4;\ 2{,}1]$, quels symboles sont décidés ?
+:::
+
+::: {.solution}
+Réponse du support : $\hat{\mathbf{a}} = [1;\ -3;\ 3]$.
+:::
+
+::: {.complement}
+Justification : $1{,}2 \in [0{,}5;\ 1{,}5]$ donne $1$ ; $-4 < -2{,}5$ donne $-3$ ; $2{,}1 > 1{,}5$ donne $3$.
+:::
+
+## Interférence entre symboles {#sec-ies}
+
+On se place sous les hypothèses suivantes [poly, p. 38] :
+
+- **absence de déformation liée au canal** : $h_c(t) = \delta(t)$, donc $g(t) = [h \star h_a](t)$ ;
+- **absence de bruit** : $z'_n = 0$.
+
+Le signal reçu s'écrit alors
+
+$$
+r_n = \underbrace{g_0\, a_n}_{\text{symbole d'intérêt}} + \underbrace{\sum_{\substack{m=-\infty \\ m \neq 0}}^{\infty} g_m\, a_{n-m}}_{\text{IES}}
+$$ {#eq-rn-sans-bruit}
+
+::: {#def-ies}
+## Interférence entre symboles (IES)
+
+L'**interférence entre symboles** est l'interférence générée par les symboles $\dots, a_{n-2}, a_{n-1}, a_{n+1}, a_{n+2}, \dots$ sur la réception du **symbole d'intérêt** $a_n$.
+:::
+
+Il est possible que la communication sans erreur ne puisse se faire si les filtres $h(t)$ et $h_a(t)$ sont mal choisis.
+
+L'IES est annulée si [poly, p. 39]
+
+$$
+g_0 \neq 0 \quad \text{et} \quad g_m = 0 \ \text{pour}\ m \neq 0 .
+$$ {#eq-annulation-ies}
+
+::: {.notes}
+Au tableau [notes, f. 1 v°], la détection est présentée comme la « mise en place de seuils de décision » sur $r_n$ ; on souhaite donc que $g_m = 0$ pour tout $m \in \mathbb{Z}^*$, pour que $r_n$ ne dépende que du symbole d'intérêt.
+:::
+
+## Critère de Nyquist {#sec-critere-nyquist}
+
+### Version temporelle {#sec-nyquist-temporel}
+
+On note $\text{Ш}_{\Ts}(t) = \sum_{m} \delta(t - m\Ts)$ le peigne de Dirac de période $\Ts$.
+
+::: {#thm-nyquist-temporel}
+## Critère de Nyquist, version temporelle
+
+Si le filtre global $g(t) = (h \star h_a)(t)$ vérifie
+
+$$
+g(t)\, \text{Ш}_{\Ts}(t) = g_0\, \delta(t)
+$$ {#eq-nyquist-temporel}
+
+alors il n'y aura pas d'IES à la réception [poly, p. 39].
+:::
+
+<!-- FIGURE F8 : g(t) s'annulant aux instants mTs, d'après [notes, f. 1 v°] — à fusionner avec F11 (rapport, section 6). -->
+
+:::: {.notes}
+::: {.proof}
+Démonstration faite au tableau [notes, f. 1 v°]. On souhaite $g_m = 0$ pour tout $m \in \mathbb{Z}^*$, soit $g(m\Ts) = 0$ pour tout $m \in \mathbb{Z}^*$. Or
+
+$$
+g(t)\, \text{Ш}_{\Ts}(t) = g(t) \sum_m \delta(t - m\Ts) = \sum_m g(t)\, \delta(t - m\Ts) = \sum_m g(m\Ts)\, \delta(t - m\Ts) .
+$$
+
+On veut donc que, pour tout $m \in \mathbb{Z}^*$, $g(m\Ts) = 0$ : il ne reste que le terme $m = 0$, et la condition s'écrit $g(t)\, \text{Ш}_{\Ts}(t) = g_0\, \delta(t)$.
+
+Graphiquement, $g(t)$ peut avoir n'importe quelle forme, pourvu qu'il passe par zéro à tous les instants $m\Ts$, $m \neq 0$.
+:::
+::::
+
+### Version fréquentielle {#sec-nyquist-frequentiel}
+
+::: {#thm-nyquist-frequentiel}
+## Critère de Nyquist, version fréquentielle
+
+Si la réponse en fréquence du filtre global
+
+$$
+G(f) = \int_{-\infty}^{+\infty} g(t)\, e^{-j2\pi f t}\, \mathrm{d}t = H(f)\, H_a(f)
+$$
+
+vérifie
+
+$$
+\frac{1}{\Ts} \sum_{m=-\infty}^{\infty} G\!\left(f - \frac{m}{\Ts}\right) = g_0
+$$ {#eq-nyquist-frequentiel}
+
+alors il n'y aura pas d'IES à la réception [poly, p. 40].
+:::
+
+::: {.a-verifier .tranche #av-signe-tf-nyquist}
+**Source** [poly, p. 40] : « $G(f) = \int_{-\infty}^{+\infty} g(t)\, e^{j2\pi f t}\, \mathrm{d}t$ ».
+
+**Problème** : le support utilise $e^{-j2\pi f \tau}$ pour les transformées de Fourier des p. 85, 86 et 87, de même que les notes [notes, f. 5 r°]. La p. 40 est isolée. Le résultat du critère n'en dépend pas.
+
+**Proposition** : convention $\TF[x](f) = \int_{-\infty}^{+\infty} x(t)\, e^{-j2\pi f t}\, \mathrm{d}t$ pour toute la matière (fixée dans la fiche matière).
+
+**Décision** : correction retenue par Armand (2026-10-07) ; la formule de la p. 40 est une coquille.
+:::
+
+:::: {.notes}
+::: {.proof}
+Démonstration faite au tableau [notes, f. 2 r°]. On part de la version temporelle @eq-nyquist-temporel et on prend la transformée de Fourier des deux membres. Le produit devient une convolution :
+
+$$
+G(f) \star \TF\!\left[\text{Ш}_{\Ts}\right](f) = g_0 .
+$$
+
+La transformée de Fourier d'un peigne de Dirac est un peigne de Dirac :
+
+$$
+\TF\!\left[\text{Ш}_{\Ts}\right](f) = \frac{1}{\Ts}\, \text{Ш}_{1/\Ts}(f) = \frac{1}{\Ts} \sum_m \delta\!\left(f - \frac{m}{\Ts}\right),
+$$
+
+d'où
+
+$$
+\frac{1}{\Ts}\, G(f) \star \sum_m \delta\!\left(f - \frac{m}{\Ts}\right) = g_0
+\iff
+\frac{1}{\Ts} \sum_m G(f) \star \delta\!\left(f - \frac{m}{\Ts}\right) = g_0
+\iff
+\frac{1}{\Ts} \sum_m G\!\left(f - \frac{m}{\Ts}\right) = g_0 .
+$$
+
+Graphiquement : la somme des répliques $G(f)$, $G(f - 1/\Ts)$, $G(f + 1/\Ts)$… de $G$, décalées de multiples de $1/\Ts$, doit être constante.
+:::
+::::
+
+::: {.complement}
+Dernière étape, non écrite au tableau : la convolution par une impulsion de Dirac décalée décale la fonction, $G(f) \star \delta(f - m/\Ts) = G(f - m/\Ts)$.
+:::
+
+<!-- FIGURE F9 : répliques G(f - m/Ts) qui se chevauchent, d'après [notes, f. 2 r° et f. 3 r°], redessinée. -->
+
+### Règle de symétrie et fréquence de Nyquist {#sec-symetrie-nyquist}
+
+::: {#prp-symetrie-nyquist}
+## Règle de symétrie
+
+Si $G(f)$ est à support borné $\left[-\frac{1}{\Ts}, \frac{1}{\Ts}\right]$, le critère de Nyquist fréquentiel devient :
+
+le point $\left(\frac{1}{2\Ts}, \frac{g_0\Ts}{2}\right)$ est un **centre de symétrie** pour $G(f)$, $f \in \left[0, \frac{1}{\Ts}\right]$ [poly, p. 41].
+:::
+
+::: {.a-verifier .tranche #av-centre-symetrie-nyquist}
+**Source** [poly, p. 41] : « Le point $\left(\frac{1}{2\Ts}, \frac{g_0}{2}\right)$ est un centre de symétrie pour $G(f)$, $f \in [0, \frac{1}{\Ts}]$ ». Repris tel quel dans les notes [notes, f. 2 r°]. Sur la figure du support, la graduation « $g(0)/2$ » est placée à la moitié de $G(0) = 10$.
+
+**Problème** : avec le critère @eq-nyquist-frequentiel, on obtient pour $f \in [0, 1/\Ts]$ : $G(f) + G(f - 1/\Ts) = g_0\Ts$. L'ordonnée du centre est donc $\frac{g_0\Ts}{2}$ (égale à $\frac{G(0)}{2}$ quand $G(\pm 1/\Ts) = 0$), pas $\frac{g_0}{2}$. Contrôle par les dimensions ($G$ s'exprime en unité de $g$ multipliée par des secondes, $g_0$ en unité de $g$) et par l'@exr-nyquist-triangle-frequence : $g_0 = \int G(f)\,\mathrm{d}f = 10^4$, et le centre de symétrie est en $(500\ \mathrm{Hz},\ 5) = \left(\frac{1}{2\Ts}, \frac{g_0\Ts}{2}\right)$, alors que $\frac{g_0}{2} = 5000$.
+
+**Proposition** : $\left(\frac{1}{2\Ts}, \frac{g_0\Ts}{2}\right)$.
+
+**Décision** : correction retenue par Armand (2026-10-07).
+:::
+
+::: {.complement}
+**Démonstration et hypothèse implicite.** Pour $f \in [0, 1/\Ts]$, seules les répliques $m = 0$ et $m = 1$ de @eq-nyquist-frequentiel sont non nulles (support de $G$ borné à $[-1/\Ts, 1/\Ts]$), d'où
+
+$$
+G(f) + G\!\left(f - \frac{1}{\Ts}\right) = g_0\Ts .
+$$
+
+Pour en déduire une symétrie centrale, il faut que $G$ soit **réelle et paire**, c'est-à-dire que $g$ soit réel et pair. Alors $G(f - 1/\Ts) = G(1/\Ts - f)$ et
+
+$$
+G(f) + G\!\left(\frac{1}{\Ts} - f\right) = g_0\Ts ,
+$$
+
+ce qui exprime exactement que le point $\left(\frac{1}{2\Ts}, \frac{g_0\Ts}{2}\right)$ est centre de symétrie de la courbe de $G$ sur $[0, 1/\Ts]$. Le support ne formule pas cette hypothèse, mais tous ses exemples la vérifient.
+:::
+
+<!-- FIGURE F10 : symétrie de G(f) autour de (1/(2Ts), g0 Ts/2), d'après [poly, p. 41] ;
+     axe gradué en g0 Ts/2, légende mentionnant la correction (bloc av-centre-symetrie-nyquist). -->
+
+::: {#def-frequence-nyquist}
+## Fréquence de Nyquist
+
+La fréquence $f = \frac{1}{2\Ts}$ est appelée **fréquence de Nyquist** [poly, p. 41].
+:::
+
+### Bande minimale {#sec-bande-minimale}
+
+:::: {.notes}
+::: {#prp-bande-minimale}
+## Bande minimale
+
+Si $G(f)$ est de support $[-B, B]$ et vérifie le critère de Nyquist, alors
+
+$$
+B \geq \frac{1}{2\Ts} .
+$$ {#eq-bande-minimale}
+:::
+
+::: {.proof}
+Démonstration faite au tableau [notes, f. 2 r° et f. 3 r°]. Les répliques $G(f - m/\Ts)$ doivent **se chevaucher** pour que leur somme soit constante. La réplique centrée en $1/\Ts$ commence à la fréquence $1/\Ts - B$ ; elle chevauche $G(f)$, qui s'arrête en $B$, si
+
+$$
+\frac{1}{\Ts} - B \leq B , \qquad \text{soit} \qquad 2B \geq \frac{1}{\Ts} .
+$$
+
+Enfin, $B \geq \frac{1}{2\Ts}$.
+:::
+::::
+
+<!-- FIGURE F12 : bande minimale (spectres rectangulaires de support [-B, B] et répliques en 1/Ts), d'après [notes, f. 2 r° et f. 3 r°], redessinée. -->
+
+::: {.complement}
+La bande minimale est donc la fréquence de Nyquist (@def-frequence-nyquist). Elle n'est atteinte qu'avec un spectre rectangulaire, $G(f)$ constant sur $\left[-\frac{1}{2\Ts}, \frac{1}{2\Ts}\right]$ : les répliques se juxtaposent alors exactement. Cela éclaire la remarque de l'enseignant liant le débit symbole à la bande passante (@sec-symboles-debit-symbole) : à bande $B$ donnée, le critère de Nyquist limite le débit symbole à $D_s = 1/\Ts \leq 2B$.
+:::
+
+### Efficacité spectrale {#sec-efficacite-spectrale}
+
+:::: {.notes}
+::: {#def-efficacite-spectrale}
+## Efficacité spectrale
+
+L'**efficacité spectrale** d'une transmission de débit binaire $D_b$ occupant la bande $B$ est
+
+$$
+\eta = \frac{D_b}{B} \qquad \text{en bits} \cdot \mathrm{s}^{-1} \cdot \mathrm{Hz}^{-1} ,
+$$ {#eq-efficacite-spectrale}
+
+où $D_b = n_b D_s$ [notes, f. 3 r°].
+:::
+::::
+
+::: {.complement}
+**Borne en bande de base.** Avec $D_b = n_b D_s = \frac{\log_2 M}{\Ts}$ et la bande minimale $B = \frac{1}{2\Ts}$ (@eq-bande-minimale), l'efficacité spectrale maximale d'une transmission en bande de base sans IES est
+
+$$
+\eta \leq 2 \log_2 M \quad \text{bits} \cdot \mathrm{s}^{-1} \cdot \mathrm{Hz}^{-1} .
+$$
+
+Cette borne suppose la bande de base et un filtre global de bande minimale. En **bande transposée**, le spectre occupe une bande de largeur $2B$ autour de la porteuse : la borne devient $\eta \leq \log_2 M$ (voir les chapitres 5 et 6).
+:::
+
+### Récapitulatif {#sec-recapitulatif-nyquist}
+
+::: {.notes}
+**Critère de Nyquist (sans bruit)** [notes, f. 3 r°] : si $h(t) \star h_a(t)$ vérifie le critère, alors
+
+$$
+r_n = g_0\, a_n .
+$$
+:::
+
+En conclusion [poly, p. 52] :
+
+- les interférences entre symboles sont le résultat d'un **mauvais choix du couple** $(h(t), h_a(t))$ ;
+- les IES peuvent rendre la communication sans erreur impossible, et ce, **même en l'absence de bruit et de filtre de canal** ($h_c(t) = \delta(t)$) ;
+- le critère de Nyquist permet de **garantir l'absence d'IES** lors du choix de $h(t)$ et $h_a(t)$ :
+  - version temporelle : $g(t)\, \text{Ш}_{\Ts}(t) = g_0\, \delta(t)$ ;
+  - version fréquentielle : $\frac{1}{\Ts} \sum_{m=-\infty}^{\infty} G\!\left(f - \frac{m}{\Ts}\right) = g_0$.
+
+### Exemple : filtre en cosinus surélevé {#sec-exemple-cosinus-sureleve}
+
+::: {#exm-cosinus-sureleve}
+## Exemple de filtre de mise en forme [poly, p. 43-45]
+
+<!-- FIGURE F11 : filtre de Nyquist en temps et en fréquence, avec les échantillons g(mTs) et les répliques,
+     d'après [poly, p. 43-45] et [notes, f. 2 r°]. Voir le bloc av-echelles-figure-cosinus-sureleve. -->
+
+Le support présente un filtre global $g(t)$ et sa réponse en fréquence $G(f)$, avec $\Ts = 1\ \mathrm{ms}$ :
+
+- **critère temporel** : $g(t)$ vaut 1 en $t = 0$ et oscille en s'annulant à tous les instants $m\Ts$, $m \neq 0$ ; les échantillons $g(m\Ts)$ sont tous nuls sauf $g_0$ ;
+- **version fréquentielle** : $G(f)$ est plat (valeur 10) au voisinage de $f = 0$, décroît autour de $\pm 500\ \mathrm{Hz}$ et s'annule au-delà ; ses répliques décalées de multiples de $1/\Ts = 1000\ \mathrm{Hz}$ se chevauchent et leur somme est constante.
+:::
+
+::: {.notes}
+L'exemple est esquissé au tableau [notes, f. 2 r°] : une impulsion centrale et des oscillations qui s'annulent aux multiples de $\Ts$.
+:::
+
+::: {.a-verifier #av-echelles-figure-cosinus-sureleve}
+**Source** [poly, p. 43-45] : le graphe temporel donne $g(0) = 1$ ; le graphe fréquentiel donne $G(0) = 10$ ; l'axe des temps montre des annulations aux multiples de $1\ \mathrm{ms}$, donc $\Ts = 1\ \mathrm{ms}$.
+
+**Problème** : avec la règle de symétrie corrigée, la somme des répliques vaut $g_0\Ts$, et $G(0) = g_0\Ts$ quand $G(\pm 1/\Ts) = 0$. Avec $g_0 = 1$ et $\Ts = 10^{-3}\ \mathrm{s}$, on attendrait $G(0) = 10^{-3}$, pas 10. Les deux graphes ne semblent pas tracés avec la même normalisation (point relevé pendant la rédaction, absent du rapport d'analyse).
+
+**Proposition** : les échelles absolues ne jouent aucun rôle dans l'exemple ; la figure reconstruite (F11) normalise les deux axes ($g(t)/g_0$ et $G(f)/(g_0\Ts)$) et le signale dans sa légende.
+:::
+
+::: {.complement}
+Ce filtre est un **cosinus surélevé** (*raised cosine*), filtre de Nyquist très utilisé, qui n'est pas nommé par le support. Pour un facteur de retombée (*roll-off*) $\beta \in [0, 1]$ :
+
+$$
+G(f) =
+\begin{cases}
+g_0\Ts & \text{si } |f| \leq \frac{1 - \beta}{2\Ts} , \\[4pt]
+\frac{g_0\Ts}{2} \left[ 1 + \cos\!\left( \frac{\pi\Ts}{\beta} \left( |f| - \frac{1 - \beta}{2\Ts} \right) \right) \right] & \text{si } \frac{1 - \beta}{2\Ts} < |f| \leq \frac{1 + \beta}{2\Ts} , \\[4pt]
+0 & \text{sinon.}
+\end{cases}
+$$
+
+Sa bande est $B = \frac{1 + \beta}{2\Ts}$ : elle vaut la bande minimale $\frac{1}{2\Ts}$ pour $\beta = 0$ (spectre rectangulaire) et $\frac{1}{\Ts}$ pour $\beta = 1$. La courbe vérifie la règle de symétrie (@prp-symetrie-nyquist).
+
+**Valeur estimée à partir de la figure** (ce n'est pas une valeur du cours) : $G$ est plat jusqu'à environ $400\ \mathrm{Hz}$ et nul à partir d'environ $600\ \mathrm{Hz}$, avec $1/\Ts = 1000\ \mathrm{Hz}$, ce qui correspond à $\beta \approx 0{,}2$.
+:::
+
+### Exercices sur le critère de Nyquist {#sec-exercices-nyquist}
+
+<!-- FIGURE F13 : filtres des exercices (porte, triangles), d'après [poly, p. 47-51]. -->
+
+::: {#exr-nyquist-porte}
+## Porte [poly, p. 47]
+
+Le filtre global $g(t)$ vaut 10 sur $[0, 1[\ \mathrm{ms}$ et 0 ailleurs : sur la figure, le point plein en $t = 0$ est à la valeur 10, et le point plein en $t = 1\ \mathrm{ms}$ est à la valeur 0. Ce filtre vérifie-t-il le critère de Nyquist si $\Ts = 1\ \mathrm{ms}$ ?
+:::
+
+::: {.solution}
+Réponse du support : oui.
+:::
+
+::: {.complement}
+Justification : $g_0 = g(0) = 10 \neq 0$ et $g(m\Ts) = 0$ pour tout $m \neq 0$, en particulier $g(1\ \mathrm{ms}) = 0$. La réponse dépend de la valeur prise aux discontinuités : elle est donnée par les points pleins (valeur retenue) et vides (valeur exclue) de la figure.
+:::
+
+::: {#exr-nyquist-triangle-temps}
+## Triangle, version temporelle [poly, p. 48]
+
+Le filtre global $g(t)$ est un triangle de sommet $g(0) = 10$ et de support $[-1, 1]\ \mathrm{ms}$. Ce filtre vérifie-t-il le critère de Nyquist si $\Ts = 0{,}5\ \mathrm{ms}$ ?
+:::
+
+::: {.solution}
+Réponse du support : non.
+:::
+
+::: {.complement}
+Justification : $g(\Ts) = g(0{,}5\ \mathrm{ms}) = 5 \neq 0$.
+:::
+
+::: {#exr-nyquist-triangle-frequence}
+## Triangle, version fréquentielle [poly, p. 49]
+
+La réponse en fréquence $G(f)$ est un triangle de sommet $G(0) = 10$ et de support $[-1000, 1000]\ \mathrm{Hz}$. On considère que $\Ts = 1\ \mathrm{ms}$ : ce filtre vérifie-t-il le critère de Nyquist ?
+:::
+
+::: {.solution}
+Réponse du support : oui.
+:::
+
+::: {.complement}
+Justification : les répliques $G(f - m/\Ts)$ sont décalées de $1000\ \mathrm{Hz}$ ; deux triangles voisins se chevauchent en se compensant exactement, et leur somme vaut 10 pour tout $f$. Le point $(500\ \mathrm{Hz},\ 5)$ est centre de symétrie de $G$ sur $[0, 1000]\ \mathrm{Hz}$ ; avec $g_0 = \int G(f)\,\mathrm{d}f = \frac{1}{2} \times 2000 \times 10 = 10^4$, on retrouve bien $\frac{g_0\Ts}{2} = 5$ (bloc `av-centre-symetrie-nyquist`).
+:::
+
+::: {#exr-debit-max-triangle}
+## Débit maximal, triangle [poly, p. 50]
+
+Le filtre global $g(t)$ est le triangle de l'@exr-nyquist-triangle-temps (sommet 10 en $t = 0$, support $[-1, 1]\ \mathrm{ms}$). Avec ce filtre, le débit maximal d'une communication sans interférences entre symboles est-il $D_s = 1\ \mathrm{ksymbole/s}$ ?
+:::
+
+::: {.solution}
+Réponse du support : oui.
+:::
+
+::: {.complement}
+Justification : $g(m\Ts) = 0$ pour tout $m \neq 0$ si et seulement si $\Ts \geq 1\ \mathrm{ms}$ (les instants $m\Ts$ sont alors hors de $]-1, 1[\ \mathrm{ms}$). Le débit symbole maximal est donc $1/(1\ \mathrm{ms}) = 1\ \mathrm{ksymbole/s}$.
+:::
+
+::: {#exr-debit-max-porte}
+## Débit maximal, porte [poly, p. 51]
+
+Le filtre de mise en forme $h(t)$ vaut 10 sur $[0, 1[\ \mathrm{ms}$ et 0 ailleurs, et $h_a(t) = h(t)$. Avec ce filtre, le débit maximal d'une communication sans interférences entre symboles est-il $D_s = 1\ \mathrm{ksymbole/s}$ ?
+:::
+
+::: {.a-verifier .tranche #av-quiz-debit-porte}
+**Source** [poly, p. 51] : « le débit maximal d'une communication sans interférences entre symboles est de $D_s = 1$ Msymboles/s ? » ; réponse marquée : A (oui).
+
+**Problème** : $g = h \star h_a$ est un triangle de support $[0, 2]\ \mathrm{ms}$ et de sommet en $t = 1\ \mathrm{ms}$ ; le débit maximal est $1\ \mathrm{ksymbole/s}$ (voir la justification ci-dessous). Avec « Msymboles/s », la bonne réponse serait B (non). L'exercice voisin, @exr-debit-max-triangle, au filtre global identique à un décalage près, est formulé en « ksymboles/s ».
+
+**Proposition** : coquille d'unité, lire « $D_s = 1$ ksymboles/s » ; réponse A conservée.
+
+**Décision** : correction retenue par Armand (2026-10-07).
+:::
+
+::: {.solution}
+Réponse du support : oui (avec l'unité corrigée, ksymbole/s).
+:::
+
+::: {.complement}
+Justification : $g(t) = (h \star h)(t)$ est un triangle de support $[0, 2]\ \mathrm{ms}$, de sommet en $t = 1\ \mathrm{ms}$.
+
+Ici $g(t)$ n'est **pas centré en 0** : son maximum est en $t_0 = 1\ \mathrm{ms}$. Le modèle @eq-modele-discret, écrit avec $g_0 = g(0)$, suppose implicitement que le maximum de $g$ est en $t = 0$. Lorsque $g$ est retardé de $t_0$ (ce qui est le cas de tout filtre causal), on échantillonne aux instants $t_0 + n\Ts$ ; tout le raisonnement s'applique au filtre recentré $g(t + t_0)$, ici le triangle de l'@exr-debit-max-triangle (à l'amplitude près). On en déduit le même débit maximal, $1\ \mathrm{ksymbole/s}$.
+:::
+
+## Diagramme de l'œil {#sec-diagramme-oeil}
+
+<!-- FIGURE F14 : construction et lecture du diagramme de l'œil, d'après [poly, p. 56 et 60] et [notes, f. 2 v°] ;
+     paramètres du support inconnus (simulation à paramétrer, voir le rapport, C6). -->
+
+Le support présente le diagramme de l'œil à partir d'un signal de durée $30\ \mathrm{ms}$ : le signal est découpé en tranches successives, qui sont superposées sur une même fenêtre de temps allant de $-1$ à $1\ \mathrm{ms}$ [poly, p. 56]. Sur l'exemple, les courbes passent toutes par les niveaux $-1$ et $1$ à l'instant central.
+
+::: {.complement}
+**Construction.** Le diagramme de l'œil s'obtient en découpant le signal $r_l(t)$ en tranches de durée $2\Ts$, synchronisées sur l'horloge symbole (chaque tranche est centrée sur un instant d'échantillonnage), puis en superposant toutes ces tranches. Sur l'exemple du support, la fenêtre de $2\ \mathrm{ms}$ correspond à $\Ts = 1\ \mathrm{ms}$ et les deux niveaux $\pm 1$ à une constellation binaire.
+:::
+
+**Analyse du diagramme de l'œil** [poly, p. 60] :
+
+- **absence d'IES** ;
+- **ouverture verticale** de l'œil : robustesse au bruit ;
+- **ouverture horizontale** de l'œil : robustesse aux déphasages de l'échantillonneur.
+
+::: {.notes}
+Précision donnée en cours [notes, f. 2 v°] : sur l'exemple, les courbes se croisent en **2 points uniques** à l'instant d'échantillonnage, ce qui traduit l'**absence d'IES**.
+:::
+
+::: {.complement}
+**Généralisation.** En l'absence d'IES, $r_n = g_0\, a_n$ : à l'instant d'échantillonnage, toutes les courbes passent par l'une des $M$ valeurs $g_0 a$, $a$ parcourant la constellation. On observe donc $M$ points de croisement uniques pour une constellation à $M$ niveaux (2 points pour l'exemple binaire). En présence d'IES, ces points s'étalent et l'œil se ferme.
+:::
+
+## À retenir {#sec-retenir-sans-bruit}
+
+Origine : support officiel, sauf mention *(notes)* ou *(complément)*.
+
+- **Débits** : $D_b = 1/\Tb$, $D_s = 1/\Ts$, et $D_b = n_b D_s$ avec $M = 2^{n_b}$ symboles (@eq-debit-binaire, @eq-debit-symbole, @eq-db-nb-ds). En bande de base, les symboles sont réels.
+- **Signal émis** : $s_l(t) = \sum_m a_m\, h(t - m\Ts)$ (@eq-signal-sl), $h$ filtre linéaire invariant.
+- **Filtre global** : $g(t) = [h_a \star h_c \star h](t)$ (@eq-filtre-global) ; sans déformation du canal ($h_c = \delta$), $g = h \star h_a$.
+- **Modèle discret** : $r_n = a_n g_0 + \sum_{m \neq 0} a_{n-m}\, g_m + z'_n$, avec $g_m = g(m\Ts)$ (@eq-modele-discret). Le second terme est l'**IES** (@def-ies).
+- **Absence d'IES** : $g_0 \neq 0$ et $g_m = 0$ pour $m \neq 0$ (@eq-annulation-ies). Sans bruit, on a alors $r_n = g_0\, a_n$ *(notes)*.
+- **Critère de Nyquist temporel** : $g(t)\, \text{Ш}_{\Ts}(t) = g_0\, \delta(t)$ (@thm-nyquist-temporel) ; démonstration *(notes)*.
+- **Critère de Nyquist fréquentiel** : $\frac{1}{\Ts} \sum_m G(f - m/\Ts) = g_0$, avec $G(f) = \int g(t)\, e^{-j2\pi ft}\, \mathrm{d}t$ (@thm-nyquist-frequentiel) ; démonstration *(notes)*.
+- **Règle de symétrie** : si $G$ est à support dans $[-1/\Ts, 1/\Ts]$ **et réelle et paire** *(complément)*, le critère équivaut à la symétrie de $G$ par rapport au point $\left(\frac{1}{2\Ts}, \frac{g_0\Ts}{2}\right)$ sur $[0, 1/\Ts]$ (@prp-symetrie-nyquist ; ordonnée corrigée, le support écrit $g_0/2$).
+- **Fréquence de Nyquist** : $\frac{1}{2\Ts}$ (@def-frequence-nyquist).
+- **Bande minimale** : un filtre global de support $[-B, B]$ vérifiant le critère a $B \geq \frac{1}{2\Ts}$ (@prp-bande-minimale) *(notes)*.
+- **Efficacité spectrale** : $\eta = D_b / B$ en bits·s⁻¹·Hz⁻¹ (@def-efficacite-spectrale) *(notes)* ; en bande de base, avec la bande minimale, $\eta \leq 2\log_2 M$ ; en bande transposée, $\eta \leq \log_2 M$ *(complément)*.
+- **Cosinus surélevé** : bande $\frac{1 + \beta}{2\Ts}$, $\beta \in [0, 1]$ *(complément)*.
+- **Diagramme de l'œil** : croisements en points uniques ⇒ absence d'IES ; ouverture verticale ⇒ robustesse au bruit ; ouverture horizontale ⇒ robustesse aux déphasages de l'échantillonneur (@sec-diagramme-oeil).
+- **Filtre non centré** : si le maximum de $g$ est en $t_0 \neq 0$, on échantillonne en $t_0 + n\Ts$ *(complément)*.

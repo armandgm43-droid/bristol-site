@@ -3,7 +3,7 @@
 > Détails techniques du projet : configuration Quarto, structure des dossiers, application de révision, scripts, build, hébergement.
 > Les choix de fond sont dans `CONTEXTE_PROJET.md` (section 5) ; les règles d'écriture dans `conventions.md`.
 >
-> Dernière mise à jour : 6 octobre 2026.
+> Dernière mise à jour : 7 octobre 2026.
 
 ---
 
@@ -24,7 +24,7 @@ Flashcards .yml ──► script de conversion ──► revision/cartes/*.json
 
 ---
 
-## 2. Structure des dossiers (état réel au 6 octobre 2026)
+## 2. Structure des dossiers (état réel au 7 octobre 2026)
 
 ```text
 Bristol/
@@ -44,6 +44,7 @@ Bristol/
 ├── matieres/
 │   └── ts227-communications-numeriques/
 │       ├── index.qmd         fiche matière
+│       ├── analyses/         rapports d'analyse des chapitres (.md, non rendus)
 │       ├── cours/  figures/  flashcards/  td/  tp/  annales/  corriges/   (vides)
 ├── revision/
 │   ├── index.html            application de flashcards (fichier unique)
@@ -52,7 +53,10 @@ Bristol/
 │       └── *.json            paquets (6 paquets hérités)
 ├── scripts/                  (vide)
 └── sources/                  sources brutes, ignorées par Git
-    └── LISEZMOI.txt
+    ├── LISEZMOI.txt
+    └── ts227/
+        ├── support/          poly, TD, correction du TD
+        └── notes/            date-inconnue.pdf + date-inconnue/ (photos des feuillets)
 ```
 
 Fichiers générés, jamais versionnés : `_site/`, `.quarto/`, `*_files/`, `*_cache/`.

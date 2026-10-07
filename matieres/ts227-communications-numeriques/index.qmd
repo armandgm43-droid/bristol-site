@@ -19,7 +19,7 @@ number-sections: false
 | N° | Chapitre | Statut |
 |---|---|---|
 | 1 | Introduction | BROUILLON |
-| 2 | Principes de communication en l'absence de bruit | BROUILLON |
+| 2 | [Principes de communication en l'absence de bruit](cours/02-communication-sans-bruit.qmd) | ANALYSÉ (texte rédigé, figures à intégrer) |
 | 3 | DSP des signaux codés en ligne | BROUILLON |
 | 4 | Transmission en présence de bruit | BROUILLON |
 | 5 | Transmission sur fréquence porteuse | BROUILLON |
@@ -29,8 +29,36 @@ number-sections: false
 
 Le cours Bristol suit les notations **du cours** (poly). Correspondance avec le TD :
 
-| Rôle | Cours (poly) | TD |
-|---|---|---|
-| Filtre de mise en forme | $h(t)$ | $g(t)$ |
-| Filtre de réception | $h_a(t)$ | $g_a(t)$ |
-| Filtre global | $g(t) = (h \star h_c \star h_a)(t)$ | $v(t)$ |
+| Rôle | Cours (poly) | TD | Notes de cours |
+|---|---|---|---|
+| Symboles | $a_n$ | $A_k$ ; $s_n$ (correction) | $a_n$ |
+| Signal des symboles (impulsions) | $s_a(t)$ | $s_s(t)$ | $s_a(t)$ |
+| Signal émis (après mise en forme) | $s_l(t)$ | $s_l(t)$ | $s_e(t)$ (f. 1 r°) |
+| Débit symbole | $D_s$ | $R_s$ | $D_s$ |
+| Filtre de mise en forme | $h(t)$ | $g(t)$ | $h(t)$ |
+| Filtre du canal | $h_c(t)$ | $h_l(t)$ | — |
+| Bruit | $z_l(t)$ | $n_l(t)$ | $z_n$, $Z_n$ (échantillons) |
+| Filtre de réception | $h_a(t)$ | $g_a(t)$ | $h_a(t)$ |
+| Filtre global | $g(t) = (h \star h_c \star h_a)(t)$ | $v(t)$ | $g(t)$ |
+| Échantillon reçu | $r_n$ | $r_l[n]$ | $r_n$, $R_n$ |
+
+## Conventions de la matière
+
+- **Transformée de Fourier** : $\TF[x](f) = \int_{-\infty}^{+\infty} x(t)\,e^{-j2\pi ft}\,\mathrm{d}t$, inverse $x(t) = \int_{-\infty}^{+\infty} X(f)\,e^{+j2\pi ft}\,\mathrm{d}f$. C'est la convention du poly (p. 85-87) et des notes ; la p. 40 du poly, qui écrit $e^{+j2\pi ft}$, est traitée comme une coquille (bloc tranché `av-signe-tf-nyquist`, chapitre 2).
+- **Porte** : $\Pi_T(t)$ désigne la porte de largeur $T$ centrée en 0 (notation des notes de cours).
+- **Numéros de page** cités : pages du PDF.
+
+## Sources
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `poly` | `poly_ts227.pdf`, Romain Tajan, version du 9 octobre 2025, 180 p. | officielle | |
+| `td` | `TD_TS_227.pdf`, « Transmissions en bande de base », G. Ferré et R. Tajan, 2020/2021, 4 p. | officielle | phase 2 |
+| `td-correction` | `correction_TD_TS_227.pdf`, 15 p. | officielle | correction partielle, **d'une autre version de l'énoncé** (numérotation des questions différente pour les exercices 2 à 5) |
+| `notes` | `notes/date-inconnue.pdf`, 5 feuillets recto-verso | personnelle | dates des séances inconnues ; couvrent les chapitres 2, 3 et 4 |
+| — | rtajan.github.io | externe | site de l'enseignant, **non inventorié** |
+
+## Remarques
+
+- **Ordre du cours en 2026-2027** : l'enseignant a traité la transmission en présence de bruit (chapitre 4, précédé des rappels de probabilités du chapitre 3) **avant** les processus aléatoires et la DSP (chapitre 3). Bristol garde l'ordre et la numérotation du poly.
+- L'efficacité spectrale a été présentée en cours avec le critère de Nyquist : elle est traitée au chapitre 2, et le chapitre 6 y renvoie.

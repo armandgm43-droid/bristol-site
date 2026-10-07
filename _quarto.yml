@@ -32,6 +32,9 @@ website:
       style: docked
       contents:
         - matieres/ts227-communications-numeriques/index.qmd
+        - section: "Cours"
+          contents:
+            - matieres/ts227-communications-numeriques/cours/02-communication-sans-bruit.qmd
         # Ajouter les chapitres au fur et à mesure, dans l'ordre :
         # - section: "Cours"
         #   contents:
