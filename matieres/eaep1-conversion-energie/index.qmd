@@ -25,13 +25,13 @@ Plan tiré de l'organisation du cours (`cours`, p. 2) : un chapitre Bristol par 
 
 | N° | Chapitre (proposé) | Contenu et sources | Statut |
 |---|---|---|---|
-| 1 | Enjeux de l'électronique de puissance | support, partie 01 | BROUILLON |
-| 2 | Convertisseurs DC/DC non isolés | partie 02 ; TD 1 | BROUILLON |
-| 3 | Composants à semiconducteur de puissance | partie 03 ; TD 2 et TD 3 | BROUILLON |
-| 4 | Commande des convertisseurs DC/DC | partie 04 | BROUILLON |
-| 5 | Packaging et thermique | partie 05 ; TD 4 | BROUILLON |
-| 6 | Composants de puissance passifs | partie 06 | BROUILLON |
-| 7 | Conversion DC/AC : onduleurs | partie 07 ; TD 5 | BROUILLON |
+| 1 | Enjeux de l'électronique de puissance | support, partie 01 | [Brouillon]{.statut .brouillon} |
+| 2 | Convertisseurs DC/DC non isolés | partie 02 ; TD 1 | [Brouillon]{.statut .brouillon} |
+| 3 | Composants à semiconducteur de puissance | partie 03 ; TD 2 et TD 3 | [Brouillon]{.statut .brouillon} |
+| 4 | Commande des convertisseurs DC/DC | partie 04 | [Brouillon]{.statut .brouillon} |
+| 5 | Packaging et thermique | partie 05 ; TD 4 | [Brouillon]{.statut .brouillon} |
+| 6 | Composants de puissance passifs | partie 06 | [Brouillon]{.statut .brouillon} |
+| 7 | Conversion DC/AC : onduleurs | partie 07 ; TD 5 | [Brouillon]{.statut .brouillon} |
 
 Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
 

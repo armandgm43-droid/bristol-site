@@ -18,12 +18,12 @@ number-sections: false
 
 | N° | Chapitre | Statut |
 |---|---|---|
-| 1 | [Introduction](cours/01-introduction.qmd) | FLASHCARDS GÉNÉRÉES |
-| 2 | [Principes de communication en l'absence de bruit](cours/02-communication-sans-bruit.qmd) | FLASHCARDS GÉNÉRÉES |
-| 3 | [DSP des signaux codés en ligne](cours/03-dsp-signaux-codes-en-ligne.qmd) | FLASHCARDS GÉNÉRÉES |
-| 4 | [Transmission en présence de bruit](cours/04-transmission-presence-bruit.qmd) | FLASHCARDS GÉNÉRÉES |
-| 5 | Transmission sur fréquence porteuse | BROUILLON |
-| 6 | Modulation et démodulation numériques | BROUILLON |
+| 1 | [Introduction](cours/01-introduction.qmd) | [Flashcards générées]{.statut .flashcards} |
+| 2 | [Principes de communication en l'absence de bruit](cours/02-communication-sans-bruit.qmd) | [Flashcards générées]{.statut .flashcards} |
+| 3 | [DSP des signaux codés en ligne](cours/03-dsp-signaux-codes-en-ligne.qmd) | [Flashcards générées]{.statut .flashcards} |
+| 4 | [Transmission en présence de bruit](cours/04-transmission-presence-bruit.qmd) | [Flashcards générées]{.statut .flashcards} |
+| 5 | Transmission sur fréquence porteuse | [Brouillon]{.statut .brouillon} |
+| 6 | Modulation et démodulation numériques | [Brouillon]{.statut .brouillon} |
 
 ## Table des notations
 

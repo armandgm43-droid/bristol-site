@@ -25,10 +25,10 @@ Plan tiré de l'« Outline » du support 2026-2027 (`slides`).
 
 | N° | Chapitre (proposé) | Contenu et sources | Statut |
 |---|---|---|---|
-| 1 | Introduction et rappels mathématiques | motivation, exemples ; fonctions, vocabulaire, convexité | BROUILLON |
-| 2 | Optimisation sans contrainte : conditions d'optimalité et moindres carrés | conditions d'optimalité ; moindres carrés linéaires | BROUILLON |
-| 3 | Méthodes itératives d'optimisation | zéros de fonctions non linéaires, méthode de Newton, descente de gradient, Gauss-Newton | BROUILLON |
-| 4 | Optimisation sous contraintes | contraintes d'égalité (multiplicateurs de Lagrange), d'inégalité, mixtes (conditions KKT) | BROUILLON |
+| 1 | Introduction et rappels mathématiques | motivation, exemples ; fonctions, vocabulaire, convexité | [Brouillon]{.statut .brouillon} |
+| 2 | Optimisation sans contrainte : conditions d'optimalité et moindres carrés | conditions d'optimalité ; moindres carrés linéaires | [Brouillon]{.statut .brouillon} |
+| 3 | Méthodes itératives d'optimisation | zéros de fonctions non linéaires, méthode de Newton, descente de gradient, Gauss-Newton | [Brouillon]{.statut .brouillon} |
+| 4 | Optimisation sous contraintes | contraintes d'égalité (multiplicateurs de Lagrange), d'inégalité, mixtes (conditions KKT) | [Brouillon]{.statut .brouillon} |
 
 Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
 

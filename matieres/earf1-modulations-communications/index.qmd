@@ -25,10 +25,10 @@ Plan tiré des sommaires des deux supports. Matière distincte de TS227 (confirm
 
 | N° | Chapitre (proposé) | Contenu et sources | Statut |
 |---|---|---|---|
-| 1 | Introduction : signaux et outils d'analyse | `mod-ana` : introduction, signaux et outils d'analyse | BROUILLON |
-| 2 | Modulations linéaires | `mod-ana` : modulations d'amplitude | BROUILLON |
-| 3 | Modulations angulaires | `mod-ana` : modulations de fréquence et de phase | BROUILLON |
-| 4 | Introduction aux modulations numériques | `mod-num` : ASK, FSK, PSK, représentation IQ, critères de performance | BROUILLON |
+| 1 | Introduction : signaux et outils d'analyse | `mod-ana` : introduction, signaux et outils d'analyse | [Brouillon]{.statut .brouillon} |
+| 2 | Modulations linéaires | `mod-ana` : modulations d'amplitude | [Brouillon]{.statut .brouillon} |
+| 3 | Modulations angulaires | `mod-ana` : modulations de fréquence et de phase | [Brouillon]{.statut .brouillon} |
+| 4 | Introduction aux modulations numériques | `mod-num` : ASK, FSK, PSK, représentation IQ, critères de performance | [Brouillon]{.statut .brouillon} |
 
 Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
 

@@ -25,12 +25,12 @@ Plan proposé à partir des supports reçus (un support = un chapitre). L'ordre 
 
 | N° | Chapitre (proposé) | Contenu et sources | Statut |
 |---|---|---|---|
-| 1 | Technologies et familles logiques | `techno` (Renaud) ; TD TCIN 1 et 2 | BROUILLON |
-| 2 | Mémoires | `memoires` (Renaud) | BROUILLON |
-| 3 | Conception de circuits intégrés numériques | `conception` (Renaud) | BROUILLON |
-| 4 | Test et testabilité des circuits intégrés numériques | `test` (Renaud) ; TD test et testabilité | BROUILLON |
-| 5 | Circuits FPGA | `fpga` (Le Gal) : circuits reconfigurables, architecture, configuration ; TD 3 et 4 | BROUILLON |
-| 6 | Description VHDL et synthèse | TD 1 (machine à états, banc de test) et sa correction ; pas de support de cours dans l'archive | BROUILLON |
+| 1 | Technologies et familles logiques | `techno` (Renaud) ; TD TCIN 1 et 2 | [Brouillon]{.statut .brouillon} |
+| 2 | Mémoires | `memoires` (Renaud) | [Brouillon]{.statut .brouillon} |
+| 3 | Conception de circuits intégrés numériques | `conception` (Renaud) | [Brouillon]{.statut .brouillon} |
+| 4 | Test et testabilité des circuits intégrés numériques | `test` (Renaud) ; TD test et testabilité | [Brouillon]{.statut .brouillon} |
+| 5 | Circuits FPGA | `fpga` (Le Gal) : circuits reconfigurables, architecture, configuration ; TD 3 et 4 | [Brouillon]{.statut .brouillon} |
+| 6 | Description VHDL et synthèse | TD 1 (machine à états, banc de test) et sa correction ; pas de support de cours dans l'archive | [Brouillon]{.statut .brouillon} |
 
 Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
 

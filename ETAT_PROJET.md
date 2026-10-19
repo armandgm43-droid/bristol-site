@@ -3,7 +3,7 @@
 > Où en est le projet. Mis à jour **à la fin de chaque session de travail**.
 > Vision et méthode : `CONTEXTE_PROJET.md`. Règles : `conventions.md`. Technique : `architecture.md`. Tâches : `TODO.md`.
 >
-> Dernière mise à jour : 19 octobre 2026 (archive 2A redistribuée : 413 fichiers rangés, 14 matières du S7 mises en place avec fiche, inventaire et plan proposé).
+> Dernière mise à jour : 19 octobre 2026 (refonte allégée de la direction artistique du site et de l'application de révision).
 
 ---
 
@@ -64,6 +64,8 @@ Décision du 7 octobre 2026 : le site sera **publié à la fin pour les étudian
 - [x] EANA3 — mise en place (7 octobre 2026) : 37 PDF triés et renommés dans `sources/eana3/{support,td,notes,corriges,annales}/` (dossier `sources/Circuits integres/` renommé) ; `matieres/eana3-circuits-integres/` (arborescence, `index.qmd`, `analyses/inventaire-sources.md`) ; `_quarto.yml` (barre latérale `eana3`) ; `index.qmd` (accueil) ; `scripts/flashcards.py` produit un paquet vide pour une matière sans carte → `revision/cartes/eana3.json` (0 carte) ajouté à `index.json` ; `architecture.md` § 6.
 
 - [x] Archive 2A (19 octobre 2026) : 413 fichiers de `sources/2A.zip` rangés dans `sources/<code>/{support,td,tp,tp/fichiers,notes,corriges,annales,travaux}` et contrôlés ; fiches matières et inventaires des 14 matières du S7 ; `_quarto.yml` (14 barres latérales) ; accueil réorganisé par UE ; 14 paquets vides (`scripts/flashcards.py`) ; compléments des fiches TS227 (TP, TS205, notes 2023) et EANA3 (TP oscillateur LC) ; `conventions.md` § 2 (dossiers `tp/`, `travaux/`, documents d'un tiers, versions antérieures).
+
+- [x] Refonte allégée de la DA (19 octobre 2026) : jetons (`assets/bristol-tokens.css`), thème (`assets/bristol.scss`), CSS de l'application (`revision/index.html`, JavaScript inchangé), accueil en cartes par UE (`index.qmd`), statuts en pastilles dans 9 fiches matières ; police *Source Sans 3* ; `conventions.md` § 4 et § 13, `architecture.md` § 4.
 
 ## 3. En cours
 
@@ -141,6 +143,7 @@ Aucun chapitre rédigé : statut `brouillon` pour tous les chapitres proposés. 
 
 | Date | Décision | Où |
 |---|---|---|
+| 2026-10-19 | Refonte de la DA : esprit fiche gardé mais allégé, application incluse, *Source Sans 3* à la place d'*Atkinson Hyperlegible* — **choix d'Armand** ; détail de la mise en page (accueil en cartes, trait rouge court, statuts en pastilles, libellés « À venir ») — choix par défaut | `conventions.md` § 4, § 13 |
 | 2026-10-19 | Archive 2A : périmètre « ranger + fiches + plans » ; dossier « S7 » d'un ancien élève intégré en `externe` (préfixe `2023-`) ; travaux personnels dans `sources/<code>/travaux/` (jamais publiés) ; TS205 (OFDM) rattaché à TS227 — **choix d'Armand** | inventaires des matières ; `conventions.md` § 2 |
 | 2026-10-19 | Annales « Initiation aux bruits » (EA222) rattachées à EANA2 ; TD VHDL rangés une fois, dans NUMC1 ; versions antérieures des supports gardées avec le suffixe `-ancienne-version` — **choix par défaut, à confirmer** | inventaires EANA2, NUMC1 |
 | 2026-10-07 | EANA3 : code `eana3` (ancien EA234), enseignants F. Rivet et Y. Deval ; plan en 5 chapitres (un par chapitre du support, numérotés à la suite) ; nommage des sources et jeux de notes non datés (`<année>-cours-NN-…`) ; sujets distribués comme TD rangés dans `td/` — **choix par défaut, à revoir par Armand** | inventaire EANA3, § 4 et § 7 |
@@ -213,7 +216,7 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 21. **Rendu Quarto non contrôlé** après l'ajout d'EANA3 (Quarto absent de l'environnement de Claude) : vérifier la barre latérale et la fiche matière avec `quarto preview`.
 
 22. **Archive 2A** : `sources/2A.zip` (870 Mo) est encore présent ; son contenu utile est redistribué, Armand peut le supprimer. Non repris : doublons, fichiers personnels (Eirspace, inscription, stages, Ingénib, anglais), fichiers de compilation et exécutables, module « Intégrer l'entreprise ».
-23. **Rendu Quarto non contrôlé** après l'ajout des 14 matières (Quarto absent de l'environnement de Claude).
+23. ~~Rendu Quarto non contrôlé après l'ajout des 14 matières~~ : contrôlé le 19 octobre 2026 (Quarto 1.10.19 installé par Claude dans sa machine de travail, copie du projet sans `sources/`) : 27 pages, aucun avertissement ; captures de l'accueil et des fiches en clair, en sombre et sur mobile. Corrigé au passage : le code en ligne (`td code`, `li code`, `p code`) restait sur fond gris clair en mode sombre (règle de Bootstrap plus spécifique), `assets/bristol.scss` ; codes des matières insécables dans l'accueil. Non vérifiables dans cet environnement : polices et formules (Google Fonts et MathJax bloqués par le réseau de Claude).
 24. **Sources manquantes** : EANA1 (aucun support officiel), TSIG1 (pas de support de cours rédigé), conditionnement analogique en EANA2 (objectif annoncé, aucun support).
 
 ## 8. Questions ouvertes (suivi de `CONTEXTE_PROJET.md`, section 22)
@@ -263,3 +266,5 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 | 2026-10-18 | Bristol — Annales 2A élec | 60 fichiers de l'archive « Annales 2A élec » rangés et renommés (`AAAA-AAAA-partiel[-precision][-pN].ext`) dans `sources/<code>/annales/` : tsig1 (8 + fiche de rappels externe dans `notes/`), eana3 (12 : sujet 2025-2026, anciens partiels EA211 Contre-réaction dont corrigé 2015-2016, EA210 Circuits HF et oscillateurs), eana1 (6), eaep1 (4, dossier « Gestion de l'énergie 2 » = EA207), auto1 (7 : AU201 commande linéaire, AU205 temps discret), auto3 (5), numc1 (6 : EN208 TCIN, examen CI/VHDL 2025-2026), nume3 (1), tsig2 (3, TS202), ts227 (7). Non repris : modules de S8 ou hors filière (CEM, comm. num. avancées, filtrage et estimation, microprocesseurs, PLL, espace d'état, systèmes non linéaires, traitement d'image, C++, droit du travail, gestion financière), initiation aux bruits (EA222, rattachement inconnu), doublons et fichiers Zone.Identifier |
 | 2026-10-18 | Bristol — Circuits intégrés — Validation et flashcards (reprise) | Le travail du 14 octobre n'avait pas atteint le PC : refait. 15 blocs AV traités selon les décisions du 14 octobre (`av-sensibilite-beta-signe` en valeur absolue, tranché par Armand ; 12 autres tranchés, propositions retenues ; `av-marge-phase-70` et `av-enonce-separation-poles` retirés et réintégrés en complément) ; 0 bloc ouvert ; 5 chapitres au statut `flashcards` ; **150 cartes** (32 + 23 + 25 + 38 + 32 ; ch. 2 centré sur les impédances par type de contre-réaction) ; 778 formules compilées sans erreur (MathJax 3.2.2) ; `scripts/flashcards.py` ignore désormais les matières sans `index.qmd` ; `eana3.json` écrit ; fiche matière mise à jour. À faire par Armand : contrôle avec `quarto preview` |
 | 2026-10-19 | Bristol — Archive 2A | `sources/2A.zip` redistribué : 413 fichiers rangés et renommés dans `sources/<code>/` (dont `tp/`, `tp/fichiers/`, `travaux/`), copies vérifiées par MD5, doublons et fichiers personnels écartés ; 14 fiches matières et inventaires (avec plans proposés et correspondance des noms d'origine) ; `_quarto.yml`, accueil par UE, 14 paquets vides ; fiches TS227 et EANA3 complétées ; `conventions.md` § 2 ; `TODO.md`. Session interrompue par une coupure de connexion avec le PC, reprise ensuite |
+| 2026-10-19 | Bristol — Contrôle du rendu | Quarto 1.10.19 installé par Claude (hors du dossier du projet) ; rendu complet du site sans avertissement ; correction du code en ligne en mode sombre (`assets/bristol.scss`) ; codes insécables dans l'accueil |
+| 2026-10-19 | Bristol — Refonte du site | Diagnostic sur captures (« en travaux » : statuts internes sur l'accueil, filets partout, majuscules, gras, feuille ombrée) ; 3 choix d'Armand ; jetons et thème refaits, accueil en cartes, CSS de l'application allégé, statuts en pastilles ; rendu contrôlé (Quarto 1.10.19, polices et MathJax servis localement pour les captures) ; `conventions.md` § 4, § 13, `architecture.md` § 4. |

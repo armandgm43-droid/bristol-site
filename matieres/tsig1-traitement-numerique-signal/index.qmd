@@ -24,11 +24,11 @@ number-sections: false
 
 | N° | Chapitre (proposé) | Contenu et sources | Statut |
 |---|---|---|---|
-| 1 | Généralités sur les signaux et les systèmes | `notes-2023-ch01` | BROUILLON |
-| 2 | Systèmes discrets linéaires invariants | `notes-2023-ch02` | BROUILLON |
-| 3 | Caractérisation fréquentielle des signaux et des SLI | `notes-2023-ch03` | BROUILLON |
-| 4 | Implémentation des filtres linéaires invariants | `notes-2023-ch04` | BROUILLON |
-| 5 | SLI et représentation en phase | `notes-2023-ch05` | BROUILLON |
+| 1 | Généralités sur les signaux et les systèmes | `notes-2023-ch01` | [Brouillon]{.statut .brouillon} |
+| 2 | Systèmes discrets linéaires invariants | `notes-2023-ch02` | [Brouillon]{.statut .brouillon} |
+| 3 | Caractérisation fréquentielle des signaux et des SLI | `notes-2023-ch03` | [Brouillon]{.statut .brouillon} |
+| 4 | Implémentation des filtres linéaires invariants | `notes-2023-ch04` | [Brouillon]{.statut .brouillon} |
+| 5 | SLI et représentation en phase | `notes-2023-ch05` | [Brouillon]{.statut .brouillon} |
 
 Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
 

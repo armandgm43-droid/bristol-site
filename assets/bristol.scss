@@ -5,6 +5,10 @@
    référence que par var(--…) : ne jamais y écrire une couleur en dur.
    Le même fichier sert au thème clair et au thème sombre (_quarto.yml) :
    c'est le jeu de jetons actif qui change, pas les règles.
+
+   Principes (version allégée du 19 octobre 2026, conventions.md § 13) :
+   une seule surface, peu de filets, de l'air ; la hiérarchie passe par la
+   taille, la graisse et l'espace plutôt que par des traits.
    ========================================================================== */
 
 /*-- scss:defaults --*/
@@ -12,7 +16,7 @@
 $font-family-sans-serif: var(--sans);
 $headings-font-family: var(--serif);
 $font-family-monospace: var(--mono);
-$headings-font-weight: 600;
+$headings-font-weight: 500;
 
 /*-- scss:rules --*/
 
@@ -30,68 +34,82 @@ $headings-font-weight: 600;
   --bs-link-hover-color: var(--pen-hover);
 }
 :root { --bs-root-font-size: var(--font-size-root); font-size: var(--font-size-root); }
-body { --bs-body-font-size: var(--font-size-reading); font-size: var(--font-size-reading); }
-html, body {
-  background-color: var(--desk);
-  color: var(--desk-ink);
+body {
+  --bs-body-font-size: var(--font-size-reading);
+  font-size: var(--font-size-reading);
+  line-height: var(--line-height-reading);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
-body { font-family: var(--sans); }
-::selection { background: color-mix(in srgb, var(--pen) 22%, transparent); }
-:focus-visible { outline: 3px solid color-mix(in srgb, var(--pen) 55%, transparent); outline-offset: 2px; }
+html, body { background-color: var(--desk); color: var(--ink); }
+::selection { background: color-mix(in srgb, var(--pen) 18%, transparent); }
+:focus-visible { outline: 2px solid color-mix(in srgb, var(--pen) 60%, transparent); outline-offset: 2px; border-radius: 3px; }
 
-a { color: var(--pen); text-underline-offset: .18em; text-decoration-thickness: 1px; }
-a:hover { color: var(--pen-hover); }
+a {
+  color: var(--pen);
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in srgb, var(--pen) 30%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+  transition: color .15s, text-decoration-color .15s;
+}
+a:hover { color: var(--pen-hover); text-decoration-color: currentColor; }
+strong, b { font-weight: 600; }
 
 /* ---------- Barre de navigation commune (même dessin que revision/) ---------- */
 #quarto-header {
-  background: var(--desk);
+  background: color-mix(in srgb, var(--desk) 88%, transparent);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+          backdrop-filter: saturate(1.4) blur(10px);
   border-bottom: 1px solid var(--desk-line);
   box-shadow: none;
 }
 #quarto-header .navbar {
-  background: var(--desk) !important;
+  background: transparent !important;
   min-height: var(--nav-height);
   padding: 0;
 }
-#quarto-header .navbar-container { padding-left: var(--space-4); padding-right: var(--space-4); }
-#quarto-header .navbar-brand-container { margin: 0; }
-#quarto-header .navbar-brand { margin: 0 var(--space-4) 0 0; padding: 0; overflow: visible; }
-#quarto-header .navbar-brand-container { overflow: visible; }
+#quarto-header .navbar-container { padding-left: var(--space-5); padding-right: var(--space-5); }
+#quarto-header .navbar-brand-container { margin: 0; overflow: visible; }
+#quarto-header .navbar-brand { margin: 0 var(--space-6) 0 0; padding: 0; overflow: visible; }
 #quarto-header .navbar-brand,
 #quarto-header .navbar-title {
   font-family: var(--serif);
-  font-weight: 600;
-  font-size: 1.5rem;
+  font-weight: 500;
+  font-size: 1.4rem;
   line-height: 1.2;
+  letter-spacing: -.01em;
   color: var(--desk-ink) !important;
 }
 #quarto-header .navbar-title {
   text-decoration: underline;
   text-decoration-color: var(--rule-red);
   text-decoration-thickness: var(--rule-red-width);
-  text-underline-offset: .3em;
+  text-underline-offset: .32em;
 }
+#quarto-header .navbar-nav { gap: var(--space-1); }
 #quarto-header .navbar-nav .nav-link {
-  color: var(--desk-ink) !important;
-  font-weight: 700;
+  color: var(--desk-muted) !important;
+  font-weight: 500;
   font-size: var(--font-size-nav);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-control);
+  transition: color .15s, background-color .15s;
 }
-#quarto-header .navbar-nav .nav-link:hover {
-  background: color-mix(in srgb, var(--desk-ink) 9%, transparent);
-}
+#quarto-header .navbar-nav .nav-link:hover { color: var(--desk-ink) !important; background: var(--desk-hover); }
+#quarto-header .navbar-nav .nav-link.active { color: var(--desk-ink) !important; }
 #quarto-header .navbar-nav .nav-link.active .menu-text {
   text-decoration: underline;
   text-decoration-color: var(--rule-red);
   text-decoration-thickness: var(--rule-red-width);
-  text-underline-offset: .45em;
+  text-underline-offset: .5em;
 }
 #quarto-header .quarto-color-scheme-toggle,
-#quarto-header .quarto-color-scheme-toggle .bi::before { color: var(--desk-ink) !important; }
+#quarto-header .quarto-color-scheme-toggle .bi::before { color: var(--desk-muted) !important; }
 /* Bouton clair/sombre : même icône que dans revision/, à la couleur de l'encre du bureau */
 #quarto-header .quarto-color-scheme-toggle .bi::before {
-  width: 1.25rem; height: 1.25rem; vertical-align: -.2em;
+  width: 1.2rem; height: 1.2rem; vertical-align: -.2em;
   background: currentColor !important;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M11 4a4 4 0 0 1 0 8H8a5 5 0 0 0 2-4 5 5 0 0 0-2-4zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8M0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5'/%3E%3C/svg%3E") no-repeat center / contain;
           mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M11 4a4 4 0 0 1 0 8H8a5 5 0 0 0 2-4 5 5 0 0 0-2-4zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8M0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5'/%3E%3C/svg%3E") no-repeat center / contain;
@@ -100,99 +118,203 @@ a:hover { color: var(--pen-hover); }
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8'/%3E%3C/svg%3E");
           mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8'/%3E%3C/svg%3E");
 }
+#quarto-header .quarto-color-scheme-toggle:hover .bi::before { color: var(--desk-ink) !important; }
 #quarto-header .quarto-color-scheme-toggle .bi,
 #quarto-header .aa-DetachedSearchButton .aa-SearchButtonIcon svg,
 #quarto-header .navbar-toggler .bi,
 #quarto-header #quarto-search .bi {
-  color: var(--desk-ink) !important;
-  fill: var(--desk-ink) !important;
+  color: var(--desk-muted) !important;
+  fill: var(--desk-muted) !important;
 }
-#quarto-header .navbar-toggler { border-color: var(--desk-line); }
+#quarto-header .navbar-toggler { border: 0; }
 #quarto-header #quarto-search .aa-DetachedSearchButton,
 #quarto-header #quarto-search .aa-DetachedSearchButtonIcon,
-#quarto-header #quarto-search svg { color: var(--desk-ink) !important; }
-#quarto-header .navbar-collapse { background: var(--desk); }
+#quarto-header #quarto-search svg { color: var(--desk-muted) !important; }
+#quarto-header .navbar-collapse { background: transparent; }
+@media (max-width: 991.98px) {
+  #quarto-header .navbar-collapse { background: var(--desk); padding-bottom: var(--space-3); }
+}
 
 /* Barre secondaire (mobile : fil d'Ariane et bouton de la barre latérale) */
 .quarto-secondary-nav, #quarto-header .quarto-secondary-nav {
   background: var(--desk) !important;
-  color: var(--desk-ink);
+  color: var(--desk-muted);
   border-bottom: 1px solid var(--desk-line);
   box-shadow: none !important;
 }
 .quarto-secondary-nav .breadcrumb-item, .quarto-secondary-nav .breadcrumb-item a,
-.quarto-secondary-nav .quarto-btn-toggle, .quarto-secondary-nav .bi { color: var(--desk-ink) !important; }
+.quarto-secondary-nav .quarto-btn-toggle, .quarto-secondary-nav .bi { color: var(--desk-muted) !important; }
 
-/* ---------- Feuille de lecture : le contenu est une feuille posée sur le bureau ---------- */
+/* ---------- Page de lecture : directement sur le bureau, sans feuille ombrée ---------- */
 main.content {
-  background: var(--paper);
+  background: transparent;
   color: var(--ink);
-  border-radius: var(--radius-paper);
-  box-shadow: var(--shadow);
-  padding: var(--space-6) var(--space-6) var(--space-7);
-  margin-top: var(--space-5);
-  margin-bottom: var(--space-6);
+  padding: var(--space-7) 0 var(--space-8);
+  margin-top: 0;
 }
+main.content > *:not(.column-page):not(.column-screen):not(.column-page-inset):not(#title-block-header):not(.subject-group):not(.home-links) { max-width: var(--measure); }
 @media (max-width: 767.98px) {
-  main.content { padding: var(--space-5) var(--space-4) var(--space-6); margin-top: var(--space-3); }
+  main.content { padding: var(--space-6) 0 var(--space-7); }
 }
 
-/* Titre de page : ligne rouge, comme l'en-tête d'une fiche */
+/* Fil d'Ariane en tête de page */
+#title-block-header .quarto-page-breadcrumbs,
+.quarto-page-breadcrumbs .breadcrumb { font-size: var(--font-size-small); margin-bottom: var(--space-3); }
+.quarto-page-breadcrumbs .breadcrumb { align-items: baseline; }
+.breadcrumb-item, .breadcrumb-item a { color: var(--ink-faint); text-decoration: none; padding-top: 0; line-height: 1.4; }
+.breadcrumb-item a:hover { color: var(--pen); }
+.breadcrumb-item + .breadcrumb-item::before { color: var(--ink-faint); content: "/"; }
+
+/* Titre de page : un court trait rouge, comme l'en-tête d'une fiche */
 #title-block-header {
-  margin-bottom: var(--space-5);
-  padding-bottom: var(--space-3);
-  border-bottom: var(--rule-red-width) solid var(--rule-red);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-7);
+  padding-bottom: 0;
+  border-bottom: 0;
+  max-width: var(--measure);
 }
 #title-block-header .title {
   font-family: var(--serif);
-  font-weight: 600;
+  font-weight: 500;
+  font-size: clamp(2rem, 1.5rem + 2vw, 2.6rem);
+  line-height: 1.15;
+  letter-spacing: -.015em;
   color: var(--ink);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
 }
-#title-block-header .subtitle,
-#title-block-header .quarto-title-meta-heading,
-#title-block-header .quarto-title-meta-contents { color: var(--ink-soft); }
-#title-block-header .quarto-title-meta { margin-top: var(--space-3); }
+#title-block-header::after {
+  content: "";
+  display: block;
+  width: var(--rule-red-length);
+  height: var(--rule-red-width);
+  margin-top: var(--space-5);
+  background: var(--rule-red);
+  border-radius: 1px;
+}
+#title-block-header > :last-child, #title-block-header .quarto-title-meta { margin-bottom: 0; }
+#title-block-header .subtitle {
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+}
+#title-block-header .description { color: var(--ink-faint); margin-top: var(--space-2); }
+#title-block-header .description p { margin: 0; font-size: 1rem; }
+/* Métadonnées (date de modification) : une ligne discrète, sans titre en capitales */
+#title-block-header .quarto-title-meta {
+  margin-top: var(--space-4);
+  display: flex; gap: var(--space-5);
+  font-size: var(--font-size-small);
+}
+#title-block-header .quarto-title-meta-heading {
+  text-transform: none !important; letter-spacing: 0 !important; font-weight: 400;
+  color: var(--ink-faint); font-size: var(--font-size-small) !important; display: inline; margin: 0;
+}
+#title-block-header .quarto-title-meta-heading::after { content: " "; }
+#title-block-header .quarto-title-meta-contents { color: var(--ink-soft); display: inline; font-size: var(--font-size-small) !important; }
+#title-block-header .quarto-title-meta-contents p { display: inline; margin: 0; }
+#title-block-header .quarto-title-meta > div { display: flex; gap: .35em; align-items: baseline; }
 
-/* Titres de section : serif, ligne bleue de fiche */
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3 { font-family: var(--serif); color: var(--ink); font-weight: 600; }
+/* Titres de section : serif, sans filet ; l'espace fait la séparation */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3 { font-family: var(--serif); color: var(--ink); font-weight: 500; letter-spacing: -.01em; }
 main.content h2, main.content .h2 {
-  border-bottom: 1px solid var(--rule-blue);
-  padding-bottom: var(--space-2);
-  margin-top: var(--space-7);
+  border-bottom: 0;
+  padding-bottom: 0;
+  font-size: 1.65rem;
+  line-height: 1.25;
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-4);
 }
-main.content h3 { margin-top: var(--space-6); }
+main.content h3, main.content .h3 { font-size: 1.3rem; line-height: 1.3; margin-top: var(--space-7); margin-bottom: var(--space-3); }
+main.content h4 { font-size: 1.1rem; margin-top: var(--space-6); }
 main.content h2 .header-section-number,
-main.content h3 .header-section-number { color: var(--ink-faint); font-weight: 500; }
-.anchorjs-link { color: var(--ink-faint) !important; }
+main.content h3 .header-section-number { color: var(--ink-faint); font-weight: 400; margin-right: .35em; }
+.anchorjs-link { color: var(--ink-faint) !important; text-decoration: none; }
+main.content p, main.content li { color: var(--ink); }
+main.content p { margin-bottom: var(--space-4); }
+main.content li + li { margin-top: var(--space-1); }
 
-/* Tableaux */
-main.content table { --bs-table-bg: transparent; --bs-table-color: var(--ink); color: var(--ink); border-color: var(--rule-blue); }
-main.content table > thead { border-bottom: 1.5px solid var(--ink-faint) !important; }
-main.content .table > :not(caption) > * > * { border-bottom-color: var(--rule-blue); color: var(--ink); }
+/* Tableaux : lignes fines, en-tête discret, pas de cadre */
+main.content table {
+  --bs-table-bg: transparent; --bs-table-color: var(--ink);
+  color: var(--ink); border-color: var(--rule-blue);
+  font-size: .97em; line-height: 1.5;
+  margin: var(--space-5) 0 var(--space-6);
+}
+main.content table, main.content table > thead, main.content table > thead > tr > th { border-top: 0 !important; }
+main.content table > thead { border-bottom: 1px solid var(--ink-faint) !important; }
+main.content table > thead th {
+  color: var(--ink-soft); font-weight: 600; font-size: var(--font-size-small);
+  border-bottom-width: 0; padding-top: 0;
+}
+main.content .table > :not(caption) > * > * {
+  border-bottom-color: var(--rule-blue); color: var(--ink);
+  padding: .7rem .75rem .7rem 0;
+  background: transparent;
+}
+main.content .table > :not(caption) > * > *:last-child { padding-right: 0; }
+main.content .table > tbody > tr:last-child > * { border-bottom: 0; }
+main.content table caption { color: var(--ink-soft); font-size: var(--font-size-small); }
+
+/* Statut d'un chapitre (fiche matière) : pastille en minuscules, pas de capitales */
+span.statut {
+  display: inline-block;
+  padding: .1em .65em;
+  border-radius: 999px;
+  font-size: .82rem;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--ink-faint) 13%, transparent);
+}
+span.statut.flashcards, span.statut.valide {
+  color: var(--pen);
+  background: color-mix(in srgb, var(--pen) 11%, transparent);
+}
+span.statut.redige, span.statut.verifie, span.statut.analyse {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--pen) 6%, transparent);
+}
 
 /* Code */
-code:not(.sourceCode) { color: var(--ink); background: var(--code-bg); padding: .05em .3em; border-radius: 3px; }
+// Quarto/Bootstrap stylent `p code`, `li code`, `td code` avec un gris fixe, plus spécifique que
+// `code` seul : en mode sombre, le code en ligne devenait clair sur clair. On reprend ces sélecteurs.
+code:not(.sourceCode),
+p code:not(.sourceCode), li code:not(.sourceCode), td code:not(.sourceCode) {
+  color: var(--ink); background: var(--code-bg);
+  padding: .1em .35em; border-radius: 4px; font-size: .86em;
+}
 div.sourceCode, pre.sourceCode { background: var(--code-bg) !important; border: 0; border-radius: var(--radius-control); }
+pre.sourceCode { padding: var(--space-4); }
 
 /* Environnements (définition, théorème…) et démonstrations */
+main.content .theorem, main.content .proof, main.content .remark, main.content .solution { margin: var(--space-5) 0; }
 main.content .theorem > p:first-child > span:first-child,
-main.content .proof > p:first-child > span:first-child { color: var(--ink); }
-main.content hr { border-color: var(--rule-blue); opacity: 1; }
+main.content .proof > p:first-child > span:first-child { color: var(--ink); font-weight: 600; }
+main.content hr { border-color: var(--desk-line); opacity: 1; margin: var(--space-7) 0; }
 
 /* Formules : même couleur que le texte, défilement horizontal si trop larges */
 mjx-container { color: inherit; }
-mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; }
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; padding: var(--space-1) 0; }
 
 /* Figures et légendes.
    Les SVG ont des couleurs fixes (conventions.md § 9) : en mode sombre, ils sont
    posés sur un papier clair (--figure-bg), comme une fiche sur la feuille. */
+main.content .quarto-figure, main.content figure { margin: var(--space-6) 0; }
 main.content .quarto-figure img, main.content figure img {
   background: var(--figure-bg);
   padding: var(--figure-pad);
   border-radius: var(--radius-paper);
 }
-figcaption, .figure-caption { color: var(--ink-soft); }
+figcaption, .figure-caption {
+  color: var(--ink-soft);
+  font-size: var(--font-size-small);
+  line-height: 1.55;
+  margin-top: var(--space-3);
+}
 
 /* ---------- Bureau : barre latérale, sommaire, navigation de page ---------- */
 #quarto-sidebar, .sidebar.sidebar-navigation, .sidebar-navigation {
@@ -200,38 +322,106 @@ figcaption, .figure-caption { color: var(--ink-soft); }
   color: var(--desk-ink);
   border: 0 !important;
 }
+#quarto-sidebar { padding-top: var(--space-7); }
+#quarto-sidebar .sidebar-menu-container { padding-right: var(--space-4); }
+#quarto-sidebar .sidebar-item { font-size: .95rem; line-height: 1.4; }
 #quarto-sidebar .sidebar-title,
 #quarto-sidebar .sidebar-item-text,
-#quarto-sidebar .sidebar-link { color: var(--desk-ink); }
+#quarto-sidebar .sidebar-link { color: var(--desk-muted); font-weight: 400; }
+#quarto-sidebar .sidebar-link { padding: .35rem .6rem; border-radius: var(--radius-control); text-decoration: none; transition: background-color .15s, color .15s; }
+#quarto-sidebar .sidebar-link:hover, #quarto-sidebar .sidebar-link:hover .sidebar-item-text { color: var(--desk-ink); background: var(--desk-hover); }
 #quarto-sidebar .sidebar-link.active,
-#quarto-sidebar .sidebar-link.active .sidebar-item-text { color: var(--desk-pen); font-weight: 700; }
-#quarto-sidebar .sidebar-title { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; }
-#quarto-sidebar .sidebar-section .sidebar-item-text { font-weight: 700; }
+#quarto-sidebar .sidebar-link.active .sidebar-item-text { color: var(--desk-ink); font-weight: 600; }
+#quarto-sidebar .sidebar-link.active { background: var(--desk-hover); }
+// Section repliable (« Cours ») : petit intitulé, pas de gras
+#quarto-sidebar .sidebar-item-section > .sidebar-item-container .sidebar-item-text,
+#quarto-sidebar .sidebar-section .sidebar-item-text { font-weight: 400; }
+#quarto-sidebar .sidebar-item-section > .sidebar-item-container > a .menu-text,
+#quarto-sidebar .sidebar-item-section > .sidebar-item-container .sidebar-item-text {
+  font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint);
+}
+#quarto-sidebar .sidebar-item-section { margin-top: var(--space-4); }
+#quarto-sidebar .sidebar-section { padding-left: 0; }
+#quarto-sidebar .sidebar-item-toggle { color: var(--ink-faint); }
+#quarto-sidebar .sidebar-title { font-family: var(--serif); font-weight: 500; font-size: 1.1rem; color: var(--desk-ink); }
 
-#TOC, nav#TOC, #quarto-margin-sidebar { color: var(--desk-ink); }
-#TOC #toc-title, #quarto-margin-sidebar h2 { color: var(--desk-ink); font-family: var(--serif); border: 0; }
-#TOC .nav-link, #quarto-margin-sidebar .nav-link { color: var(--desk-muted); }
+#TOC, nav#TOC, #quarto-margin-sidebar { color: var(--desk-muted); font-size: var(--font-size-small); }
+#quarto-margin-sidebar { padding-top: var(--space-7); }
+#TOC #toc-title, #quarto-margin-sidebar h2 {
+  color: var(--ink-faint); font-family: var(--sans); border: 0;
+  font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  margin-bottom: var(--space-3);
+}
+#TOC .nav-link, #quarto-margin-sidebar .nav-link { color: var(--desk-muted); text-decoration: none; line-height: 1.4; padding-top: .3rem; padding-bottom: .3rem; }
+#TOC .nav-link:hover, #quarto-margin-sidebar .nav-link:hover { color: var(--desk-ink); }
 #TOC .nav-link.active, #quarto-margin-sidebar .nav-link.active,
 #TOC ul > li > a.nav-link.active, .sidebar nav[role=doc-toc] ul > li > a.active {
-  color: var(--desk-pen) !important; border-left-color: var(--desk-pen) !important; font-weight: 700;
+  color: var(--desk-ink) !important; border-left-color: var(--rule-red) !important; font-weight: 500;
 }
-#TOC ul { border-left-color: var(--desk-line); }
+#TOC ul, .sidebar nav[role=doc-toc] ul { border-left-color: var(--desk-line); }
+#TOC .header-section-number { color: var(--ink-faint); }
 
-.nav-page .pagination-link, .page-navigation a { color: var(--desk-pen); }
-.page-navigation { border-top: 1px solid var(--desk-line); }
-#quarto-back-to-top { background: var(--paper); color: var(--ink); border-color: var(--rule-blue); }
+.nav-page .pagination-link, .page-navigation a { color: var(--desk-ink); text-decoration: none; }
+.nav-page .pagination-link:hover, .page-navigation a:hover { color: var(--pen); }
+.page-navigation { border-top: 1px solid var(--desk-line); padding-top: var(--space-5); margin-top: var(--space-7); }
+.nav-page .nav-page-text { font-family: var(--serif); }
+#quarto-back-to-top { background: var(--paper); color: var(--ink-soft); border: 1px solid var(--desk-line); box-shadow: var(--shadow); }
 
 /* Recherche */
 .aa-DetachedOverlay .aa-DetachedContainer, .aa-Panel, .aa-Form, .aa-DetachedFormContainer {
   background: var(--paper) !important; color: var(--ink) !important;
 }
-.aa-Form { border-color: var(--field-border) !important; }
+.aa-DetachedContainer, .aa-Panel { border-radius: var(--radius-paper) !important; box-shadow: var(--shadow) !important; }
+.aa-Form { border-color: var(--field-border) !important; border-radius: var(--radius-control) !important; }
 .aa-Input { color: var(--ink) !important; }
-.aa-Item { color: var(--ink) !important; }
-.aa-Item[aria-selected="true"], .aa-Item:hover { background: color-mix(in srgb, var(--pen) 10%, transparent) !important; }
+.aa-Item { color: var(--ink) !important; border-radius: var(--radius-control) !important; }
+.aa-Item[aria-selected="true"], .aa-Item:hover { background: color-mix(in srgb, var(--pen) 8%, transparent) !important; }
 .aa-DetachedCancelButton { color: var(--pen) !important; border-color: var(--field-border) !important; }
 #quarto-search-results .search-result-text, .aa-Panel mark, .search-match { color: var(--ink) !important; }
-.quarto-search-overlay, .aa-DetachedOverlay { background: rgba(18,25,40,.5) !important; }
+.quarto-search-overlay, .aa-DetachedOverlay { background: rgba(18,22,32,.35) !important; }
+
+/* ==========================================================================
+   Accueil : matières en cartes (index.qmd)
+   ========================================================================== */
+main.content .subject-group { max-width: none; margin-bottom: var(--space-7); }
+main.content .subject-group > h2, main.content h2.ue-title {
+  font-family: var(--sans); font-size: .8rem; font-weight: 600;
+  letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint);
+  margin: 0 0 var(--space-4);
+}
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
+  gap: var(--space-4);
+}
+.subject-grid > p { display: contents; }
+a.subject {
+  display: flex; flex-direction: column; gap: var(--space-1);
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  background: var(--paper);
+  border: 1px solid var(--desk-line);
+  border-radius: var(--radius-paper);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+  min-height: 8.5rem;
+}
+a.subject:hover { border-color: color-mix(in srgb, var(--pen) 35%, var(--desk-line)); box-shadow: var(--shadow); transform: translateY(-1px); color: var(--ink); }
+a.subject .code { font-size: .8rem; font-weight: 600; letter-spacing: .06em; color: var(--ink-faint); }
+a.subject .name { font-family: var(--serif); font-size: 1.12rem; font-weight: 500; line-height: 1.35; flex: 1; }
+a.subject .state { font-size: .88rem; color: var(--ink-faint); margin-top: var(--space-3); }
+a.subject.ready .state { color: var(--pen); font-weight: 600; }
+a.subject.ready .code::after { content: ""; display: inline-block; width: .4rem; height: .4rem; border-radius: 50%; background: var(--rule-red); margin-left: .5rem; vertical-align: .12em; }
+@media (max-width: 575.98px) {
+  .subject-grid { grid-template-columns: 1fr; gap: var(--space-3); }
+  a.subject { min-height: 0; }
+}
+
+/* Liens de bas d'accueil */
+.home-links { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); margin-top: var(--space-6); padding-top: var(--space-5); border-top: 1px solid var(--desk-line); font-size: .98rem; }
+.home-links p { margin: 0; }
+.home-links a { text-decoration: none; font-weight: 600; margin-right: .5em; }
+.home-links .muted { color: var(--ink-faint); }
 
 /* ==========================================================================
    Les quatre catégories (CONTEXTE_PROJET.md § 7, conventions.md § 5)
@@ -242,22 +432,25 @@ figcaption, .figure-caption { color: var(--ink-soft); }
 /* Blocs */
 div.notes, div.notes-externes, div.complement, div.a-verifier {
   position: relative;
-  margin: 1.25rem 0;
-  padding: 2rem 1rem 0.75rem 1.1rem;
-  border-radius: 0 var(--radius-control) var(--radius-control) 0;
+  margin: var(--space-5) 0;
+  padding: 2.35rem 1.35rem 1rem 1.35rem;
+  border-radius: 0 var(--radius-paper) var(--radius-paper) 0;
 }
+div.notes > :last-child, div.notes-externes > :last-child,
+div.complement > :last-child, div.a-verifier > :last-child { margin-bottom: 0; }
 div.notes::before, div.notes-externes::before, div.complement::before, div.a-verifier::before {
   position: absolute;
-  top: 0.45rem;
-  left: 1.1rem;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  top: .8rem;
+  left: 1.35rem;
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  line-height: 1.2;
   font-family: var(--sans);
 }
 
 div.notes {
-  border-left: 4px solid var(--cat-notes);
+  border-left: 3px solid var(--cat-notes);
   background: var(--cat-notes-bg);
 }
 div.notes::before { content: "✎ Notes de cours"; color: var(--cat-notes); }
@@ -273,13 +466,13 @@ div.notes-externes {
 div.notes-externes::before { content: "✎ Notes externes"; color: var(--cat-notes-ext); }
 
 div.complement {
-  border-left: 3px dashed var(--cat-complement);
+  border-left: 2px dashed var(--cat-complement);
   background: var(--cat-complement-bg);
 }
 div.complement::before { content: "+ Complément"; color: var(--cat-complement-ink); }
 
 div.a-verifier {
-  border-left: 4px solid var(--cat-verifier);
+  border-left: 3px solid var(--cat-verifier);
   background: var(--cat-verifier-bg);
 }
 div.a-verifier::before { content: "? À vérifier"; color: var(--cat-verifier); }
@@ -289,12 +482,17 @@ div.a-verifier::before { content: "? À vérifier"; color: var(--cat-verifier); 
    fin et fond plus pâle ; étiquette « ✓ Corrigé ». Clair et sombre : les
    jetons changent seuls, aucune couleur en dur. */
 div.a-verifier.tranche {
-  border-left-width: 2px;
+  border-left-width: 1.5px;
   background: color-mix(in srgb, var(--cat-verifier-bg) 50%, transparent);
 }
 div.a-verifier.tranche::before {
   content: "✓ Corrigé";
   color: color-mix(in srgb, var(--cat-verifier) 80%, var(--ink-soft));
+}
+
+@media (max-width: 575.98px) {
+  div.notes, div.notes-externes, div.complement, div.a-verifier { padding: 2.25rem 1rem .9rem 1rem; }
+  div.notes::before, div.notes-externes::before, div.complement::before, div.a-verifier::before { left: 1rem; }
 }
 
 /* Segments dans une phrase */

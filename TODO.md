@@ -80,7 +80,7 @@
 ## Priorité 2 quinquies — Matières du S7 (archive 2A, 19 octobre 2026)
 
 - [x] Redistribuer `sources/2A.zip` : 413 fichiers rangés dans `sources/<code>/`, copies vérifiées (MD5) ; fiches matières, inventaires et plans proposés des 14 nouvelles matières ; barres latérales, accueil, paquets vides (19 octobre 2026).
-- [ ] **Armand** : contrôler avec `quarto preview` l'accueil, les 14 barres latérales et les fiches matières (Quarto absent de l'environnement de Claude).
+- [x] Contrôler le rendu de l'accueil, des 14 barres latérales et des fiches matières (Claude, Quarto 1.10.19, 19 octobre 2026) ; reste à voir chez Armand : polices et formules.
 - [ ] **Armand** : valider ou corriger les plans proposés (AUTO1 6 ch., AUTO3 4, EAEP1 7, EANA2 5, EARF1 4, NUMC1 6, TSIG1 5) avant l'analyse des premiers chapitres.
 - [ ] **Armand** : confirmer deux rattachements par défaut : annales « Initiation aux bruits » (EA222) → EANA2 ; TD VHDL rangés dans NUMC1 (et non NUME3).
 - [ ] **Armand** : fournir le support d'EANA1 (aucun support officiel dans l'archive) et, pour TSIG1, le support de cours s'il existe (seules 6 p. d'illustrations reçues).

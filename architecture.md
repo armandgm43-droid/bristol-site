@@ -111,7 +111,7 @@ Règles de la DA (métaphore, surfaces, typographie, catégories, mode sombre) :
 | Fichier | Contenu | Lu par |
 |---|---|---|
 | `bristol-tokens.css` | **Source unique** : variables CSS (couleurs, polices, tailles, espacements), en clair et en sombre ; import des polices Google Fonts | le site (`format.html.css`) et l'application (`<link href="../assets/bristol-tokens.css">`) |
-| `bristol.scss` | Thème Quarto : règles seulement (barre de navigation, feuille de lecture, barres latérales, recherche, quatre catégories, impression). Aucune couleur en dur : tout passe par `var(--…)`. Côté Sass, seules les polices sont passées à Bootstrap | Quarto (thème clair et sombre) |
+| `bristol.scss` | Thème Quarto : règles seulement (barre de navigation, page de lecture, barres latérales, recherche, cartes de l'accueil, pastilles de statut, quatre catégories, impression). Aucune couleur en dur : tout passe par `var(--…)`. Côté Sass, seules les polices sont passées à Bootstrap | Quarto (thème clair et sombre) |
 | `bristol-sombre.scss` | Commentaire sentinelle `/*! dark */`, sans aucune couleur : il indique à Quarto que la feuille compilée est le thème sombre (sinon Quarto la traite comme claire, la classe `body.quarto-dark` n'est jamais posée et le bouton ne fait rien) | Quarto (thème sombre uniquement) |
 
 Les deux feuilles Bootstrap compilées (claire et sombre) sont donc presque identiques : c'est le **jeu de jetons actif** qui change les couleurs.
@@ -134,8 +134,9 @@ Les valeurs claires et sombres sont écrites deux fois dans ce même fichier (bl
 - Blocs `div.notes`, `div.complement`, `div.a-verifier` : filet à gauche + étiquette en `::before` + fond teinté, couleurs `--cat-…`. Segments `span.…` : couleur + symbole.
 - Impression (`@media print`) : feuille blanche, mêmes repères, sans fond.
 - Figures (`main.content figure img`) : fond `--figure-bg` et marge `--figure-pad`, nulle en clair ; en sombre, les SVG à couleurs fixes restent lisibles sur un fond blanc.
-- Blocs tranchés (`.a-verifier.tranche`) : étiquette `✓ Corrigé`, filet de 2 px au lieu de 4 px, fond `--cat-verifier-bg` mélangé à 50 % de transparent (`color-mix`) ; mêmes jetons `--cat-verifier…`, donc clair et sombre sans couleur en dur. Exemple dans `demo-conventions.qmd`.
+- Blocs tranchés (`.a-verifier.tranche`) : étiquette `✓ Corrigé`, filet de 1,5 px au lieu de 3 px, fond `--cat-verifier-bg` mélangé à 50 % de transparent (`color-mix`) ; mêmes jetons `--cat-verifier…`, donc clair et sombre sans couleur en dur. Exemple dans `demo-conventions.qmd`.
 - **Rendu PDF (LaTeX) : pas encore fait.** Il faudra un filtre Lua ou des environnements LaTeX (`tcolorbox`) qui reproduisent filet et étiquette ; reprendre alors les couleurs claires de `bristol-tokens.css`.
+- Refonte allégée du 19 octobre 2026 (`conventions.md` § 13) : seuls les jetons, `bristol.scss`, le CSS de `revision/index.html` (pas son JavaScript), `index.qmd` et les tableaux de statut des fiches matières ont changé. Rendu contrôlé sur captures (accueil, fiche matière, chapitres, démo, application et séance de révision ; clair, sombre, mobile).
 - Polices et MathJax viennent d'Internet (Google Fonts, jsDelivr) : sans connexion, polices de repli et formules non rendues.
 
 ---
@@ -216,6 +217,7 @@ Pour un site de plusieurs centaines de pages : rendu d'un seul fichier (`quarto 
 | Outil | Version | Remarque |
 |---|---|---|
 | Quarto | 1.10.19 (d'après le `_site/` généré le 6 octobre 2026) | installé sur le PC d'Armand ; ≥ 1.7 requis pour `respect-user-color-scheme` |
+| Quarto (contrôle par Claude) | 1.10.19, archive Linux de GitHub (`quarto-1.10.19-linux-amd64.tar.gz`) | installé par Claude dans sa machine de travail (hors du projet) pour rendre une copie du site sans `sources/` ; rien n'est écrit dans `_site/` ni `.quarto/` du projet |
 | Python | 3.x | figures et scripts |
 | PyYAML | 6.x | scripts |
 | matplotlib | 3.10 (rendu des figures du ch. 2 de TS227) | figures : `python3 figures/NN-slug.py` écrit le `.svg` voisin |

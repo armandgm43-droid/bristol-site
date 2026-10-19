@@ -4,7 +4,7 @@
 > À lire avec `CONTEXTE_PROJET.md` (le *pourquoi*) et `ETAT_PROJET.md` (l'état du projet).
 > Ces conventions s'appliquent à **toutes les matières**. Ce qui est propre à une matière (notations, convention de la TF…) va dans sa fiche matière, pas ici.
 >
-> Dernière mise à jour : 19 octobre 2026 (sources : dossiers `tp/` et `travaux/`, documents d'un tiers, versions antérieures).
+> Dernière mise à jour : 19 octobre 2026 (refonte allégée de la direction artistique, § 13 ; affichage des statuts, § 4).
 
 Toute nouvelle convention est **proposée explicitement** avant d'être appliquée, puis ajoutée ici et dans le [journal des conventions](#12-journal-des-conventions).
 
@@ -111,14 +111,16 @@ Le champ `statut` prend une valeur **en minuscules, sans accents**, pour pouvoir
 
 | Valeur du champ | Affichage | Signification |
 |---|---|---|
-| `brouillon` | BROUILLON | Sources reçues, rien n'est encore rédigé |
-| `analyse` | ANALYSÉ | Rapport d'analyse produit, questions posées |
-| `redige` | RÉDIGÉ | Cours reconstruit, figures intégrées |
-| `verifie` | VÉRIFIÉ | Relecture et vérifications de Claude faites |
-| `valide` | VALIDÉ | Relu et validé par Armand |
-| `flashcards` | FLASHCARDS GÉNÉRÉES | Cartes produites à partir du cours validé |
+| `brouillon` | Brouillon | Sources reçues, rien n'est encore rédigé |
+| `analyse` | Analysé | Rapport d'analyse produit, questions posées |
+| `redige` | Rédigé | Cours reconstruit, figures intégrées |
+| `verifie` | Vérifié | Relecture et vérifications de Claude faites |
+| `valide` | Validé | Relu et validé par Armand |
+| `flashcards` | Flashcards générées | Cartes produites à partir du cours validé |
 
 Un retour en arrière est explicite et noté dans `ETAT_PROJET.md`.
+
+Dans les tableaux des fiches matières, le statut s'écrit comme une **pastille** (depuis le 19 octobre 2026) : `[Brouillon]{.statut .brouillon}`, `[Flashcards générées]{.statut .flashcards}` ; la seconde classe est la valeur du champ. Les fichiers de mémoire (`ETAT_PROJET.md`, rapports) gardent les majuscules.
 
 ---
 
@@ -397,13 +399,14 @@ Le paquet généré est le **contenu complet** de la matière : ne jamais le mod
 | 2026-10-07 | Paquet TS227 provisoire (préfixe `ts-`) abandonné ; le préfixe reste réservé | Question ouverte 5 |
 | 2026-10-08 | Classe `.notes-externes` (étiquette `✎ Notes externes`, filet double bleu ardoise, jetons `--cat-notes-ext…`, clair et sombre) ; valeur `notes-externes` du champ `source` des cartes | Demande d'Armand (EANA3 : notes d'anciennes promotions) |
 | 2026-10-08 | Nommage des jeux de notes non datées d'une autre année : `<année>-cours-NN-<enseignant>.pdf`, id `notes-<année>-cNN` | Proposé à l'inventaire EANA3 (7 oct.), appliqué par défaut |
+| 2026-10-19 | Refonte allégée de la DA (§ 13) : page de lecture sur le bureau sans feuille ombrée, filets réduits, trait rouge court, *Source Sans 3* à la place d'*Atkinson Hyperlegible*, accueil en cartes (§ 13.7), statuts en pastilles (§ 4) | Demande d'Armand (« en travaux », « trop dur ») ; choix validés par Armand (esprit fiche gardé, application incluse, police changée) |
 | 2026-10-19 | Sources : dossiers `tp/` (avec `tp/fichiers/`) et `travaux/` (travaux personnels, jamais publiés) ; préfixe `<année>-` pour les corrigés et notes d'un tiers ; suffixe `-ancienne-version` ; inventaire `analyses/inventaire-sources.md` par matière | Rangement de l'archive `2A.zip`, choix d'Armand (dossier `travaux/`) et choix par défaut |
 
 ---
 
 ## 13. Direction artistique
 
-Une seule direction artistique pour le site Quarto et l'application de révision : **une fiche bristol posée sur un bureau**. Elle vient de l'application ; le site l'a reprise le 7 octobre 2026.
+Une seule direction artistique pour le site Quarto et l'application de révision : **une fiche bristol posée sur un bureau**. Elle vient de l'application ; le site l'a reprise le 7 octobre 2026. **Version allégée depuis le 19 octobre 2026** (demande d'Armand : le site faisait « en travaux » et trop dur) : même identité, mais une seule surface calme, peu de filets et beaucoup d'air ; la hiérarchie passe par la taille, la graisse et l'espace plutôt que par des traits.
 
 ### 13.1 Source unique : les jetons
 
@@ -416,42 +419,45 @@ Une seule direction artistique pour le site Quarto et l'application de révision
 
 | Surface | Jetons | Où | Mode clair | Mode sombre |
 |---|---|---|---|---|
-| **Bureau** | `--desk`, `--desk-ink`, `--desk-muted`, `--desk-pen`, `--desk-line` | fond de page, barre de navigation, barres latérales, sommaire | gris-bleu `#E2E7ED` | bleu nuit `#1B2231` |
-| **Feuille** | `--paper`, `--ink`, `--ink-soft`, `--ink-faint`, `--pen`, `--field…` | contenu d'une page du site, liste des paquets, dialogues | blanc | feuille sombre `#232B3B` |
+| **Bureau** | `--desk`, `--desk-ink`, `--desk-muted`, `--desk-pen`, `--desk-line`, `--desk-hover` | fond de page, barre de navigation (translucide), barres latérales, sommaire ; **sur le site, la page de lecture est posée directement sur le bureau** (plus de feuille ombrée) | papier chaud `#FAF9F6` | bleu nuit `#171B24` |
+| **Feuille** | `--paper`, `--ink`, `--ink-soft`, `--ink-faint`, `--pen`, `--field…` | surfaces posées sur le bureau, bordées d'un filet fin (`--desk-line`) et sans ombre : cartes de l'accueil, liste des paquets, dialogues, recherche | blanc | `#1E2330` |
 | **Fiche** | `--card-ink…`, `--card-rule-blue`, teinte du paquet | cartes de révision | papier clair | **reste en papier clair** |
 
 Repères graphiques, communs au site et à l'application :
 
-- **ligne rouge** (`--rule-red`, épaisseur `--rule-red-width`) : sous le titre d'une page ou d'une feuille, sous le mot « Bristol » et sous le lien actif de la barre de navigation ;
-- **lignes bleues** (`--rule-blue`) : sous les titres de section, entre les lignes d'un tableau ou d'une liste, comme les lignes d'une fiche ;
-- **bleu encre** (`--pen`) : liens et actions.
+- **trait rouge** (`--rule-red`, épaisseur `--rule-red-width`) : seul repère rouge, utilisé avec parcimonie : sous le mot « Bristol », sous le lien actif de la barre de navigation, et en **court trait** (`--rule-red-length`, 2,5 rem) à la fin de l'en-tête d'une page ou d'une feuille. Sur l'accueil, un point rouge signale les matières dont un cours est disponible ;
+- **lignes bleues** (`--rule-blue`) : seulement entre les lignes d'un tableau ou d'une liste, et sur les cartes de révision. Plus de filet sous les titres de section : l'espace les sépare ;
+- **bleu encre** (`--pen`) : liens (soulignement léger, plein au survol) et actions. Une action répétée sur chaque ligne (« Réviser ») est en ton doux, pleine au survol ;
+- navigation et barres latérales en encre atténuée (`--desk-muted`), sans gras ; l'élément actif passe à l'encre pleine (lien actif : trait rouge ; page active de la barre latérale : fond `--desk-hover`) ; intitulés de groupes (« Cours », « Sur cette page », UE de l'accueil) en petites capitales espacées.
 
 ### 13.3 Typographie et espacements
 
 | Rôle | Jeton | Valeur |
 |---|---|---|
-| Titres, noms de paquets, texte des cartes | `--serif` | *Literata* |
-| Texte courant, interface | `--sans` | *Atkinson Hyperlegible* |
+| Titres, noms de paquets, texte des cartes | `--serif` | *Literata*, graisse 500 |
+| Texte courant, interface | `--sans` | *Source Sans 3* (depuis le 19 octobre 2026, à la place d'Atkinson Hyperlegible : chiffres plus doux, zéro non barré) |
 | Code | `--mono` | police à chasse fixe du système |
 | Taille de référence (1 rem) | `--font-size-root` | 16 px, identique site et application |
-| Texte des pages de cours | `--font-size-reading` | 1,0625 rem (17 px) |
-| Liens de la barre de navigation | `--font-size-nav` | 0,95 rem |
-| Espacements | `--space-1` à `--space-7` | 0,25 / 0,5 / 0,75 / 1 / 1,5 / 2 / 3 rem |
-| Rayons | `--radius-paper`, `--radius-control` | 4 px (feuilles, fiches), 6 px (boutons, champs) |
-| Barre de navigation | `--nav-height` | 3,5 rem |
+| Texte des pages de cours | `--font-size-reading`, `--line-height-reading` | 1,125 rem (18 px), interligne 1,7 |
+| Liens de la barre de navigation | `--font-size-nav` | 1 rem |
+| Légendes, métadonnées, barres latérales | `--font-size-small` | 0,9 rem |
+| Espacements | `--space-1` à `--space-8` | 0,25 / 0,5 / 0,75 / 1 / 1,5 / 2 / 3 / 4,5 rem |
+| Rayons | `--radius-paper`, `--radius-control`, `--radius-card` | 10 px (surfaces, blocs, figures), 8 px (boutons, champs), 5 px (fiches de révision) |
+| Barre de navigation | `--nav-height` | 4 rem |
+| Largeur du texte de lecture | `--measure` | 44 rem |
 
 Les polices sont chargées depuis Google Fonts par `assets/bristol-tokens.css` (une seule déclaration pour les deux).
 
 ### 13.4 Les quatre catégories
 
-Formes, étiquettes et symboles **inchangés** (§ 5) : filet plein bleu `✎ Notes de cours`, filet double bleu ardoise `✎ Notes externes`, filet gris pointillé `+ Complément`, filet orange `? À vérifier`.
+Formes, étiquettes et symboles **inchangés** (§ 5) : filet plein bleu `✎ Notes de cours`, filet double bleu ardoise `✎ Notes externes`, filet gris pointillé `+ Complément`, filet orange `? À vérifier`. Allègement du 19 octobre 2026 : filets un peu plus fins (3 px, 2 px pointillé, 1,5 px pour un bloc tranché ; double de 5 px inchangé), fonds plus pâles, coins droits arrondis, marges intérieures plus larges.
 
 | Catégorie | Jetons | Mode clair | Mode sombre |
 |---|---|---|---|
-| Notes de cours | `--cat-notes`, `--cat-notes-bg` | `#23489A` (inchangé) | `#A9BFF2` |
-| Notes externes | `--cat-notes-ext`, `--cat-notes-ext-bg` | `#4E6A99` | `#B9C6DE` |
-| Complément | `--cat-complement`, `--cat-complement-ink`, `--cat-complement-bg` | `#7E889B` / `#5A6478` (inchangés) | `#8792A6` / `#B4BDCC` |
-| À vérifier | `--cat-verifier`, `--cat-verifier-bg` | `#C2610C` (inchangé) | `#F0A15C` |
+| Notes de cours | `--cat-notes`, `--cat-notes-bg` | `#2B4C9B` | `#A9BFF2` |
+| Notes externes | `--cat-notes-ext`, `--cat-notes-ext-bg` | `#52699A` | `#B9C6DE` |
+| Complément | `--cat-complement`, `--cat-complement-ink`, `--cat-complement-bg` | `#7E889B` (inchangé, = pointillés des figures) / `#5D6475` | `#7F8797` / `#B2BAC8` |
+| À vérifier | `--cat-verifier`, `--cat-verifier-bg` | `#BF6014` | `#EDA163` |
 
 En mode sombre, chaque catégorie garde sa **famille de couleur** (bleu, gris, orange), éclaircie pour rester lisible sur la feuille sombre. Les trois indices redondants (filet, étiquette, fond) sont conservés dans les deux modes.
 
@@ -463,8 +469,13 @@ En mode sombre, chaque catégorie garde sa **famille de couleur** (bleu, gris, o
 
 ### 13.6 Barre de navigation commune
 
-- Même dessin sur le site et dans l'application : « Bristol » souligné de rouge (lien vers l'accueil), puis Matières, Révisions, Conventions, et à droite le bouton clair/sombre. L'application y ajoute son indicateur d'enregistrement ; le site, la recherche.
+- Même dessin sur le site et dans l'application : « Bristol » souligné de rouge (lien vers l'accueil), puis Matières, Révisions, Conventions, et à droite le bouton clair/sombre. L'application y ajoute son indicateur d'enregistrement ; le site, la recherche. Barre translucide (flou d'arrière-plan) avec un filet fin en bas.
 - Les liens de l'application sont écrits dans `revision/index.html` : toute modification de `website.navbar` dans `_quarto.yml` doit y être reportée (voir `architecture.md`, § 6).
+
+### 13.7 Accueil
+
+- Une **carte par matière**, groupées par UE (`index.qmd`, classes `.subject-group`, `.subject-grid`, `.subject`, `.subject.ready`). Chaque carte : code, intitulé, et une ligne écrite **pour le lecteur** (« 4 chapitres sur 6 · 186 cartes », « À venir », « Travaux pratiques », « Projet »), jamais le vocabulaire de suivi du projet (« sources inventoriées », « plan proposé ») : ce détail reste dans les fiches matières et `ETAT_PROJET.md`.
+- `.ready` (point rouge, ligne en bleu encre) : au moins un chapitre rédigé. À mettre à jour à la main quand une matière avance (chapitres, nombre de cartes).
 
 ---
 

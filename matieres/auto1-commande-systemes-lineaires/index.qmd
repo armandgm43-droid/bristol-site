@@ -24,12 +24,12 @@ Plan tiré du sommaire de la note de cours (`cours-v03`), commun aux trois versi
 
 | N° | Chapitre (proposé) | Contenu et sources | Statut |
 |---|---|---|---|
-| 1 | Introduction, modélisation et représentations fréquentielles | § 1 à 3 | BROUILLON |
-| 2 | Analyse de la commande en boucle fermée | § 4 : précision, rejet de perturbation, stabilité, rapidité, sensibilité, filtrage | BROUILLON |
-| 3 | Synthèse d'un régulateur PIDF en temps continu | § 5 et 6 : P, PI, PD, PIDF ; TD 1 et TD 3 | BROUILLON |
-| 4 | Signaux échantillonnés et transformée en Z | § 7 à 9 ; table des transformées en Z | BROUILLON |
-| 5 | Commande à temps discret et synthèse fréquentielle d'un régulateur discret | § 10 et 11 : transformations en W (bilinéaire) et de Tustin ; support « Synthèse fréquentielle » | BROUILLON |
-| 6 | Implantation d'un régulateur numérique | § 12 et 13 ; support « Implantation d'un correcteur numérique » | BROUILLON |
+| 1 | Introduction, modélisation et représentations fréquentielles | § 1 à 3 | [Brouillon]{.statut .brouillon} |
+| 2 | Analyse de la commande en boucle fermée | § 4 : précision, rejet de perturbation, stabilité, rapidité, sensibilité, filtrage | [Brouillon]{.statut .brouillon} |
+| 3 | Synthèse d'un régulateur PIDF en temps continu | § 5 et 6 : P, PI, PD, PIDF ; TD 1 et TD 3 | [Brouillon]{.statut .brouillon} |
+| 4 | Signaux échantillonnés et transformée en Z | § 7 à 9 ; table des transformées en Z | [Brouillon]{.statut .brouillon} |
+| 5 | Commande à temps discret et synthèse fréquentielle d'un régulateur discret | § 10 et 11 : transformations en W (bilinéaire) et de Tustin ; support « Synthèse fréquentielle » | [Brouillon]{.statut .brouillon} |
+| 6 | Implantation d'un régulateur numérique | § 12 et 13 ; support « Implantation d'un correcteur numérique » | [Brouillon]{.statut .brouillon} |
 
 Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
 

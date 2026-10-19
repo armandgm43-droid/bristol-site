@@ -25,11 +25,11 @@ Plan Bristol tiré du support officiel (`support`, p. 1-2). Le support comporte 
 
 | N° | Chapitre | Partie (enseignant) | Séances (support 2025) | Statut |
 |---|---|---|---|---|
-| 1 | [Rappels et généralités sur la contre-réaction](cours/01-generalites-contre-reaction.qmd) | Systèmes contre-réactionnés (F. Rivet), ch. 1 | cours 1 et 2 | FLASHCARDS GÉNÉRÉES |
-| 2 | [Amplificateurs en contre-réaction](cours/02-amplificateurs-contre-reaction.qmd) | Systèmes contre-réactionnés (F. Rivet), ch. 2 | cours 4 et 6 | FLASHCARDS GÉNÉRÉES |
-| 3 | [Applications de la théorie de la contre-réaction](cours/03-applications-contre-reaction.qmd) | Systèmes contre-réactionnés (F. Rivet), ch. 3 | cours 8 et 11 ; TD 2, TD 3, TD additionnel, sujet 2025 | FLASHCARDS GÉNÉRÉES |
-| 4 | [Oscillateurs](cours/04-oscillateurs.qmd) | Oscillateurs et références de tension (Y. Deval), ch. 1 | cours 3, 5, 7 et 9 ; TD 4, TD 6, TD additionnel, sujet 2021 | FLASHCARDS GÉNÉRÉES |
-| 5 | [Références de tension](cours/05-references-de-tension.qmd) | Oscillateurs et références de tension (Y. Deval), ch. 2 | cours 10, 12 et 13 ; TD 5, sujets 2025 et 2026 | FLASHCARDS GÉNÉRÉES |
+| 1 | [Rappels et généralités sur la contre-réaction](cours/01-generalites-contre-reaction.qmd) | Systèmes contre-réactionnés (F. Rivet), ch. 1 | cours 1 et 2 | [Flashcards générées]{.statut .flashcards} |
+| 2 | [Amplificateurs en contre-réaction](cours/02-amplificateurs-contre-reaction.qmd) | Systèmes contre-réactionnés (F. Rivet), ch. 2 | cours 4 et 6 | [Flashcards générées]{.statut .flashcards} |
+| 3 | [Applications de la théorie de la contre-réaction](cours/03-applications-contre-reaction.qmd) | Systèmes contre-réactionnés (F. Rivet), ch. 3 | cours 8 et 11 ; TD 2, TD 3, TD additionnel, sujet 2025 | [Flashcards générées]{.statut .flashcards} |
+| 4 | [Oscillateurs](cours/04-oscillateurs.qmd) | Oscillateurs et références de tension (Y. Deval), ch. 1 | cours 3, 5, 7 et 9 ; TD 4, TD 6, TD additionnel, sujet 2021 | [Flashcards générées]{.statut .flashcards} |
+| 5 | [Références de tension](cours/05-references-de-tension.qmd) | Oscillateurs et références de tension (Y. Deval), ch. 2 | cours 10, 12 et 13 ; TD 5, sujets 2025 et 2026 | [Flashcards générées]{.statut .flashcards} |
 
 ## Table des notations
 

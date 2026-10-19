@@ -25,11 +25,11 @@ Plan tiré des sommaires des deux supports. Le premier objectif annoncé (« pri
 
 | N° | Chapitre (proposé) | Contenu et sources | Statut |
 |---|---|---|---|
-| 1 | Principe et caractéristiques de la conversion analogique-numérique | `can`, parties 1 et 2 : contexte, discrétisation, grandeurs caractéristiques, repliement | BROUILLON |
-| 2 | Limitations de la conversion | `can`, partie 3 : gain, offset, erreurs | BROUILLON |
-| 3 | Architectures des convertisseurs | `can`, partie 4 : CNA, Flash, intégration, pipeline, SAR, ΣΔ, entrelacement, état de l'art | BROUILLON |
-| 4 | Bruit en électronique : outils et types de bruit | `bruit` : introduction, outils de traitement, types de bruit | BROUILLON |
-| 5 | Bruit des composants, rapport signal à bruit et facteur de bruit | `bruit` : modélisation des composants, facteur de bruit ; TD et TP bruit | BROUILLON |
+| 1 | Principe et caractéristiques de la conversion analogique-numérique | `can`, parties 1 et 2 : contexte, discrétisation, grandeurs caractéristiques, repliement | [Brouillon]{.statut .brouillon} |
+| 2 | Limitations de la conversion | `can`, partie 3 : gain, offset, erreurs | [Brouillon]{.statut .brouillon} |
+| 3 | Architectures des convertisseurs | `can`, partie 4 : CNA, Flash, intégration, pipeline, SAR, ΣΔ, entrelacement, état de l'art | [Brouillon]{.statut .brouillon} |
+| 4 | Bruit en électronique : outils et types de bruit | `bruit` : introduction, outils de traitement, types de bruit | [Brouillon]{.statut .brouillon} |
+| 5 | Bruit des composants, rapport signal à bruit et facteur de bruit | `bruit` : modélisation des composants, facteur de bruit ; TD et TP bruit | [Brouillon]{.statut .brouillon} |
 
 Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
 
