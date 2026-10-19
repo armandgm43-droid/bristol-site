@@ -1,0 +1,44 @@
+% Figure — Référence de tension bandgap de l'exercice « Widlar, toute une histoire » (EANA3, chapitre 3).
+% D'après le support [support, p. 8, figure 1], redessiné.
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 03-bandgap-widlar.tex
+%   dvisvgm --no-fonts --exact-bbox -o 03-bandgap-widlar.svg <dossier temporaire>/03-bandgap-widlar.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex, fleche/.style={->, thick}]
+  % transistors
+  \draw (1.2,1.2) node[npn, xscale=-1] (Q1) {};  \node[left] at (0.5,1.2) {$Q_1$};
+  \draw (3.8,1.2) node[npn] (Q2) {};  \node[right] at (4.2,1.6) {$Q_2$ ($\times N$)};
+  
+  \draw (3.8,5.3) node[npn, xscale=-1] (Qo) {};  \node[left] at (3.1,5.3) {$Q_{out}$};
+  % masse
+  \draw (Q1.E) -- (Q1.E |- 0,-1.4);
+  \draw (Q2.E) to[R, l_=$R_1$] (Q2.E |- 0,-1.4);  \draw[fleche] (4.6,-1.2) -- node[right]{$\Delta V_{be}$} (4.6,0.3);
+  
+  % miroir : bases reliées, Q1 en diode
+  \draw (Q1.B) -- (Q2.B);
+  \draw (Q1.C) -- ++(0,0.3) coordinate (c1) -| (Q1.B);
+  % résistances R2 et sortie
+  \draw (c1) to[R, l=$R_2$, i<^=$I_1$] (c1 |- 0,4.2) coordinate (r2g);
+  \draw (Q2.C) -- ++(0,0.3) coordinate (c2) to[R, l_=$R_2$, i<_=$I_2$] (c2 |- 0,4.2) coordinate (r2d);
+  \draw (r2g) -- (r2d) -- (Qo.E);
+  \draw (6.4,0 |- c2) node[npn, anchor=B] (Qe) {};  \node[right] at (Qe.text) {$Q_{err}$};  \draw (c2) -- (Qe.B);  \draw (Qe.E) -- (Qe.E |- 0,-1.4);
+  \draw (-0.6,-1.4) -- (Qe.E |- 0,-1.4);  \draw (3.0,-1.4) node[ground]{};
+  \draw (r2g) -- (-0.6,4.2) node[ocirc]{};
+  % alimentation
+  \draw (0.6,6.6) -- (7.2,6.6);  \node[above] at (4.0,6.6) {$V_{cc}$};
+  \draw (Qo.C) -- (Qo.C |- 0,6.6);
+  \draw (7.2,6.6) to[R, l=$R_3$] (7.2,4.4) -- (Qe.C |- 0,4.4) coordinate (x);
+  \draw (Qe.C) -- (x);  \draw (x) -- (Qo.B |- x) -- (Qo.B);
+  % tensions
+  \draw[fleche] (-0.6,-1.2) -- node[left]{$V_{ref}$} (-0.6,4.0);
+  
+\end{circuitikz}
+\end{document}

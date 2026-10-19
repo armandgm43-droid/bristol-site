@@ -1,0 +1,53 @@
+---
+title: "NUMR1 — Introduction aux réseaux et à Internet. Programmation réseau"
+subtitle: "Fiche matière"
+matiere: numr1
+enseignants: ["Patrice Kadionik", "Olivier Villain"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | NUMR1 (EEL7-NUMR1 ; ancien code : RE223) |
+| UE | EEL7FE-UEB Électronique Numérique |
+| Enseignants | Patrice Kadionik (cours TCP/IP, TP sockets) ; Olivier Villain (cours partie 2, TP) |
+| Année | 2026-2027 (cours : partie 1 v2.3, partie 2 v2.5 ; TP sockets v6.7) |
+
+## Chapitres
+
+Plan à établir à l'analyse : les deux parties du cours (368 p. de diapositives) seront découpées d'après leurs sommaires.
+
+*Plan à établir.*
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/numr1/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `tcpip-1` | `support/tcpip-partie-1-v2-3.pdf` | officielle | 248 p. (une version antérieure de 306 p. aussi rangée) |
+| `tcpip-2` | `support/tcpip-partie-2-v2-5.pdf` | officielle | 120 p. |
+| `tp-sockets` | `tp/tp-sockets-v6-7.pdf` | officielle | 18 p. (une version antérieure aussi rangée) |
+| — | `tp/presentation-tp-reseaux.pdf, tp/fichiers/` | officielle | présentation des TP, extraits de code, script de compilation |
+| `notes-2023` | `notes/2023-notes-cours.pdf` | externe | 2 p. (ancien élève) |
+
+La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).
+
+## Remarques
+
+- Un paquet de cartes hérité existe déjà pour cette matière : `reseaux.json` (225 cartes, préfixe `res-`, généré avant la méthode Bristol). Question ouverte 6 : le migrer ou le garder tel quel.
+- Les programmes personnels du TP sockets sont rangés à part dans `sources/numr1/travaux/` (non publiés).

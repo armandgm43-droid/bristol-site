@@ -240,13 +240,13 @@ figcaption, .figure-caption { color: var(--ink-soft); }
    ========================================================================== */
 
 /* Blocs */
-div.notes, div.complement, div.a-verifier {
+div.notes, div.notes-externes, div.complement, div.a-verifier {
   position: relative;
   margin: 1.25rem 0;
   padding: 2rem 1rem 0.75rem 1.1rem;
   border-radius: 0 var(--radius-control) var(--radius-control) 0;
 }
-div.notes::before, div.complement::before, div.a-verifier::before {
+div.notes::before, div.notes-externes::before, div.complement::before, div.a-verifier::before {
   position: absolute;
   top: 0.45rem;
   left: 1.1rem;
@@ -261,6 +261,16 @@ div.notes {
   background: var(--cat-notes-bg);
 }
 div.notes::before { content: "✎ Notes de cours"; color: var(--cat-notes); }
+
+/* Notes externes (conventions.md § 5) : notes de cours qui ne sont pas celles
+   d'Armand (camarade, ancienne promotion, tableau d'une autre année). Même
+   famille que les notes de cours (bleu, symbole ✎), mais filet double et
+   étiquette distincte, pour rester reconnaissable en noir et blanc. */
+div.notes-externes {
+  border-left: 5px double var(--cat-notes-ext);
+  background: var(--cat-notes-ext-bg);
+}
+div.notes-externes::before { content: "✎ Notes externes"; color: var(--cat-notes-ext); }
 
 div.complement {
   border-left: 3px dashed var(--cat-complement);
@@ -290,6 +300,8 @@ div.a-verifier.tranche::before {
 /* Segments dans une phrase */
 span.notes { color: var(--cat-notes); }
 span.notes::before { content: "✎ "; font-size: 0.85em; }
+span.notes-externes { color: var(--cat-notes-ext); }
+span.notes-externes::before { content: "✎ ext. "; font-size: 0.85em; }
 span.complement { color: var(--cat-complement-ink); font-style: italic; }
 span.complement::before { content: "+ "; font-style: normal; }
 span.a-verifier { color: var(--cat-verifier); text-decoration: underline wavy; text-underline-offset: 3px; }
@@ -298,5 +310,5 @@ span.a-verifier { color: var(--cat-verifier); text-decoration: underline wavy; t
 @media print {
   html, body { background: #fff; }
   main.content { box-shadow: none; padding: 0; margin: 0; }
-  div.notes, div.complement, div.a-verifier { background: none; }
+  div.notes, div.notes-externes, div.complement, div.a-verifier { background: none; }
 }

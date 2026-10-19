@@ -1,0 +1,52 @@
+---
+title: "EANA4 — Travaux pratiques d'électronique"
+subtitle: "Fiche matière"
+matiere: eana4
+enseignants: ["Jean-Michel Vinassa"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | EANA4 (EEL7-EANA4 ; ancien code : EA208) |
+| UE | EEL7FE-UEA Circuits et Systèmes Analogiques |
+| Responsable | Jean-Michel Vinassa (auteur du poly) |
+| Année | 2026-2027 (poly 2026, 70 p.) |
+| Nature | matière de travaux pratiques (pas de cours magistral) |
+
+## Chapitres
+
+Matière de TP : pas de chapitre de cours ; TP traités en phase 2 (dossier `tp/`). Séances du poly :
+
+
+| Séance | Contenu |
+|---|---|
+| TP 1 | commutation de diode et de transistor |
+| TP 2 | propriétés de la contre-réaction (lien avec EANA3) |
+| TP 3 | amplificateur à MOSFET en hautes fréquences |
+| TP 4 / 5 | modulations d'amplitude et de fréquence (lien avec EARF1) |
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/eana4/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `poly` | `tp/poly-tp-2026-vinassa.pdf` | officielle | énoncés des TP |
+| — | `corriges/2023-…pdf` | externe | comptes rendus d'un binôme d'une promotion antérieure (TP 1 à 5), manuscrits |
+
+La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).

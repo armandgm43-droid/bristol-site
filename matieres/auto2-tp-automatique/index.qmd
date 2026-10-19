@@ -1,0 +1,57 @@
+---
+title: "AUTO2 — Travaux pratiques d'automatique 1 et 2"
+subtitle: "Fiche matière"
+matiere: auto2
+enseignants: ["Pierre Melchior", "Patrick Lanusse", "Ghazi Bel Haj Frej", "Mathieu Chevrié"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | AUTO2 (EEL7-AUTO2) |
+| UE | EEL7FE-UEC Automatique et Signal |
+| Enseignants | Pierre Melchior, Patrick Lanusse, Ghazi Bel Haj Frej, Mathieu Chevrié (page de titre des polys) |
+| Année | 2026-2027 |
+| Nature | matière de travaux pratiques (pas de cours magistral) |
+
+## Chapitres
+
+Matière de TP : pas de chapitre de cours. Le contenu théorique est celui d'AUTO1 ; les TP seront traités en phase 2 (dossier `tp/`). Séances relevées dans les polys :
+
+
+| Séance | Contenu |
+|---|---|
+| Poly « Travaux pratiques d'automatique 1 » | ascenseur commandé par automate programmable (Grafcet, Ladder, Automgen) ; commande PID en boucle fermée d'un moteur (LabVIEW) |
+| Poly « Travaux pratiques d'automatique 2 » | chaîne d'assemblage FESTO (FST) ; commande PIDF d'une enceinte thermique à retard ; synthèse d'un régulateur discret par la transformation en W |
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/auto2/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `tp-auto-1` | `tp/tp-automatique-1.pdf` | officielle | 19 p. |
+| `tp-auto-2` | `tp/tp-automatique-2.pdf` | officielle | 25 p. |
+| `annexes` | `tp/annexes-*.pdf` | officielle | Grafcet et Ladder ; logiciels Automgen et FST |
+| — | `tp/fichiers/` | officielle | projets LabVIEW (moteurs LS et Parvex, enceinte thermique), fichiers FST, configuration de l'ascenseur |
+| — | `corriges/2023-…pdf` | externe | comptes rendus manuscrits d'un ancien élève (TP 1, 2 et 4) |
+
+La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).
+
+## Remarques
+
+- Les comptes rendus personnels sont rangés à part dans `sources/auto2/travaux/` (non publiés).

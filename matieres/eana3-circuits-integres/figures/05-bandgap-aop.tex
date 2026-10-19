@@ -1,0 +1,42 @@
+% Figure — Référence bandgap en technologie CMOS : miroir PMOS commandé par un amplificateur opérationnel, transistors PNP parasites Q1 (×N) et Q2 (EANA3, chapitre 5).
+% D'après les notes externes [notes-2023-c10, p. 4], redessinée ; polarités des entrées de l'amplificateur choisies par Bristol (les notes ne les indiquent pas).
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 05-bandgap-aop.tex
+%   dvisvgm --no-fonts --exact-bbox -o 05-bandgap-aop.svg <dossier temporaire>/05-bandgap-aop.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\usetikzlibrary{shapes.geometric}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex, fleche/.style={->, thick}]
+  \draw (0,4.5) node[pmos, xscale=-1] (Ma) {};
+  \draw (3,4.5) node[pmos] (Mb) {};
+  \draw (-0.4,5.6) -- (3.4,5.6);  \node[above] at (1.5,5.6) {$V_{DD}$};
+  \draw (Ma.S) -- (0,5.6);  \draw (Mb.S) -- (3,5.6);
+  \draw (Ma.G) -- (Mb.G);
+  % branche gauche
+  \draw (Ma.D) -- (0,3.3) coordinate (vo);
+  \draw (vo) node[circ]{} to[R, l_=$R_1$, i>^=$I$] (0,1.8) coordinate (a);
+  \draw (vo) -- (-1.2,3.3) node[ocirc]{} node[left]{$V_{out}$};
+  \draw (0,0.6) node[pnp, xscale=-1] (Q2) {};  \node[left] at (-0.45,0.6) {$Q_2$};
+  \draw (a) node[circ]{} -- (Q2.E);
+  % branche droite
+  \draw (Mb.D) -- (3,3.3) coordinate (b);
+  \draw (b) node[circ]{} to[R, l=$R$, i>_=$I$] (3,1.8) -- (3,0 |- Q2.E);
+  \draw (3,0.6) node[pnp] (Q1) {};  \node[right] at (3.45,0.6) {$Q_1$ ($\times N$)};
+  \draw (Q2.B) -- (Q1.B);  \draw (1.5,0.6) node[circ]{} -- (1.5,-0.6);
+  \draw (Q2.C) -- (0,-0.6);  \draw (Q1.C) -- (3,-0.6);
+  \draw (0,-0.6) -- (3,-0.6);  \draw (1.5,-0.6) node[ground]{};
+  % amplificateur
+  \draw (5.6,2.8) node[op amp, yscale=-1] (A) {};
+  \draw (b) -- (A.+ -| b) -- (A.+);
+  \draw (0,1.55) node[circ]{} -- (2.85,1.55) arc(180:0:0.15) -- (4.2,1.55) |- (A.-);
+  \draw (A.out) -- (7.1,0 |- A.out) -- (7.1,5.05) -- (3.15,5.05) arc(0:180:0.15) -- (1.5,5.05) -- (1.5,4.5) node[circ]{};
+  \draw[fleche] (2.4,1.95) -- node[left]{$\Delta V_{BE}$} (2.4,3.15);
+\end{circuitikz}
+\end{document}

@@ -1,0 +1,28 @@
+% Figure — Générateur de courant à double tension de seuil (dual-V_T) de l'exercice « Un circuit pour l'espace » (EANA3, chapitre 3).
+% D'après le support [support, p. 15, figure 3], redessiné.
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 03-dual-vt.tex
+%   dvisvgm --no-fonts --exact-bbox -o 03-dual-vt.svg <dossier temporaire>/03-dual-vt.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\usetikzlibrary{shapes.geometric}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex, fleche/.style={->, thick}]
+  \draw (1.6,0) node[nmos] (M1) {};  \node[right] at (M1.text) {$M_1$};
+  \path (M1.D) ++(0,0.25) coordinate (d1tmp);  \draw (4.6,0 |- d1tmp) node[nmos, anchor=G] (M2) {};  \node[right] at (M2.text) {$M_2$};
+  \draw (M1.S) node[ground]{};  \draw (M2.S) -- (M2.S |- M1.S) node[ground]{};
+  \draw (M1.D) -- ++(0,0.25) coordinate (d1) to[R, l_=$R$] ++(0,1.6) coordinate (h1) to[isource, invert, l=$I_1 + i_1$] ++(0,1.9) node[vcc]{$V_{dd}$};
+  \draw (h1) -- (0.2,0 |- h1) -- (0.2,0 |- M1.G) -- (M1.G);
+  \draw (d1) -- (M2.G);
+  \draw (M2.D) -- ++(0,0.3) coordinate (d2) to[isource, invert, l=$I_2 + i_2$] ++(0,2.4) node[vcc]{$V_{dd}$};
+  \draw (d2) -- ++(1.2,0) node[ocirc]{};
+  \draw[fleche] (2.8,-0.6) -- node[right]{$V_{DS_1} + v_{DS_1}$} (2.8,0 |- d1);
+  \draw[fleche] (6.2,-0.6) -- node[right]{$V_{DS_2} + v_{DS_2}$} (6.2,0 |- d2);
+\end{circuitikz}
+\end{document}

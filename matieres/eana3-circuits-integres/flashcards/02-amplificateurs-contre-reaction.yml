@@ -1,0 +1,266 @@
+# Flashcards — EANA3, chapitre 2 : Amplificateurs en contre-réaction.
+# Générées le 2026-10-18 à partir du cours validé (étape 8). Format : conventions.md § 10.
+# Conversion : python scripts/flashcards.py (écrit revision/cartes/eana3.json).
+# Rappels : un identifiant n'est jamais modifié ni réutilisé ; une carte supprimée
+# va dans ids-retires. Les lignes d'un même paragraphe sont jointes par le script ;
+# une ligne « - … » ou un bloc $$…$$ commencent une nouvelle ligne ; une ligne vide sépare deux paragraphes.
+# Priorité de révision : impédances d'entrée et de sortie selon le type de contre-réaction.
+matiere: eana3
+chapitre: 2
+cours: cours/02-amplificateurs-contre-reaction.qmd
+ids-retires: []
+cartes:
+
+  # --- Quadripôles et vocabulaire ---
+
+  - id: eana3-quadripole-sortie-norton-thevenin
+    type: definition
+    question: |
+      Modèles de sortie d'un amplificateur vu comme un quadripôle : sortie Norton et sortie Thévenin, et valeur souhaitée de $Z_s$ dans chaque cas ?
+    reponse: |
+      - **Norton** : source de courant commandée $i_s$ en parallèle avec $Z_s$ ; $Z_s$ doit être très **grande**.
+      - **Thévenin** : source de tension commandée $v_s$ en série avec $Z_s$ ; $Z_s$ doit être la plus **petite** possible.
+    ref: sec-topologies-quadripoles
+    source: notes-externes
+
+  - id: eana3-nom-contre-reaction-lecture
+    type: methode
+    question: |
+      Que disent les deux mots du nom d'une contre-réaction (ex. « courant-série ») ?
+    reponse: |
+      Le 1er mot : la grandeur **prélevée** en sortie (tension ou courant). Le 2e : la façon de la **réinjecter** en entrée (en série ou en parallèle).
+      « Courant-série » : on prélève un courant et on le réinjecte en série.
+    ref: sec-topologies-quadripoles
+    source: notes-externes
+
+  - id: eana3-prelevement-reinjection-connexions
+    type: definition
+    question: |
+      Comment se branche le réseau $\beta_F$ pour prélever une tension, un courant, puis pour réinjecter en série, en parallèle ?
+    reponse: |
+      - Prélever une **tension** : port de $\beta_F$ **en parallèle** sur la sortie.
+      - Prélever un **courant** : port de $\beta_F$ **en série** dans la maille de sortie.
+      - Réinjecter en **série** : on ajoute une tension dans la maille d'entrée, $v_i = v_e + v_{fb}$.
+      - Réinjecter en **parallèle** : on ajoute un courant au nœud d'entrée, $i_i = i_e + i_{fb}$.
+    ref: sec-topologies-quadripoles
+    source: complement
+
+  - id: eana3-topologies-noms-anglais
+    type: relation
+    question: |
+      Correspondance entre les noms français et anglais des quatre contre-réactions ?
+    reponse: |
+      L'anglais nomme d'abord la connexion d'entrée, puis celle de sortie :
+      - courant-série = *series-series* ;
+      - tension-série = *series-shunt* ;
+      - courant-parallèle = *shunt-series* ;
+      - tension-parallèle = *shunt-shunt*.
+    ref: sec-topologies-quadripoles
+    source: complement
+
+  # --- Impédances : règle générale ---
+
+  - id: eana3-regle-impedance-entree-reinjection
+    type: propriete
+    question: |
+      Quelle est l'impédance d'entrée $Z_i$ du montage bouclé selon le mode de réinjection (série ou parallèle) ?
+    reponse: |
+      - Réinjection **série** : $Z_i = Z_e\,(1 + A_{OL})$, **multipliée**.
+      - Réinjection **parallèle** : $Z_i = \dfrac{Z_e}{1 + A_{OL}}$, **divisée**.
+
+      $Z_i$ ne dépend que de la connexion d'**entrée**, avec $A_{OL} = A\beta_F$.
+    ref: tbl-synthese-contre-reaction
+    source: complement
+
+  - id: eana3-regle-impedance-sortie-prelevement
+    type: propriete
+    question: |
+      Quelle est l'impédance de sortie $Z_o$ du montage bouclé selon la grandeur prélevée (tension ou courant) ?
+    reponse: |
+      - Prélèvement d'un **courant** : $Z_o = Z_s\,(1 + A_{OL})$, **multipliée** (le montage se comporte en source de courant).
+      - Prélèvement d'une **tension** : $Z_o = \dfrac{Z_s}{1 + A_{OL}}$, **divisée** (source de tension).
+
+      $Z_o$ ne dépend que de la connexion de **sortie**.
+    ref: tbl-synthese-contre-reaction
+    source: complement
+
+  - id: eana3-quadripole-ideal-tendance
+    type: raisonnement
+    question: |
+      Pourquoi chaque contre-réaction modifie-t-elle $Z_i$ et $Z_o$ dans le sens observé ? Exemple de l'amplificateur de transconductance.
+    reponse: |
+      Chaque type rapproche le montage du **quadripôle idéal** de sa fonction de transfert. Une entrée en tension doit avoir $Z_i$ infinie, une entrée en courant $Z_i$ nulle ; une sortie en tension $Z_o$ nulle, une sortie en courant $Z_o$ infinie.
+      Transconductance $i_o/v_i$ (courant-série) : $Z_i$ et $Z_o$ toutes deux multipliées, vers l'infini.
+    ref: tbl-synthese-contre-reaction
+    source: complement
+
+  # --- Les quatre montages : impédances ---
+
+  - id: eana3-courant-serie-impedances
+    type: formule
+    question: |
+      Contre-réaction **courant-série** : expressions de $Z_i$ et de $Z_o$ ?
+    reponse: |
+      $$Z_i = Z_e\,(1 + A_{OL}), \qquad Z_o = Z_s\,(1 + A_{OL})$$
+      Les deux sont multipliées par $1 + A\beta_F$ (réinjection série, courant prélevé).
+    ref: sec-cr-courant-serie
+    source: notes-externes
+
+  - id: eana3-courant-parallele-impedances
+    type: formule
+    question: |
+      Contre-réaction **courant-parallèle** : expressions de $Z_i$ et de $Z_o$ ?
+    reponse: |
+      $$Z_i = \frac{Z_e}{1 + A_{OL}}, \qquad Z_o = Z_s\,(1 + A_{OL})$$
+      $Z_i$ divisée (réinjection parallèle), $Z_o$ multipliée (courant prélevé).
+    ref: sec-cr-courant-parallele
+    source: notes-externes
+
+  - id: eana3-tension-serie-impedances
+    type: formule
+    question: |
+      Contre-réaction **tension-série** : expressions de $Z_i$ et de $Z_o$ ?
+    reponse: |
+      $$Z_i = Z_e\,(1 + A_{OL}), \qquad Z_o = \frac{Z_s}{1 + A_{OL}}$$
+      $Z_i$ multipliée (réinjection série), $Z_o$ divisée (tension prélevée) : on tend vers l'amplificateur de tension idéal.
+    ref: sec-cr-tension-serie
+    source: notes-externes
+
+  - id: eana3-tension-parallele-impedances
+    type: formule
+    question: |
+      Contre-réaction **tension-parallèle** : expressions de $Z_i$ et de $Z_o$ ?
+    reponse: |
+      $$Z_i = \frac{Z_e}{1 + A_{OL}}, \qquad Z_o = \frac{Z_s}{1 + A_{OL}}$$
+      Les deux sont divisées par $1 + A\beta_F$ (réinjection parallèle, tension prélevée).
+    ref: sec-cr-tension-parallele
+    source: notes-externes
+
+  - id: eana3-impedances-vers-topologie
+    type: exercice
+    question: |
+      Un montage bouclé a une impédance d'entrée **divisée** et une impédance de sortie **multipliée** par $1 + A\beta_F$. De quelle contre-réaction s'agit-il, et quelle est sa fonction de transfert ?
+    reponse: |
+      $Z_i$ divisée ⇒ réinjection **parallèle** ; $Z_o$ multipliée ⇒ **courant** prélevé : contre-réaction **courant-parallèle**, fonction de transfert $\dfrac{i_o}{i_i} = \dfrac{A}{1 + A\beta_F}$ (amplificateur de courant).
+    ref: tbl-synthese-contre-reaction
+    source: notes-externes
+
+  - id: eana3-amplificateur-tension-topologie
+    type: exercice
+    question: |
+      On veut un amplificateur de tension à très forte impédance d'entrée et très faible impédance de sortie. Quelle contre-réaction choisir ?
+    reponse: |
+      **Tension-série** : réinjection série ⇒ $Z_i = Z_e(1 + A_{OL})$ ; tension prélevée ⇒ $Z_o = Z_s/(1 + A_{OL})$ ; fonction de transfert $v_o/v_i$.
+    ref: sec-cr-tension-serie
+    source: complement
+
+  # --- Démonstrations ---
+
+  - id: eana3-zi-serie-demonstration
+    type: raisonnement
+    question: |
+      Contre-réaction tension-série : étapes du calcul de $Z_i$ ?
+    reponse: |
+      $v_e = Z_e\, i_i$ et $v_i = v_e + v_{fb} = v_e + \beta_F A v_e = Z_e\, i_i\,(1 + A\beta_F)$, d'où $Z_i = v_i/i_i = Z_e(1 + A\beta_F)$.
+      La tension réinjectée s'oppose à $v_i$ : pour un même courant d'entrée, il faut une tension d'entrée plus grande.
+    ref: sec-cr-tension-serie
+    source: notes-externes
+
+  - id: eana3-zi-parallele-demonstration
+    type: raisonnement
+    question: |
+      Contre-réaction tension-parallèle : étapes du calcul de $Z_i$ ?
+    reponse: |
+      $v_i = v_e = Z_e\, i_e$ et $i_i = i_e + i_{fb} = i_e + \beta_F A\, i_e = i_e(1 + A\beta_F)$, donc $v_i = Z_e\, \dfrac{i_i}{1 + A\beta_F}$ et $Z_i = \dfrac{Z_e}{1 + A\beta_F}$.
+    ref: sec-cr-tension-parallele
+    source: notes-externes
+
+  - id: eana3-zo-calcul-methode
+    type: methode
+    question: |
+      Méthode pour calculer l'impédance de sortie $Z_o$ d'un montage contre-réactionné ?
+    reponse: |
+      On **éteint les générateurs indépendants** (source de courant éteinte ⇒ circuit ouvert ; source de tension éteinte ⇒ court-circuit) : $i_i = 0$ ou $v_i = 0$. Le signal réinjecté fixe alors l'entrée de $A$ (ex. $v_e = -\beta_F v_o$), puis on écrit $v_o$ en fonction de $i_o$.
+    ref: sec-cr-courant-parallele
+    source: notes-externes
+
+  - id: eana3-zo-courant-serie-demonstration
+    type: raisonnement
+    question: |
+      Contre-réaction courant-série : étapes du calcul de $Z_o$ ?
+    reponse: |
+      Générateurs indépendants éteints : $v_e = -v_{fb} = -\beta_F\, i_o$. Le courant dans $Z_s$ vaut $i_o - A v_e$, donc
+      $$v_o = Z_s\,(i_o + A\beta_F\, i_o) \;\Rightarrow\; Z_o = Z_s\,(1 + A\beta_F)$$
+    ref: sec-cr-courant-serie
+    source: notes-externes
+
+  # --- Fonctions de transfert et nature de A, βF ---
+
+  - id: eana3-fonction-transfert-quatre-types
+    type: formule
+    question: |
+      Quelle grandeur est la fonction de transfert de chacune des quatre contre-réactions, et quelle est son expression ?
+    reponse: |
+      Toujours $\dfrac{A}{1 + A\beta_F}$, mais pour des grandeurs différentes :
+      - courant-série : $i_o/v_i$ ;
+      - courant-parallèle : $i_o/i_i$ ;
+      - tension-série : $v_o/v_i$ ;
+      - tension-parallèle : $v_o/i_i$.
+    ref: tbl-synthese-contre-reaction
+    source: notes-externes
+
+  - id: eana3-validite-ft-charge
+    type: condition
+    question: |
+      Sous quelles hypothèses la fonction de transfert $\frac{A}{1 + A\beta_F}$ des quatre montages est-elle valable ?
+    reponse: |
+      Réseau $\beta_F$ idéal (il ne charge pas $A$ et ne transmet rien de l'entrée vers la sortie), $A$ unilatéral, et charge négligée : $Z_s$ grande devant la charge pour une sortie Norton, petite devant elle pour une sortie Thévenin.
+    ref: sec-topologies-quadripoles
+    source: complement
+
+  - id: eana3-nature-a-betaf
+    type: propriete
+    question: |
+      Nature (et unité) de $A$ et de $\beta_F$ pour chacune des quatre contre-réactions ?
+    reponse: |
+      - courant-série : $A$ transconductance (S), $\beta_F$ résistance (Ω) ;
+      - courant-parallèle : $A$ et $\beta_F$ gains en courant ;
+      - tension-série : $A$ et $\beta_F$ gains en tension ;
+      - tension-parallèle : $A$ transimpédance (Ω), $\beta_F$ conductance (S).
+
+      Le produit $A\beta_F$ est toujours sans dimension.
+    ref: tbl-synthese-contre-reaction
+    source: complement
+
+  # --- Exercice : où est la contre-réaction ? ---
+
+  - id: eana3-emetteur-commun-rx-identification
+    type: exercice
+    question: |
+      Émetteur commun avec résistance d'émetteur $R_x$ (TD « Où est la contre-réaction ? ») : type de contre-réaction et valeurs de $A$, $\beta_F$, $Z_e$, $Z_s$ ?
+    reponse: |
+      Contre-réaction **courant-série** ($R_x$ est parcourue par $i_o$) :
+      $$A = g_m, \quad \beta_F = R_x, \quad Z_e = r_{be}, \quad Z_s = r_{ce}$$
+    ref: exr-ou-est-la-contre-reaction
+    source: notes-externes
+
+  - id: eana3-emetteur-commun-rx-impedances
+    type: resultat
+    question: |
+      Émetteur commun à résistance d'émetteur $R_x$ : gain de boucle, $Z_i$, $Z_o$ et transconductance $i_o/v_i$ ?
+    reponse: |
+      $A_{OL} = g_m R_x$ ; $Z_i = r_{be}(1 + g_m R_x)$ ; $Z_o = r_{ce}(1 + g_m R_x)$ ;
+      $$\frac{i_o}{v_i} = \frac{g_m}{1 + g_m R_x} \approx \frac{1}{R_x}$$
+      (approximations pour $g_m R_x \gg 1$).
+    ref: eq-td1-transconductance
+    source: notes-externes
+
+  - id: eana3-emetteur-commun-robustesse-rapport
+    type: raisonnement
+    question: |
+      Émetteur commun à résistance d'émetteur avec charge $R_C$ : gain $v_o/v_i$, et pourquoi est-il robuste aux variations de fabrication ($R' = \alpha R$, $0{,}8 < \alpha < 1{,}2$) ?
+    reponse: |
+      $v_o = -R_C\, i_o$, donc $\dfrac{v_o}{v_i} \approx -\dfrac{R_C}{R_x}$.
+      $-\dfrac{\alpha R_C}{\alpha R_x} = -\dfrac{R_C}{R_x}$ : le gain ne dépend que d'un **rapport** de résistances voisines, insensible à une dispersion commune, et ne dépend plus de $g_m$.
+    ref: exr-ou-est-la-contre-reaction
+    source: notes-externes

@@ -1,0 +1,418 @@
+# Flashcards — EANA3, chapitre 4 : Oscillateurs.
+# Générées le 2026-10-18 à partir du cours validé. Format : conventions.md § 10.
+# Conversion : python scripts/flashcards.py (écrit revision/cartes/eana3.json).
+# Rappels : un identifiant n'est jamais modifié ni réutilisé ; une carte supprimée
+# va dans ids-retires. Les lignes d'un même paragraphe sont jointes par le script ;
+# une ligne « - … » ou un bloc $$…$$ commencent une nouvelle ligne ; une ligne vide sépare deux paragraphes.
+# Blocs « À vérifier » tranchés : les cartes reprennent les Propositions retenues.
+matiere: eana3
+chapitre: 4
+cours: cours/04-oscillateurs.qmd
+ids-retires: []
+cartes:
+
+  # --- Principe, critère de Barkhausen ---
+
+  - id: eana3-oscillateur-principe-boucle
+    type: definition
+    question: |
+      Principe d'un oscillateur vu comme une boucle à retour unitaire de chaîne directe $H(s)$ :
+      à quelle condition oscille-t-il, et qu'est-ce qui le fait démarrer ?
+    reponse: |
+      $$\frac{V_{out}}{V_{in}} = \frac{H(s)}{1 + H(s)}$$
+      Si $H(j\omega_1) = -1$, le dénominateur s'annule : la sortie existe sans entrée, le circuit oscille à $\omega_1$.
+      Sans signal d'entrée utile, c'est le **bruit** qui l'excite.
+    ref: sec-principe-oscillateur
+    source: notes-externes
+
+  - id: eana3-oscillation-sinusoidale-origine
+    type: raisonnement
+    question: |
+      Pourquoi le signal produit par un oscillateur vérifiant $H(j\omega_1) = -1$ est-il sinusoïdal ?
+    reponse: |
+      La condition est écrite pour $s = j\omega$, c'est-à-dire en régime sinusoïdal, à une **seule pulsation** $\omega_1$.
+    ref: sec-principe-oscillateur
+    source: notes-externes
+
+  - id: eana3-barkhausen-critere
+    type: condition
+    question: |
+      Énoncé du critère de Barkhausen (amplificateur $A$, retour $\beta$) : quelles sont les deux conditions d'oscillation à $\omega_1$ ?
+    reponse: |
+      - **condition de fréquence** (de phase) : $\arg(A\beta)\big|_{\omega = \omega_1} = 0$, en incluant le signe du soustracteur ;
+      - **condition d'entretien** (d'amplitude) : $|A\beta| \geqslant 1$.
+    ref: def-critere-barkhausen
+    source: notes-externes
+
+  - id: eana3-barkhausen-convention-signe
+    type: piege
+    question: |
+      Faut-il écrire la condition d'oscillation $A\beta = -1$ ou $A\beta = 1$ ?
+    reponse: |
+      Cela dépend du soustracteur. Avec soustracteur : $1 + A\beta = 0$, soit $A\beta = -1$ (le gain de boucle complet $-A\beta$ vaut $+1$).
+      Sans soustracteur (réaction directe, cas de la plupart des schémas d'oscillateurs) : $A\beta = 1$.
+    ref: sec-barkhausen
+    source: complement
+
+  - id: eana3-barkhausen-demarrage-amplitude
+    type: raisonnement
+    question: |
+      Pourquoi la condition d'entretien s'écrit-elle $|A\beta| \geqslant 1$ et non $|A\beta| = 1$ ?
+    reponse: |
+      Au démarrage, il faut $|A\beta| > 1$ pour que le bruit soit amplifié à chaque tour et que l'oscillation croisse.
+      L'amplitude se stabilise ensuite car le gain baisse aux fortes amplitudes (non-linéarités ou correcteur),
+      jusqu'à $|A\beta| = 1$ en moyenne.
+    ref: sec-barkhausen
+    source: complement
+
+  # --- Colpitts et Hartley ---
+
+  - id: eana3-colpitts-hartley-reseau
+    type: definition
+    question: |
+      Réseau déphaseur en π ($Z_1$, $Z_2$, $Z_3$) : quelle composition donne un oscillateur Colpitts,
+      laquelle un Hartley, et lequel est le plus utilisé en intégré ?
+    reponse: |
+      - **Colpitts** : 2 condensateurs et 1 inductance ;
+      - **Hartley** : 1 condensateur et 2 inductances.
+
+      Le Colpitts est le plus utilisé : les inductances intégrées ont beaucoup plus de pertes que les condensateurs.
+    ref: sec-colpitts-hartley
+    source: notes-externes
+
+  - id: eana3-colpitts-gain-intrinseque
+    type: formule
+    question: |
+      Gain à vide de l'étage source commune polarisé par une source de courant (amplificateur du Colpitts) ? Comment l'appelle-t-on ?
+    reponse: |
+      $A_v = -g_m r_{ds}$ : le **gain intrinsèque** du transistor, gain maximal d'un étage à un transistor.
+    ref: eq-gain-intrinseque
+    source: notes-externes
+
+  - id: eana3-colpitts-capacites-parasites
+    type: formule
+    question: |
+      Colpitts à source commune ($C_1$ drain–masse, $C_2$ grille–masse) : que deviennent $C_1$ et $C_2$ aux petites variations ?
+    reponse: |
+      Les capacités parasites du transistor s'ajoutent ($C_e$ en entrée, $C_s$ en sortie) :
+      $C_2' = C_2 + C_e$ et $C_1' = C_1 + C_s$.
+    ref: sec-colpitts
+    source: notes-externes
+
+  - id: eana3-colpitts-role-c1
+    type: raisonnement
+    question: |
+      Pourquoi la capacité $C_1'$ est-elle indispensable dans l'oscillateur Colpitts ?
+    reponse: |
+      Sans elle, le réseau $L C_2'$ seul est du second ordre : son déphasage n'atteint 180° qu'asymptotiquement, donc jamais.
+    ref: sec-colpitts
+    source: notes-externes
+
+  - id: eana3-colpitts-frequence-oscillation
+    type: formule
+    question: |
+      Condition de fréquence de l'oscillateur Colpitts à source commune, et d'où vient-elle ?
+    reponse: |
+      $$\omega_0 = \frac{1}{\sqrt{LC_{eq}}}, \qquad C_{eq} = \frac{C_1' C_2'}{C_1' + C_2'}$$
+      ($C_1'$ en série avec $C_2'$). Elle annule la partie imaginaire de l'équation caractéristique : $LC_{eq}p^2 = -1$.
+    ref: eq-frequence-colpitts
+    source: notes-externes
+
+  - id: eana3-colpitts-condition-entretien
+    type: condition
+    question: |
+      Condition d'entretien de l'oscillateur Colpitts à source commune ?
+    reponse: |
+      Un rapport de capacités (partie réelle nulle en $\omega_0$) :
+      $$g_m r_{ds} = |A_v| = \frac{C_2'}{C_1'} \simeq \frac{C_2}{C_1}$$
+      En pratique, $g_m r_{ds}$ un peu supérieur pour garantir le démarrage.
+    ref: eq-entretien-colpitts
+    source: notes-externes
+
+  - id: eana3-oscillateur-capacite-variable
+    type: propriete
+    question: |
+      Comment rendre réglable la fréquence d'un oscillateur $LC$ intégré en technologie MOS ?
+    reponse: |
+      Avec une **diode bloquée**, qui se comporte comme une capacité variable contrôlée par sa tension inverse
+      (jonction drain N+ / substrat P). Composant dédié : la varicap ; on obtient un VCO.
+    ref: sec-capacite-variable
+    source: notes-externes
+
+  # --- Résistance négative ---
+
+  - id: eana3-paire-croisee-resistance-negative
+    type: formule
+    question: |
+      Résistance équivalente vue entre les drains d'une paire croisée (*cross-coupled pair*), et comment la régler ?
+    reponse: |
+      $$R_{eq} = -\frac{2}{g_m}$$
+      Le signe « − » vient de la réaction positive. On la règle par le courant de polarisation (donc $g_m$).
+    ref: eq-resistance-paire-croisee
+    source: notes-externes
+
+  - id: eana3-resistance-negative-compensation
+    type: raisonnement
+    question: |
+      Résonateur $LC$ de pertes $R_p$ (en parallèle) et résistance négative $-R$ en parallèle : que se passe-t-il si $R = R_p$, puis si $R < R_p$ ?
+    reponse: |
+      Résistance totale $\frac{R_p \cdot (-R)}{R_p - R}$.
+      - $R = R_p$ : résistance infinie, résonateur sans pertes, oscillation à $\omega_0 = 1/\sqrt{LC}$ ;
+      - $R < R_p$ : résistance totale négative, l'oscillation croît (démarrage) jusqu'à la limitation par les non-linéarités.
+    ref: sec-resistance-negative
+    source: complement
+
+  - id: eana3-paire-croisee-signe-negatif
+    type: raisonnement
+    question: |
+      Pourquoi la paire croisée présente-t-elle $-\frac{2}{g_m}$ alors que deux transistors montés en diode présenteraient $+\frac{2}{g_m}$ ?
+    reponse: |
+      En croisant les connexions, une hausse de tension sur un drain fait **baisser** l'autre drain (source commune),
+      ce qui fait encore monter le premier : réaction positive, la résistance change de signe.
+    ref: sec-td-resistance-negative
+    source: complement
+
+  - id: eana3-double-paire-croisee-rosc
+    type: exercice
+    question: |
+      TD 4 : oscillateur à double paire croisée (PMOS et NPN) sur un réseau $LC$ de pertes $R$.
+      Expression de $R_{OSC}$, condition « juste oscillant », et réglage en pratique ?
+    reponse: |
+      $$R_{OSC} = R_{MOS} /\!/ R_{BJT} = -\frac{2}{g_{mMOS} + g_{mBJT}} < 0$$
+      Juste oscillant pour $R_{OSC} = -R$. On règle $R_{OSC}$ avec le courant $I_{bias}$ (qui fixe $g_{mMOS}$ et $g_{mBJT}$).
+    ref: eq-r-osc
+    source: notes-externes
+
+  - id: eana3-pont-reactif-impedance-negative
+    type: exercice
+    question: |
+      TD 6 : AOP idéal non inverseur de gain 2, résistance $R_f$ entre entrée et sortie.
+      Impédance d'entrée, et valeur de $R_f$ pour un oscillateur entretenu avec un $LC$ de pertes $R_p$ ?
+    reponse: |
+      $Z_{in} = -R_f$ (résistance négative). Oscillation entretenue pour $R_f = R_p$
+      (en pratique un peu inférieure pour démarrer), à $\omega_0 = \frac{1}{\sqrt{LC}}$.
+    ref: eq-impedance-pont-reactif
+    source: complement
+
+  # --- Oscillateur à déphasage ---
+
+  - id: eana3-dephasage-frequence-attenuation
+    type: exercice
+    question: |
+      Oscillateur à déphasage à trois cellules $RC$ (R série, C vers la masse) : pulsation d'oscillation
+      et atténuation du réseau à cette pulsation ?
+    reponse: |
+      Partie imaginaire nulle : $6RC\omega_0 = (RC\omega_0)^3$, soit $\omega_0 = \frac{\sqrt{6}}{RC}$.
+      Alors $\frac{v_2}{v_1} = \frac{1}{1 - 30} = -\frac{1}{29}$ : atténuation de 29 et déphasage de 180°.
+    ref: exr-oscillateur-dephasage
+    source: complement
+
+  - id: eana3-dephasage-condition-entretien
+    type: exercice
+    question: |
+      Oscillateur à déphasage MOS (amplificateur dégénéré, $A_v \approx -1/\alpha$) : condition d'entretien sur $\alpha$ ?
+    reponse: |
+      $A_v \cdot \left(-\frac{1}{29}\right) = \frac{1}{29\alpha} \geqslant 1$, soit $\alpha \leqslant \frac{1}{29}$ ($|A_v| \geqslant 29$) ;
+      juste oscillant pour $\alpha = \frac{1}{29}$.
+    ref: exr-oscillateur-dephasage
+    source: complement
+
+  - id: eana3-dephasage-trois-cellules
+    type: raisonnement
+    question: |
+      Pourquoi faut-il trois cellules $RC$ (et non deux) dans un oscillateur à déphasage ?
+    reponse: |
+      Une cellule ne déphase de 90° qu'asymptotiquement, où son gain tend vers 0 : deux cellules n'atteignent 180°
+      qu'à fréquence infinie, avec un gain nul. Avec trois, 180° est atteint à une fréquence finie, avec une atténuation finie (1/29).
+    ref: exr-oscillateur-dephasage
+    source: complement
+
+  # --- Astables ---
+
+  - id: eana3-astable-principe
+    type: definition
+    question: |
+      Principe de l'astable à charge et décharge de capacité vu en cours ?
+    reponse: |
+      Une capacité $C$ est chargée puis déchargée par des sources de courant $I$ ; un comparateur à hystérésis
+      (seuils $V_b$ et $V_h$) commande l'interrupteur. $V_C$ est un signal **triangulaire** entre $V_b$ et $V_h$, de pentes $\pm I/C$.
+    ref: sec-astables
+    source: notes-externes
+
+  - id: eana3-astable-frequence
+    type: formule
+    question: |
+      Fréquence de l'astable à charge et décharge à courant constant $I$, et limite à très haute fréquence ?
+    reponse: |
+      $$F = \frac{1}{2\Delta t} = \frac{I}{2\,\Delta V\, C}$$
+      avec $\Delta V = V_h - V_b$. À très haute fréquence, le temps de propagation du comparateur devient gênant.
+    ref: eq-frequence-astable
+    source: notes-externes
+
+  # --- Oscillateurs en anneau ---
+
+  - id: eana3-anneau-principe-impair
+    type: definition
+    question: |
+      Constitution d'un oscillateur en anneau, pourquoi oscille-t-il, et quels sont ses atouts et son défaut ?
+    reponse: |
+      Un nombre **impair** d'inverseurs rebouclés : un état logique revient inversé, aucun état n'est stable.
+      Très compact et peu cher, mais fréquence mal maîtrisée.
+    ref: sec-anneau
+    source: notes-externes
+
+  - id: eana3-anneau-frequence-oscillation
+    type: formule
+    question: |
+      Période et fréquence d'un oscillateur en anneau de $N$ inverseurs de temps de propagation $\Delta t$ ?
+    reponse: |
+      $$T = 2N\,\Delta t, \qquad F = \frac{1}{2N\,\Delta t}$$
+      Une transition fait le tour en $N\Delta t$ ; il faut deux tours (front montant puis descendant) par période.
+    ref: eq-frequence-anneau
+    source: notes-externes
+
+  - id: eana3-anneau-frequence-facteur-deux
+    type: piege
+    question: |
+      Les notes de 2023 donnent $F = \frac{1}{N\Delta t}$ pour un anneau de $N$ inverseurs. Pourquoi est-ce faux ?
+    reponse: |
+      Il manque un facteur 2 : pour $N = 3$, on aurait $\frac{1}{3\Delta t}$ au lieu de $\frac{1}{6\Delta t}$.
+      La bonne formule est $F = \frac{1}{2N\Delta t}$ (corrigé du TD : $f_{osc} = \frac{1}{2Mt_p}$).
+    ref: eq-frequence-anneau
+    source: notes-externes
+
+  - id: eana3-anneau-reglage-frequence
+    type: methode
+    question: |
+      Comment faire varier la fréquence d'un oscillateur en anneau, et pourquoi ces leviers agissent-ils ?
+    reponse: |
+      En faisant varier $\Delta t \approx \frac{C\,\Delta V}{I}$ (temps de charge de la capacité de sortie) :
+      par une capacité variable (diode bloquée) ou par le courant.
+    ref: sec-anneau
+    source: complement
+
+  - id: eana3-anneau-differentiel-phases
+    type: resultat
+    question: |
+      Anneau différentiel à 4 étages rebouclé croisé : déphasage par étage, et où obtient-on des signaux en quadrature ?
+    reponse: |
+      45° de retard par étage (le croisement apporte 180°, les 4 étages se partagent les 180° restants).
+      Les étages 1 et 3 sont en quadrature ; les sorties complémentaires donnent 8 phases espacées de 45° (intérêt : I/Q).
+    ref: sec-anneau
+    source: notes-externes
+
+  - id: eana3-anneau-cml-excursion-remarquable
+    type: propriete
+    question: |
+      TD anneau : $\Delta V = \frac{L_{100}}{W_{100}}\frac{W_0}{L_0}\frac{L_1}{W_1}\frac{W_i}{L_i}\,U_T \ln N$. En quoi cette excursion logique est-elle remarquable ?
+    reponse: |
+      Elle ne dépend que de **rapports de dimensions** et de $U_T \ln N$ : indépendante de $V_{ctrl}$, $k'_p$ et $V_{Tp}$,
+      insensible aux dispersions. $V_{ctrl}$ règle le courant, donc $t_p$ et la fréquence, sans changer l'amplitude.
+    ref: exr-oscillateur-anneau
+    source: complement
+
+  - id: eana3-anneau-cml-dimensionnement
+    type: exercice
+    question: |
+      TD anneau : $\Delta V = 400$ mV, $U_T = 25$ mV, $N = 6$, longueurs 1 µm ; 5 inverseurs, $C = 100$ fF, $t_{p0} = 50$ ps,
+      $k'_p = 40$ µA/V², $V_{Tp} = -0{,}7$ V, $W_{100} = 30$ µm. Rapport de largeurs requis et fréquences pour $V_{ctrl} = 2$ V et 3 V ?
+    reponse: |
+      $\frac{W_0 W_i}{W_{100} W_1} = \frac{\Delta V}{U_T \ln N} \approx 8{,}9$.
+      $t_p = t_{p0} + \frac{C\,L_{100}}{2k'_p (V_{ctrl} + V_{Tp}) W_{100}}$ : 82 ps à 2 V, 68 ps à 3 V ;
+      $f_{osc} = \frac{1}{2Mt_p}$ avec $M = 5$ : 1,22 GHz et 1,47 GHz.
+    ref: exr-oscillateur-anneau
+    source: complement
+
+  # --- Bruit de phase : Leeson ---
+
+  - id: eana3-bruit-phase-definition
+    type: definition
+    question: |
+      Qu'est-ce que le bruit de phase d'un oscillateur, et en quelle unité s'exprime-t-il ?
+    reponse: |
+      Au lieu d'une raie à $f_0$, le spectre réel présente des « épaules » (*skirt*). Le bruit de phase, lu à un écart
+      de la porteuse, est la puissance de bruit dans 1 Hz rapportée à la puissance du signal, en dBc/Hz.
+    ref: sec-leeson
+    source: notes-externes
+
+  - id: eana3-leeson-allure-pentes
+    type: propriete
+    question: |
+      Allure du bruit de phase selon Leeson en fonction de l'écart $\Delta\omega$ à la porteuse ?
+    reponse: |
+      D'abord −30 dB/décade, puis −20 dB/décade (bruit de proximité, *close-in*),
+      puis un plancher de bruit blanc au-delà de $\frac{\omega_0}{2Q}$ (soit $\frac{f_0}{2Q}$ en fréquence).
+    ref: fig-leeson
+    source: notes-externes
+
+  - id: eana3-leeson-bruit-proximite
+    type: formule
+    question: |
+      Expression du bruit de phase de proximité selon Leeson (forme du cours), et dépendance essentielle ?
+    reponse: |
+      $$\mathcal{L}_{close\text{-}in}(\Delta\omega) = 10\log\left[\frac{FAkT}{2P_{sig}}\left(\frac{\omega_0}{2Q}\right)^2\left(\frac{1}{\Delta\omega}\right)^2\right]$$
+      L'essentiel : la dépendance en $\left(\frac{\omega_0}{2Q\,\Delta\omega}\right)^2$, d'où la pente −20 dB/décade.
+    ref: eq-leeson-close-in
+    source: notes-externes
+
+  - id: eana3-leeson-reduire-bruit
+    type: methode
+    question: |
+      Selon Leeson, sur quels paramètres agir pour réduire le bruit de phase d'un oscillateur ?
+    reponse: |
+      - augmenter le coefficient de qualité $Q$ du résonateur : $\frac{\omega_0}{2Q}$ diminue, la zone bruitée se resserre vers la porteuse ;
+      - augmenter $P_{sig}$ : le plancher baisse.
+    ref: sec-leeson
+    source: notes-externes
+
+  - id: eana3-leeson-origine-30db
+    type: raisonnement
+    question: |
+      Bruit de phase de Leeson : d'où vient la pente −30 dB/décade près de la porteuse ?
+    reponse: |
+      Du bruit en $1/f$ des transistors, converti autour de la porteuse : il ajoute une pente, d'où $1/\Delta\omega^3$.
+    ref: fig-leeson
+    source: complement
+
+  # --- Bruit de phase : Hajimiri ---
+
+  - id: eana3-hajimiri-instant-injection
+    type: propriete
+    question: |
+      Effet d'une impulsion de courant selon son instant d'injection, dans un oscillateur $LC$ puis dans un oscillateur en anneau ?
+    reponse: |
+      - $LC$ : au **maximum** de $v_s$, l'amplitude change mais pas les passages par zéro ; au **passage par zéro**, le signal est décalé dans le temps ;
+      - anneau : pendant un palier, aucun effet ; pendant un front, la suite du signal est décalée.
+    ref: fig-isf
+    source: notes-externes
+
+  - id: eana3-hajimiri-reponse-impulsionnelle
+    type: formule
+    question: |
+      Réponse impulsionnelle du système qui transforme le courant injecté $i(t)$ en phase $\phi(t)$ (Hajimiri) ? Nommer chaque terme.
+    reponse: |
+      $$h_\phi(t, \tau) = \frac{\Gamma(\omega_0 \tau)}{q_{max}}\, u(t - \tau)$$
+      Un échelon (décalage de phase permanent) ; $\Gamma$ : fonction de sensibilité impulsionnelle (ISF),
+      $\tau$ : instant d'injection, $q_{max}$ : charge maximale du nœud, $u$ : échelon unité.
+    ref: eq-reponse-impulsionnelle-phase
+    source: notes-externes
+
+  - id: eana3-isf-forme-lc-anneau
+    type: propriete
+    question: |
+      Forme de la fonction de sensibilité impulsionnelle $\Gamma$ pour un oscillateur $LC$ et pour un oscillateur en anneau ?
+    reponse: |
+      - $LC$ : cosinusoïdale, nulle aux extremums de $v_s$, extrémale aux passages par zéro ;
+      - anneau : triangles positifs sur les fronts montants, négatifs sur les fronts descendants, nulle sur les paliers.
+    ref: fig-isf
+    source: notes-externes
+
+  - id: eana3-hajimiri-reduire-bruit
+    type: raisonnement
+    question: |
+      Que déduire de la théorie de Hajimiri pour réduire le bruit de phase, et pourquoi un anneau est-il plus bruité qu'un $LC$ ?
+    reponse: |
+      N'injecter du courant (commuter les transistors) qu'aux instants où $\Gamma \approx 0$, aux sommets de la sinusoïde pour un $LC$.
+      Les fronts lents de l'anneau élargissent les zones où $\Gamma \neq 0$, d'où un bruit de phase plus élevé.
+    ref: sec-hajimiri
+    source: complement

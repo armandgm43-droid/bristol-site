@@ -1,0 +1,62 @@
+---
+title: "EAEP1 — Électronique pour la conversion d'énergie 1"
+subtitle: "Fiche matière"
+matiere: eaep1
+enseignants: ["Jean-Michel Vinassa"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | EAEP1 (EEL7-EAEP1 ; ancien code : EA207) |
+| UE | EEL7FE-UEA Circuits et Systèmes Analogiques |
+| Enseignant | Jean-Michel Vinassa |
+| Année | 2026-2027 (support de cours 2026, 142 p.) |
+| Organisation (support, p. 2) | cours en amphi ; 5 TD / enseignements intégrés ; bureau d'études sur PSIM (2 parties) |
+
+## Chapitres
+
+Plan tiré de l'organisation du cours (`cours`, p. 2) : un chapitre Bristol par chapitre du support (la partie 08 est une bibliographie). Le rattachement des TD est proposé d'après leurs titres.
+
+| N° | Chapitre (proposé) | Contenu et sources | Statut |
+|---|---|---|---|
+| 1 | Enjeux de l'électronique de puissance | support, partie 01 | BROUILLON |
+| 2 | Convertisseurs DC/DC non isolés | partie 02 ; TD 1 | BROUILLON |
+| 3 | Composants à semiconducteur de puissance | partie 03 ; TD 2 et TD 3 | BROUILLON |
+| 4 | Commande des convertisseurs DC/DC | partie 04 | BROUILLON |
+| 5 | Packaging et thermique | partie 05 ; TD 4 | BROUILLON |
+| 6 | Composants de puissance passifs | partie 06 | BROUILLON |
+| 7 | Conversion DC/AC : onduleurs | partie 07 ; TD 5 | BROUILLON |
+
+Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/eaep1/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `cours` | `support/cours-2026-vinassa.pdf` | officielle | support de cours 2026-2027 |
+| — | `support/aide-decomposition-serie-fourier.pdf, support/lire-datasheet-transistor-puissance.pdf` | officielle | aides (scans : lecture sur image) |
+| — | `support/datasheets/` | officielle | BYV29 (diode), IRFZ34N (MOSFET) |
+| `td` | `td/poly-td-2022-2023-vinassa.pdf` | officielle | poly de TD « EA207 Enseignement intégré », 2022-2023 |
+| `be` | `td/be-2024-vinassa.pdf` | officielle | bureau d'études PSIM, 2024 |
+| `notes-2023` | `notes/2023-notes-cours.pdf` | externe | 2 p. (ancien élève) |
+| — | `corriges/` | externe | TD exercice 3 (commande du transistor de puissance), manuscrit |
+| — | `annales/` | officielle | partiels 2016-2017, 2017-2018, 2022-2023 (« Gestion de l'énergie 2 ») |
+
+La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).

@@ -1,0 +1,56 @@
+---
+title: "EARF1 — Modulations analogiques et numériques pour les communications"
+subtitle: "Fiche matière"
+matiere: earf1
+enseignants: ["Thierry Taris"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | EARF1 (EEL7-EARF1) |
+| UE | EEL7FE-UEA Circuits et Systèmes Analogiques |
+| Enseignant | Thierry Taris |
+| Année | 2026-2027 |
+| Volume (supports) | modulations analogiques : 2 h 40 ; modulations numériques : 1 h 20 ; 3 TD |
+
+## Chapitres
+
+Plan tiré des sommaires des deux supports. Matière distincte de TS227 (confirmé par Armand le 18 octobre 2026) ; les modulations numériques y sont vues côté circuits.
+
+| N° | Chapitre (proposé) | Contenu et sources | Statut |
+|---|---|---|---|
+| 1 | Introduction : signaux et outils d'analyse | `mod-ana` : introduction, signaux et outils d'analyse | BROUILLON |
+| 2 | Modulations linéaires | `mod-ana` : modulations d'amplitude | BROUILLON |
+| 3 | Modulations angulaires | `mod-ana` : modulations de fréquence et de phase | BROUILLON |
+| 4 | Introduction aux modulations numériques | `mod-num` : ASK, FSK, PSK, représentation IQ, critères de performance | BROUILLON |
+
+Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/earf1/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `mod-ana` | `support/cours-01-modulations-analogiques.pdf` | officielle | 54 p. |
+| `mod-num` | `support/cours-02-modulations-numeriques.pdf` | officielle | 30 p. |
+| `td…` | `td/` | officielle | TD 1 (GNU Radio, .pdf et .docx), TD 2 (modulateurs), TD 3 (démodulateurs) |
+| `notes-2023-…` | `notes/2023-…pdf` | externe | modulations analogiques, modulations numériques (ancien élève) |
+| — | `corriges/2023-…pdf` | externe | TD 1 à 3, manuscrits (ancien élève) |
+
+La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).

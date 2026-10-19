@@ -1,0 +1,32 @@
+% Figure — Régulateur de tension à faible chute (LDO) de l'exercice « VDD is not your BFF » (EANA3, chapitre 3).
+% D'après le support [support, p. 29, figure 1], redessiné.
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 03-ldo.tex
+%   dvisvgm --no-fonts --exact-bbox -o 03-ldo.svg <dossier temporaire>/03-ldo.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\usetikzlibrary{shapes.geometric}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex, fleche/.style={->, thick}]
+  \node[draw, thick, isosceles triangle, minimum height=12mm, fill=black!4, inner sep=1pt] (Av) at (3.0,3.0) {$A_v$};
+  \node[font=\scriptsize] at (2.5,3.3) {$+$};  \node[font=\scriptsize] at (2.5,2.7) {$-$};
+  \draw (0.4,0) to[V, l=$V_{ref}$, invert] (0.4,3.3) -- (2.35,3.3);  \node[font=\footnotesize] at (0.75,2.2) {$+$};
+  \draw[<->] (2.2,2.75) -- node[left, font=\footnotesize]{$\varepsilon$} (2.2,3.25);
+  \draw (2.35,2.7) -- (1.8,2.7) -- (1.8,1.8) coordinate (vm);
+  \draw (5.4,3.0) node[pmos, anchor=G] (Mb) {};  \node[right] at (Mb.text) {$M_b$};
+  \draw (Av.east) -- (Mb.G);
+  \draw (Mb.S) -- ++(0,0.4) node[ocirc]{} node[above]{$V_{in} + v_{in}$};
+  \draw (Mb.D) |- (7.2,1.8) coordinate (out);
+  \draw (vm) to[R, l=$R_2$] (Mb.D |- vm);
+  \draw (vm) node[circ]{} node[left]{$V_- + v_-$} to[R, l_=$R_1$] (1.8,0);
+  \draw (0,0) -- (7.2,0) node[ocirc]{};  \draw (4.0,0) node[ground]{};
+  \draw (out) node[ocirc]{};
+  \draw[fleche] (7.5,0.2) -- node[right]{$V_{out} + v_{out}$} (7.5,1.6);
+\end{circuitikz}
+\end{document}

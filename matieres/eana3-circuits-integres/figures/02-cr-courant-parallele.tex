@@ -1,0 +1,37 @@
+% Figure — Contre-réaction courant-parallèle : amplificateur A et réseau de contre-réaction β_F (EANA3, chapitre 2).
+% D'après les notes externes [notes-2023-c04-06, p. 3] et [tableau-2020-c04, p. 7], redessinée.
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 02-cr-courant-parallele.tex
+%   dvisvgm --no-fonts --exact-bbox -o 02-cr-courant-parallele.svg <dossier temporaire>/02-cr-courant-parallele.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex, fleche/.style={->, thick}]
+  \draw[thick, fill=black!3] (1.9,1.6) rectangle (7.4,4.3); \node[font=\bfseries] at (7.1,4.05) {$A$};
+  \draw[thick, fill=black!3] (1.9,-1.7) rectangle (7.4,0.6); \node at (4.8,-1.45) {$\beta_F$};
+  \draw (1.9,3.5) node[circ]{} -- (2.8,3.5) to[generic, l=$Z_e$] (2.8,2.0) -- (1.9,2.0) node[circ]{};
+  \draw[fleche] (2.25,2.15) -- node[left]{$v_e$} (2.25,3.35);
+  \draw (4.6,3.5) to[american controlled current source, l=$A\,i_e$] (4.6,2.0);
+  \draw (6.5,3.5) to[generic, l=$Z_s$] (6.5,2.0);
+  \draw (4.6,3.5) -- (7.4,3.5) node[circ]{};  \draw (4.6,2.0) -- (7.4,2.0) node[circ]{};
+  \draw (1.9,0.2) node[circ]{} -- (3.0,0.2) to[american controlled current source, l=$\beta_F\, i_o$] (3.0,-1.2) -- (1.9,-1.2) node[circ]{};
+  \draw (7.4,0.2) node[circ]{} -- (6.4,0.2) -- (6.4,-1.2) -- (7.4,-1.2) node[circ]{};
+  \draw[fleche] (6.25,-0.05) -- node[left]{$i_o$} (6.25,-0.95);
+  \draw (0,3.5) node[ocirc]{}; \draw (0,-1.2) node[ocirc]{}; \draw (9.2,3.5) node[ocirc]{}; \draw (9.2,-1.2) node[ocirc]{};
+  \draw[fleche] (-0.35,-1.0) -- node[left]{$v_i$} (-0.35,3.3);
+  \draw[fleche] (9.55,-1.0) -- node[right]{$v_o$} (9.55,3.3);
+  \draw (0,3.5) -- (1.9,3.5);  \draw (0.8,3.5) node[circ]{} -- (0.8,0.2) -- (1.28,0.2) arc[start angle=180, end angle=0, radius=0.12] -- (1.9,0.2);
+  \draw (1.9,2.0) -- (1.4,2.0) -- (1.4,-1.2) node[circ]{};  \draw (0,-1.2) -- (1.9,-1.2);
+  \draw[fleche] (0.1,3.7) -- node[above]{$i_i$} (0.7,3.7);  \draw[fleche] (1.0,3.7) -- node[above]{$i_e$} (1.7,3.7);
+  \draw[fleche] (0.6,2.4) -- node[left]{$i_{fb}$} (0.6,1.2);
+  \draw (7.4,3.5) -- (9.2,3.5);  \draw[fleche] (8.9,3.7) -- node[above]{$i_o$} (8.0,3.7);
+  \draw (7.4,2.0) -- (8.1,2.0) -- (8.1,0.2) -- (7.4,0.2);
+  \draw (7.4,-1.2) -- (9.2,-1.2);
+\end{circuitikz}
+\end{document}

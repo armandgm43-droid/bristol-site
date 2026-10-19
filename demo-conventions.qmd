@@ -29,6 +29,14 @@ Un processus est cyclostationnaire de période $\Ts$ si sa moyenne et son autoco
 
 Dans une phrase du support, un ajout oral s'écrit ainsi : la porte est le filtre le plus simple [mais le professeur a insisté sur son lobe principal trop large]{.notes}.
 
+## Notes externes {#sec-demo-notes-externes}
+
+::: {.notes-externes}
+**Notes d'une autre promotion** [notes-2023-c01, p. 2]. Même rôle que les notes de cours (tableau, oral), mais ce ne sont pas les notes d'Armand : filet double, étiquette distincte, source toujours citée.
+:::
+
+Dans une phrase : le gain de boucle doit rester grand [remarque relevée dans des notes externes]{.notes-externes}.
+
 ## Complément {#sec-demo-complement}
 
 ::: {.complement}

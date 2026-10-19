@@ -6,7 +6,7 @@
 > Phrase de démarrage type :
 > « Lis `CONTEXTE_PROJET.md`, `conventions.md` et `ETAT_PROJET.md`, puis reprends le projet à partir de son état actuel. »
 >
-> Dernière mise à jour : 7 octobre 2026.
+> Dernière mise à jour : 19 octobre 2026 (matières du S7).
 
 ---
 
@@ -372,6 +372,8 @@ Contenu provenant des prises de notes d'Armand, du tableau ou d'explications ora
 - **Rendu :** bloc avec **filet vertical bleu** (bleu encre) à gauche, étiquette **`✎ Notes de cours`**, fond très légèrement teinté.
 - Ce n'est **pas** un encadré secondaire : c'est du contenu de cours à part entière, souvent essentiel (démonstrations, calculs faits au tableau, remarques du professeur, méthodes, exemples supplémentaires, schémas).
 - Un bloc de notes peut contenir des équations, des figures et des listes, comme le reste du cours.
+
+**Variante : notes externes** (décision du 8 octobre 2026). Notes de cours qui ne sont pas celles d'Armand (camarade, ancienne promotion, tableau d'une autre année), nature `externe` dans le front matter : bloc `.notes-externes`, étiquette **`✎ Notes externes`**, même famille de style (bleu, ✎) mais filet double bleu ardoise. Chaque bloc cite sa source. Détail : `conventions.md` § 5.1.
 
 ### 7.3 Complément
 
@@ -942,6 +944,9 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 | 2026-10-07 | TS227 ch. 2 : 61 flashcards générées (statut `flashcards`) ; labels `eq-signal-yl` et `eq-efficacite-spectrale` retirés (V5) | Étape 8 ; `conventions.md` § 7.2 |
 | 2026-10-07 | TS227 ch. 3 validé (`av-dsp-porte-notes` tranché d'après la correction du TD) ; 56 flashcards générées (statut `flashcards`) | Étapes 6 à 8 ; rapport ch. 3, § 17-18 |
 | 2026-10-07 | TS227 ch. 1 et 4 vérifiés et validés ; 12 et 57 flashcards générées (statut `flashcards`) ; paquet TS227 : 186 cartes | Étapes 6 à 8 ; rapports ch. 1 et 4, § 17-18 |
+| 2026-10-07 | Nouvelle matière EANA3 — Circuits intégrés (F. Rivet, Y. Deval) ; plan en 5 chapitres validé le 8 octobre | Inventaire `matieres/eana3-circuits-integres/analyses/inventaire-sources.md` |
+| 2026-10-08 | Catégorie *Notes externes* (`.notes-externes`), variante des notes de cours pour les notes qui ne sont pas celles d'Armand | EANA3 : seules des notes d'anciennes promotions sont disponibles |
+| 2026-10-19 | Les 16 matières du S7 sont dans Bristol (archive 2A redistribuée) ; sources : dossiers `tp/` et `travaux/` (travaux personnels, jamais publiés) ; documents d'un ancien élève en nature `externe` | Centraliser toute l'année ; voir `conventions.md` § 2 et `ETAT_PROJET.md` |
 
 ---
 
@@ -1010,6 +1015,10 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 - [x] Flashcards du chapitre de test (61 cartes, 7 octobre 2026)
 - [x] Chapitre 3 : rédigé, vérifié, validé, flashcards (56 cartes, 7 octobre 2026)
 - [x] Chapitres 1 et 4 : rédigés, vérifiés, validés, flashcards (12 et 57 cartes, 7 octobre 2026)
+
+## Matières du S7
+- [x] 16 matières mises en place (fiches, inventaires, plans proposés), 19 octobre 2026
+- [ ] Plans proposés à valider par Armand
 
 ## Prochaines étapes
 1. Réviser les cartes des chapitres 1 à 4 avec `quarto preview` (http://localhost:4848/revision/) et signaler les cartes à reprendre.

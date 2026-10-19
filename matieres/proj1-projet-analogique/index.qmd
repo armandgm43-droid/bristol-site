@@ -1,0 +1,60 @@
+---
+title: "PROJ1 — Projet analogique"
+subtitle: "Fiche matière"
+matiere: proj1
+enseignants: ["À compléter"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | PROJ1 (EEL7-PROJ1 ; ancien code : PR206) |
+| UE | EEL7FE-UEA Circuits et Systèmes Analogiques |
+| Encadrants | deux enseignants par séance, non nommés dans les informations générales |
+| Année | 2026-2027 (informations générales du 25 août 2026) |
+| Nature | projet en binôme : conception d'un système analogique à partir d'un sujet, rapport d'une vingtaine de pages |
+
+## Chapitres
+
+Matière de projet : pas de chapitre de cours. Bristol pourra en tirer des fiches de méthode (phase 2). Sujets 2026-2027 :
+
+
+| Séance | Contenu |
+|---|---|
+| A | cardiofréquencemètre optique |
+| B | cardiofréquencemètre électrique |
+| C | détecteur de mouvement pyroélectrique |
+| D | sonde de température RTD |
+| E | excitation d'un ventilateur par MLI |
+| F | magnétomètre portatif |
+| G | interface de boucle 4-20 mA |
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/proj1/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `infos` | `support/informations-generales-2026.pdf` | officielle | 12 p. : organisation, consignes du rapport (partie 7) |
+| `grille` | `support/grille-evaluation-2026-2027.pdf` | officielle | grille d'évaluation |
+| — | `support/sujets-2026-2027/` | officielle | les 7 sujets |
+| — | `support/ressources-groupe-d/` | officielle | ressources fournies : ouvrages et notes d'application (AOP, capteurs, PCB, logiciels), ressources par sujet, sujets non proposés |
+| — | `support/tutoriel-draw-io.pdf, support/consignes-rapport-moodle.txt` | officielle | tutoriel de saisie de schémas ; consignes de remise du rapport |
+
+## Remarques
+
+- Le rapport et les mesures personnels sont rangés à part dans `sources/proj1/travaux/` (non publiés).

@@ -1,0 +1,906 @@
+{
+  "deck": "EANA3 — Circuits intégrés",
+  "color": "#FFF0A6",
+  "items": [
+    {
+      "key": "eana3-black-invention",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Qui a inventé l'amplificateur à contre-réaction, quand, et quel problème cette invention résout-elle ?",
+      "back": "Harold S. Black, en 1927 (Bell Laboratories). Les composants actifs sont intrinsèquement non linéaires ; la contre-réaction les rend sensiblement linéaires."
+    },
+    {
+      "key": "eana3-gain-boucle-fermee",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Gain $A_F$ d'un système en réaction négative (amplificateur $A$, réseau de retour $\\beta_F$) ?",
+      "back": "$$A_F = \\frac{v_s}{v_e} = \\frac{A}{1 + A\\beta_F}$$\n$A\\beta_F$ est le gain de boucle ($A_{OL}$ dans les notes)."
+    },
+    {
+      "key": "eana3-gain-boucle-fermee-demonstration",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "À partir de quelles trois équations obtient-on $A_F = \\frac{A}{1 + A\\beta_F}$ ?",
+      "back": "$v_i = v_e - v_f$ ; $v_f = \\beta_F v_s$ ; $v_s = A v_i$. D'où $v_s = A(v_e - \\beta_F v_s)$, soit $v_s(1 + A\\beta_F) = A v_e$."
+    },
+    {
+      "key": "eana3-gain-un-sur-betaf",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Dans quelle condition le gain du montage bouclé vaut-il $\\frac{1}{\\beta_F}$, et quelle en est la conséquence ?",
+      "back": "Si $A\\beta_F \\gg 1$ : $A_F \\approx \\dfrac{1}{\\beta_F}$. Le gain ne dépend plus de l'amplificateur, seulement du réseau de contre-réaction."
+    },
+    {
+      "key": "eana3-sensibilite-variation-a",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Variation relative de $A_F$ due à une variation relative de $A$ ?",
+      "back": "$$\\frac{\\mathrm{d}A_F}{A_F} = \\frac{\\mathrm{d}A}{A} \\times \\frac{1}{1 + A\\beta_F} \\ll 1$$\nLes variations de $A$ sont divisées par $1 + A\\beta_F$ : c'est la **reproductibilité industrielle** (résultat signalé comme important pour l'examen)."
+    },
+    {
+      "key": "eana3-sensibilite-variation-a-exemple",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "$A = 10^5$, $\\beta_F = 10^{-2}$ : de combien varie $A_F$ si $A$ varie de 10 % ?",
+      "back": "$A\\beta_F = 1000$, donc $\\dfrac{\\mathrm{d}A_F}{A_F} = \\dfrac{10\\,\\%}{1001} \\approx 0{,}01\\,\\%$."
+    },
+    {
+      "key": "eana3-sensibilite-variation-betaf",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Variation relative de $A_F$ due à une variation relative de $\\beta_F$, pour $A\\beta_F \\gg 1$ ? Conséquence ?",
+      "back": "$$\\frac{\\mathrm{d}A_F}{A_F} = \\frac{\\mathrm{d}\\beta_F}{\\beta_F} \\times \\frac{-A\\beta_F}{1 + A\\beta_F} \\approx -\\frac{\\mathrm{d}\\beta_F}{\\beta_F}$$\nsoit $\\left|\\frac{\\mathrm{d}A_F}{A_F}\\right| \\approx \\left|\\frac{\\mathrm{d}\\beta_F}{\\beta_F}\\right|$ : **pas de gain en robustesse**, il faut maîtriser les composants de la boucle de retour."
+    },
+    {
+      "key": "eana3-sensibilite-betaf-signe-piege",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Les notes concluent $\\frac{\\mathrm{d}A_F}{A_F} \\simeq \\frac{\\mathrm{d}\\beta_F}{\\beta_F}$. Que manque-t-il ?",
+      "back": "Le signe : le facteur $\\frac{-A\\beta_F}{1 + A\\beta_F}$ tend vers $-1$. Une augmentation de $\\beta_F$ **diminue** $A_F$. Le résultat est juste en valeur absolue."
+    },
+    {
+      "key": "eana3-maitriser-betaf-rapports",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Pourquoi $\\beta_F$ est-il réalisé avec des rapports de composants passifs sur un circuit intégré ?",
+      "back": "On maîtrise bien mieux les **rapports** de résistances ou de capacités que leurs valeurs absolues : des composants voisins sur la puce subissent les mêmes dispersions de fabrication."
+    },
+    {
+      "key": "eana3-linearisation-distorsion",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Pourquoi un amplificateur non linéaire crée-t-il des harmoniques, et comment la contre-réaction linéarise-t-elle le montage ?",
+      "back": "$A$ est un polynôme ($a_1 v_i + a_2 v_i^2 + \\dots$) : une raie à $f_0$ en entrée donne des raies à $2f_0$, $3f_0$… en sortie. Si $A\\beta_F \\gg 1$, $A_F \\approx 1/\\beta_F$ : $A$ n'intervient plus ; si $\\beta_F$ est linéaire, le montage l'est aussi."
+    },
+    {
+      "key": "eana3-compromis-gain-bande",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Effet de la contre-réaction sur le gain et la bande passante d'un amplificateur du premier ordre $A(p) = \\frac{A_0}{1 + p/\\omega_0}$ ?",
+      "back": "Le gain statique est **divisé** et la pulsation de coupure **multipliée** par $1 + A_0\\beta_F$ :\n$$A_F(p) = \\frac{A_0/(1 + A_0\\beta_F)}{1 + p/(\\omega_0(1 + A_0\\beta_F))}$$"
+    },
+    {
+      "key": "eana3-produit-gain-bande",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Quelle grandeur est conservée par la contre-réaction pour un amplificateur du premier ordre ?",
+      "back": "Le **produit gain-bande** :\n$$\\frac{A_0}{1 + A_0\\beta_F} \\times \\omega_0 (1 + A_0\\beta_F) = A_0\\,\\omega_0$$"
+    },
+    {
+      "key": "eana3-bode-palier-boucle-fermee",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Sur le diagramme de Bode de $A$, comment tracer le gain du montage bouclé $A_F$ ?",
+      "back": "Palier horizontal à $\\log(1/\\beta_F)$ (tant que $A\\beta_F \\gg 1$) jusqu'à son intersection avec la pente de $A$, à $\\omega_0(1 + A\\beta_F)$ ; ensuite $A_F$ suit la courbe de $A$. Les notes de 2023 étiquettent à tort le palier $\\log(1/(A\\beta_F))$."
+    },
+    {
+      "key": "eana3-point-critique-stabilite",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Point critique de la stabilité d'un système contre-réactionné, et sur quelle grandeur l'étudie-t-on ?",
+      "back": "Sur la boucle ouverte $A_{OL} = A\\beta_F$. $A_F \\to \\infty$ si $1 + A\\beta_F = 0$ :\n$$A\\beta_F = -1 \\iff |A\\beta_F| = 1\\ (0\\ \\text{dB}) \\text{ et } \\arg(A\\beta_F) = 180°$$"
+    },
+    {
+      "key": "eana3-marges-gain-phase-definition",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Définitions de la marge de phase et de la marge de gain ?",
+      "back": "- Marge de phase : écart à 180°, mesuré là où $|A\\beta_F| = 1$ : $M_\\varphi = 180° + \\arg A\\beta_F(j\\omega_c)$.\n- Marge de gain : écart à 0 dB, mesuré là où $\\arg(A\\beta_F) = -180°$ : $M_G = -20\\log|A\\beta_F(j\\omega_{180})|$."
+    },
+    {
+      "key": "eana3-axe-zero-db-un-sur-betaf",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Comment lire la marge de phase sur le diagramme de Bode de $A$ seul ?",
+      "back": "$\\log(A\\beta_F) = \\log A - \\log(1/\\beta_F)$ : la droite horizontale $\\log(1/\\beta_F)$ est le **nouvel axe 0 dB** de $A\\beta_F$. On projette sur la courbe de phase le point où $|A|$ croise cette droite."
+    },
+    {
+      "key": "eana3-critere-45-degres",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Critère de stabilité retenu dans le cours, et lien avec la position de l'intersection par rapport aux pôles de $A$ ?",
+      "back": "- Intersection avec $\\log(1/\\beta_F)$ **après** le 2e pôle : phase proche de −180°, $M_\\varphi < 45°$ ⇒ risque d'instabilité, d'oscillations.\n- Intersection **entre** $\\omega_1$ et $\\omega_2$ : phase proche de −90°, $M_\\varphi > 45°$ ⇒ stable."
+    },
+    {
+      "key": "eana3-suiveur-plus-difficile",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Quel montage contre-réactionné est le plus difficile à stabiliser, et pourquoi ?",
+      "back": "Le **suiveur** ($\\beta_F = 1$). Plus $\\beta_F$ est grand, plus la droite $\\log(1/\\beta_F)$ est basse, plus l'intersection avec $|A|$ est à haute fréquence et plus la marge de phase est faible."
+    },
+    {
+      "key": "eana3-stabiliser-deux-solutions",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Deux façons de stabiliser un système qui pourrait être instable ?",
+      "back": "- **Solution brutale** : déplacer le pôle dominant avec une capacité (bande passante réduite, $A$ atténué).\n- **Solution fine** : séparer les pôles, en plaçant le second pôle $\\omega_2$ sur l'axe 0 dB de $A\\beta_F$ (droite $\\log(1/\\beta_F)$), soit $M_\\varphi = 45°$."
+    },
+    {
+      "key": "eana3-second-pole-45-degres",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Pourquoi placer le second pôle sur l'axe 0 dB de $A\\beta_F$ donne-t-il une marge de phase de 45° ?",
+      "back": "Le pôle dominant, très en dessous, apporte −90° à $\\omega_2$ et le second pôle −45° à sa coupure : phase −135°, donc $M_\\varphi = 45°$ si $|A\\beta_F(\\omega_2)| \\approx 1$. C'est la plus grande bande passante compatible avec 45° de marge."
+    },
+    {
+      "key": "eana3-miller-impedance-entree",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Amplificateur de gain $A$ ($v_{out} = A v_{in}$) avec une impédance $Z$ entre entrée et sortie : impédance d'entrée $Z_{in}$ ?",
+      "back": "$$Z_{in} = \\frac{Z}{1 - A}$$\n(l'amplificateur n'absorbe pas de courant : $v_{in} - v_{out} = Z\\,i_{in}$)."
+    },
+    {
+      "key": "eana3-miller-impedance-sortie",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Même montage (impédance $Z$ entre entrée et sortie d'un amplificateur de gain $A$) : impédance de sortie $Z_{out}$ ?",
+      "back": "$$Z_{out} = \\frac{AZ}{A - 1} = \\frac{Z}{1 - 1/A} \\approx Z \\quad (|A| \\gg 1)$$\nLes deux jeux de notes écrivent un signe faux (ils donneraient $-Z$)."
+    },
+    {
+      "key": "eana3-capacite-miller",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Capacité $C$ entre l'entrée et la sortie d'un amplificateur inverseur de gain $A$ : capacités vues de l'entrée et de la sortie ?",
+      "back": "$$C_M = C\\,(1 - A) \\approx |A|\\,C \\quad \\text{en entrée}$$\net $\\approx C$ en sortie. C'est l'**effet Miller** : une petite capacité intégrée crée un pôle dominant."
+    },
+    {
+      "key": "eana3-capacite-miller-signe-piege",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Pourquoi écrire $C_M \\approx |A|\\,C$ et non $C_M = AC$ pour un étage source commune ?",
+      "back": "Avec $v_{out} = A v_{in}$, le gain d'un inverseur est négatif ($A = -g_m R_S$) : $C(1 - A) = C(1 + g_m R_S) \\approx g_m R_S\\, C$. $AC$ serait négative."
+    },
+    {
+      "key": "eana3-poles-methode-enseirbien",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "« Méthode de l'enseirbien » pour les pôles d'un étage source commune avec $C$ entre grille et drain : capacités équivalentes et pôles obtenus ?",
+      "back": "Entrée : $C_e + C_M$ ; sortie : $C_S + C$. D'où\n$$p_1 = \\frac{1}{R_e(C_M + C_e)} \\approx \\frac{1}{R_e |A| C}, \\qquad p_2 = \\frac{1}{R_S(C + C_S)}$$\n$p_1$ est juste, $p_2$ est **faux**."
+    },
+    {
+      "key": "eana3-source-commune-transfert",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Fonction de transfert $v_{out}/i_e$ de l'étage source commune avec $C$ entre grille et drain : forme du numérateur et du dénominateur ?",
+      "back": "$$\\frac{v_{out}}{i_e} = \\frac{-(g_m - Cp)\\,R_e R_S}{1 + p\\,[(C_S + C)R_S + (C_e + C)R_e + g_m R_e R_S C] + p^2 (C_S C_e + C C_e + C C_S) R_e R_S}$$\nUn zéro, deux pôles (les notes oublient le signe « − »)."
+    },
+    {
+      "key": "eana3-decomposition-pole-dominant",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Comment extraire $p_1$ et $p_2$ d'un dénominateur du second ordre quand il y a un pôle dominant ?",
+      "back": "$D(p) = (1 + p/p_1)(1 + p/p_2) \\approx 1 + \\dfrac{p}{p_1} + \\dfrac{p^2}{p_1 p_2}$ (car $p_1 \\ll p_2$). On identifie le terme en $p$ (donne $p_1$), puis le terme en $p^2$ (donne $p_1 p_2$, donc $p_2$)."
+    },
+    {
+      "key": "eana3-pole-dominant-source-commune",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Pôle dominant de l'étage source commune avec capacité $C$ entre grille et drain, et hypothèses ?",
+      "back": "$$p_1 \\approx \\frac{1}{g_m R_e R_S C}$$\nPour $g_m R_e \\gg 1$, $g_m R_S \\gg 1$ et $C_e, C_S \\ll C$. C'est le résultat de l'enseirbien avec $|A| = g_m R_S$."
+    },
+    {
+      "key": "eana3-pole-non-dominant-source-commune",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Second pôle de l'étage source commune avec capacité $C$ entre grille et drain ?",
+      "back": "$$p_2 \\approx \\frac{g_m}{C_e + C_S}$$\n(et non $\\frac{1}{R_S(C + C_S)}$) ; indépendant de $C$ dès que $C \\gg C_e, C_S$."
+    },
+    {
+      "key": "eana3-erreur-enseirbien-haute-frequence",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Pourquoi la méthode de l'enseirbien se trompe-t-elle sur le second pôle ?",
+      "back": "À haute fréquence, $C$ court-circuite grille et drain : le transistor est **monté en diode**, d'impédance $1/g_m$. $C_e$ et $C_S$ se retrouvent en parallèle sur $1/g_m$, d'où $p_2 = g_m/(C_e + C_S)$. « C n'est plus C »."
+    },
+    {
+      "key": "eana3-zero-demi-plan-droit",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Où est le zéro de l'étage source commune avec $C$ entre grille et drain, et quel est son effet ?",
+      "back": "En $p = g_m/C$, à partie réelle **positive** (demi-plan droit), dû au passage direct du signal à travers $C$. Il ajoute du retard de phase et réduit la marge de phase."
+    },
+    {
+      "key": "eana3-capacite-compensation-choix",
+      "chap": "Ch. 01 — Rappels et généralités sur la contre-réaction",
+      "front": "Choix de la capacité de compensation $C$ : effet d'une valeur optimale, plus grande, plus petite ?",
+      "back": "Augmenter $C$ **sépare les pôles** ($p_1$ baisse, $p_2$ monte).\n- $C$ optimale : $p_2$ sur l'axe 0 dB, $M_\\varphi = 45°$, stable avec la bande passante maximale.\n- $C$ plus grande : $M_\\varphi > 45°$, stable mais bande passante plus faible.\n- $C$ plus petite : pôles rapprochés, $M_\\varphi < 45°$."
+    },
+    {
+      "key": "eana3-quadripole-sortie-norton-thevenin",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Modèles de sortie d'un amplificateur vu comme un quadripôle : sortie Norton et sortie Thévenin, et valeur souhaitée de $Z_s$ dans chaque cas ?",
+      "back": "- **Norton** : source de courant commandée $i_s$ en parallèle avec $Z_s$ ; $Z_s$ doit être très **grande**.\n- **Thévenin** : source de tension commandée $v_s$ en série avec $Z_s$ ; $Z_s$ doit être la plus **petite** possible."
+    },
+    {
+      "key": "eana3-nom-contre-reaction-lecture",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Que disent les deux mots du nom d'une contre-réaction (ex. « courant-série ») ?",
+      "back": "Le 1er mot : la grandeur **prélevée** en sortie (tension ou courant). Le 2e : la façon de la **réinjecter** en entrée (en série ou en parallèle). « Courant-série » : on prélève un courant et on le réinjecte en série."
+    },
+    {
+      "key": "eana3-prelevement-reinjection-connexions",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Comment se branche le réseau $\\beta_F$ pour prélever une tension, un courant, puis pour réinjecter en série, en parallèle ?",
+      "back": "- Prélever une **tension** : port de $\\beta_F$ **en parallèle** sur la sortie.\n- Prélever un **courant** : port de $\\beta_F$ **en série** dans la maille de sortie.\n- Réinjecter en **série** : on ajoute une tension dans la maille d'entrée, $v_i = v_e + v_{fb}$.\n- Réinjecter en **parallèle** : on ajoute un courant au nœud d'entrée, $i_i = i_e + i_{fb}$."
+    },
+    {
+      "key": "eana3-topologies-noms-anglais",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Correspondance entre les noms français et anglais des quatre contre-réactions ?",
+      "back": "L'anglais nomme d'abord la connexion d'entrée, puis celle de sortie :\n- courant-série = *series-series* ;\n- tension-série = *series-shunt* ;\n- courant-parallèle = *shunt-series* ;\n- tension-parallèle = *shunt-shunt*."
+    },
+    {
+      "key": "eana3-regle-impedance-entree-reinjection",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Quelle est l'impédance d'entrée $Z_i$ du montage bouclé selon le mode de réinjection (série ou parallèle) ?",
+      "back": "- Réinjection **série** : $Z_i = Z_e\\,(1 + A_{OL})$, **multipliée**.\n- Réinjection **parallèle** : $Z_i = \\dfrac{Z_e}{1 + A_{OL}}$, **divisée**.\n\n$Z_i$ ne dépend que de la connexion d'**entrée**, avec $A_{OL} = A\\beta_F$."
+    },
+    {
+      "key": "eana3-regle-impedance-sortie-prelevement",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Quelle est l'impédance de sortie $Z_o$ du montage bouclé selon la grandeur prélevée (tension ou courant) ?",
+      "back": "- Prélèvement d'un **courant** : $Z_o = Z_s\\,(1 + A_{OL})$, **multipliée** (le montage se comporte en source de courant).\n- Prélèvement d'une **tension** : $Z_o = \\dfrac{Z_s}{1 + A_{OL}}$, **divisée** (source de tension).\n\n$Z_o$ ne dépend que de la connexion de **sortie**."
+    },
+    {
+      "key": "eana3-quadripole-ideal-tendance",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Pourquoi chaque contre-réaction modifie-t-elle $Z_i$ et $Z_o$ dans le sens observé ? Exemple de l'amplificateur de transconductance.",
+      "back": "Chaque type rapproche le montage du **quadripôle idéal** de sa fonction de transfert. Une entrée en tension doit avoir $Z_i$ infinie, une entrée en courant $Z_i$ nulle ; une sortie en tension $Z_o$ nulle, une sortie en courant $Z_o$ infinie. Transconductance $i_o/v_i$ (courant-série) : $Z_i$ et $Z_o$ toutes deux multipliées, vers l'infini."
+    },
+    {
+      "key": "eana3-courant-serie-impedances",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Contre-réaction **courant-série** : expressions de $Z_i$ et de $Z_o$ ?",
+      "back": "$$Z_i = Z_e\\,(1 + A_{OL}), \\qquad Z_o = Z_s\\,(1 + A_{OL})$$\nLes deux sont multipliées par $1 + A\\beta_F$ (réinjection série, courant prélevé)."
+    },
+    {
+      "key": "eana3-courant-parallele-impedances",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Contre-réaction **courant-parallèle** : expressions de $Z_i$ et de $Z_o$ ?",
+      "back": "$$Z_i = \\frac{Z_e}{1 + A_{OL}}, \\qquad Z_o = Z_s\\,(1 + A_{OL})$$\n$Z_i$ divisée (réinjection parallèle), $Z_o$ multipliée (courant prélevé)."
+    },
+    {
+      "key": "eana3-tension-serie-impedances",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Contre-réaction **tension-série** : expressions de $Z_i$ et de $Z_o$ ?",
+      "back": "$$Z_i = Z_e\\,(1 + A_{OL}), \\qquad Z_o = \\frac{Z_s}{1 + A_{OL}}$$\n$Z_i$ multipliée (réinjection série), $Z_o$ divisée (tension prélevée) : on tend vers l'amplificateur de tension idéal."
+    },
+    {
+      "key": "eana3-tension-parallele-impedances",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Contre-réaction **tension-parallèle** : expressions de $Z_i$ et de $Z_o$ ?",
+      "back": "$$Z_i = \\frac{Z_e}{1 + A_{OL}}, \\qquad Z_o = \\frac{Z_s}{1 + A_{OL}}$$\nLes deux sont divisées par $1 + A\\beta_F$ (réinjection parallèle, tension prélevée)."
+    },
+    {
+      "key": "eana3-impedances-vers-topologie",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Un montage bouclé a une impédance d'entrée **divisée** et une impédance de sortie **multipliée** par $1 + A\\beta_F$. De quelle contre-réaction s'agit-il, et quelle est sa fonction de transfert ?",
+      "back": "$Z_i$ divisée ⇒ réinjection **parallèle** ; $Z_o$ multipliée ⇒ **courant** prélevé : contre-réaction **courant-parallèle**, fonction de transfert $\\dfrac{i_o}{i_i} = \\dfrac{A}{1 + A\\beta_F}$ (amplificateur de courant)."
+    },
+    {
+      "key": "eana3-amplificateur-tension-topologie",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "On veut un amplificateur de tension à très forte impédance d'entrée et très faible impédance de sortie. Quelle contre-réaction choisir ?",
+      "back": "**Tension-série** : réinjection série ⇒ $Z_i = Z_e(1 + A_{OL})$ ; tension prélevée ⇒ $Z_o = Z_s/(1 + A_{OL})$ ; fonction de transfert $v_o/v_i$."
+    },
+    {
+      "key": "eana3-zi-serie-demonstration",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Contre-réaction tension-série : étapes du calcul de $Z_i$ ?",
+      "back": "$v_e = Z_e\\, i_i$ et $v_i = v_e + v_{fb} = v_e + \\beta_F A v_e = Z_e\\, i_i\\,(1 + A\\beta_F)$, d'où $Z_i = v_i/i_i = Z_e(1 + A\\beta_F)$. La tension réinjectée s'oppose à $v_i$ : pour un même courant d'entrée, il faut une tension d'entrée plus grande."
+    },
+    {
+      "key": "eana3-zi-parallele-demonstration",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Contre-réaction tension-parallèle : étapes du calcul de $Z_i$ ?",
+      "back": "$v_i = v_e = Z_e\\, i_e$ et $i_i = i_e + i_{fb} = i_e + \\beta_F A\\, i_e = i_e(1 + A\\beta_F)$, donc $v_i = Z_e\\, \\dfrac{i_i}{1 + A\\beta_F}$ et $Z_i = \\dfrac{Z_e}{1 + A\\beta_F}$."
+    },
+    {
+      "key": "eana3-zo-calcul-methode",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Méthode pour calculer l'impédance de sortie $Z_o$ d'un montage contre-réactionné ?",
+      "back": "On **éteint les générateurs indépendants** (source de courant éteinte ⇒ circuit ouvert ; source de tension éteinte ⇒ court-circuit) : $i_i = 0$ ou $v_i = 0$. Le signal réinjecté fixe alors l'entrée de $A$ (ex. $v_e = -\\beta_F v_o$), puis on écrit $v_o$ en fonction de $i_o$."
+    },
+    {
+      "key": "eana3-zo-courant-serie-demonstration",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Contre-réaction courant-série : étapes du calcul de $Z_o$ ?",
+      "back": "Générateurs indépendants éteints : $v_e = -v_{fb} = -\\beta_F\\, i_o$. Le courant dans $Z_s$ vaut $i_o - A v_e$, donc\n$$v_o = Z_s\\,(i_o + A\\beta_F\\, i_o) \\;\\Rightarrow\\; Z_o = Z_s\\,(1 + A\\beta_F)$$"
+    },
+    {
+      "key": "eana3-fonction-transfert-quatre-types",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Quelle grandeur est la fonction de transfert de chacune des quatre contre-réactions, et quelle est son expression ?",
+      "back": "Toujours $\\dfrac{A}{1 + A\\beta_F}$, mais pour des grandeurs différentes :\n- courant-série : $i_o/v_i$ ;\n- courant-parallèle : $i_o/i_i$ ;\n- tension-série : $v_o/v_i$ ;\n- tension-parallèle : $v_o/i_i$."
+    },
+    {
+      "key": "eana3-validite-ft-charge",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Sous quelles hypothèses la fonction de transfert $\\frac{A}{1 + A\\beta_F}$ des quatre montages est-elle valable ?",
+      "back": "Réseau $\\beta_F$ idéal (il ne charge pas $A$ et ne transmet rien de l'entrée vers la sortie), $A$ unilatéral, et charge négligée : $Z_s$ grande devant la charge pour une sortie Norton, petite devant elle pour une sortie Thévenin."
+    },
+    {
+      "key": "eana3-nature-a-betaf",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Nature (et unité) de $A$ et de $\\beta_F$ pour chacune des quatre contre-réactions ?",
+      "back": "- courant-série : $A$ transconductance (S), $\\beta_F$ résistance (Ω) ;\n- courant-parallèle : $A$ et $\\beta_F$ gains en courant ;\n- tension-série : $A$ et $\\beta_F$ gains en tension ;\n- tension-parallèle : $A$ transimpédance (Ω), $\\beta_F$ conductance (S).\n\nLe produit $A\\beta_F$ est toujours sans dimension."
+    },
+    {
+      "key": "eana3-emetteur-commun-rx-identification",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Émetteur commun avec résistance d'émetteur $R_x$ (TD « Où est la contre-réaction ? ») : type de contre-réaction et valeurs de $A$, $\\beta_F$, $Z_e$, $Z_s$ ?",
+      "back": "Contre-réaction **courant-série** ($R_x$ est parcourue par $i_o$) :\n$$A = g_m, \\quad \\beta_F = R_x, \\quad Z_e = r_{be}, \\quad Z_s = r_{ce}$$"
+    },
+    {
+      "key": "eana3-emetteur-commun-rx-impedances",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Émetteur commun à résistance d'émetteur $R_x$ : gain de boucle, $Z_i$, $Z_o$ et transconductance $i_o/v_i$ ?",
+      "back": "$A_{OL} = g_m R_x$ ; $Z_i = r_{be}(1 + g_m R_x)$ ; $Z_o = r_{ce}(1 + g_m R_x)$ ;\n$$\\frac{i_o}{v_i} = \\frac{g_m}{1 + g_m R_x} \\approx \\frac{1}{R_x}$$\n(approximations pour $g_m R_x \\gg 1$)."
+    },
+    {
+      "key": "eana3-emetteur-commun-robustesse-rapport",
+      "chap": "Ch. 02 — Amplificateurs en contre-réaction",
+      "front": "Émetteur commun à résistance d'émetteur avec charge $R_C$ : gain $v_o/v_i$, et pourquoi est-il robuste aux variations de fabrication ($R' = \\alpha R$, $0{,}8 < \\alpha < 1{,}2$) ?",
+      "back": "$v_o = -R_C\\, i_o$, donc $\\dfrac{v_o}{v_i} \\approx -\\dfrac{R_C}{R_x}$. $-\\dfrac{\\alpha R_C}{\\alpha R_x} = -\\dfrac{R_C}{R_x}$ : le gain ne dépend que d'un **rapport** de résistances voisines, insensible à une dispersion commune, et ne dépend plus de $g_m$."
+    },
+    {
+      "key": "eana3-methode-exercice-contre-reaction",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Quelles sont les cinq étapes de la méthode commune aux exercices de contre-réaction ?",
+      "back": "- schéma équivalent aux petites variations (sources continues éteintes, capacités de liaison en court-circuit) ;\n- grandeur **prélevée** en sortie (tension : parallèle ; courant : série) et mode de **réinjection** (série : tension dans la maille ; parallèle : courant au nœud) → type de contre-réaction ;\n- découpage en quadripôles $A$ et $\\beta_F$, identification de $A$, $\\beta_F$, $Z_e$, $Z_s$ ;\n- tableau de synthèse : $\\frac{A}{1 + A\\beta_F} \\approx \\frac{1}{\\beta_F}$, impédances multipliées ou divisées par $1 + A\\beta_F$ ;\n- vérifier le signe de $A\\beta_F$ ($> 0$ : contre-réaction ; $< 0$ : réaction positive) et qu'il est sans dimension."
+    },
+    {
+      "key": "eana3-lna-type-contre-reaction",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "LNA à dégénérescence inductive (MOS, inductance $L$ entre source et masse) : type de contre-réaction, composition des blocs $A$ et $\\beta_F$, et expression de $A$ ?",
+      "back": "Contre-réaction **courant-série**. Bloc $A$ : $C_{gs}$ et la source $g_m v_{gs}$ ; bloc $\\beta_F$ : l'inductance $L$. $A = g_m$ (transconductance)."
+    },
+    {
+      "key": "eana3-lna-facteur-contre-reaction",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "LNA à dégénérescence inductive : comment obtient-on $\\beta_F = V_{fb}/i_o$, et que vaut-il ?",
+      "back": "$i_L = i_o + i_e$, avec $i_e = j\\omega C_{gs} v_{gs}$ et $i_o = g_m v_{gs}$ :\n$$v_{fb} = jL\\omega\\, i_o - \\omega^2 L C_{gs}\\, v_{gs} \\quad\\Rightarrow\\quad \\beta_F = jL\\omega - \\frac{\\omega^2 L C_{gs}}{g_m}$$"
+    },
+    {
+      "key": "eana3-lna-degenerescence-impedance-entree",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Expression de l'impédance d'entrée $Z_i$ du LNA à dégénérescence inductive, et d'où vient-elle ?",
+      "back": "Courant-série : $Z_i = (1 + A\\beta_F)\\, Z_e$ avec $Z_e = \\frac{1}{jC_{gs}\\omega}$, d'où\n$$Z_i = \\frac{1}{jC_{gs}\\omega}\\left(1 - \\omega^2 L C_{gs}\\right) + g_m \\frac{L}{C_{gs}}$$"
+    },
+    {
+      "key": "eana3-lna-pulsation-impedance-resistive",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "À quelle pulsation l'impédance d'entrée du LNA à dégénérescence inductive est-elle purement résistive, et que vaut-elle alors ?",
+      "back": "$\\omega_0 = \\dfrac{1}{\\sqrt{LC_{gs}}}$ ; alors $Z_i = \\dfrac{g_m L}{C_{gs}}$."
+    },
+    {
+      "key": "eana3-lna-inductance-application-numerique",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "LNA à dégénérescence inductive à 900 MHz, $g_m = 10\\ \\mathrm{mS}$ : quelle inductance $L$ donne $Z_i = 50\\ \\Omega$ ?",
+      "back": "$$L = \\sqrt{\\frac{Z_i}{g_m}}\\,\\frac{1}{\\omega_0} = \\frac{70{,}7}{5{,}65 \\cdot 10^9} \\approx 12{,}5\\ \\mathrm{nH}$$\navec $\\omega_0 = 2\\pi \\times 900 \\cdot 10^6 \\approx 5{,}65 \\cdot 10^9\\ \\mathrm{rad/s}$."
+    },
+    {
+      "key": "eana3-lna-piege-frequence-pulsation",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Le corrigé externe du LNA écrit « $\\omega = 2\\pi f = 900$ MHz ». Quelle est l'erreur ?",
+      "back": "900 MHz est la **fréquence** $f$, pas la pulsation : $\\omega_0 = 2\\pi f \\approx 5{,}65 \\cdot 10^9\\ \\mathrm{rad/s}$. Le résultat retenu est $L \\approx 12{,}5\\ \\mathrm{nH}$."
+    },
+    {
+      "key": "eana3-lna-gain-tension-resonance",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Gain en tension $V_o/V_i$ du LNA à dégénérescence inductive à $\\omega_0$, et module pour $R_L = 700\\ \\Omega$ (avec $L \\approx 12{,}5\\ \\mathrm{nH}$, $Z_i = 50\\ \\Omega$) ?",
+      "back": "À $\\omega_0$, $1 + A\\beta_F = jg_m L\\omega_0$, donc $\\frac{i_o}{v_i} = \\frac{1}{jL\\omega_0}$ et, avec $v_o = -R_L i_o$ :\n$$\\frac{V_o}{V_i} = j\\,\\frac{R_L}{L\\omega_0}$$\n$L\\omega_0 \\approx 70{,}7\\ \\Omega$ : module $\\approx 9{,}9$, soit environ 20 dB (gain purement imaginaire)."
+    },
+    {
+      "key": "eana3-lna-partie-reelle-sans-bruit",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Pourquoi la partie réelle $g_m L / C_{gs}$ de l'impédance d'entrée du LNA est-elle intéressante ?",
+      "back": "Elle ne correspond à aucune résistance physique : elle naît de la contre-réaction. On adapte ainsi le LNA à 50 Ω **sans ajouter de bruit thermique**. Elle s'écrit aussi $Z_i = \\omega_T L$, avec $\\omega_T = g_m / C_{gs}$."
+    },
+    {
+      "key": "eana3-widlar-delta-vbe-ptat",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Bandgap de Widlar ($Q_2$ de surface $N$ fois celle de $Q_1$) : expression de $\\Delta V_{be}$, hypothèse, et comportement en température ?",
+      "back": "$$\\Delta V_{be} = V_{be_1} - V_{be_2} = V_T \\ln\\frac{N I_1}{I_2} = V_T \\ln N \\quad (I_1 = I_2)$$\nAvec $V_T = \\frac{k}{q}T$ : $\\Delta V_{be}$ croît avec $T$ (**PTAT**), et $\\frac{\\mathrm{d}\\Delta V_{be}}{\\mathrm{d}T} = \\frac{\\Delta V_{be}}{T}$."
+    },
+    {
+      "key": "eana3-widlar-coefficient-vbe-ctat",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Avec $\\frac{\\mathrm{d}V_{be}}{\\mathrm{d}T} = \\frac{1}{T}(V_{be} - V_{BG})$, $V_{be} = 0{,}6$ V et $V_{BG} = 1{,}26$ V, coefficient en température d'une diode à 300 K ? Signe ?",
+      "back": "$\\frac{0{,}6 - 1{,}26}{300} \\approx -2{,}2\\ \\mathrm{mV/K}$ (environ −2 mV/K). Négatif : $V_{be}$ diminue quand $T$ augmente (**CTAT**), à l'inverse de $\\Delta V_{be}$ (PTAT)."
+    },
+    {
+      "key": "eana3-widlar-tension-reference",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Expression de $V_{ref}$ du bandgap de Widlar, et pourquoi $I_1 = I_2$ ?",
+      "back": "$$V_{ref} = \\frac{R_2}{R_1}\\,\\Delta V_{be} + V_{be}$$\n$Q_{err}$ met les deux collecteurs au même potentiel $V_{be}$ : même tension aux bornes des deux $R_2$, donc $I_1 = I_2 = \\Delta V_{be}/R_1$."
+    },
+    {
+      "key": "eana3-widlar-derive-vref-nulle",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Bandgap de Widlar : expression de $\\frac{\\mathrm{d}V_{ref}}{\\mathrm{d}T}$, et à quelle condition la dérive est-elle nulle ?",
+      "back": "$$\\frac{\\mathrm{d}V_{ref}}{\\mathrm{d}T} = \\frac{1}{T}\\,(V_{ref} - V_{BG})$$\nNulle pour $V_{ref} = V_{BG} = 1{,}26$ V (bande interdite du silicium extrapolée à 0 K) : compensation PTAT / CTAT."
+    },
+    {
+      "key": "eana3-widlar-identification-a-betaf",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Bandgap de Widlar : type de contre-réaction, $A$, $\\beta_F$ et signe de $A\\beta_F$ ?",
+      "back": "**Tension-parallèle**. $A$ est une transimpédance : $A = -g_m R_3\\, r_{be} = -\\beta R_3$ (émetteur commun $Q_{err}$ suivi d'un collecteur commun $Q_{out}$, gain en tension $-g_m R_3$). $\\beta_F = -\\frac{1}{R_2}$ ; $A\\beta_F = \\beta \\frac{R_3}{R_2} > 0$ : contre-réaction."
+    },
+    {
+      "key": "eana3-widlar-impedance-sortie",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Impédance de sortie du bandgap de Widlar, et intérêt ?",
+      "back": "Avec $Z_s \\approx 1/g_m$ (collecteur commun $Q_{out}$) :\n$$Z_o = \\frac{Z_s}{1 + A\\beta_F} \\approx \\frac{1/g_m}{1 + \\beta R_3/R_2}$$\nTrès faible : la sortie se comporte comme une source de tension, ce qu'on attend d'une référence."
+    },
+    {
+      "key": "eana3-widlar-piege-gain-tension",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Les notes de 2023 donnent, pour le Widlar, $A = -g_m R_3$, $\\beta_F = \\frac{1}{R_2}$ et $Z_o = \\frac{1/g_m}{1 - g_m R_3/R_2}$. Pourquoi est-ce faux ?",
+      "back": "- $-g_m R_3$ est un gain en **tension** : en tension-parallèle, $A$ est une transimpédance, et $A\\beta_F$ doit être sans dimension ;\n- le courant ramené par $R_2$ s'ajoute au nœud d'entrée : $\\beta_F = -1/R_2$ ;\n- le « − » du dénominateur ferait du montage une réaction positive."
+    },
+    {
+      "key": "eana3-dual-vt-courant-immunise",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Générateur dual-$V_T$ ($W_1/L_1 = W_2/L_2$, $I_1 = I_2$) : expression de $I_1$, et pourquoi résiste-t-il aux radiations ?",
+      "back": "$$I_1 = \\frac{V_{T_1} - V_{T_2}}{R}$$\nLes deux seuils subissent le même décalage $\\Delta V_T$ : leur différence, donc $I_1$, ne change pas (tant que $R$ et $\\mu_n C_{ox}$ sont stables et les MOS saturés)."
+    },
+    {
+      "key": "eana3-dual-vt-transimpedance",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Étude dynamique du dual-$V_T$ : type de contre-réaction et transimpédance $A_r = v_{DS_1}/i_1$ ?",
+      "back": "Tension-parallèle ($R$ prélève $v_{DS_1}$ et réinjecte un courant au nœud de grille) :\n$$A_r = r_{DS}\\,\\frac{1 - g_m R}{1 + g_m r_{DS}}$$"
+    },
+    {
+      "key": "eana3-dual-vt-boucle-ota",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Dual-$V_T$ avec boucle d'OTA (gain $A_g$) : expression de $i_1/i_o$, et conclusion pour $A_g \\gg 1$ ?",
+      "back": "$$\\frac{i_1}{i_o} = \\frac{1}{1 + A_g\\, g_m r_{DS} R}$$\nTend vers 0 : les perturbations de $I_1$ sont divisées par le gain de boucle $A_g\\, g_m r_{DS} R$."
+    },
+    {
+      "key": "eana3-modulateur-am-identification",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Modulateur AM du TD 3 pour $\\omega \\to 0$ : type de contre-réaction et expression de $\\beta_F$ ?",
+      "back": "$M_N$ est monté en diode ; il prélève le courant $I_o$ et fournit $V_{fb}$ en série avec $V_{mod}$ : **courant-série**. Diode MOS ≈ résistance $1/g_{m_N}$, donc $\\beta_F = \\frac{1}{g_{m_N}}$."
+    },
+    {
+      "key": "eana3-modulateur-am-sens-bornes",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Modulateur AM : avec $\\varepsilon = +(V_{mod} - V_{fb})$, la boucle fonctionne-t-elle ? Que faire ?",
+      "back": "Non : une hausse de $V_{mod}$ fait diminuer $I_o$, donc $V_{fb}$ ($A\\beta_F < 0$, réaction positive). Il faut **échanger les bornes** : $V_{fb}$ sur $+$, $V_{mod}$ sur $-$, pour que $V_{fb}$ suive $V_{mod}$."
+    },
+    {
+      "key": "eana3-ldo-tension-sortie-retour",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Régulateur LDO : type de contre-réaction, $\\beta_F$, et expression de $V_{out}$ (amplificateur idéal) ?",
+      "back": "**Tension-série** (pont $R_1$-$R_2$ en parallèle sur la sortie, tension réinjectée à l'entrée de $A_v$). $\\beta_F = \\frac{R_1}{R_1 + R_2}$ et $V_{out} = V_{ref}\\left(1 + \\frac{R_2}{R_1}\\right)$."
+    },
+    {
+      "key": "eana3-ldo-impedance-sortie-gain-faible",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "LDO avec $A \\sim 100$ et $R_2 = 100\\, R_1$ : impédance de sortie, et conclusion ?",
+      "back": "$A\\beta_F \\approx 1$ seulement : $Z_{out} = \\frac{r_{ds}}{1 + A\\beta_F} \\approx \\frac{r_{ds}}{2}$. L'impédance reste de l'ordre de $r_{ds}$, trop grande pour une source de tension ; les variations de l'alimentation sont mal rejetées."
+    },
+    {
+      "key": "eana3-brokaw-identification-betaf",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Bandgap de Brokaw : type de contre-réaction et valeur approchée de $\\beta_F = i_1/v_{ref}$ ? Limite de l'approximation ?",
+      "back": "**Tension-parallèle** : $\\beta_F \\approx \\frac{1}{R_1\\left(1 + \\frac{1}{1 + g_m R_2}\\right)} \\approx \\frac{1}{R_1}$. Mais au repos $g_m R_2 = \\ln 8 \\approx 2{,}1$ : le facteur $\\approx 1{,}3$ n'est pas négligeable en toute rigueur."
+    },
+    {
+      "key": "eana3-brokaw-bruit-dimensionnement-r1",
+      "chap": "Ch. 03 — Applications de la théorie de la contre-réaction",
+      "front": "Bandgap de Brokaw : effet d'un courant parasite $i_i$ en entrée sur $v_{ref}$, et choix de $R_1$ ?",
+      "back": "$\\frac{v_{ref}}{i_i} = \\frac{A}{1 + A\\beta_F} \\approx \\frac{1}{\\beta_F} \\approx R_1$, indépendant de $A_v$. Choisir $R_1$ **petite**, en compromis avec la valeur de $V_{ref}$ et sa compensation en température."
+    },
+    {
+      "key": "eana3-oscillateur-principe-boucle",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Principe d'un oscillateur vu comme une boucle à retour unitaire de chaîne directe $H(s)$ : à quelle condition oscille-t-il, et qu'est-ce qui le fait démarrer ?",
+      "back": "$$\\frac{V_{out}}{V_{in}} = \\frac{H(s)}{1 + H(s)}$$\nSi $H(j\\omega_1) = -1$, le dénominateur s'annule : la sortie existe sans entrée, le circuit oscille à $\\omega_1$. Sans signal d'entrée utile, c'est le **bruit** qui l'excite."
+    },
+    {
+      "key": "eana3-oscillation-sinusoidale-origine",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Pourquoi le signal produit par un oscillateur vérifiant $H(j\\omega_1) = -1$ est-il sinusoïdal ?",
+      "back": "La condition est écrite pour $s = j\\omega$, c'est-à-dire en régime sinusoïdal, à une **seule pulsation** $\\omega_1$."
+    },
+    {
+      "key": "eana3-barkhausen-critere",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Énoncé du critère de Barkhausen (amplificateur $A$, retour $\\beta$) : quelles sont les deux conditions d'oscillation à $\\omega_1$ ?",
+      "back": "- **condition de fréquence** (de phase) : $\\arg(A\\beta)\\big|_{\\omega = \\omega_1} = 0$, en incluant le signe du soustracteur ;\n- **condition d'entretien** (d'amplitude) : $|A\\beta| \\geqslant 1$."
+    },
+    {
+      "key": "eana3-barkhausen-convention-signe",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Faut-il écrire la condition d'oscillation $A\\beta = -1$ ou $A\\beta = 1$ ?",
+      "back": "Cela dépend du soustracteur. Avec soustracteur : $1 + A\\beta = 0$, soit $A\\beta = -1$ (le gain de boucle complet $-A\\beta$ vaut $+1$). Sans soustracteur (réaction directe, cas de la plupart des schémas d'oscillateurs) : $A\\beta = 1$."
+    },
+    {
+      "key": "eana3-barkhausen-demarrage-amplitude",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Pourquoi la condition d'entretien s'écrit-elle $|A\\beta| \\geqslant 1$ et non $|A\\beta| = 1$ ?",
+      "back": "Au démarrage, il faut $|A\\beta| > 1$ pour que le bruit soit amplifié à chaque tour et que l'oscillation croisse. L'amplitude se stabilise ensuite car le gain baisse aux fortes amplitudes (non-linéarités ou correcteur), jusqu'à $|A\\beta| = 1$ en moyenne."
+    },
+    {
+      "key": "eana3-colpitts-hartley-reseau",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Réseau déphaseur en π ($Z_1$, $Z_2$, $Z_3$) : quelle composition donne un oscillateur Colpitts, laquelle un Hartley, et lequel est le plus utilisé en intégré ?",
+      "back": "- **Colpitts** : 2 condensateurs et 1 inductance ;\n- **Hartley** : 1 condensateur et 2 inductances.\n\nLe Colpitts est le plus utilisé : les inductances intégrées ont beaucoup plus de pertes que les condensateurs."
+    },
+    {
+      "key": "eana3-colpitts-gain-intrinseque",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Gain à vide de l'étage source commune polarisé par une source de courant (amplificateur du Colpitts) ? Comment l'appelle-t-on ?",
+      "back": "$A_v = -g_m r_{ds}$ : le **gain intrinsèque** du transistor, gain maximal d'un étage à un transistor."
+    },
+    {
+      "key": "eana3-colpitts-capacites-parasites",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Colpitts à source commune ($C_1$ drain–masse, $C_2$ grille–masse) : que deviennent $C_1$ et $C_2$ aux petites variations ?",
+      "back": "Les capacités parasites du transistor s'ajoutent ($C_e$ en entrée, $C_s$ en sortie) : $C_2' = C_2 + C_e$ et $C_1' = C_1 + C_s$."
+    },
+    {
+      "key": "eana3-colpitts-role-c1",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Pourquoi la capacité $C_1'$ est-elle indispensable dans l'oscillateur Colpitts ?",
+      "back": "Sans elle, le réseau $L C_2'$ seul est du second ordre : son déphasage n'atteint 180° qu'asymptotiquement, donc jamais."
+    },
+    {
+      "key": "eana3-colpitts-frequence-oscillation",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Condition de fréquence de l'oscillateur Colpitts à source commune, et d'où vient-elle ?",
+      "back": "$$\\omega_0 = \\frac{1}{\\sqrt{LC_{eq}}}, \\qquad C_{eq} = \\frac{C_1' C_2'}{C_1' + C_2'}$$\n($C_1'$ en série avec $C_2'$). Elle annule la partie imaginaire de l'équation caractéristique : $LC_{eq}p^2 = -1$."
+    },
+    {
+      "key": "eana3-colpitts-condition-entretien",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Condition d'entretien de l'oscillateur Colpitts à source commune ?",
+      "back": "Un rapport de capacités (partie réelle nulle en $\\omega_0$) :\n$$g_m r_{ds} = |A_v| = \\frac{C_2'}{C_1'} \\simeq \\frac{C_2}{C_1}$$\nEn pratique, $g_m r_{ds}$ un peu supérieur pour garantir le démarrage."
+    },
+    {
+      "key": "eana3-oscillateur-capacite-variable",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Comment rendre réglable la fréquence d'un oscillateur $LC$ intégré en technologie MOS ?",
+      "back": "Avec une **diode bloquée**, qui se comporte comme une capacité variable contrôlée par sa tension inverse (jonction drain N+ / substrat P). Composant dédié : la varicap ; on obtient un VCO."
+    },
+    {
+      "key": "eana3-paire-croisee-resistance-negative",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Résistance équivalente vue entre les drains d'une paire croisée (*cross-coupled pair*), et comment la régler ?",
+      "back": "$$R_{eq} = -\\frac{2}{g_m}$$\nLe signe « − » vient de la réaction positive. On la règle par le courant de polarisation (donc $g_m$)."
+    },
+    {
+      "key": "eana3-resistance-negative-compensation",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Résonateur $LC$ de pertes $R_p$ (en parallèle) et résistance négative $-R$ en parallèle : que se passe-t-il si $R = R_p$, puis si $R < R_p$ ?",
+      "back": "Résistance totale $\\frac{R_p \\cdot (-R)}{R_p - R}$.\n- $R = R_p$ : résistance infinie, résonateur sans pertes, oscillation à $\\omega_0 = 1/\\sqrt{LC}$ ;\n- $R < R_p$ : résistance totale négative, l'oscillation croît (démarrage) jusqu'à la limitation par les non-linéarités."
+    },
+    {
+      "key": "eana3-paire-croisee-signe-negatif",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Pourquoi la paire croisée présente-t-elle $-\\frac{2}{g_m}$ alors que deux transistors montés en diode présenteraient $+\\frac{2}{g_m}$ ?",
+      "back": "En croisant les connexions, une hausse de tension sur un drain fait **baisser** l'autre drain (source commune), ce qui fait encore monter le premier : réaction positive, la résistance change de signe."
+    },
+    {
+      "key": "eana3-double-paire-croisee-rosc",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "TD 4 : oscillateur à double paire croisée (PMOS et NPN) sur un réseau $LC$ de pertes $R$. Expression de $R_{OSC}$, condition « juste oscillant », et réglage en pratique ?",
+      "back": "$$R_{OSC} = R_{MOS} /\\!/ R_{BJT} = -\\frac{2}{g_{mMOS} + g_{mBJT}} < 0$$\nJuste oscillant pour $R_{OSC} = -R$. On règle $R_{OSC}$ avec le courant $I_{bias}$ (qui fixe $g_{mMOS}$ et $g_{mBJT}$)."
+    },
+    {
+      "key": "eana3-pont-reactif-impedance-negative",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "TD 6 : AOP idéal non inverseur de gain 2, résistance $R_f$ entre entrée et sortie. Impédance d'entrée, et valeur de $R_f$ pour un oscillateur entretenu avec un $LC$ de pertes $R_p$ ?",
+      "back": "$Z_{in} = -R_f$ (résistance négative). Oscillation entretenue pour $R_f = R_p$ (en pratique un peu inférieure pour démarrer), à $\\omega_0 = \\frac{1}{\\sqrt{LC}}$."
+    },
+    {
+      "key": "eana3-dephasage-frequence-attenuation",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Oscillateur à déphasage à trois cellules $RC$ (R série, C vers la masse) : pulsation d'oscillation et atténuation du réseau à cette pulsation ?",
+      "back": "Partie imaginaire nulle : $6RC\\omega_0 = (RC\\omega_0)^3$, soit $\\omega_0 = \\frac{\\sqrt{6}}{RC}$. Alors $\\frac{v_2}{v_1} = \\frac{1}{1 - 30} = -\\frac{1}{29}$ : atténuation de 29 et déphasage de 180°."
+    },
+    {
+      "key": "eana3-dephasage-condition-entretien",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Oscillateur à déphasage MOS (amplificateur dégénéré, $A_v \\approx -1/\\alpha$) : condition d'entretien sur $\\alpha$ ?",
+      "back": "$A_v \\cdot \\left(-\\frac{1}{29}\\right) = \\frac{1}{29\\alpha} \\geqslant 1$, soit $\\alpha \\leqslant \\frac{1}{29}$ ($|A_v| \\geqslant 29$) ; juste oscillant pour $\\alpha = \\frac{1}{29}$."
+    },
+    {
+      "key": "eana3-dephasage-trois-cellules",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Pourquoi faut-il trois cellules $RC$ (et non deux) dans un oscillateur à déphasage ?",
+      "back": "Une cellule ne déphase de 90° qu'asymptotiquement, où son gain tend vers 0 : deux cellules n'atteignent 180° qu'à fréquence infinie, avec un gain nul. Avec trois, 180° est atteint à une fréquence finie, avec une atténuation finie (1/29)."
+    },
+    {
+      "key": "eana3-astable-principe",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Principe de l'astable à charge et décharge de capacité vu en cours ?",
+      "back": "Une capacité $C$ est chargée puis déchargée par des sources de courant $I$ ; un comparateur à hystérésis (seuils $V_b$ et $V_h$) commande l'interrupteur. $V_C$ est un signal **triangulaire** entre $V_b$ et $V_h$, de pentes $\\pm I/C$."
+    },
+    {
+      "key": "eana3-astable-frequence",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Fréquence de l'astable à charge et décharge à courant constant $I$, et limite à très haute fréquence ?",
+      "back": "$$F = \\frac{1}{2\\Delta t} = \\frac{I}{2\\,\\Delta V\\, C}$$\navec $\\Delta V = V_h - V_b$. À très haute fréquence, le temps de propagation du comparateur devient gênant."
+    },
+    {
+      "key": "eana3-anneau-principe-impair",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Constitution d'un oscillateur en anneau, pourquoi oscille-t-il, et quels sont ses atouts et son défaut ?",
+      "back": "Un nombre **impair** d'inverseurs rebouclés : un état logique revient inversé, aucun état n'est stable. Très compact et peu cher, mais fréquence mal maîtrisée."
+    },
+    {
+      "key": "eana3-anneau-frequence-oscillation",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Période et fréquence d'un oscillateur en anneau de $N$ inverseurs de temps de propagation $\\Delta t$ ?",
+      "back": "$$T = 2N\\,\\Delta t, \\qquad F = \\frac{1}{2N\\,\\Delta t}$$\nUne transition fait le tour en $N\\Delta t$ ; il faut deux tours (front montant puis descendant) par période."
+    },
+    {
+      "key": "eana3-anneau-frequence-facteur-deux",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Les notes de 2023 donnent $F = \\frac{1}{N\\Delta t}$ pour un anneau de $N$ inverseurs. Pourquoi est-ce faux ?",
+      "back": "Il manque un facteur 2 : pour $N = 3$, on aurait $\\frac{1}{3\\Delta t}$ au lieu de $\\frac{1}{6\\Delta t}$. La bonne formule est $F = \\frac{1}{2N\\Delta t}$ (corrigé du TD : $f_{osc} = \\frac{1}{2Mt_p}$)."
+    },
+    {
+      "key": "eana3-anneau-reglage-frequence",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Comment faire varier la fréquence d'un oscillateur en anneau, et pourquoi ces leviers agissent-ils ?",
+      "back": "En faisant varier $\\Delta t \\approx \\frac{C\\,\\Delta V}{I}$ (temps de charge de la capacité de sortie) : par une capacité variable (diode bloquée) ou par le courant."
+    },
+    {
+      "key": "eana3-anneau-differentiel-phases",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Anneau différentiel à 4 étages rebouclé croisé : déphasage par étage, et où obtient-on des signaux en quadrature ?",
+      "back": "45° de retard par étage (le croisement apporte 180°, les 4 étages se partagent les 180° restants). Les étages 1 et 3 sont en quadrature ; les sorties complémentaires donnent 8 phases espacées de 45° (intérêt : I/Q)."
+    },
+    {
+      "key": "eana3-anneau-cml-excursion-remarquable",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "TD anneau : $\\Delta V = \\frac{L_{100}}{W_{100}}\\frac{W_0}{L_0}\\frac{L_1}{W_1}\\frac{W_i}{L_i}\\,U_T \\ln N$. En quoi cette excursion logique est-elle remarquable ?",
+      "back": "Elle ne dépend que de **rapports de dimensions** et de $U_T \\ln N$ : indépendante de $V_{ctrl}$, $k'_p$ et $V_{Tp}$, insensible aux dispersions. $V_{ctrl}$ règle le courant, donc $t_p$ et la fréquence, sans changer l'amplitude."
+    },
+    {
+      "key": "eana3-anneau-cml-dimensionnement",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "TD anneau : $\\Delta V = 400$ mV, $U_T = 25$ mV, $N = 6$, longueurs 1 µm ; 5 inverseurs, $C = 100$ fF, $t_{p0} = 50$ ps, $k'_p = 40$ µA/V², $V_{Tp} = -0{,}7$ V, $W_{100} = 30$ µm. Rapport de largeurs requis et fréquences pour $V_{ctrl} = 2$ V et 3 V ?",
+      "back": "$\\frac{W_0 W_i}{W_{100} W_1} = \\frac{\\Delta V}{U_T \\ln N} \\approx 8{,}9$. $t_p = t_{p0} + \\frac{C\\,L_{100}}{2k'_p (V_{ctrl} + V_{Tp}) W_{100}}$ : 82 ps à 2 V, 68 ps à 3 V ; $f_{osc} = \\frac{1}{2Mt_p}$ avec $M = 5$ : 1,22 GHz et 1,47 GHz."
+    },
+    {
+      "key": "eana3-bruit-phase-definition",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Qu'est-ce que le bruit de phase d'un oscillateur, et en quelle unité s'exprime-t-il ?",
+      "back": "Au lieu d'une raie à $f_0$, le spectre réel présente des « épaules » (*skirt*). Le bruit de phase, lu à un écart de la porteuse, est la puissance de bruit dans 1 Hz rapportée à la puissance du signal, en dBc/Hz."
+    },
+    {
+      "key": "eana3-leeson-allure-pentes",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Allure du bruit de phase selon Leeson en fonction de l'écart $\\Delta\\omega$ à la porteuse ?",
+      "back": "D'abord −30 dB/décade, puis −20 dB/décade (bruit de proximité, *close-in*), puis un plancher de bruit blanc au-delà de $\\frac{\\omega_0}{2Q}$ (soit $\\frac{f_0}{2Q}$ en fréquence)."
+    },
+    {
+      "key": "eana3-leeson-bruit-proximite",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Expression du bruit de phase de proximité selon Leeson (forme du cours), et dépendance essentielle ?",
+      "back": "$$\\mathcal{L}_{close\\text{-}in}(\\Delta\\omega) = 10\\log\\left[\\frac{FAkT}{2P_{sig}}\\left(\\frac{\\omega_0}{2Q}\\right)^2\\left(\\frac{1}{\\Delta\\omega}\\right)^2\\right]$$\nL'essentiel : la dépendance en $\\left(\\frac{\\omega_0}{2Q\\,\\Delta\\omega}\\right)^2$, d'où la pente −20 dB/décade."
+    },
+    {
+      "key": "eana3-leeson-reduire-bruit",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Selon Leeson, sur quels paramètres agir pour réduire le bruit de phase d'un oscillateur ?",
+      "back": "- augmenter le coefficient de qualité $Q$ du résonateur : $\\frac{\\omega_0}{2Q}$ diminue, la zone bruitée se resserre vers la porteuse ;\n- augmenter $P_{sig}$ : le plancher baisse."
+    },
+    {
+      "key": "eana3-leeson-origine-30db",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Bruit de phase de Leeson : d'où vient la pente −30 dB/décade près de la porteuse ?",
+      "back": "Du bruit en $1/f$ des transistors, converti autour de la porteuse : il ajoute une pente, d'où $1/\\Delta\\omega^3$."
+    },
+    {
+      "key": "eana3-hajimiri-instant-injection",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Effet d'une impulsion de courant selon son instant d'injection, dans un oscillateur $LC$ puis dans un oscillateur en anneau ?",
+      "back": "- $LC$ : au **maximum** de $v_s$, l'amplitude change mais pas les passages par zéro ; au **passage par zéro**, le signal est décalé dans le temps ;\n- anneau : pendant un palier, aucun effet ; pendant un front, la suite du signal est décalée."
+    },
+    {
+      "key": "eana3-hajimiri-reponse-impulsionnelle",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Réponse impulsionnelle du système qui transforme le courant injecté $i(t)$ en phase $\\phi(t)$ (Hajimiri) ? Nommer chaque terme.",
+      "back": "$$h_\\phi(t, \\tau) = \\frac{\\Gamma(\\omega_0 \\tau)}{q_{max}}\\, u(t - \\tau)$$\nUn échelon (décalage de phase permanent) ; $\\Gamma$ : fonction de sensibilité impulsionnelle (ISF), $\\tau$ : instant d'injection, $q_{max}$ : charge maximale du nœud, $u$ : échelon unité."
+    },
+    {
+      "key": "eana3-isf-forme-lc-anneau",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Forme de la fonction de sensibilité impulsionnelle $\\Gamma$ pour un oscillateur $LC$ et pour un oscillateur en anneau ?",
+      "back": "- $LC$ : cosinusoïdale, nulle aux extremums de $v_s$, extrémale aux passages par zéro ;\n- anneau : triangles positifs sur les fronts montants, négatifs sur les fronts descendants, nulle sur les paliers."
+    },
+    {
+      "key": "eana3-hajimiri-reduire-bruit",
+      "chap": "Ch. 04 — Oscillateurs",
+      "front": "Que déduire de la théorie de Hajimiri pour réduire le bruit de phase, et pourquoi un anneau est-il plus bruité qu'un $LC$ ?",
+      "back": "N'injecter du courant (commuter les transistors) qu'aux instants où $\\Gamma \\approx 0$, aux sommets de la sinusoïde pour un $LC$. Les fronts lents de l'anneau élargissent les zones où $\\Gamma \\neq 0$, d'où un bruit de phase plus élevé."
+    },
+    {
+      "key": "eana3-reference-principe-tc0",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Quel principe commun permet d'obtenir une référence de tension stable en température ?",
+      "back": "Additionner une grandeur qui **décroît** avec la température (TC−) et une grandeur qui **croît** (TC+), dans la bonne proportion, pour obtenir un coefficient de température nul (TC0)."
+    },
+    {
+      "key": "eana3-vbe-coefficient-temperature",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Expression de $\\frac{\\mathrm{d}V_{BE}}{\\mathrm{d}T}$ d'un bipolaire polarisé à courant constant, et ordre de grandeur ?",
+      "back": "$$\\frac{\\mathrm{d}V_{BE}}{\\mathrm{d}T} = \\frac{1}{T}\\left(V_{BE} - V_{BG}\\right) \\simeq -2\\ \\mathrm{mV/°C}$$\n$V_{BG}$ : tension de bande interdite du silicium."
+    },
+    {
+      "key": "eana3-vbe-tc-negatif",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Pourquoi $V_{BE}$ est-elle une grandeur TC− ?",
+      "back": "$V_{BE} \\approx 0{,}6\\ \\mathrm{V}$ est inférieure à $V_{BG}$ : la dérivée $\\frac{1}{T}(V_{BE} - V_{BG})$ est négative."
+    },
+    {
+      "key": "eana3-tension-bande-interdite",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Expression et valeur à 300 K de la tension de bande interdite $V_{BG}$, et valeur de $U_T$ ?",
+      "back": "$V_{BG} = V_{BG_0} + (\\gamma - \\alpha)\\, U_T \\simeq 1{,}26\\ \\mathrm{V}$ à $300\\ \\mathrm{K}$, avec $U_T = \\frac{kT}{q} = 26\\ \\mathrm{mV}$ ; $V_{BG_0} \\approx 1{,}2\\ \\mathrm{V}$ (extrapolée à 0 K)."
+    },
+    {
+      "key": "eana3-transistor-fois-n",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Que désigne un transistor bipolaire « $\\times N$ », et que vaut son courant de saturation ?",
+      "back": "La mise en parallèle de $N$ transistors identiques (bases, collecteurs et émetteurs reliés) : courant de saturation $N I_S$."
+    },
+    {
+      "key": "eana3-delta-vbe-ptat",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Deux bipolaires de surfaces dans le rapport $N$ sont parcourus par le même courant $I$. Expression de $\\Delta V_{BE}$ ?",
+      "back": "$$\\Delta V_{BE} = U_T \\ln\\left(\\frac{I}{I_S}\\right) - U_T \\ln\\left(\\frac{I}{N I_S}\\right) = U_T \\ln N$$"
+    },
+    {
+      "key": "eana3-ptat-derivee",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Dérivée en température de $\\Delta V_{BE} = U_T \\ln N$ ? Comment qualifie-t-on cette tension ?",
+      "back": "$\\frac{\\mathrm{d}}{\\mathrm{d}T}(\\Delta V_{BE}) = \\frac{k}{q}\\ln N = \\frac{U_T}{T}\\ln N > 0$, constante. Tension TC+, et même **PTAT** (*Proportional To Absolute Temperature*)."
+    },
+    {
+      "key": "eana3-bandgap-widlar-vref",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Expression de $V_{ref}$ du bandgap de Widlar (notations des notes) ?",
+      "back": "$$V_{ref} = \\frac{\\Delta V_{BE}}{R_E}\\,R + V_{BE3}$$\n$V_{BE3}$ (TC−) plus la tension PTAT $\\Delta V_{BE}$ amplifiée par $R/R_E$."
+    },
+    {
+      "key": "eana3-bandgap-derivee-vref",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Dérivée en température de la sortie d'un bandgap, et condition TC0 ?",
+      "back": "$$\\frac{\\mathrm{d}V_{ref}}{\\mathrm{d}T} = \\frac{1}{T}\\left[V_{ref} - V_{BG}\\right]$$\nTC0 lorsque $V_{ref} = V_{BG}$, soit environ $1{,}25\\ \\mathrm{V}$ à $300\\ \\mathrm{K}$."
+    },
+    {
+      "key": "eana3-bandgap-derivee-demonstration",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Comment obtient-on $\\frac{\\mathrm{d}V_{ref}}{\\mathrm{d}T} = \\frac{1}{T}(V_{ref} - V_{BG})$ pour le bandgap de Widlar ?",
+      "back": "On dérive $V_{ref} = \\frac{R}{R_E}U_T\\ln N + V_{BE3}$ : le terme PTAT donne $\\frac{1}{T}\\frac{R}{R_E}U_T\\ln N$, $V_{BE3}$ donne $\\frac{1}{T}(V_{BE3} - V_{BG})$ ; la somme fait réapparaître $V_{ref}$."
+    },
+    {
+      "key": "eana3-bandgap-courbe-temperature",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Allure de $V_{ref}(T)$ d'une référence bandgap ? D'où vient sa courbure ?",
+      "back": "Courbe en cloche : sommet plat (TC0) à une seule température (300 K), TC+ dominant en dessous, TC− dominant au-dessus. La courbure vient du terme en $T\\ln T$ de $V_{BE}$, que la compensation linéaire ne supprime pas."
+    },
+    {
+      "key": "eana3-bandgap-pnp-vref",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Expression de $V_{ref}$ du bandgap à miroir PNP et pont $R_1$, $R_2$ en sortie ?",
+      "back": "$$V_{ref} = \\frac{R_1R_2}{4R(R_1 + R_2)}\\,\\Delta V_{BE} + \\frac{R_1}{R_1 + R_2}\\,V_{BEQ2}$$\navec $\\Delta V_{BE} = U_T\\ln N$ aux bornes de $R$ ; $R_1$, $R_2$ grandes."
+    },
+    {
+      "key": "eana3-bandgap-pnp-facteur-quart",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Les notes de 2023 donnent pour le bandgap à miroir PNP un terme PTAT $\\frac{R_2R_1}{R(R_1+R_2)}\\Delta V_{BE}$. Qu'est-ce qui manque, et pourquoi ?",
+      "back": "Un facteur $\\frac{1}{4}$ : le PNP $\\times 1$ fournit $\\frac{I}{4}$ au nœud $V_{ref}$, et l'élimination de $I_{R2}$ donne $V_{ref}\\left(\\frac{1}{R_1} + \\frac{1}{R_2}\\right) = \\frac{V_{BE2}}{R_2} + \\frac{\\Delta V_{BE}}{4R}$. La condition TC0 n'en dépend pas, seul le dimensionnement de $R$."
+    },
+    {
+      "key": "eana3-bandgap-fractionnaire-tc0",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Dérivée en température de la sortie du bandgap à pont $R_1$, $R_2$, et condition TC0 ?",
+      "back": "$$\\frac{\\mathrm{d}V_{ref}}{\\mathrm{d}T} = \\frac{1}{T}\\left[V_{ref} - \\frac{R_1}{R_1 + R_2}\\,V_{BG}\\right]$$\nTC0 pour $V_{ref} = \\frac{R_1}{R_1 + R_2}V_{BG}$ : une **fraction** de la tension de bande interdite."
+    },
+    {
+      "key": "eana3-bandgap-fractionnaire-interet",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Quel est l'intérêt d'une sortie fractionnaire par rapport au bandgap classique ?",
+      "back": "Le bandgap classique impose $V_{ref} \\approx 1{,}25\\ \\mathrm{V}$, donc une alimentation nettement supérieure. La sortie fractionnaire donne une référence stable **inférieure** à $V_{BG}$, utilisable sous faible alimentation."
+    },
+    {
+      "key": "eana3-pnp-vertical-parasite",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Quel bipolaire dispose-t-on dans une technologie CMOS, et quelle contrainte impose-t-il ?",
+      "back": "Un **PNP vertical parasite** dans le PMOS : émetteur P+, base caisson N, collecteur substrat P. Son collecteur est imposé au substrat, donc à la masse."
+    },
+    {
+      "key": "eana3-bandgap-cmos-vout",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Expression de la sortie du bandgap CMOS à amplificateur et miroir PMOS, et rôle de l'amplificateur ?",
+      "back": "$$V_{out} = V_{BE2} + \\frac{R_1}{R}\\,\\Delta V_{BE}, \\qquad \\Delta V_{BE} = U_T\\ln N$$\nL'amplificateur égalise les potentiels des deux branches : le nœud au-dessus de $R$ est à $V_{BE2}$. TC0 pour $V_{out} = V_{BG}$."
+    },
+    {
+      "key": "eana3-vth-coefficient-temperature",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Modèle de la dépendance thermique de la tension de seuil d'un MOS, signe et ordre de grandeur de $\\alpha$ ?",
+      "back": "$V_{th}(T) = V_{th_0} + \\alpha\\,(T - T_0)$, $T_0 = 300\\ \\mathrm{K}$. $\\alpha < 0$, de l'ordre de $-1$ à $-10\\ \\mathrm{mV/K}$."
+    },
+    {
+      "key": "eana3-alpha-vth-unite",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Les notes de 2023 donnent pour $\\alpha$ (pente de $V_{th}(T)$) un ordre de grandeur « 1 à 10 mV ». Qu'est-ce qui ne va pas ?",
+      "back": "L'unité : $\\alpha$ est une pente, en V/K. Il faut lire $-1$ à $-10\\ \\mathrm{mV/K}$ (des valeurs de $-1$ à $-3\\ \\mathrm{mV/K}$ sont courantes)."
+    },
+    {
+      "key": "eana3-dual-vth-longueur-canal",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Dans la référence dual-$V_{th}$, comment obtient-on deux tensions de seuil différentes, et pourquoi prend-on $V_{GS} \\simeq V_{th}$ ?",
+      "back": "La tension de seuil croît avec la longueur du canal : $L_1 > L_2 \\Rightarrow V_{th1} > V_{th2}$ (même $W/L$). Courants petits et transistors larges : l'excès $V_{GS} - V_{th}$ est faible."
+    },
+    {
+      "key": "eana3-dual-vth-vref",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Expression de $V_{ref}$ de la référence MOS à double tension de seuil ?",
+      "back": "$$V_{ref} = \\frac{R}{R_\\Delta}\\,\\Delta V_{th} + V_{th1}$$\navec $V_\\Delta = V_{th1} - V_{th2} = \\Delta V_{th}$ aux bornes de $R_\\Delta$ et $I_{D1} = I_{D2}$ (miroir PMOS)."
+    },
+    {
+      "key": "eana3-dual-vth-dimensionnement",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Condition TC0 de la référence dual-$V_{th}$ (pentes $\\alpha_1$, $\\alpha_2$) ?",
+      "back": "$\\frac{\\mathrm{d}V_{ref}}{\\mathrm{d}T} = \\frac{R}{R_\\Delta}(\\alpha_1 - \\alpha_2) + \\alpha_1 = 0$, soit\n$$\\frac{R}{R_\\Delta} = -\\frac{\\alpha_1}{\\alpha_1 - \\alpha_2}, \\qquad \\frac{R_\\Delta}{R} = \\frac{\\alpha_2}{\\alpha_1} - 1$$\n$\\Delta V_{th}$ est TC+ si $|\\alpha_1| < |\\alpha_2|$."
+    },
+    {
+      "key": "eana3-dual-vth-analogie-bandgap",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Dans la référence dual-$V_{th}$, quelles grandeurs jouent les rôles de $V_{BE}$ et de $\\Delta V_{BE}$ du bandgap ?",
+      "back": "$V_{th1}$ joue le rôle de $V_{BE}$ (TC−), $\\Delta V_{th}$ celui de $\\Delta V_{BE}$ (TC+) ; $R/R_\\Delta$ dose la compensation comme $R/R_E$ dans le bandgap de Widlar."
+    },
+    {
+      "key": "eana3-reference-soi-vdelta",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "TD 5 (SOI) : $V_{th1} = 400\\ \\mathrm{mV}$ ($M_1$, $V_{BB} = 1\\ \\mathrm{V}$), $V_{th0} = 450\\ \\mathrm{mV}$ ($M_0$), même $W/L$, même courant $I_0 = 5\\ \\mu\\mathrm{A}$. Valeurs de $V_\\Delta$ et $R_\\Delta$ ?",
+      "back": "$V_\\Delta = V_{th0} - V_{th1} = 50\\ \\mathrm{mV}$ (termes en racine égaux) ; $R_\\Delta = \\frac{V_\\Delta}{I_0} = 10\\ \\mathrm{k\\Omega}$."
+    },
+    {
+      "key": "eana3-reference-soi-vref",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "TD 5 (SOI) : pourquoi préférer $V_{Ref}$ à $V_\\Delta$, et que vaut $V_{Ref}$ ?",
+      "back": "$V_{Ref} = V_{th0} - V_{th1} = V_\\Delta = 50\\ \\mathrm{mV}$. $M_{1b}$ et $M_0$ sont en série, donc ont le même courant quel que soit le miroir PMOS : $V_{Ref}$ ne dépend pas de son appariement."
+    },
+    {
+      "key": "eana3-reference-soi-tc0",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "TD 5 (SOI) : que valent $\\frac{\\mathrm{d}V_{Ref}}{\\mathrm{d}T}$ et la sensibilité à $V_{DD}$, et pourquoi ?",
+      "back": "$\\frac{\\mathrm{d}V_{Ref}}{\\mathrm{d}T} = \\alpha - \\alpha = 0$ : TC0 par construction, sans dosage de résistances, car les transistors ne diffèrent que par leur tension de body. $V_{Ref}$ ne dépend pas de $V_{DD}$ au premier ordre."
+    },
+    {
+      "key": "eana3-brokaw-egalite-courants",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Bandgap de Brokaw (sujet Deval) : comment l'amplificateur impose-t-il $I_1 = I_2$, et quel circuit aurait fait de même ?",
+      "back": "$V_+ = V_-$ donne $V_{C1} = V_{C2}$, avec $V_{C1} = V_{DD} - R_0 I_1$ et $V_{C2} = V_{DD} - R_0 I_2$ : $I_1 = I_2$, comme avec un **miroir de courant**."
+    },
+    {
+      "key": "eana3-brokaw-vptat",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Bandgap de Brokaw : expressions de $I_{ptat}$ et de $V_{ptat}$ (tension aux bornes de $R$) ?",
+      "back": "$I_{ptat} = I_1 + I_2 = 2I_2$, avec $I_2 = \\frac{\\Delta V_{BE}}{R_\\Delta}$ et $\\Delta V_{BE} = U_T\\ln N$ :\n$$V_{ptat} = 2\\,\\frac{R}{R_\\Delta}\\,U_T \\ln N$$"
+    },
+    {
+      "key": "eana3-brokaw-vref-tc0",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Bandgap de Brokaw : expression de $V_{Ref}$, condition TC0, et composant qui fixe $I_{ptat}$ ?",
+      "back": "$V_{Ref} = V_{BE1} + V_{ptat}$, d'où $\\frac{\\mathrm{d}V_{Ref}}{\\mathrm{d}T} = \\frac{1}{T}(V_{Ref} - V_{BG})$ : TC0 si $V_{Ref} = V_{BG} = 1{,}26\\ \\mathrm{V}$. $R_\\Delta$ (avec $N$) fixe $I_{ptat}$ ; $R$ dose $V_{ptat}$."
+    },
+    {
+      "key": "eana3-suppresseur-iout",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Générateur de courant suppresseur de variations (MOS sous le seuil) : expression de $I_{out}$ en fonction de $I_{bias}$ ?",
+      "back": "$$I_{out} = I_{bias}\\exp\\left(-\\frac{R_\\Delta I_{bias}}{\\eta U_t}\\right)$$\n$M_1$, $M_2$ identiques, saturés, en faible inversion : $I_D = I_{D0}\\exp\\left(\\frac{V_{GS} - V_{th}}{\\eta U_t}\\right)$."
+    },
+    {
+      "key": "eana3-suppresseur-point-optimal",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Générateur suppresseur de variations : condition du maximum de $I_{out}$, valeur de ce maximum, et gain petits signaux en ce point ?",
+      "back": "$V_\\Delta = R_\\Delta I_{bias} = \\eta U_t$ ; $I_{out,max} = \\frac{I_{bias}}{e} \\approx 0{,}37\\, I_{bias}$. Le gain en courant aux petites variations y est **nul** : les variations de $I_{bias}$ sont supprimées."
+    },
+    {
+      "key": "eana3-autopolarise-contre-reaction",
+      "chap": "Ch. 05 — Références de tension",
+      "front": "Générateur auto-polarisé (miroir PMOS de rapport 2,72) : type de contre-réaction, et gain $G_i$ de l'amplificateur de boucle ?",
+      "back": "Contre-réaction **courant-parallèle**. $G_i = \\frac{I_2}{I_1}\\left(1 - \\frac{V_\\Delta}{\\eta U_t}\\right)$ : nul pour $V_\\Delta = \\eta U_t$, et $I_1 = \\frac{\\eta U_t}{R_\\Delta}$ ne dépend pas de $V_{DD}$."
+    }
+  ]
+}

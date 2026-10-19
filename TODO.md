@@ -2,7 +2,7 @@
 
 > Tâches concrètes, classées par priorité. Cocher puis reporter dans `ETAT_PROJET.md` en fin de session.
 >
-> Dernière mise à jour : 7 octobre 2026.
+> Dernière mise à jour : 19 octobre 2026 (archive 2A redistribuée, 14 matières du S7 mises en place).
 
 ## Priorité 1 — Avant le premier chapitre
 
@@ -55,6 +55,40 @@
 - [x] Vérification (étape 6, rapports § 17), validation (étape 7) et flashcards (étape 8 : 12 + 57 cartes) des chapitres 1 et 4 (7 octobre 2026).
 - [ ] Contrôler les 69 cartes des chapitres 1 et 4 dans l'application (`quarto preview`, http://localhost:4848/revision/).
 - [ ] Facultatif : noter $r_n$ (au lieu de $r_l[n]$) l'abscisse de `figures/04-constellation-bruitee.py`, pour l'accorder à la légende.
+
+## Priorité 2 quater — EANA3 Circuits intégrés
+
+- [x] Mise en place : sources triées (`sources/eana3/`), arborescence, fiche matière, `_quarto.yml`, accueil, paquet vide, inventaire et plan (7 octobre 2026).
+- [x] Q1 de l'inventaire : notes `notes-2023` et `tableau-2020` = sources externes, pas celles d'Armand (7 octobre 2026).
+- [ ] **Armand** : confirmer la présentation des notes externes (blocs `.notes` avec citation de la source, ou étiquette distincte « Notes externes ») et, si tu le sais, l'auteur de `tableau-2020` (tableau de F. Rivet ?).
+- [ ] **Armand** : fournir tes notes de 2026-2027 dès que tu les as (une par séance, `notes/AAAA-MM-JJ.pdf`).
+- [ ] **Armand** : revoir le plan en 5 chapitres et les choix par défaut (inventaire § 4 et § 7), dont le nommage des jeux de notes non datés (à inscrire ensuite dans `conventions.md` § 2).
+- [ ] Fournir si possible : tes notes de 2026-2027, une version 2026 du support, les énoncés manquants (TD « amplificateur à contre-réaction », TD « mode commun », annale 2017-2018).
+- [ ] Contrôler avec `quarto preview` la barre latérale EANA3, la fiche matière et le paquet vide dans l'application.
+- [x] Chapitre 1 : analyse, rédaction, figures (8 octobre 2026) ; statut `redige`.
+- [ ] **Armand** : répondre aux 7 questions du rapport du chapitre 1 (§ 14), puis vérification (étape 6) et validation.
+- [x] Chapitre 2 : analyse, rédaction, figures, TD 1 (8 octobre 2026) ; statut `redige` ; aucune question bloquante (2 demandes non bloquantes, rapport § 14).
+- [x] Chapitre 3 : analyse, rédaction, figures, exercices guidés et 4 TD (8 octobre 2026) ; statut `redige` ; 2 questions (rapport § 14).
+- [ ] **Armand** : relire en priorité les solutions proposées des TD du chapitre 3 (aucun corrigé dans les sources) ; fournir les corrigés officiels s'ils existent.
+- [x] Chapitre 4 : analyse, rédaction, 9 figures, TD 4, TD 6, TD anneau, sujet 2021 (8 octobre 2026) ; statut `redige` ; 4 questions (rapport § 14).
+- [ ] **Armand** : relire les solutions proposées du TD 6 et du sujet 2021 (chapitre 4, sans corrigé) ; signaler si le cours 2026-2027 traite les classes A, B et C.
+- [x] Chapitre 5 : analyse, rédaction, 9 figures, TD 5, sujet Brokaw 2025 (partie Deval), sujet 2026 (8 octobre 2026) ; statut `redige` ; 3 questions (rapport § 14).
+- [ ] **Armand** : relire les solutions proposées du chapitre 5 (TD 5 version SOI, Brokaw, générateur de courant : aucun corrigé) ; confirmer ce que l'enseignant appelle « bandgap fractionnaire ».
+- [ ] Après les réponses d'Armand : vérification (étape 6) et flashcards des chapitres 1 à 5 ; contrôle `quarto preview` des 5 chapitres (clair et sombre).
+- [ ] Contrôler avec `quarto preview` le rendu du chapitre 1 et des blocs `✎ Notes externes` (clair et sombre).
+
+## Priorité 2 quinquies — Matières du S7 (archive 2A, 19 octobre 2026)
+
+- [x] Redistribuer `sources/2A.zip` : 413 fichiers rangés dans `sources/<code>/`, copies vérifiées (MD5) ; fiches matières, inventaires et plans proposés des 14 nouvelles matières ; barres latérales, accueil, paquets vides (19 octobre 2026).
+- [ ] **Armand** : contrôler avec `quarto preview` l'accueil, les 14 barres latérales et les fiches matières (Quarto absent de l'environnement de Claude).
+- [ ] **Armand** : valider ou corriger les plans proposés (AUTO1 6 ch., AUTO3 4, EAEP1 7, EANA2 5, EARF1 4, NUMC1 6, TSIG1 5) avant l'analyse des premiers chapitres.
+- [ ] **Armand** : confirmer deux rattachements par défaut : annales « Initiation aux bruits » (EA222) → EANA2 ; TD VHDL rangés dans NUMC1 (et non NUME3).
+- [ ] **Armand** : fournir le support d'EANA1 (aucun support officiel dans l'archive) et, pour TSIG1, le support de cours s'il existe (seules 6 p. d'illustrations reçues).
+- [ ] **Armand** : compléter les enseignants manquants (EANA1, NUME3, PROJ1).
+- [ ] NUMR1 : établir le plan à partir des deux parties du cours (368 p.) ; décider du sort du paquet hérité `reseaux.json` (question ouverte 6).
+- [ ] TS227 : exploiter les notes externes `notes-2023` (16 p.) dans les chapitres 1 à 4, et les TP 1 à 3 (phase 2).
+- [ ] **Armand** : supprimer `sources/2A.zip` (contenu redistribué).
+- [ ] Choisir l'ordre des matières à traiter ensuite (suggestion : celles dont l'examen arrive en premier).
 
 ## Priorité 3 — Outillage
 

@@ -55,7 +55,7 @@ Bristol/
 │   ├── index.html            application de flashcards (fichier unique)
 │   └── cartes/
 │       ├── index.json        liste des paquets à charger
-│       └── *.json            paquets : 5 hérités + ts227.json (généré par scripts/flashcards.py)
+│       └── *.json            paquets : 5 hérités + ts227.json, eana3.json (générés par scripts/flashcards.py)
 ├── scripts/
 │   └── flashcards.py         conversion YAML → revision/cartes/<matiere>.json
 └── sources/                  sources brutes, ignorées par Git
@@ -159,6 +159,7 @@ Les valeurs claires et sombres sont écrites deux fois dans ce même fichier (bl
   - Ne pas changer ce port, ni lancer `quarto preview --port …` : autre adresse, progression vide.
   - Toujours passer par `localhost`, pas par `127.0.0.1` (autre adresse pour le navigateur).
   - Si le port 4848 est déjà pris (un autre `quarto preview` ouvert), fermer l'autre aperçu plutôt que de changer de port.
+  - Une matière dont le dossier `flashcards/` ne contient aucun fichier YAML produit un **paquet vide** (`items: []`), pour qu'elle apparaisse dans l'application (ajouté le 7 octobre 2026 pour EANA3).
   - Après `python scripts/flashcards.py`, relancer `quarto preview` (ou recharger la page si l'aperçu a recopié `revision/`) : les paquets sont relus à l'ouverture de l'application.
   - La progression reste propre au navigateur et à l'ordinateur : pas de synchronisation (question ouverte 8). L'export actuel de l'application ne sauvegarde que les cartes, **pas la progression** : voir la tâche « export/import de la progression » de `TODO.md`, section « Avant la publication ».
 - Chargement des paquets : à l'ouverture, lecture de `cartes/index.json` puis de chaque fichier listé (`fetch`, sans cache). Ne fonctionne pas en `file://` : passer par `quarto preview` ou un serveur local.
@@ -190,7 +191,7 @@ Langage : **Python 3** avec **PyYAML** (seule dépendance prévue).
 
 | Script | Rôle |
 |---|---|
-| `flashcards.py` | **Écrit (7 octobre 2026).** Convertit `matieres/*/flashcards/*.yml` en `revision/cartes/<matiere>.json` et ajoute le paquet à `cartes/index.json` s'il manque. Contrôles avant écriture (rien n'est écrit au moindre problème) : champs obligatoires et inconnus ; `matiere` cohérent avec le dossier ; nom du fichier = nom du chapitre ; identifiants `<matiere>-<slug>` uniques dans la matière, absents des `ids-retires`, sans préfixe hérité ; types et sources valides ; `ref` présent dans le chapitre (ou `NN-slug.qmd#label`) ; astérisque isolé ; formule en ligne coupée. Transformations : macros développées, lignes jointes façon Markdown (`conventions.md` § 10.4). Couleur du paquet : celle du fichier existant, sinon `#FFF0A6`. Option `--verifier` : contrôles seuls |
+| `flashcards.py` | **Écrit (7 octobre 2026).** Convertit `matieres/*/flashcards/*.yml` en `revision/cartes/<matiere>.json` et ajoute le paquet à `cartes/index.json` s'il manque. Contrôles avant écriture (rien n'est écrit au moindre problème) : champs obligatoires et inconnus ; `matiere` cohérent avec le dossier ; nom du fichier = nom du chapitre ; identifiants `<matiere>-<slug>` uniques dans la matière, absents des `ids-retires`, sans préfixe hérité ; types et sources valides ; `ref` présent dans le chapitre (ou `NN-slug.qmd#label`) ; astérisque isolé ; formule en ligne coupée. Transformations : macros développées, lignes jointes façon Markdown (`conventions.md` § 10.4). Couleur du paquet : celle du fichier existant, sinon `#FFF0A6`. Option `--verifier` : contrôles seuls. Depuis le 18 octobre 2026, une matière sans fiche `index.qmd` (dossier créé d'avance) est ignorée |
 | `verifier.py` | Vérifications : front matter complet et statut valide ; labels uniques dans la matière ; `ref` des cartes qui pointent vers un label existant ; identifiants de cartes uniques dans la matière et absents de tous les `ids-retires` de la matière ; types de cartes valides ; astérisques isolés ; liste des blocs `#av-…` restants |
 
 Le script de vérification sera lancé avant chaque commit (à la main, puis éventuellement en *pre-commit hook*).

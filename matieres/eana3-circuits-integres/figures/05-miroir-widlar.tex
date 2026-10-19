@@ -1,0 +1,30 @@
+% Figure — Miroir de Widlar : deux NPN de bases communes, Q1 (N transistors en parallèle) monté en diode avec la résistance d'émetteur R_E ; ΔV_BE aux bornes de R_E (EANA3, chapitre 5).
+% D'après les notes externes [notes-2023-c10, p. 1], redessinée.
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 05-miroir-widlar.tex
+%   dvisvgm --no-fonts --exact-bbox -o 05-miroir-widlar.svg <dossier temporaire>/05-miroir-widlar.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\usetikzlibrary{shapes.geometric}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex, fleche/.style={->, thick}]
+  \draw (0,0) node[npn, xscale=-1] (Q2) {};  \node[left] at (-0.75,0) {$Q_2$};
+  \draw (2.8,0) node[npn] (Q1) {};  \node[right] at (3.25,0.15) {$Q_1$ ($\times N$)};
+  \draw (Q2.B) -- (Q1.B);
+  \draw (Q1.C) -- ++(0,0.35) coordinate (c1) -- (1.4,0 |- c1) -- (1.4,0) node[circ]{};
+  \draw (c1) node[circ]{} to[isource, invert, l_=$I$] ++(0,1.7) node[vcc]{};
+  \draw (Q2.C) -- ++(0,0.35) to[isource, invert, l=$I$] ++(0,1.7) node[vcc]{};
+  \draw (Q2.E) -- (0,-2.3);
+  \draw (Q1.E) to[R, l_=$R_E$] (2.8,-2.3);
+  \draw (0,-2.3) -- (2.8,-2.3);  \draw (1.4,-2.3) node[ground]{};
+  \draw[fleche] (3.5,-2.1) -- node[right]{$\Delta V_{BE}$} (3.5,-0.9);
+  \node[right] at (0.05,-0.55) {$V_{BE2}$};
+  \node[left] at (2.75,-0.55) {$V_{BE1}$};
+\end{circuitikz}
+\end{document}

@@ -4,5 +4,20 @@
   "vhdl.json",
   "c-unix.json",
   "latex.json",
-  "ts227.json"
+  "ts227.json",
+  "eana3.json",
+  "auto1.json",
+  "auto2.json",
+  "auto3.json",
+  "eaep1.json",
+  "eana1.json",
+  "eana2.json",
+  "eana4.json",
+  "earf1.json",
+  "numc1.json",
+  "nume3.json",
+  "numr1.json",
+  "proj1.json",
+  "tsig1.json",
+  "tsig2.json"
 ]

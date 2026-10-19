@@ -1,0 +1,56 @@
+---
+title: "EANA2 — Chaîne d'acquisition et conditionnement du signal analogique"
+subtitle: "Fiche matière"
+matiere: eana2
+enseignants: ["François Rivet", "Thierry Taris"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | EANA2 (EEL7-EANA2 ; ancien code : EA233) |
+| UE | EEL7FE-UEA Circuits et Systèmes Analogiques |
+| Enseignants | François Rivet (conversion analogique-numérique) ; Thierry Taris (bruit en électronique) |
+| Année | 2026-2027 (supports : CAN, septembre 2025 ; bruit, 2014 mis à jour) |
+| Évaluation (support CAN, p. 3) | épreuve terminale sans document, 1 h 20 |
+
+## Chapitres
+
+Plan tiré des sommaires des deux supports. Le premier objectif annoncé (« principe du conditionnement analogique d'un signal ») n'a pas de support dans l'archive.
+
+| N° | Chapitre (proposé) | Contenu et sources | Statut |
+|---|---|---|---|
+| 1 | Principe et caractéristiques de la conversion analogique-numérique | `can`, parties 1 et 2 : contexte, discrétisation, grandeurs caractéristiques, repliement | BROUILLON |
+| 2 | Limitations de la conversion | `can`, partie 3 : gain, offset, erreurs | BROUILLON |
+| 3 | Architectures des convertisseurs | `can`, partie 4 : CNA, Flash, intégration, pipeline, SAR, ΣΔ, entrelacement, état de l'art | BROUILLON |
+| 4 | Bruit en électronique : outils et types de bruit | `bruit` : introduction, outils de traitement, types de bruit | BROUILLON |
+| 5 | Bruit des composants, rapport signal à bruit et facteur de bruit | `bruit` : modélisation des composants, facteur de bruit ; TD et TP bruit | BROUILLON |
+
+Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/eana2/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `can` | `support/cours-conversion-analogique-numerique-rivet.pdf` | officielle | 150 p., en anglais (titres de parties en français) |
+| `bruit` | `support/cours-initiation-bruit-taris.pdf` | officielle | 44 p. |
+| — | `support/ressources/` | officielle | « ADC survey » de B. Murmann (archive), lien vers une vidéo |
+| `td-bruit` | `td/td-bruit.pdf` | officielle | 4 p. |
+| `tp-bruit` | `tp/tp-bruit.pdf` | officielle | 13 p. |
+| — | `annales/` | officielle | partiels « Initiation aux bruits » 2015-2016 et 2016-2017 (ancien module EA222, rattaché ici par défaut) |

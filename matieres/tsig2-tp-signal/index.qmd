@@ -1,0 +1,55 @@
+---
+title: "TSIG2 — Travaux pratiques signal"
+subtitle: "Fiche matière"
+matiere: tsig2
+enseignants: ["Rémi Giraud", "Éloi Navet"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | TSIG2 (EEL7-TSIG2 ; ancien code : TS202) |
+| UE | EEL7FE-UEC Automatique et Signal |
+| Enseignants | Rémi Giraud, Éloi Navet (poly 2026-2027) ; mémo Matlab : Yannick Berthoumieu |
+| Année | 2026-2027 |
+| Nature | matière de travaux pratiques sous Matlab |
+
+## Chapitres
+
+Matière de TP : pas de chapitre de cours (théorie : TSIG1). TP traités en phase 2. Parties du poly :
+
+
+| Séance | Contenu |
+|---|---|
+| 1 | rappels : transformée de Fourier des signaux discrets, échantillonnage, TFD et théorème de Shannon |
+| 2 | utilisation de la TFD : fenêtrage, analyse de signaux sonores |
+| 3 | filtrage linéaire : effet fréquentiel, signal de parole bruité |
+| 4 | pour aller plus loin : sélectivité, débruitage sur la TF, signal biomédical |
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/tsig2/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `tp` | `tp/tp-tsig2.pdf` | officielle | 19 p. (version 2022-2023 aussi rangée) |
+| — | `tp/annexes-tsig2.pdf, tp/memo-matlab-signal.pdf` | officielle | annexes, mémo Matlab |
+| — | `tp/fichiers/signaux.zip` | officielle | signaux fournis (.wav, .mat) |
+| — | `corriges/2023-tp-cr-signal.pdf` | externe | compte rendu manuscrit (ancien élève) |
+| — | `annales/` | officielle | partiels de TP 2014-2018 |
+
+La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).

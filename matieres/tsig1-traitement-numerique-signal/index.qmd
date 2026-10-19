@@ -1,0 +1,61 @@
+---
+title: "TSIG1 — Traitement numérique du signal"
+subtitle: "Fiche matière"
+matiere: tsig1
+enseignants: ["Yannick Berthoumieu"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | TSIG1 (EEL7-TSIG1 ; ancien code : TS201) |
+| UE | EEL7FE-UEC Automatique et Signal |
+| Enseignant | Yannick Berthoumieu (illustrations du cours) |
+| Année | 2026-2027 (recueil de TD v2, 2023) |
+
+## Chapitres
+
+**Aucun support de cours rédigé reçu** (seulement 6 p. d'illustrations). Plan proposé d'après les notes d'un ancien élève (5 chapitres), à confirmer avec le cours de 2026-2027.
+
+| N° | Chapitre (proposé) | Contenu et sources | Statut |
+|---|---|---|---|
+| 1 | Généralités sur les signaux et les systèmes | `notes-2023-ch01` | BROUILLON |
+| 2 | Systèmes discrets linéaires invariants | `notes-2023-ch02` | BROUILLON |
+| 3 | Caractérisation fréquentielle des signaux et des SLI | `notes-2023-ch03` | BROUILLON |
+| 4 | Implémentation des filtres linéaires invariants | `notes-2023-ch04` | BROUILLON |
+| 5 | SLI et représentation en phase | `notes-2023-ch05` | BROUILLON |
+
+Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/tsig1/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `illustrations` | `support/illustrations-berthoumieu.pdf` | officielle | 6 p. |
+| `td` | `td/recueil-td-2023.pdf` | officielle | 23 p. : TD 1 à 3, puis anciens sujets d'examen ; rattachement des exercices aux chapitres à faire à l'analyse |
+| `notes-2023-chNN` | `notes/2023-cours-chNN-…pdf` | externe | 5 chapitres (ancien élève) |
+| — | `notes/externe-fiche-rappels-traitement-signal.pdf` | externe | fiche de rappels (archive « Annales 2A élec ») |
+| — | `corriges/2023-…pdf` | externe | TD 1 à 3, manuscrits |
+| — | `annales/` | officielle | partiels 2014-2018, 2022-2023, 2025-2026 |
+
+La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).
+
+## Remarques
+
+- Les TP associés sont dans la matière TSIG2.

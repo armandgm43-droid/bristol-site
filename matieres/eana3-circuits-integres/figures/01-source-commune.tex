@@ -1,0 +1,48 @@
+% Figure — Étage source commune de l'exercice « Séparation des pôles » (a) et son schéma équivalent aux petites variations (b) (EANA3, chapitre 1).
+% (a) D'après le support [support, p. 4, figure 2], redessiné.
+% (b) D'après les notes externes [notes-2023-c02, p. 2 et p. 5] et [tableau-2020-c03, p. 1], redessiné.
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 01-source-commune.tex
+%   dvisvgm --no-fonts --exact-bbox -o 01-source-commune.svg <dossier temporaire>/01-source-commune.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex]
+  % ---------- (a) ----------
+  \node at (-0.6,4.2) {(a)};
+  \draw (3,0) node[nmos] (M) {};
+  \node[right] at (M.text) {$M_1$};
+  \draw (M.S) node[ground] {};
+  \draw (M.D) -- ++(0,0.5) coordinate (d) to[R, l_=$R_S$] ++(0,1.9) node[vcc] {$V_{dd}$};
+  \draw (d) -- ++(1.6,0) coordinate (dd) -- ++(0.9,0) node[ocirc] (out) {};
+  \draw (dd) to[C, l=$C_S$] (dd |- 0,-2.0) node[ground] {};
+  \draw (0,0 |- M.G) node[ocirc] {} to[short, i=$i_e$] (1.3,0 |- M.G) coordinate (g) -- (M.G);
+  \draw (g) to[C, l_=$C_e$] (1.3,-2.0) node[ground] {};
+  \draw (g) -- (g |- d) to[C, l=$C$] (d);
+  \draw[->] (out) ++(0,-2.0) -- node[right] {$V_{out}$} ++(0,1.85);
+  % ---------- (b) ----------
+  \begin{scope}[xshift=7.6cm, yshift=-1.4cm]
+    \node at (-0.6,5.6) {(b)};
+    \draw (0,0) -- (9.0,0);
+    \draw (0,0) to[isource] (0,3) -- (4.2,3);
+    \node[left=5mm] at (0,1.5) {$i_e$};
+    \draw (1.5,0) to[R] (1.5,3);  \node[left=2mm] at (1.5,1.5) {$R_e$};
+    \draw (3.0,0) to[C] (3.0,3);  \node[left=3mm] at (3.0,1.5) {$C_e$};
+    \draw[->] (3.7,0.3) -- node[right] {$v_{gs}$} (3.7,2.7);
+    \draw (4.2,3) node[circ] {} node[above left] {G} to[C, l=$C$] (5.8,3) node[circ] {} node[above right] {D} -- (9.0,3);
+    \draw (5.8,3) to[american controlled current source] (5.8,0);  \node[left=4mm] at (5.8,1.5) {$g_m v_{gs}$};
+    \draw (7.3,0) to[C] (7.3,3);  \node[left=3mm] at (7.3,1.5) {$C_S$};
+    \draw (9.0,0) to[R] (9.0,3);  \node[right=2mm] at (9.0,1.5) {$R_S$};
+    \draw[->] (10.3,0.3) -- node[right] {$v_{out}$} (10.3,2.7);
+    \draw (9.0,3) -- (10.3,3) node[ocirc] {};
+    \draw (9.0,0) -- (10.3,0) node[ocirc] {};
+    \draw (4.8,0) node[circ] {} node[below] {S};
+  \end{scope}
+\end{circuitikz}
+\end{document}

@@ -70,6 +70,10 @@ Le cours Bristol suit les notations **du cours** (poly). Correspondance avec le 
 | `td-correction` | `correction_TD_TS_227.pdf`, 15 p. | officielle | correction partielle, **d'une autre version de l'énoncé** (numérotation des questions différente pour les exercices 2 à 5) |
 | `notes` | `notes/date-inconnue.pdf`, 5 feuillets recto-verso | personnelle | dates des séances inconnues ; couvrent les chapitres 2, 3 et 4 |
 | — | rtajan.github.io | externe | site de l'enseignant, **non inventorié** |
+| `tp…` | `tp/tp01-modulation-psk.pdf`, `tp/tp02-densite-spectrale-puissance.pdf`, `tp/tp03-performances-bruit.pdf`, D. Dallet et R. Tajan, 4 p. chacun | officielle | TP Matlab (phase 2) ; fichiers fournis dans `tp/fichiers/` ; aide `tp/rappels-matlab.pdf` |
+| `ts205` | `support/ts205-ofdm.pdf`, « Principes des communications multiporteuses. Introduction à l'OFDM », 3 p. | officielle | support complémentaire (ancien module TS205), rangé avec TS227 |
+| `notes-2023` | `notes/2023-notes-cours.pdf`, 16 p. | externe | notes manuscrites d'un ancien élève (promotion 2023), **reçues le 19 octobre 2026, pas encore exploitées** dans les chapitres |
+| — | `corriges/2023-…pdf` | externe | TD annoté, correction annotée, exercice 1 (ancien élève) |
 
 ## Remarques
 

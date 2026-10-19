@@ -1,0 +1,313 @@
+---
+title: "Amplificateurs en contre-réaction"
+matiere: eana3
+chapitre: 2
+enseignants: ["François Rivet"]
+annee: "2026-2027"
+statut: flashcards
+date-modified: 2026-10-18
+sources:
+  - id: support
+    fichier: support/support-cours-2025.pdf
+    nature: officielle
+    version: "2025"
+    pages: "1-2, 11-12"
+  - id: tableau-2020-c03
+    fichier: notes/2020-tableau-cours-03.pdf
+    nature: externe
+    seance: inconnue
+    pages: "5-6"
+  - id: tableau-2020-c04
+    fichier: notes/2020-tableau-cours-04.pdf
+    nature: externe
+    seance: inconnue
+    pages: "1-9"
+  - id: notes-2023-c04-06
+    fichier: notes/2023-cours-04-06-rivet.pdf
+    nature: externe
+    seance: inconnue
+    pages: "1-8"
+  - id: notes-2023-c08
+    fichier: notes/2023-cours-08-rivet.pdf
+    nature: externe
+    seance: inconnue
+    pages: "1-4"
+  - id: corr-2023-recueil
+    fichier: corriges/2023-recueil-corriges-td.pdf
+    nature: externe
+    seance: inconnue
+    pages: "3"
+---
+
+{{< include /_macros.qmd >}}
+
+<!-- Étapes 2 à 5 (analyse, rédaction, figures) faites le 2026-10-08.
+     Le support 2025 ne donne que le plan du chapitre (p. 1-2) et l'énoncé du TD 1 (p. 11-12).
+     Cours rédigé à partir des notes externes (tableau 2020, notes 2023), qui ne sont pas celles d'Armand.
+     Rapport : ../analyses/02-amplificateurs-contre-reaction.md. Figures : ../figures/02-*.tex. -->
+
+## Introduction {#sec-intro-amplificateurs-cr}
+
+Ce chapitre est le chapitre 2 de la partie *Systèmes contre-réactionnés* ; il correspond aux cours 4 et 6 du plan [support, p. 1-2] :
+
+0. topologies des quadripôles ;
+1. contre-réaction de tension-parallèle : transfert, résistance d'entrée, résistance de sortie ;
+2. contre-réaction de courant-parallèle : transfert, résistance d'entrée, résistance de sortie ;
+3. contre-réaction de tension-série : transfert, résistance d'entrée, résistance de sortie ;
+4. contre-réaction de courant-série : transfert, résistance d'entrée, résistance de sortie ;
+5. synthèse.
+
+::: {.notes-externes}
+Les deux jeux de notes traitent ces points dans un autre ordre : courant-série, courant-parallèle, tension-série, tension-parallèle [notes-2023-c04-06, p. 1-7] ; courant-série, tension-série, courant-parallèle [tableau-2020-c03, p. 6] ; [tableau-2020-c04, p. 1-9] (le tableau de 2020 ne contient pas la tension-parallèle). Le chapitre suit l'ordre du support.
+:::
+
+::: {.complement}
+Le chapitre 1 a établi les propriétés de la contre-réaction sur un schéma-bloc où tous les signaux sont de même nature ($A_F = A/(1 + A\beta_F)$). Ici, on distingue la **nature** des signaux (tension ou courant) prélevés en sortie et réinjectés en entrée : elle ne change pas la forme de la fonction de transfert, mais elle fixe la grandeur que l'on stabilise et l'effet de la contre-réaction sur les impédances d'entrée et de sortie.
+:::
+
+## Topologies des quadripôles {#sec-topologies-quadripoles}
+
+![Modèles d'un amplificateur vu comme un quadripôle : sortie en courant, modèle de Norton (a), et sortie en tension, modèle de Thévenin (b). D'après les notes externes [notes-2023-c04-06, p. 1] et [tableau-2020-c03, p. 5], redessinée.](../figures/02-modeles-quadripoles.svg){#fig-modeles-quadripoles}
+
+:::: {.notes-externes}
+Un amplificateur est une fonction de transfert entre une entrée et une sortie, chacune en tension ou en courant : il y a donc **4 possibilités de transfert** [tableau-2020-c03, p. 5]. On le représente par un quadripôle d'impédance d'entrée $Z_e$ (@fig-modeles-quadripoles) :
+
+- **sortie Norton** : source de courant commandée $i_s = f(v_e \text{ ou } i_e)$ en parallèle avec $Z_s$ ; $Z_s$ doit être très grande ;
+- **sortie Thévenin** : source de tension commandée $v_s = f(v_e \text{ ou } i_e)$ en série avec $Z_s$ ; $Z_s$ doit être la plus petite possible, pour que l'influence du courant soit la plus faible possible (on veut récupérer un maximum de $v_s$) [notes-2023-c04-06, p. 1].
+
+Pour chaque montage, deux questions : **qu'est-ce que je prélève** (en sortie : une tension ou un courant) ? **Comment je le réinjecte** (en entrée : en série ou en parallèle) [notes-2023-c04-06, p. 1] ? Le nom de la contre-réaction donne les deux réponses : « courant-série » = je prélève un courant et je le réinjecte en série [tableau-2020-c04, p. 1].
+::::
+
+::: {.complement}
+**Prélever une tension** se fait en plaçant le port de sortie du réseau $\beta_F$ **en parallèle** sur la sortie ; **prélever un courant**, en le plaçant **en série** dans la maille de sortie. **Réinjecter en série** ajoute une tension dans la maille d'entrée ($v_i = v_e + v_{fb}$) ; **réinjecter en parallèle** ajoute un courant au nœud d'entrée ($i_i = i_e + i_{fb}$). En anglais, on nomme la topologie par la connexion d'entrée puis celle de sortie : courant-série = *series-series*, tension-série = *series-shunt*, courant-parallèle = *shunt-series*, tension-parallèle = *shunt-shunt* ; le tableau de 2020 donne les trois premières [tableau-2020-c04, p. 1, 4, 7].
+
+**Notations.** Dans ce chapitre (comme dans les énoncés de la matière), $v_i$ et $i_i$ sont l'entrée du **montage**, $v_e$ et $i_e$ celle de l'**amplificateur** $A$ ; $v_o$ et $i_o$ la sortie ; $v_{fb}$, $i_{fb}$ le signal réinjecté. Le chapitre 1 notait au contraire $v_e$ l'entrée du montage et $v_i$ celle de l'amplificateur. $A_{OL} = A\beta_F$ est le gain de boucle, appelé « gain en boucle ouverte » dans les notes.
+
+**Règle de calcul.** Les calculs des notes reposent sur trois hypothèses implicites : le réseau $\beta_F$ est idéal (il ne charge ni l'entrée ni la sortie de $A$ et ne transmet rien de l'entrée vers la sortie), l'amplificateur $A$ est unilatéral, et la charge est négligée devant $Z_s$ (sortie Norton) ou $Z_s$ négligée devant la charge (sortie Thévenin).
+:::
+
+## Contre-réaction de tension-parallèle {#sec-cr-tension-parallele}
+
+![Contre-réaction de tension-parallèle : on prélève la tension $v_o$ (port de $\beta_F$ en parallèle sur la sortie) et on réinjecte un courant en parallèle sur l'entrée. D'après les notes externes [notes-2023-c04-06, p. 6], redessinée.](../figures/02-cr-tension-parallele.svg){#fig-cr-tension-parallele}
+
+:::: {.notes-externes}
+L'amplificateur a une sortie Thévenin $v_s = A\,i_e$ ; le réseau de contre-réaction réinjecte $i_{fb} = \beta_F\, v_o$ en parallèle sur l'entrée de $A$ ; la sortie de $\beta_F$ est en parallèle avec celle de $A$ [notes-2023-c04-06, p. 6].
+
+**a. Fonction de transfert.** Avec $v_o = A\,i_e$ et $i_i = i_e + i_{fb} = i_e + \beta_F v_o$ [notes-2023-c04-06, p. 7] :
+
+$$
+\frac{v_o}{i_i} = \frac{A}{1 + A\beta_F} .
+$$ {#eq-ft-tension-parallele}
+
+**b. Impédance d'entrée.** $v_i = v_e = Z_e\, i_e$ et $i_i = i_{fb} + i_e = i_e(1 + A\beta_F)$, donc $v_i = Z_e\, \frac{i_i}{1 + A\beta_F}$ :
+
+$$
+Z_i = \frac{Z_e}{1 + A\beta_F} .
+$$
+
+**c. Impédance de sortie.** On éteint la source d'entrée ($i_i = 0$, donc $i_e = -\beta_F v_o$) : $v_o = Z_s\, i_o + A\,i_e = Z_s\, i_o - A\beta_F\, v_o$, soit $v_o(1 + A\beta_F) = Z_s\, i_o$ :
+
+$$
+Z_o = \frac{Z_s}{1 + A_{OL}} .
+$$
+::::
+
+## Contre-réaction de courant-parallèle {#sec-cr-courant-parallele}
+
+![Contre-réaction de courant-parallèle : on prélève le courant $i_o$ (port de $\beta_F$ en série dans la maille de sortie) et on le réinjecte en parallèle sur l'entrée. D'après les notes externes [notes-2023-c04-06, p. 3] et [tableau-2020-c04, p. 7], redessinée.](../figures/02-cr-courant-parallele.svg){#fig-cr-courant-parallele}
+
+:::: {.notes-externes}
+On prélève un courant en sortie et on le réinjecte en parallèle (*shunt-series*) [tableau-2020-c04, p. 7] ; [notes-2023-c04-06, p. 3]. L'amplificateur a une sortie Norton $i_s = A\,i_e$ ; $i_{fb} = \beta_F\, i_o$ ; $i_i = i_e + i_{fb}$.
+
+**a. Fonction de transfert.** $Z_s$ est grande : $i_o = A\,i_e + \frac{v_o}{Z_s} \approx A\,i_e$. Avec $i_i = i_e + \beta_F i_o = \frac{i_o}{A} + \beta_F i_o$ [tableau-2020-c04, p. 8] :
+
+$$
+\frac{i_o}{i_i} = \frac{1}{\beta_F + \frac{1}{A}} = \frac{A}{1 + A\beta_F} .
+$$ {#eq-ft-courant-parallele}
+
+**b. Impédance d'entrée.** $v_i = v_e = Z_e\, i_e$ ; $i_i = \frac{v_i}{Z_e} + \beta_F i_o = \frac{v_i}{Z_e} + A\beta_F\, i_e = v_i\,\frac{1 + A\beta_F}{Z_e}$ :
+
+$$
+Z_i = \frac{Z_e}{1 + A\beta_F} = \frac{Z_e}{1 + A_{OL}} .
+$$
+
+L'impédance d'entrée est **divisée** par le gain en boucle ouverte [tableau-2020-c04, p. 8].
+
+**c. Impédance de sortie.** On éteint les générateurs **indépendants** [tableau-2020-c04, p. 9] : une source de courant éteinte est un circuit ouvert, une source de tension éteinte un court-circuit [notes-2023-c04-06, p. 4]. Avec $i_i = 0$, $i_e = -i_{fb} = -\beta_F i_o$ et
+
+$$
+v_o = Z_s\,(i_o - A\,i_e) = Z_s\,(i_o + A\beta_F\, i_o) \quad\Rightarrow\quad Z_o = Z_s\,(1 + A\beta_F) = Z_s\,(1 + A_{OL}) .
+$$
+
+L'impédance de sortie est celle de l'amplificateur multipliée par le gain de boucle ouverte [tableau-2020-c04, p. 9].
+::::
+
+## Contre-réaction de tension-série {#sec-cr-tension-serie}
+
+![Contre-réaction de tension-série : on prélève la tension $v_o$ et on réinjecte une tension $v_{fb}$ en série dans la maille d'entrée. D'après les notes externes [notes-2023-c04-06, p. 5] et [tableau-2020-c04, p. 4], redessinée.](../figures/02-cr-tension-serie.svg){#fig-cr-tension-serie}
+
+:::: {.notes-externes}
+Je prélève une tension et je la réinjecte en série (*series-shunt*) [tableau-2020-c04, p. 4]. L'amplificateur a une sortie Thévenin $A v_e$ ; $v_{fb} = \beta_F\, v_o$ ; $v_i = v_e + v_{fb}$.
+
+**a. Fonction de transfert.** $Z_s$ est petite : $v_o \approx A v_e$, et $v_i = \frac{v_o}{A} + \beta_F v_o$ [tableau-2020-c04, p. 5] ; [notes-2023-c04-06, p. 5] :
+
+$$
+\frac{v_o}{v_i} = \frac{A}{1 + A\beta_F} .
+$$ {#eq-ft-tension-serie}
+
+**b. Impédance d'entrée.** $v_e = Z_e\, i_i$ et $v_i = v_e + \beta_F A v_e = Z_e\, i_i\,(1 + A\beta_F)$ :
+
+$$
+Z_i = Z_e\,(1 + A\beta_F) = Z_e\,(1 + A_{OL}) .
+$$
+
+L'impédance d'entrée est **multipliée** par le gain en boucle ouverte.
+
+**c. Impédance de sortie.** On éteint les générateurs indépendants : $v_e = -v_{fb} = -\beta_F v_o$, et $v_o = Z_s\, i_o + A v_e = Z_s\, i_o - A\beta_F v_o$ [tableau-2020-c04, p. 6] :
+
+$$
+Z_o = \frac{Z_s}{1 + A\beta_F} = \frac{Z_s}{1 + A_{OL}} .
+$$
+
+L'impédance de sortie est celle de l'amplificateur divisée par le gain en boucle ouverte.
+::::
+
+::: {.notes-externes}
+Remarque relevée dans les notes de 2023, sans lien explicite avec le calcul : « En analogique on se limite à des transistors 20 nm » [notes-2023-c04-06, p. 5].
+:::
+
+## Contre-réaction de courant-série {#sec-cr-courant-serie}
+
+![Contre-réaction de courant-série : on prélève le courant $i_o$ et on réinjecte une tension $v_{fb}$ en série dans la maille d'entrée. D'après les notes externes [notes-2023-c04-06, p. 1], [tableau-2020-c03, p. 6] et [tableau-2020-c04, p. 1], redessinée.](../figures/02-cr-courant-serie.svg){#fig-cr-courant-serie}
+
+:::: {.notes-externes}
+Je prélève un courant et je le réinjecte en série (*series-series*) [tableau-2020-c04, p. 1]. L'amplificateur a une sortie Norton $i_s = A v_e$ ; le port d'entrée de $\beta_F$ est une source de tension $v_{fb} = \beta_F\, i_o$, en série avec l'entrée de $A$ ; son port de sortie est en série dans la maille de sortie, parcouru par $i_o$. La charge $Z_L$ doit vérifier $Z_L \ll Z_s$ [tableau-2020-c04, p. 1].
+
+**a. Fonction de transfert** $\frac{i_o}{v_i}$. $Z_s$ est très grande : $i_o \approx i_s = A v_e$, donc $v_e = \frac{i_o}{A}$ ; avec $v_i = v_{fb} + v_e = \beta_F i_o + \frac{i_o}{A}$ [tableau-2020-c04, p. 2] ; [notes-2023-c04-06, p. 2] :
+
+$$
+\frac{i_o}{v_i} = \frac{1}{\beta_F + \frac{1}{A}} = \frac{A}{1 + A\beta_F} = \frac{A}{1 + A_{OL}} .
+$$ {#eq-ft-courant-serie}
+
+C'est une contre-réaction [tableau-2020-c04, p. 2].
+
+**b. Impédance d'entrée.** $i_i = i_e$ et $v_e = Z_e\, i_i$ ; $v_i = Z_e\, i_i + \beta_F i_o = Z_e\, i_i + A\beta_F Z_e\, i_i$ [tableau-2020-c04, p. 3] :
+
+$$
+Z_i = Z_e + A\beta_F Z_e = Z_e\,(1 + A\beta_F) = Z_e\,(1 + A_{OL}) .
+$$
+
+L'impédance d'entrée est multipliée par le gain de boucle ouverte.
+
+**c. Impédance de sortie.** On éteint les générateurs indépendants : $v_e = -v_{fb} = -\beta_F i_o$, et le courant dans $Z_s$ est $i_o - A v_e$ [tableau-2020-c04, p. 3] :
+
+$$
+v_o = Z_s\,(i_o - A v_e) = Z_s\,(i_o + A\beta_F\, i_o) \quad\Rightarrow\quad Z_o = Z_s\,(1 + A\beta_F) = Z_s\,(1 + A_{OL}) .
+$$
+
+L'impédance de sortie est multipliée par le gain de boucle ouverte [tableau-2020-c04, p. 3] ; [notes-2023-c04-06, p. 3].
+::::
+
+## Synthèse {#sec-synthese-cr}
+
+::: {.notes-externes}
+Tableau de synthèse des notes de 2023 [notes-2023-c04-06, p. 8] (C : courant prélevé, T : tension prélevée ; + : réinjection série, // : réinjection parallèle) :
+
+| Contre-réaction | Fonction de transfert | $Z_i$ | $Z_o$ |
+|---|---|---|---|
+| courant-série (C+) | $\frac{i_o}{v_i}$ | $Z_e\,(1 + A_{OL})$ | $Z_s\,(1 + A_{OL})$ |
+| courant-parallèle (C//) | $\frac{i_o}{i_i}$ | $\frac{Z_e}{1 + A_{OL}}$ | $Z_s\,(1 + A_{OL})$ |
+| tension-série (T+) | $\frac{v_o}{v_i}$ | $Z_e\,(1 + A_{OL})$ | $\frac{Z_s}{1 + A_{OL}}$ |
+| tension-parallèle (T//) | $\frac{v_o}{i_i}$ | $\frac{Z_e}{1 + A_{OL}}$ | $\frac{Z_s}{1 + A_{OL}}$ |
+
+: Les quatre contre-réactions. Dans tous les cas, fonction de transfert $\frac{A}{1 + A\beta_F}$, avec $A_{OL} = A\beta_F$. {#tbl-synthese-contre-reaction}
+:::
+
+::: {.complement}
+**Règle à retenir** (lecture du @tbl-synthese-contre-reaction) :
+
+- réinjection **série** ⇒ $Z_i$ multipliée par $1 + A\beta_F$ ; réinjection **parallèle** ⇒ $Z_i$ divisée ;
+- prélèvement d'un **courant** ⇒ $Z_o$ multipliée (le montage se comporte en source de courant) ; prélèvement d'une **tension** ⇒ $Z_o$ divisée (source de tension).
+
+Chaque type rapproche le montage du **quadripôle idéal** correspondant à sa fonction de transfert : un amplificateur de tension idéal ($v_o/v_i$) a $Z_i$ infinie et $Z_o$ nulle, un amplificateur de transconductance idéal ($i_o/v_i$) a $Z_i$ et $Z_o$ infinies, etc.
+
+**Nature de $A$ et de $\beta_F$.** Le produit $A\beta_F$ est sans dimension, mais $A$ et $\beta_F$ n'en sont pas forcément :
+
+| Contre-réaction | $A$ | $\beta_F$ |
+|---|---|---|
+| courant-série | transconductance $i_s/v_e$ (S) | résistance $v_{fb}/i_o$ (Ω) |
+| courant-parallèle | gain en courant $i_s/i_e$ | gain en courant $i_{fb}/i_o$ |
+| tension-série | gain en tension $v_s/v_e$ | gain en tension $v_{fb}/v_o$ |
+| tension-parallèle | transimpédance $v_s/i_e$ (Ω) | conductance $i_{fb}/v_o$ (S) |
+
+Dans tous les cas, si $A\beta_F \gg 1$, la fonction de transfert tend vers $1/\beta_F$ et hérite des propriétés vues au chapitre 1 ([robustesse](01-generalites-contre-reaction.qmd#sec-robustesse), [linéarisation](01-generalites-contre-reaction.qmd#sec-linearisation), [compromis gain-bande](01-generalites-contre-reaction.qmd#sec-gain-bande)).
+:::
+
+## Exercice : où est la contre-réaction ? {#sec-td-ou-est-la-contre-reaction}
+
+Cet exercice est le TD 1 du support 2025 [support, p. 11-12] (sujet EA234 de F. Rivet ; fichier séparé identique : `td/td01-ou-est-la-contre-reaction.pdf`). En 2023, il a été traité en cours (cours 8) [notes-2023-c08, p. 1].
+
+![Exercice « Où est la contre-réaction ? » : montage (a) et schéma équivalent aux petites variations découpé en quadripôles $A$ et $\beta_F$, sans $R_C$ (b). (a) D'après le support [support, p. 11, figure 1], redessiné. (b) D'après les notes externes [notes-2023-c08, p. 2-3] et le corrigé externe [corr-2023-recueil, p. 3], redessiné.](../figures/02-ou-est-la-contre-reaction.svg){#fig-ou-est-la-contre-reaction}
+
+::: {#exr-ou-est-la-contre-reaction}
+## Où est la contre-réaction ? [support, p. 11-12]
+
+On fera l'hypothèse que la tension d'alimentation $V_{CC}$ est dimensionnée de manière à garantir un fonctionnement en régime linéaire (mode amplificateur) du transistor, et on **ne négligera pas l'effet Early** sur l'ensemble du problème. $C_1 = C_2 = 100\ \mu\mathrm{F}$ sont des condensateurs de liaison d'impédance négligeable à la fréquence de travail (@fig-ou-est-la-contre-reaction a).
+
+**Partie 1 : où est la contre-réaction ?** Le but est de rechercher la fonction de transfert et les impédances d'entrée et de sortie.
+
+1. Établir le schéma équivalent aux petites variations du circuit en séparant l'amplificateur $A$ constitué de $M_1$ d'une part, et le réseau de contre-réaction $\beta_F$ constitué par $R_x$ d'autre part. $R_C$ ne sera pas considérée dans cette partie.
+2. Identifier le type de contre-réaction.
+3. D'après le cours, donner la représentation schématique de ce type de contre-réaction.
+4. Identifier directement paramètre par paramètre les valeurs de $A$, $\beta_F$, $Z_e$, $Z_s$.
+5. En appliquant directement la théorie de la contre-réaction donnée dans le cours, donner l'expression de $A_{OL}$, $Z_i$, $Z_o$ et enfin de la fonction de transfert $\frac{i_o}{v_i} = \frac{A}{1 + \beta_F A}$.
+
+**Partie 2 : robustesse.** On considère la charge $R_C$.
+
+6. Donner une expression de $v_o$ en fonction de $i_o$ et $R_C$.
+7. Donner une expression de la fonction de transfert $\frac{v_o}{v_i}$.
+8. Dans le cadre d'une intégration monolithique de ce circuit, on considère que $R_X$ et $R_C$ sont soumis aux mêmes variations de processus de fabrication du fait de leur proximité physique, ce qui implique une variation homogène de leur valeur. On considérera que $R'_X = \alpha R_X$ et $R'_C = \alpha R_C$, $\alpha$ étant un coefficient compris entre 0,8 et 1,2. Commenter alors l'impact de ces variations technologiques sur la fonction du circuit.
+:::
+
+:::: {.solution}
+::: {.notes-externes}
+Montage « source commune » (émetteur commun, voir le complément ci-dessous) : gain $-g_m R_C$. La capacité ne laisse passer que les petites variations ; la résistance de polarisation ne se dessine pas [notes-2023-c08, p. 1].
+
+1. Schéma équivalent du transistor bipolaire : $r_{be}$ entre base et émetteur, source $\beta i_b = g_m v_{be}$ et $r_{ce}$ entre collecteur et émetteur. Le transistor amplifie : c'est le bloc $A$ ; $R_x$ est le bloc $\beta_F$ (@fig-ou-est-la-contre-reaction b) [notes-2023-c08, p. 1-3]. On néglige $i_b$ devant $\beta i_b$ : $R_x$ est parcourue par $i_o$ [notes-2023-c08, p. 3].
+2. Contre-réaction du type **courant-série** [notes-2023-c08, p. 3] ; [corr-2023-recueil, p. 3].
+3. Représentation : @fig-cr-courant-serie.
+4. Par identification avec le cours [notes-2023-c08, p. 4] ; [corr-2023-recueil, p. 3] :
+   $$
+   A = g_m, \qquad \beta_F = R_x, \qquad Z_e = r_{be}, \qquad Z_s = r_{ce} .
+   $$
+5. $A_{OL} = g_m R_x$, « c'est grand, on veut du gain » ; $Z_i = r_{be}(1 + g_m R_x)$ et $Z_o = r_{ce}(1 + g_m R_x)$, grandes aussi [corr-2023-recueil, p. 3] ; les notes écrivent directement $Z_i = g_m r_{be} R_x$ et $Z_{out} = g_m r_{ce} R_x$ [notes-2023-c08, p. 4]. Enfin
+   $$
+   \frac{i_o}{v_i} = \frac{g_m}{1 + g_m R_x} \approx \frac{1}{R_x} .
+   $$ {#eq-td1-transconductance}
+6. $v_o = -R_C\, i_o$ [notes-2023-c08, p. 4].
+7. $\frac{v_o}{v_i} = \frac{v_o}{i_o} \times \frac{i_o}{v_i} = -\frac{R_C}{R_x}$ [notes-2023-c08, p. 4] ; [corr-2023-recueil, p. 3].
+8. PVT : *Process, Voltage, Temperature* ; la valeur d'une résistance fabriquée varie de l'ordre de 20 %. Mais
+   $$
+   -\frac{R'_C}{R'_X} = -\frac{\alpha R_C}{\alpha R_X} = -\frac{R_C}{R_X} :
+   $$
+   le gain ne dépend pas de $\alpha$ [notes-2023-c08, p. 4].
+:::
+::::
+
+::: {.complement}
+**Précisions.**
+
+- Le transistor $M_1$ de la figure est **bipolaire** (NPN) : le montage est un **émetteur commun** à résistance d'émetteur $R_x$ (« source commune » dans les notes, terme du transistor MOS). L'« effet Early » de l'énoncé est modélisé par $r_{ce}$.
+- Les expressions $Z_i \approx g_m r_{be} R_x$ et $Z_o \approx g_m r_{ce} R_x$ des notes supposent $g_m R_x \gg 1$ ; de même $i_o/v_i \approx 1/R_x$ (@eq-td1-transconductance) et $v_o/v_i \approx -R_C/R_x$.
+- Le résultat de la question 8 illustre la [robustesse](01-generalites-contre-reaction.qmd#sec-robustesse-beta) : le gain ne dépend plus que d'un **rapport** de résistances voisines sur la puce, insensible à une dispersion commune. Il ne dépend plus de $g_m$, qui varie avec la température et la polarisation.
+- Le modèle des quadripôles est approché : il néglige le courant $i_b$ dans $R_x$, et $r_{ce}$ relie en réalité la sortie au nœud d'émetteur, donc au réseau $\beta_F$. Le calcul direct sur le schéma complet donne des résultats très proches quand $\beta = g_m r_{be} \gg 1$ et $r_{ce} \gg R_x$.
+:::
+
+## À retenir {#sec-retenir-amplificateurs-cr}
+
+- Un amplificateur est un quadripôle : entrée $Z_e$, sortie Norton ($i_s$, $Z_s$ grande) ou Thévenin ($v_s$, $Z_s$ petite) *(notes externes)*.
+- Nom d'une contre-réaction = grandeur **prélevée** en sortie (tension : port de $\beta_F$ en parallèle ; courant : en série) – mode de **réinjection** en entrée (série : tension ajoutée à la maille ; parallèle : courant ajouté au nœud) *(notes externes ; complément)*.
+- Dans les quatre cas, la fonction de transfert vaut $\frac{A}{1 + A\beta_F}$ : $\frac{v_o}{i_i}$ (@eq-ft-tension-parallele), $\frac{i_o}{i_i}$ (@eq-ft-courant-parallele), $\frac{v_o}{v_i}$ (@eq-ft-tension-serie), $\frac{i_o}{v_i}$ (@eq-ft-courant-serie) ; valable si $Z_s$ est grande (sortie Norton) ou petite (sortie Thévenin) devant la charge *(notes externes)*.
+- Impédances (@tbl-synthese-contre-reaction) : réinjection série ⇒ $Z_i = Z_e(1 + A_{OL})$ ; parallèle ⇒ $Z_i = Z_e/(1 + A_{OL})$ ; prélèvement de courant ⇒ $Z_o = Z_s(1 + A_{OL})$ ; de tension ⇒ $Z_o = Z_s/(1 + A_{OL})$ *(notes externes)*.
+- Pour calculer $Z_o$, on éteint les générateurs **indépendants** (source de courant ⇒ circuit ouvert, source de tension ⇒ court-circuit) *(notes externes)*.
+- Émetteur commun à résistance d'émetteur $R_x$ : contre-réaction courant-série, $A = g_m$, $\beta_F = R_x$, $i_o/v_i \approx 1/R_x$ ; avec la charge $R_C$, $v_o/v_i \approx -R_C/R_x$, insensible aux variations communes des résistances (@exr-ou-est-la-contre-reaction) *(notes externes)*.

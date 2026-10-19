@@ -85,6 +85,8 @@
   /* Les quatre catégories (CONTEXTE_PROJET.md § 7) : filet + étiquette + fond */
   --cat-notes:#23489A;           /* bleu encre */
   --cat-notes-bg:rgba(35,72,154,.05);
+  --cat-notes-ext:#4E6A99;       /* bleu ardoise : notes externes (même famille que les notes) */
+  --cat-notes-ext-bg:rgba(78,106,153,.05);
   --cat-complement:#7E889B;      /* gris (filet) */
   --cat-complement-ink:#5A6478;  /* gris (étiquette, texte) */
   --cat-complement-bg:rgba(126,136,155,.06);
@@ -111,6 +113,7 @@
     --cn:#A9BFF2; --cl:#F2A0A9; --cr:#8FD2AE;
     --dn:#A9BFF2; --dl:#F2A0A9; --dr:#8FD2AE;
     --cat-notes:#A9BFF2; --cat-notes-bg:rgba(169,191,242,.08);
+    --cat-notes-ext:#B9C6DE; --cat-notes-ext-bg:rgba(185,198,222,.07);
     --cat-complement:#8792A6; --cat-complement-ink:#B4BDCC; --cat-complement-bg:rgba(135,146,166,.09);
     --cat-verifier:#F0A15C; --cat-verifier-bg:rgba(240,161,92,.10);
     --card-rule-blue:#B3C4DB;
@@ -133,6 +136,7 @@
   --cn:#A9BFF2; --cl:#F2A0A9; --cr:#8FD2AE;
   --dn:#A9BFF2; --dl:#F2A0A9; --dr:#8FD2AE;
   --cat-notes:#A9BFF2; --cat-notes-bg:rgba(169,191,242,.08);
+    --cat-notes-ext:#B9C6DE; --cat-notes-ext-bg:rgba(185,198,222,.07);
   --cat-complement:#8792A6; --cat-complement-ink:#B4BDCC; --cat-complement-bg:rgba(135,146,166,.09);
   --cat-verifier:#F0A15C; --cat-verifier-bg:rgba(240,161,92,.10);
   --card-rule-blue:#B3C4DB;
@@ -154,6 +158,7 @@
   --cn:#23489A; --cl:#B3303E; --cr:#246A49;
   --dn:#23489A; --dl:#B3303E; --dr:#246A49;
   --cat-notes:#23489A; --cat-notes-bg:rgba(35,72,154,.05);
+  --cat-notes-ext:#4E6A99; --cat-notes-ext-bg:rgba(78,106,153,.05);
   --cat-complement:#7E889B; --cat-complement-ink:#5A6478; --cat-complement-bg:rgba(126,136,155,.06);
   --cat-verifier:#C2610C; --cat-verifier-bg:rgba(194,97,12,.07);
   --card-rule-blue:#C3D5EB;

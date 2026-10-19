@@ -1,0 +1,48 @@
+% Figure — Référence bandgap à miroir PNP et pont R1, R2 : courant PTAT créé par Q1 et Q2 (×N) dans R, tension de sortie fraction de la tension de bande interdite (EANA3, chapitre 5).
+% D'après les notes externes [notes-2023-c10, p. 3], redessinée.
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 05-bandgap-pnp.tex
+%   dvisvgm --no-fonts --exact-bbox -o 05-bandgap-pnp.svg <dossier temporaire>/05-bandgap-pnp.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\usetikzlibrary{shapes.geometric}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex, fleche/.style={->, thick}]
+  % miroir PNP
+  \draw (0,5) node[pnp, xscale=-1] (Pa) {};
+  \draw (3,5) node[pnp, xscale=-1] (Pb) {};  \node[left] at (2.55,5.35) {$\times 4$};
+  \draw (6,5) node[pnp] (Pc) {};  \node[right] at (6.45,5.35) {$\times 4$};
+  \draw (-0.4,6.2) -- (6.4,6.2);  \node[above] at (3,6.2) {$V_{DD}$};
+  \draw (Pa.E) -- (0,6.2);  \draw (Pb.E) -- (3,6.2);  \draw (Pc.E) -- (6,6.2);
+  \draw (Pb.B) -- (Pc.B);
+  \draw (4.3,0 |- Pb.B) node[circ]{} -- (4.3,3.9) -- (3,3.9) node[circ]{};
+  \draw (Pa.B) -- (1.4,0 |- Pa.B) -- (1.4,3.9) -- (3,3.9);
+  % branche de sortie
+  \draw (Pa.C) to[short, i=$\frac{I}{4}$] (0,2.2) coordinate (vr);
+  \draw (vr) node[circ]{} to[R, l_=$R_1$] (0,-0.8);
+  \draw (vr) -- (-1.2,2.2) node[ocirc]{} node[left]{$V_{ref}$};
+  % branche Q2
+  \draw (Pb.C) to[short, i=$I$] (3,3.9);
+  \draw (3,0.4) node[npn, xscale=-1] (Q2) {};  \node[left] at (2.35,0.4) {$Q_2$ ($\times N$)};
+  \draw (3,3.9) -- (Q2.C);
+  % branche Q1
+  \draw (Pc.C) to[short, i=$I_{ptat}$] (6,3.0) coordinate (t);
+  \draw (t) node[circ]{} to[R, l=$R$] (6,1.6) coordinate (bn);
+  \draw (6,0.4) node[npn, xscale=-1] (Q1) {};  \node[right] at (6.75,-0.05) {$Q_1$};
+  \draw (bn) node[circ]{} -- (Q1.C);
+  \draw (t) -- (7.4,3.0) -- (7.4,0.4) -- (Q1.B);
+  \draw (bn) -- (4.6,1.6) -- (4.6,0.4) -- (Q2.B);
+  % R2 (pont au-dessus du fil de Q2)
+  \draw (4.6,1.6) node[circ]{} -- (4.6,2.2) -- (3.15,2.2) arc(0:180:0.15) to[R, l_=$R_2$, i_=$I_{R2}$] (vr);
+  % masse
+  \draw (Q2.E) -- (3,-0.8);  \draw (Q1.E) -- (6,-0.8);
+  \draw (0,-0.8) -- (6,-0.8);  \draw (3,-0.8) node[ground]{};
+  \draw[fleche] (5.45,2.3) -- node[left]{$\Delta V_{BE}$} (5.45,2.95);
+\end{circuitikz}
+\end{document}

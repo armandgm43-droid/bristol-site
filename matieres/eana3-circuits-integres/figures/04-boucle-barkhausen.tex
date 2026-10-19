@@ -1,0 +1,30 @@
+% Figure — Oscillateur vu comme une boucle de réaction : amplificateur A, réseau β, bruit d'entrée (EANA3, chapitre 4).
+% D'après les notes externes [notes-2023-c03-05, p. 1], redessinée.
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 04-boucle-barkhausen.tex
+%   dvisvgm --no-fonts --exact-bbox -o 04-boucle-barkhausen.svg <dossier temporaire>/04-boucle-barkhausen.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\usetikzlibrary{shapes.geometric,calc,positioning}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex, fleche/.style={->, thick}]
+  \coordinate (e) at (0,0);
+  \node[draw, circle, thick, inner sep=0pt, minimum size=6mm] (som) at (2,0) {};
+  \draw ($(som.center)+(45:3mm)$) -- ($(som.center)+(225:3mm)$) ($(som.center)+(135:3mm)$) -- ($(som.center)+(-45:3mm)$);
+  \node[draw, thick, isosceles triangle, isosceles triangle apex angle=60, minimum height=12mm, fill=black!4, inner sep=1pt] (A) at (4.4,0) {$A$};
+  \coordinate (n) at (6.6,0);  \coordinate (s) at (8,0);
+  \node[draw, thick, rounded corners=1pt, minimum height=9mm, minimum width=14mm, fill=black!4] (b) at (4.4,-1.6) {$\beta(\omega)$};
+  \draw[->] (e) -- node[above]{$V_{in}$} (som.west);  \node[above left=0mm and 0mm of som.west, font=\footnotesize] {$+$};
+  \draw[->] (som.east) -- (A.west);
+  \draw (A.east) -- (n);  \draw[->] (n) -- node[above]{$V_{out}$} (s);  \fill (n) circle (1.5pt);
+  \draw[->] (n) |- (b.east);  \draw[->] (b.west) -| (som.south);
+  \node[below left=0mm and 0mm of som.south, font=\footnotesize] {$-$};
+  \node[below, font=\footnotesize, text=red!60!black] at (0.8,-0.15) {bruit};
+\end{circuitikz}
+\end{document}

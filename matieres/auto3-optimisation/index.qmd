@@ -1,0 +1,58 @@
+---
+title: "AUTO3 — Optimisation"
+subtitle: "Fiche matière"
+matiere: auto3
+enseignants: ["Rachid Malti"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | AUTO3 (EEL7-AUTO3 ; ancien code : AU213) |
+| UE | EEL7FE-UEC Automatique et Signal |
+| Enseignant | Rachid Malti (Université de Bordeaux) |
+| Année | 2026-2027 (support en anglais, « Introduction to Optimization », 129 p.) |
+| Organisation (version antérieure) | 9 séances de cours et TD intégrés, 1 examen |
+
+## Chapitres
+
+Plan tiré de l'« Outline » du support 2026-2027 (`slides`).
+
+| N° | Chapitre (proposé) | Contenu et sources | Statut |
+|---|---|---|---|
+| 1 | Introduction et rappels mathématiques | motivation, exemples ; fonctions, vocabulaire, convexité | BROUILLON |
+| 2 | Optimisation sans contrainte : conditions d'optimalité et moindres carrés | conditions d'optimalité ; moindres carrés linéaires | BROUILLON |
+| 3 | Méthodes itératives d'optimisation | zéros de fonctions non linéaires, méthode de Newton, descente de gradient, Gauss-Newton | BROUILLON |
+| 4 | Optimisation sous contraintes | contraintes d'égalité (multiplicateurs de Lagrange), d'inégalité, mixtes (conditions KKT) | BROUILLON |
+
+Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/auto3/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `slides` | `support/introduction-optimisation-malti.pdf` | officielle | support 2026-2027, en anglais |
+| `cours-1-2` | `support/cours-1-2-ancienne-version.pdf` | officielle | version française antérieure (cours 0 à 2) |
+| `cours-3-4` | `support/cours-3-4-ancienne-version.pdf` | officielle | version française antérieure (algorithmes de descente), texte presque absent (lecture sur image) |
+| — | `annales/` | officielle | tests 2021-2024, partiels 2021-2023 |
+| — | `corriges/` | officielle | corrigés des examens 2024-2025 et 2025-2026 (dossier « Annales d'exam » de Moodle) |
+
+## Remarques
+
+- Le support 2026-2027 est en anglais ; les versions antérieures sont en français. Bristol rédige en français et garde les termes anglais du support à leur première apparition (`conventions.md` § 1).

@@ -34,7 +34,7 @@ MACROS = RACINE / "_macros.qmd"
 
 TYPES = {"definition", "formule", "condition", "propriete", "methode",
          "raisonnement", "piege", "relation", "resultat", "exercice"}
-SOURCES = {"officiel", "notes", "complement"}
+SOURCES = {"officiel", "notes", "notes-externes", "complement"}
 CHAMPS_CARTE = {"id", "type", "question", "reponse", "ref", "source", "tags"}
 CHAMPS_FICHIER = {"matiere", "chapitre", "cours", "ids-retires", "cartes"}
 PREFIXES_HERITES = ("ts-", "res-", "ang-", "vhdl-", "cu-", "latex-")  # conventions.md § 10.3
@@ -118,10 +118,11 @@ def labels_du_cours(chemin):
 def charger_matiere(dossier, macros, err):
     """Renvoie (code, nom du paquet, liste d'items) pour une matière."""
     fichiers = sorted((dossier / "flashcards").glob("*.yml"))
-    if not fichiers:
-        return None
     fiche, _ = front_matter(dossier / "index.qmd")
     code_dossier = dossier.name.split("-")[0]
+    if not fichiers:
+        # Matière sans carte : paquet vide, pour qu'il apparaisse dans l'application.
+        return code_dossier, fiche.get("title", code_dossier), []
     chapitres, retires, vus = [], set(), {}
     for f in fichiers:
         ou = f.relative_to(RACINE).as_posix()
@@ -206,7 +207,9 @@ def main():
 
     macros, err, paquets = lire_macros(), Erreurs(), []
     for dossier in sorted((RACINE / "matieres").iterdir()):
-        if dossier.is_dir() and (dossier / "flashcards").is_dir():
+        # Une matière n'est traitée qu'une fois mise en place (fiche matière index.qmd) :
+        # les dossiers créés d'avance pour les matières à venir sont ignorés.
+        if dossier.is_dir() and (dossier / "flashcards").is_dir() and (dossier / "index.qmd").is_file():
             res = charger_matiere(dossier, macros, err)
             if res:
                 paquets.append(res)

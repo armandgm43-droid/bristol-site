@@ -1,0 +1,49 @@
+---
+title: "EANA1 — Composants et circuits de commutation"
+subtitle: "Fiche matière"
+matiere: eana1
+enseignants: ["À compléter"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | EANA1 (EEL7-EANA1) |
+| UE | EEL7FE-UEA Circuits et Systèmes Analogiques |
+| Enseignants | à compléter |
+| Année | 2026-2027 |
+
+## Chapitres
+
+**Aucun support officiel reçu** (le dossier Moodle de l'archive est vide). Plan à établir quand le support ou les notes d'Armand arriveront.
+
+*Plan à établir.*
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/eana1/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `notes-2023` | `notes/2023-notes-cours.pdf` | externe | 2 p. (ancien élève) ; contenu à relever à l'analyse |
+| — | `annales/` | officielle | partiels 2013-2018 et 2022-2023 |
+
+La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).
+
+## Remarques
+
+- Matière en attente de sources.

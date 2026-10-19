@@ -1,0 +1,503 @@
+---
+title: "Rappels et généralités sur la contre-réaction"
+matiere: eana3
+chapitre: 1
+enseignants: ["François Rivet"]
+annee: "2026-2027"
+statut: flashcards
+date-modified: 2026-10-18
+sources:
+  - id: support
+    fichier: support/support-cours-2025.pdf
+    nature: officielle
+    version: "2025"
+    pages: "1-5"
+  - id: tableau-2020-c01
+    fichier: notes/2020-tableau-cours-01.pdf
+    nature: externe
+    seance: inconnue
+    pages: "1-7"
+  - id: tableau-2020-c02
+    fichier: notes/2020-tableau-cours-02.pdf
+    nature: externe
+    seance: inconnue
+    pages: "1-6"
+  - id: tableau-2020-c03
+    fichier: notes/2020-tableau-cours-03.pdf
+    nature: externe
+    seance: inconnue
+    pages: "1-4"
+  - id: notes-2023-c01
+    fichier: notes/2023-cours-01-rivet.pdf
+    nature: externe
+    seance: inconnue
+    pages: "1-5"
+  - id: notes-2023-c02
+    fichier: notes/2023-cours-02-rivet.pdf
+    nature: externe
+    seance: inconnue
+    pages: "1-6"
+---
+
+{{< include /_macros.qmd >}}
+
+<!-- Étapes 2 à 5 (analyse, rédaction, figures) faites le 2026-10-08.
+     Le support 2025 ne contient pas de cours rédigé : seulement le plan (p. 1-2), une page historique (p. 3)
+     et l'énoncé de l'exercice guidé « Séparation des pôles » (p. 4-5). Le cours vient des notes externes
+     (tableau numérique de 2020, notes manuscrites de 2023), qui ne sont pas celles d'Armand.
+     Rapport : ../analyses/01-generalites-contre-reaction.md. Figures : ../figures/01-*.{py,tex}. -->
+
+## Introduction {#sec-intro-generalites}
+
+Le cours EANA3 a pour objectif l'introduction aux circuits intégrés, la connaissance de blocs élémentaires comme les oscillateurs et les références de tension, et l'identification des paramètres d'un système contre-réactionné pour en déduire ses caractéristiques principales [support, p. 1]. Il comporte deux parties : *Systèmes contre-réactionnés* (François Rivet) et *Oscillateurs et références de tension* (Yann Deval). Ce chapitre est le premier chapitre de la première partie ; il correspond aux cours 1 et 2 du plan [support, p. 1] :
+
+1. systèmes asservis en réaction négative : fonction de transfert, analyse des conséquences ;
+2. la robustesse : la reproductibilité industrielle ;
+3. linéarisation ;
+4. compromis gain-bande passante ;
+5. stabilité ; séparation des pôles (exercice guidé).
+
+::: {.notes-externes}
+Les notes disponibles pour ce chapitre ne sont pas celles d'Armand : tableau numérique d'un enseignant en 2020 [tableau-2020-c01] à [tableau-2020-c03], et notes manuscrites d'un étudiant en 2023 [notes-2023-c01] et [notes-2023-c02]. Les deux suivent le même plan et donnent les mêmes résultats ; quand elles diffèrent, c'est signalé.
+:::
+
+### Un peu d'histoire {#sec-histoire-black}
+
+Harold Stephen Black (1898-1983) a inventé le premier amplificateur à contre-réaction en 1927. Tous les composants électroniques (tubes à vide, transistors bipolaires et MOS) sont intrinsèquement non linéaires, mais ils peuvent être rendus sensiblement linéaires grâce à la contre-réaction ; l'invention est considérée comme une des percées majeures du vingtième siècle en électronique. Black en a eu l'idée en août 1927 sur le ferry qui traverse l'Hudson entre le New Jersey et Manhattan, où se trouvait alors le siège des Bell Laboratories ; n'ayant rien pour écrire, il a esquissé ses calculs sur une page du *New York Times*, qu'il a signée et datée [support, p. 3].
+
+::: {.notes-externes}
+Le tableau de 2020 montre une photographie de cette page du *New York Times* du samedi 6 août 1927, couverte de schémas et de calculs, avec la mention manuscrite « H S Black Aug 15, 1927 » et une signature de témoin, ainsi qu'une photographie du ferry de Staten Island [tableau-2020-c01, p. 4].
+:::
+
+## Systèmes asservis en réaction négative {#sec-reaction-negative}
+
+![Système asservi en réaction négative : amplificateur $A$ et réseau de contre-réaction $\beta_F$. D'après les notes externes [tableau-2020-c01, p. 2] et [notes-2023-c01, p. 1], redessinée.](../figures/01-schema-bloc-contre-reaction.svg){#fig-schema-bloc-contre-reaction}
+
+:::: {.notes-externes}
+Le système de la @fig-schema-bloc-contre-reaction est décrit par trois équations [tableau-2020-c01, p. 2] :
+
+$$
+\text{①}\ v_i = v_e - v_f, \qquad \text{②}\ v_f = \beta_F\, v_s, \qquad \text{③}\ v_s = A\, v_i .
+$$
+
+En reportant ② dans ①, $v_i = v_e - \beta_F v_s$, puis avec ③ :
+
+$$
+v_s = A\,(v_e - \beta_F v_s) = A v_e - A\beta_F v_s, \qquad\text{soit}\qquad v_s + A\beta_F v_s = A v_e .
+$$
+
+::: {#def-gain-boucle-fermee}
+## Gain du système contre-réactionné
+
+$$
+v_s = A_F\, v_e, \qquad A_F = \frac{A}{1 + A\beta_F} .
+$$ {#eq-gain-boucle-fermee}
+:::
+
+[tableau-2020-c01, p. 2] ; [notes-2023-c01, p. 1].
+::::
+
+::: {.complement}
+**Vocabulaire et notations.** $A$ est le gain de l'amplificateur seul (gain « en boucle ouverte » au sens de l'amplificateur), $\beta_F$ le facteur de contre-réaction (l'indice $F$ vient de *feedback*), $A_F$ le gain du montage bouclé, et le produit $A\beta_F$ est le **gain de boucle**, noté $A_{OL}$ dans les notes (@sec-stabilite). Le signe « − » du comparateur fait de la réaction une réaction **négative** : le signal $v_f$ prélevé sur la sortie est retranché de l'entrée. Les signaux peuvent être des tensions ou des courants ; le chapitre 2 distingue les quatre façons de prélever et de réinjecter.
+
+**Correspondance des notations.** Dans ce chapitre, $v_e$ est l'entrée du montage et $v_i$ l'entrée de l'amplificateur, comme dans les notes. Les énoncés de la matière (chapitres 2 et 3) font l'inverse : $v_i$ y désigne l'entrée du montage, $v_e$ celle de l'amplificateur, et $v_{fb}$ (ou $i_{fb}$) le signal de contre-réaction.
+
+**Cas limite.** Si $A\beta_F \gg 1$, $A_F \approx \frac{1}{\beta_F}$ : le gain du montage ne dépend plus de l'amplificateur, mais seulement du réseau de contre-réaction. Les trois sections suivantes exploitent cette propriété.
+:::
+
+## Robustesse du montage {#sec-robustesse}
+
+Point du plan : *la robustesse, la reproductibilité industrielle* [support, p. 1].
+
+:::: {.notes-externes}
+Le gain $A$ de l'amplificateur est très grand, de l'ordre de $10^6$ (le tableau note ici « robustesse technologique ») [tableau-2020-c01, p. 3]. Une variation de $A$ change-t-elle $A_F$ ? En dérivant @eq-gain-boucle-fermee par rapport à $A$ (avec $(u/v)' = (u'v - uv')/v^2$) [tableau-2020-c01, p. 3] :
+
+$$
+\frac{\mathrm{d}A_F}{\mathrm{d}A} = \frac{1\cdot(1 + A\beta_F) - A\beta_F}{(1 + A\beta_F)^2} = \frac{1}{(1 + A\beta_F)^2} = \frac{A}{1 + A\beta_F} \times \frac{1}{A\,(1 + A\beta_F)} = \frac{A_F}{A} \times \frac{1}{1 + A\beta_F},
+$$
+
+d'où la variation relative
+
+$$
+\frac{\mathrm{d}A_F}{A_F} = \frac{\mathrm{d}A}{A} \times \frac{1}{1 + A\beta_F} \ll 1 .
+$$ {#eq-sensibilite-gain}
+
+Le facteur $\frac{1}{1 + A\beta_F}$ est très petit. Même une variation de $A$ de 100 % ($\mathrm{d}A = A = 10^6$, $\frac{\mathrm{d}A}{A} = 1$) ne perturbe que très peu $A_F$ [notes-2023-c01, p. 2] : c'est la **reproductibilité industrielle** ($\frac{\mathrm{d}A_F}{A_F} \ll 1$), par exemple pour l'intégration des circuits (transistors) [tableau-2020-c01, p. 5]. Les notes de 2023 signalent ce résultat comme important pour l'examen [notes-2023-c01, p. 1].
+::::
+
+::: {.complement}
+**Ordre de grandeur.** Avec $A = 10^5$ et $\beta_F = 10^{-2}$ ($A\beta_F = 1000$), une variation de 10 % de $A$ ne change $A_F$ que de $10\,\% / 1001 \approx 0{,}01\,\%$.
+:::
+
+### Le prix à payer : le réseau de contre-réaction {#sec-robustesse-beta}
+
+:::: {.notes-externes}
+Mais il y a un prix à payer, dans la boucle de contre-réaction [tableau-2020-c01, p. 5]. En dérivant par rapport à $\beta_F$ (avec $(1/u)' = -u'/u^2$) :
+
+$$
+\frac{\mathrm{d}A_F}{\mathrm{d}\beta_F} = A\cdot\left(-\frac{A}{(1 + A\beta_F)^2}\right) = -\frac{A^2}{(1 + A\beta_F)^2} = \frac{A}{1 + A\beta_F} \times \frac{\beta_F}{\beta_F} \times \frac{-A}{1 + A\beta_F} = \frac{A_F}{\beta_F} \times \frac{-A\beta_F}{1 + A\beta_F},
+$$
+
+d'où, pour $A\beta_F \gg 1$,
+
+$$
+\frac{\mathrm{d}A_F}{A_F} = \frac{\mathrm{d}\beta_F}{\beta_F} \times \frac{-A\beta_F}{1 + A\beta_F} \approx -\frac{\mathrm{d}\beta_F}{\beta_F} .
+$$ {#eq-sensibilite-beta}
+
+**Pas de gain en robustesse** : les variations de $\beta_F$ se répercutent directement sur $A_F$. Pour que le montage soit reproductible, il faut **maîtriser** les composants de la boucle de retour [tableau-2020-c01, p. 5] ; [notes-2023-c01, p. 2].
+::::
+
+::: {.a-verifier .tranche #av-sensibilite-beta-signe}
+**Source** [tableau-2020-c01, p. 5] : « $\frac{\mathrm{d}A_F}{A_F} = \frac{\mathrm{d}\beta_F}{\beta_F} \times \frac{-A\beta_F}{A\beta_F} \simeq \frac{\mathrm{d}\beta_F}{\beta_F} \times (-1)$ », le facteur $(-1)$ étant barré, puis en conclusion « $\frac{\mathrm{d}A_F}{A_F} \simeq \frac{\mathrm{d}\beta_F}{\beta_F}$ ». Même résultat sans signe dans [notes-2023-c01, p. 2] : « $\frac{\mathrm{d}A_F}{A_F} = \frac{\mathrm{d}\beta_F}{\beta_F}\left(\frac{-A\beta_F}{1 + A\beta_F}\right) \sim \frac{\mathrm{d}\beta_F}{\beta_F}$ ».
+
+**Problème** : la ligne précédente donne un facteur $\frac{-A\beta_F}{1 + A\beta_F} \to -1$ : le signe « − » disparaît sans justification. Le sens physique (les variations relatives de $\beta_F$ passent intégralement dans $A_F$) est le même, mais une augmentation de $\beta_F$ **diminue** $A_F$.
+
+**Proposition** : $\frac{\mathrm{d}A_F}{A_F} \approx -\frac{\mathrm{d}\beta_F}{\beta_F}$, soit $\left|\frac{\mathrm{d}A_F}{A_F}\right| \approx \left|\frac{\mathrm{d}\beta_F}{\beta_F}\right|$ (écrit ainsi dans @eq-sensibilite-beta).
+
+**Décision** : tranché par Armand (2026-10-14) : résultat retenu en valeur absolue, $\left|\frac{\mathrm{d}A_F}{A_F}\right| \approx \left|\frac{\mathrm{d}\beta_F}{\beta_F}\right|$ ; le signe « − » reste écrit dans @eq-sensibilite-beta.
+:::
+
+::: {.complement}
+**En pratique.** $\beta_F$ est en général réalisé par des composants passifs (résistances, capacités) dont on maîtrise les **rapports** bien mieux que les valeurs absolues, en particulier sur un circuit intégré où des composants voisins subissent les mêmes dispersions de fabrication (idée reprise dans les exercices du chapitre 2, partie « robustesse »).
+:::
+
+## Linéarisation {#sec-linearisation}
+
+![Spectres à l'entrée et à la sortie d'un amplificateur non linéaire : une raie en entrée, des harmoniques en sortie. D'après les notes externes [tableau-2020-c01, p. 6] et [notes-2023-c01, p. 2], redessinée ; positions $2f_0$, $3f_0$ et amplitudes ajoutées (les notes ne les précisent pas).](../figures/01-linearisation-spectres.svg){#fig-linearisation-spectres}
+
+:::: {.notes-externes}
+$A$ est un polynôme : l'amplificateur crée de la **distorsion**. Une seule raie à l'entrée donne en sortie la raie amplifiée et des **harmoniques** (@fig-linearisation-spectres) [tableau-2020-c01, p. 6].
+
+Si $A$ est très grand ($A\beta_F \gg 1$),
+
+$$
+A_F = \frac{A}{1 + A\beta_F} \approx \frac{1}{\beta_F} .
+$$ {#eq-approx-un-sur-beta}
+
+- $A$ n'apparaît plus, donc le problème de linéarité de $A$ ne sera pas considéré ;
+- si on maîtrise $\beta_F$ (linéaire), alors on maîtrise la linéarité du montage.
+
+Le tableau conclut cette partie par « Robustesse ① Rentabilité ② » [tableau-2020-c01, p. 6].
+::::
+
+::: {.complement}
+« $A$ est un polynôme » signifie que la caractéristique de l'amplificateur s'écrit $v_s = a_1 v_i + a_2 v_i^2 + a_3 v_i^3 + \dots$ : avec $v_i = V\cos(2\pi f_0 t)$, les termes $v_i^2$, $v_i^3$… produisent des composantes aux fréquences $2f_0$, $3f_0$… L'approximation @eq-approx-un-sur-beta n'est valable que tant que l'amplificateur reste dans son domaine de fonctionnement (pas de saturation) et que $A\beta_F \gg 1$ ; c'est la raison pour laquelle la distorsion réapparaît aux fréquences où le gain de boucle diminue (@sec-gain-bande).
+:::
+
+## Compromis gain-bande passante {#sec-gain-bande}
+
+![Gain de l'amplificateur seul ($A$) et du montage bouclé ($A_F$) : le gain est divisé et la bande passante multipliée par $1 + A_0\beta_F$. D'après les notes externes [tableau-2020-c01, p. 7] et [notes-2023-c01, p. 3], redessinée ; courbes recalculées pour un amplificateur du premier ordre, avec $A_0 = 10^4$ et $\beta_F = 10^{-2}$ (valeurs choisies pour la figure).](../figures/01-gain-bande.svg){#fig-gain-bande}
+
+:::: {.notes-externes}
+Sur le diagramme de Bode (@fig-gain-bande), le gain de l'amplificateur seul présente un palier à $\log(A)$ jusqu'à $\omega_0$, puis décroît à −20 dB/décade [tableau-2020-c01, p. 7]. Le gain du montage bouclé suit l'une ou l'autre asymptote selon la valeur du gain de boucle :
+
+1. si $A\beta_F \ll 1$ : $A_F \approx A$ (courbe de $A$) ;
+2. si $A\beta_F \gg 1$ : $A_F \approx \frac{1}{\beta_F}$, donc $\log(A_F) = \log\left(\frac{1}{\beta_F}\right)$ (palier horizontal).
+
+$A_F$ reste sur le palier $\log(1/\beta_F)$ jusqu'à l'intersection avec la pente de $A$, à la pulsation $\omega_0\,(1 + A\beta_F)$, puis suit la pente de $A$ : le **gain diminue** (de $\log A$ à $\log(1/\beta_F)$) et la **bande passante augmente** (de $\omega_0$ à $\omega_0(1 + A\beta_F)$) [tableau-2020-c01, p. 7] ; [notes-2023-c01, p. 3].
+::::
+
+::: {.a-verifier .tranche #av-niveau-gain-boucle-fermee}
+**Source** [notes-2023-c01, p. 3] : sur le diagramme de Bode, le palier de $A_F$ est étiqueté « $\log(A_F) = \log\left(\frac{1}{A\beta_F}\right)$ ».
+
+**Problème** : le tableau de 2020 étiquette ce palier $\log\left(\frac{1}{\beta_F}\right)$ [tableau-2020-c01, p. 7], comme les mêmes notes de 2023 un peu plus loin (« nouvel axe à 0 dB », $\log(1/\beta_F)$, p. 4). Pour $A\beta_F \gg 1$, $A_F \approx 1/\beta_F$ (@eq-approx-un-sur-beta) : $\frac{1}{A\beta_F}$ ne peut pas être le niveau du palier. **Contradiction entre les deux sources.**
+
+**Proposition** : $\log(A_F) = \log\left(\frac{1}{\beta_F}\right)$ (écrit ainsi dans ce chapitre).
+
+**Décision** : proposition retenue (Armand a délégué la décision ; calcul vérifié par Claude), 2026-10-14.
+:::
+
+::: {.complement}
+**Démonstration pour un amplificateur du premier ordre.** Avec $A(p) = \frac{A_0}{1 + p/\omega_0}$ ($p = j\omega$) dans @eq-gain-boucle-fermee :
+
+$$
+A_F(p) = \frac{A_0}{1 + p/\omega_0 + A_0\beta_F} = \frac{\dfrac{A_0}{1 + A_0\beta_F}}{1 + \dfrac{p}{\omega_0 (1 + A_0\beta_F)}} .
+$$
+
+Le montage bouclé est encore du premier ordre, de gain statique $\frac{A_0}{1 + A_0\beta_F}$ et de pulsation de coupure $\omega_0(1 + A_0\beta_F)$ : les deux sont modifiés du même facteur $1 + A_0\beta_F$, et leur produit est conservé,
+
+$$
+\frac{A_0}{1 + A_0\beta_F} \times \omega_0 (1 + A_0\beta_F) = A_0\,\omega_0 .
+$$ {#eq-produit-gain-bande}
+
+C'est le **produit gain-bande** : on « échange » du gain contre de la bande passante. Dans les notes, $A$ désigne ici le gain statique $A_0$ (palier). Pour $A_0\beta_F \gg 1$, $\omega_0(1 + A_0\beta_F) \approx A_0\beta_F\,\omega_0$, abscisse où l'asymptote de $A$, qui vaut $A_0\omega_0/\omega$, atteint le niveau $1/\beta_F$ : c'est bien l'intersection lue sur la @fig-gain-bande.
+:::
+
+## Stabilité {#sec-stabilite}
+
+Point du plan : *5. Stabilité* (cours 2) [support, p. 1].
+
+### Marge de gain et marge de phase {#sec-marges}
+
+:::: {.notes-externes}
+L'étude de la stabilité se fait sur la **boucle ouverte** (*open loop*) : on considère le signal $v_f$ ramené par $\beta_F$, sans le reboucler sur l'entrée [tableau-2020-c02, p. 1]. Le gain en boucle ouverte est
+
+$$
+A_{OL} = A\beta_F .
+$$
+
+D'après @eq-gain-boucle-fermee, $A_F \to \infty$ si $1 + A\beta_F \to 0$. Le **point critique** est donc [tableau-2020-c02, p. 1] :
+
+$$
+A\beta_F = -1 \iff |A\beta_F| = 1 = 0\ \text{dB} \quad\text{et}\quad \arg(A\beta_F) = 180° \ (\text{opposition de phase}) .
+$$ {#eq-point-critique}
+
+« Si 1 », on prélève tout et on réinjecte tout [tableau-2020-c02, p. 1]. On définit deux critères :
+
+- la **marge de phase** $M_\varphi$, par rapport à 180°, mesurée là où $|A\beta_F| = 1$ ;
+- la **marge de gain**, par rapport à 0 dB, mesurée là où $\arg(A\beta_F) = 180°$.
+
+**Lecture sur le diagramme de Bode de $A$.** On étudie la stabilité en regardant $A_{OL}$ [tableau-2020-c02, p. 2] :
+
+$$
+\log(A_{OL}) = \log(A\beta_F) = \log(A) + \log(\beta_F) = \log(A) - \log\left(\frac{1}{\beta_F}\right) .
+$$
+
+La droite horizontale $\log(1/\beta_F)$ est donc le **nouvel axe 0 dB** de $A_{OL}$ : le point où la courbe de $A$ la croise est le point où $|A\beta_F| = 1$, et on le **projette sur la phase** pour lire $M_\varphi$ (@fig-marges-stabilite).
+
+- Si la courbe de $A$ croise $\log(1/\beta_F)$ après le second pôle $\omega_2$, la phase est proche de −180° : marge de phase $M_\varphi < 45°$, **risque d'instabilité, d'oscillations** [tableau-2020-c02, p. 2] ; [notes-2023-c01, p. 4].
+- Si elle croise $\log(1/\beta_F)$ entre $\omega_1$ et $\omega_2$, la phase est proche de −90° : $M_\varphi > 45°$, montage stable, « inconditionnellement stable » selon le tableau [tableau-2020-c02, p. 3] ; [notes-2023-c01, p. 5].
+
+Pour avoir de la marge de phase, il faut réduire la bande passante [notes-2023-c01, p. 5].
+::::
+
+![Lecture de la marge de phase : la droite $20\log(1/\beta_F)$ sert d'axe 0 dB pour $A\beta_F$ ; on projette son intersection avec le gain de $A$ sur la courbe de phase. D'après les notes externes [tableau-2020-c02, p. 2-3] et [notes-2023-c01, p. 4-5], redessinée ; courbes recalculées pour $A$ à deux pôles ($A_0 = 10^4$, $\omega_2 = 100\,\omega_1$) et deux valeurs de $\beta_F$ choisies pour la figure, $\beta_F$ supposé réel.](../figures/01-marges-stabilite.svg){#fig-marges-stabilite}
+
+::: {.complement}
+**Annotation « 70° ».** Le tableau de 2020 porte, à côté du critère de 45°, une annotation « (70°) » peu lisible et non expliquée [tableau-2020-c02, p. 2]. Le chapitre retient le seul critère écrit en toutes lettres par les deux sources : $M_\varphi < 45°$ ⇒ risque d'instabilité ; $M_\varphi > 45°$ ⇒ stable. En pratique, on vise souvent une marge plus confortable (60° à 70°) pour une réponse peu oscillante, ce qui est peut-être le sens de l'annotation.
+:::
+
+::: {.complement}
+**Définitions précises.** Soit $\omega_c$ la pulsation où $|A\beta_F(j\omega_c)| = 1$ et $\omega_{180}$ celle où $\arg A\beta_F(j\omega_{180}) = -180°$ :
+
+$$
+M_\varphi = 180° + \arg A\beta_F(j\omega_c), \qquad M_G = -20\log|A\beta_F(j\omega_{180})| .
+$$
+
+Chaque pôle apporte au plus −90° de phase (−45° à sa pulsation de coupure) : un gain de boucle à deux pôles n'atteint −180° qu'asymptotiquement, mais sa marge de phase devient très faible si $\omega_c$ est au-delà du second pôle (@fig-marges-stabilite : environ 18° pour $\beta_F = 0{,}1$, contre 90° pour $\beta_F = 0{,}001$). Avec un troisième pôle, la phase dépasse −180° et le montage peut osciller.
+
+Le seuil de 45° est une **marge de conception** usuelle : au sens strict, un système dont la boucle ouverte est stable est stable en boucle fermée si $M_\varphi > 0$ (critère du revers, cas simple) ; une faible marge donne une réponse très oscillante et laisse peu de place aux dispersions. Plus $\beta_F$ est grand (gain $A_F \approx 1/\beta_F$ faible), plus la droite $\log(1/\beta_F)$ est basse, plus l'intersection est à haute fréquence et plus la marge est faible : le cas le plus difficile à stabiliser est le **suiveur** ($\beta_F = 1$).
+:::
+
+### Comment stabiliser un système instable ? {#sec-stabiliser}
+
+:::: {.notes-externes}
+Pour un système qui *pourrait* être instable [tableau-2020-c02, p. 4] ; [notes-2023-c02, p. 1] :
+
+a. **Solution brutale** : déplacer le pôle dominant par une capacité, ce qui réduit la bande passante et atténue $A$.
+
+b. **Solution fine** : trouver l'optimum par la **séparation des pôles**, en plaçant la deuxième coupure à $M_\varphi = 45°$, c'est-à-dire $\omega_2$ à 0 dB de $\log(1/\beta_F)$ (sur la droite $\log(1/\beta_F)$).
+::::
+
+::: {.complement}
+Si le pôle dominant $\omega_1$ est très en dessous de $\omega_2$, il apporte −90° à la pulsation $\omega_2$, et le second pôle −45° : la phase de $A\beta_F$ y vaut −135°, d'où $M_\varphi = 45°$ lorsque $|A\beta_F(\omega_2)| \approx 1$. On obtient ainsi la plus grande bande passante compatible avec une marge de 45°. La section suivante montre comment une seule capacité éloigne les deux pôles l'un de l'autre.
+:::
+
+## Séparation des pôles (exercice guidé) {#sec-separation-poles}
+
+L'exercice guidé du cours 2 [support, p. 4-5] a pour but de se familiariser avec les lois élémentaires de l'électronique et une méthodologie de détermination des pôles d'une fonction de transfert.
+
+### Mise en jambe : effet d'une impédance entre entrée et sortie {#sec-effet-miller}
+
+![Amplificateur de gain $A$ avec une impédance $Z$ entre entrée et sortie (a), et schéma équivalent vu de l'entrée et de la sortie (b). (a) D'après le support [support, p. 4, figure 1], redessinée. (b) Reconstruit (pointillés gris) à partir des résultats des questions 1 et 2 ; voir aussi le croquis [notes-2023-c02, p. 2].](../figures/01-effet-miller.svg){#fig-effet-miller}
+
+::: {#exr-mise-en-jambe}
+## Partie 1 : mise en jambe [support, p. 4]
+
+On considère le montage de la @fig-effet-miller (a).
+
+1. Déterminer l'impédance d'entrée $Z_{in}$ en fonction du gain $A$ et de l'impédance $Z$.
+2. Déterminer l'impédance de sortie $Z_{out}$ en fonction du gain $A$ et de l'impédance $Z$.
+3. Considérons que $Z$ soit une capacité de valeur $C$. Rappeler l'impédance complexe d'une capacité et redéterminer $Z_{in}$ et $Z_{out}$ en fonction de $A$ et $C$.
+4. Quelles sont les capacités présentées en entrée et en sortie ?
+:::
+
+:::: {.solution}
+::: {.notes-externes}
+1. L'amplificateur n'absorbe pas de courant : le courant d'entrée $i_{in}$ est le courant $i$ dans $Z$. Avec $v_{out} = A v_{in}$ et $v_{in} - v_{out} = Z i$ : $v_{in}(1 - A) = Z i$, soit [tableau-2020-c02, p. 5] ; [notes-2023-c02, p. 1]
+
+   $$
+   Z_{in} = \frac{v_{in}}{i_{in}} = \frac{Z}{1 - A} .
+   $$ {#eq-impedance-entree-miller}
+
+2. Vue de la sortie, $Z_{out} = \frac{v_{out}}{i_{out}} = \frac{A v_{in}}{-i_{in}} = -A Z_{in} = \frac{-AZ}{1 - A}$ [notes-2023-c02, p. 1], soit $Z_{out} = \frac{AZ}{A - 1}$ (voir le bloc ci-dessous).
+
+3. $Z = \frac{1}{jC\omega}$ ; pour $A$ très grand [notes-2023-c02, p. 2] ; [tableau-2020-c02, p. 5] :
+
+   $$
+   Z_{in} = \frac{1}{jC(1 - A)\,\omega} = \frac{1}{jC_M\,\omega}, \qquad C_M = C\,(1 - A),
+   $$ {#eq-capacite-miller}
+
+   et $Z_{out} \approx \frac{1}{jC\omega}$ : vue de la sortie, la capacité reste $C$.
+
+4. En entrée, la capacité est multipliée par le gain ($C_M$, « $C_M$ ++ » : c'est ainsi qu'on peut **déplacer le pôle dominant**) ; en sortie, on retrouve $C$ [tableau-2020-c02, p. 5].
+:::
+::::
+
+::: {.a-verifier .tranche #av-impedance-sortie-miller}
+**Source** : [notes-2023-c02, p. 1] écrit $Z_{out} = \frac{-AZ}{1 - A}$ puis, encadré, « $Z_{out} = \frac{Z}{1/A - 1}$ » ; [tableau-2020-c02, p. 5] écrit « $Z_{out} = \frac{AZ}{1 - A}$ ».
+
+**Problème** : $\frac{-AZ}{1 - A} = \frac{AZ}{A - 1} = \frac{Z}{1 - 1/A}$. Les deux résultats écrits ont un **signe faux** : ils donneraient $Z_{out} \approx -Z$ pour $|A| \gg 1$, alors que les deux sources concluent ensuite (question 3) que la capacité vue en sortie est $C$, c'est-à-dire $Z_{out} \approx Z$.
+
+**Proposition** : $Z_{out} = \frac{AZ}{A - 1} = \frac{Z}{1 - 1/A}$ (calcul direct : $i_{out} = \frac{v_{out} - v_{in}}{Z} = \frac{v_{out}(1 - 1/A)}{Z}$), qui tend vers $Z$ pour $|A| \gg 1$.
+
+**Décision** : proposition retenue (Armand a délégué la décision ; calcul vérifié par Claude), 2026-10-14.
+:::
+
+::: {.a-verifier .tranche #av-capacite-miller-signe}
+**Source** : « $C_M = C(1 - A) \simeq A \cdot C$ » [tableau-2020-c02, p. 5] ; « $C_M = AC$ » [notes-2023-c02, p. 5] ; « $p_1 = \frac{1}{R_e A C}$ » avec « $A = g_m R_S$ » [notes-2023-c02, p. 2-3].
+
+**Problème** : avec la convention de l'énoncé, $v_{out} = A v_{in}$, l'étage source commune de la partie 2 a un gain **négatif**, $A = -g_m R_S$ ; alors $C(1 - A) = C(1 + g_m R_S) \approx |A|\,C$, et non $A\,C$ (qui serait négative). Les sources désignent par $A$ tantôt le gain, tantôt sa valeur absolue.
+
+**Proposition** : $C_M = C(1 - A) \approx |A|\,C = g_m R_S\, C$ pour un amplificateur inverseur de grand gain (écrit ainsi dans ce chapitre).
+
+**Décision** : proposition retenue (Armand a délégué la décision ; calcul vérifié par Claude), 2026-10-14.
+:::
+
+::: {.complement}
+Ce résultat est l'**effet Miller** (nom usuel, absent des sources) : une capacité placée entre l'entrée et la sortie d'un amplificateur inverseur de gain $A$ est vue de l'entrée comme une capacité $(1 - A)\,C$ vers la masse, très grande, et de la sortie comme une capacité $\approx C$. Avec $A < 0$, $1 - A = 1 + |A|$. C'est ce qui permet de créer un pôle dominant avec une petite capacité intégrée (@sec-capacite-compensation).
+:::
+
+### Pôles d'un étage source commune {#sec-poles-source-commune}
+
+![Étage source commune de l'exercice (a) et son schéma équivalent aux petites variations (b). (a) D'après le support [support, p. 4, figure 2], redessinée. (b) D'après les notes externes [notes-2023-c02, p. 2 et 5] et [tableau-2020-c03, p. 1], redessinée ; la résistance $R_e$ n'est pas sur la figure du support (voir le complément « Notations de l'énoncé »).](../figures/01-source-commune.svg){#fig-source-commune}
+
+::: {#exr-poles-enseirbien}
+## Partie 2 a : méthode de l'enseirbien [support, p. 5]
+
+On utilisera la notation $p = j\omega$ dans les calculs. Le but est de rechercher la fonction de transfert du montage de la @fig-source-commune (a).
+
+5. Si on considère les capacités équivalentes définies dans la partie 1, déterminer sans effort calculatoire la capacité d'entrée et la capacité de sortie.
+6. Rappeler ce qu'est un pôle. Déduire de la question précédente le nombre de pôles dans le circuit de la figure 2 et leur valeur.
+7. Quel est le pôle dominant ?
+:::
+
+::: {.complement}
+**Notations de l'énoncé.** La figure 2 ne comporte pas de résistance d'entrée, alors que la question 10 cite $R_e$ et $V_1$, et que la question 9 annonce « $V_{out}/i_s$ » pour un courant d'entrée noté $i_e$ sur la figure [support, p. 4-5]. Comme les notes, qui ajoutent une résistance entre grille et masse ($R_e$ dans [notes-2023-c02, p. 2], $R_g$ sur [tableau-2020-c02, p. 6]) et calculent $v_{out}/i_e$ [tableau-2020-c03, p. 1-2], on prend : $R_e$ = résistance interne de la source de courant d'entrée (en parallèle sur $C_e$), $V_1 = v_{gs}$, et on cherche $v_{out}/i_e$.
+:::
+
+:::: {.solution}
+::: {.notes-externes}
+5. Avec les capacités équivalentes de la partie 1 : en entrée, $C_e + C_M$ ; en sortie, $C_S + C$ [notes-2023-c02, p. 5] ; [tableau-2020-c02, p. 6].
+6. Un pôle est une racine du polynôme du dénominateur. Il y a deux pôles dans le circuit [notes-2023-c02, p. 5] :
+
+   $$
+   p_1 = \frac{1}{R_e (C_M + C_e)} \approx \frac{1}{R_e\, |A|\, C}, \qquad p_2 = \frac{1}{R_S (C + C_S)} .
+   $$
+
+7. $p_1$ est le pôle dominant.
+
+Le tableau barre ces réponses d'une grande croix rouge : « **FAUX** car + haut en fréquence, C n'est plus C » [tableau-2020-c02, p. 6] ; les notes de 2023 barrent de même $p_2 = \frac{1}{R_S(C + C_S)}$ (« non ») [notes-2023-c02, p. 2]. La partie b vérifie cette méthode par le calcul.
+
+Ordres de grandeur notés : $C_e$ et $C_S$ de l'ordre du femtofarad ($10^{-15}$ F), contre le picofarad ($10^{-12}$ F) [tableau-2020-c02, p. 6] ; [notes-2023-c02, p. 2] ; $g_m \approx 10$ mS pour un transistor MOS [notes-2023-c02, p. 3]. Le tableau rappelle l'origine des capacités sur une coupe de transistor MOS : $C_{GS}$ entre grille et source, $C_{GD}$ entre grille et drain [tableau-2020-c02, p. 6]. L'impédance d'un générateur de courant doit être la plus forte possible [notes-2023-c02, p. 3].
+:::
+::::
+
+::: {.complement}
+Dans la notation de l'énoncé, $A$ est ici le gain de l'étage, $A = -g_m R_S$ (bloc `av-capacite-miller-signe`), d'où $C_M \approx g_m R_S C$ et $p_1 \approx \frac{1}{g_m R_e R_S C}$. Les capacités de la figure 2 correspondent aux capacités du transistor : $C \approx C_{GD}$, $C_e \approx C_{GS}$ (plus les capacités parasites du nœud d'entrée), $C_S$ = capacités du nœud de sortie.
+:::
+
+::: {#exr-poles-enseirbienne}
+## Partie 2 b : méthode de l'enseirbienne [support, p. 5]
+
+Pour s'assurer de la justesse de l'approximation de l'enseirbien, on détermine les pôles par le calcul.
+
+8. Faire un schéma équivalent de la figure 2.
+9. On cherche $V_{out}/i_s$. Nous allons écrire $V_{out}$ et $i_s$ en fonction d'un paramètre commun.
+10. En utilisant la loi des nœuds, déterminer $i_s$ en fonction de $R_e$, $C_e$, $V_{out}$, $p$ et $V_1$.
+11. En utilisant la loi des nœuds, déterminer $V_{out}$ en fonction de $R_s$, $C_s$, $V_{out}$, $p$, $g_m$ et $V_1$.
+12. Mettre en forme la fonction de transfert sous la forme d'une fraction qui fait apparaître zéro et pôles en polynômes.
+13. Décomposer le dénominateur pour faire apparaître 2 pôles sous la forme d'un produit de facteurs. On considérera qu'il y a un pôle dominant.
+14. Déterminer le pôle $p_1$. Simplifier l'expression en faisant les simplifications adéquates. Comparer avec le résultat obtenu par l'enseirbien.
+15. Déterminer le pôle $p_2$. Simplifier l'expression en faisant les simplifications adéquates. Comparer avec le résultat obtenu par l'enseirbien.
+16. En prenant en considération les hautes fréquences, trouver une explication à l'erreur de l'enseirbien.
+
+Notations non définies par l'énoncé ($i_s$, $V_1$, $R_e$) : voir le complément « Notations de l'énoncé » ; la solution les remplace par $i_e$, $v_{gs}$ et la résistance d'entrée $R_e$.
+:::
+
+:::: {.solution}
+::: {.notes-externes}
+8. Schéma équivalent aux petites variations : @fig-source-commune (b) [tableau-2020-c03, p. 1] ; [notes-2023-c02, p. 5].
+
+9-11. On écrit $v_{out}$ et $i_e$ en fonction de $v_{gs}$ [tableau-2020-c03, p. 1]. Loi des nœuds, avec le courant $(v_{gs} - v_{out})\,Cp$ dans $C$ de G vers D [notes-2023-c02, p. 3] :
+
+- en entrée : $i_e = \dfrac{v_{gs}}{R_e} + v_{gs} C_e p + (v_{gs} - v_{out})\,Cp$ ;
+- en sortie : $g_m v_{gs} + \dfrac{v_{out}}{R_S} + v_{out} C_S p + (v_{out} - v_{gs})\,Cp = 0$.
+
+12. Fonction de transfert, avec 1 zéro et 2 pôles [tableau-2020-c03, p. 2] ; [notes-2023-c02, p. 3] :
+
+$$
+\frac{v_{out}}{i_e} = \frac{-(g_m - Cp)\,R_e R_S}{1 + p\left[(C_S + C)R_S + (C_e + C)R_e + g_m R_e R_S C\right] + p^2 (C_S C_e + C C_e + C C_S) R_e R_S} .
+$$ {#eq-transfert-source-commune}
+
+13. On décompose le dénominateur $D(p)$ (« méthode ♡ ») [notes-2023-c02, p. 3] ; [tableau-2020-c03, p. 2] :
+
+$$
+D(p) = \left(1 + \frac{p}{p_1}\right)\left(1 + \frac{p}{p_2}\right) = 1 + p\left(\frac{1}{p_1} + \frac{1}{p_2}\right) + \frac{p^2}{p_1 p_2} .
+$$
+
+Avec un pôle dominant, $p_1 \ll p_2$, donc $\frac{1}{p_1} \gg \frac{1}{p_2}$ et $D(p) \approx 1 + \frac{p}{p_1} + \frac{p^2}{p_1 p_2}$.
+
+14. Par identification du terme en $p$, avec $C_S, C_e \ll C$ et $g_m R \gg 1$ [tableau-2020-c03, p. 2] :
+
+$$
+p_1 = \frac{1}{(C_S + C)R_S + (C_e + C)R_e + g_m R_e R_S C} \approx \frac{1}{g_m R_e R_S C} .
+$$ {#eq-pole-dominant}
+
+C'est le résultat de l'enseirbien, avec $|A| = g_m R_S$ [notes-2023-c02, p. 3].
+
+15. Par identification du terme en $p^2$, $p_1 p_2 = \frac{1}{(C_e C_S + C C_e + C C_S) R_e R_S} \approx \frac{1}{C R_e R_S (C_e + C_S)}$, car $C_e C_S$ (de l'ordre de $10^{-30}$ F²) est négligeable devant les autres produits [tableau-2020-c03, p. 3]. D'où
+
+$$
+p_2 = \frac{g_m R_S R_e C}{C R_e R_S (C_e + C_S)} = \frac{g_m}{C_e + C_S} .
+$$ {#eq-pole-non-dominant}
+
+Ce n'est **pas** le résultat de l'enseirbien, $\frac{1}{R_S(C + C_S)}$.
+
+16. À haute fréquence, la capacité $C$ se comporte comme un court-circuit : la grille est reliée au drain, le transistor est **monté en diode**, d'impédance $Z_{out} = \frac{v_{gs}}{g_m v_{gs}} = \frac{1}{g_m}$. Les capacités $C_e$ et $C_S$ se retrouvent en parallèle sur $1/g_m$, d'où le pôle $p = \frac{1}{RC} = \frac{g_m}{C_e + C_S}$ [tableau-2020-c03, p. 3]. L'enseirbien suppose que $C$ reste une capacité de valeur $C$ vue de la sortie, ce qui est faux à ces fréquences (« C n'est plus C ») [tableau-2020-c02, p. 6].
+:::
+::::
+
+::: {.a-verifier .tranche #av-signe-transfert-separation-poles}
+**Source** : [tableau-2020-c03, p. 2] et [notes-2023-c02, p. 3] écrivent tous deux le numérateur « $(g_m - Cp)\,R_e R_S$ ».
+
+**Problème** : de l'équation du nœud de sortie, $v_{gs}(g_m - Cp) = -v_{out}\left(\frac{1}{R_S} + (C_S + C)p\right)$ ; en reportant dans l'équation d'entrée, on obtient le dénominateur des sources, mais un numérateur **négatif** : $-(g_m - Cp)\,R_e R_S$. Le signe « − » traduit l'inversion de l'étage source commune (à basse fréquence, $v_{out}/i_e = -g_m R_e R_S$).
+
+**Proposition** : $\frac{v_{out}}{i_e} = \frac{-(g_m - Cp)\,R_e R_S}{D(p)}$ (écrit ainsi dans @eq-transfert-source-commune). Les pôles ne changent pas.
+
+**Décision** : proposition retenue (Armand a délégué la décision ; calcul vérifié par Claude), 2026-10-14.
+:::
+
+::: {.complement}
+**Le zéro.** Le numérateur s'annule pour $p = g_m/C$ : c'est un zéro **à partie réelle positive** (dans le demi-plan droit), dû au passage direct du signal de la grille vers le drain à travers $C$. Avec $C \gg C_e + C_S$, il se trouve en dessous de $p_2$ ($g_m/C < g_m/(C_e + C_S)$) ; un tel zéro ajoute du retard de phase et réduit la marge de phase. Ce point n'est pas traité par les sources.
+
+**Hypothèses des simplifications.** @eq-pole-dominant suppose $g_m R_e R_S C \gg (C_S + C)R_S + (C_e + C)R_e$, vrai si $g_m R_e \gg 1$, $g_m R_S \gg 1$ et $C$ pas trop petite devant $C_e$, $C_S$ ; @eq-pole-non-dominant suppose en plus $C \gg C_e C_S/(C_e + C_S)$. La @fig-separation-poles compare ces approximations au calcul exact.
+:::
+
+### Choix de la capacité de compensation {#sec-capacite-compensation}
+
+![Position des pôles de @eq-transfert-source-commune en fonction de la capacité $C$ : quand $C$ augmente, $p_1$ diminue et $p_2$ augmente jusqu'à $g_m/(C_e + C_S)$ ; la « méthode de l'enseirbien » prédit à tort un $p_2$ décroissant. Reconstruite : pôles calculés exactement à partir du dénominateur des notes [notes-2023-c02, p. 3], [tableau-2020-c03, p. 2], avec $g_m = 10$ mS, $R_e = R_S = 10$ kΩ, $C_e = C_S = 10$ fF (valeurs choisies pour la figure) ; allure à comparer aux croquis [notes-2023-c02, p. 4] et [tableau-2020-c03, p. 4].](../figures/01-separation-poles.svg){#fig-separation-poles}
+
+:::: {.notes-externes}
+Augmenter $C$ **sépare les pôles** : $p_1$ diminue (en $1/C$) et $p_2$ augmente (@fig-separation-poles). On ajoute une capacité pour avoir $p_2$ sur 0 dB [notes-2023-c02, p. 4] : c'est la **capacité de compensation**. Le tableau compare trois valeurs de $C$ [tableau-2020-c03, p. 4] :
+
+- $C$ choisie pour avoir $p_2$ au niveau 0 dB et $M_\varphi = 45°$ : montage **stable**, **bande passante maximale** (« BW ++ ») ; c'est l'utilisation la plus optimale de la capacité $C$ ;
+- $C$ plus grande : $M_\varphi > 45°$, stable, mais $p_1$ plus bas, donc bande passante plus faible ;
+- $C$ plus petite : les pôles se rapprochent, $M_\varphi < 45°$ [notes-2023-c02, p. 4].
+::::
+
+::: {.complement}
+On retrouve les deux solutions de @sec-stabiliser : la même capacité $C$ fait à la fois baisser le pôle dominant (effet Miller, $p_1 \approx 1/(g_m R_e R_S C)$) et monter le second pôle ($p_2 \approx g_m/(C_e + C_S)$, indépendant de $C$ dès que $C \gg C_e, C_S$). C'est la compensation dite « par effet Miller » des amplificateurs intégrés à deux étages, où $C$ est placée entre l'entrée et la sortie du second étage.
+:::
+
+## À retenir {#sec-retenir-generalites}
+
+- **Gain du montage bouclé** : $A_F = \frac{A}{1 + A\beta_F}$ (@eq-gain-boucle-fermee) ; pour $A\beta_F \gg 1$, $A_F \approx \frac{1}{\beta_F}$ (@eq-approx-un-sur-beta) *(notes externes)*.
+- **Robustesse** : $\frac{\mathrm{d}A_F}{A_F} = \frac{\mathrm{d}A}{A}\,\frac{1}{1 + A\beta_F}$ (@eq-sensibilite-gain) : les variations de $A$ sont divisées par $1 + A\beta_F$ (reproductibilité industrielle) *(notes externes)*.
+- **Prix à payer** : $\frac{\mathrm{d}A_F}{A_F} \approx -\frac{\mathrm{d}\beta_F}{\beta_F}$ pour $A\beta_F \gg 1$ (@eq-sensibilite-beta) : il faut maîtriser les composants de la boucle de retour *(notes externes ; signe : bloc tranché `av-sensibilite-beta-signe`)*.
+- **Linéarisation** : la non-linéarité de $A$ disparaît si $A\beta_F \gg 1$ et si $\beta_F$ est linéaire *(notes externes)*.
+- **Gain-bande** : le gain est divisé et la bande passante multipliée par $1 + A_0\beta_F$ ; pour un premier ordre, le produit gain × bande $A_0\omega_0$ est conservé (@eq-produit-gain-bande) *(notes externes ; démonstration : complément)*.
+- **Stabilité** : étude sur la boucle ouverte $A_{OL} = A\beta_F$ ; point critique $A\beta_F = -1$ (@eq-point-critique). Sur le Bode de $A$, la droite $\log(1/\beta_F)$ est l'axe 0 dB de $A\beta_F$ ; $M_\varphi < 45°$ : risque d'instabilité ; $M_\varphi > 45°$ : stable *(notes externes)*.
+- **Stabiliser** : déplacer le pôle dominant (brutal : bande passante et gain réduits) ou séparer les pôles, en plaçant le second pôle sur l'axe 0 dB de $A\beta_F$ ($M_\varphi = 45°$) *(notes externes)*.
+- **Effet Miller** : $Z_{in} = \frac{Z}{1 - A}$ (@eq-impedance-entree-miller) ; une capacité $C$ entre entrée et sortie d'un inverseur de gain $A$ est vue en entrée comme $C_M = C(1 - A) \approx |A|\,C$ (@eq-capacite-miller), en sortie comme $\approx C$ *(notes externes ; signes corrigés : blocs tranchés `av-impedance-sortie-miller` et `av-capacite-miller-signe`)*.
+- **Séparation des pôles** (source commune avec $C$ entre grille et drain) : $p_1 \approx \frac{1}{g_m R_e R_S C}$ (@eq-pole-dominant), $p_2 \approx \frac{g_m}{C_e + C_S}$ (@eq-pole-non-dominant), valables pour $g_m R \gg 1$ et $C \gg C_e, C_S$ ; la méthode des capacités équivalentes (« enseirbien ») donne le bon $p_1$ mais un $p_2$ faux, car à haute fréquence $C$ court-circuite grille et drain (transistor monté en diode, $1/g_m$) *(notes externes)*.

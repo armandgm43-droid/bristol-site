@@ -1,0 +1,26 @@
+% Figure — Oscillateur à déphasage en technologie MOS (sujet EA210 du 22 novembre 2021) (EANA3, chapitre 4).
+% D'après le sujet [td04-2026, p. 1, figure 1], redessiné.
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 04-dephasage.tex
+%   dvisvgm --no-fonts --exact-bbox -o 04-dephasage.svg <dossier temporaire>/04-dephasage.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\usetikzlibrary{shapes.geometric,calc,positioning}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex, fleche/.style={->, thick}]
+  \draw (1.6,1.4) node[nmos] (M) {};  \node[right] at (M.text) {$M_1$};
+  \draw (M.D) -- ++(0,0.3) coordinate (d) to[R, l=$R$] ++(0,1.6) node[vcc]{$V_{DD}$};
+  \draw (M.S) to[R, l=$\alpha R$] (M.S |- 0,-0.6);
+  \draw (d) -- (2.8,0 |- d) coordinate (n1) to[R, l=$R$] (4.6,0 |- d) coordinate (n2) to[R, l=$R$] (6.4,0 |- d) coordinate (n3) -- (7.6,0 |- d) node[ocirc]{};
+  \draw (n1) to[C, l=$C$] (n1 |- 0,-0.6);  \draw (n2) to[C, l=$C$] (n2 |- 0,-0.6);  \draw (n3) to[C, l=$C$] (n3 |- 0,-0.6);
+  \draw (1.6,-0.6) -- (6.4,-0.6);  \draw (1.6,-0.6) node[ground]{};  \draw (7.6,-0.6) node[ground]{} node[ocirc]{};
+  \draw (M.G) -- (0.2,0 |- M.G) -- (0.2,-1.3) -- (7.15,-1.3) -- (7.15,0 |- d);
+  \draw[fleche] (7.9,-0.4) -- node[right]{$V_{out}$} (7.9,0.95 |- d);
+\end{circuitikz}
+\end{document}

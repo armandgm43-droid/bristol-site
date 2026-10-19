@@ -1,0 +1,68 @@
+---
+title: "AUTO1 — Commande des systèmes linéaires à temps continu et discret"
+subtitle: "Fiche matière"
+matiere: auto1
+enseignants: ["Pierre Melchior"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | AUTO1 (EEL7-AUTO1 ; ancien code : AU201, sigle CSLTCD) |
+| UE | EEL7FE-UEC Automatique et Signal |
+| Enseignant | Pierre Melchior (note de cours) ; auteurs des énoncés de TD : P. Melchior, « amarque » (métadonnées PDF, nom complet à confirmer) |
+| Année | 2026-2027 (note de cours : versions v01 et v03, plus une version d'une année antérieure) |
+
+## Chapitres
+
+Plan tiré du sommaire de la note de cours (`cours-v03`), commun aux trois versions reçues. Proposition à valider : un chapitre Bristol par bloc cohérent du sommaire.
+
+| N° | Chapitre (proposé) | Contenu et sources | Statut |
+|---|---|---|---|
+| 1 | Introduction, modélisation et représentations fréquentielles | § 1 à 3 | BROUILLON |
+| 2 | Analyse de la commande en boucle fermée | § 4 : précision, rejet de perturbation, stabilité, rapidité, sensibilité, filtrage | BROUILLON |
+| 3 | Synthèse d'un régulateur PIDF en temps continu | § 5 et 6 : P, PI, PD, PIDF ; TD 1 et TD 3 | BROUILLON |
+| 4 | Signaux échantillonnés et transformée en Z | § 7 à 9 ; table des transformées en Z | BROUILLON |
+| 5 | Commande à temps discret et synthèse fréquentielle d'un régulateur discret | § 10 et 11 : transformations en W (bilinéaire) et de Tustin ; support « Synthèse fréquentielle » | BROUILLON |
+| 6 | Implantation d'un régulateur numérique | § 12 et 13 ; support « Implantation d'un correcteur numérique » | BROUILLON |
+
+Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/auto1/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `cours-v03` | `support/note-de-cours-melchior-v03.pdf` | officielle | note de cours la plus récente, 75 p. (référence) |
+| `cours-v01` | `support/note-de-cours-melchior-v01.pdf` | officielle | version précédente, 75 p. |
+| `cours-ancien` | `support/note-de-cours-melchior-ancienne-version.pdf` | officielle | version d'une année antérieure, 91 p. |
+| `synthese-freq` | `support/synthese-frequentielle-correcteurs.pdf` | officielle | 9 p., **scan sans texte** (lecture sur image) |
+| `implantation` | `support/implantation-correcteurs.pdf` | officielle | 13 p. |
+| `table-z` | `support/table-transformees-z.pdf` | officielle | 4 p. |
+| `td…` | `td/` | officielle | TD 1-1 (PI, avec éléments de correction), TD 1-2 (PD), TD 2 (abaque de Nichols, scan), TD 3 ; recueil de TD d'une année antérieure |
+| `notes-2023-…` | `notes/2023-…pdf` | externe | fiche de synthèse, synthèse d'un PD, table de la transformée en Z (ancien élève) |
+| — | `corriges/2023-…pdf` | externe | TD 1 à 4, commande PIDF d'un moteur, partiels 2016-2017 et 2019-2020 (corrigés manuscrits d'un ancien élève) |
+| — | `annales/` | officielle | partiels AU201 (commande linéaire) et AU205 (temps discret), 2013-2018 |
+
+La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).
+
+## Remarques
+
+- Les trois versions de la note de cours ont le même sommaire ; les écarts de texte restent à relever à l'analyse de chaque chapitre (la v03 sert de référence).
+- La note de cours renvoie au cours AU103 de 1re année pour les rappels de commande en boucle fermée (§ 4).
+- Les TP associés sont dans la matière AUTO2.

@@ -1,0 +1,37 @@
+% Figure — Impédance Z entre l'entrée et la sortie d'un amplificateur de gain A (a) et schéma équivalent vu de l'entrée et de la sortie (b) (EANA3, chapitre 1).
+% (a) D'après le support [support, p. 4, figure 1], redessiné.
+% (b) Reconstruit (pointillés gris) à partir des résultats des questions 1 et 2 ; idée du croquis [notes-2023-c02, p. 2].
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 01-effet-miller.tex
+%   dvisvgm --no-fonts --exact-bbox -o 01-effet-miller.svg <dossier temporaire>/01-effet-miller.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages]{circuitikz}
+\usetikzlibrary{calc,shapes.geometric}
+\definecolor{ajout}{HTML}{7E889B}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex]
+  % ---------- (a) ----------
+  \node at (-0.4,2.6) {(a)};
+  \draw (0,0) node[ocirc] (in) {} -- (1.2,0) node[circ] (ni) {} -- (1.9,0);
+  \node[draw, thick, isosceles triangle, isosceles triangle apex angle=60, minimum height=11mm, fill=black!4, inner sep=1pt, anchor=west] (A) at (1.9,0) {$A$};
+  \draw (A.east) -- (4.0,0) node[circ] (no) {} -- (5.2,0) node[ocirc] (out) {};
+  \draw (ni) -- (1.2,1.4) to[generic, l=$Z$, i>^=$i$] (4.0,1.4) -- (no);
+  \draw[->] (0,-1.4) -- node[left] {$V_{in}$} (0,-0.15);
+  \draw[->] (5.2,-1.4) -- node[right] {$V_{out}$} (5.2,-0.15);
+  % ---------- (b) ----------
+  \begin{scope}[xshift=7.6cm, color=ajout, dashed]
+    \node[solid] at (-0.4,2.6) {(b)};
+    \draw (0,0) node[ocirc, solid] {} -- (1.2,0) node[circ, solid] (bi) {} -- (1.9,0);
+    \node[draw, thick, isosceles triangle, isosceles triangle apex angle=60, minimum height=11mm, inner sep=1pt, anchor=west] (B) at (1.9,0) {$A$};
+    \draw (B.east) -- (4.0,0) node[circ, solid] (bo) {} -- (5.2,0) node[ocirc, solid] {};
+    \draw (bi) to[generic, l_=$\dfrac{Z}{1 - A}$] (1.2,-1.8) node[ground] {};
+    \draw (bo) to[generic, l=$\dfrac{AZ}{A - 1}$] (4.0,-1.8) node[ground] {};
+  \end{scope}
+\end{circuitikz}
+\end{document}

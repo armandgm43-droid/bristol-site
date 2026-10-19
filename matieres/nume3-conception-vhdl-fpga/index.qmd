@@ -1,0 +1,59 @@
+---
+title: "NUME3 — Conception VHDL/FPGA"
+subtitle: "Fiche matière"
+matiere: nume3
+enseignants: ["À compléter"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | NUME3 (EEL7-NUME3 ; ancien code : EN202) |
+| UE | EEL7FE-UEB Électronique Numérique |
+| Enseignants | à compléter (énoncés : C. Jégo ; planning du TP 1 : « Valéry », nom complet à confirmer) |
+| Année | 2026-2027 |
+| Nature | projet : lecteur MP3 sur carte FPGA (Nexys A7 / Nexys 4 DDR) |
+
+## Chapitres
+
+Matière de projet : pas de chapitre de cours. Les rappels de VHDL sont dans NUMC1 ; les TP et le projet seront traités en phase 2 (dossier `tp/`). Séances relevées :
+
+
+| Séance | Contenu |
+|---|---|
+| TP 1 | interface du lecteur MP3 (machine à états, compteurs) |
+| TP 2 | TP VHDL (version 2016-2017) |
+| Projet | lecteur MP3 : énoncé du projet EN202 ; fichiers fournis (contraintes XDC, réception UART, ROM sinus, musiques) |
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/nume3/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `projet` | `support/enonce-projet-en202.pdf` | officielle | 7 p. |
+| `tp…` | `tp/` | officielle | TP 1 (deux versions), TP 2 |
+| — | `tp/fichiers/` | officielle | XDC, UART, ROM sinus, musiques |
+| `notes-2023` | `notes/2023-notes-definition-projet.pdf` | externe | ancien élève |
+| — | `corriges/` | externe | projets d'anciens élèves (notes manuscrites, code VHDL d'un camarade) |
+| — | `annales/` | officielle | partiel « Synthèse VHDL » 2013-2014 |
+
+La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).
+
+## Remarques
+
+- Le code personnel du projet est rangé à part dans `sources/nume3/travaux/` (non publié).

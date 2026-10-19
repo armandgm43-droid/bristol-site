@@ -1,0 +1,36 @@
+% Figure — Oscillateur BiCMOS à double paire croisée et résistance négative (EANA3, chapitre 4).
+% D'après le support [support, p. 20, figure 1], redessiné.
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 04-resistance-negative.tex
+%   dvisvgm --no-fonts --exact-bbox -o 04-resistance-negative.svg <dossier temporaire>/04-resistance-negative.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\usetikzlibrary{shapes.geometric,calc,positioning}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex, fleche/.style={->, thick}]
+  \draw (0,6.6) -- (5,6.6);  \node[above] at (2.5,6.6) {$V_{DD}$};
+  \draw (0.9,5.5) node[pmos, xscale=-1] (Ma) {};  \node[left] at (0.3,5.5) {$M_{101}$};
+  \draw (4.1,5.5) node[pmos] (Mb) {};  \node[right] at (4.7,5.5) {$M_{102}$};
+  \draw (Ma.S) -- (Ma.S |- 0,6.6);  \draw (Mb.S) -- (Mb.S |- 0,6.6);
+  \draw (0.9,0.6) node[npn, xscale=-1] (Qa) {};  \node[left] at (0.3,0.6) {$Q_1$};
+  \draw (4.1,0.6) node[npn] (Qb) {};  \node[right] at (4.7,0.6) {$Q_2$};
+  \draw (Ma.D) -- (Qa.C) coordinate[pos=0.5] (out1);  \draw (Mb.D) -- (Qb.C) coordinate[pos=0.5] (out2);
+  % croisements PMOS et NPN
+  \draw (Ma.G) -- ($(Mb.D)+(0,-0.35)$);  \draw (Mb.G) -- ($(Ma.D)+(0,-0.35)$);
+  \draw (Qa.B) -- ($(Qb.C)+(0,0.35)$);  \draw (Qb.B) -- ($(Qa.C)+(0,0.35)$);
+  % réseau RLC
+  \draw (Ma.D |- 0,3.9) to[cute inductor, l=$L$] (Mb.D |- 0,3.9);
+  \draw (Ma.D |- 0,3.1) to[C, l=$C$] (Mb.D |- 0,3.1);
+  \draw (Ma.D |- 0,2.3) to[R, l_=$R$] (Mb.D |- 0,2.3);
+  \draw (Ma.D |- 0,3.1) -- (-0.6,3.1) node[ocirc]{} node[left]{out};
+  \draw (Mb.D |- 0,3.1) -- (5.6,3.1) node[ocirc]{} node[right]{$\overline{\text{out}}$};
+  \draw (Qa.E) |- (2.5,-0.1) coordinate (t) -| (Qb.E);
+  \draw (t) to[isource, l=$I_{bias}$] (2.5,-1.8) node[ground]{};
+\end{circuitikz}
+\end{document}

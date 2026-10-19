@@ -1,0 +1,68 @@
+---
+title: "NUMC1 — Technologie des circuits numériques"
+subtitle: "Fiche matière"
+matiere: numc1
+enseignants: ["Sylvie Renaud", "Bertrand Le Gal"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | NUMC1 (EEL7-NUMC1 ; anciens codes : EN208 « technologie », EN201 « circuits FPGA ») |
+| UE | EEL7FE-UEB Électronique Numérique |
+| Enseignants | Sylvie Renaud (technologie des CI) ; Bertrand Le Gal (circuits FPGA, VHDL) ; énoncés de TD VHDL : C. Jégo |
+| Année | 2026-2027 (supports datés de 2024) |
+| Examen | épreuve commune « CI / VHDL » (sujet 2025-2026 dans `annales/`) |
+
+## Chapitres
+
+Plan proposé à partir des supports reçus (un support = un chapitre). L'ordre réel des séances est à confirmer.
+
+| N° | Chapitre (proposé) | Contenu et sources | Statut |
+|---|---|---|---|
+| 1 | Technologies et familles logiques | `techno` (Renaud) ; TD TCIN 1 et 2 | BROUILLON |
+| 2 | Mémoires | `memoires` (Renaud) | BROUILLON |
+| 3 | Conception de circuits intégrés numériques | `conception` (Renaud) | BROUILLON |
+| 4 | Test et testabilité des circuits intégrés numériques | `test` (Renaud) ; TD test et testabilité | BROUILLON |
+| 5 | Circuits FPGA | `fpga` (Le Gal) : circuits reconfigurables, architecture, configuration ; TD 3 et 4 | BROUILLON |
+| 6 | Description VHDL et synthèse | TD 1 (machine à états, banc de test) et sa correction ; pas de support de cours dans l'archive | BROUILLON |
+
+Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
+
+## Table des notations
+
+À compléter lors de l'analyse du premier chapitre.
+
+## Conventions de la matière
+
+- **Numéros de page** cités : pages du PDF.
+- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+
+## Sources
+
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/numc1/` (hors dépôt).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `techno` | `support/technologies-familles-logiques-2024.pdf` | officielle | 22 p. |
+| `memoires` | `support/memoires-2024.pdf` | officielle | 10 p. |
+| `conception` | `support/conception-circuits-integres-2024.pdf` | officielle | 35 p. (une version antérieure aussi rangée) |
+| `test` | `support/test-ci-numeriques-2024.pdf` | officielle | 13 p. |
+| `fpga` | `support/circuits-fpga-le-gal.pdf` | officielle | 110 p., version d'une année antérieure (fournie par un ancien élève) |
+| `td…` | `td/` | officielle | TD VHDL 1, 3, 4 ; TD TCIN (propagation CMOS et EEPROM, BiCMOS, test) |
+| — | `corriges/td01-…` | officielle | correction du TD 1 VHDL (deux versions) |
+| `notes-2023` | `notes/2023-notes-cours-vhdl.pdf` | externe | 68 p. (ancien élève) |
+| — | `corriges/2023-…pdf` | externe | TD 1, 3, 4, 5, machine de Moore, TD « m = 2 » (manuscrits) |
+| — | `annales/` | officielle | partiels EN208 2016-2020 et 2022-2023 ; examen CI/VHDL 2025-2026 |
+
+La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).
+
+## Remarques
+
+- Les TD VHDL figuraient aussi dans le dossier Moodle de NUME3 ; ils sont rangés une seule fois, ici (l'examen NUMC1 porte sur les CI et le VHDL).
+- Les fichiers « TD2 » et « TD3 » VHDL reçus sont en réalité les TD n° 3 et n° 4 d'EN201 ; ils sont nommés d'après leur titre.

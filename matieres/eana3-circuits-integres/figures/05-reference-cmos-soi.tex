@@ -1,0 +1,49 @@
+% Figure — Référence de tension CMOS stable en température du TD 5 (technologie SOI) : tensions de seuil de M1 et M1b abaissées par la tension de body V_Body (EANA3, chapitre 5).
+% D'après le support [support, p. 22, figure 1], redessiné.
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 05-reference-cmos-soi.tex
+%   dvisvgm --no-fonts --exact-bbox -o 05-reference-cmos-soi.svg <dossier temporaire>/05-reference-cmos-soi.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\usetikzlibrary{shapes.geometric}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex, fleche/.style={->, thick}]
+  \draw (0,6.5) node[pmos, xscale=-1] (Ma) {};  \node[left] at (-0.45,6.5) {$M_{101}$};
+  \draw (3.2,6.5) node[pmos] (Mb) {};  \node[right] at (3.65,6.5) {$M_{102}$};
+  \draw (-0.4,7.6) -- (3.6,7.6);  \node[above] at (1.6,7.6) {$V_{DD}$};
+  \draw (Ma.S) -- (0,7.6);  \draw (Mb.S) -- (3.2,7.6);
+  \draw (Ma.G) -- (Mb.G);
+  \draw (2.0,6.5) node[circ]{} -- (2.0,5.4) -- (3.2,5.4) node[circ]{};
+  % branche gauche
+  \draw (Ma.D) -- (0,5.0) coordinate (x);
+  \draw (x) node[circ]{} to[R, l_=$R$] (0,3.4) coordinate (y);
+  \draw (0,2.6) node[nmos, xscale=-1, bulk] (M1b) {};  \node[left] at (-1.05,2.25) {$M_{1b}$};
+  \draw (y) node[circ]{} -- (M1b.D);
+  \draw (M1b.S) -- (0,1.6) coordinate (vr);
+  \draw (0,0.8) node[nmos, xscale=-1] (M0) {};  \node[left] at (-0.45,0.55) {$M_0$};
+  \draw (vr) node[circ]{} -- (M0.D);
+  \draw (vr) -- (-1.5,1.6) node[ocirc]{} node[left]{$V_{Ref}$};
+  % grilles
+  \draw (y) -- (1.5,3.4) -- (1.5,0 |- M0.G) -- (M0.G);
+  \draw (1.5,0 |- M1b.G) node[circ]{} -- (M1b.G);
+  % branche droite
+  \draw (3.2,2.9) node[nmos, bulk] (M1) {};  \node[right] at (3.85,3.3) {$M_1$};
+  \draw (1.5,0 |- M1.G) node[circ]{} -- (M1.G);
+  \draw (3.2,5.4) -- (Mb.D);  \draw (3.2,5.4) -- (M1.D);
+  \draw (M1.S) to[R, l=$R_\Delta$] (3.2,-0.4);
+  \draw[fleche] (4.1,-0.2) -- node[right]{$V_\Delta$} (4.1,1.9);
+  % body
+  \draw (x) -- (3.05,5.0) arc(180:0:0.15) -- (4.6,5.0) node[circ]{} -- (5.3,5.0) node[ocirc]{} node[right]{$V_{Body}$};
+  \draw (4.6,5.0) -- (4.6,0 |- M1.bulk) -- (M1.bulk);
+  \draw (x) -- (-1.0,5.0) -- (-1.0,0 |- M1b.bulk) -- (M1b.bulk);
+  % masse
+  \draw (M0.S) -- (0,-0.4);  \draw (-1.5,-0.4) node[ocirc]{} -- (3.2,-0.4);  \draw (1.5,-0.4) node[ground]{};
+  \draw[fleche] (-1.5,-0.2) -- (-1.5,1.4);
+\end{circuitikz}
+\end{document}

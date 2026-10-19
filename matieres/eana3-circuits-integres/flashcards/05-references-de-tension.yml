@@ -1,0 +1,358 @@
+# Flashcards — EANA3, chapitre 5 : Références de tension.
+# Générées le 2026-10-18 à partir du cours validé. Format : conventions.md § 10.
+# Conversion : python scripts/flashcards.py (écrit revision/cartes/eana3.json).
+# Rappels : un identifiant n'est jamais modifié ni réutilisé ; une carte supprimée
+# va dans ids-retires. Les lignes d'un même paragraphe sont jointes par le script ;
+# une ligne « - … » ou un bloc $$…$$ commencent une nouvelle ligne ; une ligne vide sépare deux paragraphes.
+matiere: eana3
+chapitre: 5
+cours: cours/05-references-de-tension.qmd
+ids-retires: []
+cartes:
+
+  # --- Principe, TC− et TC+ ---
+
+  - id: eana3-reference-principe-tc0
+    type: definition
+    question: |
+      Quel principe commun permet d'obtenir une référence de tension stable en température ?
+    reponse: |
+      Additionner une grandeur qui **décroît** avec la température (TC−) et une grandeur
+      qui **croît** (TC+), dans la bonne proportion, pour obtenir un coefficient
+      de température nul (TC0).
+    ref: sec-intro-references
+    source: complement
+
+  - id: eana3-vbe-coefficient-temperature
+    type: formule
+    question: |
+      Expression de $\frac{\mathrm{d}V_{BE}}{\mathrm{d}T}$ d'un bipolaire polarisé à courant constant,
+      et ordre de grandeur ?
+    reponse: |
+      $$\frac{\mathrm{d}V_{BE}}{\mathrm{d}T} = \frac{1}{T}\left(V_{BE} - V_{BG}\right) \simeq -2\ \mathrm{mV/°C}$$
+      $V_{BG}$ : tension de bande interdite du silicium.
+    ref: eq-derivee-vbe
+    source: notes-externes
+
+  - id: eana3-vbe-tc-negatif
+    type: raisonnement
+    question: |
+      Pourquoi $V_{BE}$ est-elle une grandeur TC− ?
+    reponse: |
+      $V_{BE} \approx 0{,}6\ \mathrm{V}$ est inférieure à $V_{BG}$ : la dérivée $\frac{1}{T}(V_{BE} - V_{BG})$ est négative.
+    ref: sec-dependance-thermique-vbe
+    source: notes-externes
+
+  - id: eana3-tension-bande-interdite
+    type: formule
+    question: |
+      Expression et valeur à 300 K de la tension de bande interdite $V_{BG}$, et valeur de $U_T$ ?
+    reponse: |
+      $V_{BG} = V_{BG_0} + (\gamma - \alpha)\, U_T \simeq 1{,}26\ \mathrm{V}$ à $300\ \mathrm{K}$,
+      avec $U_T = \frac{kT}{q} = 26\ \mathrm{mV}$ ; $V_{BG_0} \approx 1{,}2\ \mathrm{V}$ (extrapolée à 0 K).
+    ref: sec-dependance-thermique-vbe
+    source: notes-externes
+
+  - id: eana3-transistor-fois-n
+    type: definition
+    question: |
+      Que désigne un transistor bipolaire « $\times N$ », et que vaut son courant de saturation ?
+    reponse: |
+      La mise en parallèle de $N$ transistors identiques (bases, collecteurs et émetteurs reliés) :
+      courant de saturation $N I_S$.
+    ref: sec-ptat
+    source: notes-externes
+
+  - id: eana3-delta-vbe-ptat
+    type: formule
+    question: |
+      Deux bipolaires de surfaces dans le rapport $N$ sont parcourus par le même courant $I$.
+      Expression de $\Delta V_{BE}$ ?
+    reponse: |
+      $$\Delta V_{BE} = U_T \ln\left(\frac{I}{I_S}\right) - U_T \ln\left(\frac{I}{N I_S}\right) = U_T \ln N$$
+    ref: eq-delta-vbe-ptat
+    source: notes-externes
+
+  - id: eana3-ptat-derivee
+    type: propriete
+    question: |
+      Dérivée en température de $\Delta V_{BE} = U_T \ln N$ ? Comment qualifie-t-on cette tension ?
+    reponse: |
+      $\frac{\mathrm{d}}{\mathrm{d}T}(\Delta V_{BE}) = \frac{k}{q}\ln N = \frac{U_T}{T}\ln N > 0$, constante.
+      Tension TC+, et même **PTAT** (*Proportional To Absolute Temperature*).
+    ref: sec-ptat
+    source: notes-externes
+
+  # --- Bandgap de Widlar ---
+
+  - id: eana3-bandgap-widlar-vref
+    type: formule
+    question: |
+      Expression de $V_{ref}$ du bandgap de Widlar (notations des notes) ?
+    reponse: |
+      $$V_{ref} = \frac{\Delta V_{BE}}{R_E}\,R + V_{BE3}$$
+      $V_{BE3}$ (TC−) plus la tension PTAT $\Delta V_{BE}$ amplifiée par $R/R_E$.
+    ref: sec-bandgap-widlar-deval
+    source: notes-externes
+
+  - id: eana3-bandgap-derivee-vref
+    type: resultat
+    question: |
+      Dérivée en température de la sortie d'un bandgap, et condition TC0 ?
+    reponse: |
+      $$\frac{\mathrm{d}V_{ref}}{\mathrm{d}T} = \frac{1}{T}\left[V_{ref} - V_{BG}\right]$$
+      TC0 lorsque $V_{ref} = V_{BG}$, soit environ $1{,}25\ \mathrm{V}$ à $300\ \mathrm{K}$.
+    ref: eq-derivee-vref-bandgap
+    source: notes-externes
+
+  - id: eana3-bandgap-derivee-demonstration
+    type: raisonnement
+    question: |
+      Comment obtient-on $\frac{\mathrm{d}V_{ref}}{\mathrm{d}T} = \frac{1}{T}(V_{ref} - V_{BG})$ pour le bandgap de Widlar ?
+    reponse: |
+      On dérive $V_{ref} = \frac{R}{R_E}U_T\ln N + V_{BE3}$ : le terme PTAT donne $\frac{1}{T}\frac{R}{R_E}U_T\ln N$,
+      $V_{BE3}$ donne $\frac{1}{T}(V_{BE3} - V_{BG})$ ; la somme fait réapparaître $V_{ref}$.
+    ref: eq-derivee-vref-bandgap
+    source: notes-externes
+
+  - id: eana3-bandgap-courbe-temperature
+    type: propriete
+    question: |
+      Allure de $V_{ref}(T)$ d'une référence bandgap ? D'où vient sa courbure ?
+    reponse: |
+      Courbe en cloche : sommet plat (TC0) à une seule température (300 K), TC+ dominant
+      en dessous, TC− dominant au-dessus. La courbure vient du terme en $T\ln T$ de $V_{BE}$,
+      que la compensation linéaire ne supprime pas.
+    ref: fig-vref-temperature
+    source: notes-externes
+
+  # --- Bandgap à miroir PNP, sortie fractionnaire ---
+
+  - id: eana3-bandgap-pnp-vref
+    type: formule
+    question: |
+      Expression de $V_{ref}$ du bandgap à miroir PNP et pont $R_1$, $R_2$ en sortie ?
+    reponse: |
+      $$V_{ref} = \frac{R_1R_2}{4R(R_1 + R_2)}\,\Delta V_{BE} + \frac{R_1}{R_1 + R_2}\,V_{BEQ2}$$
+      avec $\Delta V_{BE} = U_T\ln N$ aux bornes de $R$ ; $R_1$, $R_2$ grandes.
+    ref: sec-bandgap-fractionnaire-notes
+    source: notes-externes
+
+  - id: eana3-bandgap-pnp-facteur-quart
+    type: piege
+    question: |
+      Les notes de 2023 donnent pour le bandgap à miroir PNP un terme PTAT $\frac{R_2R_1}{R(R_1+R_2)}\Delta V_{BE}$.
+      Qu'est-ce qui manque, et pourquoi ?
+    reponse: |
+      Un facteur $\frac{1}{4}$ : le PNP $\times 1$ fournit $\frac{I}{4}$ au nœud $V_{ref}$, et l'élimination de $I_{R2}$
+      donne $V_{ref}\left(\frac{1}{R_1} + \frac{1}{R_2}\right) = \frac{V_{BE2}}{R_2} + \frac{\Delta V_{BE}}{4R}$.
+      La condition TC0 n'en dépend pas, seul le dimensionnement de $R$.
+    ref: sec-bandgap-fractionnaire-notes
+    source: notes-externes
+
+  - id: eana3-bandgap-fractionnaire-tc0
+    type: resultat
+    question: |
+      Dérivée en température de la sortie du bandgap à pont $R_1$, $R_2$, et condition TC0 ?
+    reponse: |
+      $$\frac{\mathrm{d}V_{ref}}{\mathrm{d}T} = \frac{1}{T}\left[V_{ref} - \frac{R_1}{R_1 + R_2}\,V_{BG}\right]$$
+      TC0 pour $V_{ref} = \frac{R_1}{R_1 + R_2}V_{BG}$ : une **fraction** de la tension de bande interdite.
+    ref: eq-derivee-vref-fractionnaire
+    source: notes-externes
+
+  - id: eana3-bandgap-fractionnaire-interet
+    type: propriete
+    question: |
+      Quel est l'intérêt d'une sortie fractionnaire par rapport au bandgap classique ?
+    reponse: |
+      Le bandgap classique impose $V_{ref} \approx 1{,}25\ \mathrm{V}$, donc une alimentation nettement supérieure.
+      La sortie fractionnaire donne une référence stable **inférieure** à $V_{BG}$, utilisable sous faible alimentation.
+    ref: sec-bandgap-fractionnaire-notes
+    source: complement
+
+  # --- Référence en technologie CMOS ---
+
+  - id: eana3-pnp-vertical-parasite
+    type: definition
+    question: |
+      Quel bipolaire dispose-t-on dans une technologie CMOS, et quelle contrainte impose-t-il ?
+    reponse: |
+      Un **PNP vertical parasite** dans le PMOS : émetteur P+, base caisson N, collecteur substrat P.
+      Son collecteur est imposé au substrat, donc à la masse.
+    ref: sec-bipolaires-cmos
+    source: notes-externes
+
+  - id: eana3-bandgap-cmos-vout
+    type: formule
+    question: |
+      Expression de la sortie du bandgap CMOS à amplificateur et miroir PMOS, et rôle de l'amplificateur ?
+    reponse: |
+      $$V_{out} = V_{BE2} + \frac{R_1}{R}\,\Delta V_{BE}, \qquad \Delta V_{BE} = U_T\ln N$$
+      L'amplificateur égalise les potentiels des deux branches : le nœud au-dessus de $R$ est à $V_{BE2}$.
+      TC0 pour $V_{out} = V_{BG}$.
+    ref: fig-bandgap-aop
+    source: notes-externes
+
+  # --- Référence full CMOS à double tension de seuil ---
+
+  - id: eana3-vth-coefficient-temperature
+    type: formule
+    question: |
+      Modèle de la dépendance thermique de la tension de seuil d'un MOS, signe et ordre de grandeur de $\alpha$ ?
+    reponse: |
+      $V_{th}(T) = V_{th_0} + \alpha\,(T - T_0)$, $T_0 = 300\ \mathrm{K}$.
+      $\alpha < 0$, de l'ordre de $-1$ à $-10\ \mathrm{mV/K}$.
+    ref: eq-vth-temperature
+    source: notes-externes
+
+  - id: eana3-alpha-vth-unite
+    type: piege
+    question: |
+      Les notes de 2023 donnent pour $\alpha$ (pente de $V_{th}(T)$) un ordre de grandeur « 1 à 10 mV ». Qu'est-ce qui ne va pas ?
+    reponse: |
+      L'unité : $\alpha$ est une pente, en V/K. Il faut lire $-1$ à $-10\ \mathrm{mV/K}$
+      (des valeurs de $-1$ à $-3\ \mathrm{mV/K}$ sont courantes).
+    ref: eq-vth-temperature
+    source: notes-externes
+
+  - id: eana3-dual-vth-longueur-canal
+    type: propriete
+    question: |
+      Dans la référence dual-$V_{th}$, comment obtient-on deux tensions de seuil différentes,
+      et pourquoi prend-on $V_{GS} \simeq V_{th}$ ?
+    reponse: |
+      La tension de seuil croît avec la longueur du canal : $L_1 > L_2 \Rightarrow V_{th1} > V_{th2}$ (même $W/L$).
+      Courants petits et transistors larges : l'excès $V_{GS} - V_{th}$ est faible.
+    ref: sec-reference-dual-vth
+    source: notes-externes
+
+  - id: eana3-dual-vth-vref
+    type: formule
+    question: |
+      Expression de $V_{ref}$ de la référence MOS à double tension de seuil ?
+    reponse: |
+      $$V_{ref} = \frac{R}{R_\Delta}\,\Delta V_{th} + V_{th1}$$
+      avec $V_\Delta = V_{th1} - V_{th2} = \Delta V_{th}$ aux bornes de $R_\Delta$ et $I_{D1} = I_{D2}$ (miroir PMOS).
+    ref: eq-vref-dual-vth
+    source: notes-externes
+
+  - id: eana3-dual-vth-dimensionnement
+    type: resultat
+    question: |
+      Condition TC0 de la référence dual-$V_{th}$ (pentes $\alpha_1$, $\alpha_2$) ?
+    reponse: |
+      $\frac{\mathrm{d}V_{ref}}{\mathrm{d}T} = \frac{R}{R_\Delta}(\alpha_1 - \alpha_2) + \alpha_1 = 0$, soit
+      $$\frac{R}{R_\Delta} = -\frac{\alpha_1}{\alpha_1 - \alpha_2}, \qquad \frac{R_\Delta}{R} = \frac{\alpha_2}{\alpha_1} - 1$$
+      $\Delta V_{th}$ est TC+ si $|\alpha_1| < |\alpha_2|$.
+    ref: eq-dimensionnement-dual-vth
+    source: notes-externes
+
+  - id: eana3-dual-vth-analogie-bandgap
+    type: relation
+    question: |
+      Dans la référence dual-$V_{th}$, quelles grandeurs jouent les rôles de $V_{BE}$ et de $\Delta V_{BE}$ du bandgap ?
+    reponse: |
+      $V_{th1}$ joue le rôle de $V_{BE}$ (TC−), $\Delta V_{th}$ celui de $\Delta V_{BE}$ (TC+) ;
+      $R/R_\Delta$ dose la compensation comme $R/R_E$ dans le bandgap de Widlar.
+    ref: sec-reference-dual-vth
+    source: complement
+
+  # --- TD 5 : référence CMOS SOI ---
+
+  - id: eana3-reference-soi-vdelta
+    type: exercice
+    question: |
+      TD 5 (SOI) : $V_{th1} = 400\ \mathrm{mV}$ ($M_1$, $V_{BB} = 1\ \mathrm{V}$), $V_{th0} = 450\ \mathrm{mV}$ ($M_0$),
+      même $W/L$, même courant $I_0 = 5\ \mu\mathrm{A}$. Valeurs de $V_\Delta$ et $R_\Delta$ ?
+    reponse: |
+      $V_\Delta = V_{th0} - V_{th1} = 50\ \mathrm{mV}$ (termes en racine égaux) ;
+      $R_\Delta = \frac{V_\Delta}{I_0} = 10\ \mathrm{k\Omega}$.
+    ref: exr-reference-cmos
+    source: complement
+
+  - id: eana3-reference-soi-vref
+    type: exercice
+    question: |
+      TD 5 (SOI) : pourquoi préférer $V_{Ref}$ à $V_\Delta$, et que vaut $V_{Ref}$ ?
+    reponse: |
+      $V_{Ref} = V_{th0} - V_{th1} = V_\Delta = 50\ \mathrm{mV}$. $M_{1b}$ et $M_0$ sont en série,
+      donc ont le même courant quel que soit le miroir PMOS : $V_{Ref}$ ne dépend pas de son appariement.
+    ref: exr-reference-cmos
+    source: complement
+
+  - id: eana3-reference-soi-tc0
+    type: resultat
+    question: |
+      TD 5 (SOI) : que valent $\frac{\mathrm{d}V_{Ref}}{\mathrm{d}T}$ et la sensibilité à $V_{DD}$, et pourquoi ?
+    reponse: |
+      $\frac{\mathrm{d}V_{Ref}}{\mathrm{d}T} = \alpha - \alpha = 0$ : TC0 par construction, sans dosage de résistances,
+      car les transistors ne diffèrent que par leur tension de body. $V_{Ref}$ ne dépend pas de $V_{DD}$ au premier ordre.
+    ref: exr-reference-cmos
+    source: complement
+
+  # --- Sujet 2025 : bandgap de Brokaw ---
+
+  - id: eana3-brokaw-egalite-courants
+    type: raisonnement
+    question: |
+      Bandgap de Brokaw (sujet Deval) : comment l'amplificateur impose-t-il $I_1 = I_2$, et quel circuit aurait fait de même ?
+    reponse: |
+      $V_+ = V_-$ donne $V_{C1} = V_{C2}$, avec $V_{C1} = V_{DD} - R_0 I_1$ et $V_{C2} = V_{DD} - R_0 I_2$ :
+      $I_1 = I_2$, comme avec un **miroir de courant**.
+    ref: exr-bandgap-brokaw-deval
+    source: complement
+
+  - id: eana3-brokaw-vptat
+    type: formule
+    question: |
+      Bandgap de Brokaw : expressions de $I_{ptat}$ et de $V_{ptat}$ (tension aux bornes de $R$) ?
+    reponse: |
+      $I_{ptat} = I_1 + I_2 = 2I_2$, avec $I_2 = \frac{\Delta V_{BE}}{R_\Delta}$ et $\Delta V_{BE} = U_T\ln N$ :
+      $$V_{ptat} = 2\,\frac{R}{R_\Delta}\,U_T \ln N$$
+    ref: exr-bandgap-brokaw-deval
+    source: complement
+
+  - id: eana3-brokaw-vref-tc0
+    type: resultat
+    question: |
+      Bandgap de Brokaw : expression de $V_{Ref}$, condition TC0, et composant qui fixe $I_{ptat}$ ?
+    reponse: |
+      $V_{Ref} = V_{BE1} + V_{ptat}$, d'où $\frac{\mathrm{d}V_{Ref}}{\mathrm{d}T} = \frac{1}{T}(V_{Ref} - V_{BG})$ :
+      TC0 si $V_{Ref} = V_{BG} = 1{,}26\ \mathrm{V}$. $R_\Delta$ (avec $N$) fixe $I_{ptat}$ ; $R$ dose $V_{ptat}$.
+    ref: exr-bandgap-brokaw-deval
+    source: complement
+
+  # --- Sujet 2026 : générateur de courant suppresseur de variations ---
+
+  - id: eana3-suppresseur-iout
+    type: formule
+    question: |
+      Générateur de courant suppresseur de variations (MOS sous le seuil) : expression de $I_{out}$
+      en fonction de $I_{bias}$ ?
+    reponse: |
+      $$I_{out} = I_{bias}\exp\left(-\frac{R_\Delta I_{bias}}{\eta U_t}\right)$$
+      $M_1$, $M_2$ identiques, saturés, en faible inversion : $I_D = I_{D0}\exp\left(\frac{V_{GS} - V_{th}}{\eta U_t}\right)$.
+    ref: eq-iout-suppresseur
+    source: complement
+
+  - id: eana3-suppresseur-point-optimal
+    type: resultat
+    question: |
+      Générateur suppresseur de variations : condition du maximum de $I_{out}$, valeur de ce maximum,
+      et gain petits signaux en ce point ?
+    reponse: |
+      $V_\Delta = R_\Delta I_{bias} = \eta U_t$ ; $I_{out,max} = \frac{I_{bias}}{e} \approx 0{,}37\, I_{bias}$.
+      Le gain en courant aux petites variations y est **nul** : les variations de $I_{bias}$ sont supprimées.
+    ref: exr-generateur-courant
+    source: complement
+
+  - id: eana3-autopolarise-contre-reaction
+    type: resultat
+    question: |
+      Générateur auto-polarisé (miroir PMOS de rapport 2,72) : type de contre-réaction, et gain $G_i$ de l'amplificateur de boucle ?
+    reponse: |
+      Contre-réaction **courant-parallèle**.
+      $G_i = \frac{I_2}{I_1}\left(1 - \frac{V_\Delta}{\eta U_t}\right)$ : nul pour $V_\Delta = \eta U_t$, et $I_1 = \frac{\eta U_t}{R_\Delta}$
+      ne dépend pas de $V_{DD}$.
+    ref: exr-generateur-courant
+    source: complement

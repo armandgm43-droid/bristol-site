@@ -4,7 +4,7 @@
 > À lire avec `CONTEXTE_PROJET.md` (le *pourquoi*) et `ETAT_PROJET.md` (l'état du projet).
 > Ces conventions s'appliquent à **toutes les matières**. Ce qui est propre à une matière (notations, convention de la TF…) va dans sa fiche matière, pas ici.
 >
-> Dernière mise à jour : 7 octobre 2026.
+> Dernière mise à jour : 19 octobre 2026 (sources : dossiers `tp/` et `travaux/`, documents d'un tiers, versions antérieures).
 
 Toute nouvelle convention est **proposée explicitement** avant d'être appliquée, puis ajoutée ici et dans le [journal des conventions](#12-journal-des-conventions).
 
@@ -34,8 +34,15 @@ Règle générale : **minuscules, sans accents, mots séparés par des tirets**.
 | Figure (rendu) | même nom, `.svg` | `figures/03-dsp-nrz.svg` |
 | TD, TP, annales (phase 2, provisoire) | `td/tdNN-slug.qmd`, `tp/tpNN-slug.qmd`, `annales/AAAA-session.qmd` | `td/td01-bande-de-base.qmd`, `annales/2025-janvier.qmd` |
 | Sources brutes (hors dépôt) | `sources/<code>/support/…`, `sources/<code>/notes/AAAA-MM-JJ.pdf` | `sources/ts227/notes/2026-09-15.pdf` |
+| Jeu de notes non datées d'une autre année ou d'un tiers (hors dépôt) | `sources/<code>/notes/<année>-cours-NN-<enseignant>.pdf`, `sources/<code>/notes/<année>-tableau-cours-NN.pdf` (un fichier par séance numérotée ; `<année>` = année du jeu) ; id : `notes-<année>-cNN`, `tableau-<année>-cNN` | `sources/eana3/notes/2023-cours-04-06-rivet.pdf` (id `notes-2023-c04-06`) |
 | Notes sans date de séance (hors dépôt) | `sources/<code>/notes/date-inconnue.pdf`, photos dans `sources/<code>/notes/date-inconnue/feuillet-N-recto.jpg` / `-verso.jpg` | `sources/ts227/notes/date-inconnue.pdf` |
 | Rapport d'analyse d'un chapitre | `analyses/NN-slug.md` (même slug que le chapitre ; `.md`, donc non rendu par Quarto) | `matieres/ts227-communications-numeriques/analyses/02-communication-sans-bruit.md` |
+| Inventaire des sources d'une matière | `analyses/inventaire-sources.md` | `matieres/auto1-commande-systemes-lineaires/analyses/inventaire-sources.md` |
+| Énoncés de TP et fichiers fournis (hors dépôt) | `sources/<code>/tp/…`, fichiers fournis (code, projets logiciels, signaux, archives `.zip` gardées telles quelles) dans `sources/<code>/tp/fichiers/` | `sources/ts227/tp/tp01-modulation-psk.pdf`, `sources/ts227/tp/fichiers/tp01.zip` |
+| Corrigés et comptes rendus (hors dépôt) | `sources/<code>/corriges/…` ; ceux d'un tiers préfixés par l'année du jeu : `<année>-tdNN-slug.pdf` ou `<année>-tpNN-slug.pdf` | `sources/eana4/corriges/2023-tp01-diode-mosfet-cr.pdf` |
+| Notes d'un tiers sans séance numérotée (hors dépôt) | `sources/<code>/notes/<année>-notes-<sujet>.pdf` ; par chapitre : `<année>-cours-chNN-<slug>.pdf` | `sources/tsig1/notes/2023-cours-ch01-generalites-signaux-systemes.pdf` |
+| Version antérieure d'un support officiel (hors dépôt) | même nom + suffixe `-ancienne-version` | `sources/numr1/support/tcpip-partie-1-ancienne-version.pdf` |
+| Travaux personnels d'Armand (hors dépôt, **jamais publiés**) | `sources/<code>/travaux/…` (CR de TP, code, rapports de projet) | `sources/auto2/travaux/cr-tp1-ascenseur-grafcet/` |
 
 - `NN` : numéro sur deux chiffres (`01`, `02`…).
 - Le slug du chapitre décrit son contenu en 2 à 5 mots.
@@ -123,6 +130,7 @@ Classes **figées** (déjà stylées dans `assets/bristol.scss`, couleurs tirée
 |---|---|---|---|
 | Support officiel | *(aucune)* | texte normal | texte normal |
 | Notes de cours | `.notes` | `::: {.notes}` | `[texte]{.notes}` |
+| Notes externes (variante des notes de cours) | `.notes-externes` | `::: {.notes-externes}` | `[texte]{.notes-externes}` |
 | Complément | `.complement` | `::: {.complement}` | `[texte]{.complement}` |
 | À vérifier | `.a-verifier` | `::: {.a-verifier #av-slug}` ; tranché : `::: {.a-verifier .tranche #av-slug}` (§ 5.2) | `[texte]{.a-verifier}` |
 
@@ -140,6 +148,7 @@ Classes **figées** (déjà stylées dans `assets/bristol.scss`, couleurs tirée
   ::::
   ```
 
+- **Notes externes** (`.notes-externes`, étiquette `✎ Notes externes`) : contenu tiré de notes de cours qui **ne sont pas celles d'Armand** (camarade, ancienne promotion, tableau d'une autre année ; nature `externe` dans le front matter). Même rôle que `.notes` (tableau, oral, démonstrations), même famille de style (bleu, symbole ✎), mais filet double et couleur ardoise. Chaque bloc cite sa source (`[notes-2023-c01, p. 2]`). Quand Armand fournit ses propres notes sur le même passage, le contenu passe en `.notes` (ou reste en `.notes-externes` s'il n'apparaît que là).
 - Ne jamais imbriquer deux catégories (pas de `.complement` dans `.notes`) : fermer le premier bloc, ouvrir le second.
 
 ### 5.2 Bloc *À vérifier*
@@ -316,7 +325,7 @@ cartes:
 | `question` | oui | recto |
 | `reponse` | oui | verso |
 | `ref` | oui | label du passage du cours dans le chapitre du fichier (`eq-…`, `def-…`, `sec-…`). Vers un autre chapitre : `NN-slug.qmd#label` |
-| `source` | non | catégorie d'origine du contenu |
+| `source` | non | catégorie d'origine du contenu : `officiel`, `notes`, `notes-externes`, `complement` |
 | `tags` | non | mots-clés libres |
 
 La matière et le chapitre sont déclarés **une fois en tête de fichier** et valent pour toutes les cartes.
@@ -386,6 +395,9 @@ Le paquet généré est le **contenu complet** de la matière : ne jamais le mod
 | 2026-10-07 | Choix par défaut appliqués par Claude (forme, figures, rédaction) et listés dans le rapport ; questions à Armand réservées aux points bloquants | Nouveau (§ 14), décision d'Armand après la vérification du ch. 2 de TS227 |
 | 2026-10-07 | Flashcards : macros écrites comme dans le cours (développées par le script), formules en ligne sur une ligne, sauts de ligne façon Markdown ; conversion par `scripts/flashcards.py` | Précise § 10.4 et § 10.5 (remplace « écrire la forme développée ») |
 | 2026-10-07 | Paquet TS227 provisoire (préfixe `ts-`) abandonné ; le préfixe reste réservé | Question ouverte 5 |
+| 2026-10-08 | Classe `.notes-externes` (étiquette `✎ Notes externes`, filet double bleu ardoise, jetons `--cat-notes-ext…`, clair et sombre) ; valeur `notes-externes` du champ `source` des cartes | Demande d'Armand (EANA3 : notes d'anciennes promotions) |
+| 2026-10-08 | Nommage des jeux de notes non datées d'une autre année : `<année>-cours-NN-<enseignant>.pdf`, id `notes-<année>-cNN` | Proposé à l'inventaire EANA3 (7 oct.), appliqué par défaut |
+| 2026-10-19 | Sources : dossiers `tp/` (avec `tp/fichiers/`) et `travaux/` (travaux personnels, jamais publiés) ; préfixe `<année>-` pour les corrigés et notes d'un tiers ; suffixe `-ancienne-version` ; inventaire `analyses/inventaire-sources.md` par matière | Rangement de l'archive `2A.zip`, choix d'Armand (dossier `travaux/`) et choix par défaut |
 
 ---
 
@@ -432,11 +444,12 @@ Les polices sont chargées depuis Google Fonts par `assets/bristol-tokens.css` (
 
 ### 13.4 Les quatre catégories
 
-Formes, étiquettes et symboles **inchangés** (§ 5) : filet plein bleu `✎ Notes de cours`, filet gris pointillé `+ Complément`, filet orange `? À vérifier`.
+Formes, étiquettes et symboles **inchangés** (§ 5) : filet plein bleu `✎ Notes de cours`, filet double bleu ardoise `✎ Notes externes`, filet gris pointillé `+ Complément`, filet orange `? À vérifier`.
 
 | Catégorie | Jetons | Mode clair | Mode sombre |
 |---|---|---|---|
 | Notes de cours | `--cat-notes`, `--cat-notes-bg` | `#23489A` (inchangé) | `#A9BFF2` |
+| Notes externes | `--cat-notes-ext`, `--cat-notes-ext-bg` | `#4E6A99` | `#B9C6DE` |
 | Complément | `--cat-complement`, `--cat-complement-ink`, `--cat-complement-bg` | `#7E889B` / `#5A6478` (inchangés) | `#8792A6` / `#B4BDCC` |
 | À vérifier | `--cat-verifier`, `--cat-verifier-bg` | `#C2610C` (inchangé) | `#F0A15C` |
 

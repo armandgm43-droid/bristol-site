@@ -1,0 +1,295 @@
+# Flashcards — EANA3, chapitre 3 : Applications de la théorie de la contre-réaction.
+# Générées le 2026-10-18 à partir du cours validé. Format : conventions.md § 10.
+# Conversion : python scripts/flashcards.py (écrit revision/cartes/eana3.json).
+# Blocs « À vérifier » tranchés : les propositions sont retenues (L ≈ 12,5 nH avec f = 900 MHz ;
+# Widlar : A transimpédance, βF = −1/R2, Zo ≈ (1/gm)/(1 + βR3/R2)).
+# Rappels : un identifiant n'est jamais modifié ni réutilisé ; une carte supprimée
+# va dans ids-retires. Les lignes d'un même paragraphe sont jointes par le script ;
+# une ligne « - … » ou un bloc $$…$$ commencent une nouvelle ligne ; une ligne vide sépare deux paragraphes.
+matiere: eana3
+chapitre: 3
+cours: cours/03-applications-contre-reaction.qmd
+ids-retires: []
+cartes:
+
+  # --- Méthode commune ---
+
+  - id: eana3-methode-exercice-contre-reaction
+    type: methode
+    question: |
+      Quelles sont les cinq étapes de la méthode commune aux exercices de contre-réaction ?
+    reponse: |
+      - schéma équivalent aux petites variations (sources continues éteintes, capacités de liaison en court-circuit) ;
+      - grandeur **prélevée** en sortie (tension : parallèle ; courant : série) et mode de **réinjection** (série : tension dans la maille ; parallèle : courant au nœud) → type de contre-réaction ;
+      - découpage en quadripôles $A$ et $\beta_F$, identification de $A$, $\beta_F$, $Z_e$, $Z_s$ ;
+      - tableau de synthèse : $\frac{A}{1 + A\beta_F} \approx \frac{1}{\beta_F}$, impédances multipliées ou divisées par $1 + A\beta_F$ ;
+      - vérifier le signe de $A\beta_F$ ($> 0$ : contre-réaction ; $< 0$ : réaction positive) et qu'il est sans dimension.
+    ref: sec-intro-applications-cr
+    source: complement
+
+  # --- LNA à dégénérescence inductive ---
+
+  - id: eana3-lna-type-contre-reaction
+    type: resultat
+    question: |
+      LNA à dégénérescence inductive (MOS, inductance $L$ entre source et masse) : type de
+      contre-réaction, composition des blocs $A$ et $\beta_F$, et expression de $A$ ?
+    reponse: |
+      Contre-réaction **courant-série**. Bloc $A$ : $C_{gs}$ et la source $g_m v_{gs}$ ;
+      bloc $\beta_F$ : l'inductance $L$. $A = g_m$ (transconductance).
+    ref: fig-lna-degenerescence
+    source: notes-externes
+
+  - id: eana3-lna-facteur-contre-reaction
+    type: raisonnement
+    question: |
+      LNA à dégénérescence inductive : comment obtient-on $\beta_F = V_{fb}/i_o$, et que vaut-il ?
+    reponse: |
+      $i_L = i_o + i_e$, avec $i_e = j\omega C_{gs} v_{gs}$ et $i_o = g_m v_{gs}$ :
+      $$v_{fb} = jL\omega\, i_o - \omega^2 L C_{gs}\, v_{gs} \quad\Rightarrow\quad \beta_F = jL\omega - \frac{\omega^2 L C_{gs}}{g_m}$$
+    ref: sec-degenerescence-inductive
+    source: notes-externes
+
+  - id: eana3-lna-degenerescence-impedance-entree
+    type: formule
+    question: |
+      Expression de l'impédance d'entrée $Z_i$ du LNA à dégénérescence inductive, et d'où vient-elle ?
+    reponse: |
+      Courant-série : $Z_i = (1 + A\beta_F)\, Z_e$ avec $Z_e = \frac{1}{jC_{gs}\omega}$, d'où
+      $$Z_i = \frac{1}{jC_{gs}\omega}\left(1 - \omega^2 L C_{gs}\right) + g_m \frac{L}{C_{gs}}$$
+    ref: eq-impedance-entree-lna
+    source: notes-externes
+
+  - id: eana3-lna-pulsation-impedance-resistive
+    type: condition
+    question: |
+      À quelle pulsation l'impédance d'entrée du LNA à dégénérescence inductive est-elle
+      purement résistive, et que vaut-elle alors ?
+    reponse: |
+      $\omega_0 = \dfrac{1}{\sqrt{LC_{gs}}}$ ; alors $Z_i = \dfrac{g_m L}{C_{gs}}$.
+    ref: eq-impedance-entree-lna
+    source: notes-externes
+
+  - id: eana3-lna-inductance-application-numerique
+    type: exercice
+    question: |
+      LNA à dégénérescence inductive à 900 MHz, $g_m = 10\ \mathrm{mS}$ : quelle inductance $L$ donne $Z_i = 50\ \Omega$ ?
+    reponse: |
+      $$L = \sqrt{\frac{Z_i}{g_m}}\,\frac{1}{\omega_0} = \frac{70{,}7}{5{,}65 \cdot 10^9} \approx 12{,}5\ \mathrm{nH}$$
+      avec $\omega_0 = 2\pi \times 900 \cdot 10^6 \approx 5{,}65 \cdot 10^9\ \mathrm{rad/s}$.
+    ref: eq-inductance-lna
+    source: notes-externes
+
+  - id: eana3-lna-piege-frequence-pulsation
+    type: piege
+    question: |
+      Le corrigé externe du LNA écrit « $\omega = 2\pi f = 900$ MHz ». Quelle est l'erreur ?
+    reponse: |
+      900 MHz est la **fréquence** $f$, pas la pulsation : $\omega_0 = 2\pi f \approx 5{,}65 \cdot 10^9\ \mathrm{rad/s}$.
+      Le résultat retenu est $L \approx 12{,}5\ \mathrm{nH}$.
+    ref: eq-inductance-lna
+    source: notes-externes
+
+  - id: eana3-lna-gain-tension-resonance
+    type: resultat
+    question: |
+      Gain en tension $V_o/V_i$ du LNA à dégénérescence inductive à $\omega_0$, et module pour $R_L = 700\ \Omega$
+      (avec $L \approx 12{,}5\ \mathrm{nH}$, $Z_i = 50\ \Omega$) ?
+    reponse: |
+      À $\omega_0$, $1 + A\beta_F = jg_m L\omega_0$, donc $\frac{i_o}{v_i} = \frac{1}{jL\omega_0}$ et, avec $v_o = -R_L i_o$ :
+      $$\frac{V_o}{V_i} = j\,\frac{R_L}{L\omega_0}$$
+      $L\omega_0 \approx 70{,}7\ \Omega$ : module $\approx 9{,}9$, soit environ 20 dB (gain purement imaginaire).
+    ref: exr-degenerescence-inductive
+    source: complement
+
+  - id: eana3-lna-partie-reelle-sans-bruit
+    type: propriete
+    question: |
+      Pourquoi la partie réelle $g_m L / C_{gs}$ de l'impédance d'entrée du LNA est-elle intéressante ?
+    reponse: |
+      Elle ne correspond à aucune résistance physique : elle naît de la contre-réaction.
+      On adapte ainsi le LNA à 50 Ω **sans ajouter de bruit thermique**. Elle s'écrit aussi $Z_i = \omega_T L$,
+      avec $\omega_T = g_m / C_{gs}$.
+    ref: sec-degenerescence-inductive
+    source: complement
+
+  # --- Bandgap de Widlar ---
+
+  - id: eana3-widlar-delta-vbe-ptat
+    type: formule
+    question: |
+      Bandgap de Widlar ($Q_2$ de surface $N$ fois celle de $Q_1$) : expression de $\Delta V_{be}$, hypothèse,
+      et comportement en température ?
+    reponse: |
+      $$\Delta V_{be} = V_{be_1} - V_{be_2} = V_T \ln\frac{N I_1}{I_2} = V_T \ln N \quad (I_1 = I_2)$$
+      Avec $V_T = \frac{k}{q}T$ : $\Delta V_{be}$ croît avec $T$ (**PTAT**), et $\frac{\mathrm{d}\Delta V_{be}}{\mathrm{d}T} = \frac{\Delta V_{be}}{T}$.
+    ref: eq-delta-vbe-widlar
+    source: notes-externes
+
+  - id: eana3-widlar-coefficient-vbe-ctat
+    type: resultat
+    question: |
+      Avec $\frac{\mathrm{d}V_{be}}{\mathrm{d}T} = \frac{1}{T}(V_{be} - V_{BG})$, $V_{be} = 0{,}6$ V et $V_{BG} = 1{,}26$ V,
+      coefficient en température d'une diode à 300 K ? Signe ?
+    reponse: |
+      $\frac{0{,}6 - 1{,}26}{300} \approx -2{,}2\ \mathrm{mV/K}$ (environ −2 mV/K).
+      Négatif : $V_{be}$ diminue quand $T$ augmente (**CTAT**), à l'inverse de $\Delta V_{be}$ (PTAT).
+    ref: exr-bandgap-widlar
+    source: complement
+
+  - id: eana3-widlar-tension-reference
+    type: formule
+    question: |
+      Expression de $V_{ref}$ du bandgap de Widlar, et pourquoi $I_1 = I_2$ ?
+    reponse: |
+      $$V_{ref} = \frac{R_2}{R_1}\,\Delta V_{be} + V_{be}$$
+      $Q_{err}$ met les deux collecteurs au même potentiel $V_{be}$ : même tension aux bornes des deux $R_2$,
+      donc $I_1 = I_2 = \Delta V_{be}/R_1$.
+    ref: eq-vref-widlar
+    source: notes-externes
+
+  - id: eana3-widlar-derive-vref-nulle
+    type: condition
+    question: |
+      Bandgap de Widlar : expression de $\frac{\mathrm{d}V_{ref}}{\mathrm{d}T}$, et à quelle condition la dérive est-elle nulle ?
+    reponse: |
+      $$\frac{\mathrm{d}V_{ref}}{\mathrm{d}T} = \frac{1}{T}\,(V_{ref} - V_{BG})$$
+      Nulle pour $V_{ref} = V_{BG} = 1{,}26$ V (bande interdite du silicium extrapolée à 0 K) :
+      compensation PTAT / CTAT.
+    ref: eq-derivee-vref-widlar
+    source: notes-externes
+
+  - id: eana3-widlar-identification-a-betaf
+    type: resultat
+    question: |
+      Bandgap de Widlar : type de contre-réaction, $A$, $\beta_F$ et signe de $A\beta_F$ ?
+    reponse: |
+      **Tension-parallèle**. $A$ est une transimpédance : $A = -g_m R_3\, r_{be} = -\beta R_3$
+      (émetteur commun $Q_{err}$ suivi d'un collecteur commun $Q_{out}$, gain en tension $-g_m R_3$).
+      $\beta_F = -\frac{1}{R_2}$ ; $A\beta_F = \beta \frac{R_3}{R_2} > 0$ : contre-réaction.
+    ref: sec-bandgap-widlar
+    source: complement
+
+  - id: eana3-widlar-impedance-sortie
+    type: resultat
+    question: |
+      Impédance de sortie du bandgap de Widlar, et intérêt ?
+    reponse: |
+      Avec $Z_s \approx 1/g_m$ (collecteur commun $Q_{out}$) :
+      $$Z_o = \frac{Z_s}{1 + A\beta_F} \approx \frac{1/g_m}{1 + \beta R_3/R_2}$$
+      Très faible : la sortie se comporte comme une source de tension, ce qu'on attend d'une référence.
+    ref: sec-bandgap-widlar
+    source: complement
+
+  - id: eana3-widlar-piege-gain-tension
+    type: piege
+    question: |
+      Les notes de 2023 donnent, pour le Widlar, $A = -g_m R_3$, $\beta_F = \frac{1}{R_2}$ et
+      $Z_o = \frac{1/g_m}{1 - g_m R_3/R_2}$. Pourquoi est-ce faux ?
+    reponse: |
+      - $-g_m R_3$ est un gain en **tension** : en tension-parallèle, $A$ est une transimpédance, et $A\beta_F$ doit être sans dimension ;
+      - le courant ramené par $R_2$ s'ajoute au nœud d'entrée : $\beta_F = -1/R_2$ ;
+      - le « − » du dénominateur ferait du montage une réaction positive.
+    ref: sec-bandgap-widlar
+    source: notes-externes
+
+  # --- TD 2 : circuit pour l'espace (dual-VT) ---
+
+  - id: eana3-dual-vt-courant-immunise
+    type: resultat
+    question: |
+      Générateur dual-$V_T$ ($W_1/L_1 = W_2/L_2$, $I_1 = I_2$) : expression de $I_1$, et pourquoi
+      résiste-t-il aux radiations ?
+    reponse: |
+      $$I_1 = \frac{V_{T_1} - V_{T_2}}{R}$$
+      Les deux seuils subissent le même décalage $\Delta V_T$ : leur différence, donc $I_1$, ne change pas
+      (tant que $R$ et $\mu_n C_{ox}$ sont stables et les MOS saturés).
+    ref: fig-dual-vt
+    source: complement
+
+  - id: eana3-dual-vt-transimpedance
+    type: formule
+    question: |
+      Étude dynamique du dual-$V_T$ : type de contre-réaction et transimpédance $A_r = v_{DS_1}/i_1$ ?
+    reponse: |
+      Tension-parallèle ($R$ prélève $v_{DS_1}$ et réinjecte un courant au nœud de grille) :
+      $$A_r = r_{DS}\,\frac{1 - g_m R}{1 + g_m r_{DS}}$$
+    ref: exr-circuit-espace
+    source: officiel
+
+  - id: eana3-dual-vt-boucle-ota
+    type: resultat
+    question: |
+      Dual-$V_T$ avec boucle d'OTA (gain $A_g$) : expression de $i_1/i_o$, et conclusion pour $A_g \gg 1$ ?
+    reponse: |
+      $$\frac{i_1}{i_o} = \frac{1}{1 + A_g\, g_m r_{DS} R}$$
+      Tend vers 0 : les perturbations de $I_1$ sont divisées par le gain de boucle $A_g\, g_m r_{DS} R$.
+    ref: exr-circuit-espace
+    source: complement
+
+  # --- TD 3 : modulateur d'amplitude ---
+
+  - id: eana3-modulateur-am-identification
+    type: resultat
+    question: |
+      Modulateur AM du TD 3 pour $\omega \to 0$ : type de contre-réaction et expression de $\beta_F$ ?
+    reponse: |
+      $M_N$ est monté en diode ; il prélève le courant $I_o$ et fournit $V_{fb}$ en série avec $V_{mod}$ :
+      **courant-série**. Diode MOS ≈ résistance $1/g_{m_N}$, donc $\beta_F = \frac{1}{g_{m_N}}$.
+    ref: exr-modulation-amplitude
+    source: complement
+
+  - id: eana3-modulateur-am-sens-bornes
+    type: piege
+    question: |
+      Modulateur AM : avec $\varepsilon = +(V_{mod} - V_{fb})$, la boucle fonctionne-t-elle ? Que faire ?
+    reponse: |
+      Non : une hausse de $V_{mod}$ fait diminuer $I_o$, donc $V_{fb}$ ($A\beta_F < 0$, réaction positive).
+      Il faut **échanger les bornes** : $V_{fb}$ sur $+$, $V_{mod}$ sur $-$, pour que $V_{fb}$ suive $V_{mod}$.
+    ref: exr-modulation-amplitude
+    source: complement
+
+  # --- TD additionnel : régulateur LDO ---
+
+  - id: eana3-ldo-tension-sortie-retour
+    type: resultat
+    question: |
+      Régulateur LDO : type de contre-réaction, $\beta_F$, et expression de $V_{out}$ (amplificateur idéal) ?
+    reponse: |
+      **Tension-série** (pont $R_1$-$R_2$ en parallèle sur la sortie, tension réinjectée à l'entrée de $A_v$).
+      $\beta_F = \frac{R_1}{R_1 + R_2}$ et $V_{out} = V_{ref}\left(1 + \frac{R_2}{R_1}\right)$.
+    ref: exr-vdd-bff
+    source: complement
+
+  - id: eana3-ldo-impedance-sortie-gain-faible
+    type: raisonnement
+    question: |
+      LDO avec $A \sim 100$ et $R_2 = 100\, R_1$ : impédance de sortie, et conclusion ?
+    reponse: |
+      $A\beta_F \approx 1$ seulement : $Z_{out} = \frac{r_{ds}}{1 + A\beta_F} \approx \frac{r_{ds}}{2}$.
+      L'impédance reste de l'ordre de $r_{ds}$, trop grande pour une source de tension ; les variations
+      de l'alimentation sont mal rejetées.
+    ref: exr-vdd-bff
+    source: complement
+
+  # --- Sujet 2025 : bandgap de Brokaw ---
+
+  - id: eana3-brokaw-identification-betaf
+    type: resultat
+    question: |
+      Bandgap de Brokaw : type de contre-réaction et valeur approchée de $\beta_F = i_1/v_{ref}$ ? Limite de l'approximation ?
+    reponse: |
+      **Tension-parallèle** : $\beta_F \approx \frac{1}{R_1\left(1 + \frac{1}{1 + g_m R_2}\right)} \approx \frac{1}{R_1}$.
+      Mais au repos $g_m R_2 = \ln 8 \approx 2{,}1$ : le facteur $\approx 1{,}3$ n'est pas négligeable en toute rigueur.
+    ref: fig-bandgap-brokaw
+    source: complement
+
+  - id: eana3-brokaw-bruit-dimensionnement-r1
+    type: raisonnement
+    question: |
+      Bandgap de Brokaw : effet d'un courant parasite $i_i$ en entrée sur $v_{ref}$, et choix de $R_1$ ?
+    reponse: |
+      $\frac{v_{ref}}{i_i} = \frac{A}{1 + A\beta_F} \approx \frac{1}{\beta_F} \approx R_1$, indépendant de $A_v$.
+      Choisir $R_1$ **petite**, en compromis avec la valeur de $V_{ref}$ et sa compensation en température.
+    ref: exr-bandgap-brokaw
+    source: complement

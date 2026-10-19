@@ -1,0 +1,44 @@
+% Figure — Modulateur d'amplitude radiofréquence de l'exercice « Analyse d'un circuit de modulation d'amplitude » (EANA3, chapitre 3).
+% D'après le support [support, p. 17, figure 1], redessiné.
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 03-modulateur-am.tex
+%   dvisvgm --no-fonts --exact-bbox -o 03-modulateur-am.svg <dossier temporaire>/03-modulateur-am.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\usetikzlibrary{shapes.geometric}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex, fleche/.style={->, thick}]
+  \node[draw, thick, isosceles triangle, minimum height=12mm, fill=black!4, inner sep=1pt] (Av) at (3.6,3.2) {$A_v$};
+  \draw (0,3.5) node[ocirc]{} -- (Av.west |- 0,3.5);
+  \draw (1.2,2.9) -- (Av.west |- 0,2.9);
+  \draw[<->] (2.75,2.95) -- node[left]{$\varepsilon$} (2.75,3.45);
+  \draw (6.0,3.2) node[pmos, anchor=G] (MP) {};  \node[right] at (MP.text) {$M_P$};
+  \draw (Av.east) -- (MP.G);
+  \draw (MP.S) -- ++(0,0.5) node[vcc]{$V_{dd}$};
+  \draw (MP.D) |- (8.2,1.9) coordinate (io);
+  \draw[fleche] (8.0,1.85) -- node[right]{$I_o$} (8.0,1.35);
+  \draw (8.2,1.9) -- (8.2,1.2) coordinate (n) ;
+  \draw (8.2,1.9) -- (9.0,1.9) node[ocirc]{};
+  \draw (n) -- (2.6,1.2) node[draw, fill=white, font=\scriptsize, align=center, minimum width=12mm] (det) at (2.4,1.2) {Détecteur\\de crête};
+  \draw (det.west) -- (1.2,1.2) -- (1.2,2.9);
+  \draw (3.4,1.2) to[C, l_=$C_1$] (3.4,-0.6);
+  \draw (3.4,0.6) to[cute inductor, l=$L$] (5.4,0.6) coordinate (gN);
+  \draw (3.4,1.2) -- (3.4,0.6);
+  \draw (gN) to[C, l_=$C_2$] (5.4,-0.6);
+  \draw (6.4,0.6) node[nmos, anchor=G] (MN) {};  \node[right] at (MN.text) {$M_N$};
+  \draw (gN) -- (MN.G);
+  \draw (MN.D) -- (MN.D |- n);
+  \draw (MN.S) -- (MN.S |- 0,-0.6);
+  \draw (0,-0.6) node[ocirc]{} -- (9.0,-0.6) node[ocirc]{};
+  \draw (4.5,-0.6) node[ground]{};
+  \draw[fleche] (-0.3,-0.4) -- node[left]{$V_{mod}$} (-0.3,3.3);
+  \draw[fleche] (1.6,-0.4) -- node[right]{$V_{fb}$} (1.6,1.0);
+  \draw[fleche] (9.3,-0.4) -- node[right]{$V_o$} (9.3,1.7);
+\end{circuitikz}
+\end{document}

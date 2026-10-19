@@ -1,0 +1,461 @@
+---
+title: "Applications de la théorie de la contre-réaction"
+matiere: eana3
+chapitre: 3
+enseignants: ["François Rivet"]
+annee: "2026-2027"
+statut: flashcards
+date-modified: 2026-10-18
+sources:
+  - id: support
+    fichier: support/support-cours-2025.pdf
+    nature: officielle
+    version: "2025"
+    pages: "1-2, 6-10, 13-19, 29-30"
+  - id: td03-2026
+    fichier: td/td03-2026-bandgap-brokaw.pdf
+    nature: officielle
+    version: "2025-10-24"
+    pages: "1-2"
+  - id: notes-2023-c11
+    fichier: notes/2023-cours-11-rivet.pdf
+    nature: externe
+    seance: inconnue
+    pages: "1-2"
+  - id: annale-2016-2017
+    fichier: annales/2016-2017-corrige-manuscrit.pdf
+    nature: externe
+    seance: inconnue
+    pages: "1-2"
+  - id: corr-2023-recueil
+    fichier: corriges/2023-recueil-corriges-td.pdf
+    nature: externe
+    seance: inconnue
+    pages: "11"
+---
+
+{{< include /_macros.qmd >}}
+
+<!-- Étapes 2 à 5 (analyse, rédaction, figures) faites le 2026-10-08.
+     Chapitre d'exercices : le support donne les énoncés des deux exercices guidés (cours 8 et 11) et des TD ;
+     solutions : notes externes (2023), corrigé externe d'annale (2016-2017) et compléments de Claude (sans corrigé).
+     Rapport : ../analyses/03-applications-contre-reaction.md. Figures : ../figures/03-*.tex. -->
+
+## Introduction {#sec-intro-applications-cr}
+
+Ce chapitre est le chapitre 3 de la partie *Systèmes contre-réactionnés*. Le support y place deux exercices guidés [support, p. 2] :
+
+1. adaptation d'impédance par dégénérescence inductive (cours 8) ;
+2. bandgap de Widlar (cours 11) ; stabilité et compensation.
+
+Bristol y rattache aussi les TD qui appliquent la théorie des chapitres 1 et 2 à des circuits complets : « Un circuit pour l'espace » (TD 2), « Analyse d'un circuit de modulation d'amplitude » (TD 3), « VDD is not your BFF » (TD additionnel) et « Une référence des circuits intégrés » (sujet du 24 octobre 2025, distribué comme TD 3 en 2026). Le TD 1 (« Où est la contre-réaction ? ») est traité au [chapitre 2](02-amplificateurs-contre-reaction.qmd#sec-td-ou-est-la-contre-reaction).
+
+::: {.complement}
+**Méthode commune à tous les exercices** (elle résume les chapitres 1 et 2) :
+
+1. dessiner le schéma équivalent aux petites variations (sources continues éteintes, capacités de liaison en court-circuit) ;
+2. repérer ce que le réseau de retour **prélève** en sortie (tension : branché en parallèle ; courant : en série) et comment il **réinjecte** en entrée (série : tension dans la maille ; parallèle : courant au nœud) ; en déduire le type de contre-réaction ;
+3. découper le circuit en quadripôles $A$ et $\beta_F$ et identifier $A$, $\beta_F$, $Z_e$, $Z_s$ ;
+4. appliquer les résultats du [tableau de synthèse](02-amplificateurs-contre-reaction.qmd#sec-synthese-cr) : fonction de transfert $\frac{A}{1 + A\beta_F} \approx \frac{1}{\beta_F}$, impédances multipliées ou divisées par $1 + A\beta_F$ ;
+5. vérifier le signe du gain de boucle ($A\beta_F > 0$ : contre-réaction ; $A\beta_F < 0$ : réaction positive) et les unités ($A\beta_F$ sans dimension).
+
+Les solutions marquées *Complément* n'ont pas de corrigé dans les sources : elles sont proposées par Claude et restent sans corrigé officiel (chapitre validé le 2026-10-14, décisions déléguées par Armand).
+:::
+
+## Adaptation d'impédance par dégénérescence inductive (exercice guidé) {#sec-degenerescence-inductive}
+
+Exercice guidé du cours 8 [support, p. 6-7] (fichier séparé identique : `support/cours08-degenerescence-inductive.pdf`). Aucune note de cours ne porte sur cette séance ; les solutions viennent d'un corrigé manuscrit externe du sujet de 2016-2017 [annale-2016-2017], qui s'arrête à la question 8.
+
+![Amplificateur faible bruit (LNA) à dégénérescence inductive (a) et son schéma équivalent aux petites variations découpé en quadripôles (b). (a) D'après le support [support, p. 6, figure 1], redessiné. (b) D'après le corrigé externe [annale-2016-2017, p. 1], redessiné.](../figures/03-lna-degenerescence.svg){#fig-lna-degenerescence}
+
+::: {#exr-degenerescence-inductive}
+## Adaptation d'impédance par dégénérescence inductive [support, p. 6-7]
+
+Dans un récepteur de radiocommunication pour téléphone mobile GSM à 900 MHz, le premier étage est généralement un amplificateur faible bruit (*Low Noise Amplifier*, LNA), chargé d'amplifier le signal reçu par l'antenne. Il doit présenter une impédance d'entrée adaptée à celle de l'antenne, assimilable à un dipôle purement résistif $Z_0 = 50\ \Omega$, pour minimiser les pertes de puissance. L'impédance d'entrée d'un MOS étant purement réactive, une contre-réaction doit être mise en œuvre : c'est le circuit de la @fig-lna-degenerescence (a). On considère que $M$ est saturé (mode transistor) et que la modulation de longueur de canal est négligeable.
+
+**Partie 1 : étude de la contre-réaction**
+
+1. Établir le schéma équivalent aux petites variations de l'amplificateur, sans négliger la capacité d'entrée $C_{GS}$ du transistor, qui doit être considérée à 900 MHz. On disposera le schéma de manière à faire apparaître le quadripôle amplificateur $A$ et le quadripôle de contre-réaction $\beta_F$.
+2. Identifier le type de contre-réaction mis en œuvre par cet amplificateur.
+3. Exprimer $A$, la transconductance du quadripôle amplificateur, en fonction de la transconductance $g_m$ du transistor.
+4. Exprimer le courant qui traverse l'inductance en fonction de $i_o$, le courant de sortie présent sur le drain, et de $i_e$, le courant d'entrée présent sur la grille. En déduire l'expression de $V_{fb}$ en fonction de $i_o$, $C_{GS}$, $g_m$, $L$ et $\omega$.
+5. En déduire l'expression du facteur de contre-réaction $\beta_F = V_{fb}/i_o$.
+
+**Partie 2 : étude de l'adaptation d'impédance**
+
+6. En déduire, à l'aide des propriétés de la contre-réaction identifiée à la question 2 et de l'impédance d'entrée $Z_e$ du transistor lorsque $C_{GS}$ n'est pas négligée, que l'impédance d'entrée globale du circuit s'exprime comme
+   $$
+   Z_i = (1 + A\beta_F)\, Z_e = \frac{1}{jC_{GS}\omega}\left(1 - LC_{GS}\omega^2\right) + g_m \frac{L}{C_{GS}} .
+   $$
+7. Exprimer la pulsation particulière $\omega_0$ à laquelle $Z_i$ est purement résistive, en fonction de $L$ et de $C_{GS}$. Par la suite, on considère que le LNA fonctionne précisément à cette pulsation.
+8. Application numérique : à la fréquence de 900 MHz, quelle doit être la valeur de l'inductance $L$ pour avoir $Z_i = 50\ \Omega$, sachant que le transistor est polarisé de telle manière que $g_m = 10$ mS ?
+
+**Partie 3 : étude de l'amplification**
+
+9. Expliciter le gain global du montage ($V_o/V_i$) à l'aide des propriétés de la contre-réaction identifiée à la question 2, des expressions de $A$ et $\beta_F$ établies précédemment, et de la relation entre $V_o$, $i_o$ et $R_L$.
+10. Ce gain est purement imaginaire, ce qui traduit un déphasage constant entre l'entrée et la sortie, induit par $C_{GS}$. Calculer le module de ce gain lorsque $R_L = 700\ \Omega$, dans les conditions de la question 8.
+:::
+
+:::: {.solution}
+::: {.notes-externes}
+Corrigé externe [annale-2016-2017, p. 1-2] :
+
+1. @fig-lna-degenerescence (b) : $C_{gs}$ entre grille et source et la source commandée $g_m v_{gs}$ forment le bloc $A$ ; l'inductance $L$, entre la source et la masse, forme le bloc $\beta_F$.
+2. On identifie un montage **courant-série**.
+3. $g_m v_{gs} = A\, v_{gs}$, donc $A = g_m$.
+4. $i_L = i_o + i_e$ ; $v_{gs} = \frac{i_e}{j\omega C_{gs}}$, donc $i_e = j\omega C_{gs} v_{gs}$ ; $v_{fb} = jL\omega\, i_o - \omega^2 L C_{gs}\, v_{gs}$, or $\frac{i_o}{v_{gs}} = g_m$, d'où
+   $$
+   v_{fb} = i_o \left(jL\omega - \frac{\omega^2 L C_{gs}}{g_m}\right) .
+   $$
+5. $\beta_F = jL\omega - \dfrac{\omega^2 L C_{gs}}{g_m}$.
+6. $Z_i = (1 + A\beta_F)\, Z_e = \left(1 + jLg_m\omega - \omega^2 L C_{gs}\right)\frac{1}{jC_{gs}\omega}$, soit
+   $$
+   Z_i = \frac{1}{jC_{gs}\omega}\left(1 - \omega^2 L C_{gs}\right) + g_m \frac{L}{C_{gs}} .
+   $$ {#eq-impedance-entree-lna}
+7. $Z_i$ est purement résistive lorsque $\omega_0 = \frac{1}{\sqrt{LC_{gs}}}$ ; alors $Z_i = \frac{g_m L}{C_{gs}}$.
+8. Avec $\omega_0^2 = \frac{1}{LC_{gs}}$, $\frac{Z_i}{\omega_0^2} = g_m L^2$, d'où
+   $$
+   L = \sqrt{\frac{Z_i}{g_m}}\,\frac{1}{\omega_0}, \qquad L = 12{,}5\ \mathrm{nH} .
+   $$ {#eq-inductance-lna}
+:::
+::::
+
+::: {.a-verifier .tranche #av-application-numerique-lna}
+**Source** [annale-2016-2017, p. 2] : « $\omega = 2\pi f = 900$ MHz », puis « A.N. : $L = 12{,}5$ » suivi d'une unité dont la première lettre se lit « n » ou « m ».
+
+**Problème** : 900 MHz est la **fréquence** $f$, pas la pulsation ; l'unité de $L$ est ambiguë.
+
+**Proposition** : $f = 900$ MHz, $\omega_0 = 2\pi \times 900 \cdot 10^6 \approx 5{,}65 \cdot 10^9$ rad/s ; $L = \frac{\sqrt{50/0{,}01}}{5{,}65 \cdot 10^9} = \frac{70{,}7}{5{,}65 \cdot 10^9} \approx 12{,}5$ nH (écrit ainsi dans @eq-inductance-lna).
+
+**Décision** : proposition retenue (Armand a délégué la décision ; calcul vérifié par Claude), 2026-10-14.
+:::
+
+::: {.complement}
+**Partie 3 (sans corrigé).**
+
+9. Pour une contre-réaction courant-série, $\frac{i_o}{v_i} = \frac{A}{1 + A\beta_F}$ avec $A = g_m$. À la pulsation $\omega_0$, $\omega_0^2 L C_{gs} = 1$, donc $1 + A\beta_F = 1 + jg_m L\omega_0 - \omega_0^2 LC_{gs} = jg_m L\omega_0$ et $\frac{i_o}{v_i} = \frac{1}{jL\omega_0}$. Le courant $i_o$ entre dans le drain depuis $R_L$ : $v_o = -R_L\, i_o$, d'où
+   $$
+   \frac{V_o}{V_i} = -\frac{R_L}{jL\omega_0} = j\,\frac{R_L}{L\omega_0} .
+   $$
+10. Avec $L\omega_0 = \sqrt{Z_i/g_m} = \sqrt{50/0{,}01} \approx 70{,}7\ \Omega$ : $\left|\frac{V_o}{V_i}\right| = \frac{700}{70{,}7} \approx 9{,}9$, soit environ 20 dB.
+
+**Remarques.** La partie réelle $g_m L/C_{gs}$ de $Z_i$ ne dissipe aucune puissance dans une résistance : elle naît de la contre-réaction. C'est ce qui permet d'adapter le LNA à 50 Ω sans ajouter le bruit thermique d'une résistance physique. $g_m/C_{gs}$ est la pulsation de transition $\omega_T$ du transistor : $Z_i = \omega_T L$.
+:::
+
+## Bandgap de Widlar (exercice guidé) {#sec-bandgap-widlar}
+
+Exercice guidé du cours 11 [support, p. 8-10] (fichier séparé identique : `support/cours11-bandgap-widlar.pdf`). Le chapitre 5 étudie les références de tension du point de vue de leur stabilité en température ; ici, l'accent est mis sur la contre-réaction.
+
+![Référence de tension bandgap étudiée dans l'exercice. D'après le support [support, p. 8, figure 1], redessiné.](../figures/03-bandgap-widlar.svg){#fig-bandgap-widlar}
+
+::: {#exr-bandgap-widlar}
+## Widlar, toute une histoire… [support, p. 8-10]
+
+Nous allons étudier le circuit de la @fig-bandgap-widlar et identifier une contre-réaction.
+
+**I. Avant-propos**
+
+1. Sachant que le courant de collecteur $I_c$ est donné par la loi de Shockley, $I_c = I_s\, e^{V_{be}/V_T}$, établir le courant $I_2$ en fonction de $V_{be_2}$, $V_T$, $I_s$ et $N$. Écrire $V_{be_2}$ en fonction de $I_2$, $V_T$, $I_s$ et $N$. En déduire $\Delta V_{be}$ en fonction de $V_{be_1}$, $V_{be_2}$, puis en fonction de $V_T$ et $N$, en admettant que $I_1 = I_2$. On nomme cette relation PTAT, pour *Proportional To Absolute Temperature*. Commenter l'expression de $\Delta V_{be}$ si on admet que $V_T = \frac{k}{q}T$.
+2. Un peu de mathématique… calculer $\frac{\mathrm{d}\Delta V_{be}}{\mathrm{d}T}$ en fonction de $T$ et $\Delta V_{be}$.
+3. On sait que $\frac{\mathrm{d}V_{be}}{\mathrm{d}T} = \frac{1}{T}(V_{be} - V_{BG})$ avec $V_{BG} = 1{,}26$ V. Dans le cas d'une diode, comme pour $Q_1$ monté en diode, $V_{be} = 0{,}6$ V. Calculer le coefficient de variation en température de la diode à 300 K. Commenter le signe.
+
+**II. $Q_{err}$, acte 1**
+
+4. Établir une relation entre $I_2$, $R_1$ et $\Delta V_{be}$.
+5. Établir une relation entre $V_{ref}$, $R_2$, $R_1$, $V_{be}$ (de $Q_{err}$) et $\Delta V_{be}$.
+6. À l'aide des réponses aux questions 2 et 3, calculer $\frac{\mathrm{d}V_{ref}}{\mathrm{d}T}$ en fonction de $T$, $V_{ref}$, $R_2$, $R_1$ et $V_{BG}$. Commenter cette relation si $V_{ref} = V_{BG}$, et la fonctionnalité de ce circuit.
+
+**III. $Q_{err}$, acte 2**
+
+7. $Q_{err}$ met le collecteur de $Q_2$ au potentiel $V_{be}$. Commenter le potentiel au collecteur de $Q_1$ et la différence de potentiel dans les résistances $R_2$.
+
+**IV. $Q_{err}$, acte 3**
+
+Une contre-réaction peut être identifiée dans ce circuit ; l'énoncé redessine le circuit pour la faire apparaître (sa figure 2 : $Q_{err}$ et $Q_{out}$ en haut, entre l'entrée et la sortie $V_{ref}$ ; les deux résistances $R_2$, $Q_1$, $Q_2$ et $R_1$ en bas).
+
+8. Identifier le type de contre-réaction en indiquant clairement les blocs $A$ et $\beta$.
+9. On observera que le bloc $A$ est composé de 2 structures caractéristiques des montages bipolaires. Les identifier et indiquer le gain en tension de ce montage. En déduire $A$.
+10. En identifiant $i_o$ un courant de sortie du montage et $i_{fb}$ un courant de contre-réaction, calculer $\beta_F$.
+11. En déduire l'impédance de sortie. Commenter suivant la fonctionnalité du circuit proposée en 6.
+:::
+
+:::: {.solution}
+::: {.notes-externes}
+Notes de 2023 [notes-2023-c11, p. 1-2] :
+
+1. $I_c = I_S\, e^{V_{be}/V_T}$ ; $Q_2$ a une surface $N$ fois plus grande : $I_2 = N I_S\, e^{V_{be_2}/V_T}$, d'où $V_{be_2} = V_T \ln\frac{I_2}{N I_S}$ ; $V_{be_1} = V_T \ln\frac{I_1}{I_S}$ et
+   $$
+   \Delta V_{be} = V_{be_1} - V_{be_2} = V_T \ln\frac{N I_1}{I_2} = V_T \ln N \quad (I_1 = I_2) .
+   $$ {#eq-delta-vbe-widlar}
+   $V_{be}$ définit le courant qui traverse le transistor. $\Delta V_{be} = \frac{k}{q}\, T \ln N$, avec $\frac{k}{q}\ln N > 0$ : plus la température augmente, plus $\Delta V_{be}$ augmente.
+2. $\dfrac{\mathrm{d}\Delta V_{be}}{\mathrm{d}T} = \dfrac{k}{q}\ln N \times \dfrac{T}{T} = \dfrac{\Delta V_{be}}{T}$.
+3. $\dfrac{\mathrm{d}V_{be}}{\mathrm{d}T} = \dfrac{1}{T}(V_{be} - V_{BG}) = -2$ mV/K.
+4. $\Delta V_{be} = R_1 I_2$.
+5. $V_{ref} = R_2 I_1 + V_{be_1}$, soit
+   $$
+   V_{ref} = \frac{R_2}{R_1}\,\Delta V_{be} + V_{be_{err}} .
+   $$ {#eq-vref-widlar}
+6. $\dfrac{\mathrm{d}V_{ref}}{\mathrm{d}T} = \dfrac{R_2}{R_1}\dfrac{\mathrm{d}\Delta V_{be}}{\mathrm{d}T} + \dfrac{\mathrm{d}V_{be_{err}}}{\mathrm{d}T} = \dfrac{1}{T}\left(\dfrac{R_2}{R_1}\Delta V_{be} + V_{be} - V_{BG}\right)$, soit
+   $$
+   \frac{\mathrm{d}V_{ref}}{\mathrm{d}T} = \frac{1}{T}\,(V_{ref} - V_{BG}) .
+   $$ {#eq-derivee-vref-widlar}
+   Si $V_{ref} = V_{BG}$, $\frac{\mathrm{d}V_{ref}}{\mathrm{d}T} = 0$ : $V_{ref} = 1{,}26$ V.
+7. Même chute de potentiel dans les deux résistances $R_2$.
+8. Contre-réaction **tension-parallèle**.
+9. $A = -g_m R_3$ : émetteur commun ($Q_{err}$) suivi d'un collecteur commun ($Q_{out}$).
+10. $\beta_F = \frac{1}{R_2}$.
+11. $Z_o = \frac{Z_s}{1 + A_{OL}} = \frac{1/g_m}{1 - \frac{1}{R_2} g_m R_3}$ ; les notes concluent : « $R_3$ proche de $R_2$ ⇒ $Z_o \approx \frac{1}{g_m}$ » et « $R_3 > R_2$ ⇒ $Z_o = -\frac{1}{g_m^2 R_3/R_2}$ » (voir le bloc ci-dessous).
+:::
+::::
+
+::: {.a-verifier .tranche #av-widlar-contre-reaction}
+**Source** [notes-2023-c11, p. 2] : $A = -g_m R_3$, $\beta_F = \frac{1}{R_2}$, $Z_o = \frac{1/g_m}{1 - \frac{1}{R_2} g_m R_3}$, puis « $R_3$ proche de $R_2$ ⇒ $Z_o \approx 1/g_m$ » et « $R_3 > R_2$ ⇒ $Z_o = -\frac{1}{g_m^2 R_3/R_2}$ ».
+
+**Problème** :
+
+- pour une contre-réaction tension-parallèle, $A$ est une **transimpédance** ($v_o/i_e$) et $\beta_F$ une conductance ; ici $A = -g_m R_3$ est le gain en **tension** demandé à la question 9, et $A\beta_F = -g_m R_3/R_2$ n'est pas sans dimension ;
+- avec la convention $i_i = i_e + i_{fb}$ du chapitre 2, le courant ramené par $R_2$ depuis la sortie s'ajoute au nœud d'entrée : $i_{fb} = -v_o/R_2$, donc $\beta_F = -1/R_2$ ; le signe « − » du dénominateur de $Z_o$ ferait sinon de ce montage une réaction positive ;
+- les deux conclusions ne découlent pas de l'expression écrite (avec $R_3 \approx R_2$, le dénominateur vaut $1 - g_m$) ; $g_m^2$ n'est pas homogène.
+
+**Proposition** (à confirmer : aucune autre source) : le gain en tension du bloc $A$ (de la base de $Q_{err}$ à $V_{ref}$) vaut $-g_m R_3$ ; la transimpédance vaut $A = -g_m R_3\, r_{be}$, où $r_{be}$ est la résistance d'entrée de $Q_{err}$, soit $A = -\beta R_3$ ($\beta$ : gain en courant de $Q_{err}$) ; $\beta_F = -\frac{1}{R_2}$ ; $A\beta_F = \beta\frac{R_3}{R_2} > 0$ (contre-réaction) ; avec $Z_s \approx \frac{1}{g_m}$ (sortie du collecteur commun $Q_{out}$) :
+$$
+Z_o = \frac{Z_s}{1 + A\beta_F} \approx \frac{1/g_m}{1 + \beta R_3/R_2},
+$$
+très faible : la sortie se comporte comme une source de tension, ce qu'on attend d'une référence de tension (question 6).
+
+**Décision** : proposition retenue (Armand a délégué la décision ; calcul vérifié par Claude), 2026-10-14.
+:::
+
+::: {.complement}
+**Précisions sur les questions 3, 5 et 7.**
+
+- Question 3 : $\frac{0{,}6 - 1{,}26}{300} = -2{,}2$ mV/K, arrondi à −2 mV/K dans les notes. Le coefficient est **négatif** : $V_{be}$ diminue quand la température augmente (CTAT, *Complementary To Absolute Temperature*), alors que $\Delta V_{be}$ augmente (PTAT) ; c'est la compensation de ces deux tendances qui annule la dérive en 6.
+- Question 5 : les deux résistances $R_2$ ont la même tension à leurs bornes (question 7) : l'une va de $V_{ref}$ au collecteur de $Q_1$, au potentiel $V_{be_1}$ (diode), l'autre de $V_{ref}$ au collecteur de $Q_2$, au potentiel $V_{be_{err}}$ imposé par $Q_{err}$. Donc $I_1 = I_2 = \frac{\Delta V_{be}}{R_1}$, et $V_{ref} = R_2 I_1 + V_{be_1} = \frac{R_2}{R_1}\Delta V_{be} + V_{be}$, avec $V_{be} = V_{be_1} = V_{be_{err}}$ quand la boucle est à l'équilibre ; les notes écrivent les deux formes.
+- Question 6 : on obtient @eq-derivee-vref-widlar en remarquant que le terme entre parenthèses vaut $V_{ref} - V_{BG}$ d'après @eq-vref-widlar. La valeur 1,26 V est la tension de bande interdite du silicium extrapolée à 0 K (d'où le nom *bandgap*).
+- Question 7 : $Q_{err}$ est l'amplificateur d'erreur de la boucle : il ajuste la base de $Q_{out}$, donc $V_{ref}$, jusqu'à ce que les deux collecteurs soient au même potentiel ($V_{be}$).
+:::
+
+::: {.notes-externes}
+Le corrigé externe du même auteur reprend les questions 1, 2, 4 et 5 [corr-2023-recueil, p. 11] avec deux erreurs (dénominateur $N I_S$ dans $V_{be_1}$, terme $V_{be_1}$ perdu à la question 5) ; il n'est pas repris ici.
+:::
+
+### Stabilité et compensation {#sec-stabilite-compensation}
+
+Le plan du support associe au cours 11 le point « stabilité et compensation » [support, p. 2]. **Aucune note** ne le traite. Les notions correspondantes sont au chapitre 1 : [marges de stabilité](01-generalites-contre-reaction.qmd#sec-marges) et [capacité de compensation](01-generalites-contre-reaction.qmd#sec-capacite-compensation) ; la dernière partie de l'exercice « VDD is not your BFF » (@sec-td-vdd) y revient.
+
+## TD 2 : un circuit pour l'espace {#sec-td-circuit-espace}
+
+Énoncé : [support, p. 13-16] (sujet EA234 de F. Rivet ; fichier séparé identique : `td/td02-circuit-pour-l-espace.pdf`). Le corrigé manuscrit « TD3 – Un circuit immunisé » de 2023 porte sur une **autre version** du sujet (deux résistances $R_1$ et $R_2$, autre plan) : il n'est pas utilisé.
+
+![Générateur de courant à double tension de seuil (dual-$V_T$) du TD 2. D'après le support [support, p. 15, figure 3], redessiné.](../figures/03-dual-vt.svg){#fig-dual-vt}
+
+::: {#exr-circuit-espace}
+## Un circuit pour l'espace [support, p. 13-16]
+
+*Contexte.* Les communications avec le satellite Hipparcos de l'ESA ont pris fin le 15 août 1993 : resté sur une orbite de transfert après une panne, il traversait à chaque orbite les ceintures de Van Allen. Les transistors MOS reçoivent des doses de rayonnement (*Total Ionizing Dose*, TID) qui décalent durablement leur tension de seuil $V_T$. En régime saturé ($V_{GS} > V_T$ et $V_{DS} \geq V_{GS} - V_T$),
+$$
+I_{DS} = \frac{1}{2}\,\frac{W}{L}\,\mu_n C_{ox}\,(V_{GS} - V_T)^2,
+$$
+avec $\mu_n$ la mobilité des porteurs et $C_{ox}$ la capacité d'oxyde de grille. Il faut donc « durcir » les circuits aux radiations. Le sujet étudie une référence de tension immunisée aux variations de procédé, de tension, de température et aux radiations (figure 2 du sujet, d'après Y. Piccin, 2014) : on génère un courant immunisé, converti en tension de référence. Les transistors $M_1$ et $M_2$ ont des tensions de seuil différentes $V_{T_1}$ et $V_{T_2}$ ; co-intégrés sur le même substrat, ils subissent le même décalage $\Delta V_T$.
+
+**Partie 1 : étude statique** (circuit de la @fig-dual-vt ; $M_1$ et $M_2$ saturés ; grandeurs continues seulement)
+
+1. Exprimer la tension $V_{DS_1}$ en fonction de $V_{GS_1}$, du courant $I_1$ et de $R$.
+2. Exprimer les courants de drain $I_{DS_1}$ et $I_{DS_2}$ en fonction de la géométrie ($W_x$, $L_x$), de $V_{GS_x}$ et de $V_{T_x}$, $x \in \{1; 2\}$.
+3. On dimensionne $\frac{W_1}{L_1} = \frac{W_2}{L_2}$ et on impose $I_1 = I_2$. En déduire une relation entre $V_{GS_1}$, $V_{GS_2}$, $V_{T_1}$ et $V_{T_2}$, avec $V_{T_1} > V_{T_2}$.
+4. Exprimer $V_{DS_1}$ en fonction de $V_{GS_2}$, puis, d'après 1 et 3, en déduire une relation entre $I_1$, $V_{T_1}$, $V_{T_2}$ et $R$. Sachant que les décalages $\Delta V_T$ des tensions de seuil sont similaires lors d'une exposition aux radiations, conclure sur la fonctionnalité de ce circuit s'il est irradié.
+
+**Partie 2 : étude dynamique** (variations $i_1$ de $I_1$ ; $I_1 = I_2$ et $i_2 = 0$ ; modulation de longueur de canal modélisée par une résistance $r_{DS}$, la même pour $M_1$ et $M_2$)
+
+5. Établir le schéma équivalent aux petites variations sous la forme de 2 quadripôles : un d'amplification avec $M_1$, un de contre-réaction avec $R$ ; $M_2$ à l'extérieur des quadripôles ; $i_1$ courant d'entrée, $v_{DS_1}$ tension de sortie.
+6. Déterminer le type de contre-réaction mise en œuvre.
+7. Démontrer que la fonction de transfert $A_r = \frac{v_{DS_1}}{i_1}$ vaut $A_r = r_{DS}\,\frac{1 - g_m R}{1 + g_m r_{DS}}$.
+8. Établir une relation entre $v_{GS_2}$, $A_r$ et $i_1$, et exprimer $v_{DS_2}$ en fonction de $r_{DS}$, $i_1$, $g_m$ et $A_r$.
+
+**Partie 3 : contre-réaction système.** Un OTA (amplificateur à transconductance, gain $A_g$) convertit la différence $\varepsilon = v_{DS_2} - v_{DS_1}$ en un courant $i_{out}$ (figure 4 du sujet). Les perturbations sont représentées par un courant $i_o$ injecté en entrée ; au nœud de sortie de l'OTA, $i_o = i_{out} + i_1$ (figure 5 du sujet : comparateur $i_o$ (+), $i_{out}$ (−) → $i_1$ → bloc $g_m r_{DS} R$ → $\varepsilon$ → bloc $A_g$ → $i_{out}$).
+
+9. D'après 7 et 8, exprimer $\varepsilon = v_{DS_2} - v_{DS_1}$ en fonction de $i_1$, $g_m$, $r_{DS}$ et $R$.
+10. Donner la relation entre $i_{out}$, $\varepsilon$ et $A_g$, ainsi que la relation entre $i_{out}$, $i_1$ et $i_o$. En déduire $i_1/i_o$ et, sachant que $A_g \gg 1$, conclure sur l'effet de la contre-réaction sur le système.
+:::
+
+::: {.complement}
+**Proposition de solution (aucun corrigé de cette version).**
+
+1. Le courant $I_1$ traverse $R$ de haut en bas, de la grille de $M_1$ vers son drain : $V_{DS_1} = V_{GS_1} - R I_1$.
+2. $I_{DS_x} = \frac{1}{2}\,\frac{W_x}{L_x}\,\mu_n C_{ox}\,(V_{GS_x} - V_{T_x})^2$.
+3. Mêmes rapports $W/L$ et mêmes courants : $V_{GS_1} - V_{T_1} = V_{GS_2} - V_{T_2}$, soit $V_{GS_1} - V_{GS_2} = V_{T_1} - V_{T_2}$.
+4. La grille de $M_2$ est reliée au drain de $M_1$ : $V_{DS_1} = V_{GS_2}$. Avec 1 et 3 : $R I_1 = V_{GS_1} - V_{GS_2}$, d'où
+   $$
+   I_1 = \frac{V_{T_1} - V_{T_2}}{R} .
+   $$
+   Sous irradiation, $V_{T_1}$ et $V_{T_2}$ se décalent du même $\Delta V_T$ : leur différence, donc $I_1$, ne change pas. Le courant est immunisé (tant que $R$ et $\mu_n C_{ox}$ ne varient pas et que les deux transistors restent saturés).
+5. Schéma : la source $i_1$ arrive au nœud de grille de $M_1$ ; $R$ relie ce nœud au drain de $M_1$ ; entre le drain et la masse, la source $g_m v_{GS_1}$ et $r_{DS}$ ; le drain de $M_1$ commande la grille de $M_2$ (source $g_m v_{GS_2}$ et $r_{DS}$ entre drain de $M_2$ et masse).
+6. On prélève la tension $v_{DS_1}$ et on réinjecte, par $R$, un courant au nœud d'entrée : contre-réaction **tension-parallèle** ($A_r$ est une transimpédance).
+7. La grille n'absorbe pas de courant : $i_1$ traverse $R$, et $v_{GS_1} = v_{DS_1} + R\,i_1$. Au drain : $i_1 = g_m v_{GS_1} + \frac{v_{DS_1}}{r_{DS}} = g_m(v_{DS_1} + R i_1) + \frac{v_{DS_1}}{r_{DS}}$, d'où $i_1(1 - g_m R) = v_{DS_1}\,\frac{1 + g_m r_{DS}}{r_{DS}}$ et
+   $$
+   A_r = \frac{v_{DS_1}}{i_1} = r_{DS}\,\frac{1 - g_m R}{1 + g_m r_{DS}} .
+   $$
+8. $v_{GS_2} = v_{DS_1} = A_r\, i_1$. Le courant de drain de $M_2$ est fixé par la source ($i_2 = 0$) : $0 = g_m v_{GS_2} + \frac{v_{DS_2}}{r_{DS}}$, donc $v_{DS_2} = -g_m r_{DS} A_r\, i_1$.
+9. $\varepsilon = v_{DS_2} - v_{DS_1} = -(1 + g_m r_{DS})\,A_r\, i_1 = r_{DS}\,(g_m R - 1)\, i_1 \approx g_m r_{DS} R\, i_1$ si $g_m R \gg 1$ (gain du bloc de la figure 5).
+10. $i_{out} = A_g\,\varepsilon$ et $i_1 = i_o - i_{out}$, d'où $i_1 = i_o - A_g\, g_m r_{DS} R\, i_1$ et
+    $$
+    \frac{i_1}{i_o} = \frac{1}{1 + A_g\, g_m r_{DS} R} \xrightarrow[A_g \gg 1]{} 0 :
+    $$
+    la boucle de l'OTA absorbe presque toute la perturbation ; les variations du courant $I_1$, donc de la tension de référence, sont divisées par le gain de boucle $A_g\, g_m r_{DS} R$.
+:::
+
+## TD 3 : analyse d'un circuit de modulation d'amplitude {#sec-td-modulation-amplitude}
+
+Énoncé : [support, p. 17-19] (sujet EA234 du 25 octobre 2024, F. Rivet ; fichier séparé identique : `td/td03-modulation-amplitude.pdf`). Aucun corrigé.
+
+![Modulateur d'amplitude radiofréquence du TD 3. D'après le support [support, p. 17, figure 1], redessiné.](../figures/03-modulateur-am.svg){#fig-modulateur-am}
+
+::: {#exr-modulation-amplitude}
+## Analyse d'un circuit de modulation d'amplitude [support, p. 17-19]
+
+Les circuits de modulation d'amplitude modifient l'amplitude d'une porteuse RF en fonction d'un signal modulant. L'oscillateur Colpitts, couramment utilisé pour générer la porteuse, offre une haute stabilité en fréquence. Le circuit de la @fig-modulateur-am est alimenté par $V_{dd}$ ; le signal modulant est la tension d'entrée $V_{mod}$, le signal modulé la tension de sortie $V_o$. La modulation de longueur de canal de $M_N$ n'est pas prise en compte.
+
+**Partie I : étude de l'asservissement.** La fréquence du signal modulant $f_m$ est très inférieure à celle de la porteuse $f_{RF}$ générée par le réseau $L$-$C$ ; on pourra considérer $\omega \to 0$.
+
+1. Redessiner le circuit en prenant l'équivalence des composants $L$ et $C$ pour $\omega \to 0$. Le détecteur de crête sera équivalent à un fil. Les transistors $M_P$ et $M_N$ ne sont pas considérés aux petits signaux et la tension d'alimentation reste la même.
+2. Représenter ce circuit sous la forme de 2 quadripôles : « $A$ », comprenant l'amplificateur $A_v$ et le transistor $M_P$, avec pour entrée la tension $V_{mod}$ ; « $\beta_F$ », comprenant le transistor $M_N$.
+3. Quel type de contre-réaction est mis en œuvre dans ce circuit ?
+4. Le quadripôle « $A$ » a un gain $A$ très grand ; les courants d'entrée de $A_v$ sont nuls. Par comparaison avec le quadripôle $\beta_F$ du cours, donner l'expression du facteur $\beta_F$ tel que $V_{fb} = \beta_F\, I_o$ en fonction de $g_{m_N}$, la transconductance de $M_N$.
+
+L'amplificateur $A_v$ n'a pas de bornes ± assignées : $\varepsilon = \pm(V_{mod} - V_{fb})$. On suppose dans un premier temps $\varepsilon = +(V_{mod} - V_{fb})$.
+
+5. Quel est le montage de base du transistor $M_P$ ? Rappeler son gain, sachant que la charge vue de son drain est $1/g_{m_N}$.
+6. Admettons une alternance positive de $V_{mod}$ ($V_{mod} > V_{fb}$). Quel est le signe de la fonction de transfert du quadripôle $A$ ? En déduire la variation de $V_{fb}$.
+7. $V_{fb}$ est l'image de l'asservissement et doit suivre $V_{mod}$. Est-ce le cas si $\varepsilon = +(V_{mod} - V_{fb})$ ? Quelles bornes assigneriez-vous à $V_{mod}$ et $V_{fb}$ ?
+
+**Partie II : étude de la bande passante.** Le gain de $A_v$ dépend de la fréquence : $A(j\omega)$ ; on considère $A \approx A_v$, le gain apporté par $M_P$ étant quasi unitaire (figure 2 du sujet : gain $\log A_v$ en fonction de $f$, avec une zone $A_v \gg 1$ aux basses fréquences et une zone $A_v \ll 1$ au-delà d'une fréquence de coupure).
+
+8. D'après le cours, représenter sur ce gabarit le gain en boucle ouverte en fonction de $A$ et $\beta_F$, le tracé asymptotique de la fonction de transfert globale $A_F = \frac{A}{1 + A\beta_F}$ et la bande passante du système ; on nommera $f_F$ sa fréquence de coupure.
+9. $g_{m_N}$ dépend des dimensions $W_N$ et $L_N$ de $M_N$ (un grand transistor donne un grand $g_m$). D'après la question 4 et sachant que $\beta_F = 1/g_{m_N}$, commenter l'évolution de la bande passante en fonction de la taille de $M_N$.
+10. Le courant de drain augmente quand $g_{m_N}$ augmente, ce qui donne une plus grande amplitude de $V_o$. Si cette amplitude est trop grande, le signal de sortie sera-t-il toujours sinusoïdal ? Quel est le juste dimensionnement de $g_{m_N}$ pour une bande passante suffisamment large et une amplitude suffisamment grande ?
+
+*Rappels du sujet* : en saturation, $I_{DS_N} = \frac{1}{2}\frac{W_N}{L_N}\mu_n C_{ox}(V_{GS_N} - V_{T_N})^2$ pour un NMOS, $I_{DS_P} = -\frac{1}{2}\frac{W_P}{L_P}\mu_p C_{ox}(V_{GS_P} - V_{T_P})^2$ pour un PMOS ; schéma équivalent : source $g_m v_{gs}$ entre drain et source.
+:::
+
+::: {.complement}
+**Proposition de solution (aucun corrigé).**
+
+1. Pour $\omega \to 0$, l'inductance est un court-circuit et les capacités des circuits ouverts : la grille de $M_N$ est reliée à son drain, $M_N$ est **monté en diode** ; le détecteur de crête étant un fil, $V_{fb} = V_o$.
+2. « $A$ » : $A_v$ commande la grille de $M_P$, dont le courant de drain $I_o$ est la sortie ; « $\beta_F$ » : la diode $M_N$, traversée par $I_o$, qui fournit $V_{fb}$.
+3. On prélève le **courant** $I_o$ (la diode est en série sur le trajet de $I_o$) et on réinjecte une **tension** $V_{fb}$ en série avec $V_{mod}$ à l'entrée de $A_v$ : contre-réaction **courant-série**.
+4. Un MOS monté en diode est équivalent à une résistance $1/g_{m_N}$ : $V_{fb} = I_o/g_{m_N}$, donc $\beta_F = \frac{1}{g_{m_N}}$ (c'est la valeur donnée à la question 9).
+5. $M_P$ est en **source commune** ; avec la charge $1/g_{m_N}$, son gain vaut $-\frac{g_{m_P}}{g_{m_N}}$.
+6. Avec $\varepsilon = +(V_{mod} - V_{fb})$ et $A_v > 0$, une alternance positive de $V_{mod}$ fait monter la grille de $M_P$ : $|V_{GS_P}|$ diminue, donc $I_o$ diminue et $V_{fb}$ **diminue**. La fonction de transfert de « $A$ » ($I_o/\varepsilon$) est **négative**.
+7. Non : $V_{fb}$ varie en sens inverse de $V_{mod}$, et le produit $A\beta_F$ est négatif (réaction positive). Il faut assigner $V_{fb}$ à la borne $+$ et $V_{mod}$ à la borne $-$ : $\varepsilon = V_{fb} - V_{mod}$ ; alors une hausse de $V_{mod}$ fait baisser la grille de $M_P$, augmente $I_o$ et fait monter $V_{fb}$.
+8. Sur le gabarit, la droite $\log(1/\beta_F) = \log(g_{m_N})$ sert d'axe 0 dB pour le gain en boucle ouverte $A\beta_F$ ; $A_F$ suit cette droite ($A_F \approx 1/\beta_F = g_{m_N}$) tant que $A\beta_F \gg 1$, puis la courbe de $A$ au-delà de leur intersection, à la fréquence $f_F$ ([compromis gain-bande](01-generalites-contre-reaction.qmd#sec-gain-bande)).
+9. Un grand $M_N$ donne un grand $g_{m_N}$ : la droite $\log(g_{m_N})$ monte, l'intersection avec la pente de $A$ se fait plus tôt, la **bande passante diminue**. Un petit transistor donne une bande passante plus large mais un gain $A_F$ plus faible.
+10. Si l'amplitude de $V_o$ est trop grande, les transistors sortent de leur régime de fonctionnement (saturation des MOS, écrêtage par l'alimentation) : le signal n'est plus sinusoïdal (distorsion). Le juste dimensionnement est un compromis : $g_{m_N}$ assez grand pour l'amplitude, assez petit pour garder $f_F$ au-dessus des fréquences du signal modulant.
+
+*Remarque d'unités* : ici $A$ (de $\varepsilon$ à $I_o$) est une transconductance et $\beta_F$ une résistance, comme dans le chapitre 2 ; l'énoncé assimile $A$ au gain en tension $A_v$ en considérant le gain de $M_P$ comme quasi unitaire.
+:::
+
+## TD additionnel : VDD is not your BFF {#sec-td-vdd}
+
+Énoncé : [support, p. 29-30] (sujet EA234 du 6 novembre 2023, F. Rivet ; fichier séparé identique : `td/td-add-vdd-is-not-your-bff.pdf`). Aucun corrigé.
+
+![Régulateur de tension à faible chute (LDO) du TD « VDD is not your BFF ». D'après le support [support, p. 29, figure 1], redessiné.](../figures/03-ldo.svg){#fig-ldo}
+
+::: {#exr-vdd-bff}
+## VDD is not your BFF [support, p. 29-30]
+
+Un régulateur « à faible chute » (*Low-Dropout*, LDO) est un régulateur de tension linéaire qui peut fonctionner même lorsque la tension d'alimentation est très proche de la tension de sortie. Il n'a pas de bruit de commutation, est très petit et simple à concevoir : une référence, un amplificateur et un élément de passage. La @fig-ldo représente le ST730 de STMicroelectronics, régulateur pour des applications entre 1,2 V et 12 V, de courant de repos ultra-faible (5 µA typique, 10 µA au maximum), adapté aux applications automobiles ou grand public connectées en permanence à une batterie.
+
+Le circuit est alimenté par $V_{in}$ ; les perturbations de l'alimentation sont représentées par une tension variable $\Delta v = v_{in}$. $V_{ref} = 50$ mV pour une tension de sortie régulée $V_{out} = 5{,}05$ V. La modulation de longueur de canal de $M_b$ est prise en compte.
+
+**Partie I : préliminaires**
+
+1. L'amplificateur $A_v$ est idéal ($I_+ = I_- = 0$, $\varepsilon = 0$). Que dire de $V_-$ en fonction de $V_{ref}$ ? Exprimer $V_{out}$ en fonction de $R_1$, $R_2$ et $V_{ref}$.
+2. Connaissant $V_{ref}$ et $V_{out}$, et sachant que le courant maximal de repos est 5 µA, proposer un dimensionnement de $R_1$ et $R_2$.
+
+**Partie II : étude de la contre-réaction**
+
+3. Représenter le schéma aux petits signaux sous la forme de 2 quadripôles : « $A$ », comprenant $A_v$ et $M_b$, avec pour entrées la partie variable $v_{in}$ de l'alimentation et la partie variable $v_-$ de $V_-$ (la référence $V_{ref}$ n'a aucune partie variable) ; « $\beta_F$ », comprenant $R_1$ et $R_2$.
+4. Quel type de contre-réaction est mis en œuvre ?
+5. Le quadripôle « $A$ » a un gain $A$ très grand. Par comparaison avec le quadripôle $\beta_F$ du cours, donner $\beta_F$ tel que $v_{fb} = \beta_F\, v_{out}$.
+
+Dans la suite, on prend $A \sim 100$ et $R_2 = 100\, R_1$.
+
+6. D'après la fonction de transfert de la contre-réaction identifiée, donner une valeur approximative de $v_{out}/v_{in}$. En déduire l'impact d'une variation de l'alimentation sur la tension de sortie.
+7. Le montage de $M_b$ est similaire à une grille commune d'impédance de sortie $Z_s = r_{ds}$. Donner l'impédance de sortie $Z_{out}$ en fonction de $r_{ds}$. Commenter son ordre de grandeur et la fonctionnalité du circuit.
+
+**Partie III : propriétés du circuit.** Le gain $A$ dépend de la fréquence $f$ des variations de l'alimentation : $A(j\omega)$ (figure 2 du sujet : $A \gg 1$ aux basses fréquences, $A \ll 1$ aux hautes fréquences).
+
+8. Commenter la variation de $Z_{out}$ en fonction de la fréquence.
+9. On ajoute une capacité $C$ en sortie. Donner l'impédance de sortie équivalente en fonction de $Z_{out}$, $C$ et $\omega$. Commenter sa variation en fonction de la fréquence.
+10. Le montage présenterait-il alors un risque d'instabilité ? Si oui, pour quelle raison ?
+:::
+
+::: {.complement}
+**Proposition de solution (aucun corrigé).**
+
+1. $\varepsilon = 0$ : $V_- = V_{ref}$. $R_1$ et $R_2$ forment un diviseur (aucun courant dans l'entrée $-$) : $V_- = \frac{R_1}{R_1 + R_2} V_{out}$, d'où $V_{out} = V_{ref}\left(1 + \frac{R_2}{R_1}\right)$.
+2. $\frac{V_{out}}{V_{ref}} = 101$, donc $R_2 = 100\,R_1$ ; le courant de repos dans le pont, $\frac{V_{out}}{R_1 + R_2}$, doit rester inférieur à 5 µA : $R_1 + R_2 \geq \frac{5{,}05\ \mathrm{V}}{5\ \mu\mathrm{A}} = 1{,}01\ \mathrm{M\Omega}$, par exemple $R_1 = 10\ \mathrm{k\Omega}$ et $R_2 = 1\ \mathrm{M\Omega}$.
+3. Petits signaux : $V_{ref}$ devient un court-circuit (borne $+$ à la masse) ; « $A$ » reçoit $v_-$ et $v_{in}$ et fournit $v_{out}$ ; « $\beta_F$ » est le pont $R_1$-$R_2$ branché sur la sortie.
+4. On prélève la tension de sortie (pont en parallèle sur la sortie) et on réinjecte une tension en série à l'entrée de $A_v$ ($\varepsilon = v_{ref} - v_-$) : contre-réaction **tension-série**.
+5. $\beta_F = \frac{R_1}{R_1 + R_2} = \frac{1}{101} \approx 0{,}01$.
+6. $\frac{A}{1 + A\beta_F} = \frac{100}{1 + 100/101} \approx 50$ : avec un gain de boucle $A\beta_F \approx 1$ seulement, la contre-réaction atténue mal les variations ; une perturbation de l'alimentation se retrouve fortement en sortie. *Lecture proposée, à confirmer* : l'énoncé ne précise pas comment $v_{in}$ entre dans le quadripôle $A$ (par la source de $M_b$) ; le titre du sujet (« VDD is not your BFF ») va dans le sens d'un rejet insuffisant de l'alimentation.
+7. Pour une tension-série, $Z_{out} = \frac{Z_s}{1 + A\beta_F} = \frac{r_{ds}}{1 + 100/101} \approx \frac{r_{ds}}{2}$ : l'impédance de sortie n'est divisée que par 2 et reste de l'ordre de $r_{ds}$, grande pour un régulateur, qui devrait se comporter comme une source de tension (impédance faible).
+8. Quand $A(j\omega)$ diminue avec la fréquence, $A\beta_F$ diminue et $Z_{out}$ remonte vers $r_{ds}$ : la régulation se dégrade aux hautes fréquences.
+9. $Z_{eq} = Z_{out} \parallel \frac{1}{jC\omega} = \frac{Z_{out}}{1 + jC\omega Z_{out}}$ : la capacité réduit l'impédance de sortie aux hautes fréquences (elle « prend le relais » de la boucle).
+10. Oui : la capacité de sortie, avec l'impédance de sortie, crée un pôle supplémentaire dans la boucle, qui s'ajoute à celui de $A(j\omega)$ ; deux pôles réduisent la marge de phase, d'où un risque d'instabilité ([stabilité](01-generalites-contre-reaction.qmd#sec-marges)).
+:::
+
+## Sujet 2025 : une référence des circuits intégrés {#sec-td-brokaw}
+
+Énoncé : sujet EANA3 du 24 octobre 2025, F. Rivet [td03-2026, p. 1-2], distribué comme TD 3 en 2026 (fichier `td/td03-2026-bandgap-brokaw.pdf`). Aucun corrigé. La partie du même examen rédigée par Y. Deval, sur la stabilité en température de ce circuit, relève du chapitre 5.
+
+![Bandgap de Brokaw découpé en quadripôles $A$ et $\beta_F$. D'après le sujet [td03-2026, p. 1, figure 1], redessiné.](../figures/03-bandgap-brokaw.svg){#fig-bandgap-brokaw}
+
+::: {#exr-bandgap-brokaw}
+## Une référence des circuits intégrés [td03-2026, p. 1-2]
+
+Paul Brokaw (décédé le 18 septembre 2025), ingénieur chez Analog Devices, a posé des fondations de la conception analogique intégrée ; son « bandgap de Brokaw » est devenu un standard pour fournir une tension stable, peu sensible à la température. On étudie le circuit de la @fig-bandgap-brokaw du point de vue des variations, sous la forme d'un quadripôle d'amplification « $A$ » et d'un réseau de contre-réaction « $\beta_F$ ». On ne prend pas en compte l'effet Early, on néglige les courants de base de $Q_1$ et $Q_2$ devant leurs courants de collecteur, et $Q_1$ et $Q_2$ ont les mêmes paramètres petits signaux : $g_{m_1} = g_{m_2} = g_m$, $r_{be_1} = r_{be_2} = r_{be}$.
+
+1. Quel type de contre-réaction est mis en œuvre ? D'après le cours, $\beta_F$ est obtenu suivant $i_F = \beta_F\, v_{ref}$ ; on va l'identifier.
+2. Faire le schéma équivalent du seul réseau de contre-réaction « $\beta_F$ », avec pour entrée la tension $v_{ref}$ et pour sortie la tension $\varepsilon$ associée à $i_1$ et $i_2$, courants de collecteur de $Q_1$ et $Q_2$.
+3. Écrire la relation entre $\Delta v_{be}$, la tension aux bornes de $R_2$, et $i_2$.
+4. Écrire $\Delta v_{be}$ en fonction de $v_{be_1}$ et $v_{be_2}$. En déduire $v_{be_1}$ en fonction de $v_{be_2}$, $R_2$ et $i_2$, puis de $g_m$, $v_{be_2}$ et $R_2$.
+5. Exprimer $v_{ref}$ en fonction de $v_{be_1}$, $R_1$, $i_1$ et $i_2$, puis, d'après 4, en fonction de $v_{be_1}$, $g_m$, $R_1$ et $R_2$. On pourra procéder à des simplifications justifiées.
+6. Sachant que $\beta_F = i_1/v_{ref}$, déduire la valeur de $\beta_F$ en fonction de $R_1$, après des simplifications justifiées.
+
+Le quadripôle « $A$ » a un gain $A_v$ très grand ($> 10^3$) et une impédance de sortie $Z_{sortie}$ assez faible.
+
+7. D'après la question 1, exprimer l'impédance de sortie $Z_{out}$ du montage en fonction de $A_v$ et $R_1$. Que penser de cette valeur au regard de la fonction du circuit ?
+
+On modélise le bruit ou les parasites par un courant $i_i$ sur l'entrée du circuit.
+
+8. Rappeler la fonction de transfert de ce type de contre-réaction et, en faisant les simplifications nécessaires ($A_v$ très grand), l'exprimer en fonction de $R_1$.
+9. Commenter l'impact du bruit représenté par $i_i$ sur les variations de la tension de référence.
+10. Comment dimensionner $R_1$ pour limiter cet impact ?
+:::
+
+::: {.complement}
+**Proposition de solution (aucun corrigé).**
+
+1. On prélève la tension $v_{ref}$ (les bases de $Q_1$ et $Q_2$ sont reliées à la sortie) et on réinjecte des **courants** de collecteur aux nœuds d'entrée de « $A$ » : contre-réaction **tension-parallèle**.
+2-3. Dans le réseau $\beta_F$ : bases à $v_{ref}$ ; émetteur de $Q_2$ relié par $R_2$ au nœud commun, émetteur de $Q_1$ directement au nœud commun ; $R_1$ du nœud commun à la masse, parcourue par $i_1 + i_2$. Aux bornes de $R_2$ : $\Delta v_{be} = R_2\, i_2$.
+4. $\Delta v_{be} = v_{be_1} - v_{be_2}$, donc $v_{be_1} = v_{be_2} + R_2\, i_2$ ; avec $i_2 = g_m v_{be_2}$ : $v_{be_1} = v_{be_2}\,(1 + g_m R_2)$.
+5. $v_{ref} = v_{be_1} + R_1\,(i_1 + i_2)$, avec $i_1 = g_m v_{be_1}$ et $i_2 = g_m v_{be_2} = \frac{g_m v_{be_1}}{1 + g_m R_2}$ :
+   $$
+   v_{ref} = v_{be_1}\left[1 + g_m R_1\left(1 + \frac{1}{1 + g_m R_2}\right)\right] \approx g_m R_1\, v_{be_1}\left(1 + \frac{1}{1 + g_m R_2}\right) \quad (g_m R_1 \gg 1) .
+   $$
+6. $\beta_F = \frac{i_1}{v_{ref}} = \frac{g_m v_{be_1}}{v_{ref}} \approx \frac{1}{R_1\left(1 + \frac{1}{1 + g_m R_2}\right)}$, et $\beta_F \approx \frac{1}{R_1}$ si l'on néglige aussi $\frac{1}{1 + g_m R_2}$ devant 1. *Attention* : au point de repos du circuit de Brokaw, $g_m R_2 = \frac{I_2 R_2}{V_T} = \frac{\Delta V_{be}}{V_T} = \ln 8 \approx 2{,}1$ ; le facteur $1 + \frac{1}{1 + g_m R_2} \approx 1{,}3$ n'est donc pas négligeable en toute rigueur (simplification à discuter avec l'enseignant).
+7. Contre-réaction tension-parallèle : $Z_{out} = \frac{Z_{sortie}}{1 + A\beta_F}$, soit, avec la notation de l'énoncé, $Z_{out} \approx \frac{Z_{sortie}}{A_v/R_1}$ (le produit $A\beta_F$ doit être sans dimension : $A$ est ici une transimpédance, de l'ordre de $A_v$ fois la résistance $R_c$ qui convertit les courants de collecteur en tension $\varepsilon$). L'impédance de sortie est très faible : c'est ce qu'on attend d'une référence de **tension**.
+8. $\frac{v_{ref}}{i_i} = \frac{A}{1 + A\beta_F} \approx \frac{1}{\beta_F} \approx R_1$.
+9. Un courant parasite $i_i$ produit une variation $v_{ref} \approx R_1\, i_i$, indépendante du gain $A_v$.
+10. Choisir $R_1$ **petite** limite cet impact. En contrepartie, $R_1$ fixe aussi, avec $R_2$, la valeur de $V_{ref}$ et sa compensation en température (chapitre 5) : le choix est un compromis.
+:::
+
+## À retenir {#sec-retenir-applications-cr}
+
+- **Méthode** : schéma petits signaux → grandeur prélevée et mode de réinjection → découpage $A$/$\beta_F$ → formules du chapitre 2 ; vérifier le signe et les unités de $A\beta_F$ *(complément)*.
+- **Dégénérescence inductive** (LNA) : contre-réaction courant-série, $A = g_m$, $\beta_F = jL\omega - \frac{\omega^2 LC_{gs}}{g_m}$ ; $Z_i = \frac{1}{jC_{gs}\omega}(1 - \omega^2 LC_{gs}) + \frac{g_m L}{C_{gs}}$ (@eq-impedance-entree-lna), purement résistive à $\omega_0 = 1/\sqrt{LC_{gs}}$, où elle vaut $\frac{g_m L}{C_{gs}}$ ; $L = \sqrt{Z_i/g_m}/\omega_0$ (@eq-inductance-lna) *(corrigé externe ; partie 3 : complément)*.
+- **Bandgap de Widlar** : $\Delta V_{be} = V_T \ln N$ (PTAT, @eq-delta-vbe-widlar) ; $V_{ref} = \frac{R_2}{R_1}\Delta V_{be} + V_{be}$ (@eq-vref-widlar) ; $\frac{\mathrm{d}V_{ref}}{\mathrm{d}T} = \frac{V_{ref} - V_{BG}}{T}$ (@eq-derivee-vref-widlar), nulle pour $V_{ref} = V_{BG} = 1{,}26$ V ; contre-réaction tension-parallèle qui rend l'impédance de sortie très faible *(notes externes ; identification de $A$ et $\beta_F$ corrigée : bloc tranché `av-widlar-contre-reaction`)*.
+- **Dual-$V_T$** : $I_1 = \frac{V_{T_1} - V_{T_2}}{R}$, insensible à un décalage commun des tensions de seuil (irradiation) *(complément)*.
+- **Sens d'une boucle** : vérifier que la grandeur ramenée suit l'entrée ; sinon, échanger les bornes $+$ et $-$ de l'amplificateur (TD 3) *(complément)*.
+- **Régulateur LDO** : tension-série, $\beta_F = \frac{R_1}{R_1 + R_2}$, $V_{out} = V_{ref}(1 + R_2/R_1)$ ; un gain de boucle faible rejette mal les variations de l'alimentation ; une capacité de sortie ajoute un pôle et un risque d'instabilité *(complément)*.

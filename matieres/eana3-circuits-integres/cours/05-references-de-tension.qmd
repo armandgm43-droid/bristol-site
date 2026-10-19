@@ -1,0 +1,443 @@
+---
+title: "Références de tension"
+matiere: eana3
+chapitre: 5
+enseignants: ["Yann Deval"]
+annee: "2026-2027"
+statut: flashcards
+date-modified: 2026-10-18
+sources:
+  - id: support
+    fichier: support/support-cours-2025.pdf
+    nature: officielle
+    version: "2025"
+    pages: "2, 22-23"
+  - id: td04-2026
+    fichier: td/td04-2026-recueil-sujets-deval.pdf
+    nature: officielle
+    version: "2026"
+    pages: "5-10"
+  - id: notes-2023-c10
+    fichier: notes/2023-cours-10-deval.pdf
+    nature: externe
+    seance: inconnue
+    pages: "1-6"
+  - id: corr-2023-ref-cmos
+    fichier: corriges/2023-reference-tension-cmos-dual-vth.pdf
+    nature: externe
+    seance: inconnue
+    pages: "1-2"
+---
+
+{{< include /_macros.qmd >}}
+
+<!-- Étapes 2 à 5 (analyse, rédaction, figures) faites le 2026-10-08.
+     Le support ne contient que le plan et l'énoncé du TD 5 : le cours vient des notes externes de 2023 (cours 10)
+     et d'un corrigé externe (autre version du TD 5) ; compléments de Claude pour les sujets sans corrigé.
+     Rapport : ../analyses/05-references-de-tension.md. Figures : ../figures/05-*. -->
+
+## Introduction {#sec-intro-references}
+
+Ce chapitre est le chapitre 2 de la partie *Oscillateurs et références de tension* de Yann Deval. Le support en donne le plan [support, p. 2] :
+
+1. référence bipolaire stable en température (cours 10) ;
+2. référence MOS stable en température (cours 12) ;
+3. bandgap fractionnaire (cours 13).
+
+Le TD associé est le TD 5 « Référence de tension stable en température » [support, p. 2]. Bristol y ajoute deux sujets du recueil distribué comme TD 4 en 2026 : la partie Deval du sujet du 24 octobre 2025 sur le bandgap de Brokaw et le sujet du 2 avril 2026 « Générateur de courant suppresseur de variations » [td04-2026, p. 5-10].
+
+::: {.notes-externes}
+Le support ne contient aucun cours rédigé. Le cours ci-dessous vient des notes manuscrites d'un étudiant en 2023 [notes-2023-c10] (elles ne sont pas celles d'Armand), qui couvrent la référence bipolaire et la référence MOS. Le corrigé externe [corr-2023-ref-cmos] porte sur une **autre version** du TD 5 (référence à double tension de seuil) : il est repris dans le cours (@sec-reference-dual-vth), pas comme corrigé du TD 5.
+:::
+
+::: {.complement}
+**Le problème.** Un circuit intégré a besoin de tensions et de courants de polarisation qui ne dépendent ni de la température, ni de la tension d'alimentation, ni des dispersions de fabrication. L'idée commune à tout le chapitre : **additionner une grandeur qui décroît avec la température (TC−) et une grandeur qui croît (TC+)**, dans la bonne proportion, pour obtenir un coefficient de température nul (TC0) [notes-2023-c10, p. 1]. Le bandgap de Widlar a déjà été étudié comme exemple de contre-réaction au [chapitre 3](03-applications-contre-reaction.qmd#sec-bandgap-widlar).
+:::
+
+## Référence de tension bipolaire {#sec-reference-bipolaire}
+
+### Dépendance thermique de $V_{BE}$ {#sec-dependance-thermique-vbe}
+
+:::: {.notes-externes}
+La tension base-émetteur d'un transistor bipolaire polarisé à courant constant dépend de la température [notes-2023-c10, p. 1] :
+
+$$
+\frac{\mathrm{d}V_{BE}}{\mathrm{d}T} = \frac{1}{T}\left(V_{BE} - V_{BG}\right) \simeq -2\ \mathrm{mV/°C},
+$$ {#eq-derivee-vbe}
+
+où $V_{BG}$ est la tension de bande interdite (*band gap*) du silicium,
+
+$$
+V_{BG} = V_{BG_0} + (\gamma - \alpha)\, U_T \simeq 1{,}26\ \mathrm{V} \text{ à } 300\ \mathrm{K}, \qquad U_T = \frac{kT}{q} = 26\ \mathrm{mV}.
+$$
+
+Comme $V_{BE} \approx 0{,}6$ V est inférieure à $V_{BG}$, la dérivée est **négative** : $V_{BE}$ est une grandeur **TC−**.
+::::
+
+::: {.complement}
+$\gamma$ et $\alpha$ sont des exposants du modèle du courant de saturation $I_S \propto T^{\gamma}\exp\left(-\frac{qV_{BG_0}}{kT}\right)$ et du courant de collecteur ($I_C \propto T^{\alpha}$) ; les notes ne les définissent pas. $V_{BG_0} \approx 1{,}2$ V est la bande interdite extrapolée à 0 K. Les sujets de 2025 donnent la même relation en annexe, avec $V_{BG} = 1{,}26$ V et $U_T = 26$ mV à 300 K [td04-2026, p. 6].
+:::
+
+### Une tension PTAT : le miroir de Widlar {#sec-ptat}
+
+![Miroir de Widlar : $Q_1$, formé de $N$ transistors en parallèle, est monté en diode avec la résistance d'émetteur $R_E$ ; la différence des $V_{BE}$ apparaît aux bornes de $R_E$. D'après les notes externes [notes-2023-c10, p. 1], redessinée.](../figures/05-miroir-widlar.svg){#fig-miroir-widlar}
+
+::: {.notes-externes}
+Un transistor « $\times N$ » est la mise en parallèle de $N$ transistors identiques (bases, collecteurs et émetteurs reliés) : son courant de saturation est $N I_S$ [notes-2023-c10, p. 2]. Dans le miroir de Widlar de la @fig-miroir-widlar, les deux transistors sont parcourus par le même courant $I$ ; avec $V_{BE} = U_T\ln\frac{I_C}{I_S}$ :
+
+$$
+\Delta V_{BE} = V_{BE2} - V_{BE1} = U_T \ln\left(\frac{I}{I_S}\right) - U_T \ln\left(\frac{I}{N I_S}\right) = U_T \ln N .
+$$ {#eq-delta-vbe-ptat}
+
+Sa dérivée est positive et constante :
+
+$$
+\frac{\mathrm{d}}{\mathrm{d}T}\left(\Delta V_{BE}\right) = \frac{k}{q}\ln N = \frac{U_T}{T}\ln N > 0 .
+$$
+
+$\Delta V_{BE}$ est **TC+**, et même **PTAT** (*Proportional To Absolute Temperature*). On note aussi que $g_m = \frac{I}{U_T} \approx 40\, I$ (avec $U_T \approx 25$ mV) [notes-2023-c10, p. 2].
+:::
+
+### Bandgap de Widlar {#sec-bandgap-widlar-deval}
+
+::: {.notes-externes}
+Le bandgap de Widlar (même circuit qu'au [chapitre 3](03-applications-contre-reaction.qmd#fig-bandgap-widlar), notations des notes) ajoute à $V_{BE3}$ (TC−) la tension PTAT $\Delta V_{BE}$ amplifiée par le rapport $R/R_E$ [notes-2023-c10, p. 2] :
+
+$$
+V_{ref} = \frac{\Delta V_{BE}}{R_E}\,R + V_{BE3} .
+$$
+
+En dérivant avec @eq-derivee-vbe et @eq-delta-vbe-ptat :
+
+$$
+\frac{\mathrm{d}V_{ref}}{\mathrm{d}T} = \frac{1}{T}\left[\frac{R}{R_E}U_T\ln N + V_{BE3} - V_{BG}\right] = \frac{1}{T}\left[V_{ref} - V_{BG}\right] .
+$$ {#eq-derivee-vref-bandgap}
+
+La référence est stable en température (TC0) lorsque $V_{ref} = V_{BG}$, soit environ 1,25 V à 300 K.
+:::
+
+![Allure de la tension de sortie d'une référence bandgap en fonction de la température. D'après les notes externes [notes-2023-c10, p. 3], redessinée ; courbe calculée avec un modèle usuel de $V_{BE}(T)$, valeurs choisies pour la figure.](../figures/05-vref-temperature.svg){#fig-vref-temperature}
+
+::: {.notes-externes}
+Le coefficient n'est nul qu'à une température : $V_{ref}(T)$ présente un sommet plat à 300 K (TC0), avec un TC+ dominant en dessous et un TC− dominant au-dessus (@fig-vref-temperature) [notes-2023-c10, p. 3].
+:::
+
+::: {.complement}
+**1,25 ou 1,26 V ?** Les notes écrivent 1,26 V (p. 1) puis 1,25 V (p. 2), et prennent $U_T$ égal à 26 mV (p. 1) puis 25 mV (p. 2). Ce sont des arrondis : $U_T = 25{,}9$ mV à 300 K, et la valeur exacte de $V_{BG}$ dépend du modèle ($V_{BG_0} \approx 1{,}2$ V plus quelques $U_T$). Les sujets d'examen utilisent 1,26 V et 26 mV [td04-2026, p. 6-7]. La courbure de la @fig-vref-temperature vient du terme en $T\ln T$ de $V_{BE}$, que la compensation linéaire ne supprime pas.
+:::
+
+### Bandgap à miroir PNP et sortie fractionnaire {#sec-bandgap-fractionnaire-notes}
+
+![Référence bandgap à miroir PNP : courant PTAT créé dans $R$ par $Q_1$ et $Q_2$ ($\times N$), pont $R_1$, $R_2$ en sortie. D'après les notes externes [notes-2023-c10, p. 3], redessinée.](../figures/05-bandgap-pnp.svg){#fig-bandgap-pnp}
+
+::: {.notes-externes}
+Trois PNP de bases communes recopient le courant : celui de gauche ($\times 1$) fournit $\frac{I}{4}$ au nœud $V_{ref}$, celui du milieu ($\times 4$, monté en diode) $I$ à $Q_2$, celui de droite ($\times 4$) $I_{ptat}$ à $R$ et $Q_1$. La tension aux bornes de $R$ est $\Delta V_{BE} = U_T\ln N$ (PTAT) ; $V_{BEQ2}$ est TC− [notes-2023-c10, p. 3]. $R_1$ et $R_2$ sont grandes, donc $I_{R2}$ est petit devant les autres courants, et
+
+$$
+V_{BE2} - V_{ref} = R_2 I_{R2}, \qquad V_{ref} = \left(I_{R2} + \frac{I}{4}\right) R_1 .
+$$
+
+Les notes concluent :
+
+$$
+V_{ref} = \frac{R_2R_1}{R(R_1 + R_2)}\,\Delta V_{BE} + \frac{R_1}{R_1 + R_2}\,V_{BEQ2}, \qquad \frac{\mathrm{d}V_{ref}}{\mathrm{d}T} = \frac{1}{T}\left[V_{ref} - \frac{R_1}{R_1 + R_2}\,V_{BG}\right] .
+$$ {#eq-derivee-vref-fractionnaire}
+
+La référence est TC0 pour $V_{ref} = \frac{R_1}{R_1 + R_2}\,V_{BG}$ : une **fraction** de la tension de bande interdite.
+:::
+
+::: {.a-verifier .tranche #av-vref-bandgap-pnp-facteur}
+**Source** [notes-2023-c10, p. 3] : les deux relations écrites, puis « après calculs » $V_{ref} = \frac{R_2R_1}{R(R_1+R_2)}\Delta V_{BE} + \frac{R_1}{R_1+R_2}V_{BEQ2}$ ; à la ligne suivante, le dénominateur ressemble à « $R_0$ ».
+
+**Problème** : en éliminant $I_{R2}$ entre les deux relations, avec $I = \frac{\Delta V_{BE}}{R}$, on obtient $V_{ref}\left(\frac{1}{R_1} + \frac{1}{R_2}\right) = \frac{V_{BE2}}{R_2} + \frac{\Delta V_{BE}}{4R}$, soit un facteur $\frac{1}{4}$ devant le terme PTAT, absent des notes.
+
+**Proposition** :
+$$
+V_{ref} = \frac{R_1R_2}{4R(R_1 + R_2)}\,\Delta V_{BE} + \frac{R_1}{R_1 + R_2}\,V_{BEQ2} .
+$$
+La conclusion @eq-derivee-vref-fractionnaire est inchangée (elle vaut pour tout coefficient du terme PTAT) : seul le dimensionnement de $R$ en dépend.
+
+**Décision** : proposition retenue (Armand a délégué la décision ; calcul vérifié par Claude), 2026-10-14.
+:::
+
+::: {.complement}
+**Intérêt.** Le bandgap classique impose $V_{ref} \approx 1{,}25$ V, donc une alimentation nettement supérieure. Le pont $R_1$, $R_2$ donne une tension de référence stable **inférieure** à $V_{BG}$, utilisable sous faible alimentation. Le plan du support place un « bandgap fractionnaire » au cours 13, sans notes : il s'agit probablement de ce principe (à confirmer, @sec-bandgap-fractionnaire).
+:::
+
+## Référence de tension MOS {#sec-reference-mos}
+
+### Des bipolaires dans une technologie CMOS {#sec-bipolaires-cmos}
+
+::: {.notes-externes}
+La photographie du tableau [notes-2023-c10, p. 4] montre les coupes d'un NMOS (caissons N+ dans le substrat P, diode N+/substrat) et d'un PMOS dans un caisson N ; dans le PMOS, la diffusion P+, le caisson N et le substrat P forment un **PNP vertical parasite** (émetteur P+, base caisson N, collecteur substrat). Un diagramme de bandes d'une jonction PN l'accompagne.
+:::
+
+![Référence bandgap en technologie CMOS : miroir PMOS commandé par un amplificateur opérationnel, PNP parasites $Q_1$ ($\times N$) et $Q_2$, bases et collecteurs à la masse. D'après les notes externes [notes-2023-c10, p. 4], redessinée ; polarités des entrées de l'amplificateur choisies par Bristol.](../figures/05-bandgap-aop.svg){#fig-bandgap-aop}
+
+::: {.notes-externes}
+Dans le schéma de la @fig-bandgap-aop, l'amplificateur égalise les potentiels des deux branches : le nœud au-dessus de $R$ est au potentiel $V_{BE2}$, la tension aux bornes de $R$ vaut $\Delta V_{BE} = U_T\ln N$, et la sortie vaut [notes-2023-c10, p. 4]
+$$
+V_{out} = V_{BE2} + \frac{R_1}{R}\,\Delta V_{BE} .
+$$
+:::
+
+::: {.complement}
+Le PNP parasite a son collecteur imposé au substrat, donc à la masse : c'est pourquoi les collecteurs de $Q_1$ et $Q_2$ sont à la masse dans la @fig-bandgap-aop. Les deux branches portent le même courant $I = \frac{U_T\ln N}{R}$ (miroir PMOS) ; $V_{out}$ a la forme de @eq-derivee-vref-bandgap : TC0 pour $V_{out} = V_{BG}$, en choisissant $\frac{R_1}{R}\ln N$. Polarités : si la sortie de l'amplificateur monte, les PMOS conduisent moins et le nœud de $R$ (terme linéaire en $I$) baisse plus que le nœud de $Q_2$ (terme logarithmique) ; pour une contre-réaction, ce nœud attaque l'entrée $+$.
+:::
+
+### Référence « full CMOS » à double tension de seuil {#sec-reference-dual-vth}
+
+:::: {.notes-externes}
+Sans bipolaire, on exploite la dépendance thermique de la tension de seuil [notes-2023-c10, p. 5] :
+
+$$
+V_{th}(T) = V_{th_0} + \alpha\,(T - T_0), \qquad T_0 = 300\ \mathrm{K},
+$$ {#eq-vth-temperature}
+
+avec $\alpha < 0$, lié au gap du matériau et à la tension de bandes plates $V_{FB}$, d'ordre de grandeur 1 à 10 mV.
+::::
+
+::: {.a-verifier .tranche #av-unite-alpha-vth}
+**Source** [notes-2023-c10, p. 5] : « $\alpha < 0$ ordre de grandeur $(1 - 10)$ mV ».
+
+**Problème** : d'après @eq-vth-temperature, $\alpha$ est une pente en V/K ; l'unité écrite est une tension.
+
+**Proposition** : $\alpha$ de l'ordre de −1 à −10 mV/K (des valeurs de −1 à −3 mV/K sont courantes).
+
+**Décision** : proposition retenue (Armand a délégué la décision ; calcul vérifié par Claude), 2026-10-14.
+:::
+
+![Référence de tension MOS à double tension de seuil : miroir PMOS, $M_1$ monté en diode, $M_2$ (seuil plus faible) dégénéré par $R_\Delta$. D'après les notes externes [notes-2023-c10, p. 5] et le corrigé externe [corr-2023-ref-cmos, p. 1-2], redessinée.](../figures/05-reference-dual-vth.svg){#fig-reference-dual-vth}
+
+::: {.notes-externes}
+Les deux NMOS ont des tensions de seuil différentes (*dual-$V_{th}$*), $V_{th_{M2}} < V_{th_{M1}}$ ; la tension de seuil croît avec la longueur du canal : $L_1 > L_2 \Rightarrow V_{th1} > V_{th2}$, à rapport $W/L$ identique [notes-2023-c10, p. 5-6]. Les courants sont petits et les transistors larges, donc $V_{GS} \simeq V_{th}$ (avec $I_D = \frac{\mu_n C_{ox}}{2}\frac{W}{L}(V_{GS} - V_{th})^2$, l'excès $V_{OD} = V_{GS} - V_{th}$ est faible).
+
+Le corrigé externe d'une version du TD 5 [corr-2023-ref-cmos, p. 1-2] fait le calcul complet avec les notations de la @fig-reference-dual-vth :
+
+1. $V_{GS1} = V_{th1}$, $V_{GS2} = V_{th2}$ ;
+2. maille des grilles : $V_{GS1} - V_{GS2} - V_\Delta = 0$, d'où $V_\Delta = V_{th1} - V_{th2} = \Delta V_{th}$ ;
+3. $M_{102}$ est monté en diode et sa grille est reliée à celle de $M_{101}$ : miroir de courant, $I_{D1} = I_{D2}$ ;
+4. $I_{D2} = \frac{V_\Delta}{R_\Delta}$ et $V_R = R\, I_{D1}$, donc $V_R = \frac{R}{R_\Delta}\Delta V_{th}$, et
+   $$
+   V_{ref} = \frac{R}{R_\Delta}\,\Delta V_{th} + V_{th1} ;
+   $$ {#eq-vref-dual-vth}
+5. étude thermique : $\Delta V_{th}(T) = \left(V_{th1}(T_0) - V_{th2}(T_0)\right) + (T - T_0)(\alpha_1 - \alpha_2)$, donc $\frac{\mathrm{d}\Delta V_{th}}{\mathrm{d}T} = \alpha_1 - \alpha_2$ ; $\Delta V_{th}$ est TC+ si $|\alpha_1| < |\alpha_2|$ (notes, p. 5) ;
+6. TC0 : $\frac{\mathrm{d}V_{ref}}{\mathrm{d}T} = \frac{R}{R_\Delta}(\alpha_1 - \alpha_2) + \alpha_1 = 0$, soit
+   $$
+   \frac{R}{R_\Delta} = -\frac{\alpha_1}{\alpha_1 - \alpha_2}, \qquad \frac{R_\Delta}{R} = \frac{\alpha_2}{\alpha_1} - 1 .
+   $$ {#eq-dimensionnement-dual-vth}
+
+Le corrigé donne ensuite $\frac{R_\Delta}{R} \simeq \frac{3}{2}$ et une valeur numérique de $V_{ref}$ (417 ou 917 mV, premier chiffre ambigu), à partir de données absentes de nos sources : elles ne sont pas reprises.
+:::
+
+::: {.notes-externes}
+**Variante avec amplificateur** [notes-2023-c10, p. 6] (non redessinée) : miroir PMOS dont les grilles sont commandées par un amplificateur opérationnel qui compare les deux branches ; $M_2$ dans la branche gauche ; dans la branche droite, une résistance (tension $\Delta V_{th}$) puis $M_1$ ; la grille de $M_2$ est reliée au bas de la résistance (drain de $M_1$), la grille de $M_1$ au haut de la résistance.
+:::
+
+::: {.complement}
+**Même logique que le bandgap.** $V_{th1}$ joue le rôle de $V_{BE}$ (TC−) et $\Delta V_{th}$ celui de $\Delta V_{BE}$ (TC+) ; le rapport $R/R_\Delta$ dose la compensation (@eq-dimensionnement-dual-vth), comme $R/R_E$ dans le bandgap de Widlar. Si $\alpha_1 = \alpha_2$, $\Delta V_{th}$ ne dépend plus de la température : c'est le principe du TD 5 (@sec-td-reference-cmos).
+:::
+
+## Bandgap fractionnaire {#sec-bandgap-fractionnaire}
+
+Le plan du support place le bandgap fractionnaire au cours 13 [support, p. 2]. **Aucune note** ne porte ce titre ; le seul circuit à sortie fractionnaire des sources est celui de la @sec-bandgap-fractionnaire-notes. La section sera complétée avec le cours de 2026-2027.
+
+## TD 5 : référence de tension CMOS stable en température {#sec-td-reference-cmos}
+
+![Référence de tension CMOS stable en température du TD 5 (technologie SOI) : tensions de seuil de $M_1$ et $M_{1b}$ abaissées par la tension de body $V_{Body}$. D'après le support [support, p. 22, figure 1], redessiné.](../figures/05-reference-cmos-soi.svg){#fig-reference-cmos-soi}
+
+![Tension de seuil des NMOS en fonction de la tension de body $V_{BB}$. D'après le support [support, p. 22, figure 2], redessinée (lecture graphique : 450 mV à 0 V, 400 mV à 1 V).](../figures/05-vth-vbb.svg){#fig-vth-vbb}
+
+::: {#exr-reference-cmos}
+## Référence de tension CMOS stable en température [support, p. 22-23]
+
+On s'intéresse à la référence de tension stable en température de la @fig-reference-cmos-soi, destinée à un régulateur à faible chute de tension (LDO). La technologie est du silicium sur isolant (SOI), qui permet de modifier fortement la tension de seuil des NMOS avec la tension de corps $V_{BB}$ (@fig-vth-vbb). Ce contrôle n'est utilisé que pour $M_1$ et $M_{1b}$ ; $M_0$ a son body à la masse ($V_{BB} = 0$). $M_{101}$ et $M_{102}$ ont le même rapport $W/L$, de même que tous les NMOS.
+
+1. On fixe $V_{Body} = 1$ V. Déduire de la @fig-vth-vbb les tensions de seuil $V_{th1}$ de $M_1$ et $M_{1b}$, et $V_{th0}$ de $M_0$.
+2. $M_{101}$ et $M_{102}$ sont câblés selon une topologie connue. Laquelle ? En déduire que les courants des deux branches ($M_{102}$, $M_1$, $R_\Delta$ d'une part ; $M_{101}$, $R$, $M_{1b}$, $M_0$ d'autre part) sont identiques ; ce courant est noté $I_0$.
+3. Écrire la relation liant $V_{GS0}$, $V_{GS1}$ et $V_\Delta$.
+4. Pour un NMOS saturé, $V_{GS} = V_{th} + \sqrt{\frac{2}{\mu_n C_{ox}}\frac{L}{W}I_D}$. Déduire de la relation précédente l'expression simple de $V_\Delta$ en fonction de $V_{th0}$ et $V_{th1}$.
+5. En déduire la valeur de $V_\Delta$.
+6. En déduire la valeur de $R_\Delta$ qui fixe $I_0 = 5$ µA.
+7. En supposant $V_{GS0}$ très peu différent de $V_{th0}$ (faibles courants), calculer $R$ pour fixer $V_{Body}$ à 1 V.
+
+Si le miroir PMOS n'est pas parfait, l'expression de la question 4 n'est plus valable ; $M_{1b}$ ne souffre pas de ce défaut, car il partage nécessairement le courant de $M_0$. On préfère donc utiliser $V_{Ref}$ comme référence plutôt que $V_\Delta$.
+
+8. Exprimer $V_{Ref}$ en fonction de $V_{th0}$ et $V_{th1}$ et le comparer à $V_\Delta$.
+
+La tension de seuil dépend linéairement de la température : $V_{th}(T) = V_{th}(T_0) + \alpha(T - T_0)$, avec $T_0 = 300$ K et $\alpha$ négatif, dépendant de la technologie et des dimensions. On suppose que seul $V_{th}(T_0)$ dépend de la tension de body : $\alpha$ est le même pour $M_0$, $M_1$ et $M_{1b}$.
+
+9. Calculer $\frac{\mathrm{d}V_{Ref}}{\mathrm{d}T}$. En quoi cette valeur est-elle remarquable ?
+10. À aucun moment on n'a considéré $V_{DD}$. Que peut-on en conclure concernant $V_{Ref}$ ?
+:::
+
+::: {.complement}
+**Proposition de solution (aucun corrigé de cette version).**
+
+1. À $V_{BB} = 1$ V : $V_{th1} = 400$ mV (pour $M_1$ et $M_{1b}$) ; à $V_{BB} = 0$ : $V_{th0} = 450$ mV.
+2. $M_{102}$ monté en diode et grilles communes : **miroir de courant**. Même $W/L$, même $V_{GS}$ : $M_{101}$ recopie le courant de $M_{102}$, les deux branches portent $I_0$.
+3. Les grilles de $M_0$ et $M_1$ sont au même nœud (drain de $M_{1b}$) ; $M_0$ a sa source à la masse, $M_1$ a sa source au potentiel $V_\Delta$ : $V_{GS0} = V_{GS1} + V_\Delta$, soit $V_\Delta = V_{GS0} - V_{GS1}$.
+4. $M_0$ et $M_1$ ont le même $W/L$ et le même courant $I_0$ : les termes en racine sont égaux, et
+   $$
+   V_\Delta = V_{th0} - V_{th1} .
+   $$
+5. $V_\Delta = 450 - 400 = 50$ mV.
+6. $R_\Delta = \frac{V_\Delta}{I_0} = \frac{50\ \mathrm{mV}}{5\ \mu\mathrm{A}} = 10\ \mathrm{k\Omega}$.
+7. $V_{Body}$ est le haut de $R$ ; le bas de $R$ est le nœud des grilles, au potentiel $V_{GS0} \approx V_{th0} = 0{,}45$ V. Donc $R I_0 = 1 - 0{,}45 = 0{,}55$ V et $R = \frac{0{,}55}{5 \cdot 10^{-6}} = 110\ \mathrm{k\Omega}$.
+8. $M_{1b}$ a sa grille au nœud des grilles et sa source à $V_{Ref}$ : $V_{GS1b} = V_{GS0} - V_{Ref}$. $M_{1b}$ et $M_0$ sont en série (même courant, quel que soit le miroir), même $W/L$ : $V_{GS0} - V_{th0} = V_{GS1b} - V_{th1}$, d'où
+   $$
+   V_{Ref} = V_{th0} - V_{th1} = V_\Delta = 50\ \mathrm{mV},
+   $$
+   même valeur que $V_\Delta$, mais indépendante de l'appariement du miroir PMOS.
+9. $\frac{\mathrm{d}V_{Ref}}{\mathrm{d}T} = \alpha - \alpha = 0$ : la référence est **TC0** par construction, sans dosage de résistances (contrairement au bandgap) : les deux dérives thermiques s'annulent parce que les deux transistors ne diffèrent que par leur tension de body.
+10. $V_{Ref}$ ne dépend pas de $V_{DD}$ (au premier ordre) : bonne réjection des variations d'alimentation, ce qu'on attend d'une référence pour un LDO.
+
+**Remarque.** La valeur de 50 mV est faible ; on peut l'amplifier ensuite (par exemple dans la boucle du LDO, [chapitre 3](03-applications-contre-reaction.qmd#sec-td-vdd)).
+:::
+
+## Sujet 2025 : bandgap de Brokaw (partie Deval) {#sec-td-brokaw-deval}
+
+![Bandgap de Brokaw du sujet de Y. Deval : $Q_2$ ($N$ transistors en parallèle) et $Q_1$ chargés par $R_0$, amplificateur différentiel parfait. D'après le sujet [td04-2026, p. 5, figure 1], redessiné.](../figures/05-bandgap-brokaw.svg){#fig-bandgap-brokaw-deval}
+
+::: {#exr-bandgap-brokaw-deval}
+## Référence de tension bipolaire stable en température [td04-2026, p. 5-6]
+
+On s'intéresse à la référence de tension bipolaire inventée par Paul Brokaw au milieu des années 1970, sur la base des travaux de Robert Widlar (1971) (@fig-bandgap-brokaw-deval). $Q_2$ est la mise en parallèle de $N$ transistors identiques à $Q_1$ : son courant de saturation est $N$ fois celui de $Q_1$. Les courants de base et l'effet Early sont négligés. L'amplificateur différentiel est parfait (impédances d'entrée infinies, gain $A_v$ infini, impédance de sortie nulle).
+
+**Partie 1 : polarisation en courant, alternative au miroir de courant.**
+
+1. Au point de fonctionnement, la différence de potentiel entre les entrées de l'amplificateur est nulle. En déduire la relation entre $V_{C1}$ et $V_{C2}$, tensions des collecteurs de $Q_1$ et $Q_2$.
+2. En exprimant $V_{C1}$ et $V_{C2}$ en fonction de $R_0$, $V_{DD}$, $I_1$ et $I_2$, en déduire la relation entre $I_1$ et $I_2$. Quel autre circuit bien connu aurait permis d'obtenir la même relation ?
+3. Donner l'expression de $I_{ptat}$ en fonction de $I_2$.
+
+**Partie 2 : création d'une tension TC+.**
+
+4. En parcourant la boucle formée des jonctions base-émetteur de $Q_1$ et $Q_2$ et de $R_\Delta$, exprimer $\Delta V_{BE}$ en fonction de $V_{BE1}$ et $V_{BE2}$.
+5. À l'aide de l'annexe, montrer que $\Delta V_{BE}$ s'exprime simplement en fonction de $N$ et de $U_T$.
+6. Montrer que $\frac{\mathrm{d}(\Delta V_{BE})}{\mathrm{d}T}$ est une constante positive (TC+), ce qui vaut à $\Delta V_{BE}$ le nom de PTAT.
+7. Exprimer $V_{ptat}$, tension aux bornes de $R$, en fonction de $N$, $U_T$, $R_\Delta$ et $R$.
+
+**Partie 3 : référence TC0 par addition d'un TC+ et d'un TC−.**
+
+8. Exprimer $V_{Ref}$ en fonction de $V_{BE1}$ et $V_{ptat}$.
+9. À l'aide de l'annexe et des résultats précédents, montrer que $\frac{\mathrm{d}V_{Ref}}{\mathrm{d}T}$ ne s'annule à 300 K (TC0) que lorsque $V_{Ref} = V_{BG}$.
+
+**Partie 4 : polarisation en courant, le retour.**
+
+10. Quel composant fixe la valeur de $I_{ptat}$ ?
+
+**Annexe** : $I_C = I_S\exp\left(\frac{V_{BE}}{U_T}\right)$ ; $U_T = \frac{kT}{q}$, 26 mV à 300 K ; $\frac{\mathrm{d}V_{BE}}{\mathrm{d}T} = \frac{1}{T}(V_{BE} - V_{BG})$, avec $V_{BG} = 1{,}26$ V à 300 K (TC−).
+:::
+
+::: {.complement}
+**Proposition de solution (aucun corrigé).** La partie Rivet du même sujet (lecture en contre-réaction) est au [chapitre 3](03-applications-contre-reaction.qmd#sec-td-brokaw).
+
+1. $V_+ = V_-$, donc $V_{C1} = V_{C2}$.
+2. $V_{C1} = V_{DD} - R_0 I_1$ et $V_{C2} = V_{DD} - R_0 I_2$, donc $I_1 = I_2$ : c'est ce qu'aurait imposé un **miroir de courant**.
+3. Les deux courants d'émetteur se rejoignent dans $R$ : $I_{ptat} = I_1 + I_2 = 2I_2$.
+4. Les bases sont communes ; l'émetteur de $Q_2$ rejoint celui de $Q_1$ à travers $R_\Delta$ : $V_{BE1} = V_{BE2} + R_\Delta I_2$, donc $\Delta V_{BE} = V_{BE1} - V_{BE2}$ (tension aux bornes de $R_\Delta$).
+5. $I_1 = I_S e^{V_{BE1}/U_T}$ et $I_2 = N I_S e^{V_{BE2}/U_T}$ ; avec $I_1 = I_2$ :
+   $$
+   \Delta V_{BE} = U_T \ln N .
+   $$
+6. $\frac{\mathrm{d}(\Delta V_{BE})}{\mathrm{d}T} = \frac{k}{q}\ln N$ : constante, positive pour $N > 1$.
+7. $I_2 = \frac{\Delta V_{BE}}{R_\Delta}$ et $I_{ptat} = 2I_2$ :
+   $$
+   V_{ptat} = R\, I_{ptat} = 2\,\frac{R}{R_\Delta}\,U_T \ln N .
+   $$
+8. La base de $Q_1$ est à $V_{Ref}$ et son émetteur au haut de $R$ : $V_{Ref} = V_{BE1} + V_{ptat}$.
+9. $\frac{\mathrm{d}V_{Ref}}{\mathrm{d}T} = \frac{1}{T}(V_{BE1} - V_{BG}) + \frac{V_{ptat}}{T} = \frac{1}{T}\left(V_{Ref} - V_{BG}\right)$ (car $V_{ptat}$ est proportionnelle à $T$) : nulle si et seulement si $V_{Ref} = V_{BG} = 1{,}26$ V.
+10. $I_{ptat} = \frac{2U_T\ln N}{R_\Delta}$ : c'est $R_\Delta$ (avec $N$) qui fixe le courant ; $R$ sert ensuite à doser $V_{ptat}$ pour atteindre $V_{Ref} = V_{BG}$. Le circuit fournit donc aussi un courant PTAT de polarisation.
+:::
+
+## Sujet 2026 : générateur de courant suppresseur de variations {#sec-td-generateur-courant}
+
+![Générateur de courant suppresseur de variations (a) et générateur auto-polarisé (b). D'après le sujet [td04-2026, p. 7-8, figures 1 et 2], redessiné.](../figures/05-generateur-courant.svg){#fig-generateur-courant}
+
+::: {#exr-generateur-courant}
+## Générateur de courant suppresseur de variations [td04-2026, p. 7-10]
+
+On considère le circuit de la @fig-generateur-courant (a), évolution du miroir de courant : la relation entre le courant d'entrée $I_{bias}$ et le courant de sortie $I_{out}$ n'est plus une simple égalité, et le circuit fournit un courant de sortie propre même si l'alimentation $V_{bias}$ est bruitée. $M_1$ et $M_2$ sont identiques et saturés. Ils fonctionnent en **faible inversion** (conduction sous le seuil, $V_{GS} < V_{th}$) ; le courant, dû à la diffusion, est exponentiel :
+$$
+I_D = I_{D0}\exp\left(\frac{V_{GS} - V_{th}}{\eta U_t}\right),
+$$
+où $I_{D0}$ est le courant extrapolé à $V_{GS} = V_{th}$, $U_t = kT/q \approx 26$ mV à 300 K et $\eta$ un facteur d'idéalité compris entre 1 et 2.
+
+**I. Étude du générateur de courant : polarisation.**
+
+1. Donner l'expression de $I_{bias}$ en fonction de $R_{bias}$ et $V_{bias}$.
+2. En déduire que si $V_{bias}$ est bruitée, $I_{bias}$ l'est aussi, ce qui le rend peu adapté pour alimenter des circuits analogiques.
+3. Sachant qu'il n'y a aucun courant de grille, donner l'expression de $V_\Delta$ en fonction de $R_\Delta$ et $I_{bias}$.
+4. Sur la maille formée de $M_1$, $R_\Delta$ et $M_2$, écrire la relation entre $V_{GS2}$, $R_\Delta$, $I_{bias}$ et $V_{GS1}$.
+5. Montrer que $I_{out} = I_{D0}\exp\left(\frac{V_{GS1} - V_{th}}{\eta U_t}\right)\exp\left(-\frac{R_\Delta I_{bias}}{\eta U_t}\right)$.
+6. Réécrire cette relation pour avoir $I_{out}$ en fonction de $I_{bias}$, $R_\Delta$ et $U_t$.
+7. Cette relation présente un maximum : calculer la dérivée de $I_{out}$ par rapport à $I_{bias}$.
+8. En déduire que $I_{out}$ est maximal lorsque $V_\Delta = \eta U_t$, et exprimer ce maximum en fonction de $I_{bias}$.
+9. L'expression de la question 7 est le gain en courant aux petites variations, $i_{out} = f(i_{bias})$. Que vaut-il dans les conditions de la question 8 ?
+10. Justifier a posteriori le nom de « générateur de courant suppresseur de variations ».
+
+**II. Étude du générateur auto-polarisé : contre-réaction.** Le circuit de la @fig-generateur-courant (b) referme la boucle par un miroir PMOS, ce qui le rend indépendant de l'alimentation. La modulation de longueur de canal est négligée ; $M_{102}$ est 2,72 fois plus grand que $M_{101}$, ce qui impose un rapport de 2,72 entre $I_1$ et $I_2$. L'amplificateur de boucle (figure 3 de l'énoncé, non redessinée : $M_1$, $R_\Delta$ et $M_2$ de la figure (a), attaqués par un courant $I_{in}$ au nœud haut de $R_\Delta$, sortie $I_{out}$ au drain de $M_2$) est étudié d'abord. Le schéma petits signaux d'un MOS sous le seuil est celui du MOS saturé ; seule l'expression de $g_m$ change.
+
+1. Établir le schéma équivalent aux petites variations de l'amplificateur de boucle.
+2. Exprimer $i_{in}$ en fonction de $g_{m1}$ et $v_{gs1}$, et en déduire la résistance d'entrée de l'amplificateur.
+3. Exprimer $v_{gs2}$ en fonction de $v_{gs1}$, $g_{m1}$ et $R_\Delta$.
+4. En déduire que le gain en courant de l'amplificateur vaut $G_i = \frac{i_{out}}{i_{in}} = \frac{g_{m2}}{g_{m1}}(1 - g_{m1}R_\Delta)$.
+5. Dessiner le quadripôle équivalent à l'amplificateur, avec son impédance d'entrée et son générateur de courant lié en sortie.
+
+Réseau de retour (figure 4 de l'énoncé : le miroir $M_{101}$, $M_{102}$ seul, attaqué par $I_{in}$ sur $M_{101}$, sortie $I_{out}$ sur $M_{102}$).
+
+6. Ce circuit est un bloc élémentaire bien connu. Lequel ?
+7. En déduire son quadripôle équivalent aux petites variations, avec son impédance d'entrée en fonction de $g_{m101}$ et son générateur de courant lié de gain 2,72.
+8. En regroupant les quadripôles des questions 5 et 7, identifier le type de contre-réaction mis en œuvre.
+9. Sous le seuil, $g_m = \frac{I_D}{\eta U_t}$. En déduire $G_i$ en fonction de $V_\Delta$, $\eta$ et $U_t$.
+10. En déduire que si l'on fixe $V_\Delta = \eta U_t$ (ce qui, avec $R_\Delta$, fixe aussi $I_1$ et $I_2$), un courant parasite injecté à l'entrée de la boucle n'est pas transmis en sortie, ce qui rend le circuit robuste aux bruits de l'alimentation.
+
+**Annexe** : $(uv)' = u'v + uv'$ ; $(\exp u)' = u'\exp u$ ; $e \approx 2{,}72$ ; $e^{-1} \approx 0{,}37$.
+:::
+
+::: {.complement}
+**Proposition de solution (aucun corrigé).**
+
+**Partie I.**
+
+1. $I_{bias} = \frac{V_{bias} - V_{GS1}}{R_{bias}} \approx \frac{V_{bias}}{R_{bias}}$ ($V_{GS1}$, inférieure au seuil, est petite devant $V_{bias}$).
+2. Toute variation $\delta V_{bias}$ donne $\delta I_{bias} \approx \frac{\delta V_{bias}}{R_{bias}}$ : le bruit de l'alimentation passe dans le courant.
+3. Sans courant de grille, tout $I_{bias}$ traverse $R_\Delta$ : $V_\Delta = R_\Delta I_{bias}$.
+4. La grille de $M_1$ est au haut de $R_\Delta$, celle de $M_2$ au bas : $V_{GS2} = V_{GS1} - R_\Delta I_{bias}$.
+5. $I_{out} = I_{D0}\exp\left(\frac{V_{GS2} - V_{th}}{\eta U_t}\right)$ ; on remplace $V_{GS2}$ et on sépare l'exponentielle.
+6. $M_1$ est traversé par $I_{bias}$ : $I_{bias} = I_{D0}\exp\left(\frac{V_{GS1} - V_{th}}{\eta U_t}\right)$, d'où
+   $$
+   I_{out} = I_{bias}\exp\left(-\frac{R_\Delta I_{bias}}{\eta U_t}\right) .
+   $$ {#eq-iout-suppresseur}
+7. $\frac{\mathrm{d}I_{out}}{\mathrm{d}I_{bias}} = \left(1 - \frac{R_\Delta I_{bias}}{\eta U_t}\right)\exp\left(-\frac{R_\Delta I_{bias}}{\eta U_t}\right)$.
+8. La dérivée s'annule pour $R_\Delta I_{bias} = \eta U_t$, soit $V_\Delta = \eta U_t$ ; alors $I_{out,max} = \frac{I_{bias}}{e} \approx 0{,}37\, I_{bias}$.
+9. Au maximum, le gain en courant aux petites variations est **nul**.
+10. Au voisinage de ce point, une petite variation de $I_{bias}$ (bruit de $V_{bias}$) ne modifie pas $I_{out}$ au premier ordre : les variations sont « supprimées ».
+
+**Partie II.**
+
+1. $M_1$ : source commandée $g_{m1}v_{gs1}$ entre drain et source (masse) ; $R_\Delta$ entre la grille de $M_1$ (entrée) et le drain de $M_1$ ; la grille de $M_2$ au drain de $M_1$ ; $M_2$ : $g_{m2}v_{gs2}$ en sortie ($r_{ds}$ négligée).
+2. Le courant d'entrée traverse $R_\Delta$ et entre dans le drain de $M_1$ : $i_{in} = g_{m1}v_{gs1}$, donc $R_{in} = \frac{v_{gs1}}{i_{in}} = \frac{1}{g_{m1}}$.
+3. $v_{gs2} = v_{gs1} - R_\Delta i_{in} = v_{gs1}(1 - g_{m1}R_\Delta)$.
+4. $i_{out} = g_{m2}v_{gs2} = g_{m2}(1 - g_{m1}R_\Delta)\frac{i_{in}}{g_{m1}}$ : on retrouve $G_i$.
+5. Entrée : résistance $\frac{1}{g_{m1}}$ ; sortie : source de courant $G_i\, i_{in}$ (amplificateur de courant, [chapitre 2](02-amplificateurs-contre-reaction.qmd#sec-topologies-quadripoles)).
+6. Un **miroir de courant** PMOS.
+7. Entrée : $\frac{1}{g_{m101}}$ (transistor monté en diode) ; sortie : source de courant $2{,}72\, i_{in}$.
+8. Les deux blocs sont des amplificateurs de courant : le retour prélève le courant de sortie de l'amplificateur (en série dans sa branche) et réinjecte un courant au nœud d'entrée (en parallèle) : contre-réaction **courant-parallèle** ([chapitre 2](02-amplificateurs-contre-reaction.qmd#sec-cr-courant-parallele)).
+9. $g_{m1} = \frac{I_1}{\eta U_t}$, $g_{m2} = \frac{I_2}{\eta U_t}$ et $V_\Delta = R_\Delta I_1$ :
+   $$
+   G_i = \frac{I_2}{I_1}\left(1 - \frac{V_\Delta}{\eta U_t}\right) .
+   $$
+10. Pour $V_\Delta = \eta U_t$, $G_i = 0$ : une variation de courant injectée à l'entrée de la boucle n'atteint pas la sortie. C'est cohérent avec la partie I : @eq-iout-suppresseur donne alors $I_2 = I_1/e$, exactement le rapport $1/2{,}72$ imposé par le miroir ; le point de fonctionnement se place de lui-même au sommet de la courbe, et $I_1 = \frac{\eta U_t}{R_\Delta}$ ne dépend que de $R_\Delta$ et de la température, pas de $V_{DD}$.
+:::
+
+## À retenir {#sec-retenir-references}
+
+- **Principe** : additionner un terme TC− et un terme TC+ pour obtenir TC0 *(notes externes)*.
+- **TC−** : $\frac{\mathrm{d}V_{BE}}{\mathrm{d}T} = \frac{V_{BE} - V_{BG}}{T} \approx -2$ mV/°C, $V_{BG} \approx 1{,}26$ V (@eq-derivee-vbe) *(notes externes)*.
+- **TC+ (PTAT)** : deux bipolaires de surfaces dans le rapport $N$ au même courant, $\Delta V_{BE} = U_T\ln N$, $\frac{\mathrm{d}\Delta V_{BE}}{\mathrm{d}T} = \frac{k}{q}\ln N$ (@eq-delta-vbe-ptat) *(notes externes)*.
+- **Bandgap** : $V_{ref} = V_{BE} + K\,U_T\ln N$, $\frac{\mathrm{d}V_{ref}}{\mathrm{d}T} = \frac{V_{ref} - V_{BG}}{T}$ : TC0 pour $V_{ref} = V_{BG}$ (@eq-derivee-vref-bandgap) ; courbe en cloche, TC0 en un seul point *(notes externes)*. Brokaw : $I_1 = I_2$ par l'amplificateur, $V_{ptat} = 2\frac{R}{R_\Delta}U_T\ln N$, $V_{Ref} = V_{BE1} + V_{ptat}$ *(complément)*.
+- **Sortie fractionnaire** : un pont $R_1$, $R_2$ donne TC0 pour $V_{ref} = \frac{R_1}{R_1 + R_2}V_{BG}$ (@eq-derivee-vref-fractionnaire) *(notes externes ; facteur 1/4 : bloc `av-vref-bandgap-pnp-facteur`)*.
+- **CMOS** : PNP verticaux parasites (collecteur au substrat) ; bandgap à amplificateur, $V_{out} = V_{BE2} + \frac{R_1}{R}U_T\ln N$ *(notes externes)*.
+- **Full CMOS** : $V_{th}(T) = V_{th_0} + \alpha(T - T_0)$, $\alpha < 0$ (@eq-vth-temperature) ; dual-$V_{th}$ : $V_{ref} = \frac{R}{R_\Delta}\Delta V_{th} + V_{th1}$ (@eq-vref-dual-vth), TC0 pour $\frac{R}{R_\Delta} = -\frac{\alpha_1}{\alpha_1 - \alpha_2}$ (@eq-dimensionnement-dual-vth) *(notes et corrigé externes)*. TD 5 (SOI) : $V_{Ref} = V_{th0} - V_{th1}$, TC0 et indépendante de $V_{DD}$ *(complément)*.
+- **Courant sous le seuil** : $I_{out} = I_{bias}e^{-R_\Delta I_{bias}/(\eta U_t)}$ (@eq-iout-suppresseur), maximal et insensible aux variations pour $V_\Delta = \eta U_t$ ; rebouclé par un miroir de rapport $e$, il s'auto-polarise indépendamment de l'alimentation *(complément)*.

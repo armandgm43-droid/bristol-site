@@ -1,0 +1,35 @@
+% Figure — Bandgap de Brokaw du sujet de Y. Deval (24 octobre 2025) : Q2 (×N) et Q1 chargés par R0, amplificateur différentiel parfait, R_Δ et R (EANA3, chapitre 5).
+% D'après le sujet [td04-2026, p. 5, figure 1], redessiné.
+% Rendu SVG :
+%   latex -output-directory=<dossier temporaire> 05-bandgap-brokaw.tex
+%   dvisvgm --no-fonts --exact-bbox -o 05-bandgap-brokaw.svg <dossier temporaire>/05-bandgap-brokaw.dvi
+\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{sansmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[european, straightvoltages, americancurrents]{circuitikz}
+\usetikzlibrary{shapes.geometric}
+\begin{document}
+\sansmath
+\begin{circuitikz}[font=\small, >=latex, fleche/.style={->, thick}]
+  \draw (0,2) node[npn, xscale=-1] (Q2) {};  \node[left] at (-0.5,2.35) {$Q_2$ ($\times N$)};
+  \draw (2.2,2) node[npn, xscale=-1] (Q1) {};  \node[above left] at (2.15,2.45) {$Q_1$};
+  \draw (-0.4,6.3) -- (2.6,6.3);  \node[above] at (1.1,6.3) {$V_{DD}$};
+  \draw (0,6.3) to[R, l_=$R_0$, i>^=$I_2$] (0,4.6) -- (Q2.C);
+  \draw (2.2,6.3) to[R, l=$R_0$, i>_=$I_1$] (2.2,4.6) -- (Q1.C);
+  \draw (4.8,4.15) node[op amp, yscale=-1] (A) {};  \node at (A.center) {$A_v$};
+  \draw (2.2,0 |- A.+) node[circ]{} -- (A.+);
+  \draw (0,0 |- A.-) node[circ]{} -- (2.05,0 |- A.-) arc(180:0:0.15) -- (A.-);
+  \draw (Q2.B) -- (Q1.B) -- (6.6,2) node[circ]{} -- (7.4,2) node[ocirc]{};
+  \draw (A.out) -- (6.6,0 |- A.out) -- (6.6,2);
+  \draw (Q2.E) -- (0,0.6) to[R, l=$R_\Delta$] (2.2,0.6) coordinate (e);
+  \draw (Q1.E) -- (e) node[circ]{};
+  \draw[fleche] (1.6,0.05) -- node[below]{$\Delta V_{BE}$} (0.6,0.05);
+  \draw (e) to[R, l_=$R$, i>^=$I_{ptat}$] (2.2,-1.3);
+  \draw[fleche] (2.95,-1.1) -- node[right]{$V_{ptat}$} (2.95,0.4);
+  \draw (2.2,-1.3) -- (7.4,-1.3) node[ocirc]{};  \draw (2.2,-1.3) node[ground]{};
+  \draw[fleche] (7.7,-1.1) -- node[right]{$V_{Ref}$} (7.7,1.8);
+\end{circuitikz}
+\end{document}

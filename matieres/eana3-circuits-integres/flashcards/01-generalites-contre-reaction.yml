@@ -1,0 +1,336 @@
+# Flashcards — EANA3, chapitre 1 : Rappels et généralités sur la contre-réaction.
+# Générées le 2026-10-18 à partir du cours validé (étape 8). Format : conventions.md § 10.
+# Conversion : python scripts/flashcards.py (écrit revision/cartes/eana3.json).
+# Rappels : un identifiant n'est jamais modifié ni réutilisé ; une carte supprimée
+# va dans ids-retires. Les lignes d'un même paragraphe sont jointes par le script ;
+# une ligne « - … » ou un bloc $$…$$ commencent une nouvelle ligne ; une ligne vide sépare deux paragraphes.
+matiere: eana3
+chapitre: 1
+cours: cours/01-generalites-contre-reaction.qmd
+ids-retires: []
+cartes:
+
+  # --- Système en réaction négative ---
+
+  - id: eana3-black-invention
+    type: definition
+    question: |
+      Qui a inventé l'amplificateur à contre-réaction, quand, et quel problème cette invention résout-elle ?
+    reponse: |
+      Harold S. Black, en 1927 (Bell Laboratories). Les composants actifs sont intrinsèquement non linéaires ; la contre-réaction les rend sensiblement linéaires.
+    ref: sec-histoire-black
+    source: officiel
+
+  - id: eana3-gain-boucle-fermee
+    type: formule
+    question: |
+      Gain $A_F$ d'un système en réaction négative (amplificateur $A$, réseau de retour $\beta_F$) ?
+    reponse: |
+      $$A_F = \frac{v_s}{v_e} = \frac{A}{1 + A\beta_F}$$
+      $A\beta_F$ est le gain de boucle ($A_{OL}$ dans les notes).
+    ref: eq-gain-boucle-fermee
+    source: notes-externes
+
+  - id: eana3-gain-boucle-fermee-demonstration
+    type: raisonnement
+    question: |
+      À partir de quelles trois équations obtient-on $A_F = \frac{A}{1 + A\beta_F}$ ?
+    reponse: |
+      $v_i = v_e - v_f$ ; $v_f = \beta_F v_s$ ; $v_s = A v_i$.
+      D'où $v_s = A(v_e - \beta_F v_s)$, soit $v_s(1 + A\beta_F) = A v_e$.
+    ref: sec-reaction-negative
+    source: notes-externes
+
+  - id: eana3-gain-un-sur-betaf
+    type: condition
+    question: |
+      Dans quelle condition le gain du montage bouclé vaut-il $\frac{1}{\beta_F}$, et quelle en est la conséquence ?
+    reponse: |
+      Si $A\beta_F \gg 1$ : $A_F \approx \dfrac{1}{\beta_F}$. Le gain ne dépend plus de l'amplificateur, seulement du réseau de contre-réaction.
+    ref: eq-approx-un-sur-beta
+    source: notes-externes
+
+  # --- Robustesse ---
+
+  - id: eana3-sensibilite-variation-a
+    type: formule
+    question: |
+      Variation relative de $A_F$ due à une variation relative de $A$ ?
+    reponse: |
+      $$\frac{\mathrm{d}A_F}{A_F} = \frac{\mathrm{d}A}{A} \times \frac{1}{1 + A\beta_F} \ll 1$$
+      Les variations de $A$ sont divisées par $1 + A\beta_F$ : c'est la **reproductibilité industrielle** (résultat signalé comme important pour l'examen).
+    ref: eq-sensibilite-gain
+    source: notes-externes
+
+  - id: eana3-sensibilite-variation-a-exemple
+    type: exercice
+    question: |
+      $A = 10^5$, $\beta_F = 10^{-2}$ : de combien varie $A_F$ si $A$ varie de 10 % ?
+    reponse: |
+      $A\beta_F = 1000$, donc $\dfrac{\mathrm{d}A_F}{A_F} = \dfrac{10\,\%}{1001} \approx 0{,}01\,\%$.
+    ref: sec-robustesse
+    source: complement
+
+  - id: eana3-sensibilite-variation-betaf
+    type: formule
+    question: |
+      Variation relative de $A_F$ due à une variation relative de $\beta_F$, pour $A\beta_F \gg 1$ ? Conséquence ?
+    reponse: |
+      $$\frac{\mathrm{d}A_F}{A_F} = \frac{\mathrm{d}\beta_F}{\beta_F} \times \frac{-A\beta_F}{1 + A\beta_F} \approx -\frac{\mathrm{d}\beta_F}{\beta_F}$$
+      soit $\left|\frac{\mathrm{d}A_F}{A_F}\right| \approx \left|\frac{\mathrm{d}\beta_F}{\beta_F}\right|$ : **pas de gain en robustesse**, il faut maîtriser les composants de la boucle de retour.
+    ref: eq-sensibilite-beta
+    source: notes-externes
+
+  - id: eana3-sensibilite-betaf-signe-piege
+    type: piege
+    question: |
+      Les notes concluent $\frac{\mathrm{d}A_F}{A_F} \simeq \frac{\mathrm{d}\beta_F}{\beta_F}$. Que manque-t-il ?
+    reponse: |
+      Le signe : le facteur $\frac{-A\beta_F}{1 + A\beta_F}$ tend vers $-1$. Une augmentation de $\beta_F$ **diminue** $A_F$. Le résultat est juste en valeur absolue.
+    ref: eq-sensibilite-beta
+    source: notes-externes
+
+  - id: eana3-maitriser-betaf-rapports
+    type: propriete
+    question: |
+      Pourquoi $\beta_F$ est-il réalisé avec des rapports de composants passifs sur un circuit intégré ?
+    reponse: |
+      On maîtrise bien mieux les **rapports** de résistances ou de capacités que leurs valeurs absolues : des composants voisins sur la puce subissent les mêmes dispersions de fabrication.
+    ref: sec-robustesse-beta
+    source: complement
+
+  # --- Linéarisation ---
+
+  - id: eana3-linearisation-distorsion
+    type: raisonnement
+    question: |
+      Pourquoi un amplificateur non linéaire crée-t-il des harmoniques, et comment la contre-réaction linéarise-t-elle le montage ?
+    reponse: |
+      $A$ est un polynôme ($a_1 v_i + a_2 v_i^2 + \dots$) : une raie à $f_0$ en entrée donne des raies à $2f_0$, $3f_0$… en sortie.
+      Si $A\beta_F \gg 1$, $A_F \approx 1/\beta_F$ : $A$ n'intervient plus ; si $\beta_F$ est linéaire, le montage l'est aussi.
+    ref: sec-linearisation
+    source: notes-externes
+
+  # --- Gain-bande ---
+
+  - id: eana3-compromis-gain-bande
+    type: propriete
+    question: |
+      Effet de la contre-réaction sur le gain et la bande passante d'un amplificateur du premier ordre $A(p) = \frac{A_0}{1 + p/\omega_0}$ ?
+    reponse: |
+      Le gain statique est **divisé** et la pulsation de coupure **multipliée** par $1 + A_0\beta_F$ :
+      $$A_F(p) = \frac{A_0/(1 + A_0\beta_F)}{1 + p/(\omega_0(1 + A_0\beta_F))}$$
+    ref: sec-gain-bande
+    source: notes-externes
+
+  - id: eana3-produit-gain-bande
+    type: resultat
+    question: |
+      Quelle grandeur est conservée par la contre-réaction pour un amplificateur du premier ordre ?
+    reponse: |
+      Le **produit gain-bande** :
+      $$\frac{A_0}{1 + A_0\beta_F} \times \omega_0 (1 + A_0\beta_F) = A_0\,\omega_0$$
+    ref: eq-produit-gain-bande
+    source: complement
+
+  - id: eana3-bode-palier-boucle-fermee
+    type: methode
+    question: |
+      Sur le diagramme de Bode de $A$, comment tracer le gain du montage bouclé $A_F$ ?
+    reponse: |
+      Palier horizontal à $\log(1/\beta_F)$ (tant que $A\beta_F \gg 1$) jusqu'à son intersection avec la pente de $A$, à $\omega_0(1 + A\beta_F)$ ; ensuite $A_F$ suit la courbe de $A$.
+      Les notes de 2023 étiquettent à tort le palier $\log(1/(A\beta_F))$.
+    ref: sec-gain-bande
+    source: notes-externes
+
+  # --- Stabilité ---
+
+  - id: eana3-point-critique-stabilite
+    type: condition
+    question: |
+      Point critique de la stabilité d'un système contre-réactionné, et sur quelle grandeur l'étudie-t-on ?
+    reponse: |
+      Sur la boucle ouverte $A_{OL} = A\beta_F$. $A_F \to \infty$ si $1 + A\beta_F = 0$ :
+      $$A\beta_F = -1 \iff |A\beta_F| = 1\ (0\ \text{dB}) \text{ et } \arg(A\beta_F) = 180°$$
+    ref: eq-point-critique
+    source: notes-externes
+
+  - id: eana3-marges-gain-phase-definition
+    type: definition
+    question: |
+      Définitions de la marge de phase et de la marge de gain ?
+    reponse: |
+      - Marge de phase : écart à 180°, mesuré là où $|A\beta_F| = 1$ : $M_\varphi = 180° + \arg A\beta_F(j\omega_c)$.
+      - Marge de gain : écart à 0 dB, mesuré là où $\arg(A\beta_F) = -180°$ : $M_G = -20\log|A\beta_F(j\omega_{180})|$.
+    ref: sec-marges
+    source: notes-externes
+
+  - id: eana3-axe-zero-db-un-sur-betaf
+    type: methode
+    question: |
+      Comment lire la marge de phase sur le diagramme de Bode de $A$ seul ?
+    reponse: |
+      $\log(A\beta_F) = \log A - \log(1/\beta_F)$ : la droite horizontale $\log(1/\beta_F)$ est le **nouvel axe 0 dB** de $A\beta_F$. On projette sur la courbe de phase le point où $|A|$ croise cette droite.
+    ref: sec-marges
+    source: notes-externes
+
+  - id: eana3-critere-45-degres
+    type: condition
+    question: |
+      Critère de stabilité retenu dans le cours, et lien avec la position de l'intersection par rapport aux pôles de $A$ ?
+    reponse: |
+      - Intersection avec $\log(1/\beta_F)$ **après** le 2e pôle : phase proche de −180°, $M_\varphi < 45°$ ⇒ risque d'instabilité, d'oscillations.
+      - Intersection **entre** $\omega_1$ et $\omega_2$ : phase proche de −90°, $M_\varphi > 45°$ ⇒ stable.
+    ref: sec-marges
+    source: notes-externes
+
+  - id: eana3-suiveur-plus-difficile
+    type: piege
+    question: |
+      Quel montage contre-réactionné est le plus difficile à stabiliser, et pourquoi ?
+    reponse: |
+      Le **suiveur** ($\beta_F = 1$). Plus $\beta_F$ est grand, plus la droite $\log(1/\beta_F)$ est basse, plus l'intersection avec $|A|$ est à haute fréquence et plus la marge de phase est faible.
+    ref: sec-marges
+    source: complement
+
+  - id: eana3-stabiliser-deux-solutions
+    type: methode
+    question: |
+      Deux façons de stabiliser un système qui pourrait être instable ?
+    reponse: |
+      - **Solution brutale** : déplacer le pôle dominant avec une capacité (bande passante réduite, $A$ atténué).
+      - **Solution fine** : séparer les pôles, en plaçant le second pôle $\omega_2$ sur l'axe 0 dB de $A\beta_F$ (droite $\log(1/\beta_F)$), soit $M_\varphi = 45°$.
+    ref: sec-stabiliser
+    source: notes-externes
+
+  - id: eana3-second-pole-45-degres
+    type: raisonnement
+    question: |
+      Pourquoi placer le second pôle sur l'axe 0 dB de $A\beta_F$ donne-t-il une marge de phase de 45° ?
+    reponse: |
+      Le pôle dominant, très en dessous, apporte −90° à $\omega_2$ et le second pôle −45° à sa coupure : phase −135°, donc $M_\varphi = 45°$ si $|A\beta_F(\omega_2)| \approx 1$. C'est la plus grande bande passante compatible avec 45° de marge.
+    ref: sec-stabiliser
+    source: complement
+
+  # --- Effet Miller ---
+
+  - id: eana3-miller-impedance-entree
+    type: formule
+    question: |
+      Amplificateur de gain $A$ ($v_{out} = A v_{in}$) avec une impédance $Z$ entre entrée et sortie : impédance d'entrée $Z_{in}$ ?
+    reponse: |
+      $$Z_{in} = \frac{Z}{1 - A}$$
+      (l'amplificateur n'absorbe pas de courant : $v_{in} - v_{out} = Z\,i_{in}$).
+    ref: eq-impedance-entree-miller
+    source: notes-externes
+
+  - id: eana3-miller-impedance-sortie
+    type: formule
+    question: |
+      Même montage (impédance $Z$ entre entrée et sortie d'un amplificateur de gain $A$) : impédance de sortie $Z_{out}$ ?
+    reponse: |
+      $$Z_{out} = \frac{AZ}{A - 1} = \frac{Z}{1 - 1/A} \approx Z \quad (|A| \gg 1)$$
+      Les deux jeux de notes écrivent un signe faux (ils donneraient $-Z$).
+    ref: exr-mise-en-jambe
+    source: notes-externes
+
+  - id: eana3-capacite-miller
+    type: formule
+    question: |
+      Capacité $C$ entre l'entrée et la sortie d'un amplificateur inverseur de gain $A$ : capacités vues de l'entrée et de la sortie ?
+    reponse: |
+      $$C_M = C\,(1 - A) \approx |A|\,C \quad \text{en entrée}$$
+      et $\approx C$ en sortie. C'est l'**effet Miller** : une petite capacité intégrée crée un pôle dominant.
+    ref: eq-capacite-miller
+    source: notes-externes
+
+  - id: eana3-capacite-miller-signe-piege
+    type: piege
+    question: |
+      Pourquoi écrire $C_M \approx |A|\,C$ et non $C_M = AC$ pour un étage source commune ?
+    reponse: |
+      Avec $v_{out} = A v_{in}$, le gain d'un inverseur est négatif ($A = -g_m R_S$) : $C(1 - A) = C(1 + g_m R_S) \approx g_m R_S\, C$. $AC$ serait négative.
+    ref: eq-capacite-miller
+    source: notes-externes
+
+  # --- Séparation des pôles ---
+
+  - id: eana3-poles-methode-enseirbien
+    type: methode
+    question: |
+      « Méthode de l'enseirbien » pour les pôles d'un étage source commune avec $C$ entre grille et drain : capacités équivalentes et pôles obtenus ?
+    reponse: |
+      Entrée : $C_e + C_M$ ; sortie : $C_S + C$. D'où
+      $$p_1 = \frac{1}{R_e(C_M + C_e)} \approx \frac{1}{R_e |A| C}, \qquad p_2 = \frac{1}{R_S(C + C_S)}$$
+      $p_1$ est juste, $p_2$ est **faux**.
+    ref: exr-poles-enseirbien
+    source: notes-externes
+
+  - id: eana3-source-commune-transfert
+    type: formule
+    question: |
+      Fonction de transfert $v_{out}/i_e$ de l'étage source commune avec $C$ entre grille et drain : forme du numérateur et du dénominateur ?
+    reponse: |
+      $$\frac{v_{out}}{i_e} = \frac{-(g_m - Cp)\,R_e R_S}{1 + p\,[(C_S + C)R_S + (C_e + C)R_e + g_m R_e R_S C] + p^2 (C_S C_e + C C_e + C C_S) R_e R_S}$$
+      Un zéro, deux pôles (les notes oublient le signe « − »).
+    ref: eq-transfert-source-commune
+    source: notes-externes
+
+  - id: eana3-decomposition-pole-dominant
+    type: methode
+    question: |
+      Comment extraire $p_1$ et $p_2$ d'un dénominateur du second ordre quand il y a un pôle dominant ?
+    reponse: |
+      $D(p) = (1 + p/p_1)(1 + p/p_2) \approx 1 + \dfrac{p}{p_1} + \dfrac{p^2}{p_1 p_2}$ (car $p_1 \ll p_2$). On identifie le terme en $p$ (donne $p_1$), puis le terme en $p^2$ (donne $p_1 p_2$, donc $p_2$).
+    ref: exr-poles-enseirbienne
+    source: notes-externes
+
+  - id: eana3-pole-dominant-source-commune
+    type: formule
+    question: |
+      Pôle dominant de l'étage source commune avec capacité $C$ entre grille et drain, et hypothèses ?
+    reponse: |
+      $$p_1 \approx \frac{1}{g_m R_e R_S C}$$
+      Pour $g_m R_e \gg 1$, $g_m R_S \gg 1$ et $C_e, C_S \ll C$. C'est le résultat de l'enseirbien avec $|A| = g_m R_S$.
+    ref: eq-pole-dominant
+    source: notes-externes
+
+  - id: eana3-pole-non-dominant-source-commune
+    type: formule
+    question: |
+      Second pôle de l'étage source commune avec capacité $C$ entre grille et drain ?
+    reponse: |
+      $$p_2 \approx \frac{g_m}{C_e + C_S}$$
+      (et non $\frac{1}{R_S(C + C_S)}$) ; indépendant de $C$ dès que $C \gg C_e, C_S$.
+    ref: eq-pole-non-dominant
+    source: notes-externes
+
+  - id: eana3-erreur-enseirbien-haute-frequence
+    type: raisonnement
+    question: |
+      Pourquoi la méthode de l'enseirbien se trompe-t-elle sur le second pôle ?
+    reponse: |
+      À haute fréquence, $C$ court-circuite grille et drain : le transistor est **monté en diode**, d'impédance $1/g_m$. $C_e$ et $C_S$ se retrouvent en parallèle sur $1/g_m$, d'où $p_2 = g_m/(C_e + C_S)$. « C n'est plus C ».
+    ref: exr-poles-enseirbienne
+    source: notes-externes
+
+  - id: eana3-zero-demi-plan-droit
+    type: propriete
+    question: |
+      Où est le zéro de l'étage source commune avec $C$ entre grille et drain, et quel est son effet ?
+    reponse: |
+      En $p = g_m/C$, à partie réelle **positive** (demi-plan droit), dû au passage direct du signal à travers $C$. Il ajoute du retard de phase et réduit la marge de phase.
+    ref: sec-poles-source-commune
+    source: complement
+
+  - id: eana3-capacite-compensation-choix
+    type: methode
+    question: |
+      Choix de la capacité de compensation $C$ : effet d'une valeur optimale, plus grande, plus petite ?
+    reponse: |
+      Augmenter $C$ **sépare les pôles** ($p_1$ baisse, $p_2$ monte).
+      - $C$ optimale : $p_2$ sur l'axe 0 dB, $M_\varphi = 45°$, stable avec la bande passante maximale.
+      - $C$ plus grande : $M_\varphi > 45°$, stable mais bande passante plus faible.
+      - $C$ plus petite : pôles rapprochés, $M_\varphi < 45°$.
+    ref: sec-capacite-compensation
+    source: notes-externes

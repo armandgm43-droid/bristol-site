@@ -1,0 +1,76 @@
+---
+title: "EANA3 — Circuits intégrés"
+subtitle: "Fiche matière"
+matiere: eana3
+enseignants: ["François Rivet", "Yann Deval"]
+annee: "2026-2027"
+number-sections: false
+---
+
+{{< include /_macros.qmd >}}
+
+## Informations
+
+| | |
+|---|---|
+| Code | EANA3 (ancien code : EA234) |
+| Enseignants | François Rivet (systèmes contre-réactionnés) ; Yann Deval (oscillateurs et références de tension) |
+| Auteurs d'énoncés de TD | Nathalie Deltimple (oscillateur à résistance négative, oscillateur en anneau) |
+| Année | 2026-2027 (support officiel disponible : version 2025) |
+| Volume (support 2025) | 13 cours magistraux, 6 TD (+ 2 TD additionnels), 1 TP (simulation d'un oscillateur LC intégré) |
+
+## Chapitres
+
+Plan Bristol tiré du support officiel (`support`, p. 1-2). Le support comporte deux parties, numérotées chacune à partir de 1 ; Bristol numérote les chapitres à la suite.
+
+| N° | Chapitre | Partie (enseignant) | Séances (support 2025) | Statut |
+|---|---|---|---|---|
+| 1 | [Rappels et généralités sur la contre-réaction](cours/01-generalites-contre-reaction.qmd) | Systèmes contre-réactionnés (F. Rivet), ch. 1 | cours 1 et 2 | FLASHCARDS GÉNÉRÉES |
+| 2 | [Amplificateurs en contre-réaction](cours/02-amplificateurs-contre-reaction.qmd) | Systèmes contre-réactionnés (F. Rivet), ch. 2 | cours 4 et 6 | FLASHCARDS GÉNÉRÉES |
+| 3 | [Applications de la théorie de la contre-réaction](cours/03-applications-contre-reaction.qmd) | Systèmes contre-réactionnés (F. Rivet), ch. 3 | cours 8 et 11 ; TD 2, TD 3, TD additionnel, sujet 2025 | FLASHCARDS GÉNÉRÉES |
+| 4 | [Oscillateurs](cours/04-oscillateurs.qmd) | Oscillateurs et références de tension (Y. Deval), ch. 1 | cours 3, 5, 7 et 9 ; TD 4, TD 6, TD additionnel, sujet 2021 | FLASHCARDS GÉNÉRÉES |
+| 5 | [Références de tension](cours/05-references-de-tension.qmd) | Oscillateurs et références de tension (Y. Deval), ch. 2 | cours 10, 12 et 13 ; TD 5, sujets 2025 et 2026 | FLASHCARDS GÉNÉRÉES |
+
+## Table des notations
+
+À compléter lors de l'analyse de chaque chapitre. Notations relevées à l'inventaire (à confirmer) :
+
+| Rôle | Support | Notes |
+|---|---|---|
+| Entrée du montage / entrée de l'amplificateur | $v_i$ / $v_e$ (énoncés, ch. 2-3) | $v_e$ / $v_i$ (ch. 1) — **inversé** ; Bristol suit la source de chaque chapitre |
+| Gain de l'amplificateur | $A$ (pour un inverseur, les notes écrivent souvent $A$ pour $\lvert A\rvert$ : bloc `av-capacite-miller-signe`, ch. 1) | $A$ |
+| Facteur de contre-réaction | $\beta_F$ (p. 7, p. 12) | $\beta_F$ |
+| Gain du système bouclé | $\frac{A}{1 + \beta_F A}$ (p. 12) | $A_F = \frac{A}{1 + A\beta_F}$ |
+| Gain de boucle (boucle ouverte) | $A_{OL}$ (p. 12) | $A_{OL} = A\beta_F$ |
+| Variable de Laplace | $p = j\omega$ (p. 5) | $p$ |
+| Signal de contre-réaction | $V_{fb}$, $i_{fb}$ (p. 7, p. 10) | $v_f$ (ch. 1) ; $v_{fb}$, $i_{fb}$ (ch. 2) |
+| Grandeurs de sortie du montage | $v_o$, $i_o$ | $v_o$, $i_o$ (ch. 2) ; $v_s$ (ch. 1) |
+| Impédance d'entrée de l'amplificateur / du montage bouclé | $Z_e$ / $Z_i$ (p. 7) | $Z_e$ / $Z_i$ |
+| Réseau de retour d'un oscillateur | $\beta$, $\beta(\omega)$ (notes ch. 4) | $\beta$ (ch. 4) |
+| Bruit de phase | $\mathcal{L}(\Delta\omega)$ en dBc/Hz (notes ch. 4) | $\mathcal{L}(\Delta\omega)$ |
+| Fonction de sensibilité impulsionnelle | $\Gamma(\omega_0\tau)$ (ISF, notes ch. 4) | $\Gamma$ |
+| Nombre d'inverseurs d'un anneau | $N$ (notes), $M$ (TD anneau, où $N$ est un rapport d'émetteurs) | $N$ (cours), $M$ (TD) |
+
+## Conventions de la matière
+
+- Variable de Laplace : $p = j\omega$ (support, « Séparation des pôles », partie 2).
+- **Numéros de page** cités : pages du PDF.
+
+## Sources
+
+Inventaire complet, page par page et avec le rattachement aux chapitres : `analyses/inventaire-sources.md` (non publié).
+
+| id | Source | Nature | Remarque |
+|---|---|---|---|
+| `support` | `support/support-cours-2025.pdf`, 30 p. | officielle | plan, puis exercices guidés et énoncés de TD (anciens sujets d'examen EA234) |
+| `td…` | `td/`, 10 énoncés | officielle | numérotation du support 2025 ; deux énoncés distribués en 2026 (TD3, TD4) |
+| `notes-2023-…` | `notes/2023-cours-NN-…pdf`, 9 séances | externe | notes manuscrites d'un tiers (papier quadrillé, scannées en 2023), **pas celles d'Armand** |
+| `tableau-2020-…` | `notes/2020-tableau-cours-NN.pdf`, 4 séances | externe | tableau numérique (support annoté), 2020 ; auteur probable : l'enseignant, non confirmé |
+| `tp` | `tp/tp-oscillateur-lc-350nm.pdf`, 11 p. | officielle | TP (TDM) : oscillateur LC intégré en CMOS 350 nm, sous Cadence (ajouté le 19 octobre 2026) |
+| — | `corriges/`, `annales/` | à préciser | corrigés manuscrits (phase 2) |
+
+## Remarques
+
+- **Notes de cours** : les notes disponibles ne sont pas celles d'Armand (années 2020 et 2023). Dans les chapitres, les blocs *Notes de cours* qui en viennent citent leur source ; les notes d'Armand de 2026-2027 seront ajoutées à leur arrivée.
+- Le support 2025 n'est pas un poly de cours : il contient le plan, puis les énoncés des exercices guidés et des TD. Le contenu des cours magistraux vient surtout des notes.
+- L'ordre des séances a changé d'une année à l'autre (ex. : en 2023, le cours 8 portait sur « Où est la contre-réaction ? », TD 1 du support 2025).

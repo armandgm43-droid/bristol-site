@@ -7,9 +7,38 @@ number-sections: false
 
 ## Matières
 
+2e année, filière Électronique, semestre 7 (2026-2027).
+
+### Circuits et systèmes analogiques
+
 | Code | Matière | Statut |
 |---|---|---|
-| [TS227](matieres/ts227-communications-numeriques/index.qmd) | Introduction aux communications numériques | En cours de mise en place |
+| [EANA1](matieres/eana1-composants-circuits-commutation/index.qmd) | Composants et circuits de commutation | Sources inventoriées ; aucun support officiel reçu |
+| [EAEP1](matieres/eaep1-conversion-energie/index.qmd) | Électronique pour la conversion d'énergie 1 | Sources inventoriées ; plan proposé (7 chapitres) |
+| [EANA2](matieres/eana2-chaine-acquisition/index.qmd) | Chaîne d'acquisition et conditionnement du signal analogique | Sources inventoriées ; plan proposé (5 chapitres) |
+| [EANA3](matieres/eana3-circuits-integres/index.qmd) | Circuits intégrés | Chapitres 1 à 5 : flashcards générées |
+| [EANA4](matieres/eana4-tp-electronique/index.qmd) | Travaux pratiques d'électronique | Matière de TP ou de projet : sources inventoriées |
+| [EARF1](matieres/earf1-modulations-communications/index.qmd) | Modulations analogiques et numériques pour les communications | Sources inventoriées ; plan proposé (4 chapitres) |
+| [PROJ1](matieres/proj1-projet-analogique/index.qmd) | Projet analogique | Matière de TP ou de projet : sources inventoriées |
+
+### Électronique numérique
+
+| Code | Matière | Statut |
+|---|---|---|
+| [NUMC1](matieres/numc1-technologie-circuits-numeriques/index.qmd) | Technologie des circuits numériques | Sources inventoriées ; plan proposé (6 chapitres) |
+| [NUME3](matieres/nume3-conception-vhdl-fpga/index.qmd) | Conception VHDL/FPGA | Matière de TP ou de projet : sources inventoriées |
+| [NUMR1](matieres/numr1-reseaux-internet/index.qmd) | Introduction aux réseaux et à Internet. Programmation réseau | Sources inventoriées ; plan à établir |
+| [TS227](matieres/ts227-communications-numeriques/index.qmd) | Introduction aux communications numériques | Chapitres 1 à 4 sur 6 : flashcards générées |
+
+### Automatique et signal
+
+| Code | Matière | Statut |
+|---|---|---|
+| [AUTO1](matieres/auto1-commande-systemes-lineaires/index.qmd) | Commande des systèmes linéaires à temps continu et discret | Sources inventoriées ; plan proposé (6 chapitres) |
+| [AUTO2](matieres/auto2-tp-automatique/index.qmd) | Travaux pratiques d'automatique 1 et 2 | Matière de TP ou de projet : sources inventoriées |
+| [AUTO3](matieres/auto3-optimisation/index.qmd) | Optimisation | Sources inventoriées ; plan proposé (4 chapitres) |
+| [TSIG1](matieres/tsig1-traitement-numerique-signal/index.qmd) | Traitement numérique du signal | Sources inventoriées ; plan proposé (5 chapitres) |
+| [TSIG2](matieres/tsig2-tp-signal/index.qmd) | Travaux pratiques signal | Matière de TP ou de projet : sources inventoriées |
 
 ## Ressources
 
