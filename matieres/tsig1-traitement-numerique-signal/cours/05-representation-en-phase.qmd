@@ -1,0 +1,498 @@
+---
+title: "SLI et représentation en phase"
+matiere: tsig1
+chapitre: 5
+enseignants: ["Yannick Berthoumieu"]
+annee: "2026-2027"
+statut: verifie
+date-modified: 2026-10-20
+sources:
+  - id: notes
+    fichier: notes/date-inconnue.pdf
+    nature: personnelle
+    seance: inconnue
+    pages: "f. 12 r° à f. 13 r°"
+  - id: notes-2023-ch05
+    fichier: notes/2023-cours-ch05-sli-representation-phase.pdf
+    nature: externe
+    pages: "1-4"
+  - id: notes-2023-ch04
+    fichier: notes/2023-cours-ch04-implementation-filtres.pdf
+    nature: externe
+    pages: "5, 7"
+  - id: td
+    fichier: td/recueil-td-2023.pdf
+    nature: officielle
+    version: "2023 (v2)"
+    pages: "4-6, 9"
+  - id: corrige-2023-td01
+    fichier: corriges/2023-td01-systeme-discret-representation-frequence.pdf
+    nature: externe
+    pages: "6-8, 13"
+  - id: corrige-2023-td03
+    fichier: corriges/2023-td03-placement-poles-zeros-rii.pdf
+    nature: externe
+    pages: "1-2, 4"
+---
+
+{{< include /_macros.qmd >}}
+
+Le module de $H(f)$ dit quelles fréquences passent ; la **phase** dit avec quel retard. Ce chapitre définit le **retard de groupe**, caractérise les filtres à **phase linéaire** (retard identique pour toutes les fréquences) et les filtres à **minimum de phase** (retard minimal à module donné), et montre que tout filtre se décompose en un filtre à minimum de phase suivi d'un **passe-tout**.
+
+::: {.complement}
+Les notes ne donnent pas de titre à ce chapitre (f. 12 r°) ; le titre retenu est celui du chapitre correspondant des notes d'un ancien élève (2023), voir la [fiche matière](../index.qmd).
+:::
+
+## Contexte : retard de groupe {#sec-retard-groupe}
+
+::: {.notes}
+On considère un filtre RII causal, $\sum_k c_k\, y[n-k] = \sum_l d_l\, x[n-l]$, de réponse en fréquence $H(f) = |H(f)|\, e^{j\operatorname{Arg}(H(f))}$.
+
+**Exemple.** Entrée $x[n] = \cos(2\pi f_0 n) + \cos(2\pi f_1 n)$, avec $f_0, f_1 \in [-\frac12, \frac12]$ (fréquences normalisées). Chaque sinusoïde est multipliée par le module et déphasée de la phase à sa fréquence :
+
+$$
+y[n] = |H(f_0)| \cos\bigl(2\pi f_0 n + \operatorname{Arg}(H(f_0))\bigr) + |H(f_1)| \cos\bigl(2\pi f_1 n + \operatorname{Arg}(H(f_1))\bigr),
+$$
+
+soit
+
+$$
+y[n] = |H(f_0)| \cos\Bigl(2\pi f_0 \Bigl(n + \frac{\operatorname{Arg}(H(f_0))}{2\pi f_0}\Bigr)\Bigr) + |H(f_1)| \cos\Bigl(2\pi f_1 \Bigl(n + \frac{\operatorname{Arg}(H(f_1))}{2\pi f_1}\Bigr)\Bigr).
+$$
+
+Les deux composantes sont décalées de $k_0$ et $k_1$ échantillons ; si $k_0 \neq k_1$, elles subissent des **retards différents** [notes, f. 12 r°].
+:::
+
+::: {.complement}
+Avec le signe : $\cos\bigl(2\pi f_0 (n - k_0)\bigr)$ est retardé de $k_0$ échantillons, donc $k_0 = -\dfrac{\operatorname{Arg}(H(f_0))}{2\pi f_0}$ (**retard de phase**). Des retards différents selon la fréquence déforment le signal : c'est la **distorsion de phase**, même si $|H(f_0)| = |H(f_1)| = 1$.
+:::
+
+:::: {.notes}
+::: {#def-retard-groupe}
+## Retard de groupe
+
+$$
+\tau(H) = -\frac{\mathrm{d}\operatorname{Arg}\bigl(H(\omega)\bigr)}{\mathrm{d}\omega}, \qquad \omega = 2\pi f.
+$$ {#eq-retard-groupe}
+:::
+
+Si la phase a un **profil linéaire**, $\operatorname{Arg}(H(f)) = -2\pi D f + \beta$, le **retard de groupe est constant** [notes, f. 12 r°].
+::::
+
+::: {.complement}
+Les notes notent le retard de groupe $r(H)$ ou $r_H$ ; on garde cette notation dans les calculs de @sec-minimum-phase. Avec $\omega = 2\pi f$, une phase $-2\pi D f + \beta = -D\omega + \beta$ donne $\tau = D$ échantillons. Exemple du [chapitre 3](03-tfd-interpretation-frequentielle.qmd#eq-h-moyenne-normalisee) : $\operatorname{Arg}(H) = -\pi f = -\omega/2$, d'où $\tau = \frac12$ échantillon.
+:::
+
+::: {.notes-externes}
+Mise en garde sur la variable : $\omega = \dfrac{2\pi f}{f_\text{éch}}$, pulsation **normalisée** par la fréquence d'échantillonnage [notes-2023-ch05, p. 1] ; $\omega \in [-\pi, \pi]$ quand $f \in [-\frac{f_\text{éch}}{2}, \frac{f_\text{éch}}{2}]$ [notes-2023-ch04, p. 7].
+
+**Phase linéaire équivalente à un retard de groupe constant** : $\operatorname{Arg}(H(\omega)) = -\beta\omega + \alpha$ [notes-2023-ch05, p. 3].
+:::
+
+::: {.complement}
+Avec $\omega$ normalisée, le retard de groupe est en **échantillons** ; on le multiplie par $T_e$ pour l'avoir en secondes. Dans l'écriture des notes 2023, le retard de groupe vaut $\beta$.
+:::
+
+## Filtre à phase linéaire {#sec-phase-lineaire}
+
+::: {.notes}
+Un filtre à phase linéaire s'écrit
+
+$$
+H(f) = e^{j(-2\pi D f + \beta)}\, \tilde{H}(f),
+$$ {#eq-phase-lineaire}
+
+où $\tilde{H}(f)$ est **à phase nulle** (réelle). Un filtre à phase nulle est **non causal** : sa réponse impulsionnelle $\tilde{h}[n]$ est symétrique autour de $n = 0$. Le facteur $e^{-j2\pi D f}$ la décale de $D$ échantillons et rend $h[n]$ **causale** (cas d'un RIF) [notes, f. 12 r°].
+
+**Propriétés de linéarité de phase (placement des zéros).** La phase est linéaire si les zéros sont organisés par paires $\{z_i ; z_i^{-1}\}$. Pour un RIF de réponse $h[0], \dots, h[M]$, cela correspond à une réponse impulsionnelle symétrique ou antisymétrique :
+
+$$
+h[n] = \pm\, h[M - n].
+$$ {#eq-rif-symetrique}
+
+[notes, f. 12 r°]
+:::
+
+![Phase linéaire : réponse impulsionnelle à phase nulle $\tilde{h}[n]$, symétrique et non causale, puis $h[n]$ décalée de $D$ échantillons, causale. D'après les notes de cours [notes, f. 12 r°], redessinée (RIF symétrique de longueur 9, $D = 4$).](../figures/05-phase-lineaire-rif.svg){#fig-phase-lineaire-rif}
+
+::: {.notes-externes}
+On veut un filtre **causal** à partir d'un filtre **non causal** pour la phase, d'où le **RIF** : $H(\omega) = e^{-j\beta\omega + \alpha}\, \tilde H(\omega)$ (tel qu'écrit), $\tilde H$ à phase nulle, de réponse $\tilde h[n]$ non causale symétrique ; $h[n]$ est sa version décalée, causale symétrique.
+
+Justification de la phase nulle : $\tilde h$ réelle avec $\tilde h[2] = \tilde h[-2]$. Dans la TF, les termes $\tilde h[-2]\, e^{-j2\pi f}$ (tel qu'écrit) et $\tilde h[2]\, e^{-j4\pi f}$ se regroupent en $2\,\tilde h[2] \cos(4\pi f)$, réel ; la ligne suivante donne $2j\,\tilde h[2] \sin(4\pi f)$.
+
+On peut générer un filtre à phase linéaire à condition d'avoir un RIF tel que $h[n] = \pm h[M - n]$ [notes-2023-ch05, p. 3].
+:::
+
+::: {.a-verifier #av-phase-nulle-symetrie-tf}
+**Source** [notes-2023-ch05, p. 3] : « $H(\omega) = e^{-j\beta\omega + \alpha}\, \tilde H(\omega)$ » ; « TF → $\tilde h(-2)\, e^{-j2\pi f}$ … $\tilde h(2)\, e^{-j4\pi f}$ ↳ $2\tilde h(2)\cos(4\pi f)$ / $2j\,\tilde h(2)\sin(4\pi f)$ ».
+
+**Problème** :
+
+1. Dans $e^{-j\beta\omega + \alpha}$, il manque le $j$ devant $\alpha$ : avec $\operatorname{Arg} H = -\beta\omega + \alpha$, le facteur est $e^{j(-\beta\omega + \alpha)}$ ; sinon $e^{\alpha}$ est un gain réel.
+2. Le terme d'indice $-2$ vaut $\tilde h[-2]\, e^{-j2\pi f(-2)} = \tilde h[-2]\, e^{+j4\pi f}$, et non $e^{-j2\pi f}$ : sans cette correction, on n'obtient pas de cosinus.
+3. La ligne en sinus correspond au cas **antisymétrique** $\tilde h[-2] = -\tilde h[2]$, non indiqué ; on obtient alors $\tilde h[2]\bigl(e^{-j4\pi f} - e^{j4\pi f}\bigr) = -2j\, \tilde h[2] \sin(4\pi f)$ (signe opposé à celui des notes).
+
+**Proposition** : $H(\omega) = e^{j(-\beta\omega + \alpha)}\, \tilde H(\omega)$ ; cas symétrique : $\tilde h[-2]\, e^{j4\pi f} + \tilde h[2]\, e^{-j4\pi f} = 2\,\tilde h[2] \cos(4\pi f)$ (réel, phase nulle) ; cas antisymétrique : $-2j\,\tilde h[2] \sin(4\pi f)$ (imaginaire pur, d'où une phase constante de $\pm\frac{\pi}{2}$, le terme $\alpha$).
+:::
+
+::: {.complement}
+Pour des coefficients réels, les zéros complexes vont aussi par paires conjuguées : un zéro $z_i$ s'accompagne alors de $z_i^*$, $1/z_i$ et $1/z_i^*$ (zéros symétriques par rapport au cercle unité). Pour une réponse symétrique de longueur $M + 1$, le retard de groupe vaut $D = M/2$ échantillons.
+:::
+
+:::: {.notes-externes}
+::: {#prp-rif-phase-lineaire-zeros}
+## Zéros d'un RIF à phase linéaire
+
+Si $h[n] = h[M - n]$, alors $H(z) = z^{-M}\, H(z^{-1})$ : un filtre RIF à phase linéaire possède des **couples de zéros** $\{z_l,\ z_l^{-1}\}$.
+:::
+
+::: {.proof}
+$H(z) = \sum_n h[n]\, z^{-n} = \sum_n h[M - n]\, z^{-n} = z^{-M} \sum_n h[n]\, z^{\,n}$ (exposant de $z$ non écrit dans les notes), soit $H(z) = z^{-M} H(z^{-1})$.
+:::
+
+[notes-2023-ch05, p. 4]
+::::
+
+::: {.a-verifier #av-rif-phase-lineaire-exposant}
+**Source** [notes-2023-ch05, p. 4] : « $= z^{-M} \sum h(n)\, z$ ».
+
+**Problème** : l'exposant de $z$ manque ; écrit ainsi, la somme ne vaut pas $H(z^{-1})$.
+
+**Proposition** : changement d'indice $m = M - n$ : $\sum_n h[M-n]\, z^{-n} = \sum_m h[m]\, z^{-(M-m)} = z^{-M} \sum_m h[m]\, z^{m} = z^{-M} H(z^{-1})$.
+:::
+
+::: {.complement}
+Conséquence : si $H(z_l) = 0$ avec $z_l \neq 0$, alors $H(z_l^{-1}) = z_l^{-M} H(z_l) = 0$ (en appliquant la relation en $z = z_l^{-1}$). Dans le cas antisymétrique $h[n] = -h[M-n]$, $H(z) = -z^{-M} H(z^{-1})$ et la conclusion est la même. C'est la démonstration de la propriété énoncée en @eq-rif-symetrique.
+:::
+
+## Filtres à minimum de phase {#sec-minimum-phase}
+
+::: {.notes}
+**Objectif** : obtenir, à **module équivalent**, un filtre à **retard de groupe minimum**. On compare deux filtres $H_1$ et $H_2$ tels que
+
+$$
+|H_2(f)| = |H_1(f)| \quad \text{et} \quad r_{H_2} \geq r_{H_1}.
+$$
+
+**Cas étudié** [notes, f. 12 v°] :
+
+$$
+H_1(z) = \frac{z - b}{z + a}, \qquad H_2(z) = \frac{b z - 1}{z + a}, \qquad 0 < a, b < 1.
+$$
+
+$H_1$ a un zéro en $b$ (dans le disque unité), $H_2$ un zéro en $1/b$ (hors du disque) ; tous deux ont un pôle en $-a$.
+:::
+
+![Cas étudié : diagrammes pôles-zéros de $H_1$ (zéro en $b$) et de $H_2$ (zéro en $1/b$), et retards de groupe $r_{H_1}$, $r_{H_2}$ et $r_A$ ($a = 0{,}5$, $b = 0{,}6$). D'après les notes de cours [notes, f. 12 v° et f. 13 r°], redessinée ; courbes de retard de groupe calculées.](../figures/05-minimum-phase.svg){#fig-minimum-phase}
+
+### Égalité des modules {#sec-egalite-modules}
+
+::: {.notes}
+**1. Montrer que $|H_1(\omega)| = |H_2(\omega)|$ pour tout $\omega$.** Sur le cercle unité ($z = e^{j\omega}$) :
+
+$$
+|H_1(\omega)| = \frac{|e^{j\omega} - b|}{|e^{j\omega} + a|}, \qquad |H_2(\omega)| = \frac{|b\, e^{j\omega} - 1|}{|e^{j\omega} + a|}.
+$$
+
+Il suffit de comparer $|e^{j\omega} - b|^2$ et $|b\, e^{j\omega} - 1|^2$ [notes, f. 12 v°].
+:::
+
+::: {.a-verifier #av-module-passe-tout}
+**Source** [notes, f. 12 v°] : « $|e^{j\omega} - b|^2 = (\cos\omega - b)^2 + \sin(\omega)$ » et « $|b e^{j\omega} - 1|^2 = (b\cos\omega - 1)^2$ » (deux lignes précédentes, avec $\sqrt{1 + b^2}$, raturées).
+
+**Problème** : il manque le carré du sinus dans la première expression et le terme $b^2\sin^2\omega$ dans la seconde ; telles qu'écrites, les deux expressions ne sont pas égales et la démonstration ne conclut pas.
+
+**Proposition** :
+$$
+|e^{j\omega} - b|^2 = (\cos\omega - b)^2 + \sin^2\omega = 1 - 2b\cos\omega + b^2,
+$$
+$$
+|b e^{j\omega} - 1|^2 = (b\cos\omega - 1)^2 + b^2\sin^2\omega = b^2 - 2b\cos\omega + 1,
+$$
+d'où $|H_1(\omega)| = |H_2(\omega)|$.
+
+**Autres sources** : les notes 2023 font le calcul complet : « $\cos\omega + j\sin\omega - b = (\cos\omega - b) + j\sin\omega \Rightarrow |\,|^2 = 1 - 2b\cos\omega + b^2$ » et « $b(\cos\omega + j\sin\omega) - 1 = (b\cos\omega - 1) + jb\sin\omega \Rightarrow |\,|^2 = b^2 - 2b\cos\omega + 1$ », d'où $|H_1| = |H_2|$ [notes-2023-ch05, p. 1] ; même résultat dans le cas général, $|1 - \alpha e^{-j\omega}|^2 = 1 - 2b\cos(\omega - \theta) + b^2$ [notes-2023-ch04, p. 5].
+:::
+
+### Décomposition en passe-tout et retard de groupe {#sec-passe-tout}
+
+:::: {.notes}
+**2. Retard de groupe.** On écrit
+
+$$
+H_2(z) = \frac{b z - 1}{z + a} = \frac{z - b}{z + a} \cdot \frac{b z - 1}{z - b},
+$$
+
+donc $H_2(z) = H_1(z)\, A(z)$ avec
+
+$$
+A(z) = \frac{b z - 1}{z - b}.
+$$ {#eq-passe-tout-ordre-1}
+
+$A(z)$ est un **passe-tout** : $|A(\omega)| = 1$ pour tout $\omega$. Les phases s'ajoutent, $\operatorname{Arg}(H_2(\omega)) = \operatorname{Arg}(H_1(\omega)) + \operatorname{Arg}(A(\omega))$, donc avec @eq-retard-groupe :
+
+$$
+r_{H_2} = r_{H_1} + r_A.
+$$ {#eq-retards-additifs}
+
+**Retard de groupe du passe-tout.** $r_A = r(b e^{j\omega} - 1) - r(e^{j\omega} - b)$. Les phases s'écrivent avec des arctangentes, que l'on dérive avec $\bigl(\operatorname{Arctan} g(\omega)\bigr)' = \dfrac{g'(\omega)}{1 + g^2(\omega)}$ :
+
+$$
+\left(\operatorname{Arctan} \frac{b\sin\omega}{b\cos\omega - 1}\right)' = \frac{b^2 - b\cos\omega}{(b\cos\omega - 1)^2 + b^2\sin^2\omega},
+$$
+
+$$
+\left(\operatorname{Arctan} \frac{\sin\omega}{\cos\omega - b}\right)' = \frac{\cos\omega(\cos\omega - b) + \sin^2\omega}{(\cos\omega - b)^2 + \sin^2\omega} = \frac{1 - b\cos\omega}{(\cos\omega - b)^2 + \sin^2\omega}.
+$$
+
+Les deux dénominateurs valent $1 - 2b\cos\omega + b^2$. Donc
+
+$$
+r_A = \frac{1 - b^2}{1 - 2b\cos\omega + b^2} \geq 0 \quad \text{pour } 0 < b < 1,
+$$ {#eq-retard-groupe-passe-tout}
+
+d'où $r_A \geq 0$ pour tout $\omega$, et
+
+::: {#prp-retard-minimum}
+## Retard de groupe minimum
+
+$$
+r_{H_2} \geq r_{H_1}.
+$$
+:::
+
+[notes, f. 12 v° et f. 13 r°]
+::::
+
+::: {.complement}
+Détail du calcul de $r_A$ avec @eq-retard-groupe : $r(b e^{j\omega} - 1) = -\dfrac{b^2 - b\cos\omega}{D}$ et $r(e^{j\omega} - b) = -\dfrac{1 - b\cos\omega}{D}$, avec $D = 1 - 2b\cos\omega + b^2$. Leur différence vaut $\dfrac{-b^2 + b\cos\omega + 1 - b\cos\omega}{D} = \dfrac{1 - b^2}{D}$. Le numérateur est positif car $b < 1$, et $D = |e^{j\omega} - b|^2 > 0$.
+:::
+
+## Définition et décomposition {#sec-definition-minimum-phase}
+
+:::: {.notes}
+::: {#def-minimum-phase}
+## Filtre à minimum de phase
+
+Un filtre à minimum de phase est un filtre dont les **zéros sont à l'intérieur du cercle unité**.
+:::
+
+Tout filtre se décompose en
+
+$$
+H(z) = H_\mathrm{min}(z)\, A(z),
+$$ {#eq-decomposition-min-passe-tout}
+
+- où $H_\mathrm{min}(z)$ est à minimum de phase : on le définit par le **placement des zéros** ;
+- et $A(z)$ est un **passe-tout**, $|A(\omega)| = 1$ pour tout $\omega$.
+
+[notes, f. 13 r°]
+::::
+
+::: {.notes-externes}
+Généralisation : $H_2(z) = \dfrac{d_0}{c_0} \dfrac{\prod_l (1 - z_l z^{-1})}{\prod_k (1 - p_k z^{-1})} = A(z)\, H_\mathrm{min}(z)$, où $H_\mathrm{min}(z)$ est un filtre à minimum de phase : **$H_\mathrm{min}(z)$ a ses zéros et ses pôles $\subset \mathcal{C}_1$** (à l'intérieur du cercle unité ; schéma avec un pôle $p_k$ dans le disque) [notes-2023-ch05, p. 2 et 3].
+:::
+
+::: {.complement}
+@def-minimum-phase ne parle que des zéros ; la formulation 2023 ajoute les pôles. Pour un filtre causal, les deux formulations coïncident dès qu'il est stable, puisque ses pôles sont alors dans le disque unité ([condition de stabilité du chapitre 4](04-implementation-equations-differences.qmd#thm-stabilite-poles)).
+:::
+
+::: {.complement}
+Méthode (exercice fréquent des partiels) : chaque zéro $z_0$ de $H$ situé **hors** du cercle unité est remplacé dans $H_\mathrm{min}$ par son inverse conjugué $1/z_0^*$ (à l'intérieur), et le passe-tout $A(z)$ compense : $|H_\mathrm{min}| = |H|$ à un facteur constant près, et $H_\mathrm{min}$ a le plus petit retard de groupe parmi les filtres de même module. C'est exactement le passage de $H_2$ à $H_1$ ci-dessus. Pour un filtre causal et stable, les pôles sont déjà dans le cercle unité ; $H_\mathrm{min}$ et son inverse $1/H_\mathrm{min}$ sont alors tous deux causaux et stables.
+:::
+
+## Exercices du TD {#sec-exercices-td-ch05}
+
+::: {#exr-td-filtre-phase-nulle}
+## Causalité et filtre à phase nulle
+
+On cherche à filtrer des données $x[n]$ en nombre fini avec un filtre dont la réponse fréquentielle de phase est nulle. La synthèse d'un filtre à phase nulle n'est accessible qu'avec un filtre non causal.
+
+1. Est-il possible, avec un filtre non causal, de filtrer les données en temps réel, c'est-à-dire de calculer la sortie $y[n]$ en ne connaissant que les échantillons $x[k]$ pour $k \leq n$ ?
+2. On suppose toutes les données à filtrer stockées en mémoire. On envisage deux techniques de création du filtre à partir d'un filtre réel causal $h[n]$.
+   - **Méthode 1**, en trois étapes : (1) filtrer $x[n]$ par $h[n]$, ce qui donne $g[n]$ ; (2) retourner la sortie de l'étape 1 (changement d'échelle $-1$, $g[-n]$), puis filtrer la séquence obtenue par $h[n]$, ce qui donne $r[n]$ ; (3) retourner la sortie de l'étape 2 : $y_1[n] = r[-n]$.
+   - **Méthode 2**, en trois étapes : (1) filtrer $x[n]$ par $h[n]$, ce qui donne $g[n]$ ; (2) retourner le signal $x[n]$ ($x[-n]$), puis le filtrer par $h[n]$, ce qui donne $r[n]$ ; (3) retourner la sortie de l'étape 2 et l'ajouter à $g$ : $y_2[n] = g[n] + r[-n]$.
+
+   Déterminer les réponses fréquentielles des deux filtres $h_1[n]$ et $h_2[n]$ qui lient respectivement $x[n]$ à $y_1[n]$ et à $y_2[n]$. Les exprimer en fonction de $|H(\omega)|$ et de $\operatorname{Arg}(H(\omega))$, où $H(\omega)$ est la transformée de Fourier de $h[n]$.
+3. Le filtre $h[n]$ a les caractéristiques suivantes (graphes du recueil, sur $[0, \pi]$) : $|H(\omega)| = 1$ pour $\frac{\pi}{4} \leq \omega \leq \frac{3\pi}{4}$ et $0$ ailleurs ; $\operatorname{Arg}(H(\omega)) = \omega$ (droite de $0$ en $\omega = 0$ à $\pi$ en $\omega = \pi$). Tracer les réponses fréquentielles d'amplitude des deux filtres $h_1[n]$ et $h_2[n]$. Comparer les résultats.
+
+[td, p. 4-5]
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+Contexte : $H(f) = \sum_n h[n]\, e^{-j2\pi f n} = |H(f)|\, e^{j\operatorname{Arg}(H(f))}$.
+
+1. Un filtre non causal calcule $y[n] = T\bigl[x[n+P], \dots, x[n-K]\bigr]$ : il utilise des échantillons **futurs** ($x[n+1], x[n+2], \dots$) en plus du présent et du passé. Le corrigé rappelle à côté la condition de temps réel : latence inférieure à $T_e$.
+2. **Méthode 1.** $y_1[n] = r[-n] = h[-n] \star g[n] = h[-n] \star \bigl(h[n] \star x[n]\bigr) = \bigl(h[-n] \star h[n]\bigr) \star x[n]$, donc
+$$
+h_1[n] = h[-n] \star h[n] \quad \text{(non causal)}.
+$$
+Or $\sum_n h[-n]\, e^{-j2\pi f n} = \sum_n h[n]\, e^{j2\pi f n} = H(-f) = H^*(f)$ puisque $h$ est réelle, d'où
+$$
+H_1(f) = H^*(f)\, H(f) = |H(f)|^2.
+$$
+**Méthode 2.** $y_2[n] = h[n] \star x[n] + h[-n] \star x[n] = \bigl(h[n] + h[-n]\bigr) \star x[n]$ : $h_2[n] = h[n] + h[-n]$, non causal (association en parallèle), et
+$$
+H_2(f) = H(f) + H^*(f) = 2\,|H(f)| \cos\bigl(\operatorname{Arg}(H(f))\bigr) :
+$$
+il ne conserve pas le même profil que le filtre initial.
+3. $\omega = 2\pi f$ : pour $f \in [-\frac{f_e}{2}, \frac{f_e}{2}]$, $\omega \in [-\pi, \pi]$ (fréquence normalisée $[-\frac12, \frac12]$). $|H_1(\omega)|$ est le même rectangle que $|H(\omega)|$ entre $\frac{\pi}{4}$ et $\frac{3\pi}{4}$ : « rien ne change pour $H_1$ ». $|H_2(\omega)|$ est nul hors de $[\frac{\pi}{4}, \frac{3\pi}{4}]$ et, dans cette bande, part de sa valeur maximale en $\frac{\pi}{4}$, s'annule en $\frac{\pi}{2}$ et remonte en $\frac{3\pi}{4}$.
+
+[corrige-2023-td01, p. 6-8]
+:::
+::::
+
+::: {.complement}
+- **Question 1 : non.** Si $h[k] \neq 0$ pour un $k < 0$, le calcul de $y[n] = \sum_k h[k]\, x[n-k]$ demande $x[n-k]$ avec $n - k > n$, échantillon pas encore acquis à l'instant $n$. Si $h[k] = 0$ pour $k < -D$, on peut calculer $y[n-D]$ à l'instant $n$ : traitement avec un retard de $D$ échantillons, mais pas en temps réel au sens strict. D'où le traitement **hors ligne**, sur des données stockées. Voir la [causalité au chapitre 2](02-systemes-discrets-convolution.qmd#sec-causalite).
+- **Question 3, valeurs.** $\operatorname{Arg}(H(\omega)) = \omega$, donc $|H_2(\omega)| = 2\,|\cos\omega|$ dans la bande : $\sqrt2 \approx 1{,}41$ en $\frac{\pi}{4}$ et $\frac{3\pi}{4}$, $0$ en $\frac{\pi}{2}$. $H_2$ est réelle mais change de signe en $\frac{\pi}{2}$ : phase $0$ sur $[\frac{\pi}{4}, \frac{\pi}{2}[$ et $\pi$ sur $]\frac{\pi}{2}, \frac{3\pi}{4}]$. $H_1 = |H|^2 \geq 0$ est réelle positive : **phase rigoureusement nulle**, et module identique ici ($|H|^2 = |H|$ puisque $|H|$ vaut 0 ou 1).
+- **Comparaison.** La méthode 1 (filtrer, retourner, refiltrer, retourner) donne un vrai filtre à phase nulle de module $|H|^2$ ; la méthode 2 ne donne la bonne amplitude que là où la phase de $h$ est proche de 0 ($\cos \approx 1$), et déforme fortement la bande passante dès que la phase tourne.
+:::
+
+::: {#exr-td-gabarit-rif-symetrique}
+## Identification des coefficients d'un RIF symétrique
+
+On veut concevoir un filtre, c'est-à-dire calculer les coefficients de sa réponse impulsionnelle. Le filtre est causal, de réponse impulsionnelle symétrique de longueur 5 ($h[n] = h[4-n]$, $n = 0, 1, 2, 3, 4$). Sa réponse fréquentielle vérifie
+
+$$
+H(e^{j0}) = 0, \qquad H(e^{j0{,}5\pi}) = 1, \qquad H(e^{j\pi}) = 0.
+$$
+
+Après avoir calculé sa réponse impulsionnelle, tracer le module de sa réponse fréquentielle [td, p. 6].
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+Le gabarit fréquentiel permet de déduire la forme de $h[n]$ ; $h[n] = h[4-n]$ fixe la profondeur du filtre, $M = 5$. Le corrigé écrit les conditions sur le module : $|H(e^{j0})| = 0$, $|H(e^{j0{,}5\pi})| = 1$, $|H(e^{j\pi})| = 0$.
+
+En pulsation normalisée, $H(\omega) = \sum_{n=0}^{4} h[n]\, e^{-j\omega n}$, avec $h[0] = h[4]$ et $h[1] = h[3]$ :
+$$
+H(\omega) = h[0]\bigl[1 + e^{-j4\omega}\bigr] + h[1]\bigl[e^{-j\omega} + e^{-j3\omega}\bigr] + h[2]\, e^{-j2\omega}
+= e^{-j2\omega}\bigl[2h[0]\cos(2\omega) + 2h[1]\cos(\omega) + h[2]\bigr].
+$$
+D'où le système
+$$
+\begin{aligned}
+\omega = 0 &: \quad 2h[0] + 2h[1] + h[2] = 0 \quad (1)\\
+\omega = \tfrac{\pi}{2} &: \quad -2h[0] + h[2] = \pm 1 \quad (2)\\
+\omega = \pi &: \quad 2h[0] - 2h[1] + h[2] = 0 \quad (3)
+\end{aligned}
+$$
+(1) $-$ (3) donne $h[1] = 0$ ; puis le corrigé conclut $h[2] = \pm\frac12$ et $h[0] = \pm\frac14$.
+
+[corrige-2023-td01, p. 13]
+:::
+::::
+
+::: {.a-verifier #av-td-gabarit-signes}
+**Source** [corrige-2023-td01, p. 13] : « $h(1) = 0$, $h(2) = \pm\frac12$, $h(0) = \pm\frac14$ » ; plus haut, « $H(\omega) = h(0)[1 + e^{-j4\omega}] + h(1)[-e^{-j\omega} + e^{-j3\omega}] + h(2)e^{-j2\omega}$ » (signe moins devant $e^{-j\omega}$, lecture probable), suivi de « $= e^{-j2\omega}[2h(0)\cos(2\omega) + h(1)2\cos(\omega) + h(2)]$ ».
+
+**Problème** : (a) avec $h[1] = h[3]$, le terme est $h[1]\bigl[e^{-j\omega} + e^{-j3\omega}\bigr]$ ; le signe moins est incompatible avec la ligne suivante, qui est juste (la solution ci-dessus écrit le signe $+$). (b) Les deux signes sont liés. (1) $+$ (3) donne $h[2] = -2h[0]$ : $h[0]$ et $h[2]$ sont de **signes opposés**. Avec $h[0] = \frac14$ et $h[2] = \frac12$ (mêmes signes), on aurait $H(e^{j0}) = 1 \neq 0$. De plus, l'énoncé impose $H(e^{j0{,}5\pi}) = 1$ (valeur complexe, sans module) : $e^{-j\pi}\bigl(-2h[0] + h[2]\bigr) = 1$, soit $-2h[0] + h[2] = -1$, ce qui lève l'ambiguïté.
+
+**Proposition** : $h[1]\bigl[e^{-j\omega} + e^{-j3\omega}\bigr]$ ; $h[0] = h[4] = \frac14$, $h[1] = h[3] = 0$, $h[2] = -\frac12$ (solution unique de l'énoncé, vérifiée par calcul symbolique) ; si l'on n'impose que le module, la solution opposée $\bigl(-\frac14, 0, \frac12, 0, -\frac14\bigr)$ convient aussi.
+:::
+
+::: {.complement}
+Avec $h = \bigl(\frac14, 0, -\frac12, 0, \frac14\bigr)$ : $2h[0]\cos(2\omega) + h[2] = \frac12\cos(2\omega) - \frac12 = -\sin^2\omega$, d'où
+$$
+H(\omega) = -\sin^2(\omega)\, e^{-j2\omega}, \qquad |H(\omega)| = \sin^2\omega = \sin^2(2\pi f).
+$$
+Le module vaut 0 en $f = 0$ et $f = \pm\frac12$, et 1 en $f = \pm\frac14$ ($\pm\frac{f_e}{4}$) : **passe-bande** centré sur $\frac{f_e}{4}$, peu sélectif. La symétrie $h[n] = h[4-n]$ donne une phase linéaire (@eq-rif-symetrique) : retard de groupe de 2 échantillons ($D = M/2$ avec ici $M = 4$ au sens de @eq-rif-symetrique).
+:::
+
+::: {#exr-td-poles-zeros-phase-lineaire}
+## Pôles, zéros, phase linéaire et passe-tout
+
+Soit le système de fonction de transfert
+
+$$
+H_1(z) = \frac{1}{r^2}\bigl(1 - r e^{j\theta} z^{-1}\bigr)^2 \bigl(1 - r e^{-j\theta} z^{-1}\bigr)^2, \qquad r = 0{,}55, \quad \theta = \frac{2\pi}{3}\ \text{rad}.
+$$
+
+1. Déterminer la réponse impulsionnelle du système.
+   a. Tracer le diagramme des pôles et des zéros.
+   b. Tracer la réponse fréquentielle d'amplitude (en dB).
+   c. Quelle est la caractéristique du système ? (question numérotée « -a » une seconde fois dans le recueil)
+2. On désire obtenir un filtre $H_2(f)$ possédant la même réponse fréquentielle d'amplitude que $H_1(f)$, mais une phase linéaire, avec la propriété $h[n] = h[M-n]$, où $M$ représente l'ensemble des échantillons non nuls de la réponse impulsionnelle.
+   a. Déterminer le diagramme des pôles et des zéros de $H_2(f)$.
+   b. Déterminer l'expression du filtre $H_3(f)$ tel que $H_2(f) = H_1(f)\, H_3(f)$, assurant une réponse fréquentielle d'amplitude $|H_2(f)|_\mathrm{dB}$ identique à celle de $H_1(f)$. Quelle est la caractéristique du filtre $H_3(f)$ ?
+   c. Déterminer les réponses fréquentielles des deux filtres $H_2(f)$ et $H_3(f)$.
+
+[td, p. 9]
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+$H_1$ est un filtre RIF ; ses zéros $z_1 = r e^{j\theta}$ et $z_2 = r e^{-j\theta}$ sont complexes conjugués, donc la réponse impulsionnelle est réelle (signal réel en entrée, signal réel en sortie).
+
+**1-a.** Zéros doubles en $0{,}55\, e^{\pm j\frac{2\pi}{3}}$ (diagramme des zéros). Quand $z = e^{j2\pi f/f_e}$ parcourt le cercle unité, l'argument $\frac{2\pi}{3}$ correspond à $f = \frac{f_e}{3}$ : réjection autour de $\frac{f_e}{3}$.
+
+**1-b.** Avec $z = e^{j2\pi f/f_e}$ :
+$$
+|H_1(f)| = \frac{1}{r^2}\, |1 - z_1 z^{-1}|^2\, |1 - z_1^* z^{-1}|^2 = \frac{1}{r^2}\, |z - z_1|^2\, |z - z_1^*|^2 :
+$$
+un calcul de module en fréquence revient à regarder les **distances** entre le point du cercle unité et les zéros.
+
+**1-c.** RIF, car pas de polynôme au dénominateur.
+
+**2-a.** $|H_2(f)| = |H_1(f)|$ et $h_2[n] = h_2[M-n]$ : phase linéaire, les zéros de $H_2$ vont par paires $\{z_i, z_i^{-1}\}$. On déplace un zéro de chaque paire double en son inverse, $\frac{1}{z_1} = \frac1r e^{-j\theta}$ et $\frac{1}{z_2} = \frac1r e^{j\theta}$ :
+$$
+H_2(z) = C\bigl(1 - r e^{j\theta} z^{-1}\bigr)\bigl(1 - r e^{-j\theta} z^{-1}\bigr)\Bigl(1 - \frac1r e^{j\theta} z^{-1}\Bigr)\Bigl(1 - \frac1r e^{-j\theta} z^{-1}\Bigr).
+$$
+Avec $|1 - r e^{j\theta} e^{-j\omega}|^2 = 1 - 2r\cos(\theta - \omega) + r^2$ et $\bigl|1 - \frac1r e^{j\theta} e^{-j\omega}\bigr|^2 = \frac{1}{r^2}\bigl(1 - 2r\cos(\theta - \omega) + r^2\bigr)$, l'égalité $|H_2(\omega)| = |H_1(\omega)|$ donne $|C| = \frac{r^2}{r^2} = 1$.
+
+**2-b.** Le corrigé écrit $H_1(z) = H_2(z)\, H_3(z)$, $H_2$ étant annoté « minimum de phase » (voir le bloc *À vérifier* ci-dessous) ; sachant que $|H_1(f)| = |H_2(f)|$, il conclut $|H_3(f)| = 1$ pour tout $f$, et ajoute en condition générale : « RII jamais à phase linéaire, linéarité de phase dédiée au RIF ».
+
+Rappel de cours du corrigé : pôles dans le disque unité $\mathcal{C}_1$ : stabilité ; zéros dans $\mathcal{C}_1$ : filtre à minimum de phase ; zéros par paires $(z_i, z_i^{-1})$ : filtre à phase linéaire, car si $h[n] = h[M-n]$, $H(z) = \sum_n h[M-n]\, z^{-n} = z^{-M} \sum_n h[n]\, z^{n} = z^{-M} H(z^{-1})$, qui a les zéros $\{z_i, z_i^{-1}\}$.
+
+[corrige-2023-td03, p. 1-2 et p. 4]
+:::
+::::
+
+::: {.a-verifier #av-td-minimum-phase-decomposition}
+**Source** [corrige-2023-td03, p. 2] : « $H_1(z) = H_2(z)\, H_3(z)$ », avec $H_2(z)$ souligné et annoté « minimum de phase ».
+
+**Problème** : l'énoncé [td, p. 9] pose $H_2(f) = H_1(f)\, H_3(f)$. Le filtre à minimum de phase est $H_1$ (tous ses zéros, de module $0{,}55$, sont dans le cercle unité, @def-minimum-phase) ; $H_2$ a deux zéros hors du cercle (module $\frac{1}{0{,}55} \approx 1{,}82$). Le corrigé intervertit les rôles, ce qui contredit @eq-decomposition-min-passe-tout ($H = H_\mathrm{min}\, A$). La conclusion $|H_3| = 1$ reste juste.
+
+**Proposition** : « $H_2(z) = H_1(z)\, H_3(z)$, avec $H_1$ à minimum de phase et $H_3$ passe-tout ».
+:::
+
+::: {.complement}
+**Réponse impulsionnelle de $H_1$** (question 1, non donnée dans le corrigé). $(1 - r e^{j\theta} z^{-1})(1 - r e^{-j\theta} z^{-1}) = 1 - 2r\cos\theta\, z^{-1} + r^2 z^{-2} = 1 + r z^{-1} + r^2 z^{-2}$ puisque $\cos\frac{2\pi}{3} = -\frac12$. D'où
+$$
+H_1(z) = \frac{1}{r^2}\bigl(1 + r z^{-1} + r^2 z^{-2}\bigr)^2 = \frac{1}{r^2} + \frac{2}{r} z^{-1} + 3 z^{-2} + 2r\, z^{-3} + r^2 z^{-4},
+$$
+soit $h_1[n] \approx 3{,}306$ ; $3{,}636$ ; $3$ ; $1{,}1$ ; $0{,}3025$ pour $n = 0, \dots, 4$.
+
+**1. a.** $H_1(z) = \dfrac{(z^2 + r z + r^2)^2}{r^2 z^4}$ : en plus des zéros doubles, **pôle quadruple en $z = 0$**.
+
+**1. b.** En fréquence normalisée : $20\log_{10}|H_1| \approx 21{,}1$ dB en $f = 0$, minimum $\approx 1{,}6$ dB vers $f \approx 0{,}35$ (proche de l'argument des zéros, $f = \frac13$, où l'on a $\approx 1{,}9$ dB), $\approx 5{,}4$ dB en $f = \frac12$. Les zéros étant loin du cercle ($r = 0{,}55$), la réjection reste modérée (environ 19,5 dB sous le maximum).
+
+**1. c.** Caractéristique attendue, au vu de la question 2 : tous les zéros sont dans le cercle unité, $H_1$ est **à minimum de phase** (@def-minimum-phase), en plus d'être RIF (donc stable).
+
+**2. a.** Zéros de $H_2$ : $0{,}55\, e^{\pm j\frac{2\pi}{3}}$ et $\frac{1}{0{,}55}\, e^{\pm j\frac{2\pi}{3}} \approx 1{,}82\, e^{\pm j\frac{2\pi}{3}}$ (simples) ; pôle quadruple en 0. En développant avec $C = 1$ :
+$$
+h_2[n] = \Bigl(1,\ r + \tfrac1r,\ r^2 + 1 + \tfrac{1}{r^2},\ r + \tfrac1r,\ 1\Bigr) \approx (1 ;\ 2{,}368 ;\ 4{,}608 ;\ 2{,}368 ;\ 1),
+$$
+symétrique : $h_2[n] = h_2[4-n]$, $M = 4$.
+
+**2. b.**
+$$
+H_3(z) = \frac{H_2(z)}{H_1(z)} = \frac{r^2 + r z^{-1} + z^{-2}}{1 + r z^{-1} + r^2 z^{-2}} :
+$$
+filtre **passe-tout** ($|H_3| = 1$), RII, causal et stable (pôles $0{,}55\, e^{\pm j\frac{2\pi}{3}}$), zéros aux inverses des pôles. C'est la décomposition @eq-decomposition-min-passe-tout : $H_2 = H_1 \cdot H_3$, $H_1$ à minimum de phase.
+
+**2. c.** Par symétrie de $h_2$ autour de $n = 2$ :
+$$
+H_2(f) = e^{-j4\pi f}\Bigl[r^2 + 1 + \frac{1}{r^2} + 2\Bigl(r + \frac1r\Bigr)\cos(2\pi f) + 2\cos(4\pi f)\Bigr].
+$$
+Le crochet reste positif (minimum $\approx 1{,}21$) : $|H_2(f)|$ égale ce crochet, qui coïncide avec $|H_1(f)|$, et $\operatorname{Arg}(H_2(f)) = -4\pi f$, phase linéaire de retard de groupe 2 échantillons. Pour $H_3$ : $|H_3(f)| = 1$ et $\operatorname{Arg}(H_3(f)) = -4\pi f - \operatorname{Arg}(H_1(f))$ ; son retard de groupe, positif, est l'excès de retard de $H_2$ sur $H_1$ (@eq-retards-additifs, @prp-retard-minimum). Toutes ces valeurs ont été vérifiées numériquement.
+:::
+
+## À retenir {#sec-retenir-representation-phase}
+
+- Retard de groupe : $\tau = -\dfrac{\mathrm{d}\operatorname{Arg}H(\omega)}{\mathrm{d}\omega}$ (@eq-retard-groupe) ; phase linéaire $-2\pi D f + \beta$ → retard constant $D$, pas de distorsion de phase.
+- Phase linéaire : $H(f) = e^{j(-2\pi D f + \beta)}\tilde{H}(f)$, $\tilde H$ réelle ; RIF à phase linéaire $\iff h[n] = \pm h[M - n]$ (@eq-rif-symetrique) ; zéros par paires $\{z_i, z_i^{-1}\}$.
+- Passe-tout du premier ordre $A(z) = \dfrac{bz - 1}{z - b}$ : $|A| = 1$, $r_A = \dfrac{1 - b^2}{1 - 2b\cos\omega + b^2} \geq 0$ (@eq-retard-groupe-passe-tout).
+- Retards additifs en cascade : $r_{H_1 A} = r_{H_1} + r_A$ (@eq-retards-additifs).
+- Minimum de phase : zéros dans le cercle unité (@def-minimum-phase) ; $H = H_\mathrm{min}\, A$ ; à module égal, retard de groupe minimal.

@@ -1,6 +1,9 @@
 [
+  "tsig1-partiel.json",
   "reseaux.json",
   "anglais-ielts.json",
+  "italien.json",
+  "russe.json",
   "vhdl.json",
   "c-unix.json",
   "latex.json",

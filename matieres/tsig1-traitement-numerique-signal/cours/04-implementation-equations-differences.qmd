@@ -1,0 +1,855 @@
+---
+title: "Implémentation des SLI et équations aux différences"
+matiere: tsig1
+chapitre: 4
+enseignants: ["Yannick Berthoumieu"]
+annee: "2026-2027"
+statut: verifie
+date-modified: 2026-10-20
+sources:
+  - id: notes
+    fichier: notes/date-inconnue.pdf
+    nature: personnelle
+    seance: inconnue
+    pages: "f. 9 r° à f. 11 r°"
+  - id: notes-2023-ch04
+    fichier: notes/2023-cours-ch04-implementation-filtres.pdf
+    nature: externe
+    pages: "1-7"
+  - id: notes-2023-ch05
+    fichier: notes/2023-cours-ch05-sli-representation-phase.pdf
+    nature: externe
+    pages: "2"
+  - id: td
+    fichier: td/recueil-td-2023.pdf
+    nature: officielle
+    version: "2023 (v2)"
+    pages: "7-11"
+  - id: corrige-2023-td02
+    fichier: corriges/2023-td02-transformee-z-equation-differences.pdf
+    nature: externe
+    pages: "1-5"
+  - id: corrige-2023-td03
+    fichier: corriges/2023-td03-placement-poles-zeros-rii.pdf
+    nature: externe
+    pages: "2-3"
+---
+
+{{< include /_macros.qmd >}}
+
+Un SLI se programme par une **équation aux différences** : une combinaison à coefficients constants d'échantillons d'entrée et de sortie décalés. Ce chapitre distingue les filtres RIF et RII, introduit la **transformée en $z$** et la fonction de transfert $H(z) = N(z)/D(z)$, et en déduit la condition de stabilité sur les **pôles**. Il se termine par un exemple complet : de l'équation aux différences à la réponse impulsionnelle.
+
+## Contexte : filtres RIF et RII {#sec-contexte-rif-rii}
+
+::: {.notes}
+Un SLI de réponse impulsionnelle $h[n]$ calcule $y[n] = \sum_{k=-\infty}^{+\infty} h[k]\,x[n-k]$ ; s'il est **causal**, $y[n] = \sum_{k=0}^{+\infty} h[k]\,x[n-k]$ ([chapitre 2](02-systemes-discrets-convolution.qmd#eq-convolution-causale)).
+
+- **Réponse impulsionnelle finie (RIF)** : $y[n] = \sum_{k=0}^{K-1} h[k]\,x[n-k]$. Un RIF est **toujours stable** ; son profil fréquentiel est **faiblement réjecteur** (forme en cosinus).
+- **Réponse impulsionnelle infinie (RII)** : comment la réaliser avec un nombre fini d'opérations ? C'est l'objet de ce chapitre.
+
+[notes, f. 9 r°]
+:::
+
+::: {.complement}
+Un RIF est stable car $\sum_n |h[n]|$ est une somme finie de termes finis ([condition de stabilité](02-systemes-discrets-convolution.qmd#eq-cns-stabilite)). Exemple de profil en cosinus : la moyenne de deux échantillons du [chapitre 3](03-tfd-interpretation-frequentielle.qmd#eq-h-moyenne-normalisee). « Faiblement réjecteur » : avec peu de coefficients, la transition entre bande passante et bande coupée est lente et l'atténuation hors bande reste modeste.
+:::
+
+::: {.notes-externes}
+**Forme générale d'un RIF, non nécessairement causal** :
+
+$$
+y[n] = \sum_{k=-K}^{L} h[k]\, x[n-k], \qquad h = [\,0 \ \cdots\ 0\ \ h[-K],\ h[-K+1],\ \dots,\ h[L]\,],
+$$ {#eq-rif-non-causal}
+
+toujours stable [notes-2023-ch04, p. 1].
+
+**Dynamique d'amplitude du filtre.** Exemple $y[n] = x[n] + x[n-1]$ : avec $x[n] = \delta[n]$, $h[n] = \delta[n] + \delta[n-1]$, et
+
+$$
+H(f) = \sum_n h[n]\, e^{-j2\pi f n} = h[0] + h[1]\, e^{-j2\pi f} = 1 + e^{-j2\pi f},
+\qquad |H(f)| = 2\,|\cos(\pi f)|.
+$$
+
+C'est un passe-bas « au profil en cosinus ». Mise en garde notée : « réjection fréquentielle » ; un **bon filtre** a une **zone de réjection marquée**, ce que ce filtre n'a pas.
+
+Un RII n'est **pas implémentable via le produit de convolution** $y[n] = \sum_{k=-\infty}^{+\infty} h[k]\, x[n-k]$ (somme infinie) [notes-2023-ch04, p. 1].
+:::
+
+::: {.a-verifier #av-rif-somme-cosinus-exposant}
+**Source** [notes-2023-ch04, p. 1] : « $H(f) = e^{-j2\pi f}\, 2\cos(\pi f)$ » (encadré).
+
+**Problème** : $1 + e^{-j2\pi f} = e^{-j\pi f}\bigl(e^{j\pi f} + e^{-j\pi f}\bigr) = 2\, e^{-j\pi f} \cos(\pi f)$. Avec $e^{-j2\pi f}$, la phase (et le retard de groupe) seraient doublés.
+
+**Proposition** : $H(f) = e^{-j\pi f}\, 2\cos(\pi f)$, soit deux fois la réponse de la [moyenne de deux échantillons du chapitre 3](03-tfd-interpretation-frequentielle.qmd#eq-h-moyenne-normalisee).
+:::
+
+::: {.complement}
+Pour $K > 0$, @eq-rif-non-causal utilise des échantillons futurs : le filtre n'est pas causal. Le retarder de $K$ échantillons donne un RIF causal de même module ; c'est le procédé du [chapitre 5](05-representation-en-phase.qmd#sec-phase-lineaire). L'exemple est la moyenne de deux échantillons du chapitre 3 sans le facteur $0{,}5$ : même forme, gain 2 en $f = 0$.
+:::
+
+## Équations aux différences {#sec-equations-differences}
+
+### Analogie avec le domaine continu {#sec-analogie-continu}
+
+::: {.notes}
+Un circuit RC (résistance $R$ en série, sortie $y(t)$ aux bornes du condensateur $C$) obéit à
+
+$$
+y(t) + RC\,\frac{\mathrm{d}y(t)}{\mathrm{d}t} = x(t),
+\qquad
+H(f) = \frac{1}{1 + j2\pi RC f}.
+$$
+
+Forme générale d'une équation différentielle linéaire à coefficients constants :
+
+$$
+\sum_k a_k\, \frac{\mathrm{d}^k y(t)}{\mathrm{d}t^k} = \sum_l b_l\, \frac{\mathrm{d}^l x(t)}{\mathrm{d}t^l}.
+$$
+
+**Approximation de la dérivée.** La dérivation correspond à $\dfrac{\mathrm{d}x(t)}{\mathrm{d}t} \xrightarrow{\ \TF\ } j2\pi f\, X(f)$ : un gain proportionnel à la fréquence. Avec
+
+$$
+\frac{\mathrm{d}x(t)}{\mathrm{d}t} = \lim_{h \to 0} \frac{x(t + h) - x(t)}{h},
+$$
+
+une approximation discrète possible est le filtre $h[n] = \delta[n+1] - \delta[n]$ [notes, f. 9 r°].
+:::
+
+::: {.complement}
+Ce filtre calcule $x[n+1] - x[n]$ : il utilise un échantillon futur, il n'est donc **pas causal**. La version causale (différence arrière) est $h[n] = \delta[n] - \delta[n-1]$, soit $y[n] = x[n] - x[n-1]$ ; au facteur $1/T_e$ près, c'est une approximation de la dérivée.
+:::
+
+::: {.notes-externes}
+Avec un pas discret $h = T_e$, $x'[n] \simeq x[n+1] - x[n]$. **Masques numériques** de dérivation :
+
+- ordre 1 : $[\,1 \ \ {-1}\,]$ ;
+- ordre 2 : $[\,1 \ \ {-2} \ \ 1\,]$.
+
+Les deux membres de l'équation différentielle sont écrits avec des bornes finies, $\sum_{k=0}^{K-1} a_k \frac{\mathrm{d}^k y(t)}{\mathrm{d}t^k} = \sum_{l=0}^{L-1} b_l \frac{\mathrm{d}^l x(t)}{\mathrm{d}t^l}$ (« structure continue causale ») ; l'équation aux différences en est l'**approximation discrète** [notes-2023-ch04, p. 2].
+:::
+
+::: {.complement}
+Le facteur $1/T_e$ est omis dans les notes. Le masque d'ordre 2 correspond à $x[n+1] - 2x[n] + x[n-1] \simeq T_e^2\, x''(nT_e)$ : c'est le masque d'ordre 1 appliqué deux fois (une différence avant, puis une différence arrière).
+:::
+
+### Forme générale {#sec-forme-generale-equation-differences}
+
+:::: {.notes}
+Les formes dérivées sont approchées par des **combinaisons à coefficients constants d'échantillons décalés dans le temps**. On obtient l'**équation aux différences** (causale) :
+
+::: {#def-equation-differences}
+## Équation aux différences
+
+$$
+\sum_{k=0}^{K-1} c_k\, y[n-k] = \sum_{l=0}^{L-1} d_l\, x[n-l].
+$$ {#eq-equation-differences}
+:::
+
+Exemples [notes, f. 9 v°] :
+
+- $y[n] = 0{,}5\,x[n] - 0{,}25\,x[n-1]$ : la sortie ne dépend que des entrées, filtre **RIF** ;
+- $y[n] = y[n-1] + 0{,}5\,x[n] - 0{,}75\,x[n-2]$ : le terme $y[n-1]$ (sortie passée) rend la réponse impulsionnelle infinie, filtre **RII**.
+::::
+
+::: {.complement}
+Un RII est **récursif** : on calcule $y[n]$ à partir de $y[n-1], y[n-2], \dots$ déjà calculés. Avec $c_0 = 1$, @eq-equation-differences donne directement l'algorithme $y[n] = \sum_l d_l\, x[n-l] - \sum_{k \geq 1} c_k\, y[n-k]$ : un nombre fini d'opérations par échantillon, pour une réponse impulsionnelle infinie.
+:::
+
+::: {.notes-externes}
+Exemples de **filtres récursifs** :
+
+- $y[n] = 0{,}5\, y[n-1] + x[n] - x[n-1]$ [notes-2023-ch04, p. 2] ;
+- $y[n] = 0{,}5\, y[n-1] + 0{,}8\, x[n] - 0{,}77\, x[n-1]$ [notes-2023-ch04, p. 7].
+
+Utilisation : $y[n] = \sum_{l=0}^{L-1} d_l\, x[n-l]$ réalise un **RIF**, $\sum_k c_k\, y[n-k] = \sum_{l=0}^{L-1} d_l\, x[n-l]$ un **RII** [notes-2023-ch04, p. 7].
+:::
+
+::: {.complement}
+Fonctions de transfert (calcul de rédaction) : $H(z) = \dfrac{1 - z^{-1}}{1 - 0{,}5\, z^{-1}}$ pour le premier (pôle $0{,}5$, zéro $1$ : gain nul en $f = 0$, passe-haut) et $H(z) = \dfrac{0{,}8 - 0{,}77\, z^{-1}}{1 - 0{,}5\, z^{-1}}$ pour le second (pôle $0{,}5$, zéro $0{,}9625$). Les deux sont stables.
+:::
+
+## Interprétation fréquentielle {#sec-interpretation-frequentielle-equations}
+
+::: {.notes}
+On prend la TFSD des deux membres de @eq-equation-differences, en fréquence normalisée et avec le [théorème du retard](03-tfd-interpretation-frequentielle.qmd#eq-retard-tfsd) :
+
+$$
+H(f) = \frac{\sum_l d_l\, e^{-j2\pi l f}}{\sum_k c_k\, e^{-j2\pi k f}}.
+$$ {#eq-h-f-equation-differences}
+
+On pose $z = e^{j2\pi f}$, toujours de module 1 : quand $f$ varie, $z$ parcourt le **cercle unité** du plan complexe (dans le sens trigonométrique quand $f$ croît, $z = 1$ pour $f = 0$). D'où
+
+$$
+H(z) = \frac{\sum_l d_l\, z^{-l}}{\sum_k c_k\, z^{-k}} = \frac{N(z)}{D(z)},
+$$ {#eq-h-z-fraction}
+
+où $N$ et $D$ sont deux polynômes (en $z^{-1}$) [notes, f. 9 v°].
+:::
+
+::: {.notes-externes}
+**Relation avec la TF** : $z = e^{j\omega}$ ou $z = e^{j2\pi f}$, avec $\omega$ et $f$ **normalisées** : $\omega \in [-\pi, \pi]$, $f \in [-\frac12, \frac12]$ [notes-2023-ch04, p. 7].
+
+La transformée en $z$ s'obtient par généralisation de la TF : $e^{j2\pi f T_e} \to r\, e^{j\theta} = z$ [notes-2023-ch04, p. 3].
+:::
+
+## Stabilité et transformée en $z$ {#sec-stabilite-transformee-z}
+
+### Transformée en $z$ {#sec-transformee-z}
+
+:::: {.notes}
+Rappel de la condition nécessaire et suffisante de stabilité : $\sum_n |h[n]| \leq M_h < \infty$. Elle garantit l'existence de la réponse en fréquence, puisque pour $f \in [-\frac12, \frac12]$ :
+
+$$
+|H(f)| = \Bigl|\sum_n h[n]\, e^{-j2\pi f n}\Bigr| \leq \sum_n |h[n]| < \infty.
+$$
+
+Afin de montrer l'existence de $|H(f)|$, il est nécessaire de généraliser la transformée [notes, f. 9 v° et f. 10 r°].
+
+::: {#def-transformee-z}
+## Transformée en $z$
+
+$$
+H(z) = \sum_{n=-\infty}^{+\infty} h[n]\, z^{-n}, \qquad z \in \mathbb{C}.
+$$ {#eq-transformee-z}
+
+Pour $z = e^{j2\pi f}$ (cercle unité), on retrouve la transformée de Fourier : le cercle unité est le **lieu de la transformée de Fourier**.
+:::
+::::
+
+:::: {.notes}
+::: {#thm-stabilite-zone-convergence}
+## Stabilité et zone de convergence
+
+Un SLI est stable si et seulement si la zone de convergence de $H(z)$ **inclut le cercle unité**.
+:::
+
+**Type de zone de convergence.** Pour un système causal ($h[n] = 0$ pour $n < 0$), avec $z = r\,e^{j\theta}$ :
+
+$$
+|H(z)| = \Bigl|\sum_{n=0}^{+\infty} h[n]\, z^{-n}\Bigr| \leq \sum_{n=0}^{+\infty} |h[n]|\, r^{-n} :
+$$
+
+la zone de convergence est l'**extérieur d'un disque** [notes, f. 10 r°].
+::::
+
+::: {.complement}
+La majoration $\sum_n |h[n]|\, r^{-n}$ décroît quand $r$ augmente : si elle est finie pour un rayon $r_0$, elle l'est pour tout $r > r_0$, d'où la forme de la zone. Pour un système causal, la zone de convergence est $|z| > \max_k |p_k|$ (extérieur du cercle passant par le pôle de plus grand module). Elle contient le cercle unité si et seulement si tous les pôles sont de module inférieur à 1 : c'est la condition de @thm-stabilite-poles plus bas.
+:::
+
+### Pôles et zéros {#sec-poles-zeros}
+
+::: {.notes}
+En factorisant numérateur et dénominateur :
+
+$$
+H(z) = \frac{\sum_l d_l\, z^{-l}}{\sum_k c_k\, z^{-k}} = \frac{N(z)}{D(z)}
+= \frac{d_0}{c_0}\, \frac{\prod_l \bigl(1 - z_l\, z^{-1}\bigr)}{\prod_k \bigl(1 - p_k\, z^{-1}\bigr)},
+$$ {#eq-factorisation-poles-zeros}
+
+avec $\{z_l\}$ les **zéros** (racines de $N(z)$) et $\{p_k\}$ les **pôles** (racines de $D(z)$). Sur le cercle unité :
+
+$$
+|H(f)| = \left|\frac{d_0}{c_0}\right| \frac{\prod_l \bigl|1 - z_l\, e^{-j2\pi f}\bigr|}{\prod_k \bigl|1 - p_k\, e^{-j2\pi f}\bigr|},
+$$ {#eq-module-poles-zeros}
+
+$$
+\operatorname{Arg}\bigl(H(f)\bigr) = \operatorname{Arg}\!\left(\frac{d_0}{c_0}\right) + \sum_l \operatorname{Arg}\bigl(1 - z_l\, e^{-j2\pi f}\bigr) - \sum_k \operatorname{Arg}\bigl(1 - p_k\, e^{-j2\pi f}\bigr).
+$$ {#eq-phase-poles-zeros}
+
+[notes, f. 10 r°]
+:::
+
+::: {.a-verifier #av-bornes-factorisation}
+**Source** [notes, f. 10 r°] : « $\dfrac{d_0}{c_0}\, \dfrac{\prod_{l=0}^{L-1}(1 - z_l z^{-1})}{\prod_{k=0}^{K-1}(1 - p_k z^{-1})}$ ».
+
+**Problème** : avec @eq-equation-differences ($l$ de $0$ à $L-1$), $N(z)$ est de degré $L-1$ en $z^{-1}$ : il a $L-1$ zéros, et non $L$. De même $D(z)$ a $K-1$ pôles.
+
+**Proposition** : produits pour $l = 1, \dots, L-1$ et $k = 1, \dots, K-1$ (ou bornes non précisées, comme dans @eq-factorisation-poles-zeros).
+
+**Autres sources** : les notes 2023 écrivent $\dfrac{d_0}{c_0}\dfrac{\prod_l (1 - z_l z^{-1})}{\prod_k (1 - p_k z^{-1})}$, **sans bornes** sur les produits [notes-2023-ch04, p. 5] [notes-2023-ch05, p. 2], comme la forme actuelle de @eq-factorisation-poles-zeros ; elles ne disent rien du nombre de zéros ou de pôles.
+:::
+
+::: {.complement}
+Lecture géométrique de @eq-module-poles-zeros : $|1 - p\,e^{-j2\pi f}| = |e^{j2\pi f} - p|$ est la distance entre le point $e^{j2\pi f}$ du cercle unité et le pôle $p$. Le gain est donc **grand près d'un pôle** et **nul sur un zéro** placé sur le cercle unité : c'est la base de la lecture d'un diagramme pôles-zéros (passe-bas, passe-haut, réjecteur…), question fréquente des partiels.
+:::
+
+::: {.notes-externes}
+**Module et phase d'un facteur $(1 - \alpha z^{-1})$**, en $f$ ou $\omega$ normalisés. Avec $\alpha = b\, e^{j\theta}$ et $z = e^{j\omega}$ :
+
+$$
+1 - b\, e^{j\theta} e^{-j\omega} = 1 - b\, e^{-j(\omega - \theta)} = \bigl(1 - b\cos(\omega - \theta)\bigr) + j\, b \sin(\omega - \theta).
+$$
+
+$$
+\bigl|1 - \alpha\, e^{-j\omega}\bigr|^2 = \bigl(1 - b\cos(\omega - \theta)\bigr)^2 + b^2 \sin^2(\omega - \theta) = 1 - 2b\cos(\omega - \theta) + b^2.
+$$ {#eq-module-facteur-elementaire}
+
+$$
+\operatorname{Arg}\bigl(1 - \alpha\, e^{-j\omega}\bigr) = \operatorname{arctg}\left(\frac{-\,b\sin(\omega - \theta)}{1 - b\cos(\omega - \theta)}\right) \quad \text{(tel qu'écrit, voir ci-dessous)}.
+$$ {#eq-phase-facteur-elementaire}
+
+[notes-2023-ch04, p. 5]
+:::
+
+::: {.a-verifier #av-phase-facteur-elementaire-signe}
+**Source** [notes-2023-ch04, p. 5] : « $\operatorname{Arg}(\,) = \operatorname{arctg}\Bigl(\dfrac{-b\sin(\omega-\theta)}{1 - b\cos(\omega-\theta)}\Bigr)$ », juste après « $= (1 - b\cos(\omega-\theta)) + jb\sin(\omega-\theta)$ ».
+
+**Problème** : la partie imaginaire écrite à la ligne précédente est $+\,b\sin(\omega - \theta)$ ; le signe moins dans l'arctangente contredit ce calcul.
+
+**Proposition** : $\operatorname{Arg}\bigl(1 - \alpha e^{-j\omega}\bigr) = \operatorname{Arctan}\dfrac{b\sin(\omega - \theta)}{1 - b\cos(\omega - \theta)}$, valable sans correction de $\pm\pi$ quand la partie réelle est positive, par exemple pour $b < 1$.
+:::
+
+::: {.complement}
+@eq-module-facteur-elementaire donne la lecture géométrique : la distance au carré entre $e^{j\omega}$ et $\alpha$ est minimale, égale à $(1 - b)^2$, pour $\omega = \theta$. Un pôle $\alpha$ proche du cercle donne donc un pic de gain à la fréquence $\omega = \theta = \operatorname{Arg}(\alpha)$. Avec $\theta = 0$, on retrouve $|e^{j\omega} - b|^2 = 1 - 2b\cos\omega + b^2$, utilisé au [chapitre 5](05-representation-en-phase.qmd#sec-egalite-modules).
+:::
+
+### Cellule d'ordre 1 {#sec-cellule-ordre-1}
+
+:::: {.notes}
+On étudie $y[n] = \alpha\, y[n-1] + x[n]$.
+
+**Théorème du retard** pour la transformée en $z$ : $x[n] \xrightarrow{\ \mathrm{TZ}\ } X(z)$ et $x[n-k] \xrightarrow{\ \mathrm{TZ}\ } z^{-k}\, X(z)$.
+
+D'où $Y(z) = \alpha\, z^{-1}\, Y(z) + X(z)$ et
+
+$$
+H(z) = \frac{1}{1 - \alpha\, z^{-1}}.
+$$ {#eq-cellule-ordre-1}
+
+La série converge pour $|\alpha z^{-1}| < 1$, c'est-à-dire $|z| > |\alpha|$ (extérieur du disque de rayon $|\alpha|$). Elle contient le cercle unité si :
+
+::: {#prp-stabilite-ordre-1}
+## Stabilité de la cellule d'ordre 1
+
+$$
+|\alpha| < 1.
+$$
+:::
+
+**Remarque.** $h[n] = \alpha^n\, u[n]$ : la réponse impulsionnelle est infinie (RII), et
+
+$$
+H(z) = \sum_{n=0}^{+\infty} \alpha^n z^{-n} = \sum_{n=0}^{+\infty} \bigl(\alpha z^{-1}\bigr)^n = \frac{1}{1 - \alpha z^{-1}}.
+$$ {#eq-tz-exponentielle}
+
+[notes, f. 10 r° et v°]
+::::
+
+:::: {.notes-externes}
+::: {#prp-retard-transformee-z}
+## Théorème du retard (transformée en $z$)
+
+$$
+\sum_n h[n-k]\, z^{-n} = z^{-k}\, H(z).
+$$
+:::
+
+::: {.proof}
+$\displaystyle\sum_n h[n-k]\, z^{-n} = \sum_n h[n]\, z^{-n-k} = z^{-k} \sum_n h[n]\, z^{-n} = z^{-k}\, H(z)$.
+:::
+
+Pour la cellule d'ordre 1, la convergence exige $|\alpha z^{-1}| < 1$, soit $r > |\alpha|$ ; condition de stabilité $|\alpha| < 1$. Remarque : $\alpha$ est la **racine du dénominateur** (le pôle) [notes-2023-ch04, p. 4].
+::::
+
+::: {.a-verifier #av-roc-inclusion-disque}
+**Source** [notes-2023-ch04, p. 4] : « $\mathrm{ROC}(H(z)) \subset \mathcal{C}_1$ », où $\mathcal{C}_1$ est défini p. 5 comme le « cercle unité » (et la stabilité écrite $\{p_k\} \subset \mathcal{C}_1$).
+
+**Problème** : la zone de convergence $|z| > |\alpha|$ est l'extérieur d'un disque ; elle ne peut pas être incluse dans le disque unité. L'inclusion est écrite à l'envers par rapport à @thm-stabilite-zone-convergence.
+
+**Proposition** : $\mathcal{C}_1 \subset \mathrm{ROC}(H)$ (le cercle unité est inclus dans la zone de convergence), ce qui équivaut à $|\alpha| < 1$.
+:::
+
+### Généralisation : décomposition en éléments simples {#sec-generalisation-elements-simples}
+
+:::: {.notes}
+Pour une fraction propre ($K \geq L$), on décompose en éléments simples :
+
+$$
+H(z) = \frac{N(z)}{D(z)} = \frac{A_1\, z}{z - p_0} + \frac{A_2\, z}{z - p_1} + \dots
+$$
+
+Par superposition, chaque terme est une cellule d'ordre 1 de pôle $p_k$, stable si $|p_k| < 1$.
+
+::: {#thm-stabilite-poles}
+## Condition de stabilité (système causal)
+
+$$
+\forall k, \quad |p_k| < 1 :
+$$
+
+tous les pôles sont à l'intérieur du **cercle unité** (disque unité ouvert, noté $\mathcal{C}_1$ dans les notes).
+:::
+
+[notes, f. 10 v°]
+::::
+
+::: {.complement}
+Chaque terme $\dfrac{A\, z}{z - p} = \dfrac{A}{1 - p\, z^{-1}}$ a pour réponse impulsionnelle causale $A\, p^n\, u[n]$ (@eq-tz-exponentielle). D'où $h[n] = \sum_k A_k\, p_k^n\, u[n]$ : elle tend vers 0, et reste absolument sommable, exactement quand tous les $|p_k|$ sont inférieurs à 1. Décomposer $H(z)/z$ plutôt que $H(z)$ fait apparaître directement la forme $\frac{A z}{z - p}$.
+:::
+
+::: {.notes-externes}
+Si $L \leq K$, on décompose directement en éléments simples en $z^{-1}$ :
+
+$$
+H(z) = \sum_i \frac{A_i}{1 - p_i\, z^{-1}},
+$$
+
+puis, par **théorème de superposition**, CNS de stabilité : $\{p_k\} \subset \mathcal{C}_1$, où $\mathcal{C}_1$ est noté « cercle unité » [notes-2023-ch04, p. 5].
+:::
+
+::: {.complement}
+Ici $\{p_k\} \subset \mathcal{C}_1$ doit se lire « pôles à l'intérieur du cercle unité » (disque ouvert), comme dans @thm-stabilite-poles.
+:::
+
+![Cellule d'ordre 1 : zone de convergence $|z| > |\alpha|$ et réponse impulsionnelle $h[n] = \alpha^n u[n]$ pour $\alpha = 0{,}8$ (stable) et $\alpha = -0{,}8$ (stable, alternée). D'après les notes de cours [notes, f. 10 v°], redessinée ; réponses impulsionnelles ajoutées.](../figures/04-cellule-ordre-1.svg){#fig-cellule-ordre-1}
+
+## Exemple complet {#sec-exemple-complet-rii}
+
+::: {.notes}
+**Équation** : $y[n] + \frac{1}{4}\, y[n-1] - \frac{3}{8}\, y[n-2] = x[n]$.
+
+**Fonction de transfert.** Par transformée en $z$ :
+
+$$
+Y(z)\Bigl[1 + \tfrac{1}{4} z^{-1} - \tfrac{3}{8} z^{-2}\Bigr] = X(z)
+\quad \Longrightarrow \quad
+H(z) = \frac{1}{z^{-2}\bigl(z^2 + \frac14 z - \frac38\bigr)} = \frac{z^2}{\bigl(z + \frac34\bigr)\bigl(z - \frac12\bigr)}.
+$$ {#eq-exemple-h-z}
+
+**Pôles.** $\Delta = \bigl(\frac14\bigr)^2 - 4 \times \bigl(-\frac38\bigr) = \frac{1}{16} + \frac{12}{8} = \frac{25}{16} > 0$, d'où
+
+$$
+p_1 = \frac{-\frac14 - \frac54}{2} = -\frac34, \qquad p_2 = \frac{-\frac14 + \frac54}{2} = \frac12.
+$$
+
+Les deux pôles sont dans le disque unité : la condition de stabilité est vérifiée.
+
+**Décomposition.**
+
+$$
+\frac{z^2}{\bigl(z + \frac34\bigr)\bigl(z - \frac12\bigr)} = \frac{A\, z}{z + \frac34} + \frac{B\, z}{z - \frac12}.
+$$
+
+On évalue après multiplication par le dénominateur de chaque terme (et division par $z$) :
+
+- en $z = -\frac34$ : $\dfrac{-\frac34}{-\frac34 - \frac12} = A$, soit $A = \dfrac{3/4}{5/4} = \dfrac35$ ;
+- en $z = \frac12$ : $\dfrac{\frac12}{\frac12 + \frac34} = B$, soit $B = \dfrac{1/2}{5/4} = \dfrac25$.
+
+Vérification : $\dfrac35\, \dfrac{z}{z + \frac34} + \dfrac25\, \dfrac{z}{z - \frac12} = \dfrac15\, \dfrac{3z^2 - \frac32 z + 2z^2 + \frac32 z}{(z + \frac34)(z - \frac12)} = \dfrac{z^2}{(z + \frac34)(z - \frac12)}$.
+
+**Réponse impulsionnelle** (RII) :
+
+$$
+h[n] = A_0 \Bigl(\frac12\Bigr)^n u[n] + A_1 \Bigl(-\frac34\Bigr)^n u[n].
+$$
+
+[notes, f. 10 v° et f. 11 r°]
+:::
+
+::: {.complement}
+Avec les valeurs trouvées ($A_0 = B$, $A_1 = A$, non reportées dans les notes) :
+
+$$
+h[n] = \left[\frac25 \Bigl(\frac12\Bigr)^n + \frac35 \Bigl(-\frac34\Bigr)^n\right] u[n].
+$$ {#eq-exemple-h-n}
+
+Contrôle sur les premiers termes, par l'équation de récurrence avec $x = \delta$ : $h[0] = 1$ et $h[1] = -\frac14 h[0] = -\frac14$. La formule donne $h[0] = \frac25 + \frac35 = 1$ et $h[1] = \frac15 - \frac{9}{20} = -\frac14$.
+
+Les notes nomment $z_1$, $z_2$ les racines de $z^2 + \frac14 z - \frac38$ : ce sont des **pôles** de $H(z)$ ; on les note $p_1$, $p_2$ ici. $H(z)$ a un zéro double en $z = 0$.
+:::
+
+![Exemple complet : diagramme pôles-zéros (pôles en $\frac12$ et $-\frac34$, zéro double en 0) et réponse impulsionnelle @eq-exemple-h-n. D'après les notes de cours [notes, f. 10 v°], redessinée ; réponse impulsionnelle calculée.](../figures/04-exemple-poles-zeros.svg){#fig-exemple-poles-zeros}
+
+:::: {.notes-externes}
+::: {#exm-rii-ordre-2-variante}
+## Variante : $y[n] - \frac14 y[n-1] - \frac38 y[n-2] = x[n]$
+
+Transformée en $z$ : $Y(z)\bigl(1 - \frac14 z^{-1} - \frac38 z^{-2}\bigr) = X(z)$, d'où
+
+$$
+H(z) = \frac{1}{1 - \frac14 z^{-1} - \frac38 z^{-2}}.
+$$
+
+**Pôles** : $z^2 - \frac14 z - \frac38 = 0$, $\Delta = \frac{1}{16} + \frac{12}{8} = \frac{25}{16}$, d'où $z_1 = -\frac12$ et $z_2 = \frac34$ : **filtre stable**.
+
+**Décomposition en $z^{-1}$** :
+
+$$
+H(z) = \frac{1}{\bigl(1 - \frac34 z^{-1}\bigr)\bigl(1 + \frac12 z^{-1}\bigr)} = \frac{A}{1 + \frac12 z^{-1}} + \frac{B}{1 - \frac34 z^{-1}},
+$$
+
+$$
+A = \frac{1}{1 - \frac34 \times (-2)} = \frac{1}{1 + \frac64} = \frac25, \qquad
+B = \frac{1}{1 + \frac12 \times \frac43} = \frac{1}{1 + \frac23} = \frac35.
+$$
+
+$$
+h[n] = A_1 \Bigl(\frac34\Bigr)^n u[n] + A_2 \Bigl(-\frac12\Bigr)^n u[n].
+$$
+:::
+
+[notes-2023-ch04, p. 5 et 6]
+::::
+
+::: {.complement}
+Méthode : $A$ s'obtient en multipliant par $1 + \frac12 z^{-1}$ puis en posant $z^{-1} = -2$ (le pôle $-\frac12$), $B$ en posant $z^{-1} = \frac43$ (le pôle $\frac34$). Les notes ne reportent pas les valeurs : $A_1 = B = \frac35$ et $A_2 = A = \frac25$, d'où $h[n] = \bigl[\frac35 (\frac34)^n + \frac25 (-\frac12)^n\bigr] u[n]$. Contrôle par la récurrence : $h[0] = 1$, $h[1] = \frac14$ ; la formule donne $\frac35 + \frac25 = 1$ et $\frac{9}{20} - \frac{4}{20} = \frac14$.
+
+Cette équation se déduit de celle de @sec-exemple-complet-rii en changeant le signe du coefficient de $y[n-1]$, c'est-à-dire $z \to -z$ : les pôles changent de signe et $h[n]$ est multipliée par $(-1)^n$, ce que confirment @eq-exemple-h-n et le résultat ci-dessus.
+:::
+
+## Exercices du TD {#sec-exercices-td-ch04}
+
+::: {.remark}
+**Annexe du recueil de TD** [td, p. 11]. Définitions, en parallèle du domaine continu :
+
+| | Domaine continu | Domaine discret |
+|---|---|---|
+| Transformée | $X(p) = \int_{-\infty}^{+\infty} x(t)\, e^{-pt}\,\mathrm{d}t$ | $X(z) = \sum_{n=-\infty}^{+\infty} x[n]\, z^{-n}$ |
+| Équation | $\sum_{k=0}^{K-1} C_k \dfrac{\mathrm{d}^k y(t)}{\mathrm{d}t^k} = \sum_{l=0}^{L-1} D_l \dfrac{\mathrm{d}^l x(t)}{\mathrm{d}t^l}$ | $\sum_{k=0}^{K-1} C_k\, y[n-k] = \sum_{l=0}^{L-1} D_l\, x[n-l]$ |
+| Fréquence | $p = j\omega = j2\pi f$ | $z = e^{j\omega T_e} = e^{j2\pi f/f_e}$ |
+| Fonction de transfert | $H(p) = \dfrac{\sum_{l=0}^{L-1} D_l\, p^l}{\sum_{k=0}^{K-1} C_k\, p^k}$ | $H(z) = \dfrac{\sum_{l=0}^{L-1} D_l\, z^{-l}}{\sum_{k=0}^{K-1} C_k\, z^{-k}}$ |
+| Stabilité ($K > L$, système causal) | pôles à partie réelle négative | pôles à l'intérieur du cercle unité dans le plan complexe |
+
+Formulaire :
+
+$$
+\sum_{n=0}^{N-1} a^n = \frac{1 - a^N}{1 - a}, \qquad \sum_{n=0}^{+\infty} a^n = \frac{1}{1 - a} \quad \text{pour } |a| < 1.
+$$
+:::
+
+::: {.a-verifier #av-td-annexe-derivee}
+**Source** [td, p. 11] : « $\sum_{k=0}^{K-1} C_k \dfrac{d^k y(t)}{dt^k} = \sum_{l=0}^{L-1} D_l \dfrac{d^l x(t)}{dt^p}$ ».
+
+**Problème** : l'ordre de dérivation du second membre doit être le même au numérateur et au dénominateur ; $p$ désigne ailleurs dans le tableau la variable de Laplace.
+
+**Proposition** : $\dfrac{\mathrm{d}^l x(t)}{\mathrm{d}t^l}$ (forme retenue dans le tableau ci-dessus).
+:::
+
+::: {.complement}
+La première somme suppose $a \neq 1$ (pour $a = 1$, elle vaut $N$). Dans l'annexe, $\omega$ est une pulsation en rad/s ($z = e^{j\omega T_e}$) ; dans les énoncés du TD, $H(\omega)$ désigne la réponse en pulsation **normalisée**, $\omega = 2\pi f/f_e \in [-\pi, \pi]$. Les coefficients $C_k$, $D_l$ de l'annexe sont les $c_k$, $d_l$ de @eq-equation-differences.
+:::
+
+::: {#exr-td-porte-trapeze}
+## Porte et trapèze : énergie, transformées en $z$ et de Fourier
+
+1. Soit la fonction porte à temps discret $x[n] = 1$ pour $n = 0, \dots, N-1$ (0 ailleurs). Calculer l'énergie du signal et sa puissance. Quelle est sa transformée en $z$, puis sa transformée de Fourier ? Quelles sont les fréquences observées quand on utilise la TFD ?
+2. Soit la fonction trapèze à temps discret $x[n] = an + b$ pour $n = 0, \dots, N-1$. Quelle est sa transformée en $z$, puis sa transformée de Fourier ?
+3. Y a-t-il un lien entre les deux transformées en $z$ obtenues ?
+
+[td, p. 7]
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+1. Énergie et puissance :
+$$
+E = \sum_{n=-\infty}^{+\infty} x^2[n] = N, \qquad P = \lim_{M \to \infty} \frac{1}{2M+1} \sum_{n=-M}^{M} x^2[n] = 0.
+$$
+Transformée en $z$ :
+$$
+X(z) = \sum_{n=0}^{N-1} z^{-n} = \frac{1 - z^{-N}}{1 - z^{-1}}.
+$$
+Transformée de Fourier ($f$ variable continue, fréquence normalisée, $f \in [-\frac12, \frac12]$), avec $z = e^{j2\pi f}$ :
+$$
+X(f) = \frac{1 - e^{-j2\pi f N}}{1 - e^{-j2\pi f}}.
+$$
+La TFD (« algorithme ») calcule cette TF en des fréquences $f = k\,\Delta f$ ; le corrigé trace des échantillons sur la courbe de $|X(f)|$ (voir le bloc *À vérifier* ci-dessous).
+2. et 3. Le corrigé dessine un trapèze symétrique $y_1[n] = (x_1 \star x_2)[n]$, convolution de deux portes $x_1$ et $x_2$ de largeurs différentes, et en déduit $Y_1(z) = X_1(z)\,X_2(z)$ (voir le second bloc *À vérifier*).
+
+[corrige-2023-td02, p. 1-2]
+:::
+::::
+
+::: {.a-verifier #av-td-tfd-porte}
+**Source** [corrige-2023-td02, p. 2] : « $X(k) = \sum_{n=0}^{M-1} x(n)\, e^{-j2\pi\frac{kn}{N}}$ », « $f = k\,\Delta f$ », « $\Delta f = \frac{1}{M}$ », puis un tracé de la TFSD de la porte où les échantillons de la TFD (en rouge) tombent sur des valeurs **non nulles** du lobe principal et des lobes secondaires.
+
+**Problème** : $M$ et $N$ sont intervertis entre la borne de la somme et l'exposant, et le pas $\Delta f = \frac1M$ ne correspond pas à l'exposant $\frac{kn}{N}$. Surtout, avec une TFD sur $N$ points d'une porte de $N$ échantillons, les fréquences observées $f_k = \frac{k}{N}$ tombent **exactement sur les zéros** de $X(f)$ (sauf $k = 0$) : $X[k] = N$ si $k = 0$, $0$ sinon. Les échantillons dessinés ne correspondent qu'à une TFD sur $M > N$ points (complément par des zéros).
+
+**Proposition** : avec les notations du [chapitre 3](03-tfd-interpretation-frequentielle.qmd#eq-tfd), $X[k] = \sum_{n=0}^{N-1} x[n]\, e^{-j2\pi kn/M}$, fréquences observées $f_k = \frac{k}{M}$ ($k f_e/M$ en hertz). Pour $M = N$ : $X[k] = N\,\delta[k]$ ; pour $M > N$ : échantillons de la courbe $|X(f)|$, comme sur le tracé.
+:::
+
+::: {.a-verifier #av-td-trapeze-interpretation}
+**Source** [corrige-2023-td02, p. 2] : pour les questions 2 et 3, tracé d'un trapèze symétrique « $y_1(n) = x_1(n) \star x_2(n) \Rightarrow Y_1(z) = X_1(z) \times X_2(z)$ ».
+
+**Problème** : l'énoncé [td, p. 7] définit le « trapèze » par $x[n] = an + b$ pour $n = 0, \dots, N-1$ (une rampe posée sur un palier), et non par la convolution de deux portes. Le corrigé traite un autre signal ; il ne donne ni la transformée en $z$ ni la TF de $an + b$.
+
+**Proposition** : solution pour $x[n] = an + b$ dans le complément ci-dessous ; la lecture du corrigé (trapèze symétrique) y est traitée aussi.
+:::
+
+::: {.complement}
+**Question 1.**
+
+- TF sous forme réelle : $X(f) = \dfrac{e^{-j\pi f N}\,(e^{j\pi f N} - e^{-j\pi f N})}{e^{-j\pi f}\,(e^{j\pi f} - e^{-j\pi f})} = e^{-j\pi f (N-1)}\, \dfrac{\sin(\pi N f)}{\sin(\pi f)}$. Module $N$ en $f = 0$, zéros en $f = \frac{k}{N}$, $k \neq 0$ (modulo 1) ; phase linéaire (retard $\frac{N-1}{2}$).
+- Puissance nulle : signal d'énergie finie, $\frac{N}{2M+1} \to 0$.
+
+**Question 2** ($x[n] = an + b$, $0 \leq n \leq N-1$). Avec $\sum_{n=0}^{N-1} n\, z^{-n} = -z\, \dfrac{\mathrm{d}}{\mathrm{d}z} \sum_{n=0}^{N-1} z^{-n}$ :
+
+$$
+X(z) = b\, \frac{1 - z^{-N}}{1 - z^{-1}} + a\, \frac{z^{-1}\bigl(1 - N z^{-(N-1)} + (N-1)\, z^{-N}\bigr)}{(1 - z^{-1})^2},
+$$
+
+et la TF s'obtient en posant $z = e^{j2\pi f}$ (le cercle unité appartient à la zone de convergence : signal de durée finie). Formule vérifiée par calcul symbolique pour $N = 3, 5, 7$.
+
+**Question 3.** En notant $X_\Pi(z) = \dfrac{1 - z^{-N}}{1 - z^{-1}}$ la transformée de la porte :
+
+$$
+X_\mathrm{trap}(z) = b\, X_\Pi(z) - a\, z\, \frac{\mathrm{d}X_\Pi(z)}{\mathrm{d}z},
+$$
+
+par la propriété $n\,x[n] \longleftrightarrow -z\, \dfrac{\mathrm{d}X(z)}{\mathrm{d}z}$. Avec la lecture du corrigé (trapèze symétrique, convolution de deux portes de longueurs $N_1$ et $N_2$), le lien est un produit : $Y_1(z) = \dfrac{(1 - z^{-N_1})(1 - z^{-N_2})}{(1 - z^{-1})^2}$.
+:::
+
+::: {#exr-td-equation-differences-ordre-2}
+## Équation aux différences d'ordre 2
+
+Soit le système défini par l'équation aux différences
+
+$$
+y[n] + c_1\, y[n-1] + c_2\, y[n-2] = d_0\, x[n] + d_1\, x[n-1] + d_2\, x[n-2].
+$$
+
+Étudier les fonctions de transfert obtenues pour :
+
+- $c_1 = c_2 = 0$, $d_0 = 1$, $d_1 = -0{,}5$, $d_2 = 0{,}125$ ;
+- $c_1 = -0{,}94$, $c_2 = 0{,}5$, $d_0 = 1$, $d_1 = d_2 = 0$.
+
+[td, p. 7]
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+Rappel du corrigé : l'équation $\sum_{k=0}^{K-1} c_k\, y[n-k] = \sum_{l=0}^{L-1} d_l\, x[n-l]$ décrit un RII causal, de fonction de transfert $H(z) = \dfrac{\sum_l d_l z^{-l}}{\sum_k c_k z^{-k}} = \dfrac{N(z)}{D(z)}$ (zéros : racines de $N$ ; pôles : racines de $D$) ; stabilité : pôles dans le disque unité.
+
+- **Premier cas** : $y[n] = x[n] - 0{,}5\,x[n-1] + 0{,}125\,x[n-2]$ ne dépend que de $x$ : RIF, stable, causal.
+- **Second cas** : $y[n] = 0{,}94\,y[n-1] - 0{,}5\,y[n-2] + x[n]$ : RII, causal. Par transformée en $z$,
+$$
+Y(z) - 0{,}94\, z^{-1}\, Y(z) + 0{,}5\, z^{-2}\, Y(z) = X(z), \qquad H(z) = \frac{1}{1 - 0{,}94\, z^{-1} + 0{,}5\, z^{-2}} = \frac{z^2}{z^2 - 0{,}94\, z + 0{,}5}.
+$$
+Pôles $p_{1,2} = 0{,}47 \pm j\,0{,}53$, à l'intérieur du cercle unité (diagramme) : stable.
+
+[corrige-2023-td02, p. 1-3]
+:::
+::::
+
+::: {.a-verifier #av-td-discriminant-stabilite}
+**Source** [corrige-2023-td02, p. 3] : « $\Delta = -1{,}1 < 0$ donc instable », puis, après le calcul des pôles $0{,}47 \pm j\,0{,}53$ et le diagramme, « $\Rightarrow$ stable ».
+
+**Problème** : le signe du discriminant indique seulement que les pôles sont complexes conjugués ; il ne dit rien de la stabilité. Les deux conclusions se contredisent ; la bonne est la seconde, $|p_{1,2}| = \sqrt{0{,}5} \approx 0{,}707 < 1$.
+
+**Proposition** : « $\Delta = 0{,}94^2 - 4 \times 0{,}5 \approx -1{,}12 < 0$ donc pôles complexes conjugués ; $|p_{1,2}|^2 = 0{,}5 < 1$ donc stable ».
+:::
+
+::: {.complement}
+**Premier cas.** $H(z) = 1 - 0{,}5\,z^{-1} + 0{,}125\,z^{-2} = \dfrac{z^2 - 0{,}5\,z + 0{,}125}{z^2}$ : zéros $0{,}25 \pm j\,0{,}25$ (module $\approx 0{,}354$, dans le cercle unité : filtre à minimum de phase, voir le [chapitre 5](05-representation-en-phase.qmd#def-minimum-phase)), pôle double en $z = 0$. $|H(f)|$ croît de $0{,}625$ en $f = 0$ à $1{,}625$ en $f = \frac12$ : passe-haut peu sélectif.
+
+**Second cas.** $|p_{1,2}| = \sqrt{c_2} = \sqrt{0{,}5}$ (produit des racines) ; arguments $\pm 0{,}268\pi$, soit $f \approx \pm 0{,}134$. Zéro double en $z = 0$. $|H(f)|$ vaut $\approx 1{,}79$ en $f = 0$, passe par un maximum $\approx 2{,}68$ ($\approx 8{,}6$ dB) vers $f \approx 0{,}125$, près de l'argument des pôles, et vaut $\approx 0{,}41$ en $f = \frac12$ : passe-bas avec une résonance.
+:::
+
+::: {#exr-td-rif-somme-deux}
+## RIF $y[n] = x[n] + x[n-1]$
+
+Soit un signal $x[n]$ filtré par un filtre linéaire dont la sortie vérifie $y[n] = x[n] + x[n-1]$.
+
+1. Quelle relation vérifient l'entrée $x[n]$ et la sortie $y[n]$ de ce filtre ?
+2. S'agit-il d'un filtre RIF ou RII ?
+3. S'agit-il d'un filtre causal ?
+4. Donner l'expression de $H(z)$.
+5. Est-il stable ?
+6. Donner les pôles et les zéros de la fonction de transfert.
+7. Quelle est la nature du filtre ? On représentera $|H(f)|$ en fonction de $f$, sur une plage de fréquences que l'on précisera.
+
+[td, p. 7]
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+1. Une équation aux différences linéaire.
+2. RIF : dépendance en $x$ seulement ; réponse impulsionnelle $h[n] = \delta[n] + \delta[n-1]$.
+3. Causal.
+4. $H(z) = 1 + z^{-1}$.
+5. Stable, car RIF (toujours).
+6. Pas de pôles ; zéro en $z = -1 = e^{j\pi}$.
+7. Passe-bas : $z = e^{j2\pi f} = e^{j\pi}$ pour $f = \frac12$, annulation en haute fréquence. On est en fréquence normalisée, donc $f \in [-\frac12, \frac12]$ (Shannon).
+
+[corrige-2023-td02, p. 3]
+:::
+::::
+
+::: {.a-verifier #av-td-rif-poles-origine}
+**Source** [corrige-2023-td02, p. 3 et p. 4] : « Pas de pôles » pour $H(z) = 1 + z^{-1}$ ; « Pas de pôles » et « Pôles : inexistant » pour $H(z) = 1 + 2z^{-1} + z^{-2}$.
+
+**Problème** : en puissances positives de $z$, $1 + z^{-1} = \dfrac{z + 1}{z}$ a un **pôle simple en $z = 0$**, et $(1 + z^{-1})^2 = \dfrac{(z+1)^2}{z^2}$ un **pôle double en $z = 0$**. Le cours compte ces pôles et zéros à l'origine (zéro double en 0 de l'[exemple complet](#sec-exemple-complet-rii)). Ils n'influent ni sur la stabilité ni sur $|H(f)|$ (puisque $|e^{j2\pi f}| = 1$), mais ils figurent dans un diagramme pôles-zéros.
+
+**Proposition** : « aucun pôle hors de l'origine ; pôle simple (respectivement double) en $z = 0$ ».
+:::
+
+::: {.complement}
+$H(f) = 1 + e^{-j2\pi f} = 2\cos(\pi f)\, e^{-j\pi f}$, d'où $|H(f)| = 2\,|\cos(\pi f)|$ sur $[-\frac12, \frac12]$ : 2 en $f = 0$, nul en $f = \pm\frac12$. C'est deux fois la moyenne de deux échantillons du [chapitre 3](03-tfd-interpretation-frequentielle.qmd#eq-h-moyenne-normalisee) : passe-bas non idéal, phase linéaire $-\pi f$ (retard d'un demi-échantillon).
+:::
+
+::: {#exr-td-rif-binomial-ordre-2}
+## RIF $y[n] = x[n] + 2x[n-1] + x[n-2]$
+
+Soit un signal $x[n]$ filtré par un filtre linéaire dont la sortie vérifie $y[n] = x[n] + 2\,x[n-1] + x[n-2]$. Reprendre les questions 1 à 7 de @exr-td-rif-somme-deux [td, p. 7].
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+1. Idem : équation aux différences linéaire ; $h[n] = \delta[n] + 2\,\delta[n-1] + \delta[n-2]$, soit $h[0] = 1$, $h[1] = 2$, $h[2] = 1$, $h[n] = 0$ ailleurs.
+2. RIF.
+3. Causal.
+4. $H(z) = 1 + 2z^{-1} + z^{-2} = (1 + z^{-1})^2$.
+5. Stable : entrée bornée $\Rightarrow$ sortie bornée.
+6. Pas de pôles ; zéro $z = -1 = e^{\pm j\pi}$ : annulation.
+7. Sur le cercle unité, $z = e^{j2\pi f/f_e}$ :
+$$
+H(f) = \bigl(1 + e^{-j2\pi f/f_e}\bigr)^2 = 4\cos^2\Bigl(\frac{\pi f}{f_e}\Bigr)\, e^{j\frac{2\pi f}{f_e}} \quad [\text{sic}],
+$$
+module tracé sur $[-\frac{f_e}{2}, \frac{f_e}{2}]$, maximum 4 en $f = 0$, nul en $\pm\frac{f_e}{2}$ : filtre passe-bas d'ordre 2.
+
+[corrige-2023-td02, p. 3-4]
+:::
+::::
+
+::: {.a-verifier #av-td-phase-binomial-signe}
+**Source** [corrige-2023-td02, p. 4] : « $H(f) = \bigl(1 + e^{-j\frac{2\pi f}{f_\mathrm{ech}}}\bigr)^2 = 4\cos^2\bigl(\frac{\pi f}{f_\mathrm{ech}}\bigr)\, e^{j\frac{2\pi f}{f_\mathrm{ech}}}$ », et le graphe du module est légendé « $4\cos\,2\pi f/f_\mathrm{ech}$ » (exposant 2 peu lisible).
+
+**Problème** : $\bigl(1 + e^{-j\theta}\bigr)^2 = \bigl(2\cos\frac{\theta}{2}\, e^{-j\theta/2}\bigr)^2 = 4\cos^2\frac{\theta}{2}\, e^{-j\theta}$ : l'exponentielle est $e^{-j2\pi f/f_e}$ (signe moins, retard d'un échantillon), et l'argument du cosinus du graphe doit être $\pi f/f_e$ (sinon le module s'annulerait en $\pm f_e/4$, alors que le tracé s'annule en $\pm f_e/2$).
+
+**Proposition** : $H(f) = 4\cos^2\bigl(\frac{\pi f}{f_e}\bigr)\, e^{-j2\pi f/f_e}$, module $4\cos^2\bigl(\frac{\pi f}{f_e}\bigr)$.
+:::
+
+::: {.complement}
+- Le zéro $z = -1$ est **double** ($H(z) = (1 + z^{-1})^2$) ; pôle double en $z = 0$ (voir [le bloc sur les pôles à l'origine](#av-td-rif-poles-origine)).
+- C'est la mise en cascade de deux filtres $1 + z^{-1}$ : $|H| = 4\cos^2(\pi f)$ (fréquence normalisée) décroît plus vite que $2|\cos(\pi f)|$, d'où une sélectivité un peu meilleure. Phase linéaire $-2\pi f$ : retard d'un échantillon ($h$ symétrique autour de $n = 1$).
+:::
+
+::: {#exr-td-rif-difference-ordre-3}
+## RIF $y[n] = x[n] - 3x[n-1] + 3x[n-2] - x[n-3]$
+
+Soit un signal $x[n]$ filtré par un filtre linéaire dont la sortie vérifie $y[n] = x[n] - 3\,x[n-1] + 3\,x[n-2] - x[n-3]$. Reprendre les questions 1 à 7 de @exr-td-rif-somme-deux [td, p. 8].
+:::
+
+:::: {.complement}
+::: {.solution}
+Le corrigé de 2023 ne traite pas cette question.
+
+1. Équation aux différences linéaire, soit $y = h \star x$ avec $h[n] = \delta[n] - 3\,\delta[n-1] + 3\,\delta[n-2] - \delta[n-3]$.
+2. RIF (quatre coefficients non nuls).
+3. Causal : $h[n] = 0$ pour $n < 0$.
+4. $H(z) = 1 - 3z^{-1} + 3z^{-2} - z^{-3} = (1 - z^{-1})^3$.
+5. Stable : $\sum_n |h[n]| = 8 < \infty$.
+6. $H(z) = \dfrac{(z - 1)^3}{z^3}$ : zéro triple en $z = 1$, pôle triple en $z = 0$.
+7. $1 - e^{-j2\pi f} = 2j\sin(\pi f)\, e^{-j\pi f}$, d'où
+$$
+H(f) = \bigl(1 - e^{-j2\pi f}\bigr)^3 = -8j \sin^3(\pi f)\, e^{-j3\pi f}, \qquad |H(f)| = 8\,|\sin(\pi f)|^3, \quad f \in \Bigl[-\frac12, \frac12\Bigr].
+$$
+Nul en $f = 0$ (zéro triple en $z = 1$), maximal ($8$) en $f = \pm\frac12$ : **passe-haut** (triple différence première). $h[n] = -h[3-n]$ (antisymétrique) : phase linéaire par morceaux, $-3\pi f - \frac{\pi}{2}$ pour $0 < f \leq \frac12$, retard de groupe $\frac32$ échantillon.
+:::
+::::
+
+::: {#exr-td-rii-poles-complexes}
+## RII $y[n] = -0{,}8\,y[n-1] - 0{,}64\,y[n-2] + x[n]$
+
+Soit un signal $x[n]$ filtré par un filtre linéaire dont la sortie vérifie $y[n] = -0{,}8\,y[n-1] - 0{,}64\,y[n-2] + x[n]$. Reprendre les questions 1 à 6 de @exr-td-rif-somme-deux [td, p. 8].
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+1. Équation aux différences linéaire.
+2. RII.
+3. Causal : ne dépend que du présent ou du passé, donc $h[n] = 0$ pour $n < 0$. Avec $x = \delta$ : $h[n] = -0{,}8\,h[n-1] - 0{,}64\,h[n-2] + \delta[n]$, d'où $h[0] = 1$, $h[1] = -0{,}8$.
+4. $Y(z) = -0{,}8\,z^{-1}\,Y(z) - 0{,}64\,z^{-2}\,Y(z) + X(z)$ :
+$$
+H(z) = \frac{1}{1 + 0{,}8\,z^{-1} + 0{,}64\,z^{-2}} = \frac{1}{(1 - p_1 z^{-1})(1 - p_2 z^{-1})} = \frac{\alpha}{1 - p_1 z^{-1}} + \frac{\beta}{1 - p_2 z^{-1}}.
+$$
+5. et 6. $\Delta = 0{,}64 - 4 \times 0{,}64 = -3 \times 0{,}8^2$, d'où
+$$
+p_{1,2} = \frac{-0{,}8 \pm j\,0{,}8\sqrt3}{2} = 0{,}8\, e^{\pm j\frac{2\pi}{3}}, \qquad |p_{1,2}| < 1 :
+$$
+stable (diagramme : deux pôles dans le disque unité). Rappel : $a^n u[n] \longleftrightarrow \dfrac{1}{1 - a z^{-1}}$ dans le domaine de convergence. Pour obtenir $h[n]$, le corrigé commence la division de $1$ par $1 + 0{,}8\,z^{-1} + 0{,}64\,z^{-2}$ selon les puissances croissantes de $z^{-1}$ : $1 - 0{,}8\,z^{-1} + \dots = \sum_n h[n]\, z^{-n}$.
+
+[corrige-2023-td02, p. 4-5]
+:::
+::::
+
+::: {.complement}
+- **Zéros** (question 6) : $H(z) = \dfrac{z^2}{z^2 + 0{,}8\,z + 0{,}64}$ a un zéro double en $z = 0$.
+- **Réponse impulsionnelle explicite.** Avec $p_{1,2} = \rho\, e^{\pm j\theta}$, $\rho = 0{,}8$, $\theta = \frac{2\pi}{3}$, les éléments simples donnent $\alpha = \frac{p_1}{p_1 - p_2}$, $\beta = -\frac{p_2}{p_1 - p_2}$ et
+$$
+h[n] = \frac{p_1^{n+1} - p_2^{n+1}}{p_1 - p_2}\, u[n] = 0{,}8^n\, \frac{\sin\bigl(\frac{2\pi (n+1)}{3}\bigr)}{\sin\bigl(\frac{2\pi}{3}\bigr)}\, u[n].
+$$
+Premières valeurs : $1$ ; $-0{,}8$ ; $0$ ; $0{,}512$ ; $-0{,}4096$ ; $0$ ; $0{,}262$… (identiques à la récurrence).
+- **Autre écriture** : $(1 - 0{,}8\,z^{-1})(1 + 0{,}8\,z^{-1} + 0{,}64\,z^{-2}) = 1 - 0{,}512\,z^{-3}$, donc $H(z) = \dfrac{1 - 0{,}8\,z^{-1}}{1 - 0{,}512\,z^{-3}}$ : $h[3m] = 0{,}512^m$, $h[3m+1] = -0{,}8 \times 0{,}512^m$, $h[3m+2] = 0$.
+- Pour information (question 7 non demandée) : $|H(f)|$ passe par un maximum $\approx 3{,}2$ vers $f \approx 0{,}34$, près de l'argument des pôles ($\frac13$).
+:::
+
+::: {#exr-td-filtre-transforme-moins-z2}
+## D'un filtre à un autre : $G(z) = H(-z^2)$
+
+1. Soit un filtre causal de réponse impulsionnelle $h[k]$ et de fonction de transfert
+$$
+H(z) = \frac{1 + b_1 z^{-1}}{1 + a_1 z^{-1} + a_2 z^{-2}}.
+$$
+Donner l'équation aux différences. Un filtre admettant une telle fonction de transfert est-il RIF ou RII ? Justifier.
+2. On définit un second filtre, de réponse impulsionnelle $g[k]$, dont la fonction de transfert vérifie $G(z) = H(-z^2)$. Donner l'expression de $G(z)$ et en déduire l'équation aux différences associée.
+3. Exprimer dans le cas général $G(z)$ en fonction de $h[k]$. En déduire la relation entre les réponses impulsionnelles $h[k]$ et $g[k]$.
+4. Si $b_1 = 1$, $a_1 = 0$ et $a_2 = -\frac14$, le filtre est-il stable ? Donner l'expression de $h[k]$, puis celle de $G(z)$ et les 5 premiers termes non nuls de $g[k]$.
+
+[td, p. 9-10]
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+1. $y[n] = x[n] + b_1\, x[n-1] - a_1\, y[n-1] - a_2\, y[n-2]$ (voir le bloc *À vérifier* ci-dessous pour la nature du filtre).
+2. $z^{-1} \to (-z^2)^{-1} = -z^{-2}$ et $z^{-2} \to z^{-4}$ :
+$$
+G(z) = \frac{1 - b_1 z^{-2}}{1 - a_1 z^{-2} + a_2 z^{-4}}, \qquad y[n] = x[n] - b_1\, x[n-2] + a_1\, y[n-2] - a_2\, y[n-4].
+$$
+3. $$
+G(z) = \sum_k g[k]\, z^{-k} = \sum_k h[k]\, (-z^2)^{-k} = \sum_k (-1)^k\, h[k]\, z^{-2k},
+$$
+à identifier avec $\sum_k g[2k]\, z^{-2k} + \sum_k g[2k+1]\, z^{-2k-1}$ :
+$$
+g[2k] = (-1)^k\, h[k], \qquad g[2k+1] = 0.
+$$
+
+[corrige-2023-td03, p. 2-3]
+:::
+::::
+
+::: {.a-verifier #av-td-rii-ou-rif}
+**Source** [corrige-2023-td03, p. 2] : après l'équation $y(n) = x(n) + b_1 x(n-1) - a_1 y(n-1) - a_2 y(n-2)$, « $\Rightarrow$ RIF : ne dépend que du présent et du passé ».
+
+**Problème** : dépendre seulement du présent et du passé caractérise un filtre **causal**. La sortie dépend des sorties passées $y[n-1]$, $y[n-2]$ (dénominateur non constant) : le filtre est **récursif**, à réponse impulsionnelle infinie dès que $(a_1, a_2) \neq (0, 0)$ et que le dénominateur ne se simplifie pas avec le numérateur.
+
+**Proposition** : « RII : la récursion sur $y[n-1]$, $y[n-2]$ (pôles non nuls) donne une réponse impulsionnelle infinie ; filtre causal ».
+:::
+
+::: {.complement}
+**Question 4** (non traitée dans le corrigé).
+
+- $H(z) = \dfrac{1 + z^{-1}}{1 - \frac14 z^{-2}} = \dfrac{1 + z^{-1}}{\bigl(1 - \frac12 z^{-1}\bigr)\bigl(1 + \frac12 z^{-1}\bigr)}$ : pôles $\pm\frac12$, dans le disque unité, filtre causal : **stable** (@thm-stabilite-poles).
+- Éléments simples : $H(z) = \dfrac{3/2}{1 - \frac12 z^{-1}} - \dfrac{1/2}{1 + \frac12 z^{-1}}$ (évaluation en $z^{-1} = 2$ et $z^{-1} = -2$), d'où
+$$
+h[k] = \Bigl[\frac32 \Bigl(\frac12\Bigr)^k - \frac12 \Bigl(-\frac12\Bigr)^k\Bigr] u[k] : \quad 1,\ 1,\ \tfrac14,\ \tfrac14,\ \tfrac{1}{16},\ \tfrac{1}{16}, \dots
+$$
+soit $h[k] = \bigl(\frac14\bigr)^{\lfloor k/2 \rfloor}$ pour $k \geq 0$ (vérifié par la récurrence $h[k] = \delta[k] + \delta[k-1] + \frac14 h[k-2]$).
+- $G(z) = \dfrac{1 - z^{-2}}{1 - \frac14 z^{-4}}$ ; ses pôles vérifient $z^4 = \frac14$, $|z| = \frac{1}{\sqrt2} < 1$ : stable.
+- Avec la question 3, les 5 premiers termes non nuls sont
+$$
+g[0] = 1, \quad g[2] = -1, \quad g[4] = \frac14, \quad g[6] = -\frac14, \quad g[8] = \frac{1}{16},
+$$
+les termes d'indice impair étant nuls (vérifié par la récurrence $g[k] = \delta[k] - \delta[k-2] + \frac14 g[k-4]$).
+- Interprétation : sur le cercle unité, $-z^2 = e^{j(4\pi f + \pi)}$, donc $G(f) = H\bigl(2f + \frac12\bigr)$ : la réponse de $H$ est comprimée d'un facteur 2 et décalée.
+:::
+
+## À retenir {#sec-retenir-equations-differences}
+
+- RIF : $y[n] = \sum_{k=0}^{K-1} h[k]\,x[n-k]$, toujours stable ; RII : réponse impulsionnelle infinie, réalisée par récursion.
+- Équation aux différences : $\sum_k c_k\, y[n-k] = \sum_l d_l\, x[n-l]$ (@eq-equation-differences) ; $H(z) = \sum_l d_l z^{-l} / \sum_k c_k z^{-k} = N(z)/D(z)$ (@eq-h-z-fraction).
+- Transformée en $z$ : $H(z) = \sum_n h[n]\, z^{-n}$ ; $z = e^{j2\pi f}$ redonne la TF (@eq-transformee-z). Retard : $x[n-k] \to z^{-k} X(z)$.
+- Stable $\iff$ zone de convergence contenant le cercle unité ; système causal : stable $\iff$ tous les pôles vérifient $|p_k| < 1$ (@thm-stabilite-poles).
+- $\alpha^n u[n] \leftrightarrow \dfrac{1}{1 - \alpha z^{-1}} = \dfrac{z}{z - \alpha}$, pour $|z| > |\alpha|$ (@eq-tz-exponentielle).
+- Module et phase à partir des pôles et zéros (@eq-module-poles-zeros, @eq-phase-poles-zeros) : gain fort près des pôles, nul aux zéros sur le cercle.
+- Méthode : équation → $H(z)$ → pôles → éléments simples de $H(z)/z$ → $h[n] = \sum_k A_k p_k^n u[n]$ (@sec-exemple-complet-rii).

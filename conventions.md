@@ -33,6 +33,7 @@ Règle générale : **minuscules, sans accents, mots séparés par des tirets**.
 | Figure (source) | `figures/NN-slug-figure.py` ou `.tex` | `figures/03-dsp-nrz.py` |
 | Figure (rendu) | même nom, `.svg` | `figures/03-dsp-nrz.svg` |
 | TD, TP, annales (phase 2, provisoire) | `td/tdNN-slug.qmd`, `tp/tpNN-slug.qmd`, `annales/AAAA-session.qmd` | `td/td01-bande-de-base.qmd`, `annales/2025-janvier.qmd` |
+| Page d'annale corrigée | `annales/AAAA-AAAA-partiel.qmd` ou `annales/AAAA-AAAA-examen.qmd` (année universitaire du sujet) ; énoncé en images dans `annales/sujets/<annale>-exN.png` (en-tête d'exercice) et `<annale>-exN-qM.png` (question), script `<annale>-decoupe.py` + `normaliser-largeur.py` | `annales/2016-2017-partiel.qmd`, `annales/sujets/2016-2017-partiel-ex4-q2.png` |
 | Sources brutes (hors dépôt) | `sources/<code>/support/…`, `sources/<code>/notes/AAAA-MM-JJ.pdf` | `sources/ts227/notes/2026-09-15.pdf` |
 | Jeu de notes non datées d'une autre année ou d'un tiers (hors dépôt) | `sources/<code>/notes/<année>-cours-NN-<enseignant>.pdf`, `sources/<code>/notes/<année>-tableau-cours-NN.pdf` (un fichier par séance numérotée ; `<année>` = année du jeu) ; id : `notes-<année>-cNN`, `tableau-<année>-cNN` | `sources/eana3/notes/2023-cours-04-06-rivet.pdf` (id `notes-2023-c04-06`) |
 | Notes sans date de séance (hors dépôt) | `sources/<code>/notes/date-inconnue.pdf`, photos dans `sources/<code>/notes/date-inconnue/feuillet-N-recto.jpg` / `-verso.jpg` | `sources/ts227/notes/date-inconnue.pdf` |
@@ -401,6 +402,7 @@ Le paquet généré est le **contenu complet** de la matière : ne jamais le mod
 | 2026-10-08 | Nommage des jeux de notes non datées d'une autre année : `<année>-cours-NN-<enseignant>.pdf`, id `notes-<année>-cNN` | Proposé à l'inventaire EANA3 (7 oct.), appliqué par défaut |
 | 2026-10-19 | Refonte allégée de la DA (§ 13) : page de lecture sur le bureau sans feuille ombrée, filets réduits, trait rouge court, *Source Sans 3* à la place d'*Atkinson Hyperlegible*, accueil en cartes (§ 13.7), statuts en pastilles (§ 4) | Demande d'Armand (« en travaux », « trop dur ») ; choix validés par Armand (esprit fiche gardé, application incluse, police changée) |
 | 2026-10-19 | Sources : dossiers `tp/` (avec `tp/fichiers/`) et `travaux/` (travaux personnels, jamais publiés) ; préfixe `<année>-` pour les corrigés et notes d'un tiers ; suffixe `-ancienne-version` ; inventaire `analyses/inventaire-sources.md` par matière | Rangement de l'archive `2A.zip`, choix d'Armand (dossier `travaux/`) et choix par défaut |
+| 2026-10-20 | Annales corrigées : sujet affiché **en images découpées question par question**, solution (bloc *Complément*) sous chaque question ; images régénérables par script ; sujets reproduits dans le recueil de TD traités comme des annales | Demande d'Armand (TSIG1) |
 
 ---
 

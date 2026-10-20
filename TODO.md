@@ -81,7 +81,7 @@
 
 - [x] Redistribuer `sources/2A.zip` : 413 fichiers rangés dans `sources/<code>/`, copies vérifiées (MD5) ; fiches matières, inventaires et plans proposés des 14 nouvelles matières ; barres latérales, accueil, paquets vides (19 octobre 2026).
 - [x] Contrôler le rendu de l'accueil, des 14 barres latérales et des fiches matières (Claude, Quarto 1.10.19, 19 octobre 2026) ; reste à voir chez Armand : polices et formules.
-- [ ] **Armand** : valider ou corriger les plans proposés (AUTO1 6 ch., AUTO3 4, EAEP1 7, EANA2 5, EARF1 4, NUMC1 6, TSIG1 5) avant l'analyse des premiers chapitres.
+- [ ] **Armand** : valider ou corriger les plans proposés (AUTO1 6 ch., AUTO3 4, EAEP1 7, EANA2 5, EARF1 4, NUMC1 6 ; TSIG1 : fait, plan des notes d'Armand) avant l'analyse des premiers chapitres.
 - [ ] **Armand** : confirmer deux rattachements par défaut : annales « Initiation aux bruits » (EA222) → EANA2 ; TD VHDL rangés dans NUMC1 (et non NUME3).
 - [ ] **Armand** : fournir le support d'EANA1 (aucun support officiel dans l'archive) et, pour TSIG1, le support de cours s'il existe (seules 6 p. d'illustrations reçues).
 - [ ] **Armand** : compléter les enseignants manquants (EANA1, NUME3, PROJ1).
@@ -89,6 +89,16 @@
 - [ ] TS227 : exploiter les notes externes `notes-2023` (16 p.) dans les chapitres 1 à 4, et les TP 1 à 3 (phase 2).
 - [ ] **Armand** : supprimer `sources/2A.zip` (contenu redistribué).
 - [ ] Choisir l'ordre des matières à traiter ensuite (suggestion : celles dont l'examen arrive en premier).
+
+## Priorité 2 sexies — TSIG1 (partiel le 22 octobre 2026)
+
+- [x] Notes d'Armand rangées et transcrites ; 5 chapitres rédigés et vérifiés (statut `verifie`), TD 1 à 3 intégrés (20 octobre 2026).
+- [ ] **Armand** : relire les 5 chapitres et trancher les 30 blocs *À vérifier* (1/4/9/11/5), en priorité `av-phase-moyenne-signe`, `av-phase-lineaire-retard-groupe`, `av-module-passe-tout` et les `av-td-…` (erreurs des corrigés 2023).
+- [ ] Après la relecture : statut `valide`, flashcards définitives (`flashcards/0N-*.yml`, identifiants `tsig1-…`), `scripts/flashcards.py`, retrait du paquet provisoire `tsig1-partiel.json` (préfixe `tsig1p-` réservé).
+- [ ] Contrôler le rendu des 5 chapitres avec `quarto preview` (formules, clair et sombre).
+- [x] Annales : 9 sujets corrigés en images découpées par question (20 octobre 2026), dont le corrigé 2022-2023.
+- [ ] **Armand** : relire les corrigés des annales et trancher les 11 blocs `av-ann…` (notamment `av-ann13-pulsation-3pi4`, `av-ann22-gain-conception`).
+- [ ] Mettre à jour `analyses/annales-partiel.md` avec les trois sujets du recueil (mars 2014, mars 2018, décembre 2019).
 
 ## Priorité 3 — Outillage
 

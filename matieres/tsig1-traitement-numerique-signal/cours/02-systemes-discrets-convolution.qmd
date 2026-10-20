@@ -1,0 +1,454 @@
+---
+title: "Systèmes discrets et convolution"
+matiere: tsig1
+chapitre: 2
+enseignants: ["Yannick Berthoumieu"]
+annee: "2026-2027"
+statut: verifie
+date-modified: 2026-10-20
+sources:
+  - id: notes
+    fichier: notes/date-inconnue.pdf
+    nature: personnelle
+    seance: inconnue
+    pages: "f. 4 r° à f. 5 r°"
+  - id: notes-2023-ch02
+    fichier: notes/2023-cours-ch02-systemes-discrets-lineaires-invariants.pdf
+    nature: externe
+    pages: "1, 3-6"
+  - id: illustrations
+    fichier: support/illustrations-berthoumieu.pdf
+    nature: officielle
+    version: "TS201"
+    pages: "5-6"
+  - id: td
+    fichier: td/recueil-td-2023.pdf
+    nature: officielle
+    version: "2023 (v2)"
+    pages: "3-5"
+  - id: corrige-2023-td01
+    fichier: corriges/2023-td01-systeme-discret-representation-frequence.pdf
+    nature: externe
+    pages: "1-6, 8-9"
+---
+
+{{< include /_macros.qmd >}}
+
+Un système discret transforme une suite d'échantillons en une autre. Ce chapitre définit les propriétés qui le caractérisent (linéarité, invariance, stabilité, causalité), montre qu'un système linéaire invariant (SLI) est entièrement décrit par sa **réponse impulsionnelle** et que sa sortie s'obtient par **convolution discrète**.
+
+## Système discret {#sec-systeme-discret}
+
+::: {.notes}
+Un système discret associe à l'entrée $x(nT_e)$ la sortie $y(nT_e)$ :
+
+$$
+y(nT_e) = T\bigl[x(nT_e)\bigr] \quad \text{(théorie du signal)},
+\qquad
+y[n] = T\bigl[x[n]\bigr] \quad \text{(algorithme, mémoire)}.
+$$
+
+Exemples de transformations [notes, f. 4 r°] :
+
+- $y[n] = \max\bigl(x[n], x[n-1]\bigr)$ ;
+- $y[n] = 0{,}5\,x[n] + 0{,}25\,x[n-1] + 0{,}7\,x[n+1]$ ;
+- un **système récursif**, dont la sortie dépend aussi des sorties passées (voir le bloc ci-dessous).
+:::
+
+::: {.a-verifier #av-exemple-systeme-recursif}
+**Source** [notes, f. 4 r°] : « $y(n) = 0{,}5\,x[n] - 0{,}2\,y[n]$ ← système récursif ».
+
+**Problème** : avec $y[n]$ des deux côtés, l'équation se résout en $y[n] = \frac{0{,}5}{1{,}2}\,x[n]$ : ce n'est pas un système récursif. Un système récursif fait intervenir une sortie **passée**.
+
+**Proposition** : $y[n] = 0{,}5\,x[n] - 0{,}2\,y[n-1]$.
+
+**Autres sources** : l'exemple n'apparaît pas dans les notes 2023 ; leur seul système récursif, « $y(n) = y(n-1) + x(n-1) + x(n-2)$ », fait intervenir une sortie **passée**, comme la proposition [notes-2023-ch02, p. 3].
+:::
+
+::: {.notes-externes}
+Autres exemples de transformations donnés en 2023 : $T[\cdot] = \max\{x[n], x[n+1]\}$ et $T[\cdot] = x^2[n]$ [notes-2023-ch02, p. 1].
+:::
+
+## Système linéaire invariant {#sec-sli-discret}
+
+### Linéarité {#sec-linearite}
+
+:::: {.notes}
+::: {#def-linearite}
+## Linéarité
+
+Un système est linéaire si, pour toutes entrées $x_1$, $x_2$ et tous scalaires $a_1$, $a_2$ :
+
+$$
+T\bigl[a_1 x_1[n] + a_2 x_2[n]\bigr] = a_1\, T\bigl[x_1[n]\bigr] + a_2\, T\bigl[x_2[n]\bigr].
+$$
+:::
+
+Exemples : $y[n] = 0{,}5\,x[n] + 0{,}25\,x[n-1]$ est linéaire ; $y[n] = 0{,}5\,x[n] + 10$ ne l'est pas [notes, f. 4 r°].
+::::
+
+::: {.a-verifier #av-exemple-lineaire-indice}
+**Source** [notes, f. 4 r°] : premier exemple de système linéaire, « $y[n] = 0{,}5\,x[n] + 0{,}25\,x[\,?\,]$ » : l'indice du second terme est peu lisible.
+
+**Problème** : lecture incertaine ; l'exemple reste linéaire quel que soit l'indice.
+
+**Proposition** : $x[n-1]$, comme dans l'exemple de transformation qui précède.
+
+**Autres sources** : exemple linéaire des notes 2023, « $y(n) = 0{,}5\,x(n) - 0{,}3\,x(n-1)$ » [notes-2023-ch02, p. 1] : même structure, second terme en $x(n-1)$ (coefficient et signe différents, autre année).
+:::
+
+::: {.complement}
+Pourquoi $y[n] = 0{,}5\,x[n] + 10$ n'est pas linéaire : une entrée nulle donne une sortie de 10, alors qu'un système linéaire envoie toujours l'entrée nulle sur la sortie nulle ($T[0 \cdot x] = 0 \cdot T[x]$).
+:::
+
+::: {.notes-externes}
+Exemples de 2023 : $y[n] = 0{,}5\,x[n] - 0{,}3\,x[n-1]$ est linéaire ; $y[n] = a\,x[n] + b$ ne l'est pas. Démonstration pour le second :
+
+$$
+T\bigl[a_1 x_1[n] + a_2 x_2[n]\bigr] = a\bigl[a_1 x_1[n] + a_2 x_2[n]\bigr] + b
+\ \neq\
+a_1 T\bigl[x_1[n]\bigr] + a_2 T\bigl[x_2[n]\bigr] = a_1\bigl[a\,x_1[n] + b\bigr] + a_2\bigl[a\,x_2[n] + b\bigr].
+$$
+
+[notes-2023-ch02, p. 1]
+:::
+
+::: {.complement}
+Les deux membres diffèrent par $b$ d'un côté et $(a_1 + a_2)\,b$ de l'autre : ils ne sont égaux pour tous $a_1$, $a_2$ que si $b = 0$. Les notes 2023 notent le système $T_1$ dans le premier membre et $T_1$, $T_2$ dans le second : il s'agit du même système $T$.
+:::
+
+### Invariance temporelle {#sec-invariance}
+
+:::: {.notes}
+::: {#def-invariance}
+## Invariance temporelle
+
+Un système est invariant si un retard de l'entrée produit le même retard de la sortie : pour tout entier $k$ constant,
+
+$$
+x[n] \to y[n] \quad \Longrightarrow \quad x[n-k] \to y[n-k].
+$$
+:::
+
+**Exemple invariant.** $y[n] = a\,x[n] + x[n-1]$ (un multiplieur par $a$, une cellule de retard $z^{-1}$ et un sommateur). L'entrée retardée donne $a\,x[n-k] + x[n-(k+1)] = y[n-k]$ : le système est **invariant**.
+
+**Exemple non invariant.** $y[n] = n \cdot x[n]$ (multiplication par l'indice) : le système n'est **pas invariant** [notes, f. 4 r°].
+::::
+
+::: {.complement}
+Vérification du second exemple : l'entrée retardée $x[n-k]$ donne $n\,x[n-k]$, alors que la sortie retardée vaut $y[n-k] = (n-k)\,x[n-k]$. Les deux diffèrent dès que $k \neq 0$.
+:::
+
+### Convolution discrète {#sec-convolution-discrete}
+
+:::: {.notes}
+::: {#thm-convolution-discrete}
+## Sortie d'un SLI
+
+La sortie d'un SLI discret est la **convolution** de l'entrée par la réponse impulsionnelle $h[n] = T\bigl[\delta[n]\bigr]$ :
+
+$$
+y[n] = (h \star x)[n] = \sum_{k=-\infty}^{+\infty} h[k]\, x[n-k].
+$$ {#eq-convolution-discrete}
+:::
+
+Rappel en temps continu : $y(t) = \int h(\tau)\,x(t-\tau)\,\mathrm{d}\tau$.
+
+::: {.proof}
+On décompose l'entrée sur les impulsions ([chapitre 1](01-echantillonnage-signal-discret.qmd#eq-decomposition-impulsions)), puis on utilise la linéarité et l'invariance :
+
+$$
+y[n] = T\Bigl[\sum_{k} x[k]\,\delta[n-k]\Bigr]
+\underset{\text{linéarité}}{=} \sum_{k} x[k]\, T\bigl[\delta[n-k]\bigr]
+\underset{\text{invariance}}{=} \sum_{k} x[k]\, h[n-k].
+$$
+:::
+
+[notes, f. 4 r° et v°]
+::::
+
+::: {.complement}
+Le changement d'indice $k \to n - k$ montre que $\sum_k x[k]\,h[n-k] = \sum_k h[k]\,x[n-k]$ : la convolution est commutative, ce qui raccorde la démonstration à @eq-convolution-discrete.
+:::
+
+Le support d'illustrations représente la convolution 1D comme une **fenêtre de coefficients** (ici $[1, 0, 1]$) qui glisse le long du signal : chaque sortie est la somme des produits terme à terme entre la fenêtre et les échantillons qu'elle recouvre ; il rappelle que $y(n) = \sum_m h(m)\, x(n-m)$ devient $Y(f) = H(f)\, X(f)$ par transformée de Fourier [illustrations, p. 5]. Le même principe s'étend aux images (convolution 2D par un filtre $3 \times 3$, bancs de filtres de Gabor) et fonde les **réseaux de neurones convolutifs** (*Convolutional Neural Network*, CNN) [illustrations, p. 5-6].
+
+::: {.notes-externes}
+**Convolution discrète : circulation d'un masque de convolution.** Pour calculer $y[2]$, le masque recouvre les indices 1 à 3 ; pour $y[3]$, les indices 2 à 4 : c'est un « masque qui circule centré » [notes-2023-ch02, p. 5].
+:::
+
+::: {.complement}
+Dans l'exemple 2D de l'illustration, la première sortie vaut $38 = 2 \cdot 1 + 1 \cdot 2 + 1 \cdot 0 + 4 \cdot 0 + 2 \cdot 0 + 5 \cdot 2 + 3 \cdot 0 + 5 \cdot 2 + 7 \cdot 2$ : le filtre est appliqué **sans être retourné**. C'est l'usage des CNN, où l'opération appelée « convolution » est en fait une corrélation ; au sens de @eq-convolution-discrete, il faudrait retourner le masque ($h[k]$ multiplie $x[n-k]$). Pour un masque symétrique comme $[1, 0, 1]$, les deux coïncident.
+:::
+
+## Stabilité {#sec-stabilite-sli}
+
+:::: {.notes}
+::: {#def-stabilite-ebsb}
+## Stabilité
+
+Un système est stable si toute entrée bornée produit une sortie bornée :
+
+$$
+|x[n]| \leq M_x < \infty \ \ \forall n \quad \Longrightarrow \quad |y[n]| \leq M_y < \infty \ \ \forall n.
+$$
+:::
+
+::: {#thm-stabilite-sli}
+## Condition nécessaire et suffisante de stabilité d'un SLI
+
+Un SLI est stable si et seulement si sa réponse impulsionnelle est absolument sommable :
+
+$$
+\sum_{n=-\infty}^{+\infty} \bigl|h[n]\bigr| \leq M_h < \infty.
+$$ {#eq-cns-stabilite}
+:::
+
+::: {.proof}
+**Condition suffisante.** Si $|x[n]| \leq M_x$, alors
+
+$$
+|y[n]| = \Bigl|\sum_k h[k]\,x[n-k]\Bigr| \leq \sum_k |h[k]|\,|x[n-k]| \leq M_x \sum_k |h[k]|,
+$$
+
+qui est fini si $\sum_k |h[k]| \leq M_h < \infty$ : le système est stable.
+
+**Condition nécessaire.** Supposons $\sum_k |h[k]| = \infty$. On choisit l'entrée bornée (de module au plus 1)
+
+$$
+x[n] = \begin{cases} \dfrac{h^*[-n]}{|h[-n]|} & \text{si } h[-n] \neq 0,\\[4pt] 0 & \text{sinon.}\end{cases}
+$$
+
+Alors $y[0] = \sum_k h[k]\,x[-k] = \sum_k \dfrac{h[k]\,h^*[k]}{|h[k]|} = \sum_k |h[k]| = \infty$ : la sortie n'est pas bornée.
+:::
+
+[notes, f. 4 v°]
+::::
+
+::: {.complement}
+La condition « si $h[-n] \neq 0$ » de l'entrée choisie n'est pas écrite dans les notes (seule la fraction et le cas « 0 » le sont) : elle évite la division par zéro.
+:::
+
+::: {.notes-externes}
+**Remarque.** Un filtre à **réponse impulsionnelle finie** (RIF), c'est-à-dire à nombre de valeurs non nulles fini, est **immédiatement stable**.
+
+**Exemple.** $h[n] = \delta[n+1] + \delta[n] + \delta[n-1]$ est un RIF. Sa sortie se réduit à trois termes :
+
+$$
+y[n] = \sum_{k=-\infty}^{+\infty} h[k]\, x[n-k] = \sum_{k=-1}^{1} h[k]\, x[n-k] = x[n+1] + x[n] + x[n-1],
+$$
+
+expression qui donne directement l'**implémentation du filtre** [notes-2023-ch02, p. 4 et 6].
+:::
+
+::: {.complement}
+Ce RIF est stable ($\sum_n |h[n]| = 3$) mais **pas causal** : il utilise $x[n+1]$ (voir @sec-causalite). C'est le masque centré de trois points de @sec-convolution-discrete. La stabilité des RIF est reprise au [chapitre 4](04-implementation-equations-differences.qmd#sec-contexte-rif-rii).
+:::
+
+## Causalité {#sec-causalite}
+
+:::: {.notes}
+Pour un traitement en temps réel, la transformation ne peut utiliser que des échantillons **présents ou passés** de l'entrée : le système doit être **causal**.
+
+::: {#def-causalite}
+## Causalité
+
+Un système causal est un système pour lequel la sortie ne peut pas être disponible avant l'entrée. La sortie à l'instant $n$ ne dépend que de l'entrée présente et passée et des sorties passées :
+
+$$
+y[n] = T\bigl[x[n], \dots, x[n-P],\ y[n-1], \dots, y[n-K]\bigr].
+$$
+:::
+
+Exemples [notes, f. 5 r°] :
+
+| Système | Causal ? |
+|---|---|
+| $y[n] = a_1\,x[n] + a_2\,x[n-1]$ | oui |
+| $y[n] = a_1\,x[n+1] - a_2\,x[n] + a_3\,x[n-1]$ | non (utilise $x[n+1]$) |
+| $y[n] = y[n-1] + a_1\,x[n] + a_2\,x[n-1]$ | oui |
+
+**Causalité et produit de convolution.** Un SLI est causal si et seulement si $h[n] = 0$ pour $n < 0$. La convolution se réduit alors à
+
+$$
+y[n] = \sum_{k=0}^{+\infty} h[k]\, x[n-k].
+$$ {#eq-convolution-causale}
+::::
+
+::: {.a-verifier #av-latence-temps-reel}
+**Source** [notes, f. 5 r°] : ligne en rouge, très pâle, sous la figure de la causalité, lue « Latence du système : $\tau_\mathrm{lat}$ ; Temps réel : $\tau_\mathrm{lat} < T_e$ ».
+
+**Problème** : lecture incertaine (encre rouge presque effacée sur la photo).
+
+**Proposition** : un système fonctionne en temps réel si sa latence (temps de calcul d'un échantillon de sortie) est inférieure à la période d'échantillonnage $T_e$.
+
+**Autres sources** : les notes 2023 portent la même ligne, surlignée et bien lisible : « Système temps réel est causal : $\tau_\text{latence} < T_e$ » [notes-2023-ch02, p. 3].
+:::
+
+::: {.notes-externes}
+Exemples de 2023 [notes-2023-ch02, p. 3] :
+
+| Système | Causal ? |
+|---|---|
+| $y[n] = x[n-1] - x[n-2]$ | oui |
+| $y[n] = y[n-1] + x[n-1] + x[n-2]$ | oui |
+| $y[n] = x[n+1] - x[n-2]$ | non |
+
+« Système temps réel est causal : $\tau_\text{latence} < T_e$. » Le schéma associé place $y[n]$ sur l'axe des temps après l'arrivée de $x[n]$ et avant celle de $x[n+1]$ [notes-2023-ch02, p. 3].
+:::
+
+::: {.a-verifier #av-convolution-causale-bornes}
+**Source** [notes-2023-ch02, p. 3] : « $y(n) = \sum_{k=-\infty}^{+\infty} x(k)\,h(n-k)$ », avec sous la somme « $k = 0$ (causalité) ».
+
+**Problème** : dans cette forme de la convolution, la causalité ($h[n-k] = 0$ pour $k > n$) limite la borne **supérieure** de la somme à $k = n$ ; la borne inférieure $k = 0$ correspond à l'autre forme, $\sum_k h[k]\,x[n-k]$ (@eq-convolution-causale). Écrite telle quelle, $\sum_{k=0}^{+\infty} x[k]\,h[n-k]$ suppose en plus une entrée nulle pour $n < 0$.
+
+**Proposition** : $y[n] = \sum_{k=-\infty}^{n} x[k]\,h[n-k] = \sum_{k=0}^{+\infty} h[k]\,x[n-k]$ ; seule la seconde forme est reprise dans le cours (@eq-convolution-causale), aucune modification de notre texte n'est nécessaire si Armand l'accepte.
+:::
+
+## Association de systèmes discrets {#sec-association-systemes}
+
+::: {.notes}
+- **En série** (cascade) : $x[n] \to h_1[n] \to h_2[n] \to y[n]$ équivaut à un seul SLI de réponse impulsionnelle
+  $$
+  h[n] = (h_1 \star h_2)[n].
+  $$ {#eq-association-serie}
+- **En parallèle** (mêmes entrées, sorties additionnées) :
+  $$
+  h[n] = h_1[n] + h_2[n].
+  $$ {#eq-association-parallele}
+
+[notes, f. 5 r°]
+:::
+
+::: {.complement}
+Pour deux RIF en cascade, la longueur de $h_1 \star h_2$ est $L_1 + L_2 - 1$ (longueurs respectives $L_1$, $L_2$). La cascade de RIF est un exercice fréquent des partiels (voir l'[analyse des annales](../index.qmd#sec-partiel)).
+:::
+
+## Exercices du TD {#sec-exercices-td-ch02}
+
+::: {#exr-td-convolution-graphique}
+## Convolution de deux séquences finies
+
+Un SLI a pour réponse impulsionnelle (valeurs lues sur le graphe du recueil) $h[-1] = 1$, $h[0] = 2$, $h[1] = 1$, $h[2] = -1$, et $h[n] = 0$ ailleurs. Déterminer la réponse du système à la séquence d'entrée $x[0] = 1$, $x[1] = 2$, $x[2] = 3$, $x[3] = 1$, $x[n] = 0$ ailleurs [td, p. 3].
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+On applique @eq-convolution-discrete, $y[n] = \sum_k h[k]\,x[n-k]$ : pour chaque $n$, on retourne $x$ (séquence $x[-k]$), on la décale de $n$ et on somme les produits terme à terme avec $h[k]$. Le corrigé dispose les deux séquences en tableau, $x$ retournée glissant d'un cran à chaque ligne sous $h$ : « on représente à chaque fois pour effectuer la convolution ».
+
+Par exemple $y[0] = h[-1]\,x[1] + h[0]\,x[0] = 1 \times 2 + 2 \times 1 = 4$. On obtient :
+
+| $n$ | $-1$ | $0$ | $1$ | $2$ | $3$ | $4$ | $5$ |
+|---|---|---|---|---|---|---|---|
+| $y[n]$ | $1$ | $4$ | $8$ | $8$ | $3$ | $-2$ | $-1$ |
+
+et $y[n] = 0$ ailleurs [corrige-2023-td01, p. 1-2].
+:::
+::::
+
+::: {.complement}
+Contrôles rapides : le support de $y$ va de $-1 + 0 = -1$ à $2 + 3 = 5$, soit $4 + 4 - 1 = 7$ échantillons ; la somme des $y[n]$ vaut $\bigl(\sum_n h[n]\bigr)\bigl(\sum_n x[n]\bigr) = 3 \times 7 = 21$, et l'on a bien $1 + 4 + 8 + 8 + 3 - 2 - 1 = 21$.
+:::
+
+::: {#exr-td-convolution-portes}
+## Convolution de deux portes
+
+On pose $h[n] = 7\,u[4-n]\,u[n-1]$, où $u[n]$ désigne l'échelon à temps discret.
+
+1. Représenter $h[n]$ en fonction de $n$, ainsi que $x[n] = u[n-3] - u[n-8]$.
+2. Calculer la convolution $y[n] = (x \star h)[n]$.
+
+[td, p. 3-4]
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+1. $u[4-n] = 1$ pour $n \leq 4$ et $u[n-1] = 1$ pour $n \geq 1$ : $h[n] = 7$ pour $1 \leq n \leq 4$, $0$ ailleurs. De même $x[n] = 1$ pour $3 \leq n \leq 7$, $0$ ailleurs (cinq échantillons).
+2. En faisant glisser $x[-k]$ (non nul pour $-7 \leq k \leq -3$) :
+
+| $n$ | $4$ | $5$ | $6$ | $7$ | $8$ | $9$ | $10$ | $11$ |
+|---|---|---|---|---|---|---|---|---|
+| $y[n]$ | $7$ | $14$ | $21$ | $28$ | $28$ | $21$ | $14$ | $7$ |
+
+et $y[n] = 0$ ailleurs [corrige-2023-td01, p. 3-4].
+:::
+::::
+
+::: {.complement}
+$y[n] = 7 \times \operatorname{card}\{k \in [\![1, 4]\!] : n - k \in [\![3, 7]\!]\}$ : la convolution de deux portes de longueurs 4 et 5 est un **trapèze** de longueur $4 + 5 - 1 = 8$, de plateau $7 \times \min(4, 5) = 28$.
+:::
+
+::: {#exr-td-cascade-exponentielles}
+## Association de deux SLI en série
+
+Déterminer la réponse impulsionnelle du système mettant en série les deux SLI de réponses impulsionnelles
+
+$$
+h_1[n] = \Bigl(\frac12\Bigr)^n u[n], \qquad h_2[n] = \Bigl(\frac14\Bigr)^n u[n],
+$$
+
+où $u[n]$ vaut 1 pour $n \geq 0$ et 0 ailleurs [td, p. 4].
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+En série, $Y(f) = H_2(f)\,H_1(f)\,X(f)$ : $H_\mathrm{eq} = H_1 H_2$ et $h_\mathrm{eq} = h_1 \star h_2$ (@eq-association-serie).
+
+**Méthode 1 (transformée en $z$).**
+$H_1(z) = \sum_{n \geq 0} \bigl(\frac12 z^{-1}\bigr)^n = \dfrac{1}{1 - \frac12 z^{-1}}$ si $\bigl|\frac12 z^{-1}\bigr| < 1$, et de même $H_2(z) = \dfrac{1}{1 - \frac14 z^{-1}}$ si $\bigl|\frac14 z^{-1}\bigr| < 1$. On décompose
+
+$$
+H_\mathrm{eq}(z) = \frac{1}{\bigl(1 - \frac12 z^{-1}\bigr)\bigl(1 - \frac14 z^{-1}\bigr)} = \frac{\alpha}{1 - \frac12 z^{-1}} + \frac{\beta}{1 - \frac14 z^{-1}},
+$$
+
+avec $\alpha + \beta = 1$ et $-\frac{\alpha}{4} - \frac{\beta}{2} = 0$, soit $\alpha = 2$, $\beta = -1$. D'où
+
+$$
+h_\mathrm{eq}[n] = 2\Bigl(\frac12\Bigr)^n u[n] - \Bigl(\frac14\Bigr)^n u[n].
+$$
+
+**Méthode 2 (somme directe).** Pour $n \geq 0$ :
+
+$$
+(h_1 \star h_2)[n] = \sum_{k=0}^{n} \Bigl(\frac12\Bigr)^k \Bigl(\frac14\Bigr)^{n-k} = \Bigl(\frac14\Bigr)^n \sum_{k=0}^{n} 2^k = \Bigl(\frac14\Bigr)^n \frac{1 - 2^{n+1}}{1 - 2} = \Bigl(\frac14\Bigr)^n \bigl(2^{n+1} - 1\bigr).
+$$
+
+[corrige-2023-td01, p. 4-6]
+:::
+::::
+
+::: {.complement}
+- Les bornes $0 \leq k \leq n$ viennent de $u[k]\,u[n-k]$ ; pour $n < 0$, la somme est vide et $h_\mathrm{eq}[n] = 0$ (cascade de deux systèmes causaux : causale).
+- Les deux résultats coïncident : $\bigl(\frac14\bigr)^n 2^{n+1} = 2\bigl(\frac12\bigr)^n$. Contrôle : $h_\mathrm{eq}[0] = 1$ et $h_\mathrm{eq}[1] = h_1[1] + h_2[1] = \frac12 + \frac14 = \frac34 = 2 \times \frac12 - \frac14$.
+- La méthode 1 utilise la transformée en $z$ et la décomposition en éléments simples du [chapitre 4](04-implementation-equations-differences.qmd#sec-generalisation-elements-simples).
+:::
+
+::: {#exr-td-rif-proprietes}
+## Propriétés d'un filtre RIF
+
+Un filtre à réponse impulsionnelle finie (RIF) est caractérisé par l'équation
+
+$$
+y[n] = \sum_{k=0}^{M-1} h[k]\, x[n-k].
+$$
+
+Le système ainsi défini est-il un système linéaire invariant, stable et causal ? [td, p. 5]
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+Oui pour les quatre propriétés [corrige-2023-td01, p. 8-9] :
+
+- **linéarité** : $\sum_k h[k]\,\bigl(a_1 x_1[n-k] + a_2 x_2[n-k]\bigr) = a_1 T[x_1] + a_2 T[x_2]$ ;
+- **invariance** : $y[n] = h[0]\,x[n] + h[1]\,x[n-1] + \dots$ se réalise par une chaîne de retards $z^{-1}$ et de coefficients $h[k]$ fixes, qui ne dépendent pas de $n$ ;
+- **stabilité** : $h[n] = h[0]\,\delta[n] + h[1]\,\delta[n-1] + \dots + h[M-1]\,\delta[n-M+1]$ est finie, donc $\sum_n |h[n]| \leq M_h < \infty$ (@eq-cns-stabilite) ;
+- **causalité** : $k$ va de $0$ à $M-1$, la sortie n'utilise que les entrées présente et passées.
+:::
+::::
+
+## À retenir {#sec-retenir-systemes-discrets}
+
+- Linéarité : $T[a_1x_1 + a_2x_2] = a_1T[x_1] + a_2T[x_2]$ ; invariance : $x[n-k] \to y[n-k]$ (@def-linearite, @def-invariance).
+- SLI : $h[n] = T[\delta[n]]$ et $y[n] = \sum_k h[k]\,x[n-k]$ (@eq-convolution-discrete).
+- Stabilité (entrée bornée, sortie bornée) d'un SLI $\iff \sum_n |h[n]| < \infty$ (@eq-cns-stabilite).
+- Causalité d'un SLI $\iff h[n] = 0$ pour $n < 0$ ; alors $y[n] = \sum_{k \geq 0} h[k]\,x[n-k]$ (@eq-convolution-causale).
+- Série : $h = h_1 \star h_2$ ; parallèle : $h = h_1 + h_2$.

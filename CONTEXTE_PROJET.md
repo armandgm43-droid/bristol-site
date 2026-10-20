@@ -899,6 +899,8 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 | `vhdl.json` | VHDL | 90 | `vhdl-` | Connaissances générales (pas de cours fourni) |
 | `c-unix.json` | C et Unix | 108 | `cu-` | Connaissances générales (pas de cours fourni) |
 | `latex.json` | LaTeX | 92 | `latex-` | Connaissances générales |
+| `italien.json` | Italien : conjugaison et vocabulaire (B1) | 432 | `it-` | Connaissances générales (19 octobre 2026) |
+| `russe.json` | Russe : débutant | 229 | `ru-` | Connaissances générales (19 octobre 2026) |
 | ~~`ts227.json`~~ | ~~Communications numériques (TS227)~~ | ~~129~~ | `ts-` | **Abandonné** le 7 octobre 2026 (voir 18.5) : `ts227.json` est désormais généré par `scripts/flashcards.py` (clés `ts227-…`) |
 
 ### 20.5 Évolutions prévues de l'application

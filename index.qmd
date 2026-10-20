@@ -46,7 +46,7 @@ page-layout: full
 [[AUTO1]{.code} [Commande des systèmes linéaires à temps continu et discret]{.name} [À venir]{.state}](matieres/auto1-commande-systemes-lineaires/index.qmd){.subject}
 [[AUTO2]{.code} [Travaux pratiques d'automatique 1 et 2]{.name} [Travaux pratiques]{.state}](matieres/auto2-tp-automatique/index.qmd){.subject}
 [[AUTO3]{.code} [Optimisation]{.name} [À venir]{.state}](matieres/auto3-optimisation/index.qmd){.subject}
-[[TSIG1]{.code} [Traitement numérique du signal]{.name} [À venir]{.state}](matieres/tsig1-traitement-numerique-signal/index.qmd){.subject}
+[[TSIG1]{.code} [Traitement numérique du signal]{.name} [5 chapitres sur 5 · 9 annales corrigées · 52 cartes]{.state}](matieres/tsig1-traitement-numerique-signal/index.qmd){.subject .ready}
 [[TSIG2]{.code} [Travaux pratiques signal]{.name} [Travaux pratiques]{.state}](matieres/tsig2-tp-signal/index.qmd){.subject}
 ::::
 :::

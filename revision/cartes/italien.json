@@ -1,0 +1,2598 @@
+{
+ "deck": "Italien : conjugaison et vocabulaire (B1)",
+ "color": "#D5ECD4",
+ "items": [
+  {
+   "key": "it-pres-regulier",
+   "chap": "Conjugaison : présent",
+   "front": "Terminaisons du présent des trois groupes réguliers (**parlare**, **credere**, **dormire**) ?",
+   "back": "-are : -o, -i, -a, -iamo, -ate, -ano\n-ere : -o, -i, -e, -iamo, -ete, -ono\n-ire : -o, -i, -e, -iamo, -ite, -ono"
+  },
+  {
+   "key": "it-pres-finire",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **finire** au présent.",
+   "back": "io **finisco** · tu **finisci** · lui/lei **finisce**\nnoi **finiamo** · voi **finite** · loro **finiscono**\nVerbes en -isc- (capire, preferire, pulire, spedire…) : -isc- à toutes les personnes sauf noi et voi."
+  },
+  {
+   "key": "it-pres-care-gare",
+   "chap": "Conjugaison : présent",
+   "front": "Présent de **cercare** et **pagare** à la 2e personne du singulier et à noi ?",
+   "back": "tu **cerchi**, noi **cerchiamo** ; tu **paghi**, noi **paghiamo**.\nOn ajoute un h pour garder le son dur [k]/[g] devant i."
+  },
+  {
+   "key": "it-pres-ciare-giare",
+   "chap": "Conjugaison : présent",
+   "front": "Présent de **mangiare** à tu et noi ?",
+   "back": "tu **mangi**, noi **mangiamo** (un seul i).\nVerbes en -ciare/-giare : le i du radical disparaît devant la terminaison en i."
+  },
+  {
+   "key": "it-pres-essere",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **essere** au présent.",
+   "back": "io **sono** · tu **sei** · lui/lei **è**\nnoi **siamo** · voi **siete** · loro **sono**"
+  },
+  {
+   "key": "it-pres-avere",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **avere** au présent.",
+   "back": "io **ho** · tu **hai** · lui/lei **ha**\nnoi **abbiamo** · voi **avete** · loro **hanno**"
+  },
+  {
+   "key": "it-pres-andare",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **andare** au présent.",
+   "back": "io **vado** · tu **vai** · lui/lei **va**\nnoi **andiamo** · voi **andate** · loro **vanno**"
+  },
+  {
+   "key": "it-pres-fare",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **fare** au présent.",
+   "back": "io **faccio** · tu **fai** · lui/lei **fa**\nnoi **facciamo** · voi **fate** · loro **fanno**"
+  },
+  {
+   "key": "it-pres-dare",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **dare** au présent.",
+   "back": "io **do** · tu **dai** · lui/lei **dà**\nnoi **diamo** · voi **date** · loro **danno**\nAccent sur **dà** (il donne) pour le distinguer de la préposition da."
+  },
+  {
+   "key": "it-pres-stare",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **stare** au présent.",
+   "back": "io **sto** · tu **stai** · lui/lei **sta**\nnoi **stiamo** · voi **state** · loro **stanno**"
+  },
+  {
+   "key": "it-pres-dire",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **dire** au présent.",
+   "back": "io **dico** · tu **dici** · lui/lei **dice**\nnoi **diciamo** · voi **dite** · loro **dicono**"
+  },
+  {
+   "key": "it-pres-venire",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **venire** au présent.",
+   "back": "io **vengo** · tu **vieni** · lui/lei **viene**\nnoi **veniamo** · voi **venite** · loro **vengono**"
+  },
+  {
+   "key": "it-pres-uscire",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **uscire** au présent.",
+   "back": "io **esco** · tu **esci** · lui/lei **esce**\nnoi **usciamo** · voi **uscite** · loro **escono**"
+  },
+  {
+   "key": "it-pres-potere",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **potere** au présent.",
+   "back": "io **posso** · tu **puoi** · lui/lei **può**\nnoi **possiamo** · voi **potete** · loro **possono**"
+  },
+  {
+   "key": "it-pres-volere",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **volere** au présent.",
+   "back": "io **voglio** · tu **vuoi** · lui/lei **vuole**\nnoi **vogliamo** · voi **volete** · loro **vogliono**"
+  },
+  {
+   "key": "it-pres-dovere",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **dovere** au présent.",
+   "back": "io **devo** · tu **devi** · lui/lei **deve**\nnoi **dobbiamo** · voi **dovete** · loro **devono**"
+  },
+  {
+   "key": "it-pres-sapere",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **sapere** au présent.",
+   "back": "io **so** · tu **sai** · lui/lei **sa**\nnoi **sappiamo** · voi **sapete** · loro **sanno**"
+  },
+  {
+   "key": "it-pres-rimanere",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **rimanere** au présent.",
+   "back": "io **rimango** · tu **rimani** · lui/lei **rimane**\nnoi **rimaniamo** · voi **rimanete** · loro **rimangono**"
+  },
+  {
+   "key": "it-pres-tenere",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **tenere** au présent.",
+   "back": "io **tengo** · tu **tieni** · lui/lei **tiene**\nnoi **teniamo** · voi **tenete** · loro **tengono**"
+  },
+  {
+   "key": "it-pres-bere",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **bere** au présent.",
+   "back": "io **bevo** · tu **bevi** · lui/lei **beve**\nnoi **beviamo** · voi **bevete** · loro **bevono**"
+  },
+  {
+   "key": "it-pres-scegliere",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **scegliere** au présent.",
+   "back": "io **scelgo** · tu **scegli** · lui/lei **sceglie**\nnoi **scegliamo** · voi **scegliete** · loro **scelgono**"
+  },
+  {
+   "key": "it-pres-salire",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **salire** au présent.",
+   "back": "io **salgo** · tu **sali** · lui/lei **sale**\nnoi **saliamo** · voi **salite** · loro **salgono**"
+  },
+  {
+   "key": "it-pres-morire",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **morire** au présent.",
+   "back": "io **muoio** · tu **muori** · lui/lei **muore**\nnoi **moriamo** · voi **morite** · loro **muoiono**"
+  },
+  {
+   "key": "it-pres-sedersi",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **sedersi** au présent.",
+   "back": "io **mi siedo** · tu **ti siedi** · lui/lei **si siede**\nnoi **ci sediamo** · voi **vi sedete** · loro **si siedono**"
+  },
+  {
+   "key": "it-pres-tradurre",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **tradurre** au présent.",
+   "back": "io **traduco** · tu **traduci** · lui/lei **traduce**\nnoi **traduciamo** · voi **traducete** · loro **traducono**\nMême modèle : produrre, condurre, ridurre (radical -duc-)."
+  },
+  {
+   "key": "it-pres-porre",
+   "chap": "Conjugaison : présent",
+   "front": "Conjugue **porre** au présent.",
+   "back": "io **pongo** · tu **poni** · lui/lei **pone**\nnoi **poniamo** · voi **ponete** · loro **pongono**\nMême modèle : proporre, comporre, supporre."
+  },
+  {
+   "key": "it-voc-riuscire-a-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **riuscire a** ?",
+   "back": "réussir à, arriver à (faire qch)\nNon riesco a dormire."
+  },
+  {
+   "key": "it-voc-sbrigarsi-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **sbrigarsi** ?",
+   "back": "se dépêcher\nSbrigati!"
+  },
+  {
+   "key": "it-voc-accorgersi-di-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **accorgersi di** ?",
+   "back": "s'apercevoir de\nparticipe : accorto"
+  },
+  {
+   "key": "it-voc-fidarsi-di-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **fidarsi di** ?",
+   "back": "faire confiance à"
+  },
+  {
+   "key": "it-voc-lamentarsi-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **lamentarsi** ?",
+   "back": "se plaindre"
+  },
+  {
+   "key": "it-voc-arrabbiarsi-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **arrabbiarsi** ?",
+   "back": "se mettre en colère"
+  },
+  {
+   "key": "it-voc-annoiarsi-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **annoiarsi** ?",
+   "back": "s'ennuyer"
+  },
+  {
+   "key": "it-voc-dimenticare-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **dimenticare** ?",
+   "back": "oublier"
+  },
+  {
+   "key": "it-voc-ricordarsi-di-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **ricordarsi di** ?",
+   "back": "se souvenir de"
+  },
+  {
+   "key": "it-voc-aspettare-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **aspettare** ?",
+   "back": "attendre"
+  },
+  {
+   "key": "it-voc-cercare-di-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **cercare di** ?",
+   "back": "essayer de\ncercare seul = chercher"
+  },
+  {
+   "key": "it-voc-smettere-di-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **smettere di** ?",
+   "back": "arrêter de\nHo smesso di fumare."
+  },
+  {
+   "key": "it-voc-spiegare-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **spiegare** ?",
+   "back": "expliquer"
+  },
+  {
+   "key": "it-voc-prestare-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **prestare** ?",
+   "back": "prêter"
+  },
+  {
+   "key": "it-voc-affittare-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **affittare** ?",
+   "back": "louer (un logement)\nun'auto, une bici : noleggiare"
+  },
+  {
+   "key": "it-voc-noleggiare-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **noleggiare** ?",
+   "back": "louer (voiture, vélo, matériel)"
+  },
+  {
+   "key": "it-voc-traslocare-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **traslocare** ?",
+   "back": "déménager"
+  },
+  {
+   "key": "it-voc-risparmiare-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **risparmiare** ?",
+   "back": "économiser, épargner"
+  },
+  {
+   "key": "it-voc-spendere-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **spendere** ?",
+   "back": "dépenser"
+  },
+  {
+   "key": "it-voc-guadagnare-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **guadagnare** ?",
+   "back": "gagner (de l'argent)\nun match, un prix : vincere"
+  },
+  {
+   "key": "it-voc-vincere-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **vincere** ?",
+   "back": "gagner (un match, un prix)"
+  },
+  {
+   "key": "it-voc-sorridere-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **sorridere** ?",
+   "back": "sourire"
+  },
+  {
+   "key": "it-voc-scherzare-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **scherzare** ?",
+   "back": "plaisanter"
+  },
+  {
+   "key": "it-voc-innamorarsi-di-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **innamorarsi di** ?",
+   "back": "tomber amoureux de"
+  },
+  {
+   "key": "it-voc-rendersi-conto-di-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **rendersi conto di** ?",
+   "back": "se rendre compte de"
+  },
+  {
+   "key": "it-voc-avere-voglia-di-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **avere voglia di** ?",
+   "back": "avoir envie de"
+  },
+  {
+   "key": "it-voc-fare-a-meno-di-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **fare a meno di** ?",
+   "back": "se passer de"
+  },
+  {
+   "key": "it-voc-servire-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **servire** ?",
+   "back": "servir ; être nécessaire\nMi serve una penna = j'ai besoin d'un stylo."
+  },
+  {
+   "key": "it-voc-tenerci-a-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **tenerci a** ?",
+   "back": "tenir à\nCi tengo molto."
+  },
+  {
+   "key": "it-voc-svegliarsi-fr",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Que signifie **svegliarsi** ?",
+   "back": "se réveiller"
+  },
+  {
+   "key": "it-voc-riuscire-a-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « réussir à, arriver à (faire qch) » en italien ?",
+   "back": "**riuscire a**\nNon riesco a dormire."
+  },
+  {
+   "key": "it-voc-sbrigarsi-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « se dépêcher » en italien ?",
+   "back": "**sbrigarsi**\nSbrigati!"
+  },
+  {
+   "key": "it-voc-accorgersi-di-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « s'apercevoir de » en italien ?",
+   "back": "**accorgersi di**\nparticipe : accorto"
+  },
+  {
+   "key": "it-voc-fidarsi-di-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « faire confiance à » en italien ?",
+   "back": "**fidarsi di**"
+  },
+  {
+   "key": "it-voc-lamentarsi-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « se plaindre » en italien ?",
+   "back": "**lamentarsi**"
+  },
+  {
+   "key": "it-voc-arrabbiarsi-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « se mettre en colère » en italien ?",
+   "back": "**arrabbiarsi**"
+  },
+  {
+   "key": "it-voc-annoiarsi-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « s'ennuyer » en italien ?",
+   "back": "**annoiarsi**"
+  },
+  {
+   "key": "it-voc-dimenticare-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « oublier » en italien ?",
+   "back": "**dimenticare**"
+  },
+  {
+   "key": "it-voc-ricordarsi-di-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « se souvenir de » en italien ?",
+   "back": "**ricordarsi di**"
+  },
+  {
+   "key": "it-voc-aspettare-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « attendre » en italien ?",
+   "back": "**aspettare**"
+  },
+  {
+   "key": "it-voc-cercare-di-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « essayer de » en italien ?",
+   "back": "**cercare di**\ncercare seul = chercher"
+  },
+  {
+   "key": "it-voc-smettere-di-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « arrêter de » en italien ?",
+   "back": "**smettere di**\nHo smesso di fumare."
+  },
+  {
+   "key": "it-voc-spiegare-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « expliquer » en italien ?",
+   "back": "**spiegare**"
+  },
+  {
+   "key": "it-voc-prestare-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « prêter » en italien ?",
+   "back": "**prestare**"
+  },
+  {
+   "key": "it-voc-affittare-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « louer (un logement) » en italien ?",
+   "back": "**affittare**\nun'auto, une bici : noleggiare"
+  },
+  {
+   "key": "it-voc-noleggiare-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « louer (voiture, vélo, matériel) » en italien ?",
+   "back": "**noleggiare**"
+  },
+  {
+   "key": "it-voc-traslocare-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « déménager » en italien ?",
+   "back": "**traslocare**"
+  },
+  {
+   "key": "it-voc-risparmiare-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « économiser, épargner » en italien ?",
+   "back": "**risparmiare**"
+  },
+  {
+   "key": "it-voc-spendere-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « dépenser » en italien ?",
+   "back": "**spendere**"
+  },
+  {
+   "key": "it-voc-guadagnare-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « gagner (de l'argent) » en italien ?",
+   "back": "**guadagnare**\nun match, un prix : vincere"
+  },
+  {
+   "key": "it-voc-vincere-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « gagner (un match, un prix) » en italien ?",
+   "back": "**vincere**"
+  },
+  {
+   "key": "it-voc-sorridere-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « sourire » en italien ?",
+   "back": "**sorridere**"
+  },
+  {
+   "key": "it-voc-scherzare-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « plaisanter » en italien ?",
+   "back": "**scherzare**"
+  },
+  {
+   "key": "it-voc-innamorarsi-di-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « tomber amoureux de » en italien ?",
+   "back": "**innamorarsi di**"
+  },
+  {
+   "key": "it-voc-rendersi-conto-di-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « se rendre compte de » en italien ?",
+   "back": "**rendersi conto di**"
+  },
+  {
+   "key": "it-voc-avere-voglia-di-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « avoir envie de » en italien ?",
+   "back": "**avere voglia di**"
+  },
+  {
+   "key": "it-voc-fare-a-meno-di-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « se passer de » en italien ?",
+   "back": "**fare a meno di**"
+  },
+  {
+   "key": "it-voc-servire-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « servir ; être nécessaire » en italien ?",
+   "back": "**servire**\nMi serve una penna = j'ai besoin d'un stylo."
+  },
+  {
+   "key": "it-voc-tenerci-a-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « tenir à » en italien ?",
+   "back": "**tenerci a**\nCi tengo molto."
+  },
+  {
+   "key": "it-voc-svegliarsi-it",
+   "chap": "Vocabulaire : verbes utiles",
+   "front": "Comment dit-on « se réveiller » en italien ?",
+   "back": "**svegliarsi**"
+  },
+  {
+   "key": "it-pp-formation",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Comment se forme le **passato prossimo** ?",
+   "back": "Auxiliaire **avere** ou **essere** au présent + participe passé.\nRéguliers : -are → **-ato**, -ere → **-uto**, -ire → **-ito**."
+  },
+  {
+   "key": "it-pp-aux-essere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Quels verbes prennent l'auxiliaire **essere** au passato prossimo ?",
+   "back": "- la plupart des verbes de mouvement et de changement d'état (andare, venire, partire, arrivare, nascere, morire, diventare) ;\n- tous les verbes pronominaux (mi sono alzato) ;\n- essere, stare, restare, piacere, sembrare, costare, succedere."
+  },
+  {
+   "key": "it-pp-essere-stato",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Passato prossimo de **essere** à io ? Et de **stare** ?",
+   "back": "Les deux : **sono stato/a**.\nessere et stare ont le même participe (stato), avec l'auxiliaire essere."
+  },
+  {
+   "key": "it-pp-aux-double",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Pourquoi dit-on **ho finito il lavoro** mais **il film è finito** ?",
+   "back": "Certains verbes (finire, cominciare, passare, salire, scendere, correre…) prennent **avere** quand ils ont un complément d'objet direct, et **essere** sinon."
+  },
+  {
+   "key": "it-pp-modaux",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Quel auxiliaire avec un verbe modal : « j'ai dû partir » ?",
+   "back": "En italien soigné, le modal prend l'auxiliaire du verbe à l'infinitif : **sono dovuto partire** (partire → essere), mais **ho dovuto lavorare**.\nL'usage oral accepte aussi avere partout."
+  },
+  {
+   "key": "it-pp-accord-essere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Accord du participe avec **essere** : « Maria est partie » ?",
+   "back": "**Maria è partita.**\nAvec essere, le participe s'accorde toujours avec le sujet (-o, -a, -i, -e)."
+  },
+  {
+   "key": "it-pp-accord-avere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "« Les clés ? Je les ai trouvées. » en italien ?",
+   "back": "**Le chiavi? Le ho trovate.**\nAvec avere, accord obligatoire avec les pronoms lo, la, li, le placés avant (et avec ne : *ne ho mangiate tre*)."
+  },
+  {
+   "key": "it-pp-piacere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "« La pizza m'a plu. » en italien ?",
+   "back": "**Mi è piaciuta la pizza.**\npiacere prend essere, et le participe s'accorde avec ce qui plaît."
+  },
+  {
+   "key": "it-part-fare",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **fare** ?",
+   "back": "**fatto**"
+  },
+  {
+   "key": "it-part-dire",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **dire** ?",
+   "back": "**detto**"
+  },
+  {
+   "key": "it-part-prendere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **prendere** ?",
+   "back": "**preso**"
+  },
+  {
+   "key": "it-part-mettere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **mettere** ?",
+   "back": "**messo**"
+  },
+  {
+   "key": "it-part-vedere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **vedere** ?",
+   "back": "**visto**"
+  },
+  {
+   "key": "it-part-scrivere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **scrivere** ?",
+   "back": "**scritto**"
+  },
+  {
+   "key": "it-part-leggere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **leggere** ?",
+   "back": "**letto**"
+  },
+  {
+   "key": "it-part-aprire",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **aprire** ?",
+   "back": "**aperto**"
+  },
+  {
+   "key": "it-part-chiudere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **chiudere** ?",
+   "back": "**chiuso**"
+  },
+  {
+   "key": "it-part-rispondere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **rispondere** ?",
+   "back": "**risposto**"
+  },
+  {
+   "key": "it-part-chiedere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **chiedere** ?",
+   "back": "**chiesto**"
+  },
+  {
+   "key": "it-part-scegliere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **scegliere** ?",
+   "back": "**scelto**"
+  },
+  {
+   "key": "it-part-rimanere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **rimanere** ?",
+   "back": "**rimasto**"
+  },
+  {
+   "key": "it-part-nascere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **nascere** ?",
+   "back": "**nato**"
+  },
+  {
+   "key": "it-part-morire",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **morire** ?",
+   "back": "**morto**"
+  },
+  {
+   "key": "it-part-vivere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **vivere** ?",
+   "back": "**vissuto**"
+  },
+  {
+   "key": "it-part-bere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **bere** ?",
+   "back": "**bevuto**"
+  },
+  {
+   "key": "it-part-perdere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **perdere** ?",
+   "back": "**perso (ou perduto)**"
+  },
+  {
+   "key": "it-part-decidere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **decidere** ?",
+   "back": "**deciso**"
+  },
+  {
+   "key": "it-part-ridere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **ridere** ?",
+   "back": "**riso**"
+  },
+  {
+   "key": "it-part-rompere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **rompere** ?",
+   "back": "**rotto**"
+  },
+  {
+   "key": "it-part-correre",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **correre** ?",
+   "back": "**corso**"
+  },
+  {
+   "key": "it-part-spendere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **spendere** ?",
+   "back": "**speso**"
+  },
+  {
+   "key": "it-part-offrire",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **offrire** ?",
+   "back": "**offerto**"
+  },
+  {
+   "key": "it-part-scoprire",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **scoprire** ?",
+   "back": "**scoperto**"
+  },
+  {
+   "key": "it-part-accendere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **accendere** ?",
+   "back": "**acceso**"
+  },
+  {
+   "key": "it-part-spegnere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **spegnere** ?",
+   "back": "**spento**"
+  },
+  {
+   "key": "it-part-succedere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **succedere** ?",
+   "back": "**successo**"
+  },
+  {
+   "key": "it-part-piangere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **piangere** ?",
+   "back": "**pianto**"
+  },
+  {
+   "key": "it-part-vincere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **vincere** ?",
+   "back": "**vinto**"
+  },
+  {
+   "key": "it-part-tradurre",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **tradurre** ?",
+   "back": "**tradotto**"
+  },
+  {
+   "key": "it-part-muovere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **muovere** ?",
+   "back": "**mosso**"
+  },
+  {
+   "key": "it-part-discutere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **discutere** ?",
+   "back": "**discusso**"
+  },
+  {
+   "key": "it-part-venire",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **venire** ?",
+   "back": "**venuto**"
+  },
+  {
+   "key": "it-part-conoscere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **conoscere** ?",
+   "back": "**conosciuto**"
+  },
+  {
+   "key": "it-part-piacere",
+   "chap": "Conjugaison : passato prossimo",
+   "front": "Participe passé de **piacere** ?",
+   "back": "**piaciuto**"
+  },
+  {
+   "key": "it-voc-pero-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **però** ?",
+   "back": "mais, cependant"
+  },
+  {
+   "key": "it-voc-quindi-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **quindi** ?",
+   "back": "donc"
+  },
+  {
+   "key": "it-voc-infatti-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **infatti** ?",
+   "back": "en effet"
+  },
+  {
+   "key": "it-voc-invece-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **invece** ?",
+   "back": "en revanche, au contraire"
+  },
+  {
+   "key": "it-voc-comunque-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **comunque** ?",
+   "back": "de toute façon ; cependant"
+  },
+  {
+   "key": "it-voc-eppure-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **eppure** ?",
+   "back": "et pourtant"
+  },
+  {
+   "key": "it-voc-mentre-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **mentre** ?",
+   "back": "pendant que, tandis que"
+  },
+  {
+   "key": "it-voc-appena-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **appena** ?",
+   "back": "dès que ; à peine"
+  },
+  {
+   "key": "it-voc-finche-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **finché** ?",
+   "back": "tant que ; jusqu'à ce que"
+  },
+  {
+   "key": "it-voc-percio-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **perciò** ?",
+   "back": "c'est pourquoi"
+  },
+  {
+   "key": "it-voc-neanche-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **neanche** ?",
+   "back": "même pas ; non plus\naussi : nemmeno, neppure"
+  },
+  {
+   "key": "it-voc-anzi-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **anzi** ?",
+   "back": "au contraire ; et même"
+  },
+  {
+   "key": "it-voc-magari-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **magari** ?",
+   "back": "peut-être ; si seulement !"
+  },
+  {
+   "key": "it-voc-ormai-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **ormai** ?",
+   "back": "désormais ; à présent (il est trop tard)"
+  },
+  {
+   "key": "it-voc-addirittura-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **addirittura** ?",
+   "back": "carrément, même"
+  },
+  {
+   "key": "it-voc-piuttosto-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **piuttosto** ?",
+   "back": "plutôt"
+  },
+  {
+   "key": "it-voc-apposta-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **apposta** ?",
+   "back": "exprès"
+  },
+  {
+   "key": "it-voc-abbastanza-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **abbastanza** ?",
+   "back": "assez"
+  },
+  {
+   "key": "it-voc-purtroppo-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **purtroppo** ?",
+   "back": "malheureusement"
+  },
+  {
+   "key": "it-voc-finalmente-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **finalmente** ?",
+   "back": "enfin"
+  },
+  {
+   "key": "it-voc-spesso-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **spesso** ?",
+   "back": "souvent"
+  },
+  {
+   "key": "it-voc-ogni-tanto-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **ogni tanto** ?",
+   "back": "de temps en temps"
+  },
+  {
+   "key": "it-voc-di-solito-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **di solito** ?",
+   "back": "d'habitude"
+  },
+  {
+   "key": "it-voc-davvero-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **davvero** ?",
+   "back": "vraiment"
+  },
+  {
+   "key": "it-voc-ancora-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **ancora** ?",
+   "back": "encore ; toujours\nSei ancora qui? = Tu es toujours là ?"
+  },
+  {
+   "key": "it-voc-inoltre-fr",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Que signifie **inoltre** ?",
+   "back": "de plus, en outre"
+  },
+  {
+   "key": "it-voc-pero-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « mais, cependant » en italien ?",
+   "back": "**però**"
+  },
+  {
+   "key": "it-voc-quindi-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « donc » en italien ?",
+   "back": "**quindi**"
+  },
+  {
+   "key": "it-voc-infatti-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « en effet » en italien ?",
+   "back": "**infatti**"
+  },
+  {
+   "key": "it-voc-invece-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « en revanche, au contraire » en italien ?",
+   "back": "**invece**"
+  },
+  {
+   "key": "it-voc-comunque-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « de toute façon ; cependant » en italien ?",
+   "back": "**comunque**"
+  },
+  {
+   "key": "it-voc-eppure-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « et pourtant » en italien ?",
+   "back": "**eppure**"
+  },
+  {
+   "key": "it-voc-mentre-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « pendant que, tandis que » en italien ?",
+   "back": "**mentre**"
+  },
+  {
+   "key": "it-voc-appena-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « dès que ; à peine » en italien ?",
+   "back": "**appena**"
+  },
+  {
+   "key": "it-voc-finche-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « tant que ; jusqu'à ce que » en italien ?",
+   "back": "**finché**"
+  },
+  {
+   "key": "it-voc-percio-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « c'est pourquoi » en italien ?",
+   "back": "**perciò**"
+  },
+  {
+   "key": "it-voc-neanche-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « même pas ; non plus » en italien ?",
+   "back": "**neanche**\naussi : nemmeno, neppure"
+  },
+  {
+   "key": "it-voc-anzi-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « au contraire ; et même » en italien ?",
+   "back": "**anzi**"
+  },
+  {
+   "key": "it-voc-magari-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « peut-être ; si seulement ! » en italien ?",
+   "back": "**magari**"
+  },
+  {
+   "key": "it-voc-ormai-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « désormais ; à présent (il est trop tard) » en italien ?",
+   "back": "**ormai**"
+  },
+  {
+   "key": "it-voc-addirittura-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « carrément, même » en italien ?",
+   "back": "**addirittura**"
+  },
+  {
+   "key": "it-voc-piuttosto-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « plutôt » en italien ?",
+   "back": "**piuttosto**"
+  },
+  {
+   "key": "it-voc-apposta-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « exprès » en italien ?",
+   "back": "**apposta**"
+  },
+  {
+   "key": "it-voc-abbastanza-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « assez » en italien ?",
+   "back": "**abbastanza**"
+  },
+  {
+   "key": "it-voc-purtroppo-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « malheureusement » en italien ?",
+   "back": "**purtroppo**"
+  },
+  {
+   "key": "it-voc-finalmente-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « enfin » en italien ?",
+   "back": "**finalmente**"
+  },
+  {
+   "key": "it-voc-spesso-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « souvent » en italien ?",
+   "back": "**spesso**"
+  },
+  {
+   "key": "it-voc-ogni-tanto-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « de temps en temps » en italien ?",
+   "back": "**ogni tanto**"
+  },
+  {
+   "key": "it-voc-di-solito-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « d'habitude » en italien ?",
+   "back": "**di solito**"
+  },
+  {
+   "key": "it-voc-davvero-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « vraiment » en italien ?",
+   "back": "**davvero**"
+  },
+  {
+   "key": "it-voc-ancora-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « encore ; toujours » en italien ?",
+   "back": "**ancora**\nSei ancora qui? = Tu es toujours là ?"
+  },
+  {
+   "key": "it-voc-inoltre-it",
+   "chap": "Vocabulaire : connecteurs et adverbes",
+   "front": "Comment dit-on « de plus, en outre » en italien ?",
+   "back": "**inoltre**"
+  },
+  {
+   "key": "it-imperf-parlare",
+   "chap": "Conjugaison : imparfait",
+   "front": "Conjugue **parlare** au imparfait.",
+   "back": "io **parlavo** · tu **parlavi** · lui/lei **parlava**\nnoi **parlavamo** · voi **parlavate** · loro **parlavano**\nMême schéma : credere → credevo, dormire → dormivo."
+  },
+  {
+   "key": "it-imperf-essere",
+   "chap": "Conjugaison : imparfait",
+   "front": "Conjugue **essere** au imparfait.",
+   "back": "io **ero** · tu **eri** · lui/lei **era**\nnoi **eravamo** · voi **eravate** · loro **erano**"
+  },
+  {
+   "key": "it-imperf-irreguliers",
+   "chap": "Conjugaison : imparfait",
+   "front": "Imparfait (io) de **fare**, **dire**, **bere**, **tradurre** ?",
+   "back": "**facevo**, **dicevo**, **bevevo**, **traducevo** : on part de l'ancien radical latin (facere, dicere, bevere, traducere)."
+  },
+  {
+   "key": "it-imperf-usage",
+   "chap": "Conjugaison : imparfait",
+   "front": "Imparfait ou passato prossimo : « Quand j'étais petit, j'allais à la mer tous les étés » ?",
+   "back": "**Quando ero piccolo, andavo al mare ogni estate.**\nImparfait : habitude, description, action en cours dans le passé."
+  },
+  {
+   "key": "it-imperf-vs-pp",
+   "chap": "Conjugaison : imparfait",
+   "front": "« Je lisais quand le téléphone a sonné » ?",
+   "back": "**Leggevo quando è squillato il telefono.**\nAction en cours (imparfait) interrompue par une action ponctuelle (passato prossimo)."
+  },
+  {
+   "key": "it-trapassato",
+   "chap": "Conjugaison : imparfait",
+   "front": "Comment se forme le **trapassato prossimo** (plus-que-parfait) ?",
+   "back": "Auxiliaire à l'**imparfait** + participe : **avevo mangiato**, **ero partito/a**."
+  },
+  {
+   "key": "it-voc-la-camera-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **la camera** ?",
+   "back": "la chambre\nfaux ami : une caméra = una videocamera"
+  },
+  {
+   "key": "it-voc-il-burro-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **il burro** ?",
+   "back": "le beurre\nfaux ami : le bureau = l'ufficio / la scrivania"
+  },
+  {
+   "key": "it-voc-salire-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **salire** ?",
+   "back": "monter\nfaux ami : salir = sporcare"
+  },
+  {
+   "key": "it-voc-fermare-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **fermare** ?",
+   "back": "arrêter\nfaux ami : fermer = chiudere"
+  },
+  {
+   "key": "it-voc-morbido-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **morbido** ?",
+   "back": "doux, moelleux\nfaux ami : morbide = morboso"
+  },
+  {
+   "key": "it-voc-guardare-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **guardare** ?",
+   "back": "regarder\nfaux ami : garder = tenere, custodire"
+  },
+  {
+   "key": "it-voc-la-squadra-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **la squadra** ?",
+   "back": "l'équipe"
+  },
+  {
+   "key": "it-voc-la-cantina-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **la cantina** ?",
+   "back": "la cave\nfaux ami : une cantine = una mensa"
+  },
+  {
+   "key": "it-voc-l-autista-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **l'autista** ?",
+   "back": "le chauffeur\nfaux ami : autiste = autistico"
+  },
+  {
+   "key": "it-voc-la-macchina-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **la macchina** ?",
+   "back": "la voiture\naussi : machine"
+  },
+  {
+   "key": "it-voc-l-ufficio-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **l'ufficio** ?",
+   "back": "le bureau (lieu de travail)\nle meuble : la scrivania"
+  },
+  {
+   "key": "it-voc-la-scrivania-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **la scrivania** ?",
+   "back": "le bureau (meuble)"
+  },
+  {
+   "key": "it-voc-l-argento-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **l'argento** ?",
+   "back": "l'argent (métal)\nl'argent monnaie : i soldi"
+  },
+  {
+   "key": "it-voc-i-soldi-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **i soldi** ?",
+   "back": "l'argent (monnaie)"
+  },
+  {
+   "key": "it-voc-la-libreria-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **la libreria** ?",
+   "back": "la librairie ; la bibliothèque (meuble)\nle lieu où l'on emprunte des livres : la biblioteca"
+  },
+  {
+   "key": "it-voc-la-firma-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **la firma** ?",
+   "back": "la signature\nfaux ami : une firme = una ditta, un'azienda"
+  },
+  {
+   "key": "it-voc-i-parenti-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **i parenti** ?",
+   "back": "la famille (proches)\nfaux ami : les parents = i genitori"
+  },
+  {
+   "key": "it-voc-i-genitori-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **i genitori** ?",
+   "back": "les parents (père et mère)"
+  },
+  {
+   "key": "it-voc-stanco-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **stanco** ?",
+   "back": "fatigué"
+  },
+  {
+   "key": "it-voc-la-tasca-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **la tasca** ?",
+   "back": "la poche\nfaux ami : une tasse = una tazza"
+  },
+  {
+   "key": "it-voc-la-tazza-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **la tazza** ?",
+   "back": "la tasse"
+  },
+  {
+   "key": "it-voc-la-lavagna-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **la lavagna** ?",
+   "back": "le tableau (de classe)"
+  },
+  {
+   "key": "it-voc-lo-scontrino-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **lo scontrino** ?",
+   "back": "le ticket de caisse"
+  },
+  {
+   "key": "it-voc-lo-sconto-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **lo sconto** ?",
+   "back": "la réduction, la remise"
+  },
+  {
+   "key": "it-voc-caldo-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **caldo** ?",
+   "back": "chaud\nfroid : freddo"
+  },
+  {
+   "key": "it-voc-subito-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **subito** ?",
+   "back": "tout de suite\nfaux ami : subitement = improvvisamente"
+  },
+  {
+   "key": "it-voc-la-gamba-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **la gamba** ?",
+   "back": "la jambe"
+  },
+  {
+   "key": "it-voc-la-stampa-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **la stampa** ?",
+   "back": "la presse ; l'impression"
+  },
+  {
+   "key": "it-voc-il-bicchiere-fr",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Que signifie **il bicchiere** ?",
+   "back": "le verre (à boire)\nle matériau : il vetro"
+  },
+  {
+   "key": "it-voc-la-camera-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « la chambre » en italien ?",
+   "back": "**la camera**\nfaux ami : une caméra = una videocamera"
+  },
+  {
+   "key": "it-voc-il-burro-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « le beurre » en italien ?",
+   "back": "**il burro**\nfaux ami : le bureau = l'ufficio / la scrivania"
+  },
+  {
+   "key": "it-voc-salire-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « monter » en italien ?",
+   "back": "**salire**\nfaux ami : salir = sporcare"
+  },
+  {
+   "key": "it-voc-fermare-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « arrêter » en italien ?",
+   "back": "**fermare**\nfaux ami : fermer = chiudere"
+  },
+  {
+   "key": "it-voc-morbido-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « doux, moelleux » en italien ?",
+   "back": "**morbido**\nfaux ami : morbide = morboso"
+  },
+  {
+   "key": "it-voc-guardare-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « regarder » en italien ?",
+   "back": "**guardare**\nfaux ami : garder = tenere, custodire"
+  },
+  {
+   "key": "it-voc-la-squadra-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « l'équipe » en italien ?",
+   "back": "**la squadra**"
+  },
+  {
+   "key": "it-voc-la-cantina-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « la cave » en italien ?",
+   "back": "**la cantina**\nfaux ami : une cantine = una mensa"
+  },
+  {
+   "key": "it-voc-l-autista-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « le chauffeur » en italien ?",
+   "back": "**l'autista**\nfaux ami : autiste = autistico"
+  },
+  {
+   "key": "it-voc-la-macchina-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « la voiture » en italien ?",
+   "back": "**la macchina**\naussi : machine"
+  },
+  {
+   "key": "it-voc-l-ufficio-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « le bureau (lieu de travail) » en italien ?",
+   "back": "**l'ufficio**\nle meuble : la scrivania"
+  },
+  {
+   "key": "it-voc-la-scrivania-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « le bureau (meuble) » en italien ?",
+   "back": "**la scrivania**"
+  },
+  {
+   "key": "it-voc-l-argento-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « l'argent (métal) » en italien ?",
+   "back": "**l'argento**\nl'argent monnaie : i soldi"
+  },
+  {
+   "key": "it-voc-i-soldi-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « l'argent (monnaie) » en italien ?",
+   "back": "**i soldi**"
+  },
+  {
+   "key": "it-voc-la-libreria-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « la librairie ; la bibliothèque (meuble) » en italien ?",
+   "back": "**la libreria**\nle lieu où l'on emprunte des livres : la biblioteca"
+  },
+  {
+   "key": "it-voc-la-firma-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « la signature » en italien ?",
+   "back": "**la firma**\nfaux ami : une firme = una ditta, un'azienda"
+  },
+  {
+   "key": "it-voc-i-parenti-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « la famille (proches) » en italien ?",
+   "back": "**i parenti**\nfaux ami : les parents = i genitori"
+  },
+  {
+   "key": "it-voc-i-genitori-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « les parents (père et mère) » en italien ?",
+   "back": "**i genitori**"
+  },
+  {
+   "key": "it-voc-stanco-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « fatigué » en italien ?",
+   "back": "**stanco**"
+  },
+  {
+   "key": "it-voc-la-tasca-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « la poche » en italien ?",
+   "back": "**la tasca**\nfaux ami : une tasse = una tazza"
+  },
+  {
+   "key": "it-voc-la-tazza-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « la tasse » en italien ?",
+   "back": "**la tazza**"
+  },
+  {
+   "key": "it-voc-la-lavagna-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « le tableau (de classe) » en italien ?",
+   "back": "**la lavagna**"
+  },
+  {
+   "key": "it-voc-lo-scontrino-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « le ticket de caisse » en italien ?",
+   "back": "**lo scontrino**"
+  },
+  {
+   "key": "it-voc-lo-sconto-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « la réduction, la remise » en italien ?",
+   "back": "**lo sconto**"
+  },
+  {
+   "key": "it-voc-caldo-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « chaud » en italien ?",
+   "back": "**caldo**\nfroid : freddo"
+  },
+  {
+   "key": "it-voc-subito-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « tout de suite » en italien ?",
+   "back": "**subito**\nfaux ami : subitement = improvvisamente"
+  },
+  {
+   "key": "it-voc-la-gamba-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « la jambe » en italien ?",
+   "back": "**la gamba**"
+  },
+  {
+   "key": "it-voc-la-stampa-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « la presse ; l'impression » en italien ?",
+   "back": "**la stampa**"
+  },
+  {
+   "key": "it-voc-il-bicchiere-it",
+   "chap": "Vocabulaire : faux amis",
+   "front": "Comment dit-on « le verre (à boire) » en italien ?",
+   "back": "**il bicchiere**\nle matériau : il vetro"
+  },
+  {
+   "key": "it-fut-parlare",
+   "chap": "Conjugaison : futur",
+   "front": "Conjugue **parlare** au futur.",
+   "back": "io **parlerò** · tu **parlerai** · lui/lei **parlerà**\nnoi **parleremo** · voi **parlerete** · loro **parleranno**\n-are devient **-er-** : parlare → parlerò. credere → crederò, dormire → dormirò."
+  },
+  {
+   "key": "it-fut-care-giare",
+   "chap": "Conjugaison : futur",
+   "front": "Futur (io) de **cercare** et **mangiare** ?",
+   "back": "**cercherò** (h pour garder [k]) ; **mangerò** (le i disparaît)."
+  },
+  {
+   "key": "it-fut-essere",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **essere** à la 1re personne (io) ?",
+   "back": "**sarò**"
+  },
+  {
+   "key": "it-fut-avere",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **avere** à la 1re personne (io) ?",
+   "back": "**avrò**"
+  },
+  {
+   "key": "it-fut-andare",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **andare** à la 1re personne (io) ?",
+   "back": "**andrò**"
+  },
+  {
+   "key": "it-fut-dovere",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **dovere** à la 1re personne (io) ?",
+   "back": "**dovrò**"
+  },
+  {
+   "key": "it-fut-potere",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **potere** à la 1re personne (io) ?",
+   "back": "**potrò**"
+  },
+  {
+   "key": "it-fut-sapere",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **sapere** à la 1re personne (io) ?",
+   "back": "**saprò**"
+  },
+  {
+   "key": "it-fut-vedere",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **vedere** à la 1re personne (io) ?",
+   "back": "**vedrò**"
+  },
+  {
+   "key": "it-fut-vivere",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **vivere** à la 1re personne (io) ?",
+   "back": "**vivrò**"
+  },
+  {
+   "key": "it-fut-venire",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **venire** à la 1re personne (io) ?",
+   "back": "**verrò**"
+  },
+  {
+   "key": "it-fut-volere",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **volere** à la 1re personne (io) ?",
+   "back": "**vorrò**"
+  },
+  {
+   "key": "it-fut-tenere",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **tenere** à la 1re personne (io) ?",
+   "back": "**terrò**"
+  },
+  {
+   "key": "it-fut-rimanere",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **rimanere** à la 1re personne (io) ?",
+   "back": "**rimarrò**"
+  },
+  {
+   "key": "it-fut-bere",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **bere** à la 1re personne (io) ?",
+   "back": "**berrò**"
+  },
+  {
+   "key": "it-fut-fare",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **fare** à la 1re personne (io) ?",
+   "back": "**farò**"
+  },
+  {
+   "key": "it-fut-dare",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **dare** à la 1re personne (io) ?",
+   "back": "**darò**"
+  },
+  {
+   "key": "it-fut-stare",
+   "chap": "Conjugaison : futur",
+   "front": "Futur de **stare** à la 1re personne (io) ?",
+   "back": "**starò**"
+  },
+  {
+   "key": "it-fut-probabilita",
+   "chap": "Conjugaison : futur",
+   "front": "Que signifie **Saranno le otto.** ?",
+   "back": "« Il doit être huit heures » : le futur exprime aussi une **supposition** sur le présent (futuro di probabilità)."
+  },
+  {
+   "key": "it-fut-anteriore",
+   "chap": "Conjugaison : futur",
+   "front": "« Quand j'aurai fini, je t'appellerai. » en italien ?",
+   "back": "**Quando avrò finito, ti chiamerò.**\nFuturo anteriore = auxiliaire au futur + participe."
+  },
+  {
+   "key": "it-fut-presente",
+   "chap": "Conjugaison : futur",
+   "front": "« Demain je vais à Rome » : futur obligatoire en italien ?",
+   "back": "Non : **Domani vado a Roma.** Le présent s'emploie couramment pour un futur proche et certain."
+  },
+  {
+   "key": "it-voc-il-colloquio-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **il colloquio** ?",
+   "back": "l'entretien (d'embauche)"
+  },
+  {
+   "key": "it-voc-lo-stipendio-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **lo stipendio** ?",
+   "back": "le salaire"
+  },
+  {
+   "key": "it-voc-il-capo-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **il capo** ?",
+   "back": "le chef, le patron"
+  },
+  {
+   "key": "it-voc-il-la-collega-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **il/la collega** ?",
+   "back": "le/la collègue"
+  },
+  {
+   "key": "it-voc-la-scadenza-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **la scadenza** ?",
+   "back": "l'échéance, la date limite"
+  },
+  {
+   "key": "it-voc-la-riunione-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **la riunione** ?",
+   "back": "la réunion"
+  },
+  {
+   "key": "it-voc-il-compito-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **il compito** ?",
+   "back": "le devoir ; la tâche"
+  },
+  {
+   "key": "it-voc-il-voto-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **il voto** ?",
+   "back": "la note (scolaire)"
+  },
+  {
+   "key": "it-voc-la-laurea-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **la laurea** ?",
+   "back": "le diplôme universitaire"
+  },
+  {
+   "key": "it-voc-laurearsi-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **laurearsi** ?",
+   "back": "obtenir son diplôme (université)"
+  },
+  {
+   "key": "it-voc-il-tirocinio-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **il tirocinio** ?",
+   "back": "le stage\naussi : lo stage"
+  },
+  {
+   "key": "it-voc-l-azienda-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **l'azienda** ?",
+   "back": "l'entreprise"
+  },
+  {
+   "key": "it-voc-superare-un-esame-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **superare un esame** ?",
+   "back": "réussir un examen\nrater : essere bocciato"
+  },
+  {
+   "key": "it-voc-essere-bocciato-fr",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Que signifie **essere bocciato** ?",
+   "back": "échouer, être recalé"
+  },
+  {
+   "key": "it-voc-il-colloquio-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « l'entretien (d'embauche) » en italien ?",
+   "back": "**il colloquio**"
+  },
+  {
+   "key": "it-voc-lo-stipendio-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « le salaire » en italien ?",
+   "back": "**lo stipendio**"
+  },
+  {
+   "key": "it-voc-il-capo-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « le chef, le patron » en italien ?",
+   "back": "**il capo**"
+  },
+  {
+   "key": "it-voc-il-la-collega-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « le/la collègue » en italien ?",
+   "back": "**il/la collega**"
+  },
+  {
+   "key": "it-voc-la-scadenza-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « l'échéance, la date limite » en italien ?",
+   "back": "**la scadenza**"
+  },
+  {
+   "key": "it-voc-la-riunione-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « la réunion » en italien ?",
+   "back": "**la riunione**"
+  },
+  {
+   "key": "it-voc-il-compito-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « le devoir ; la tâche » en italien ?",
+   "back": "**il compito**"
+  },
+  {
+   "key": "it-voc-il-voto-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « la note (scolaire) » en italien ?",
+   "back": "**il voto**"
+  },
+  {
+   "key": "it-voc-la-laurea-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « le diplôme universitaire » en italien ?",
+   "back": "**la laurea**"
+  },
+  {
+   "key": "it-voc-laurearsi-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « obtenir son diplôme (université) » en italien ?",
+   "back": "**laurearsi**"
+  },
+  {
+   "key": "it-voc-il-tirocinio-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « le stage » en italien ?",
+   "back": "**il tirocinio**\naussi : lo stage"
+  },
+  {
+   "key": "it-voc-l-azienda-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « l'entreprise » en italien ?",
+   "back": "**l'azienda**"
+  },
+  {
+   "key": "it-voc-superare-un-esame-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « réussir un examen » en italien ?",
+   "back": "**superare un esame**\nrater : essere bocciato"
+  },
+  {
+   "key": "it-voc-essere-bocciato-it",
+   "chap": "Vocabulaire : travail et études",
+   "front": "Comment dit-on « échouer, être recalé » en italien ?",
+   "back": "**essere bocciato**"
+  },
+  {
+   "key": "it-cond-parlare",
+   "chap": "Conjugaison : conditionnel",
+   "front": "Conjugue **parlare** au conditionnel présent.",
+   "back": "io **parlerei** · tu **parleresti** · lui/lei **parlerebbe**\nnoi **parleremmo** · voi **parlereste** · loro **parlerebbero**\nMême radical que le futur : sarei, avrei, andrei, vorrei, verrei, berrei…"
+  },
+  {
+   "key": "it-cond-essere",
+   "chap": "Conjugaison : conditionnel",
+   "front": "Conjugue **essere** au conditionnel présent.",
+   "back": "io **sarei** · tu **saresti** · lui/lei **sarebbe**\nnoi **saremmo** · voi **sareste** · loro **sarebbero**"
+  },
+  {
+   "key": "it-cond-vs-fut-noi",
+   "chap": "Conjugaison : conditionnel",
+   "front": "**parleremo** ou **parleremmo** : lequel est le conditionnel ?",
+   "back": "**parleremmo** (deux m) = nous parlerions.\n**parleremo** (un m) = nous parlerons (futur)."
+  },
+  {
+   "key": "it-cond-politesse",
+   "chap": "Conjugaison : conditionnel",
+   "front": "« Je voudrais un café, s'il vous plaît. » ?",
+   "back": "**Vorrei un caffè, per favore.**"
+  },
+  {
+   "key": "it-cond-passato",
+   "chap": "Conjugaison : conditionnel",
+   "front": "« J'aurais aimé venir. » ?",
+   "back": "**Mi sarebbe piaciuto venire.** (ou *Avrei voluto venire.*)\nCondizionale passato = auxiliaire au conditionnel + participe."
+  },
+  {
+   "key": "it-cond-futur-passe",
+   "chap": "Conjugaison : conditionnel",
+   "front": "« Il a dit qu'il viendrait. » en italien ?",
+   "back": "**Ha detto che sarebbe venuto.**\nPiège : le futur dans le passé se dit au **conditionnel passé**, pas au conditionnel présent comme en français."
+  },
+  {
+   "key": "it-voc-l-affitto-fr",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Que signifie **l'affitto** ?",
+   "back": "le loyer"
+  },
+  {
+   "key": "it-voc-la-bolletta-fr",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Que signifie **la bolletta** ?",
+   "back": "la facture (gaz, électricité)"
+  },
+  {
+   "key": "it-voc-il-coinquilino-fr",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Que signifie **il coinquilino** ?",
+   "back": "le colocataire"
+  },
+  {
+   "key": "it-voc-la-lavatrice-fr",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Que signifie **la lavatrice** ?",
+   "back": "le lave-linge"
+  },
+  {
+   "key": "it-voc-la-spazzatura-fr",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Que signifie **la spazzatura** ?",
+   "back": "les ordures, la poubelle"
+  },
+  {
+   "key": "it-voc-fare-la-spesa-fr",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Que signifie **fare la spesa** ?",
+   "back": "faire les courses"
+  },
+  {
+   "key": "it-voc-il-binario-fr",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Que signifie **il binario** ?",
+   "back": "le quai, la voie\nIl treno parte dal binario 3."
+  },
+  {
+   "key": "it-voc-in-ritardo-fr",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Que signifie **in ritardo** ?",
+   "back": "en retard"
+  },
+  {
+   "key": "it-voc-prenotare-fr",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Que signifie **prenotare** ?",
+   "back": "réserver"
+  },
+  {
+   "key": "it-voc-la-coincidenza-fr",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Que signifie **la coincidenza** ?",
+   "back": "la correspondance (transport)\naussi : la coïncidence"
+  },
+  {
+   "key": "it-voc-il-bagaglio-fr",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Que signifie **il bagaglio** ?",
+   "back": "le bagage"
+  },
+  {
+   "key": "it-voc-lo-sciopero-fr",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Que signifie **lo sciopero** ?",
+   "back": "la grève"
+  },
+  {
+   "key": "it-voc-la-dogana-fr",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Que signifie **la dogana** ?",
+   "back": "la douane"
+  },
+  {
+   "key": "it-voc-l-affitto-it",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Comment dit-on « le loyer » en italien ?",
+   "back": "**l'affitto**"
+  },
+  {
+   "key": "it-voc-la-bolletta-it",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Comment dit-on « la facture (gaz, électricité) » en italien ?",
+   "back": "**la bolletta**"
+  },
+  {
+   "key": "it-voc-il-coinquilino-it",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Comment dit-on « le colocataire » en italien ?",
+   "back": "**il coinquilino**"
+  },
+  {
+   "key": "it-voc-la-lavatrice-it",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Comment dit-on « le lave-linge » en italien ?",
+   "back": "**la lavatrice**"
+  },
+  {
+   "key": "it-voc-la-spazzatura-it",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Comment dit-on « les ordures, la poubelle » en italien ?",
+   "back": "**la spazzatura**"
+  },
+  {
+   "key": "it-voc-fare-la-spesa-it",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Comment dit-on « faire les courses » en italien ?",
+   "back": "**fare la spesa**"
+  },
+  {
+   "key": "it-voc-il-binario-it",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Comment dit-on « le quai, la voie » en italien ?",
+   "back": "**il binario**\nIl treno parte dal binario 3."
+  },
+  {
+   "key": "it-voc-in-ritardo-it",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Comment dit-on « en retard » en italien ?",
+   "back": "**in ritardo**"
+  },
+  {
+   "key": "it-voc-prenotare-it",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Comment dit-on « réserver » en italien ?",
+   "back": "**prenotare**"
+  },
+  {
+   "key": "it-voc-la-coincidenza-it",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Comment dit-on « la correspondance (transport) » en italien ?",
+   "back": "**la coincidenza**\naussi : la coïncidence"
+  },
+  {
+   "key": "it-voc-il-bagaglio-it",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Comment dit-on « le bagage » en italien ?",
+   "back": "**il bagaglio**"
+  },
+  {
+   "key": "it-voc-lo-sciopero-it",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Comment dit-on « la grève » en italien ?",
+   "back": "**lo sciopero**"
+  },
+  {
+   "key": "it-voc-la-dogana-it",
+   "chap": "Vocabulaire : maison et voyage",
+   "front": "Comment dit-on « la douane » en italien ?",
+   "back": "**la dogana**"
+  },
+  {
+   "key": "it-cong-pres-regulier",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Subjonctif présent régulier de **parlare**, **credere**, **dormire** ?",
+   "back": "parli, parli, parli, parliamo, parliate, parlino\ncreda, creda, creda, crediamo, crediate, credano\ndorma, dorma, dorma, dormiamo, dormiate, dormano"
+  },
+  {
+   "key": "it-cong-pres-singulier",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Pourquoi précise-t-on souvent le sujet au subjonctif présent singulier : **che tu parli** ?",
+   "back": "Les trois personnes du singulier sont identiques (che io/tu/lui parli) : le pronom lève l'ambiguïté."
+  },
+  {
+   "key": "it-cong-finire",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Subjonctif présent de **finire** ?",
+   "back": "io **finisca** · tu **finisca** · lui/lei **finisca**\nnoi **finiamo** · voi **finiate** · loro **finiscano**"
+  },
+  {
+   "key": "it-cong-essere",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **essere** au subjonctif présent.",
+   "back": "io **sia** · tu **sia** · lui/lei **sia**\nnoi **siamo** · voi **siate** · loro **siano**"
+  },
+  {
+   "key": "it-cong-avere",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **avere** au subjonctif présent.",
+   "back": "io **abbia** · tu **abbia** · lui/lei **abbia**\nnoi **abbiamo** · voi **abbiate** · loro **abbiano**"
+  },
+  {
+   "key": "it-cong-fare",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **fare** au subjonctif présent.",
+   "back": "io **faccia** · tu **faccia** · lui/lei **faccia**\nnoi **facciamo** · voi **facciate** · loro **facciano**"
+  },
+  {
+   "key": "it-cong-andare",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **andare** au subjonctif présent.",
+   "back": "io **vada** · tu **vada** · lui/lei **vada**\nnoi **andiamo** · voi **andiate** · loro **vadano**"
+  },
+  {
+   "key": "it-cong-dare",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **dare** au subjonctif présent.",
+   "back": "io **dia** · tu **dia** · lui/lei **dia**\nnoi **diamo** · voi **diate** · loro **diano**"
+  },
+  {
+   "key": "it-cong-stare",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **stare** au subjonctif présent.",
+   "back": "io **stia** · tu **stia** · lui/lei **stia**\nnoi **stiamo** · voi **stiate** · loro **stiano**"
+  },
+  {
+   "key": "it-cong-dire",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **dire** au subjonctif présent.",
+   "back": "io **dica** · tu **dica** · lui/lei **dica**\nnoi **diciamo** · voi **diciate** · loro **dicano**"
+  },
+  {
+   "key": "it-cong-venire",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **venire** au subjonctif présent.",
+   "back": "io **venga** · tu **venga** · lui/lei **venga**\nnoi **veniamo** · voi **veniate** · loro **vengano**"
+  },
+  {
+   "key": "it-cong-potere",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **potere** au subjonctif présent.",
+   "back": "io **possa** · tu **possa** · lui/lei **possa**\nnoi **possiamo** · voi **possiate** · loro **possano**"
+  },
+  {
+   "key": "it-cong-volere",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **volere** au subjonctif présent.",
+   "back": "io **voglia** · tu **voglia** · lui/lei **voglia**\nnoi **vogliamo** · voi **vogliate** · loro **vogliano**"
+  },
+  {
+   "key": "it-cong-dovere",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **dovere** au subjonctif présent.",
+   "back": "io **debba** · tu **debba** · lui/lei **debba**\nnoi **dobbiamo** · voi **dobbiate** · loro **debbano**"
+  },
+  {
+   "key": "it-cong-sapere",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **sapere** au subjonctif présent.",
+   "back": "io **sappia** · tu **sappia** · lui/lei **sappia**\nnoi **sappiamo** · voi **sappiate** · loro **sappiano**"
+  },
+  {
+   "key": "it-cong-uscire",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **uscire** au subjonctif présent.",
+   "back": "io **esca** · tu **esca** · lui/lei **esca**\nnoi **usciamo** · voi **usciate** · loro **escano**"
+  },
+  {
+   "key": "it-cong-opinion",
+   "chap": "Conjugaison : subjonctif",
+   "front": "« Je pense qu'il est fatigué. » en italien ?",
+   "back": "**Penso che sia stanco.**\nPiège : après les verbes d'opinion (pensare, credere, sembrare), l'italien met le **subjonctif**, contrairement au français."
+  },
+  {
+   "key": "it-cong-declencheurs",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Citer 4 types de déclencheurs du subjonctif.",
+   "back": "- opinion, doute : penso che, credo che, non so se ;\n- volonté : voglio che, preferisco che ;\n- sentiment : sono contento che, ho paura che ;\n- tournure impersonnelle : è importante che, bisogna che."
+  },
+  {
+   "key": "it-cong-conjonctions",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Quelles conjonctions imposent le subjonctif ?",
+   "back": "**benché / sebbene** (bien que), **affinché** (pour que), **prima che** (avant que), **a meno che** (à moins que), **purché** (pourvu que), **senza che** (sans que)."
+  },
+  {
+   "key": "it-cong-dopo-che",
+   "chap": "Conjugaison : subjonctif",
+   "front": "**dopo che** (après que) : subjonctif ?",
+   "back": "Non : **indicatif**. *Dopo che è partito, ho pianto.*"
+  },
+  {
+   "key": "it-cong-meme-sujet",
+   "chap": "Conjugaison : subjonctif",
+   "front": "« Je pense venir » : **Penso che venga** ?",
+   "back": "Non : même sujet → **di + infinitif** : **Penso di venire.**"
+  },
+  {
+   "key": "it-cong-passato",
+   "chap": "Conjugaison : subjonctif",
+   "front": "« Je suis content que tu sois venu. » ?",
+   "back": "**Sono contento che tu sia venuto.**\nCongiuntivo passato = auxiliaire au subjonctif présent + participe."
+  },
+  {
+   "key": "it-cong-imperf-formation",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Subjonctif imparfait de **parlare** ?",
+   "back": "io **parlassi** · tu **parlassi** · lui/lei **parlasse**\nnoi **parlassimo** · voi **parlaste** · loro **parlassero**\ncredere → credessi, dormire → dormissi."
+  },
+  {
+   "key": "it-congimp-essere",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Conjugue **essere** au subjonctif imparfait.",
+   "back": "io **fossi** · tu **fossi** · lui/lei **fosse**\nnoi **fossimo** · voi **foste** · loro **fossero**"
+  },
+  {
+   "key": "it-congimp-irreguliers",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Subjonctif imparfait (io) de **dare**, **stare**, **fare**, **dire**, **bere** ?",
+   "back": "**dessi**, **stessi**, **facessi**, **dicessi**, **bevessi**."
+  },
+  {
+   "key": "it-cong-trapassato",
+   "chap": "Conjugaison : subjonctif",
+   "front": "« Si j'avais su… » : quel temps après **se** ?",
+   "back": "**Se avessi saputo…** : congiuntivo trapassato (auxiliaire au subjonctif imparfait + participe)."
+  },
+  {
+   "key": "it-concordanza",
+   "chap": "Conjugaison : subjonctif",
+   "front": "« Je pensais qu'il était fatigué. » ?",
+   "back": "**Pensavo che fosse stanco.**\nConcordance : verbe principal au passé → subjonctif **imparfait** (présent → subjonctif présent)."
+  },
+  {
+   "key": "it-ipotetico-1",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Hypothèse réelle : « S'il pleut, je reste à la maison. » ?",
+   "back": "**Se piove, resto a casa.**\nIndicatif dans les deux propositions."
+  },
+  {
+   "key": "it-ipotetico-2",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Hypothèse possible : « Si j'avais le temps, je viendrais. » ?",
+   "back": "**Se avessi tempo, verrei.**\nse + subjonctif imparfait, puis conditionnel présent."
+  },
+  {
+   "key": "it-ipotetico-3",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Hypothèse irréelle passée : « Si j'avais étudié, j'aurais réussi l'examen. » ?",
+   "back": "**Se avessi studiato, avrei superato l'esame.**\nse + congiuntivo trapassato, puis conditionnel passé."
+  },
+  {
+   "key": "it-ipotetico-piege",
+   "chap": "Conjugaison : subjonctif",
+   "front": "Erreur dans **Se avrei tempo, verrei** ?",
+   "back": "Jamais de conditionnel après **se** (hypothèse) : **Se avessi tempo, verrei.**"
+  },
+  {
+   "key": "it-voc-geloso-fr",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Que signifie **geloso** ?",
+   "back": "jaloux"
+  },
+  {
+   "key": "it-voc-orgoglioso-fr",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Que signifie **orgoglioso** ?",
+   "back": "fier"
+  },
+  {
+   "key": "it-voc-testardo-fr",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Que signifie **testardo** ?",
+   "back": "têtu"
+  },
+  {
+   "key": "it-voc-pigro-fr",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Que signifie **pigro** ?",
+   "back": "paresseux"
+  },
+  {
+   "key": "it-voc-la-vergogna-fr",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Que signifie **la vergogna** ?",
+   "back": "la honte\nChe vergogna!"
+  },
+  {
+   "key": "it-voc-preoccupato-fr",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Que signifie **preoccupato** ?",
+   "back": "inquiet"
+  },
+  {
+   "key": "it-voc-deluso-fr",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Que signifie **deluso** ?",
+   "back": "déçu"
+  },
+  {
+   "key": "it-voc-il-sollievo-fr",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Que signifie **il sollievo** ?",
+   "back": "le soulagement"
+  },
+  {
+   "key": "it-voc-stufo-di-fr",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Que signifie **stufo di** ?",
+   "back": "qui en a marre de\nSono stufo!"
+  },
+  {
+   "key": "it-voc-antipatico-fr",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Que signifie **antipatico** ?",
+   "back": "antipathique"
+  },
+  {
+   "key": "it-voc-geloso-it",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Comment dit-on « jaloux » en italien ?",
+   "back": "**geloso**"
+  },
+  {
+   "key": "it-voc-orgoglioso-it",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Comment dit-on « fier » en italien ?",
+   "back": "**orgoglioso**"
+  },
+  {
+   "key": "it-voc-testardo-it",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Comment dit-on « têtu » en italien ?",
+   "back": "**testardo**"
+  },
+  {
+   "key": "it-voc-pigro-it",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Comment dit-on « paresseux » en italien ?",
+   "back": "**pigro**"
+  },
+  {
+   "key": "it-voc-la-vergogna-it",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Comment dit-on « la honte » en italien ?",
+   "back": "**la vergogna**\nChe vergogna!"
+  },
+  {
+   "key": "it-voc-preoccupato-it",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Comment dit-on « inquiet » en italien ?",
+   "back": "**preoccupato**"
+  },
+  {
+   "key": "it-voc-deluso-it",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Comment dit-on « déçu » en italien ?",
+   "back": "**deluso**"
+  },
+  {
+   "key": "it-voc-il-sollievo-it",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Comment dit-on « le soulagement » en italien ?",
+   "back": "**il sollievo**"
+  },
+  {
+   "key": "it-voc-stufo-di-it",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Comment dit-on « qui en a marre de » en italien ?",
+   "back": "**stufo di**\nSono stufo!"
+  },
+  {
+   "key": "it-voc-antipatico-it",
+   "chap": "Vocabulaire : sentiments et caractère",
+   "front": "Comment dit-on « antipathique » en italien ?",
+   "back": "**antipatico**"
+  },
+  {
+   "key": "it-imp-tu",
+   "chap": "Conjugaison : impératif",
+   "front": "Impératif (tu) de **parlare**, **prendere**, **dormire**, **finire** ?",
+   "back": "**parla!**, **prendi!**, **dormi!**, **finisci!**\nAttention : -are → -a (pas -i)."
+  },
+  {
+   "key": "it-imp-negatif",
+   "chap": "Conjugaison : impératif",
+   "front": "« Ne parle pas ! » (tu) ?",
+   "back": "**Non parlare!**\nImpératif négatif à tu = non + infinitif."
+  },
+  {
+   "key": "it-imp-irreguliers",
+   "chap": "Conjugaison : impératif",
+   "front": "Impératif (tu) de **andare**, **fare**, **dare**, **stare**, **dire** ?",
+   "back": "**va'** (vai), **fa'** (fai), **da'** (dai), **sta'** (stai), **di'**."
+  },
+  {
+   "key": "it-imp-essere-avere",
+   "chap": "Conjugaison : impératif",
+   "front": "Impératif (tu) de **essere**, **avere**, **sapere** ?",
+   "back": "**sii**, **abbi**, **sappi**. Ex. : *Sii gentile!*"
+  },
+  {
+   "key": "it-imp-lei",
+   "chap": "Conjugaison : impératif",
+   "front": "Impératif de politesse (Lei) : « Entrez ! Venez ! Faites ! » ?",
+   "back": "**Entri! Venga! Faccia!**\nLa forme Lei emprunte le subjonctif présent."
+  },
+  {
+   "key": "it-imp-pronoms",
+   "chap": "Conjugaison : impératif",
+   "front": "Où placer les pronoms à l'impératif : « Dis-le-moi ! », « Fais-le ! » ?",
+   "back": "Collés à la fin (tu, noi, voi) : **Dimmelo! Fallo!**\nAvec va', fa', da', sta', di', la consonne du pronom double (fammi, dillo, vacci), sauf gli (dagli)."
+  },
+  {
+   "key": "it-imp-pronoms-lei",
+   "chap": "Conjugaison : impératif",
+   "front": "« Dites-moi ! » (Lei) ?",
+   "back": "**Mi dica!** Avec Lei, le pronom se place **devant** le verbe."
+  },
+  {
+   "key": "it-voc-in-bocca-al-lupo-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **in bocca al lupo** ?",
+   "back": "bonne chance\nOn répond : Crepi!"
+  },
+  {
+   "key": "it-voc-non-vedo-l-ora-di-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **non vedo l'ora di** ?",
+   "back": "j'ai hâte de"
+  },
+  {
+   "key": "it-voc-meno-male-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **meno male** ?",
+   "back": "heureusement, ouf"
+  },
+  {
+   "key": "it-voc-fa-niente-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **fa niente** ?",
+   "back": "ce n'est pas grave"
+  },
+  {
+   "key": "it-voc-che-peccato-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **che peccato!** ?",
+   "back": "quel dommage !"
+  },
+  {
+   "key": "it-voc-avere-fretta-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **avere fretta** ?",
+   "back": "être pressé"
+  },
+  {
+   "key": "it-voc-figurati-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **figurati** ?",
+   "back": "je t'en prie ; pas du tout\nforme Lei : si figuri"
+  },
+  {
+   "key": "it-voc-prendere-in-giro-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **prendere in giro** ?",
+   "back": "se moquer de"
+  },
+  {
+   "key": "it-voc-essere-al-verde-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **essere al verde** ?",
+   "back": "être fauché"
+  },
+  {
+   "key": "it-voc-costare-un-occhio-della-testa-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **costare un occhio della testa** ?",
+   "back": "coûter les yeux de la tête"
+  },
+  {
+   "key": "it-voc-essere-in-gamba-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **essere in gamba** ?",
+   "back": "être doué, capable"
+  },
+  {
+   "key": "it-voc-acqua-in-bocca-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **acqua in bocca** ?",
+   "back": "motus et bouche cousue"
+  },
+  {
+   "key": "it-voc-fare-una-figuraccia-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **fare una figuraccia** ?",
+   "back": "se ridiculiser"
+  },
+  {
+   "key": "it-voc-boh-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **boh** ?",
+   "back": "aucune idée"
+  },
+  {
+   "key": "it-voc-dai-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **dai!** ?",
+   "back": "allez !"
+  },
+  {
+   "key": "it-voc-stare-con-le-mani-in-mano-fr",
+   "chap": "Vocabulaire : expressions",
+   "front": "Que signifie **stare con le mani in mano** ?",
+   "back": "rester les bras croisés"
+  },
+  {
+   "key": "it-voc-in-bocca-al-lupo-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « bonne chance » en italien ?",
+   "back": "**in bocca al lupo**\nOn répond : Crepi!"
+  },
+  {
+   "key": "it-voc-non-vedo-l-ora-di-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « j'ai hâte de » en italien ?",
+   "back": "**non vedo l'ora di**"
+  },
+  {
+   "key": "it-voc-meno-male-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « heureusement, ouf » en italien ?",
+   "back": "**meno male**"
+  },
+  {
+   "key": "it-voc-fa-niente-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « ce n'est pas grave » en italien ?",
+   "back": "**fa niente**"
+  },
+  {
+   "key": "it-voc-che-peccato-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « quel dommage ! » en italien ?",
+   "back": "**che peccato!**"
+  },
+  {
+   "key": "it-voc-avere-fretta-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « être pressé » en italien ?",
+   "back": "**avere fretta**"
+  },
+  {
+   "key": "it-voc-figurati-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « je t'en prie ; pas du tout » en italien ?",
+   "back": "**figurati**\nforme Lei : si figuri"
+  },
+  {
+   "key": "it-voc-prendere-in-giro-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « se moquer de » en italien ?",
+   "back": "**prendere in giro**"
+  },
+  {
+   "key": "it-voc-essere-al-verde-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « être fauché » en italien ?",
+   "back": "**essere al verde**"
+  },
+  {
+   "key": "it-voc-costare-un-occhio-della-testa-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « coûter les yeux de la tête » en italien ?",
+   "back": "**costare un occhio della testa**"
+  },
+  {
+   "key": "it-voc-essere-in-gamba-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « être doué, capable » en italien ?",
+   "back": "**essere in gamba**"
+  },
+  {
+   "key": "it-voc-acqua-in-bocca-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « motus et bouche cousue » en italien ?",
+   "back": "**acqua in bocca**"
+  },
+  {
+   "key": "it-voc-fare-una-figuraccia-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « se ridiculiser » en italien ?",
+   "back": "**fare una figuraccia**"
+  },
+  {
+   "key": "it-voc-boh-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « aucune idée » en italien ?",
+   "back": "**boh**"
+  },
+  {
+   "key": "it-voc-dai-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « allez ! » en italien ?",
+   "back": "**dai!**"
+  },
+  {
+   "key": "it-voc-stare-con-le-mani-in-mano-it",
+   "chap": "Vocabulaire : expressions",
+   "front": "Comment dit-on « rester les bras croisés » en italien ?",
+   "back": "**stare con le mani in mano**"
+  },
+  {
+   "key": "it-gerundio",
+   "chap": "Conjugaison : gérondif et passé simple",
+   "front": "Gérondif de **parlare**, **credere**, **dormire** ? Et de **fare**, **dire**, **bere** ?",
+   "back": "**parlando**, **credendo**, **dormendo** ; **facendo**, **dicendo**, **bevendo**."
+  },
+  {
+   "key": "it-stare-gerundio",
+   "chap": "Conjugaison : gérondif et passé simple",
+   "front": "« Je suis en train de manger. » ?",
+   "back": "**Sto mangiando.** (stare + gérondif)"
+  },
+  {
+   "key": "it-remoto-parlare",
+   "chap": "Conjugaison : gérondif et passé simple",
+   "front": "Conjugue **parlare** au passato remoto.",
+   "back": "io **parlai** · tu **parlasti** · lui/lei **parlò**\nnoi **parlammo** · voi **parlaste** · loro **parlarono**\nPassé simple : surtout à l'écrit et dans le Sud ; à reconnaître."
+  },
+  {
+   "key": "it-remoto-essere",
+   "chap": "Conjugaison : gérondif et passé simple",
+   "front": "Conjugue **essere** au passato remoto.",
+   "back": "io **fui** · tu **fosti** · lui/lei **fu**\nnoi **fummo** · voi **foste** · loro **furono**"
+  },
+  {
+   "key": "it-remoto-avere",
+   "chap": "Conjugaison : gérondif et passé simple",
+   "front": "Conjugue **avere** au passato remoto.",
+   "back": "io **ebbi** · tu **avesti** · lui/lei **ebbe**\nnoi **avemmo** · voi **aveste** · loro **ebbero**"
+  },
+  {
+   "key": "it-remoto-fare",
+   "chap": "Conjugaison : gérondif et passé simple",
+   "front": "Conjugue **fare** au passato remoto.",
+   "back": "io **feci** · tu **facesti** · lui/lei **fece**\nnoi **facemmo** · voi **faceste** · loro **fecero**"
+  },
+  {
+   "key": "it-gr-piacere",
+   "chap": "Grammaire : pronoms et tournures",
+   "front": "« J'aime le café » et « J'aime les livres » avec **piacere** ?",
+   "back": "**Mi piace il caffè.** / **Mi piacciono i libri.**\nLe verbe s'accorde avec la chose qui plaît."
+  },
+  {
+   "key": "it-gr-mancare",
+   "chap": "Grammaire : pronoms et tournures",
+   "front": "« Tu me manques. » ?",
+   "back": "**Mi manchi.** Construction de piacere : c'est toi (sujet) qui me (mi) manques."
+  },
+  {
+   "key": "it-gr-ne",
+   "chap": "Grammaire : pronoms et tournures",
+   "front": "« Combien en veux-tu ? J'en veux deux. » ?",
+   "back": "**Quanti ne vuoi? Ne voglio due.** ne = en."
+  },
+  {
+   "key": "it-gr-ci",
+   "chap": "Grammaire : pronoms et tournures",
+   "front": "« J'y vais demain. » ?",
+   "back": "**Ci vado domani.** ci = y (lieu)."
+  },
+  {
+   "key": "it-gr-glielo",
+   "chap": "Grammaire : pronoms et tournures",
+   "front": "« Je le lui donne. » ?",
+   "back": "**Glielo do.** gli/le + lo → **glielo** (aussi pour Lei et loro)."
+  },
+  {
+   "key": "it-gr-me-lo",
+   "chap": "Grammaire : pronoms et tournures",
+   "front": "mi + lo, ti + la, ci + li deviennent ?",
+   "back": "**me lo**, **te la**, **ce li** : le i des pronoms indirects devient e devant lo, la, li, le, ne."
+  },
+  {
+   "key": "it-gr-si-impersonale",
+   "chap": "Grammaire : pronoms et tournures",
+   "front": "« On mange bien ici. » et « On vend des maisons. » ?",
+   "back": "**Si mangia bene qui.** / **Si vendono case.**\nAvec un nom pluriel, le verbe se met au pluriel (si passivant)."
+  },
+  {
+   "key": "it-gr-prep-articolate",
+   "chap": "Grammaire : pronoms et tournures",
+   "front": "di, a, da, in, su + **il** donnent ?",
+   "back": "**del**, **al**, **dal**, **nel**, **sul** (de même avec lo, la, l', i, gli, le : dello, alla, negli…)."
+  },
+  {
+   "key": "it-gr-ci-vuole",
+   "chap": "Grammaire : pronoms et tournures",
+   "front": "« Il faut deux heures. » et « Il me faut une heure. » ?",
+   "back": "**Ci vogliono due ore.** (volerci, accordé) / **Ci metto un'ora.** (metterci, accordé avec la personne)"
+  }
+ ]
+}

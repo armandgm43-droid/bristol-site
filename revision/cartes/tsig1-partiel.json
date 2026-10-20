@@ -1,0 +1,318 @@
+{
+  "deck": "TSIG1 — partiel (provisoire)",
+  "color": "#D8E6F7",
+  "items": [
+    {
+      "key": "tsig1p-ech-shannon",
+      "chap": "Ch. 1 — Signaux discrets et échantillonnage",
+      "front": "Théorème de Shannon : condition sur $f_e$ pour échantillonner sans perte un signal de fréquence maximale $f_{max}$ ?",
+      "back": "$$f_e \\geq 2 f_{max}$$\nSinon les motifs périodisés se recouvrent : **repliement** (recouvrement spectral), perte de l'intégrité du signal numérique."
+    },
+    {
+      "key": "tsig1p-ech-spectre-periodise",
+      "chap": "Ch. 1 — Signaux discrets et échantillonnage",
+      "front": "Spectre $X_m(f)$ du signal échantillonné à $T_e$ en fonction du spectre analogique $X_a(f)$ ?",
+      "back": "$$X_m(f) = \\frac{1}{T_e} \\sum_{k=-\\infty}^{+\\infty} X_a(f - k f_e)$$\nLe spectre est **périodisé** de période $f_e = 1/T_e$."
+    },
+    {
+      "key": "tsig1p-ech-peigne",
+      "chap": "Ch. 1 — Signaux discrets et échantillonnage",
+      "front": "Modèle de l'échantillonnage idéal : expression de $x_m(t)$ ?",
+      "back": "$$x_m(t) = x_a(t)\\, \\text{Ш}_{T_e}(t) = \\sum_n x_a(nT_e)\\, \\delta(t - nT_e)$$\nproduit par un peigne de Dirac ; sa TF est $\\frac{1}{T_e}\\sum_k \\delta(f - k f_e)$."
+    },
+    {
+      "key": "tsig1p-ech-repliement-methode",
+      "chap": "Ch. 1 — Signaux discrets et échantillonnage",
+      "front": "Méthode : une sinusoïde de fréquence $f_0 > f_e/2$ est échantillonnée à $f_e$. Quelle fréquence apparente obtient-on ?",
+      "back": "On ramène $f_0$ dans $[-f_e/2,\\ f_e/2]$ en retranchant un multiple de $f_e$ : $f_{app} = f_0 - k f_e$.\nEx. : 7 Hz et 13 Hz échantillonnés à 10 Hz donnent $-3$ Hz et 3 Hz, soit la même séquence que 3 Hz (cosinus pair) : **ambiguïté**."
+    },
+    {
+      "key": "tsig1p-ech-reconstruction",
+      "chap": "Ch. 1 — Signaux discrets et échantillonnage",
+      "front": "Filtre de reconstruction idéal : réponse en fréquence et réponse impulsionnelle ?",
+      "back": "$H_{rec}(f) = T_e$ sur $[-f_e/2,\\ f_e/2]$, 0 ailleurs.\n$$h_{rec}(t) = \\frac{\\sin(\\pi f_e t)}{\\pi f_e t}$$\net $x_{rec}(t) = \\sum_n x_a(nT_e)\\, h_{rec}(t - nT_e)$, égal à $x_a(t)$ si Shannon est respecté."
+    },
+    {
+      "key": "tsig1p-sli-convolution",
+      "chap": "Ch. 2 — Systèmes discrets linéaires invariants",
+      "front": "Sortie d'un SLI discret de réponse impulsionnelle $h(n)$ pour une entrée $x(n)$ ?",
+      "back": "Produit de convolution discret :\n$$y(n) = \\sum_{k=-\\infty}^{+\\infty} h(k)\\, x(n-k) = \\sum_k h(n-k)\\, x(k)$$\navec $h(n) = T[\\delta(n)]$."
+    },
+    {
+      "key": "tsig1p-sli-linearite",
+      "chap": "Ch. 2 — Systèmes discrets linéaires invariants",
+      "front": "$y(n) = a\\,x(n) + b$ avec $b \\neq 0$ : le système est-il linéaire ? Pourquoi ?",
+      "back": "**Non.** $T[a_1 x_1 + a_2 x_2] = a(a_1x_1 + a_2x_2) + b$ alors que $a_1T[x_1] + a_2T[x_2]$ contient $(a_1 + a_2)\\,b$. (Système affine.)"
+    },
+    {
+      "key": "tsig1p-sli-invariance",
+      "chap": "Ch. 2 — Systèmes discrets linéaires invariants",
+      "front": "$y(n) = n\\,x(n)$ : le système est-il invariant ? Pourquoi ?",
+      "back": "**Non.** L'entrée retardée $x(n-k)$ donne $n\\,x(n-k)$, alors que $y(n-k) = (n-k)\\,x(n-k)$. Le gain dépend du temps."
+    },
+    {
+      "key": "tsig1p-sli-causalite",
+      "chap": "Ch. 2 — Systèmes discrets linéaires invariants",
+      "front": "Condition de causalité d'un SLI sur $h(n)$ ? Exemple non causal ?",
+      "back": "$$h(n) = 0 \\text{ pour } n < 0$$\nLa sortie ne dépend que du présent et du passé. $y(n) = x(n+1) - x(n-2)$ n'est **pas** causal (utilise $x(n+1)$)."
+    },
+    {
+      "key": "tsig1p-sli-stabilite",
+      "chap": "Ch. 2 — Systèmes discrets linéaires invariants",
+      "front": "Condition nécessaire et suffisante de stabilité EBSB d'un SLI ?",
+      "back": "$$\\sum_{n=-\\infty}^{+\\infty} |h(n)| < \\infty$$\n(réponse impulsionnelle absolument sommable)."
+    },
+    {
+      "key": "tsig1p-sli-rif-stable",
+      "chap": "Ch. 2 — Systèmes discrets linéaires invariants",
+      "front": "Un filtre RIF est-il toujours stable ? Pourquoi ?",
+      "back": "**Oui** : $h(n)$ a un nombre fini de valeurs non nulles, donc $\\sum |h(n)|$ est fini."
+    },
+    {
+      "key": "tsig1p-sli-serie-parallele",
+      "chap": "Ch. 2 — Systèmes discrets linéaires invariants",
+      "front": "Réponse impulsionnelle de deux SLI en **série** ? en **parallèle** ?",
+      "back": "Série : $h = h_1 \\star h_2$ (donc $H = H_1 H_2$).\nParallèle : $h = h_1 + h_2$ (donc $H = H_1 + H_2$)."
+    },
+    {
+      "key": "tsig1p-conv-support",
+      "chap": "Ch. 2 — Systèmes discrets linéaires invariants",
+      "front": "Convolution de deux séquences finies : $x$ non nulle sur $[n_1, n_2]$, $h$ sur $[m_1, m_2]$. Support et longueur de $y = x \\star h$ ?",
+      "back": "Support $[n_1 + m_1,\\ n_2 + m_2]$, longueur $L_x + L_h - 1$."
+    },
+    {
+      "key": "tsig1p-conv-decalage",
+      "chap": "Ch. 2 — Systèmes discrets linéaires invariants",
+      "front": "Lien entre $x(n+2) \\star h(n)$, $x(n) \\star h(n+2)$ et $y = x \\star h$ ?",
+      "back": "Les deux valent $y(n+2)$ : décaler une des deux séquences décale la sortie d'autant (invariance)."
+    },
+    {
+      "key": "tsig1p-conv-dirac",
+      "chap": "Ch. 2 — Systèmes discrets linéaires invariants",
+      "front": "Que vaut $x(n) \\star \\delta(n - k)$ ?",
+      "back": "$x(n - k)$ : convoluer avec un Dirac retardé retarde le signal.\nPratique : $h = 2\\delta(n+1) + 2\\delta(n-1)$ donne $y(n) = 2x(n+1) + 2x(n-1)$."
+    },
+    {
+      "key": "tsig1p-tftd-definition",
+      "chap": "Ch. 3 — Caractérisation fréquentielle",
+      "front": "Définition de la transformée de Fourier d'une séquence discrète $x(n)$ définie pour tout $n$ (TFTD), en fréquence normalisée ?",
+      "back": "$$X(e^{j2\\pi f}) = \\sum_{n=-\\infty}^{+\\infty} x(n)\\, e^{-j2\\pi f n}$$\npériodique de période 1, étudiée sur $f \\in [-1/2,\\ 1/2]$ (ou $\\omega = 2\\pi f \\in [-\\pi, \\pi]$)."
+    },
+    {
+      "key": "tsig1p-tfd-definition",
+      "chap": "Ch. 3 — Caractérisation fréquentielle",
+      "front": "Définition de la transformée de Fourier discrète (TFD) d'une séquence de $N$ échantillons ?",
+      "back": "$$X(k) = \\sum_{n=0}^{N-1} x(n)\\, e^{-j2\\pi \\frac{kn}{N}}, \\quad k = 0, \\dots, N-1$$\n$N$ points en temps donnent $N$ points en fréquence, $\\Delta f = f_e/N$."
+    },
+    {
+      "key": "tsig1p-tfd-inverse",
+      "chap": "Ch. 3 — Caractérisation fréquentielle",
+      "front": "TFD inverse ?",
+      "back": "$$x(n) = \\frac{1}{N} \\sum_{k=0}^{N-1} X(k)\\, e^{+j2\\pi \\frac{kn}{N}}$$"
+    },
+    {
+      "key": "tsig1p-tfd-zero-padding",
+      "chap": "Ch. 3 — Caractérisation fréquentielle",
+      "front": "À quoi sert le *zero padding* (calcul sur $M > N$ points en complétant par des zéros) ?",
+      "back": "À **suréchantillonner** l'axe des fréquences ($\\Delta f = f_e/M$) : on voit mieux la forme du spectre, sans gagner en résolution (elle dépend de la durée observée)."
+    },
+    {
+      "key": "tsig1p-tfd-fenetre",
+      "chap": "Ch. 3 — Caractérisation fréquentielle",
+      "front": "Effet de la troncature d'un signal sur $N$ échantillons (fenêtre rectangulaire) sur son spectre ?",
+      "back": "$x_o = x_a \\cdot w$ donc $X_o = X_a \\star W$ : chaque raie est remplacée par un sinus cardinal (lobe principal de largeur $2/T$ et lobes secondaires). Une fenêtre d'apodisation réduit les lobes secondaires."
+    },
+    {
+      "key": "tsig1p-tf-produit",
+      "chap": "Ch. 3 — Caractérisation fréquentielle",
+      "front": "Relation entre $X$, $Y$ et $H$ pour un SLI, dans le domaine fréquentiel ?",
+      "back": "$$Y(e^{j2\\pi f}) = H(e^{j2\\pi f})\\, X(e^{j2\\pi f}) \\quad \\forall f$$\navec $H$ = TF de $h(n)$."
+    },
+    {
+      "key": "tsig1p-tf-retard",
+      "chap": "Ch. 3 — Caractérisation fréquentielle",
+      "front": "TF de $x(n - k)$ ?",
+      "back": "$$e^{-j2\\pi f k}\\, X(e^{j2\\pi f})$$\nUn retard multiplie par une exponentielle (phase linéaire)."
+    },
+    {
+      "key": "tsig1p-tf-modulation",
+      "chap": "Ch. 3 — Caractérisation fréquentielle",
+      "front": "TF de $e^{j2\\pi f_0 n} x(n)$ ? et de $x(n)\\cos(2\\pi f_0 n)$ ?",
+      "back": "Translation : $X(e^{j2\\pi (f - f_0)})$.\nCosinus : $\\frac12\\left[X(e^{j2\\pi(f - f_0)}) + X(e^{j2\\pi(f + f_0)})\\right]$."
+    },
+    {
+      "key": "tsig1p-tf-renversement",
+      "chap": "Ch. 3 — Caractérisation fréquentielle",
+      "front": "TF de $x(-n)$ ? de $x(n) \\star x(-n)$ pour $x$ réelle ?",
+      "back": "$x(-n) \\to X(e^{-j2\\pi f})$, soit $X^*(e^{j2\\pi f})$ si $x$ est réelle.\nDonc $x(n)\\star x(-n) \\to |X(e^{j2\\pi f})|^2$."
+    },
+    {
+      "key": "tsig1p-sinus-entree",
+      "chap": "Ch. 3 — Caractérisation fréquentielle",
+      "front": "Sortie d'un SLI réel pour l'entrée $x(n) = \\cos(2\\pi f_0 n)$ ?",
+      "back": "$$y(n) = |H(f_0)|\\, \\cos\\big(2\\pi f_0 n + \\arg H(f_0)\\big)$$\nMême fréquence, amplitude multipliée par le module, déphasage $\\arg H(f_0)$. Idem pour un sinus."
+    },
+    {
+      "key": "tsig1p-sinus-methode",
+      "chap": "Ch. 3 — Caractérisation fréquentielle",
+      "front": "Méthode : trouver $f_0$ (normalisée) pour l'entrée $x(n) = \\sin(\\pi n/4)$ ?",
+      "back": "On identifie $2\\pi f_0 n = \\pi n /4$, soit $f_0 = 1/8$ ($\\omega_0 = \\pi/4$). Puis on évalue $H(e^{j2\\pi f_0})$ : $e^{-j2\\pi f_0 k} = e^{-j\\pi k/4}$."
+    },
+    {
+      "key": "tsig1p-stabilite-tf",
+      "chap": "Ch. 3 — Caractérisation fréquentielle",
+      "front": "Conséquence de la stabilité sur la réponse en fréquence ?",
+      "back": "$|H(e^{j2\\pi f})| \\leq \\sum |h(n)| < \\infty$ pour tout $f$ : la réponse en fréquence d'un SLI stable est bornée."
+    },
+    {
+      "key": "tsig1p-retard-groupe",
+      "chap": "Ch. 3 — Caractérisation fréquentielle",
+      "front": "Définition du retard de groupe ?",
+      "back": "$$\\tau(\\omega) = -\\frac{\\mathrm{d}\\, \\arg H(e^{j\\omega})}{\\mathrm{d}\\omega}, \\quad \\omega = 2\\pi f$$\nS'il n'est pas constant, chaque composante est retardée différemment : distorsion de phase."
+    },
+    {
+      "key": "tsig1p-tz-definition",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Définition de la transformée en $z$ (unilatérale, cas causal) et lien avec la TF ?",
+      "back": "$$H(z) = \\sum_{n=0}^{+\\infty} h(n)\\, z^{-n}$$\nLa TF s'obtient sur le cercle unité : $z = e^{j2\\pi f} = e^{j\\omega}$."
+    },
+    {
+      "key": "tsig1p-tz-retard",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Transformée en $z$ de $x(n - k)$ ?",
+      "back": "$z^{-k} X(z)$ (théorème du retard). En particulier $\\delta(n - k) \\leftrightarrow z^{-k}$."
+    },
+    {
+      "key": "tsig1p-tz-exponentielle",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Transformée en $z$ de $a^n u(n)$ et région de convergence ?",
+      "back": "$$\\frac{1}{1 - a z^{-1}}, \\quad |z| > |a|$$\nLe système causal correspondant est stable si $|a| < 1$."
+    },
+    {
+      "key": "tsig1p-eqdiff-forme",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Forme générale d'une équation aux différences causale, et $H(z)$ associée ?",
+      "back": "$$\\sum_{k=0}^{K-1} c_k\\, y(n-k) = \\sum_{l=0}^{L-1} d_l\\, x(n-l)$$\n$$H(z) = \\frac{\\sum_l d_l z^{-l}}{\\sum_k c_k z^{-k}} = \\frac{N(z)}{D(z)}$$"
+    },
+    {
+      "key": "tsig1p-rif-rii",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Comment reconnaître un RIF et un RII sur l'équation aux différences ?",
+      "back": "**RIF** : $y(n)$ ne dépend que des entrées, $y(n) = \\sum_l d_l x(n-l)$ (non récursif, pas de pôle hors de 0).\n**RII** : $y(n)$ dépend aussi des sorties passées (récursif, pôles non nuls)."
+    },
+    {
+      "key": "tsig1p-stabilite-poles",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Condition de stabilité d'un système causal sur les pôles de $H(z)$ ?",
+      "back": "Tous les pôles $p_k$ sont **strictement à l'intérieur du cercle unité** : $|p_k| < 1$."
+    },
+    {
+      "key": "tsig1p-poles-zeros-methode",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Méthode : pôles et zéros de $H(z) = \\frac{1}{1 + 0{,}8 z^{-1} + 0{,}64 z^{-2}}$ ?",
+      "back": "Multiplier par $z^2$ : $H(z) = \\frac{z^2}{z^2 + 0{,}8z + 0{,}64}$.\nZéro double en $z = 0$ ; pôles $-0{,}4 \\pm j\\,0{,}69 = 0{,}8\\, e^{\\pm j2\\pi/3}$. Ne pas oublier les zéros (ou pôles) à l'origine."
+    },
+    {
+      "key": "tsig1p-dees-methode",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Méthode : réponse impulsionnelle d'un RII causal à partir de $H(z)$ ?",
+      "back": "1. Factoriser le dénominateur : pôles $p_k$.\n2. Décomposer en éléments simples : $H(z) = \\sum_k \\frac{A_k}{1 - p_k z^{-1}}$, avec $A_k = \\left[(1 - p_k z^{-1}) H(z)\\right]_{z = p_k}$.\n3. $h(n) = \\sum_k A_k\\, p_k^n\\, u(n)$."
+    },
+    {
+      "key": "tsig1p-rif-cosinus",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Module de $H$ pour $y(n) = x(n) + x(n-1)$ ? Nature ?",
+      "back": "$H(f) = 1 + e^{-j2\\pi f} = 2\\cos(\\pi f)\\, e^{-j\\pi f}$, donc $|H| = 2|\\cos(\\pi f)|$ : passe-bas en cosinus, nul en $f = 1/2$, réjection peu marquée."
+    },
+    {
+      "key": "tsig1p-rif-difference",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Nature du filtre $h_0 = -\\delta(n) + \\delta(n-1)$ ?",
+      "back": "Zéro en $z = 1$ (soit $f = 0$) : $|H_0| = 2|\\sin(\\pi f)|$, **passe-haut** (dérivateur). En cascade, il reste passe-haut."
+    },
+    {
+      "key": "tsig1p-lecture-pz",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Lecture d'un diagramme pôles/zéros : où le gain est-il grand, où est-il nul ?",
+      "back": "Sur le cercle unité ($z = e^{j2\\pi f}$) : gain **grand** près d'un pôle (proche du cercle), **nul** sur un zéro placé sur le cercle.\n$z = 1$ correspond à $f = 0$, $z = -1$ à $f = 1/2$."
+    },
+    {
+      "key": "tsig1p-lecture-pz-nature",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Nature du filtre : zéro en $z = 1$ seulement ? zéro en $z = -1$ seulement ? zéros en $\\pm 1$ ? zéros sur le cercle à $e^{\\pm j\\theta}$ avec des pôles juste à côté ?",
+      "back": "Zéro en $+1$ : coupe $f = 0$, **passe-haut**.\nZéro en $-1$ : coupe $f = 1/2$, **passe-bas**.\nZéros en $\\pm 1$ : **passe-bande**.\nZéros $e^{\\pm j\\theta}$ + pôles proches : **réjection** (notch) en $f = \\theta/2\\pi$."
+    },
+    {
+      "key": "tsig1p-notch-conception",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Concevoir un filtre RIF qui supprime une sinusoïde de fréquence normalisée $f_0$ ?",
+      "back": "Zéros conjugués sur le cercle unité en $e^{\\pm j2\\pi f_0}$ :\n$$H(z) = 1 - 2\\cos(2\\pi f_0)\\, z^{-1} + z^{-2}$$\nsoit $h = \\{1,\\ -2\\cos(2\\pi f_0),\\ 1\\}$."
+    },
+    {
+      "key": "tsig1p-module-cellule",
+      "chap": "Ch. 4 — Implémentation : RIF, RII, transformée en z",
+      "front": "Module au carré de $1 - b\\,e^{j\\theta} e^{-j\\omega}$ ?",
+      "back": "$$1 - 2b\\cos(\\omega - \\theta) + b^2$$\nminimal quand $\\omega = \\theta$ : d'où l'effet d'un zéro (creux) ou d'un pôle (pic) d'argument $\\theta$."
+    },
+    {
+      "key": "tsig1p-minphase-def",
+      "chap": "Ch. 5 — Phase : minimum de phase, phase linéaire",
+      "front": "Définition d'un filtre à minimum de phase ?",
+      "back": "Filtre causal et stable dont **tous les zéros et les pôles sont à l'intérieur du cercle unité**. Son inverse est donc aussi causal et stable."
+    },
+    {
+      "key": "tsig1p-minphase-decomposition",
+      "chap": "Ch. 5 — Phase : minimum de phase, phase linéaire",
+      "front": "Méthode : écrire $H(z) = H_{min}(z)\\, H_{pt}(z)$ ?",
+      "back": "Chaque zéro $z_e$ hors du cercle est remplacé par $1/z_e^*$ dans $H_{min}$ (même module sur le cercle) ; le passe-tout garde le rapport.\nEx. : $(1 - 9z^{-2})$ devient $(9 - z^{-2})$ dans $H_{min}$, et $H_{pt} = \\frac{1 - 9z^{-2}}{9 - z^{-2}}$."
+    },
+    {
+      "key": "tsig1p-passe-tout",
+      "chap": "Ch. 5 — Phase : minimum de phase, phase linéaire",
+      "front": "Qu'est-ce qu'un filtre passe-tout ? Forme élémentaire ?",
+      "back": "$|H_{pt}(e^{j\\omega})| = 1$ pour tout $\\omega$ : il ne modifie que la phase. Forme : $\\frac{b z - 1}{z - b}$ (zéro en $1/b$, pôle en $b$, inverses l'un de l'autre)."
+    },
+    {
+      "key": "tsig1p-minphase-retard",
+      "chap": "Ch. 5 — Phase : minimum de phase, phase linéaire",
+      "front": "Pour un même module, pourquoi le filtre à minimum de phase est-il appelé ainsi ?",
+      "back": "$H = H_{pt} H_{min}$ et le retard de groupe d'un passe-tout est positif : $\\tau_H = \\tau_{pt} + \\tau_{min} > \\tau_{min}$. Il a le **plus petit retard de groupe** parmi les filtres de même module."
+    },
+    {
+      "key": "tsig1p-phase-lineaire-def",
+      "chap": "Ch. 5 — Phase : minimum de phase, phase linéaire",
+      "front": "Filtre à phase linéaire : définition et intérêt ?",
+      "back": "$\\arg H(\\omega) = -\\beta\\omega + \\alpha$ : **retard de groupe constant** $\\beta$, donc toutes les composantes sont retardées de la même durée (pas de distorsion de phase)."
+    },
+    {
+      "key": "tsig1p-phase-lineaire-rif",
+      "chap": "Ch. 5 — Phase : minimum de phase, phase linéaire",
+      "front": "Condition sur $h(n)$ pour un RIF causal à phase linéaire (longueur $M + 1$) ?",
+      "back": "Symétrie : $$h(n) = \\pm\\, h(M - n)$$\nConséquence : $H(z) = \\pm z^{-M} H(z^{-1})$, les zéros vont par couples $\\{z_e,\\ 1/z_e\\}$."
+    },
+    {
+      "key": "tsig1p-ann-format",
+      "chap": "Annales — méthodes",
+      "front": "Format du partiel de TSIG1 (d'après les annales) ?",
+      "back": "1 h 20, **sans document**, calculatrice autorisée, 5 à 6 exercices. Rappels fournis : $\\delta(n-k) \\leftrightarrow z^{-k}$, $a^n u(n) \\leftrightarrow \\frac{1}{1 - az^{-1}}$, somme géométrique."
+    },
+    {
+      "key": "tsig1p-ann-somme-geo",
+      "chap": "Annales — méthodes",
+      "front": "Somme géométrique $\\sum_{n=N_1}^{N_2} \\alpha^n$ ?",
+      "back": "$$\\frac{\\alpha^{N_1} - \\alpha^{N_2 + 1}}{1 - \\alpha}, \\quad \\alpha \\neq 1$$"
+    },
+    {
+      "key": "tsig1p-ann-rii-cascade",
+      "chap": "Annales — méthodes",
+      "front": "$y(n) = \\alpha y(n-1) + \\beta w(n)$ et $w(n) = \\frac12 w(n-1) + x(n)$, en cascade. Identifier $\\alpha$ et $\\beta$ si $y(n) = \\frac34 y(n-1) - \\frac18 y(n-2) + x(n)$ ?",
+      "back": "$S = \\frac{\\beta}{(1 - \\frac12 z^{-1})(1 - \\alpha z^{-1})} = \\frac{\\beta}{1 - (\\alpha + \\frac12) z^{-1} + \\frac{\\alpha}{2} z^{-2}}$.\nIdentification : $\\beta = 1$, $\\alpha + \\frac12 = \\frac34$, donc $\\alpha = \\frac14$ (et $\\frac{\\alpha}{2} = \\frac18$ ✓)."
+    },
+    {
+      "key": "tsig1p-ann-rii-cascade-h",
+      "chap": "Annales — méthodes",
+      "front": "Réponse impulsionnelle de $H(z) = \\frac{1}{(1 - \\frac12 z^{-1})(1 - \\frac14 z^{-1})}$ ? Stable ?",
+      "back": "$A = \\frac{1}{1 - \\frac14 \\cdot 2} = 2$, $B = \\frac{1}{1 - \\frac12 \\cdot 4} = -1$ :\n$$h(n) = \\left[2\\left(\\tfrac12\\right)^n - \\left(\\tfrac14\\right)^n\\right] u(n)$$\nPôles $\\frac12$ et $\\frac14$ dans le cercle : stable. Contrôle : $h(0) = 1$, $h(1) = \\frac34$."
+    }
+  ]
+}

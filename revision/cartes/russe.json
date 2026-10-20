@@ -1,0 +1,1380 @@
+{
+ "deck": "Russe : débutant",
+ "color": "#D6E1F5",
+ "items": [
+  {
+   "key": "ru-lettre-01",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **А а** ?",
+   "back": "[a] comme « a » dans « papa ».\nTranslittération : a."
+  },
+  {
+   "key": "ru-lettre-02",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Б б** ?",
+   "back": "[b] comme « b ».\nTranslittération : b."
+  },
+  {
+   "key": "ru-lettre-03",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **В в** ?",
+   "back": "[v] comme « v ». Piège : ressemble au B latin.\nTranslittération : v."
+  },
+  {
+   "key": "ru-lettre-04",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Г г** ?",
+   "back": "[g] dur, comme dans « gare » (jamais [ʒ]).\nTranslittération : g."
+  },
+  {
+   "key": "ru-lettre-05",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Д д** ?",
+   "back": "[d] comme « d ».\nTranslittération : d."
+  },
+  {
+   "key": "ru-lettre-06",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Е е** ?",
+   "back": "[je] « iè » en début de mot ou après voyelle ; après consonne, [e] qui mouille la consonne.\nTranslittération : ye / e."
+  },
+  {
+   "key": "ru-lettre-07",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Ё ё** ?",
+   "back": "[jo] « io ». Toujours accentuée ; les deux points sont souvent omis à l'écrit.\nTranslittération : yo."
+  },
+  {
+   "key": "ru-lettre-08",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Ж ж** ?",
+   "back": "[ʐ] comme « j » dans « jour ».\nTranslittération : zh."
+  },
+  {
+   "key": "ru-lettre-09",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **З з** ?",
+   "back": "[z] comme « z ». Piège : ressemble au chiffre 3.\nTranslittération : z."
+  },
+  {
+   "key": "ru-lettre-10",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **И и** ?",
+   "back": "[i] comme « i ». Piège : ressemble à un N à l'envers.\nTranslittération : i."
+  },
+  {
+   "key": "ru-lettre-11",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Й й** ?",
+   "back": "[j] « i » bref, comme dans « paille » (ex. : чай).\nTranslittération : y."
+  },
+  {
+   "key": "ru-lettre-12",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **К к** ?",
+   "back": "[k] comme « k ».\nTranslittération : k."
+  },
+  {
+   "key": "ru-lettre-13",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Л л** ?",
+   "back": "[l] comme « l ».\nTranslittération : l."
+  },
+  {
+   "key": "ru-lettre-14",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **М м** ?",
+   "back": "[m] comme « m ».\nTranslittération : m."
+  },
+  {
+   "key": "ru-lettre-15",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Н н** ?",
+   "back": "[n] comme « n ». Piège : ressemble au H latin.\nTranslittération : n."
+  },
+  {
+   "key": "ru-lettre-16",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **О о** ?",
+   "back": "[o] quand elle est accentuée ; [a] sinon (молоко́ : [məlɐˈko]).\nTranslittération : o."
+  },
+  {
+   "key": "ru-lettre-17",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **П п** ?",
+   "back": "[p] comme « p ».\nTranslittération : p."
+  },
+  {
+   "key": "ru-lettre-18",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Р р** ?",
+   "back": "[r] roulé. Piège : ressemble au P latin.\nTranslittération : r."
+  },
+  {
+   "key": "ru-lettre-19",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **С с** ?",
+   "back": "[s] comme « s ». Piège : ressemble au C latin.\nTranslittération : s."
+  },
+  {
+   "key": "ru-lettre-20",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Т т** ?",
+   "back": "[t] comme « t ».\nTranslittération : t."
+  },
+  {
+   "key": "ru-lettre-21",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **У у** ?",
+   "back": "[u] comme « ou ». Piège : ressemble au y latin.\nTranslittération : u."
+  },
+  {
+   "key": "ru-lettre-22",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Ф ф** ?",
+   "back": "[f] comme « f ».\nTranslittération : f."
+  },
+  {
+   "key": "ru-lettre-23",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Х х** ?",
+   "back": "[x] comme la jota espagnole ou le « ch » allemand de « Bach ». Piège : ressemble au X latin.\nTranslittération : kh."
+  },
+  {
+   "key": "ru-lettre-24",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Ц ц** ?",
+   "back": "[ts] comme dans « tsar ».\nTranslittération : ts."
+  },
+  {
+   "key": "ru-lettre-25",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Ч ч** ?",
+   "back": "[tɕ] « tch » mouillé, comme dans « tchèque ».\nTranslittération : ch."
+  },
+  {
+   "key": "ru-lettre-26",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Ш ш** ?",
+   "back": "[ʂ] comme « ch » dans « chat » (dur).\nTranslittération : sh."
+  },
+  {
+   "key": "ru-lettre-27",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Щ щ** ?",
+   "back": "[ɕː] « ch » long et mouillé.\nTranslittération : shch."
+  },
+  {
+   "key": "ru-lettre-28",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Ъ ъ** ?",
+   "back": "Aucun son : sépare une consonne de la voyelle mouillée qui suit (подъе́зд, « entrée d'immeuble »).\nTranslittération : (signe dur)."
+  },
+  {
+   "key": "ru-lettre-29",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Ы ы** ?",
+   "back": "[ɨ] un « i » prononcé langue en arrière, entre « i » et « ou » (ты, мы).\nTranslittération : y."
+  },
+  {
+   "key": "ru-lettre-30",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Ь ь** ?",
+   "back": "Aucun son propre : mouille (palatalise) la consonne qui précède (мать, день).\nTranslittération : (signe mou)."
+  },
+  {
+   "key": "ru-lettre-31",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Э э** ?",
+   "back": "[ɛ] comme « è » (э́то).\nTranslittération : e."
+  },
+  {
+   "key": "ru-lettre-32",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Ю ю** ?",
+   "back": "[ju] « iou ».\nTranslittération : yu."
+  },
+  {
+   "key": "ru-lettre-33",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce la lettre **Я я** ?",
+   "back": "[ja] « ia ». C'est aussi le mot я, « je ».\nTranslittération : ya."
+  },
+  {
+   "key": "ru-alphabet-nombre",
+   "chap": "Alphabet cyrillique",
+   "front": "Combien de lettres compte l'alphabet russe ?",
+   "back": "**33** lettres (10 voyelles, 21 consonnes, 2 signes : ъ et ь)."
+  },
+  {
+   "key": "ru-alphabet-faux-amis",
+   "chap": "Alphabet cyrillique",
+   "front": "Quelles lettres cyrilliques ressemblent à des lettres latines mais se lisent autrement ?",
+   "back": "**В** = v, **Н** = n, **Р** = r, **С** = s, **У** = ou, **Х** = kh (et minuscules **в н р с у х**)."
+  },
+  {
+   "key": "ru-alphabet-paires",
+   "chap": "Alphabet cyrillique",
+   "front": "Quelles sont les paires de voyelles « dures / molles » ?",
+   "back": "а/я, э/е, ы/и, о/ё, у/ю.\nLa voyelle molle mouille la consonne qui précède (ou se prononce avec [j] en début de mot)."
+  },
+  {
+   "key": "ru-pron-reduction",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce un **о** non accentué ? Et un **е** ou **я** non accentué ?",
+   "back": "о → [a] ou [ə] (хорошо́ : kharacho) ; е, я → proche de [i] (сестра́ : sistra)."
+  },
+  {
+   "key": "ru-pron-accent",
+   "chap": "Alphabet cyrillique",
+   "front": "L'accent tonique russe est-il fixe ?",
+   "back": "Non, il est **libre** et doit s'apprendre avec chaque mot ; il change la prononciation des voyelles. Les manuels le marquent d'un accent aigu (вода́)."
+  },
+  {
+   "key": "ru-pron-devoisement",
+   "chap": "Alphabet cyrillique",
+   "front": "Comment se prononce le **б** final de **хлеб** (pain) ?",
+   "back": "Comme [p] : [xlʲep]. En fin de mot, б, в, г, д, ж, з se dévoisent en п, ф, к, т, ш, с."
+  },
+  {
+   "key": "ru-lire-mots-1",
+   "chap": "Alphabet cyrillique",
+   "front": "Lis et traduis : **ресторан**, **метро**, **такси**.",
+   "back": "restoran (restaurant), metro (métro), taksi (taxi)."
+  },
+  {
+   "key": "ru-lire-mots-2",
+   "chap": "Alphabet cyrillique",
+   "front": "Lis et traduis : **кофе**, **банк**, **телефон**.",
+   "back": "kofe (café), bank (banque), telefon (téléphone)."
+  },
+  {
+   "key": "ru-voc-zdravstvuyte-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **здра́вствуйте** ?",
+   "back": "bonjour (poli)\n*zdravstvuyte*\nLe premier в ne se prononce pas : [ˈzdrastvʊjtʲe]."
+  },
+  {
+   "key": "ru-voc-privet-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **приве́т** ?",
+   "back": "salut (en arrivant)\n*privet*"
+  },
+  {
+   "key": "ru-voc-do-svidaniya-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **до свида́ния** ?",
+   "back": "au revoir\n*do svidaniya*"
+  },
+  {
+   "key": "ru-voc-poka-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **пока́** ?",
+   "back": "salut, à plus (en partant)\n*poka*"
+  },
+  {
+   "key": "ru-voc-spasibo-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **спаси́бо** ?",
+   "back": "merci\n*spasibo*"
+  },
+  {
+   "key": "ru-voc-pozhaluysta-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **пожа́луйста** ?",
+   "back": "s'il vous plaît ; je vous en prie\n*pozhaluysta*\nSe prononce souvent [pɐˈʐalstə]."
+  },
+  {
+   "key": "ru-voc-izvinite-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **извини́те** ?",
+   "back": "excusez-moi\n*izvinite*"
+  },
+  {
+   "key": "ru-voc-da-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **да** ?",
+   "back": "oui\n*da*"
+  },
+  {
+   "key": "ru-voc-net-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **нет** ?",
+   "back": "non\n*net*"
+  },
+  {
+   "key": "ru-voc-khorosho-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **хорошо́** ?",
+   "back": "bien ; d'accord\n*khorosho*"
+  },
+  {
+   "key": "ru-voc-plokho-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **пло́хо** ?",
+   "back": "mal\n*plokho*"
+  },
+  {
+   "key": "ru-voc-kak-dela-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **как дела́?** ?",
+   "back": "comment ça va ?\n*kak dela*"
+  },
+  {
+   "key": "ru-voc-menya-zovut-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **меня́ зову́т…** ?",
+   "back": "je m'appelle…\n*menya zovut*\nLittéralement « on m'appelle »."
+  },
+  {
+   "key": "ru-voc-ochen-priyatno-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **о́чень прия́тно** ?",
+   "back": "enchanté(e)\n*ochen' priyatno*"
+  },
+  {
+   "key": "ru-voc-ya-ne-ponimayu-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **я не понима́ю** ?",
+   "back": "je ne comprends pas\n*ya ne ponimayu*"
+  },
+  {
+   "key": "ru-voc-vy-govorite-po-frantsuzski-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **вы говори́те по-францу́зски?** ?",
+   "back": "parlez-vous français ?\n*vy govorite po-frantsuzski*"
+  },
+  {
+   "key": "ru-voc-povtorite-pozhaluysta-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **повтори́те, пожа́луйста** ?",
+   "back": "répétez, s'il vous plaît\n*povtorite, pozhaluysta*"
+  },
+  {
+   "key": "ru-voc-skol-ko-eto-stoit-fr",
+   "chap": "Politesse et premiers échanges",
+   "front": "Que signifie **ско́лько э́то сто́ит?** ?",
+   "back": "combien ça coûte ?\n*skol'ko eto stoit*"
+  },
+  {
+   "key": "ru-voc-zdravstvuyte-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « bonjour (poli) » en russe ?",
+   "back": "**здра́вствуйте** · *zdravstvuyte*\nLe premier в ne se prononce pas : [ˈzdrastvʊjtʲe]."
+  },
+  {
+   "key": "ru-voc-privet-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « salut (en arrivant) » en russe ?",
+   "back": "**приве́т** · *privet*"
+  },
+  {
+   "key": "ru-voc-do-svidaniya-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « au revoir » en russe ?",
+   "back": "**до свида́ния** · *do svidaniya*"
+  },
+  {
+   "key": "ru-voc-poka-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « salut, à plus (en partant) » en russe ?",
+   "back": "**пока́** · *poka*"
+  },
+  {
+   "key": "ru-voc-spasibo-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « merci » en russe ?",
+   "back": "**спаси́бо** · *spasibo*"
+  },
+  {
+   "key": "ru-voc-pozhaluysta-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « s'il vous plaît ; je vous en prie » en russe ?",
+   "back": "**пожа́луйста** · *pozhaluysta*\nSe prononce souvent [pɐˈʐalstə]."
+  },
+  {
+   "key": "ru-voc-izvinite-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « excusez-moi » en russe ?",
+   "back": "**извини́те** · *izvinite*"
+  },
+  {
+   "key": "ru-voc-da-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « oui » en russe ?",
+   "back": "**да** · *da*"
+  },
+  {
+   "key": "ru-voc-net-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « non » en russe ?",
+   "back": "**нет** · *net*"
+  },
+  {
+   "key": "ru-voc-khorosho-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « bien ; d'accord » en russe ?",
+   "back": "**хорошо́** · *khorosho*"
+  },
+  {
+   "key": "ru-voc-plokho-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « mal » en russe ?",
+   "back": "**пло́хо** · *plokho*"
+  },
+  {
+   "key": "ru-voc-kak-dela-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « comment ça va ? » en russe ?",
+   "back": "**как дела́?** · *kak dela*"
+  },
+  {
+   "key": "ru-voc-menya-zovut-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « je m'appelle… » en russe ?",
+   "back": "**меня́ зову́т…** · *menya zovut*\nLittéralement « on m'appelle »."
+  },
+  {
+   "key": "ru-voc-ochen-priyatno-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « enchanté(e) » en russe ?",
+   "back": "**о́чень прия́тно** · *ochen' priyatno*"
+  },
+  {
+   "key": "ru-voc-ya-ne-ponimayu-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « je ne comprends pas » en russe ?",
+   "back": "**я не понима́ю** · *ya ne ponimayu*"
+  },
+  {
+   "key": "ru-voc-vy-govorite-po-frantsuzski-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « parlez-vous français ? » en russe ?",
+   "back": "**вы говори́те по-францу́зски?** · *vy govorite po-frantsuzski*"
+  },
+  {
+   "key": "ru-voc-povtorite-pozhaluysta-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « répétez, s'il vous plaît » en russe ?",
+   "back": "**повтори́те, пожа́луйста** · *povtorite, pozhaluysta*"
+  },
+  {
+   "key": "ru-voc-skol-ko-eto-stoit-ru",
+   "chap": "Politesse et premiers échanges",
+   "front": "Comment dit-on « combien ça coûte ? » en russe ?",
+   "back": "**ско́лько э́то сто́ит?** · *skol'ko eto stoit*"
+  },
+  {
+   "key": "ru-gr-pas-etre",
+   "chap": "Bases de grammaire",
+   "front": "« Je suis étudiant. » en russe ?",
+   "back": "**Я студе́нт.** (Ya student)\nAu présent, le verbe « être » ne s'exprime pas."
+  },
+  {
+   "key": "ru-gr-genre",
+   "chap": "Bases de grammaire",
+   "front": "Comment reconnaître le genre d'un nom russe ?",
+   "back": "Masculin : consonne ou -й (дом, чай) ; féminin : -а, -я (ма́ма, семья́) ; neutre : -о, -е (окно́, мо́ре).\nEn -ь : masculin ou féminin, à apprendre (день m., ночь f.)."
+  },
+  {
+   "key": "ru-gr-avoir",
+   "chap": "Bases de grammaire",
+   "front": "« J'ai un frère. » en russe ?",
+   "back": "**У меня́ есть брат.** (U menya yest' brat)\nLittéralement « chez moi il y a un frère »."
+  },
+  {
+   "key": "ru-gr-question",
+   "chap": "Bases de grammaire",
+   "front": "Comment pose-t-on une question fermée en russe ?",
+   "back": "Par l'**intonation** seule, sans changer l'ordre des mots : Э́то вода́? (C'est de l'eau ?)"
+  },
+  {
+   "key": "ru-gr-eto",
+   "chap": "Bases de grammaire",
+   "front": "Que signifie **э́то** dans **Э́то мой дом.** ?",
+   "back": "« ce, c'est » : **C'est ma maison.** (Eto moy dom)"
+  },
+  {
+   "key": "ru-gr-ne",
+   "chap": "Bases de grammaire",
+   "front": "Comment exprime-t-on la négation ?",
+   "back": "Avec **не** devant le mot nié : Я **не** понима́ю = je ne comprends pas."
+  },
+  {
+   "key": "ru-voc-ya-fr",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Que signifie **я** ?",
+   "back": "je\n*ya*"
+  },
+  {
+   "key": "ru-voc-ty-fr",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Que signifie **ты** ?",
+   "back": "tu\n*ty*"
+  },
+  {
+   "key": "ru-voc-on-fr",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Que signifie **он** ?",
+   "back": "il\n*on*"
+  },
+  {
+   "key": "ru-voc-ona-fr",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Que signifie **она́** ?",
+   "back": "elle\n*ona*"
+  },
+  {
+   "key": "ru-voc-my-fr",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Que signifie **мы** ?",
+   "back": "nous\n*my*"
+  },
+  {
+   "key": "ru-voc-vy-fr",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Que signifie **вы** ?",
+   "back": "vous\n*vy*\nВы avec majuscule : vouvoiement à l'écrit."
+  },
+  {
+   "key": "ru-voc-oni-fr",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Que signifie **они́** ?",
+   "back": "ils, elles\n*oni*"
+  },
+  {
+   "key": "ru-voc-chto-fr",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Que signifie **что?** ?",
+   "back": "quoi ? que ?\n*chto*\nSe prononce [ʂto]."
+  },
+  {
+   "key": "ru-voc-kto-fr",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Que signifie **кто?** ?",
+   "back": "qui ?\n*kto*"
+  },
+  {
+   "key": "ru-voc-gde-fr",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Que signifie **где?** ?",
+   "back": "où ?\n*gde*"
+  },
+  {
+   "key": "ru-voc-kogda-fr",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Que signifie **когда́?** ?",
+   "back": "quand ?\n*kogda*"
+  },
+  {
+   "key": "ru-voc-pochemu-fr",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Que signifie **почему́?** ?",
+   "back": "pourquoi ?\n*pochemu*"
+  },
+  {
+   "key": "ru-voc-kak-fr",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Que signifie **как?** ?",
+   "back": "comment ?\n*kak*"
+  },
+  {
+   "key": "ru-voc-ya-ru",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Comment dit-on « je » en russe ?",
+   "back": "**я** · *ya*"
+  },
+  {
+   "key": "ru-voc-ty-ru",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Comment dit-on « tu » en russe ?",
+   "back": "**ты** · *ty*"
+  },
+  {
+   "key": "ru-voc-on-ru",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Comment dit-on « il » en russe ?",
+   "back": "**он** · *on*"
+  },
+  {
+   "key": "ru-voc-ona-ru",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Comment dit-on « elle » en russe ?",
+   "back": "**она́** · *ona*"
+  },
+  {
+   "key": "ru-voc-my-ru",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Comment dit-on « nous » en russe ?",
+   "back": "**мы** · *my*"
+  },
+  {
+   "key": "ru-voc-vy-ru",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Comment dit-on « vous » en russe ?",
+   "back": "**вы** · *vy*\nВы avec majuscule : vouvoiement à l'écrit."
+  },
+  {
+   "key": "ru-voc-oni-ru",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Comment dit-on « ils, elles » en russe ?",
+   "back": "**они́** · *oni*"
+  },
+  {
+   "key": "ru-voc-chto-ru",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Comment dit-on « quoi ? que ? » en russe ?",
+   "back": "**что?** · *chto*\nSe prononce [ʂto]."
+  },
+  {
+   "key": "ru-voc-kto-ru",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Comment dit-on « qui ? » en russe ?",
+   "back": "**кто?** · *kto*"
+  },
+  {
+   "key": "ru-voc-gde-ru",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Comment dit-on « où ? » en russe ?",
+   "back": "**где?** · *gde*"
+  },
+  {
+   "key": "ru-voc-kogda-ru",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Comment dit-on « quand ? » en russe ?",
+   "back": "**когда́?** · *kogda*"
+  },
+  {
+   "key": "ru-voc-pochemu-ru",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Comment dit-on « pourquoi ? » en russe ?",
+   "back": "**почему́?** · *pochemu*"
+  },
+  {
+   "key": "ru-voc-kak-ru",
+   "chap": "Pronoms et mots interrogatifs",
+   "front": "Comment dit-on « comment ? » en russe ?",
+   "back": "**как?** · *kak*"
+  },
+  {
+   "key": "ru-voc-odin-fr",
+   "chap": "Nombres",
+   "front": "Que signifie **оди́н** ?",
+   "back": "un (1)\n*odin*"
+  },
+  {
+   "key": "ru-voc-dva-fr",
+   "chap": "Nombres",
+   "front": "Que signifie **два** ?",
+   "back": "deux (2)\n*dva*"
+  },
+  {
+   "key": "ru-voc-tri-fr",
+   "chap": "Nombres",
+   "front": "Que signifie **три** ?",
+   "back": "trois (3)\n*tri*"
+  },
+  {
+   "key": "ru-voc-chetyre-fr",
+   "chap": "Nombres",
+   "front": "Que signifie **четы́ре** ?",
+   "back": "quatre (4)\n*chetyre*"
+  },
+  {
+   "key": "ru-voc-pyat-fr",
+   "chap": "Nombres",
+   "front": "Que signifie **пять** ?",
+   "back": "cinq (5)\n*pyat'*"
+  },
+  {
+   "key": "ru-voc-shest-fr",
+   "chap": "Nombres",
+   "front": "Que signifie **шесть** ?",
+   "back": "six (6)\n*shest'*"
+  },
+  {
+   "key": "ru-voc-sem-fr",
+   "chap": "Nombres",
+   "front": "Que signifie **семь** ?",
+   "back": "sept (7)\n*sem'*"
+  },
+  {
+   "key": "ru-voc-vosem-fr",
+   "chap": "Nombres",
+   "front": "Que signifie **во́семь** ?",
+   "back": "huit (8)\n*vosem'*"
+  },
+  {
+   "key": "ru-voc-devyat-fr",
+   "chap": "Nombres",
+   "front": "Que signifie **де́вять** ?",
+   "back": "neuf (9)\n*devyat'*"
+  },
+  {
+   "key": "ru-voc-desyat-fr",
+   "chap": "Nombres",
+   "front": "Que signifie **де́сять** ?",
+   "back": "dix (10)\n*desyat'*"
+  },
+  {
+   "key": "ru-voc-sto-fr",
+   "chap": "Nombres",
+   "front": "Que signifie **сто** ?",
+   "back": "cent (100)\n*sto*"
+  },
+  {
+   "key": "ru-voc-odin-ru",
+   "chap": "Nombres",
+   "front": "Comment dit-on « un (1) » en russe ?",
+   "back": "**оди́н** · *odin*"
+  },
+  {
+   "key": "ru-voc-dva-ru",
+   "chap": "Nombres",
+   "front": "Comment dit-on « deux (2) » en russe ?",
+   "back": "**два** · *dva*"
+  },
+  {
+   "key": "ru-voc-tri-ru",
+   "chap": "Nombres",
+   "front": "Comment dit-on « trois (3) » en russe ?",
+   "back": "**три** · *tri*"
+  },
+  {
+   "key": "ru-voc-chetyre-ru",
+   "chap": "Nombres",
+   "front": "Comment dit-on « quatre (4) » en russe ?",
+   "back": "**четы́ре** · *chetyre*"
+  },
+  {
+   "key": "ru-voc-pyat-ru",
+   "chap": "Nombres",
+   "front": "Comment dit-on « cinq (5) » en russe ?",
+   "back": "**пять** · *pyat'*"
+  },
+  {
+   "key": "ru-voc-shest-ru",
+   "chap": "Nombres",
+   "front": "Comment dit-on « six (6) » en russe ?",
+   "back": "**шесть** · *shest'*"
+  },
+  {
+   "key": "ru-voc-sem-ru",
+   "chap": "Nombres",
+   "front": "Comment dit-on « sept (7) » en russe ?",
+   "back": "**семь** · *sem'*"
+  },
+  {
+   "key": "ru-voc-vosem-ru",
+   "chap": "Nombres",
+   "front": "Comment dit-on « huit (8) » en russe ?",
+   "back": "**во́семь** · *vosem'*"
+  },
+  {
+   "key": "ru-voc-devyat-ru",
+   "chap": "Nombres",
+   "front": "Comment dit-on « neuf (9) » en russe ?",
+   "back": "**де́вять** · *devyat'*"
+  },
+  {
+   "key": "ru-voc-desyat-ru",
+   "chap": "Nombres",
+   "front": "Comment dit-on « dix (10) » en russe ?",
+   "back": "**де́сять** · *desyat'*"
+  },
+  {
+   "key": "ru-voc-sto-ru",
+   "chap": "Nombres",
+   "front": "Comment dit-on « cent (100) » en russe ?",
+   "back": "**сто** · *sto*"
+  },
+  {
+   "key": "ru-voc-sem-ya-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **семья́** ?",
+   "back": "la famille\n*sem'ya*"
+  },
+  {
+   "key": "ru-voc-mama-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **ма́ма** ?",
+   "back": "maman\n*mama*"
+  },
+  {
+   "key": "ru-voc-papa-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **па́па** ?",
+   "back": "papa\n*papa*"
+  },
+  {
+   "key": "ru-voc-brat-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **брат** ?",
+   "back": "le frère\n*brat*"
+  },
+  {
+   "key": "ru-voc-sestra-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **сестра́** ?",
+   "back": "la sœur\n*sestra*"
+  },
+  {
+   "key": "ru-voc-drug-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **друг** ?",
+   "back": "l'ami\n*drug*\nSe prononce [druk]."
+  },
+  {
+   "key": "ru-voc-podruga-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **подру́га** ?",
+   "back": "l'amie\n*podruga*"
+  },
+  {
+   "key": "ru-voc-voda-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **вода́** ?",
+   "back": "l'eau\n*voda*"
+  },
+  {
+   "key": "ru-voc-khleb-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **хлеб** ?",
+   "back": "le pain\n*khleb*"
+  },
+  {
+   "key": "ru-voc-chay-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **чай** ?",
+   "back": "le thé\n*chay*"
+  },
+  {
+   "key": "ru-voc-kofe-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **ко́фе** ?",
+   "back": "le café (boisson)\n*kofe*\nMasculin, bien que terminé par -е."
+  },
+  {
+   "key": "ru-voc-moloko-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **молоко́** ?",
+   "back": "le lait\n*moloko*"
+  },
+  {
+   "key": "ru-voc-yabloko-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **я́блоко** ?",
+   "back": "la pomme\n*yabloko*"
+  },
+  {
+   "key": "ru-voc-myaso-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **мя́со** ?",
+   "back": "la viande\n*myaso*"
+  },
+  {
+   "key": "ru-voc-ryba-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **ры́ба** ?",
+   "back": "le poisson\n*ryba*"
+  },
+  {
+   "key": "ru-voc-dom-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **дом** ?",
+   "back": "la maison\n*dom*"
+  },
+  {
+   "key": "ru-voc-gorod-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **го́род** ?",
+   "back": "la ville\n*gorod*"
+  },
+  {
+   "key": "ru-voc-ulitsa-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **у́лица** ?",
+   "back": "la rue\n*ulitsa*"
+  },
+  {
+   "key": "ru-voc-magazin-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **магази́н** ?",
+   "back": "le magasin\n*magazin*"
+  },
+  {
+   "key": "ru-voc-vokzal-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **вокза́л** ?",
+   "back": "la gare\n*vokzal*"
+  },
+  {
+   "key": "ru-voc-tualet-fr",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Que signifie **туале́т** ?",
+   "back": "les toilettes\n*tualet*"
+  },
+  {
+   "key": "ru-voc-sem-ya-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « la famille » en russe ?",
+   "back": "**семья́** · *sem'ya*"
+  },
+  {
+   "key": "ru-voc-mama-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « maman » en russe ?",
+   "back": "**ма́ма** · *mama*"
+  },
+  {
+   "key": "ru-voc-papa-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « papa » en russe ?",
+   "back": "**па́па** · *papa*"
+  },
+  {
+   "key": "ru-voc-brat-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « le frère » en russe ?",
+   "back": "**брат** · *brat*"
+  },
+  {
+   "key": "ru-voc-sestra-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « la sœur » en russe ?",
+   "back": "**сестра́** · *sestra*"
+  },
+  {
+   "key": "ru-voc-drug-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « l'ami » en russe ?",
+   "back": "**друг** · *drug*\nSe prononce [druk]."
+  },
+  {
+   "key": "ru-voc-podruga-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « l'amie » en russe ?",
+   "back": "**подру́га** · *podruga*"
+  },
+  {
+   "key": "ru-voc-voda-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « l'eau » en russe ?",
+   "back": "**вода́** · *voda*"
+  },
+  {
+   "key": "ru-voc-khleb-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « le pain » en russe ?",
+   "back": "**хлеб** · *khleb*"
+  },
+  {
+   "key": "ru-voc-chay-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « le thé » en russe ?",
+   "back": "**чай** · *chay*"
+  },
+  {
+   "key": "ru-voc-kofe-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « le café (boisson) » en russe ?",
+   "back": "**ко́фе** · *kofe*\nMasculin, bien que terminé par -е."
+  },
+  {
+   "key": "ru-voc-moloko-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « le lait » en russe ?",
+   "back": "**молоко́** · *moloko*"
+  },
+  {
+   "key": "ru-voc-yabloko-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « la pomme » en russe ?",
+   "back": "**я́блоко** · *yabloko*"
+  },
+  {
+   "key": "ru-voc-myaso-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « la viande » en russe ?",
+   "back": "**мя́со** · *myaso*"
+  },
+  {
+   "key": "ru-voc-ryba-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « le poisson » en russe ?",
+   "back": "**ры́ба** · *ryba*"
+  },
+  {
+   "key": "ru-voc-dom-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « la maison » en russe ?",
+   "back": "**дом** · *dom*"
+  },
+  {
+   "key": "ru-voc-gorod-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « la ville » en russe ?",
+   "back": "**го́род** · *gorod*"
+  },
+  {
+   "key": "ru-voc-ulitsa-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « la rue » en russe ?",
+   "back": "**у́лица** · *ulitsa*"
+  },
+  {
+   "key": "ru-voc-magazin-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « le magasin » en russe ?",
+   "back": "**магази́н** · *magazin*"
+  },
+  {
+   "key": "ru-voc-vokzal-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « la gare » en russe ?",
+   "back": "**вокза́л** · *vokzal*"
+  },
+  {
+   "key": "ru-voc-tualet-ru",
+   "chap": "Famille, nourriture et lieux",
+   "front": "Comment dit-on « les toilettes » en russe ?",
+   "back": "**туале́т** · *tualet*"
+  },
+  {
+   "key": "ru-voc-segodnya-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **сего́дня** ?",
+   "back": "aujourd'hui\n*segodnya*\nLe г se prononce [v] : [sʲɪˈvodnʲə]."
+  },
+  {
+   "key": "ru-voc-zavtra-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **за́втра** ?",
+   "back": "demain\n*zavtra*"
+  },
+  {
+   "key": "ru-voc-vchera-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **вчера́** ?",
+   "back": "hier\n*vchera*"
+  },
+  {
+   "key": "ru-voc-utro-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **у́тро** ?",
+   "back": "le matin\n*utro*"
+  },
+  {
+   "key": "ru-voc-vecher-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **ве́чер** ?",
+   "back": "le soir\n*vecher*"
+  },
+  {
+   "key": "ru-voc-den-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **день** ?",
+   "back": "le jour\n*den'*"
+  },
+  {
+   "key": "ru-voc-noch-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **ночь** ?",
+   "back": "la nuit\n*noch'*"
+  },
+  {
+   "key": "ru-voc-vremya-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **вре́мя** ?",
+   "back": "le temps (durée)\n*vremya*\nNeutre malgré la terminaison -я."
+  },
+  {
+   "key": "ru-voc-kniga-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **кни́га** ?",
+   "back": "le livre\n*kniga*"
+  },
+  {
+   "key": "ru-voc-mashina-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **маши́на** ?",
+   "back": "la voiture\n*mashina*"
+  },
+  {
+   "key": "ru-voc-rabota-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **рабо́та** ?",
+   "back": "le travail\n*rabota*"
+  },
+  {
+   "key": "ru-voc-byt-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **быть** ?",
+   "back": "être\n*byt'*"
+  },
+  {
+   "key": "ru-voc-govorit-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **говори́ть** ?",
+   "back": "parler\n*govorit'*"
+  },
+  {
+   "key": "ru-voc-znat-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **знать** ?",
+   "back": "savoir, connaître\n*znat'*"
+  },
+  {
+   "key": "ru-voc-ponimat-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **понима́ть** ?",
+   "back": "comprendre\n*ponimat'*"
+  },
+  {
+   "key": "ru-voc-khotet-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **хоте́ть** ?",
+   "back": "vouloir\n*khotet'*"
+  },
+  {
+   "key": "ru-voc-lyubit-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **люби́ть** ?",
+   "back": "aimer\n*lyubit'*"
+  },
+  {
+   "key": "ru-voc-zhit-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **жить** ?",
+   "back": "vivre, habiter\n*zhit'*"
+  },
+  {
+   "key": "ru-voc-rabotat-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **рабо́тать** ?",
+   "back": "travailler\n*rabotat'*"
+  },
+  {
+   "key": "ru-voc-chitat-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **чита́ть** ?",
+   "back": "lire\n*chitat'*"
+  },
+  {
+   "key": "ru-voc-yest-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **есть** ?",
+   "back": "manger\n*yest'*\nAussi : « il y a » (у меня есть)."
+  },
+  {
+   "key": "ru-voc-pit-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **пить** ?",
+   "back": "boire\n*pit'*"
+  },
+  {
+   "key": "ru-voc-bol-shoy-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **большо́й** ?",
+   "back": "grand\n*bol'shoy*"
+  },
+  {
+   "key": "ru-voc-malen-kiy-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **ма́ленький** ?",
+   "back": "petit\n*malen'kiy*"
+  },
+  {
+   "key": "ru-voc-khoroshiy-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **хоро́ший** ?",
+   "back": "bon\n*khoroshiy*"
+  },
+  {
+   "key": "ru-voc-novyy-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **но́вый** ?",
+   "back": "nouveau\n*novyy*"
+  },
+  {
+   "key": "ru-voc-staryy-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **ста́рый** ?",
+   "back": "vieux\n*staryy*"
+  },
+  {
+   "key": "ru-voc-krasivyy-fr",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Que signifie **краси́вый** ?",
+   "back": "beau\n*krasivyy*"
+  },
+  {
+   "key": "ru-voc-segodnya-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « aujourd'hui » en russe ?",
+   "back": "**сего́дня** · *segodnya*\nLe г se prononce [v] : [sʲɪˈvodnʲə]."
+  },
+  {
+   "key": "ru-voc-zavtra-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « demain » en russe ?",
+   "back": "**за́втра** · *zavtra*"
+  },
+  {
+   "key": "ru-voc-vchera-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « hier » en russe ?",
+   "back": "**вчера́** · *vchera*"
+  },
+  {
+   "key": "ru-voc-utro-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « le matin » en russe ?",
+   "back": "**у́тро** · *utro*"
+  },
+  {
+   "key": "ru-voc-vecher-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « le soir » en russe ?",
+   "back": "**ве́чер** · *vecher*"
+  },
+  {
+   "key": "ru-voc-den-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « le jour » en russe ?",
+   "back": "**день** · *den'*"
+  },
+  {
+   "key": "ru-voc-noch-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « la nuit » en russe ?",
+   "back": "**ночь** · *noch'*"
+  },
+  {
+   "key": "ru-voc-vremya-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « le temps (durée) » en russe ?",
+   "back": "**вре́мя** · *vremya*\nNeutre malgré la terminaison -я."
+  },
+  {
+   "key": "ru-voc-kniga-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « le livre » en russe ?",
+   "back": "**кни́га** · *kniga*"
+  },
+  {
+   "key": "ru-voc-mashina-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « la voiture » en russe ?",
+   "back": "**маши́на** · *mashina*"
+  },
+  {
+   "key": "ru-voc-rabota-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « le travail » en russe ?",
+   "back": "**рабо́та** · *rabota*"
+  },
+  {
+   "key": "ru-voc-byt-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « être » en russe ?",
+   "back": "**быть** · *byt'*"
+  },
+  {
+   "key": "ru-voc-govorit-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « parler » en russe ?",
+   "back": "**говори́ть** · *govorit'*"
+  },
+  {
+   "key": "ru-voc-znat-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « savoir, connaître » en russe ?",
+   "back": "**знать** · *znat'*"
+  },
+  {
+   "key": "ru-voc-ponimat-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « comprendre » en russe ?",
+   "back": "**понима́ть** · *ponimat'*"
+  },
+  {
+   "key": "ru-voc-khotet-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « vouloir » en russe ?",
+   "back": "**хоте́ть** · *khotet'*"
+  },
+  {
+   "key": "ru-voc-lyubit-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « aimer » en russe ?",
+   "back": "**люби́ть** · *lyubit'*"
+  },
+  {
+   "key": "ru-voc-zhit-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « vivre, habiter » en russe ?",
+   "back": "**жить** · *zhit'*"
+  },
+  {
+   "key": "ru-voc-rabotat-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « travailler » en russe ?",
+   "back": "**рабо́тать** · *rabotat'*"
+  },
+  {
+   "key": "ru-voc-chitat-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « lire » en russe ?",
+   "back": "**чита́ть** · *chitat'*"
+  },
+  {
+   "key": "ru-voc-yest-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « manger » en russe ?",
+   "back": "**есть** · *yest'*\nAussi : « il y a » (у меня есть)."
+  },
+  {
+   "key": "ru-voc-pit-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « boire » en russe ?",
+   "back": "**пить** · *pit'*"
+  },
+  {
+   "key": "ru-voc-bol-shoy-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « grand » en russe ?",
+   "back": "**большо́й** · *bol'shoy*"
+  },
+  {
+   "key": "ru-voc-malen-kiy-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « petit » en russe ?",
+   "back": "**ма́ленький** · *malen'kiy*"
+  },
+  {
+   "key": "ru-voc-khoroshiy-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « bon » en russe ?",
+   "back": "**хоро́ший** · *khoroshiy*"
+  },
+  {
+   "key": "ru-voc-novyy-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « nouveau » en russe ?",
+   "back": "**но́вый** · *novyy*"
+  },
+  {
+   "key": "ru-voc-staryy-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « vieux » en russe ?",
+   "back": "**ста́рый** · *staryy*"
+  },
+  {
+   "key": "ru-voc-krasivyy-ru",
+   "chap": "Temps, objets, verbes et adjectifs",
+   "front": "Comment dit-on « beau » en russe ?",
+   "back": "**краси́вый** · *krasivyy*"
+  }
+ ]
+}

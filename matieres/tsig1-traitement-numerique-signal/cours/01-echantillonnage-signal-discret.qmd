@@ -1,0 +1,377 @@
+---
+title: "Échantillonnage et signal discret"
+matiere: tsig1
+chapitre: 1
+enseignants: ["Yannick Berthoumieu"]
+annee: "2026-2027"
+statut: verifie
+date-modified: 2026-10-20
+sources:
+  - id: notes
+    fichier: notes/date-inconnue.pdf
+    nature: personnelle
+    seance: inconnue
+    pages: "f. 1 r° à f. 3 v°"
+  - id: notes-2023-ch01
+    fichier: notes/2023-cours-ch01-generalites-signaux-systemes.pdf
+    nature: externe
+    pages: "1-7"
+  - id: fiche-rappels
+    fichier: notes/externe-fiche-rappels-traitement-signal.pdf
+    nature: externe
+    pages: "1-2"
+  - id: illustrations
+    fichier: support/illustrations-berthoumieu.pdf
+    nature: officielle
+    version: "TS201"
+    pages: "1-2"
+---
+
+{{< include /_macros.qmd >}}
+
+Ce chapitre pose le cadre du cours : un signal analogique est **échantillonné** pour être traité par un algorithme, puis **reconstruit**. On y établit l'effet de l'échantillonnage sur le spectre (périodisation), le théorème de Shannon-Nyquist, le filtre de reconstruction idéal et les signaux discrets élémentaires.
+
+Aucun support de cours rédigé n'est disponible pour TSIG1, hormis un court support d'illustrations de l'enseignant : le chapitre est reconstruit à partir des notes de cours d'Armand, complétées par les notes d'un ancien élève (promotion 2023) ; voir la [fiche matière](../index.qmd).
+
+## Contexte {#sec-contexte-traitement-numerique}
+
+::: {.notes}
+On étudie une transformation $T[\cdot]$ qui associe une sortie $y(t)$ à une entrée $x(t)$. Les propriétés recherchées sont la **linéarité**, l'**invariance temporelle** et la **causalité**. Pour un système linéaire invariant (SLI) à temps continu, de réponse impulsionnelle $h(t)$ :
+
+$$
+y(t) = \int_{-\infty}^{+\infty} h(\tau)\, x(t - \tau)\,\mathrm{d}\tau
+\quad \longleftrightarrow \quad
+Y(f) = H(f)\, X(f).
+$$ {#eq-sli-continu}
+
+En traitement **numérique**, la transformation est réalisée par un algorithme, entre deux convertisseurs :
+
+$$
+x(t) \xrightarrow{\ \text{CAN}\ } x[n] = x(nT_e) \xrightarrow{\ T[\cdot]\ } y[n] = y(nT_e) \xrightarrow{\ \text{CNA}\ } y(t).
+$$
+
+Le convertisseur analogique-numérique (CAN) réalise l'**échantillonnage**, le convertisseur numérique-analogique (CNA) la **reconstruction** [notes, f. 1 r°].
+:::
+
+Le support d'illustrations de l'enseignant ouvre le cours sur des exemples de signaux et de traitements : un signal de parole et son spectre, un signal périodique et son spectre (deux raies symétriques), l'égaliseur d'un logiciel de musique et la compression MP3 (changement de longueur des fenêtres d'analyse, « *Long*, *Start*, *Short*, *Stop* », et seuil de masquage de l'oreille en fonction de la fréquence) [illustrations, p. 1-2].
+
+::: {.notes-externes}
+Les notes 2023 précisent les paramètres des convertisseurs : le CAN (« A/N ») est réglé par $T_e$ et par $B$ (« support binaire », nombre de bits), le CNA (« N/A ») par $T_e$.
+
+**Remarque : le choix de $T_e$.** Si l'on échantillonne trop lentement, on perd de l'information : un signal qui oscille rapidement entre deux instants d'échantillonnage n'est vu que par deux échantillons, qui ne rendent pas compte de ses oscillations [notes-2023-ch01, p. 1].
+:::
+
+## Échantillonnage {#sec-echantillonnage}
+
+### Définition {#sec-definition-echantillonnage}
+
+:::: {.notes}
+::: {#def-echantillonnage}
+## Échantillonnage
+
+L'échantillonnage est le **relevé** de $x(t)$ à une période régulière $T_e$ :
+
+- $T_e$ : **période d'échantillonnage** (en s) ;
+- $f_e = \dfrac{1}{T_e}$ : **fréquence d'échantillonnage** (en Hz).
+
+L'échantillon d'indice $n$ est $x[n] = x(nT_e)$, prélevé à l'instant $t = nT_e$.
+:::
+
+Deux lectures de la même suite : en mémoire, la case $x[n]$ ; dans le temps, la valeur $x(nT_e)$.
+
+| Mémoire | Temps |
+|---|---|
+| $x[-1]$ | $x(-T_e)$ |
+| $x[0]$ | $x(0)$ |
+| $x[1]$ | $x(T_e)$ |
+| $x[2]$ | $x(2T_e)$ |
+
+[notes, f. 1 r°]
+::::
+
+::: {.a-verifier #av-indices-entiers-naturels}
+**Source** [notes, f. 1 r°] : « $x[n]$, $x(nT_e)$, $n \in \mathbb{N}$ », alors que le tableau voisin contient $x[-1] = x(-T_e)$.
+
+**Problème** : un indice négatif n'appartient pas à $\mathbb{N}$. La suite de tout le cours (sommes de $-\infty$ à $+\infty$, peigne de Dirac) suppose $n \in \mathbb{Z}$.
+
+**Proposition** : $n \in \mathbb{Z}$.
+
+**Autres sources** : les notes 2023 écrivent aussi « $x_a(nT_e)$, $n \in \mathbb{N}$ », à côté d'un tracé gradué en $-T_e$ et d'une liste $x(-T_e), x(0), x(T_e)$ [notes-2023-ch01, p. 1] : l'écriture n'est pas une erreur de copie. Mais les notes 2023 et la fiche de rappels écrivent toutes les sommes de $-\infty$ à $+\infty$ [notes-2023-ch01, p. 2-3 et 6] [fiche-rappels, p. 1-2], ce qui va dans le sens de la proposition.
+:::
+
+### Point de vue mathématique : impulsion et peigne de Dirac {#sec-peigne-dirac}
+
+::: {.notes}
+L'échantillonnage se modélise avec l'**impulsion de Dirac** $\delta(t)$, dont on utilise trois propriétés :
+
+$$
+\delta(t - \tau)\, f(t) = f(\tau)\, \delta(t - \tau), \qquad
+\int_{-\infty}^{+\infty} \delta(t - \tau)\, f(t)\,\mathrm{d}t = f(\tau), \qquad
+f(t) \star \delta(t) = f(t).
+$$
+
+Le **peigne de Dirac** de période $T_e$ est
+
+$$
+\text{Ш}_{T_e}(t) = \sum_{n=-\infty}^{+\infty} \delta(t - nT_e) = \dots + \delta(t + 2T_e) + \delta(t + T_e) + \delta(t) + \delta(t - T_e) + \dots
+$$ {#eq-peigne-dirac}
+
+Le signal échantillonné $x_m(t)$ est le produit du signal analogique $x_a(t)$ par le peigne :
+
+$$
+x_m(t) = x_a(t)\, \text{Ш}_{T_e}(t) = \sum_{n=-\infty}^{+\infty} x_a(nT_e)\, \delta(t - nT_e).
+$$ {#eq-signal-echantillonne}
+
+[notes, f. 1 v°]
+:::
+
+::: {.complement}
+Les notes écrivent le peigne avec une lettre manuscrite proche de $s_{T_e}$. On utilise ici la notation usuelle $\text{Ш}_{T_e}$ (lettre cyrillique « cha »), déjà employée dans Bristol pour TS227 ; voir la table des notations de la [fiche matière](../index.qmd).
+:::
+
+### Interprétation fréquentielle de l'échantillonnage {#sec-interpretation-frequentielle-echantillonnage}
+
+::: {.notes}
+Avec la transformée de Fourier $X_a(f) = \displaystyle\int_{-\infty}^{+\infty} x_a(t)\, e^{-j2\pi ft}\,\mathrm{d}t$, la transformée du signal échantillonné vaut
+
+$$
+X_m(f) = \int_{-\infty}^{+\infty} \Bigl[\sum_n x_a(nT_e)\,\delta(t - nT_e)\Bigr] e^{-j2\pi ft}\,\mathrm{d}t
+= \sum_{n=-\infty}^{+\infty} x_a(nT_e)\, e^{-j2\pi f n T_e}.
+$$ {#eq-tfsd-origine}
+
+C'est la **transformée de Fourier de la séquence discrète** (TFSD), étudiée au [chapitre 3](03-tfd-interpretation-frequentielle.qmd#sec-tfsd).
+
+**Relation entre $X_m(f)$ et $X_a(f)$.** Un produit dans le temps devient une convolution en fréquence :
+
+$$
+x_m(t) = x_a(t)\, \text{Ш}_{T_e}(t) \quad \xrightarrow{\ \TF\ } \quad X_m(f) = X_a(f) \star S_{T_e}(f),
+$$
+
+où $S_{T_e}(f)$ est la transformée de Fourier du peigne [notes, f. 1 v°].
+
+**Transformée de Fourier du peigne de Dirac.** Le peigne est périodique : on le développe en série de Fourier,
+
+$$
+\text{Ш}_{T_e}(t) = \sum_{k=-\infty}^{+\infty} c_k\, e^{j2\pi \frac{k}{T_e} t},
+\qquad
+c_k = \frac{1}{T_e} \int_{-T_e/2}^{T_e/2} \delta(t)\, e^{-j2\pi \frac{k}{T_e} t}\,\mathrm{d}t = \frac{1}{T_e} \quad \forall k,
+$$
+
+d'où
+
+$$
+S_{T_e}(f) = \frac{1}{T_e} \sum_{k=-\infty}^{+\infty} \delta(f - k f_e).
+$$ {#eq-tf-peigne}
+
+**Spectre du signal échantillonné.**
+
+$$
+X_m(f) = \int_{-\infty}^{+\infty} X_a(g)\, \frac{1}{T_e}\sum_k \delta(f - g - kf_e)\,\mathrm{d}g
+= \frac{1}{T_e} \sum_{k=-\infty}^{+\infty} X_a(f - k f_e).
+$$ {#eq-periodisation}
+
+[notes, f. 2 r°]
+:::
+
+::: {.notes-externes}
+Propriété de la transformée de Fourier rappelée avec ce calcul, la **modulation** :
+
+$$
+x(t)\, e^{j2\pi f_0 t} \ \xrightarrow{\ \TF\ }\ X(f - f_0).
+$$
+
+[fiche-rappels, p. 1]
+:::
+
+:::: {.notes}
+::: {#prp-periodisation}
+## Périodisation du spectre
+
+L'échantillonnage temporel correspond à une **répétition du spectre** $X_a$ tous les $f_e$ dans le domaine fréquentiel (@eq-periodisation) [notes, f. 2 r°].
+:::
+::::
+
+![Spectre d'un signal à bande limitée ($|f| \leq f_{\max}$) et spectre du signal échantillonné : motifs répétés tous les $f_e$, sans chevauchement lorsque $f_e \geq 2 f_{\max}$. D'après les notes de cours [notes, f. 2 r°], redessinée.](../figures/01-periodisation-spectre.svg){#fig-periodisation-spectre}
+
+::: {.notes}
+Ordres de grandeur notés en marge : fréquence d'échantillonnage de 100 kHz pour la musique, de 1 GHz pour la vidéo [notes, f. 2 r°].
+:::
+
+::: {.complement}
+Ce sont des ordres de grandeur. Valeurs courantes en audio : 44,1 kHz (CD), 48 kHz ou 96 kHz (le cours cite 96 kHz, voir @sec-reconstruction).
+:::
+
+### Théorème de Shannon-Nyquist {#sec-shannon}
+
+:::: {.notes}
+::: {#thm-shannon}
+## Shannon-Nyquist
+
+Pour garantir l'intégrité de l'échantillonnage d'un signal $x_a(t)$ à bande limitée ($X_a(f) = 0$ pour $|f| > f_{\max}$), il faut
+
+$$
+f_e \geq 2 f_{\max}.
+$$ {#eq-shannon}
+:::
+
+Si la condition n'est pas respectée, les motifs du spectre périodisé se chevauchent : c'est le **repliement spectral** (*aliasing*) [notes, f. 2 v°].
+::::
+
+![Repliement spectral : avec $f_e < 2f_{\max}$, les motifs se chevauchent et le spectre d'origine ne peut plus être isolé. D'après les notes de cours [notes, f. 2 v°], redessinée.](../figures/01-repliement-spectral.svg){#fig-repliement-spectral}
+
+::: {.notes-externes}
+Le théorème est présenté comme une condition d'**intégrité** : l'échantillonnage conserve l'intégrité du signal analogique si $f_e \geq 2 f_{\max}$. Le chevauchement des motifs y est appelé **recouvrement spectral** ; il entraîne une perte d'intégrité du signal numérique [notes-2023-ch01, p. 4] [fiche-rappels, p. 1].
+:::
+
+::: {.complement}
+Le motif central n'est récupérable par un filtrage passe-bas que s'il ne recouvre pas ses voisins, c'est-à-dire si $f_{\max} \leq f_e - f_{\max}$ : c'est la condition @eq-shannon. La fréquence $f_e/2$ est appelée **fréquence de Nyquist**.
+:::
+
+## Reconstruction {#sec-reconstruction}
+
+::: {.notes}
+Rappel de la chaîne : $x_a(t) \to$ CAN $\to x_a(nT_e) \to T[\cdot] \to y_a(nT_e) \to$ CNA $\to y_a(t)$.
+
+En marge : le **débit** d'un flux numérique est $D = f_e \cdot B$, où $B$ est la **profondeur** (nombre de bits par échantillon). Exemple : $f_e = 96$ kHz, $16$ bits [notes, f. 2 v°].
+:::
+
+::: {.complement}
+Avec ces valeurs, $D = 96\,000 \times 16 = 1{,}536$ Mbit/s par voie.
+:::
+
+::: {.notes}
+Si le théorème de Shannon est respecté, on retrouve $X_a(f)$ en ne gardant que le motif central du spectre périodisé, avec le **filtre de reconstruction** idéal :
+
+$$
+X_a(f) = X_m(f) \cdot H_\mathrm{rec}(f),
+\qquad
+H_\mathrm{rec}(f) =
+\begin{cases}
+T_e & \text{si } -\dfrac{f_e}{2} \leq f \leq \dfrac{f_e}{2},\\[4pt]
+0 & \text{sinon.}
+\end{cases}
+$$ {#eq-filtre-reconstruction}
+
+Le gain $T_e$ compense le facteur $1/T_e$ de @eq-periodisation.
+
+**Réponse impulsionnelle du filtre de reconstruction** [notes, f. 3 r°] :
+
+$$
+\begin{aligned}
+h_\mathrm{rec}(t) &= \int_{-\infty}^{+\infty} H_\mathrm{rec}(f)\, e^{j2\pi ft}\,\mathrm{d}f
+= \int_{-f_e/2}^{f_e/2} T_e\, e^{j2\pi ft}\,\mathrm{d}f
+= T_e \left[\frac{e^{j2\pi ft}}{j2\pi t}\right]_{-f_e/2}^{f_e/2} \\
+&= T_e\, \frac{e^{j\pi f_e t} - e^{-j\pi f_e t}}{j2\pi t}
+= T_e\, \frac{\sin(\pi f_e t)}{\pi t}
+= \sinc(f_e t).
+\end{aligned}
+$$ {#eq-h-rec}
+
+Le signal est reconstruit comme une somme de sinus cardinaux centrés sur les instants d'échantillonnage, pondérés par les échantillons.
+:::
+
+::: {.notes-externes}
+« On s'intéresse principalement au domaine $f \in [-f_e/2, f_e/2]$ » : les basses fréquences (BF) sont près de $f = 0$, les hautes fréquences (HF) près de $\pm f_e/2$.
+
+Le gain du filtre de reconstruction y est obtenu par **identification**. On pose $H_\mathrm{rec}(f) = C$ sur $[-f_e/2, f_e/2]$ et $0$ sinon. Sur cet intervalle, seul le terme $k = 0$ de @eq-periodisation subsiste : $X_m(f) = \frac{1}{T_e} X_a(f)$. Pour que $X_\mathrm{rec}(f) = H_\mathrm{rec}(f)\, X_m(f)$ redonne $X_a(f)$, il faut $C = T_e$ [notes-2023-ch01, p. 5].
+:::
+
+::: {.notes-externes}
+**Reconstruction.** Le signal reconstruit est la sortie du filtre de reconstruction excité par le signal échantillonné @eq-signal-echantillonne :
+
+$$
+\begin{aligned}
+x_\mathrm{rec}(t) &= (h_\mathrm{rec} \star x_m)(t) = \int_{-\infty}^{+\infty} h_\mathrm{rec}(\tau)\, x_m(t - \tau)\,\mathrm{d}\tau
+= \int_{-\infty}^{+\infty} h_\mathrm{rec}(\tau) \Bigl[\sum_n x_a(nT_e)\, \delta(t - \tau - nT_e)\Bigr] \mathrm{d}\tau,
+\end{aligned}
+$$
+
+d'où, avec $h_\mathrm{rec}(t) = \sinc(f_e t)$ (@eq-h-rec) :
+
+$$
+x_\mathrm{rec}(t) = \sum_{n=-\infty}^{+\infty} x_a(nT_e)\, h_\mathrm{rec}(t - nT_e)
+= \sum_{n=-\infty}^{+\infty} x_a(nT_e)\, \sinc\!\bigl(f_e (t - nT_e)\bigr).
+$$ {#eq-interpolation-shannon}
+
+Si $T_e$ respecte le théorème de Shannon, $x_\mathrm{rec}(t) = x_a(t)$. La fiche appelle cette expression la **fonction de reconstruction** [notes-2023-ch01, p. 6] [fiche-rappels, p. 2].
+:::
+
+::: {.complement}
+Convention : $\sinc(x) = \dfrac{\sin(\pi x)}{\pi x}$ (celle des notes ; les notes 2023 écrivent directement $h_\mathrm{rec}(t) = \frac{\sin(\pi f_e t)}{\pi f_e t}$). La fiche de rappels écrit $h_\mathrm{rec}(t) = \operatorname{sinCard}(\pi t F_e)$ : elle utilise l'autre convention, $\operatorname{sinCard}(u) = \sin(u)/u$ ; la fonction est la même. Le filtre idéal est non causal et de durée infinie : un CNA réel en donne une approximation.
+:::
+
+![Reconstruction : chaque échantillon porte un sinus cardinal $x_a(nT_e)\,\sinc(f_e(t - nT_e))$ ; leur somme redonne le signal. D'après les notes de cours [notes, f. 3 r°], redessinée.](../figures/01-reconstruction-sinc.svg){#fig-reconstruction-sinc}
+
+::: {.complement}
+Les notes contiennent, au f. 2 v°, un premier calcul de $h_\mathrm{rec}(t)$ (écrit avec des échelons et $e^{-j2\pi ft}$, sans le facteur $T_e$), repris correctement au f. 3 r° : seule la seconde version est reproduite ici.
+:::
+
+## Exemples de signaux discrets {#sec-signaux-discrets}
+
+::: {.notes}
+**Signal périodique.** $x(t) = \cos(2\pi f_0 t)$ donne $x(nT_e) = \cos(2\pi f_0 n T_e)$. Shannon impose $f_e \geq 2f_0$ ; le cas limite est $f_0 = f_e/2$ [notes, f. 3 r°].
+:::
+
+::: {.complement}
+Dans le cas limite $f_e = 2f_0$, on prélève deux échantillons par période ; selon la phase, ils peuvent tomber sur les passages par zéro (c'est la situation dessinée dans les notes) et la suite est alors identiquement nulle. Pour une sinusoïde, il faut en pratique $f_e > 2f_0$ strictement.
+:::
+
+::: {.notes-externes}
+Les notes 2023 relèvent le même cas : « si $T_e = \frac{T_0}{2}$, $x(\ ) = 0$ » (argument laissé vide), à côté d'un cosinus dont les échantillons sont tracés [notes-2023-ch01, p. 7].
+:::
+
+:::: {.notes}
+::: {#def-echelon-impulsion}
+## Échelon et impulsion discrets
+
+- **Échelon discret** : $u[n] = 1$ pour $n \geq 0$, $u[n] = 0$ pour $n < 0$.
+- **Impulsion discrète** : $\delta[n] = 1$ si $n = 0$, $\delta[n] = 0$ ailleurs.
+:::
+
+**Séquence finie** : séquence n'ayant qu'un nombre fini d'échantillons non nuls. Exemple : $x[0] = 1$, $x[1] = 2$, $x[2] = -1$, soit
+
+$$
+x[n] = \delta[n] + 2\,\delta[n-1] - \delta[n-2].
+$$
+
+[notes, f. 3 r° et v°]
+::::
+
+:::: {.notes}
+::: {#prp-decomposition-impulsions}
+## Décomposition sur les impulsions
+
+Toute séquence s'écrit comme une somme d'impulsions décalées :
+
+$$
+x[n] = \sum_{k=-\infty}^{+\infty} x[k]\, \delta[n - k].
+$$ {#eq-decomposition-impulsions}
+
+[notes, f. 3 v°]
+:::
+::::
+
+![Signaux discrets élémentaires : échelon $u[n]$, impulsion $\delta[n]$ et séquence finie $\delta[n] + 2\delta[n-1] - \delta[n-2]$. D'après les notes de cours [notes, f. 3 r° et v°], redessinée.](../figures/01-signaux-discrets.svg){#fig-signaux-discrets}
+
+::: {.complement}
+Les notes écrivent $\delta(nT_e) + 2\delta((n-1)T_e) - \delta((n-2)T_e)$ : il s'agit de l'impulsion **discrète**, qui vaut 1 (et non une distribution de Dirac) à l'indice concerné. On note $\delta[n]$ pour éviter la confusion avec $\delta(t)$.
+:::
+
+::: {.notes-externes}
+**Forme discrète en pratique : un vecteur.** En machine, le signal échantillonné est rangé dans un vecteur de $N$ valeurs,
+
+$$
+\mathbf{x} = \begin{bmatrix} x[0] & x[1] & \cdots & x[N-1] \end{bmatrix}^{\mathsf{T}},
+$$
+
+la case $x[n]$ contenant l'échantillon $x(nT_e)$ [notes-2023-ch01, p. 7].
+:::
+
+## À retenir {#sec-retenir-echantillonnage}
+
+- Signal échantillonné : $x_m(t) = x_a(t)\,\text{Ш}_{T_e}(t) = \sum_n x_a(nT_e)\,\delta(t - nT_e)$ (@eq-signal-echantillonne).
+- TF du peigne : $S_{T_e}(f) = \frac{1}{T_e}\sum_k \delta(f - kf_e)$ (@eq-tf-peigne).
+- Spectre échantillonné : $X_m(f) = \frac{1}{T_e}\sum_k X_a(f - kf_e)$, périodique de période $f_e$ (@eq-periodisation).
+- Shannon-Nyquist : $f_e \geq 2f_{\max}$ pour un signal à bande limitée ; sinon repliement (@thm-shannon). Pour une sinusoïde pure, $f_e > 2f_0$ strictement.
+- Filtre de reconstruction idéal : gain $T_e$ sur $[-f_e/2, f_e/2]$, $h_\mathrm{rec}(t) = \sinc(f_e t)$ (@eq-h-rec).
+- Décomposition $x[n] = \sum_k x[k]\,\delta[n-k]$ (@eq-decomposition-impulsions).

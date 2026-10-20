@@ -1,0 +1,596 @@
+---
+title: "Transformée de Fourier discrète et interprétation fréquentielle des SLI"
+matiere: tsig1
+chapitre: 3
+enseignants: ["Yannick Berthoumieu"]
+annee: "2026-2027"
+statut: verifie
+date-modified: 2026-10-20
+sources:
+  - id: notes
+    fichier: notes/date-inconnue.pdf
+    nature: personnelle
+    seance: inconnue
+    pages: "f. 6 r° à f. 8 r°"
+  - id: notes-2023-ch03
+    fichier: notes/2023-cours-ch03-caracterisation-frequentielle.pdf
+    nature: externe
+    pages: "1-7"
+  - id: notes-2023-ch04
+    fichier: notes/2023-cours-ch04-implementation-filtres.pdf
+    nature: externe
+    pages: "1"
+  - id: notes-2023-ch05
+    fichier: notes/2023-cours-ch05-sli-representation-phase.pdf
+    nature: externe
+    pages: "3"
+  - id: fiche-rappels
+    fichier: notes/externe-fiche-rappels-traitement-signal.pdf
+    nature: externe
+    pages: "3"
+  - id: illustrations
+    fichier: support/illustrations-berthoumieu.pdf
+    nature: officielle
+    version: "TS201"
+    pages: "3-4"
+  - id: td
+    fichier: td/recueil-td-2023.pdf
+    nature: officielle
+    version: "2023 (v2)"
+    pages: "5-6"
+  - id: corrige-2023-td01
+    fichier: corriges/2023-td01-systeme-discret-representation-frequence.pdf
+    nature: externe
+    pages: "9-12"
+---
+
+{{< include /_macros.qmd >}}
+
+Comment calculer le spectre d'un signal avec un algorithme ? La transformée de Fourier de la séquence discrète (TFSD) porte sur une infinité d'échantillons et donne une fonction continue de la fréquence ; la **transformée de Fourier discrète** (TFD) en est la version calculable : nombre fini d'échantillons, nombre fini de fréquences. La seconde partie du chapitre utilise la TFSD pour décrire un SLI dans le domaine fréquentiel : **réponse en fréquence**, module, phase, fréquence normalisée.
+
+## Transformée de Fourier discrète {#sec-tfd}
+
+### Transformée de Fourier de la séquence discrète {#sec-tfsd}
+
+:::: {.notes}
+::: {#def-tfsd}
+## TFSD
+
+La transformée de Fourier de la séquence discrète $x[n] = x(nT_e)$ est
+
+$$
+X(f) = \sum_{n=-\infty}^{+\infty} x(nT_e)\, e^{-j2\pi f n T_e}.
+$$ {#eq-tfsd}
+:::
+
+C'est la transformée de Fourier du signal échantillonné ([chapitre 1](01-echantillonnage-signal-discret.qmd#eq-tfsd-origine)). Elle n'est pas calculable telle quelle : la somme porte sur une infinité d'échantillons et $f$ est une variable continue [notes, f. 6 r°].
+::::
+
+::: {.complement}
+$X(f)$ est périodique de période $f_e$, puisque $e^{-j2\pi (f + f_e) n T_e} = e^{-j2\pi f n T_e}$ : c'est la périodisation du spectre vue au [chapitre 1](01-echantillonnage-signal-discret.qmd#prp-periodisation). Il suffit donc de la connaître sur un intervalle de largeur $f_e$.
+:::
+
+::: {.notes-externes}
+La **TFD** est présentée comme un algorithme qui transforme un vecteur de $N$ points en temps, $\mathbf{x} = [x(0), \dots, x(N-1)]$, en un vecteur de $M$ points en fréquence, $\mathbf{X} = [X(0), \dots, X(M-1)]$ : elle prélève des valeurs du spectre continu sur $[-f_e/2, f_e/2]$. Deux obstacles empêchent de calculer la TFSD : le support temporel est **infini** et $X(f)$ est **continue**. D'où deux étapes : borner le support temporel (étape 1), discrétiser l'axe fréquentiel (étape 2) [notes-2023-ch03, p. 1-2].
+:::
+
+### Support temporel fini : fenêtre d'observation {#sec-fenetre-observation}
+
+::: {.notes}
+**Construction d'un algorithme.** Première étape : le support temporel est fini, on ne dispose que de $N$ échantillons $x[0], x[1], \dots, x[N-1]$. On calcule donc
+
+$$
+\sum_{n=0}^{N-1} x[n]\, e^{-j2\pi f n T_e}.
+$$ {#eq-tfsd-n-points}
+
+**Interprétation.** Observer le signal sur une durée finie revient à le multiplier par une **fenêtre d'observation** $w(t)$ :
+
+$$
+x_0(t) = x_a(t)\, w(t) \quad \xrightarrow{\ \TF\ } \quad X_0(f) = X_a(f) \star W(f).
+$$ {#eq-fenetrage}
+
+Pour une fenêtre rectangulaire de durée $\tau$ (de $-\tau/2$ à $\tau/2$), $W(f)$ est un sinus cardinal, dont le lobe principal s'annule en $\pm 1/\tau$.
+
+**Exemple du cosinus.** $x_a(t) = \cos(2\pi f_0 t)$ a pour spectre $X_a(f) = \frac{1}{2}\bigl[\delta(f - f_0) + \delta(f + f_0)\bigr]$. Après fenêtrage :
+
+$$
+X_0(f) = X_a(f) \star W(f) = \frac{1}{2}\bigl[W(f - f_0) + W(f + f_0)\bigr].
+$$ {#eq-cosinus-fenetre}
+
+Les deux raies deviennent deux sinus cardinaux centrés en $\pm f_0$, dont le lobe principal s'annule en $f_0 \pm 1/\tau$ [notes, f. 6 r°].
+:::
+
+::: {.complement}
+Expression de la fenêtre rectangulaire, avec $\sinc(x) = \sin(\pi x)/(\pi x)$ :
+
+$$
+w(t) = \Pi_\tau(t) \quad \xrightarrow{\ \TF\ } \quad W(f) = \tau\, \sinc(f\tau).
+$$
+
+Conséquences du fenêtrage : la **résolution fréquentielle** est limitée (deux raies plus proches que $\approx 1/\tau$ se confondent) et des **lobes secondaires** apparaissent autour de chaque raie (fuite spectrale). Observer plus longtemps ($\tau$ plus grand) affine les lobes.
+:::
+
+::: {.notes-externes}
+La fenêtre $w(t)$ est appelée **fenêtre d'apodisation**. Sur les échantillons, le spectre calculé devient
+
+$$
+\sum_n w(nT_e)\, x_a(nT_e)\, e^{-j2\pi f n T_e},
+$$
+
+et l'on peut choisir une fenêtre autre que rectangulaire [notes-2023-ch03, p. 1-2].
+:::
+
+![Spectre d'un cosinus observé sur une durée finie $\tau$ : deux sinus cardinaux centrés en $\pm f_0$, de premier zéro en $f_0 \pm 1/\tau$. D'après les notes de cours [notes, f. 6 r°], redessinée ($f_0 = 10$ Hz, $\tau = 0{,}4$ s).](../figures/03-cosinus-fenetre.svg){#fig-cosinus-fenetre}
+
+### Échantillonnage de l'axe fréquentiel {#sec-echantillonnage-frequentiel}
+
+::: {.notes}
+Seconde étape : on ne calcule $X(f)$ qu'en un nombre fini de fréquences $f = k\,\Delta f$.
+
+**Définition de $\Delta f$.** Le spectre est connu sur une période, $f \in [-f_e/2, f_e/2]$ ou $f \in [0, f_e]$. Si l'on considère $M$ points sur l'axe des fréquences :
+
+$$
+\Delta f = \frac{f_e}{M}.
+$$ {#eq-pas-frequentiel}
+
+[notes, f. 6 v°]
+:::
+
+:::: {.notes}
+::: {#def-tfd}
+## Transformée de Fourier discrète (TFD)
+
+En remplaçant $f$ par $k\,\Delta f = k f_e / M$ dans @eq-tfsd-n-points, on obtient l'algorithme discret final :
+
+$$
+X[k] = \sum_{n=0}^{N-1} x[n]\, e^{-j2\pi \frac{kn}{M}},
+\qquad k \in [\![0, M-1]\!],\quad n \in [\![0, N-1]\!].
+$$ {#eq-tfd}
+:::
+
+**Attention :** TFD $\neq$ TFSD. La TFSD (@eq-tfsd) porte sur tous les échantillons et donne une fonction continue de $f$ ; la TFD porte sur $N$ échantillons et donne $M$ valeurs [notes, f. 6 v°].
+::::
+
+::: {.complement}
+Passage de @eq-tfsd-n-points à @eq-tfd : $f\,n\,T_e = \dfrac{k f_e}{M}\, n\, T_e = \dfrac{kn}{M}$ puisque $f_e T_e = 1$.
+
+Le plus souvent $M = N$. Prendre $M > N$ revient à compléter le signal par des zéros (*zero padding*) : la courbe obtenue est plus finement échantillonnée, mais la résolution reste fixée par la durée d'observation $\tau = N T_e$. L'algorithme rapide qui calcule la TFD est la FFT (*Fast Fourier Transform*).
+:::
+
+::: {.notes-externes}
+**Remarque : $M \geq N$.** On complète le vecteur des $N$ échantillons par des zéros, $\mathbf{x} = [\,\mathbf{x}_N \ \ \text{zéros}\,]$ (*zero padding*), ce qui « permet d'effectuer un suréchantillonnage » du spectre. La TFD s'écrit alors sur les $M$ points du vecteur complété :
+
+$$
+X[k] = \sum_{n=0}^{M-1} x[n]\, e^{-j2\pi \frac{kn}{M}}.
+$$
+
+[notes-2023-ch03, p. 3]
+:::
+
+::: {.complement}
+Cette écriture et @eq-tfd donnent le même résultat : les termes $n = N, \dots, M-1$ sont nuls. Le « suréchantillonnage » porte sur l'axe des fréquences (pas $\Delta f = f_e/M$ plus fin) ; il n'améliore pas la résolution (voir le complément ci-dessus).
+:::
+
+::: {.a-verifier #av-tfd-ecriture-exponentielle}
+**Source** [notes, f. 6 v°] : en tête de page, « $X(f) = \sum_{n=0}^{N-1} x(nT_e)\exp(-2\pi f n T_e)$ » ; dans la ligne « Attention », le signe de l'exponentielle de la TFSD est peu lisible (lu « $\exp(+j2\pi f n T_e)$ » ou « $\exp(-j2\pi f n T_e)$ »).
+
+**Problème** : il manque le $j$ dans la première formule ; la TFSD a été définie avec $e^{-j2\pi f n T_e}$ (f. 6 r°).
+
+**Proposition** : $e^{-j2\pi f n T_e}$ dans les deux cas, comme dans @eq-tfsd.
+
+**Autres sources** : les notes 2023 écrivent la TFSD et la somme sur $N$ points avec $e^{-j2\pi f n T_e}$ (avec $j$, signe moins) [notes-2023-ch03, p. 1-2] et la TFD avec $e^{-j2\pi kn/M}$ [notes-2023-ch03, p. 3], comme la fiche de rappels [fiche-rappels, p. 3].
+:::
+
+### Exemple avec Matlab {#sec-exemple-matlab-tfd}
+
+::: {.notes}
+Calcul et tracé du spectre d'un cosinus de fréquence $f_0 = 10$ Hz échantillonné à $T_e = 0{,}01$ s, sur $N = 256$ points, avec une TFD sur $M = 512$ points [notes, f. 6 v°] :
+
+```matlab
+N  = 256;
+n  = [0:N-1];
+Te = 0.01;
+f0 = 10;
+x  = cos(2*pi*f0*n*Te);
+X  = fft(x, 512);
+f  = linspace(-1/(2*Te), 1/(2*Te), 512);
+figure
+plot(f, fftshift(abs(X)))
+```
+:::
+
+::: {.a-verifier #av-matlab-linspace}
+**Source** [notes, f. 6 v°] :
+
+- « `f = linspace(1/(2Te), 1/(2Te), M)` » (borne de gauche sans signe moins visible, nombre de points noté `M`) ;
+- « `x = cos(2*pi*n*Te);` » : la variable `f0 = 10` est définie à la ligne précédente mais n'apparaît pas dans le cosinus (lecture vérifiée sur les trois photos du feuillet).
+
+**Problème** : avec deux bornes égales, l'axe serait constant. `fftshift` place les fréquences négatives à gauche : l'axe va de $-f_e/2$ à $f_e/2$, avec $M = 512$ points (la taille de la FFT). Sans `f0`, le signal serait un cosinus de 1 Hz, et `f0` ne servirait à rien.
+
+**Proposition** : `f = linspace(-1/(2*Te), 1/(2*Te), 512)` et `x = cos(2*pi*f0*n*Te)` (formes retenues dans le code ci-dessus et dans @fig-tfd-cosinus).
+:::
+
+::: {.complement}
+Lecture des valeurs : $f_e = 100$ Hz, durée d'observation $\tau = N T_e = 2{,}56$ s, pas de calcul $\Delta f = f_e/M \approx 0{,}195$ Hz. On voit deux lobes en $\pm 10$ Hz, de premier zéro à $\pm 1/\tau \approx \pm 0{,}39$ Hz de part et d'autre.
+
+Avec `linspace`, les deux bornes sont incluses : l'axe exact des fréquences après `fftshift` est $f_k = k\,f_e/M$ pour $k = -M/2, \dots, M/2 - 1$, soit en Matlab `f = (-M/2:M/2-1)*(1/Te)/M`. L'écart est d'un pas $\Delta f$ au plus, invisible sur le tracé.
+:::
+
+![TFD d'un cosinus ($f_0 = 10$ Hz, $T_e = 0{,}01$ s, $N = 256$, $M = 512$), même calcul que l'exemple Matlab des notes : module de la TFD centrée. Figure calculée (Python), d'après les notes de cours [notes, f. 6 v°].](../figures/03-tfd-cosinus.svg){#fig-tfd-cosinus}
+
+## Représentation fréquentielle des systèmes {#sec-representation-frequentielle-sli}
+
+### Réponse en fréquence {#sec-reponse-frequence}
+
+:::: {.notes}
+Pour un SLI de réponse impulsionnelle $h[n]$, $y[n] = \sum_k h[k]\,x[n-k]$. On note $X(f)$, $Y(f)$ et $H(f)$ les TFSD de $x[n]$, $y[n]$ et $h[n]$.
+
+::: {#thm-reponse-frequence}
+## Filtrage dans le domaine fréquentiel
+
+$$
+Y(f) = H(f)\, X(f), \qquad H(f) = \sum_{n} h(nT_e)\, e^{-j2\pi f n T_e}.
+$$ {#eq-y-egal-hx}
+:::
+
+::: {.proof}
+$$
+\begin{aligned}
+Y(f) &= \sum_n y(nT_e)\, e^{-j2\pi f n T_e}
+= \sum_n \Bigl[\sum_k h(kT_e)\, x\bigl((n-k)T_e\bigr)\Bigr] e^{-j2\pi f n T_e} \\
+&= \sum_k h(kT_e) \sum_n x\bigl((n-k)T_e\bigr)\, e^{-j2\pi f n T_e}
+= \sum_k h(kT_e) \sum_n x(nT_e)\, e^{-j2\pi f (n+k) T_e} \\
+&= \sum_k h(kT_e)\, e^{-j2\pi f k T_e} \cdot \sum_n x(nT_e)\, e^{-j2\pi f n T_e}
+= H(f)\, X(f).
+\end{aligned}
+$$
+:::
+
+$H(f)$ est la **réponse en fréquence** du filtre ; on l'écrit $H(f) = |H(f)|\, e^{j \operatorname{Arg}(H(f))}$, avec $|H(f)|$ le **module** et $\operatorname{Arg}(H(f))$ la **phase** du filtre [notes, f. 7 r°].
+::::
+
+::: {.complement}
+À la troisième ligne, on a remplacé l'indice $n$ par $n + k$ dans la somme intérieure (changement d'indice $n \to n + k$), ce qui ne change pas une somme sur $\mathbb{Z}$.
+:::
+
+::: {.notes-externes}
+$Y(f) = H(f)\,X(f)$ pour tout $f$ : $H(f)$ est la **représentation fréquentielle** du filtre, son « action fréquentielle ». Exemples de gabarits idéaux sur $[-f_e/2, f_e/2]$, avec une fréquence de coupure $f_c$ :
+
+- **passe-bas** (PB) : $H(f) = 1$ pour $|f| \leq f_c$, $0$ ailleurs ;
+- **passe-haut** (PH) : $H(f) = 0$ pour $|f| < f_c$, $1$ pour $f_c \leq |f| \leq f_e/2$.
+
+Comme $H(f)$ est complexe, on l'écrit $H(f) = |H(f)|\, e^{j\arg(H(f))}$ [notes-2023-ch03, p. 4] [fiche-rappels, p. 3].
+:::
+
+:::: {.notes}
+::: {#thm-retard-tfsd}
+## Théorème du retard
+
+$$
+x[n] \longleftrightarrow X(f)
+\qquad \Longrightarrow \qquad
+x[n-k] \longleftrightarrow X(f)\, e^{-j2\pi f k T_e}.
+$$ {#eq-retard-tfsd}
+:::
+
+::: {.proof}
+$\displaystyle\sum_n x\bigl((n-k)T_e\bigr)\, e^{-j2\pi f n T_e} = \sum_n x(nT_e)\, e^{-j2\pi f (n+k) T_e} = X(f)\, e^{-j2\pi f k T_e}$.
+:::
+
+[notes, f. 7 r°]
+::::
+
+### Calcul de $H(f)$ : deux méthodes {#sec-calcul-h-f}
+
+::: {.notes}
+**Exemple** : $y[n] = x[n] - 0{,}5\,x[n-1]$.
+
+**Méthode 1 : par la réponse impulsionnelle.** Avec $x[n] = \delta[n]$ :
+
+$$
+h[n] = \delta[n] - 0{,}5\,\delta[n-1].
+$$
+
+La réponse impulsionnelle est finie : c'est un filtre **RIF** (réponse impulsionnelle finie). Il est causal ($h[n] = 0$ pour $n < 0$) et stable ($\sum_n |h[n]| = 1{,}5 < \infty$). Alors
+
+$$
+H(f) = \sum_{n=0}^{1} h(nT_e)\, e^{-j2\pi f n T_e} = h[0] + h[1]\, e^{-j2\pi f T_e} = 1 - 0{,}5\, e^{-j2\pi f T_e}.
+$$ {#eq-h-exemple-rif}
+
+**Méthode 2 : par l'équation et le théorème du retard.** On prend la TFSD des deux membres :
+
+$$
+Y(f) = X(f) - 0{,}5\,X(f)\, e^{-j2\pi f T_e}
+\quad \Longrightarrow \quad
+H(f) = \frac{Y(f)}{X(f)} = 1 - 0{,}5\, e^{-j2\pi f T_e}.
+$$
+
+[notes, f. 7 v°]
+:::
+
+::: {.complement}
+Module : $|H(f)|^2 = (1 - 0{,}5\cos 2\pi f T_e)^2 + (0{,}5\sin 2\pi f T_e)^2 = 1{,}25 - \cos(2\pi f T_e)$. Il vaut $0{,}25$ en $f = 0$ ($|H| = 0{,}5$) et $2{,}25$ en $f = f_e/2$ ($|H| = 1{,}5$) : ce filtre favorise les hautes fréquences (passe-haut peu sélectif).
+:::
+
+::: {.notes}
+**Choix de la fenêtre** (remarque notée à cet endroit) : fenêtre rectangulaire ; **fenêtre de Blackman** : baisse de la résolution fréquentielle, mais meilleure prise en compte des lobes secondaires [notes, f. 7 v°].
+:::
+
+::: {.a-verifier #av-blackman-lobes-secondaires}
+**Source** [notes, f. 7 v°] : « Fenêtre de Blackman : baisse de la résolution fréquentielle mais p… en comptes des lobes secondaires » (mot partiellement lisible, lu « prise »).
+
+**Problème** : lecture incertaine du sens exact.
+
+**Proposition** : par rapport à la fenêtre rectangulaire, la fenêtre de Blackman a un lobe principal plus large (résolution moins bonne) mais des lobes secondaires beaucoup plus faibles (moins de fuite spectrale).
+
+**Autres sources** : les notes 2023 ne parlent pas de Blackman. Le support de l'enseignant donne la fenêtre de Blackman et un exemple où elle fait apparaître une sinusoïde très faible, invisible avec la fenêtre rectangulaire, avec un sommet plus large autour des raies fortes [illustrations, p. 3-4] (voir plus bas) : le sens proposé y correspond ; le mot manuscrit reste illisible.
+:::
+
+Le support d'illustrations donne quatre fenêtres de pondération [illustrations, p. 3] :
+
+| Fenêtre | $w(n)$ |
+|---|---|
+| Bartlett | $1 - \dfrac{|n|}{M + 1}$ |
+| Hann | $\dfrac{1}{2}\left[1 + \cos\left(\dfrac{2\pi n}{2M + 1}\right)\right]$ |
+| « Hanning » | $0{,}54 + 0{,}46\cos\left(\dfrac{2\pi n}{2M + 1}\right)$ |
+| Blackman | $0{,}42 + 0{,}5\cos\left(\dfrac{2\pi n}{2M + 1}\right) + 0{,}08\cos\left(\dfrac{4\pi n}{2M + 1}\right)$ |
+
+Le spectre du signal pondéré s'écrit $\tilde{S}(f) = \sum_{n=0}^{N-1} w[n]\, s[n]\, e^{-j2\pi f n}$ (fréquence normalisée) [illustrations, p. 3].
+
+Une diapositive compare sous Matlab trois fenêtres de $N = 65$ points (`blackmanharris`, `hamming`, `blackman`, tracées avec `wvtool`), en temps et en fréquence (module en dB, de $0$ à $-350$ dB) [illustrations, p. 4]. Un exemple montre l'intérêt du choix : somme de trois sinusoïdes de fréquences normalisées $f_n = \{0{,}1 ; 0{,}12 ; 0{,}35\}$ et d'amplitudes $A_n = \{10 ; 10 ; 0{,}001\}$, spectres visualisés en $\log_{10}$ avec une fenêtre rectangulaire puis une fenêtre de Blackman. Sur le second tracé apparaît un pic vers $0{,}35$, absent du premier ; autour de $0{,}1$, le premier tracé montre deux pics fins rapprochés, le second un sommet plus large [illustrations, p. 4].
+
+::: {.complement}
+Lecture de l'exemple : avec la fenêtre rectangulaire, la sinusoïde d'amplitude $0{,}001$ (soit $10^{-4}$ fois les autres) est noyée dans les lobes secondaires des deux raies fortes ; la fenêtre de Blackman, aux lobes secondaires beaucoup plus faibles, la fait apparaître, au prix d'un lobe principal plus large (les raies $0{,}1$ et $0{,}12$ se séparent moins bien). L'ordre des deux tracés (rectangulaire à gauche, Blackman à droite) est déduit de l'ordre de la liste de la diapositive, qui ne les légende pas.
+
+Le support ne précise pas l'intervalle de $n$ ; les expressions (en $|n|$, cosinus pairs, maximum en $n = 0$) sont celles de fenêtres centrées, définies pour $-M \leq n \leq M$ (longueur $2M + 1$). Elles sont donc écrites centrées alors que la somme $\tilde{S}(f)$ porte sur $n = 0, \dots, N-1$ : en pratique, la fenêtre est décalée de $M$ échantillons pour couvrir les $N = 2M + 1$ points. Dans les tracés Matlab, l'axe « *Normalized Frequency* ($\times\pi$ rad/sample) » va de 0 à 1 : la valeur 1 correspond à $f_n = \frac{1}{2}$ (soit $f_e/2$).
+:::
+
+::: {.a-verifier #av-fenetre-hanning-hamming}
+**Source** [illustrations, p. 3] : « Hanning $w(n) = 0.54 + 0.46\cos\left(\frac{2\pi n}{2M+1}\right)$ », sur la ligne qui suit « Hann $w(n) = \frac{1}{2}\left[1 + \cos\left(\frac{2\pi n}{2M+1}\right)\right]$ ».
+
+**Problème** : les coefficients $0{,}54$ et $0{,}46$ sont ceux de la fenêtre de **Hamming** (celle que la diapositive suivante appelle `hamming` sous Matlab). « Hanning » est d'ordinaire un autre nom de la fenêtre de **Hann**, déjà donnée à la ligne précédente.
+
+**Proposition** : nommer cette ligne « Hamming ».
+:::
+
+### Exemple : moyenne de deux échantillons {#sec-exemple-moyenne}
+
+::: {.notes}
+**Exemple** : $y[n] = 0{,}5\,\bigl[x[n] + x[n-1]\bigr]$. Avec $x[n] = \delta[n]$ : $h[n] = 0{,}5\,\bigl[\delta[n] + \delta[n-1]\bigr]$, causal et stable. Alors
+
+$$
+H(f) = \sum_{n=0}^{1} h(nT_e)\, e^{-j2\pi f n T_e} = 0{,}5 + 0{,}5\, e^{-j2\pi f T_e} = 0{,}5\,\bigl[1 + e^{-j2\pi f T_e}\bigr].
+$$ {#eq-h-moyenne}
+
+Par la méthode 2 : $Y(f) = 0{,}5\,X(f) + 0{,}5\,X(f)\, e^{-j2\pi f T_e}$ [notes, f. 7 v°].
+:::
+
+::: {.a-verifier #av-exemple-moyenne-ecriture}
+**Source** [notes, f. 7 v° et f. 8 r°] :
+
+- « $X(f) = \sum_{n=0} y(nT_e)\exp(-j2\pi f n T_e)$ » pour la réponse en fréquence de l'exemple ;
+- l'équation est recopiée une fois « $y[n] = 0{,}5\,[x[n] - x[n-1]]$ » ;
+- « $Y(f) = 0{,}5\,[X(f) + \exp(-j2\pi f T_e)]$ » (deux fois).
+
+**Problème** : il s'agit de $H(f)$ (et non $X(f)$), de la moyenne $x[n] + x[n-1]$, et le facteur $X(f)$ manque devant l'exponentielle.
+
+**Proposition** : $H(f) = 0{,}5\,[1 + e^{-j2\pi f T_e}]$ et $Y(f) = 0{,}5\,X(f)\,[1 + e^{-j2\pi f T_e}]$.
+:::
+
+### Fréquence normalisée {#sec-frequence-normalisee}
+
+:::: {.notes}
+::: {#def-frequence-normalisee}
+## Fréquence normalisée
+
+On pose
+
+$$
+f_n = \frac{f}{f_e} = f\,T_e, \qquad f_n \in \left[-\tfrac{1}{2}, \tfrac{1}{2}\right] \ \text{lorsque}\ f \in \left[-\tfrac{f_e}{2}, \tfrac{f_e}{2}\right].
+$$
+
+La réponse en fréquence s'écrit alors sans $T_e$ :
+
+$$
+H(f_n) = \sum_n h[n]\, e^{-j2\pi f_n n}.
+$$ {#eq-h-frequence-normalisee}
+:::
+
+**Retour sur l'exemple** (en fréquence normalisée, notée simplement $f$) :
+
+$$
+H(f) = \frac{1}{2}\bigl[1 + e^{-j2\pi f}\bigr]
+= \frac{1}{2}\, e^{-j\pi f}\bigl[e^{j\pi f} + e^{-j\pi f}\bigr]
+= e^{-j\pi f} \cos(\pi f).
+$$ {#eq-h-moyenne-normalisee}
+
+On a donc $|H(f)| = |\cos(\pi f)|$ : il vaut 1 en $f = 0$ et s'annule en $f = \pm\frac{1}{2}$ ($\pm f_e/2$). C'est un **passe-bas, mais pas idéal** (le gabarit idéal serait rectangulaire). La phase est **linéaire** [notes, f. 8 r°].
+::::
+
+![Moyenne de deux échantillons : module $|H(f)| = |\cos(\pi f)|$ et phase $\operatorname{Arg}(H(f)) = -\pi f$, en fréquence normalisée. D'après les notes de cours [notes, f. 8 r°], redessinée ; gabarit passe-bas idéal ajouté (en pointillés gris).](../figures/03-moyenne-module-phase.svg){#fig-moyenne-module-phase}
+
+::: {.notes-externes}
+Autre nom : **fréquence réduite**, notée aussi $f_r$. La TFSD $H(f) = \sum_n h(nT_e)\, e^{-j2\pi f n T_e}$ donne $f$ en hertz quand $nT_e$ repère le temps en secondes. Dans un **contexte algorithmique** (par exemple $y[n] = x[n] - x[n-1]$), on travaille en fréquence réduite, $f_r = f/f_e \in [-\frac12, \frac12]$ et $H(f_r) = \sum_n h[n]\, e^{-j2\pi f_r n}$.
+
+**Attention :** l'écriture **classique** est $H(f) = \sum_n h[n]\, e^{-j2\pi f n}$, où $f$ désigne alors la fréquence réduite [notes-2023-ch03, p. 4-5] [fiche-rappels, p. 3].
+:::
+
+::: {.a-verifier #av-phase-moyenne-signe}
+**Source** [notes, f. 8 r°] : graphe de $\operatorname{Arg}(H(f))$ tracé comme une droite **croissante** passant par l'origine, jusqu'à $f = 1/2$.
+
+**Problème** : d'après @eq-h-moyenne-normalisee, $H(f) = e^{-j\pi f}\cos(\pi f)$ avec $\cos(\pi f) \geq 0$ sur $[-\frac12, \frac12]$ : la phase vaut $-\pi f$, droite **décroissante**.
+
+**Proposition** : $\operatorname{Arg}(H(f)) = -\pi f$ pour $f \in [-\frac12, \frac12]$ (tracé de @fig-moyenne-module-phase).
+
+**Autres sources** : aucun tracé de phase dans les notes 2023. Pour $y[n] = x[n] + x[n-1]$, elles écrivent « $H(f) = e^{-j2\pi f}\, 2\cos(\pi f)$ » [notes-2023-ch04, p. 1] : facteur de phase à exposant **négatif**, donc phase décroissante (appui indirect ; l'exposant lui-même est discuté au [chapitre 4](04-implementation-equations-differences.qmd#av-rif-somme-cosinus-exposant)).
+:::
+
+::: {.a-verifier #av-phase-lineaire-retard-groupe}
+**Source** [notes, f. 8 r°] : « Phase linéaire → Pas de retard de groupe ».
+
+**Problème** : les notes du f. 12 r° (chapitre 5) disent au contraire qu'une phase linéaire donne un retard de groupe **constant**. Avec $\operatorname{Arg}(H) = -\pi f$ et la définition $\tau = -\frac{\mathrm{d}\operatorname{Arg}(H)}{\mathrm{d}\omega}$, $\omega = 2\pi f$ ([chapitre 5](05-representation-en-phase.qmd#eq-retard-groupe)), on trouve $\tau = \frac{1}{2}$ échantillon, soit $T_e/2$ : retard non nul.
+
+**Proposition** : « Phase linéaire → retard de groupe constant (ici $T_e/2$) : pas de distorsion de phase ». Voir [chapitre 5](05-representation-en-phase.qmd#sec-retard-groupe).
+
+**Autres sources** : les notes 2023 rangent le retard de groupe $\tau(H) = -\frac{\mathrm{d}\operatorname{Arg}(H(\omega))}{\mathrm{d}\omega}$ sous le titre « Distorsion de phase » [notes-2023-ch03, p. 7] et écrivent en encadré « phase linéaire équivalent à un retard de groupe constant » [notes-2023-ch05, p. 3] ; la fiche de rappels associe « Retard de groupe constant » à la « propriété de linéarité de phase », RIF symétrique $h(n) = \pm h(M-n)$ [fiche-rappels, p. 3]. Aucune source externe ne dit « pas de retard de groupe ».
+:::
+
+### Stabilité et réponse en fréquence {#sec-stabilite-reponse-frequence}
+
+::: {.notes-externes}
+**Relation entre la stabilité et la TF.** Si le SLI est stable, $\sum_n |h[n]| \leq M_h < \infty$ ([condition de stabilité](02-systemes-discrets-convolution.qmd#eq-cns-stabilite)). Alors, pour tout $f$,
+
+$$
+|H(f)| = \Bigl|\sum_n h[n]\, e^{-j2\pi f n}\Bigr| \leq \sum_n |h[n]|\, \underbrace{\bigl|e^{-j2\pi f n}\bigr|}_{=\,1} = \sum_n |h[n]| \leq M_h < \infty.
+$$ {#eq-borne-module-stabilite}
+
+La réponse en fréquence d'un SLI stable est **bornée** [notes-2023-ch03, p. 5].
+:::
+
+::: {.complement}
+La réciproque est fausse : le passe-bas idéal a un module borné (0 ou 1), mais sa réponse impulsionnelle, un sinus cardinal, n'est pas absolument sommable. La stabilité garantit aussi que la TFSD de $h[n]$ converge (absolument) pour tout $f$.
+:::
+
+### Réponse à une sinusoïde {#sec-reponse-sinusoide}
+
+::: {.notes-externes}
+**Étude de l'impact du terme de phase.** On écrit $H(f) = |H(f)|\, e^{j\arg(H(f))}$ : le module est connu, quel est le rôle de la phase ? On étudie l'entrée $x(nT_e) = \cos(2\pi f_0 n T_e)$, soit en fréquence réduite $x[n] = \cos(2\pi f_0 n)$. Avec $\cos(2\pi f_0 n) = \frac12\bigl[e^{j2\pi f_0 n} + e^{-j2\pi f_0 n}\bigr]$ :
+
+$$
+\begin{aligned}
+y[n] &= \sum_k h[k]\, x[n-k] = \sum_k h[k] \cos\bigl(2\pi f_0 (n-k)\bigr)
+= \frac12 \sum_k h[k] \Bigl[e^{j2\pi f_0 (n-k)} + e^{-j2\pi f_0 (n-k)}\Bigr] \\
+&= \frac12\, e^{j2\pi f_0 n} \underbrace{\Bigl[\sum_k h[k]\, e^{-j2\pi f_0 k}\Bigr]}_{H(f_0)}
++ \frac12\, e^{-j2\pi f_0 n} \underbrace{\Bigl[\sum_k h[k]\, e^{j2\pi f_0 k}\Bigr]}_{H^*(f_0)},
+\end{aligned}
+$$
+
+d'où
+
+$$
+y[n] = |H(f_0)| \cos\bigl(2\pi f_0 n + \arg(H(f_0))\bigr).
+$$ {#eq-reponse-sinusoide}
+
+Une sinusoïde traverse un SLI en restant une sinusoïde de même fréquence, multipliée par le module et déphasée de la phase de $H$ à cette fréquence [notes-2023-ch03, p. 5-6].
+:::
+
+::: {.complement}
+L'identification du second crochet à $H^*(f_0)$ suppose $h[n]$ **réelle**. On a alors $\frac12\bigl[H(f_0)\,e^{j2\pi f_0 n} + H^*(f_0)\,e^{-j2\pi f_0 n}\bigr] = \operatorname{Re}\bigl[H(f_0)\, e^{j2\pi f_0 n}\bigr]$, ce qui donne @eq-reponse-sinusoide. La suite (somme de deux sinusoïdes, retard de chaque composante, retard de groupe) est traitée au [chapitre 5](05-representation-en-phase.qmd#sec-retard-groupe).
+:::
+
+## Exercices du TD {#sec-exercices-td-ch03}
+
+::: {#exr-td-rif-retard-quatre}
+## Réponse en fréquence de $y[n] = x[n] - x[n-4]$
+
+On considère le filtre $H$ régi par l'équation $y[n] = x[n] - x[n-4]$.
+
+a. Calculer et tracer la réponse fréquentielle (module et phase) dans la gamme de fréquences $-\frac{f_e}{2} \leq f \leq \frac{f_e}{2}$.
+b. Démontrer que la sortie d'un filtre quelconque de réponse impulsionnelle $h[n]$, excité par la séquence $x_1[n] = A\,e^{j2\pi f_0 n T_e}$, est
+   $$
+   y[n] = A\,|H(f_0)|\, e^{j2\pi f_0 n T_e + j\operatorname{Arg}(H(f_0))},
+   $$
+   où $\operatorname{Arg}(H(f_0))$ est l'argument de $H(f)$ à la fréquence $f_0$.
+c. Quelle est la sortie du filtre $H$ pour l'entrée $x[n] = \cos\bigl(\frac{\pi n}{2}\bigr) + \cos\bigl(\frac{\pi n}{4}\bigr)$, $-\infty \leq n \leq +\infty$ ? Indication : utiliser b.
+d. Expliquer les résultats de la question c à partir de ceux de la question a. Si $x[n]$ avait une moyenne $m_x$, quelle serait la moyenne de $y[n]$ ?
+
+[td, p. 5-6]
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+On travaille en fréquence normalisée ($f \in [-\frac12, \frac12]$).
+
+a. Par le théorème du retard (@eq-retard-tfsd), $Y(f) = X(f) - e^{-j8\pi f} X(f)$, d'où
+
+$$
+H(f) = 1 - e^{-j8\pi f} = e^{-j4\pi f}\bigl(e^{j4\pi f} - e^{-j4\pi f}\bigr) = 2j\, e^{-j4\pi f} \sin(4\pi f),
+\qquad |H(f)| = 2\,|\sin(4\pi f)|.
+$$
+
+Le module, tracé sur $[-\frac12, \frac12]$, est formé de quatre arches de hauteur 2.
+
+b. $y[n] = \sum_{k=0}^{M-1} h[k]\, A\, e^{j2\pi f_0 (n-k)} = A\, e^{j2\pi f_0 n} \sum_{k} h[k]\, e^{-j2\pi f_0 k} = A\, e^{j2\pi f_0 n}\, H(f_0)$ : la somme est l'expression de la TF évaluée en $f_0$. D'où $y[n] = A\,|H(f_0)|\, e^{j2\pi f_0 n + j\operatorname{Arg}(H(f_0))}$. Pour $x[n] = A\cos(2\pi f_0 n)$, on prend la partie réelle : $y[n] = A\,|H(f_0)|\cos\bigl(2\pi f_0 n + \operatorname{Arg}(H(f_0))\bigr)$ ; pour une somme $\sum_i a_i \cos(2\pi f_i n)$, $y[n] = \sum_i a_i\,|H(f_i)|\cos\bigl(2\pi f_i n + \operatorname{Arg}(H(f_i))\bigr)$.
+
+c. $2\pi f_0 n = \frac{\pi n}{2}$ donne $f_0 = \frac14$ et $2\pi f_1 n = \frac{\pi n}{4}$ donne $f_1 = \frac18$. $H(f_0) = 2j\,e^{-j\pi}\sin(\pi) = 0$ ; $H(f_1) = 2j\,e^{-j\pi/2}\sin(\frac{\pi}{2}) = 2$, soit $|H(f_1)| = 2$ et $\operatorname{Arg}(H(f_1)) = 0$. Finalement
+
+$$
+y[n] = 2\cos\Bigl(\frac{\pi n}{4}\Bigr).
+$$
+
+d. $f_0 = \frac14$ tombe sur un zéro de $|H|$ : la composante est éliminée ; $f_1 = \frac18$ tombe sur un maximum (gain 2, phase nulle). La moyenne est la composante à $f = 0$, où $H(0) = 0$ : $m_y = 0$.
+
+[corrige-2023-td01, p. 9-11]
+:::
+::::
+
+::: {.a-verifier #av-td-retard-quatre-ecriture}
+**Source** [corrige-2023-td01, p. 9] : « $Y(f) = X(f) - e^{-8j\pi f} X(f)$ », puis à la ligne suivante « $X(f) = X(f)\,(1 - e^{-j8\pi f})$ ».
+
+**Problème** : le premier membre de la seconde ligne est $Y(f)$ ; telle qu'écrite, l'égalité imposerait $X(f) = 0$ là où $e^{-j8\pi f} \neq 1$.
+
+**Proposition** : $Y(f) = X(f)\,(1 - e^{-j8\pi f})$, d'où $H(f) = 1 - e^{-j8\pi f}$ (forme retenue dans la solution ci-dessus).
+:::
+
+::: {.complement}
+- **Zéros et maxima** : $|H(f)|$ s'annule en $f = 0, \pm\frac14, \pm\frac12$ et vaut 2 en $f = \pm\frac18, \pm\frac38$ (filtre « en peigne »).
+- **Phase** (non tracée dans le corrigé) : $\operatorname{Arg}(H(f)) = \frac{\pi}{2} - 4\pi f$ là où $\sin(4\pi f) > 0$, et $-\frac{\pi}{2} - 4\pi f$ là où $\sin(4\pi f) < 0$ (modulo $2\pi$). Elle est linéaire par morceaux, de pente $-4\pi$ (retard de 2 échantillons, voir le [chapitre 5](05-representation-en-phase.qmd#sec-phase-lineaire)), avec des sauts de $\pi$ aux zéros de $|H|$.
+- **Contrôle direct de c** : $\cos\bigl(\frac{\pi(n-4)}{2}\bigr) = \cos\bigl(\frac{\pi n}{2} - 2\pi\bigr) = \cos\bigl(\frac{\pi n}{2}\bigr)$ et $\cos\bigl(\frac{\pi(n-4)}{4}\bigr) = -\cos\bigl(\frac{\pi n}{4}\bigr)$ ; donc $y[n] = 2\cos\bigl(\frac{\pi n}{4}\bigr)$.
+- Le passage à la partie réelle en b suppose $h[n]$ **réelle** : alors $H(-f_0) = H^*(f_0)$ et les deux exponentielles de $\cos$ donnent des sorties conjuguées.
+- Moyenne : directement, $\E\{y[n]\} = m_x - m_x = 0$.
+:::
+
+::: {#exr-td-filtres-quadrature}
+## Filtres en quadrature
+
+On considère le système de réponse impulsionnelle $h_A[n] = 0{,}5\,\delta[n] - \delta[n-1] + 0{,}5\,\delta[n-2]$.
+
+1. Le système est-il linéaire, invariant, stable et causal ?
+2. Tracer le module de la réponse fréquentielle associée à $h_A[n]$. Conclure sur le type d'action fréquentielle de $h_A[n]$.
+3. On considère la transformation $h_C[n] = (-1)^n\, h_A[n]$ pour tout entier $n$. Donner la relation entre $H_A(f)$ et $H_C(f)$ et tracer $H_C(f)$. Conclusion.
+
+[td, p. 6]
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+1. Causal : n'utilise que des éléments du passé et du présent ; stable : réponse impulsionnelle finie.
+2. $$
+H_A(f) = 0{,}5 - e^{-j2\pi f} + 0{,}5\, e^{-j4\pi f} = e^{-j2\pi f}\bigl(0{,}5\, e^{j2\pi f} - 1 + 0{,}5\, e^{-j2\pi f}\bigr) = e^{-j2\pi f}\bigl(\cos(2\pi f) - 1\bigr).
+$$
+Le module est maximal en $f = \pm\frac12$ : **passe-haut** (courbe « PH » du corrigé, tracée avec la courbe « PB » de $H_C$).
+3. $$
+H_C(f) = \sum_n h_A[n]\,(-1)^n e^{-j2\pi f n} = \sum_n h_A[n]\, e^{j\pi n}\, e^{-j2\pi f n} = \sum_n h_A[n]\, e^{-j2\pi (f - \frac12) n} = H_A\Bigl(f - \frac12\Bigr).
+$$
+$H_C$ est le **passe-bas** obtenu en décalant $H_A$ de $\frac12$. Les deux branches se calculent avec les mêmes coefficients : $x_\mathrm{PH}[n] = h_A[0]\,x[n] + h_A[1]\,x[n-1] + \dots$ et $x_\mathrm{PB}[n] = h_A[0]\,x[n] - h_A[1]\,x[n-1] + \dots$
+
+[corrige-2023-td01, p. 11-12]
+:::
+::::
+
+::: {.a-verifier #av-td-quadrature-minimum}
+**Source** [corrige-2023-td01, p. 12] : graphe de $|H_A(f)|$ (courbe noire « PH ») dont le minimum, en $f = 0$, est nettement au-dessus de l'axe.
+
+**Problème** : $|H_A(0)| = |0{,}5 - 1 + 0{,}5| = 0$ ; le croquis laisse croire qu'un filtre passe-haut laisse passer une part de la composante continue.
+
+**Proposition** : $|H_A(f)| = 1 - \cos(2\pi f) = 2\sin^2(\pi f)$, nul en $f = 0$, égal à 2 en $f = \pm\frac12$.
+:::
+
+::: {.complement}
+- $H_A(f) = -2\sin^2(\pi f)\, e^{-j2\pi f}$ : phase linéaire $\pi - 2\pi f$ (réponse impulsionnelle symétrique, retard d'un échantillon).
+- $h_C[n] = 0{,}5\,\delta[n] + \delta[n-1] + 0{,}5\,\delta[n-2]$ et $|H_C(f)| = 1 + \cos(2\pi f) = 2\cos^2(\pi f)$ : 2 en $f = 0$, nul en $f = \pm\frac12$ ($\pm f_e/2$).
+- Conclusion : multiplier $h[n]$ par $(-1)^n = e^{j\pi n}$ décale la réponse en fréquence de $\frac12$ ($f_e/2$) et transforme un passe-bas en passe-haut et inversement. Les deux modules sont symétriques par rapport à $f = \frac14$ et $|H_A(f)| + |H_C(f)| = 2$ : ils se partagent la bande en deux moitiés complémentaires, d'où le nom de filtres en quadrature (filtres miroirs).
+- Linéarité et invariance (question 1) : c'est un RIF, voir l'[exercice du chapitre 2](02-systemes-discrets-convolution.qmd#exr-td-rif-proprietes).
+:::
+
+## À retenir {#sec-retenir-tfd}
+
+- TFSD : $X(f) = \sum_{n} x(nT_e)\, e^{-j2\pi f n T_e}$, périodique de période $f_e$ (@eq-tfsd).
+- Fenêtre d'observation : $X_0 = X_a \star W$ ; rectangulaire de durée $\tau$ → sinus cardinal, résolution $\approx 1/\tau$ (@eq-fenetrage).
+- TFD sur $N$ échantillons et $M$ fréquences : $X[k] = \sum_{n=0}^{N-1} x[n]\, e^{-j2\pi kn/M}$, $\Delta f = f_e/M$ (@eq-tfd, @eq-pas-frequentiel). TFD $\neq$ TFSD.
+- SLI : $Y(f) = H(f)\,X(f)$, $H(f) = |H(f)|\,e^{j\operatorname{Arg}H(f)}$ (@eq-y-egal-hx).
+- Retard : $x[n-k] \leftrightarrow X(f)\,e^{-j2\pi f k T_e}$ (@eq-retard-tfsd).
+- Fréquence normalisée $f_n = f/f_e \in [-\frac12, \frac12]$ (@def-frequence-normalisee).
+- Moyenne $\frac12(x[n] + x[n-1])$ : $H(f) = e^{-j\pi f}\cos(\pi f)$, passe-bas non idéal à phase linéaire (@eq-h-moyenne-normalisee).
+- SLI stable $\Rightarrow$ $|H(f)| \leq \sum_n |h[n]| < \infty$ pour tout $f$ (@eq-borne-module-stabilite) ; la réciproque est fausse.
+- Réponse à $\cos(2\pi f_0 n)$ (h réelle) : $|H(f_0)|\cos\bigl(2\pi f_0 n + \arg H(f_0)\bigr)$ (@eq-reponse-sinusoide).

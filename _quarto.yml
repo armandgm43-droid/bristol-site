@@ -129,6 +129,24 @@ website:
       style: docked
       contents:
         - matieres/tsig1-traitement-numerique-signal/index.qmd
+        - section: "Cours"
+          contents:
+            - matieres/tsig1-traitement-numerique-signal/cours/01-echantillonnage-signal-discret.qmd
+            - matieres/tsig1-traitement-numerique-signal/cours/02-systemes-discrets-convolution.qmd
+            - matieres/tsig1-traitement-numerique-signal/cours/03-tfd-interpretation-frequentielle.qmd
+            - matieres/tsig1-traitement-numerique-signal/cours/04-implementation-equations-differences.qmd
+            - matieres/tsig1-traitement-numerique-signal/cours/05-representation-en-phase.qmd
+        - section: "Annales corrigées"
+          contents:
+            - matieres/tsig1-traitement-numerique-signal/annales/2025-2026-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2022-2023-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2019-2020-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2017-2018-examen.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2017-2018-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2016-2017-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2015-2016-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2014-2015-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2013-2014-examen.qmd
     - id: tsig2
       title: "TSIG2"
       style: docked

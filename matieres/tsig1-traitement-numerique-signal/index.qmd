@@ -20,26 +20,58 @@ number-sections: false
 
 ## Chapitres
 
-**Aucun support de cours rédigé reçu** (seulement 6 p. d'illustrations). Plan proposé d'après les notes d'un ancien élève (5 chapitres), à confirmer avec le cours de 2026-2027.
+Plan tiré des **notes de cours d'Armand** (2026-2027), complété par les notes d'un ancien élève (2023, *Notes externes*), le support d'illustrations de l'enseignant et le recueil de TD. Aucun support de cours rédigé n'existe : l'essentiel du cours est donc en bloc *Notes de cours*.
 
-| N° | Chapitre (proposé) | Contenu et sources | Statut |
+| N° | Chapitre | Contenu | Statut |
 |---|---|---|---|
-| 1 | Généralités sur les signaux et les systèmes | `notes-2023-ch01` | [Brouillon]{.statut .brouillon} |
-| 2 | Systèmes discrets linéaires invariants | `notes-2023-ch02` | [Brouillon]{.statut .brouillon} |
-| 3 | Caractérisation fréquentielle des signaux et des SLI | `notes-2023-ch03` | [Brouillon]{.statut .brouillon} |
-| 4 | Implémentation des filtres linéaires invariants | `notes-2023-ch04` | [Brouillon]{.statut .brouillon} |
-| 5 | SLI et représentation en phase | `notes-2023-ch05` | [Brouillon]{.statut .brouillon} |
+| 1 | [Échantillonnage et signal discret](cours/01-echantillonnage-signal-discret.qmd) | peigne de Dirac, périodisation du spectre, Shannon-Nyquist, reconstruction, signaux discrets | [Vérifié]{.statut .verifie} |
+| 2 | [Systèmes discrets et convolution](cours/02-systemes-discrets-convolution.qmd) | linéarité, invariance, convolution, stabilité, causalité, association ; TD 1 | [Vérifié]{.statut .verifie} |
+| 3 | [TFD et interprétation fréquentielle des SLI](cours/03-tfd-interpretation-frequentielle.qmd) | TFSD, fenêtrage, TFD, réponse en fréquence, fréquence normalisée ; TD 1 | [Vérifié]{.statut .verifie} |
+| 4 | [Implémentation des SLI et équations aux différences](cours/04-implementation-equations-differences.qmd) | RIF/RII, transformée en $z$, pôles et zéros, stabilité, éléments simples ; TD 2 et 3 | [Vérifié]{.statut .verifie} |
+| 5 | [SLI et représentation en phase](cours/05-representation-en-phase.qmd) | retard de groupe, phase linéaire, minimum de phase, passe-tout ; TD 1 et 3 | [Vérifié]{.statut .verifie} |
 
-Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
+Chapitres **à relire par Armand** : 30 blocs *À vérifier* ouverts (1, 4, 9, 11 et 5 par chapitre). Les cartes définitives seront générées après cette relecture.
+
+## Préparation du partiel {#sec-partiel}
+
+Partiel 2026-2027 : **jeudi 22 octobre 2026** (1 h 20, sans document, calculatrice autorisée, d'après les annales).
+
+- **9 annales corrigées** : chaque sujet est affiché en images, découpé question par question, avec la solution juste en dessous (solutions rédigées par Claude et vérifiées par le calcul, à relire).
+
+  | Sujet | Date | Source |
+  |---|---|---|
+  | [Partiel 2025-2026](annales/2025-2026-partiel.qmd) | 23/10/2025 | scan |
+  | [Partiel 2022-2023](annales/2022-2023-partiel.qmd) | 01/12/2022 | photos |
+  | [Partiel 2019-2020](annales/2019-2020-partiel.qmd) | 11/12/2019 | recueil de TD |
+  | [Examen de mars 2018](annales/2017-2018-examen.qmd) | 08/03/2018 | recueil de TD |
+  | [Partiel 2017-2018](annales/2017-2018-partiel.qmd) | 13/12/2017 | scan |
+  | [Partiel 2016-2017](annales/2016-2017-partiel.qmd) | 06/12/2016 | scan et recueil (identiques) |
+  | [Partiel 2015-2016](annales/2015-2016-partiel.qmd) | 30/11/2015 | scan |
+  | [Partiel 2014-2015](annales/2014-2015-partiel.qmd) | 28/11/2014 | scan et recueil (identiques) |
+  | [Examen de mars 2014](annales/2013-2014-examen.qmd) | 14/03/2014 | recueil de TD |
+
+  Exercices repris d'un sujet à l'autre : « Filtre RII et cascade » (2016, 2017, 2022) ; l'échantillonnage des trois cosinus (2015 et mars 2018) ; la définition de la TFD (presque tous les sujets). 11 blocs *À vérifier* (`av-ann…`) signalent des énoncés ambigus ou incomplets.
+- Paquet de cartes **provisoire** « TSIG1 — partiel » (52 cartes, préfixe `tsig1p-`) dans les [Révisions](../../revision/index.html) : écrit avant la rédaction des chapitres, d'après `notes-2023` et les annales. Il sera retiré quand les cartes définitives (`tsig1-…`) seront générées à partir des chapitres validés.
 
 ## Table des notations
 
-À compléter lors de l'analyse du premier chapitre.
+| Grandeur | Cours Bristol | Notes d'Armand | Notes 2023 / TD |
+|---|---|---|---|
+| Période, fréquence d'échantillonnage | $T_e$, $f_e = 1/T_e$ | $T_e$, $f_e$ | $T_e$, $f_e$ |
+| Échantillon | $x[n] = x(nT_e)$ | $x[n]$, $x(n)$, $x(nT_e)$ | $x(n)$ |
+| Impulsion, échelon discrets | $\delta[n]$, $u[n]$ | $\delta(n)$, $u(nT_e)$ | $\delta(n)$, $u(n)$ (TD : $d(n)$) |
+| Peigne de Dirac | $\text{Ш}_{T_e}(t)$, TF $S_{T_e}(f)$ | lettre proche de $s_{T_e}(t)$, $S_{T_e}(f)$ | — |
+| Réponse impulsionnelle, réponse en fréquence | $h[n]$, $H(f)$, $H(z)$ | idem | $h(n)$ |
+| Fréquence normalisée | $f_n = f/f_e \in [-\frac12, \frac12]$ (souvent notée $f$) ; $\omega = 2\pi f_n$ | $f_n$, puis $f$ | $\omega$ |
+| Coefficients de l'équation aux différences | $c_k$ (sortie), $d_l$ (entrée) | $c_k$, $d_l$ | variable selon les exercices |
+| Retard de groupe | $\tau(H)$, $r_H$ | $r(H)$, $r_H$ | — |
 
 ## Conventions de la matière
 
-- **Numéros de page** cités : pages du PDF.
-- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+- **Numéros de page** cités : pages du PDF ; notes d'Armand citées par feuillet (`[notes, f. 3 r°]`).
+- Transformée de Fourier : $X(f) = \int x(t)\,e^{-j2\pi ft}\,\mathrm{d}t$ ; TFSD : $X(f) = \sum_n x(nT_e)\,e^{-j2\pi f n T_e}$.
+- $\sinc(x) = \dfrac{\sin(\pi x)}{\pi x}$ (convention des notes).
+- Retard de groupe : $\tau = -\dfrac{\mathrm{d}\operatorname{Arg} H(\omega)}{\mathrm{d}\omega}$, en échantillons.
 
 ## Sources
 
@@ -47,11 +79,12 @@ Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources bru
 
 | id | Source | Nature | Remarque |
 |---|---|---|---|
+| `notes` | `notes/date-inconnue.pdf` (photos dans `notes/date-inconnue/`) | personnelle | notes d'Armand, 13 feuillets, cours 2026-2027 ; transcription `transcriptions/notes-2026.md` |
 | `illustrations` | `support/illustrations-berthoumieu.pdf` | officielle | 6 p. |
-| `td` | `td/recueil-td-2023.pdf` | officielle | 23 p. : TD 1 à 3, puis anciens sujets d'examen ; rattachement des exercices aux chapitres à faire à l'analyse |
+| `td` | `td/recueil-td-2023.pdf` | officielle | 23 p. : TD 1 à 3 (intégrés aux chapitres 2 à 5), annexe, anciens sujets d'examen |
 | `notes-2023-chNN` | `notes/2023-cours-chNN-…pdf` | externe | 5 chapitres (ancien élève) |
-| — | `notes/externe-fiche-rappels-traitement-signal.pdf` | externe | fiche de rappels (archive « Annales 2A élec ») |
-| — | `corriges/2023-…pdf` | externe | TD 1 à 3, manuscrits |
+| `fiche-rappels` | `notes/externe-fiche-rappels-traitement-signal.pdf` | externe | fiche de rappels (archive « Annales 2A élec ») |
+| `corrige-2023-tdNN` | `corriges/2023-…pdf` | externe | TD 1 à 3, manuscrits ; plusieurs erreurs relevées (blocs `av-td-…`) |
 | — | `annales/` | officielle | partiels 2014-2018, 2022-2023, 2025-2026 |
 
 La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).
