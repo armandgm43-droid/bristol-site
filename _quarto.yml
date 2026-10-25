@@ -62,6 +62,9 @@ website:
             - matieres/eana3-circuits-integres/cours/03-applications-contre-reaction.qmd
             - matieres/eana3-circuits-integres/cours/04-oscillateurs.qmd
             - matieres/eana3-circuits-integres/cours/05-references-de-tension.qmd
+        - section: "Annales corrigées"
+          contents:
+            - matieres/eana3-circuits-integres/annales/2016-2017-partiel-circuits-hf.qmd
     # Matières du S7 mises en place le 19 octobre 2026 : fiche matière seule,
     # ajouter la section « Cours » au premier chapitre rédigé.
     - id: eana1
@@ -136,6 +139,9 @@ website:
             - matieres/tsig1-traitement-numerique-signal/cours/03-tfd-interpretation-frequentielle.qmd
             - matieres/tsig1-traitement-numerique-signal/cours/04-implementation-equations-differences.qmd
             - matieres/tsig1-traitement-numerique-signal/cours/05-representation-en-phase.qmd
+        - section: "Fiches de révision"
+          contents:
+            - matieres/tsig1-traitement-numerique-signal/fiches/fiche-tf-tz-echantillonnage.qmd
         - section: "Annales corrigées"
           contents:
             - matieres/tsig1-traitement-numerique-signal/annales/2025-2026-partiel.qmd

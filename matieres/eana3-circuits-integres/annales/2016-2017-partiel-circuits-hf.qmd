@@ -1,0 +1,163 @@
+---
+title: "Partiel 2016-2017 (Circuits HF et oscillateurs) — corrigé"
+subtitle: "EA210, N. Deltimple, 7 novembre 2016 · 1 h 20, documents et calculatrice autorisés · exercice II : charge active à résistance négative"
+matiere: eana3
+date-modified: 2026-10-22
+sources:
+  - id: sujet-2016-hf
+    fichier: annales/2016-2017-partiel-circuits-hf-oscillateurs.pdf
+    nature: officielle
+    pages: "1-2"
+  - id: sujet-2013-hf
+    fichier: annales/2013-2014-partiel-circuits-hf-oscillateurs.pdf
+    nature: officielle
+    pages: "1"
+---
+
+{{< include /_macros.qmd >}}
+
+::: {.complement}
+Aucun corrigé officiel : **toutes les solutions de cette page sont rédigées par Claude**. À relire avec un œil critique ; signaler toute erreur.
+
+Le sujet vient de l'ancien module EA210 « Circuits HF et oscillateurs », rangé avec EANA3. Seul l'**exercice II** (paire croisée PMOS, résistance négative) est corrigé ici ; l'exercice I (questions générales sur les circuits intégrés HF : pôle dominant, capacités intégrées, varactor MOS) ne l'est pas encore.
+
+**Le même exercice est tombé en 2013-2014** (Partie I « Étude de charges actives ») [sujet-2013-hf, p. 1] : ses questions 1 et 2 sont les questions 1 et 2 ci-dessous, sa question 3 est la question 7, sa question bonus 3+ est la question 10.
+:::
+
+Chapitre du cours : [Oscillateur à résistance négative](../cours/04-oscillateurs.qmd#sec-resistance-negative) et [TD 4](../cours/04-oscillateurs.qmd#sec-td-resistance-negative).
+
+## Exercice II : étude d'un amplificateur HF (14 points) {#sec-ann16hf-ex2}
+
+![](sujets/2016-2017-partiel-circuits-hf-ex2.png){fig-alt="Exercice II : paire croisée PMOS (fig. 1) et amplificateur différentiel NMOS M1, M1' à charge active auto-polarisée : PMOS montés en diode M3, M3' et paire croisée M2, M2' (fig. 2), courant de queue I0."}
+
+**Conventions de la correction.** PMOS de source à $V_{DD}$ (masse dynamique) ; on note $v_1$, $v_2$ les variations de $V_{out1}$, $V_{out2}$, et $v_{id} = v_{in1} - v_{in2}$. Le courant de drain petit signal d'un PMOS dont la source est à la masse dynamique s'écrit, compté **du drain vers la source** (c'est-à-dire « sortant » du nœud de drain vers le transistor) : $i = g_m v_g + g_{ds} v_d$, où $v_g$ et $v_d$ sont les variations de grille et de drain. Même forme pour un NMOS de source à la masse dynamique.
+
+![](sujets/2016-2017-partiel-circuits-hf-ex2-q1.png){fig-alt="Q1 : résistance dynamique équivalente d'un transistor NMOS ou PMOS dont la grille est reliée au drain."}
+
+:::: {.complement}
+::: {.solution}
+Transistor monté en diode : $v_g = v_d = v$, donc $i = (g_m + g_{ds})\, v$ :
+$$r_\text{diode} = \frac{1}{g_m + g_{ds}} = \frac{1}{g_m} \parallel r_{ds} \approx \frac{1}{g_m} \quad (g_m \gg g_{ds}).$$
+Résistance **faible et positive**, réglée par le courant de polarisation (à travers $g_m$). Valable en régime saturé (toujours vrai pour un MOS en diode : $V_{DS} = V_{GS} > V_{GS} - V_{T}$).
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex2-q2.png){fig-alt="Q2 : impédance différentielle vue depuis les drains d'une paire croisée PMOS, en fonction de gm (gm identiques)."}
+
+:::: {.complement}
+::: {.solution}
+On note $M_a$ le transistor dont le drain est au nœud 1 et $M_b$ celui dont le drain est au nœud 2. On injecte un courant $i_x$ dans le drain 1 et on le récupère au drain 2 ; $v_x = v_1 - v_2$. Le drain de chaque transistor est relié à la grille de l'autre (on néglige $g_{ds}$) :
+
+- nœud 1 (drain de $M_a$, grille à $v_2$) : $i_x = g_m v_2$ ;
+- nœud 2 (drain de $M_b$, grille à $v_1$) : $-i_x = g_m v_1$.
+
+Donc $v_x = v_1 - v_2 = -\dfrac{i_x}{g_m} - \dfrac{i_x}{g_m}$ :
+$$\boxed{Z_{diff} = \frac{v_x}{i_x} = -\frac{2}{g_m}}$$
+C'est la **résistance négative** du cours ([chapitre 4](../cours/04-oscillateurs.qmd#eq-resistance-paire-croisee)). Interprétation : si $v_1$ monte, la grille de $M_b$ monte, $M_b$ (PMOS) conduit moins et $v_2$ descend ; la grille de $M_a$ descend, $M_a$ conduit plus et $v_1$ monte encore. La paire accentue l'écart au lieu de s'y opposer : réaction positive. Avec $g_{ds}$ : $Z_{diff} = -\dfrac{2}{g_m - g_{ds}}$.
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex2-q3.png){fig-alt="Q3 : commenter le schéma de la figure 2 (polarisation, fonction réalisée, entrées, sorties)."}
+
+:::: {.complement}
+::: {.solution}
+- **Fonction** : amplificateur différentiel. Entrées : grilles de $M_1$ et $M_1'$ ($V_{in1}$, $V_{in2}$) ; sorties : drains ($V_{out1}$, $V_{out2}$), lues en **différentiel** ($A_v = \frac{v_{out1} - v_{out2}}{v_{in1} - v_{in2}}$).
+- **Polarisation** : la source de courant $I_0$ fixe le courant total ; au repos, symétrie : $I_{D1} = I_{D2} = I_0/2$. Dans chaque branche, ce courant se partage entre le PMOS en diode ($M_3$) et le PMOS de la paire croisée ($M_2$).
+- **Charge active** : quatre PMOS. Les diodes $M_3$, $M_3'$ fixent le potentiel continu des drains (d'où « auto-polarisée » : pas de circuit de contre-réaction de mode commun) ; la paire croisée $M_2$, $M_2'$ apporte une résistance différentielle négative qui **compense** celle, positive, des diodes, pour augmenter la résistance de charge différentielle, donc le gain.
+- **En mode commun** ($v_1 = v_2 = v_c$), la paire croisée se comporte au contraire comme deux diodes : chaque nœud voit $\frac{1}{g_{m2} + g_{m3}}$, faible. Le mode commun de sortie reste donc bien défini même quand la charge différentielle devient très grande.
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex2-q4.png){fig-alt="Q4 : lien entre les transconductances de M1 et M1', de M2 et M2', de M3 et M3'."}
+
+:::: {.complement}
+::: {.solution}
+Transistors identiques deux à deux et, au repos, mêmes courants par symétrie ($I_0/2$ par branche) :
+$$g_{m1} = g_{m1'}, \qquad g_{m2} = g_{m2'}, \qquad g_{m3} = g_{m3'} .$$
+De plus, au repos $V_{out1} = V_{out2}$ : $M_2$ (grille à $V_{out2}$) et $M_3$ (grille à $V_{out1}$) ont **la même $V_{SG}$** et la même $V_{SD}$. Ils ont donc la même tension de saturation $V_{SG} - |V_{Tp}|$ ; leurs courants sont dans le rapport de leurs $W/L$, et comme $g_m = \frac{2 I_D}{V_{SG} - |V_{Tp}|}$ :
+$$\frac{g_{m2}}{g_{m3}} = \frac{I_{D2}}{I_{D3}} = \frac{(W/L)_2}{(W/L)_3}, \qquad I_{D2} + I_{D3} = \frac{I_0}{2} .$$
+Ce rapport de géométries est le paramètre de conception de la question 10.
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex2-q5.png){fig-alt="Q5 : schéma équivalent dynamique HF de l'amplificateur de la figure 2, résistances d'accès négligées, bulks reliés aux sources."}
+
+:::: {.complement}
+::: {.solution}
+Chaque transistor est remplacé par son modèle petit signal HF : source de courant $g_m v_{gs}$ et $r_{ds}$ entre drain et source, capacités $C_{gs}$, $C_{gd}$ et $C_{db}$. Bulk relié à la source : $C_{sb}$ est court-circuitée et $C_{db}$ se retrouve entre drain et source. Résistances d'accès (grille, source, drain) négligées.
+
+- Les sources des PMOS sont à $V_{DD}$ : **masse dynamique**.
+- $I_0$ idéale : circuit ouvert en dynamique. En mode différentiel, par symétrie, le nœud des sources de $M_1$, $M_1'$ ne bouge pas : **masse virtuelle**.
+- Nœud $V_{out1}$ : drains de $M_1$, $M_2$, $M_3$, grille de $M_3$ et grille de $M_2'$. On y trouve, vers la masse : $g_{m1} v_{gs1}$ (avec $v_{gs1} = v_{id}/2$), $r_{ds1} \parallel r_{ds2} \parallel r_{ds3}$, la source $g_{m3} v_1$ (diode), la source $g_{m2} v_2$ commandée par l'**autre** sortie, et les capacités $C_{db1} + C_{db2} + C_{db3} + C_{gs3} + C_{gs2'}$ ; $C_{gd1}$ relie l'entrée $v_{in1}$ à $v_1$, $C_{gd2}$ et $C_{gd2'}$ relient les deux sorties ($C_{gd3}$ est court-circuitée par la liaison grille-drain).
+- Nœud $V_{out2}$ : symétrique.
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex2-q6.png){fig-alt="Q6 : simplifier ce schéma en considérant que les capacités présentent des impédances très élevées et en négligeant la modulation de longueur de canal."}
+
+:::: {.complement}
+::: {.solution}
+Capacités ouvertes (basse fréquence devant les pôles parasites), $\lambda = 0$ donc $r_{ds} \to \infty$. Il ne reste, au nœud 1 (le nœud 2 est symétrique) :
+
+- $M_1$ : source de courant $g_{m1}\,\frac{v_{id}}{2}$ ;
+- $M_3$ : résistance $\frac{1}{g_{m3}}$ vers la masse ;
+- $M_2$ : source de courant $g_{m2}\, v_2$ commandée par la tension de l'autre sortie.
+
+Équation du nœud 1 (courants sortant du nœud) :
+$$g_{m1}\frac{v_{id}}{2} + g_{m3}\, v_1 + g_{m2}\, v_2 = 0 .$$
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex2-q7.png){fig-alt="Q7 : impédance différentielle dynamique équivalente de l'assemblage M2, M2', M3, M3' vue depuis les drains, en fonction de gm2 et gm3."}
+
+:::: {.complement}
+::: {.solution}
+On isole la charge (sans $M_1$, $M_1'$) et on injecte $i_x$ au nœud 1, récupéré au nœud 2 :
+$$i_x = g_{m3} v_1 + g_{m2} v_2, \qquad -i_x = g_{m3} v_2 + g_{m2} v_1 .$$
+Par différence : $2 i_x = (g_{m3} - g_{m2})(v_1 - v_2)$, d'où
+$$\boxed{Z_{diff} = \frac{v_1 - v_2}{i_x} = \frac{2}{g_{m3} - g_{m2}}}$$
+Positive si $g_{m3} > g_{m2}$, infinie si $g_{m3} = g_{m2}$, négative si $g_{m2} > g_{m3}$.
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex2-q8.png){fig-alt="Q8 : montrer que cette impédance pouvait être déterminée a priori, sans schéma équivalent."}
+
+:::: {.complement}
+::: {.solution}
+La charge est l'association de deux dipôles connus, branchés entre les **mêmes** deux drains :
+
+- les diodes $M_3$ et $M_3'$ : $\frac{1}{g_{m3}}$ chacune entre un drain et la masse dynamique, soit **en série** entre les drains : $\frac{2}{g_{m3}}$ (question 1) ;
+- la paire croisée $M_2$, $M_2'$ : $-\frac{2}{g_{m2}}$ (question 2).
+
+Les deux sont **en parallèle** : les admittances s'ajoutent,
+$$\frac{1}{Z_{diff}} = \frac{g_{m3}}{2} - \frac{g_{m2}}{2} \quad\Longrightarrow\quad Z_{diff} = \frac{2}{g_{m3} - g_{m2}} .$$
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex2-q9.png){fig-alt="Q9 : gain en tension Av = (Vout1 - Vout2)/(Vin1 - Vin2) en fonction des transconductances."}
+
+:::: {.complement}
+::: {.solution}
+Par symétrie, en mode différentiel $v_2 = -v_1$. L'équation du nœud 1 (question 6) devient :
+$$g_{m1}\frac{v_{id}}{2} + (g_{m3} - g_{m2})\, v_1 = 0 \quad\Longrightarrow\quad v_1 = -\frac{g_{m1}}{2\,(g_{m3} - g_{m2})}\, v_{id} .$$
+Avec $v_{out1} - v_{out2} = 2 v_1$ :
+$$\boxed{A_v = \frac{v_{out1} - v_{out2}}{v_{in1} - v_{in2}} = -\frac{g_{m1}}{g_{m3} - g_{m2}}}$$
+Contrôle par la question 7 : la paire différentielle injecte un courant différentiel $g_{m1} v_{id}/2$ dans la charge $Z_{diff}$, soit $A_v = -g_{m1}\frac{Z_{diff}}{2}$, même résultat. Sans la paire croisée ($g_{m2} = 0$), on retrouve le gain classique d'une paire à charges diodes, $-\frac{g_{m1}}{g_{m3}}$.
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex2-q10.png){fig-alt="Q10 : à quelle condition ce gain est-il infini ?"}
+
+:::: {.complement}
+::: {.solution}
+$A_v \to \infty$ si
+$$\boxed{g_{m2} = g_{m3}} \quad\Longleftrightarrow\quad \left(\frac{W}{L}\right)_2 = \left(\frac{W}{L}\right)_3$$
+(question 4 : même $V_{SG}$, donc même rapport $g_m$ que $W/L$). La résistance négative de la paire croisée annule exactement la résistance des diodes : la charge différentielle devient infinie.
+
+En pratique, le gain reste fini : en gardant les $r_{ds}$ (modulation de longueur de canal), l'équation du nœud donne
+$$A_v = -\frac{g_{m1}}{g_{m3} - g_{m2} + g_{ds1} + g_{ds2} + g_{ds3}} \;\xrightarrow{g_{m2} = g_{m3}}\; -g_{m1}\,(r_{ds1} \parallel r_{ds2} \parallel r_{ds3}),$$
+et l'égalité $g_{m2} = g_{m3}$ n'est jamais exacte (dispersions technologiques). On choisit donc $g_{m2}$ un peu inférieur à $g_{m3}$.
+
+Mise en garde : si $g_{m2} > g_{m3}$, la résistance différentielle totale est **négative** ; le circuit bascule (bascule bistable, *latch*), ce qui sert dans les comparateurs. Avec un résonateur $LC$ entre les drains au lieu des diodes, la même résistance négative compense les pertes du résonateur : c'est l'**oscillateur à résistance négative** du chapitre 4.
+:::
+::::

@@ -1,0 +1,179 @@
+---
+title: "Fiche de révision — Échantillonnage, TF et transformée en z"
+subtitle: "TSIG1 · passer du temps à la fréquence et à z, retards, paires et propriétés"
+matiere: tsig1
+date-modified: 2026-10-21
+---
+
+{{< include /_macros.qmd >}}
+
+::: {.complement}
+**Fiche de synthèse rédigée par Claude** pour le partiel du 22 octobre 2026. Le texte sans marquage **résume le cours Bristol** (chapitres 1 à 5) : chaque ligne renvoie au passage d'origine, où sa source (notes d'Armand, notes 2023…) est indiquée. Les blocs *Complément* contiennent ce qui **n'est pas dans le cours** mais sert dans les annales : paires et propriétés classiques, méthodes, pièges. Toutes les paires et propriétés de cette page ont été **vérifiées numériquement** (sommes calculées directement et comparées aux formules).
+:::
+
+Notation : $f$ désigne la **fréquence normalisée** ($f = f_\text{Hz}/f_e$, période 1, étudiée sur $[-\frac12, \frac12]$) et $\omega = 2\pi f$ la **pulsation normalisée** ($\omega \in [-\pi, \pi]$), celle des sujets d'annales. Pour passer d'une écriture à l'autre : **remplacer $2\pi f$ par $\omega$**.
+
+## Les trois représentations et comment passer de l'une à l'autre {#sec-fiche-trois-domaines}
+
+| Domaine | Définition | Variable | Cours |
+|---|---|---|---|
+| Temps | $x[n] = x_a(nT_e)$ | $n \in \mathbb{Z}$ | [ch. 1](../cours/01-echantillonnage-signal-discret.qmd#def-echantillonnage) |
+| Fréquence (TFSD) | $X(f) = \displaystyle\sum_n x[n]\, e^{-j2\pi f n}$ | $f$ réel, $X$ **périodique de période 1** | [ch. 3](../cours/03-tfd-interpretation-frequentielle.qmd#def-frequence-normalisee) |
+| Transformée en $z$ | $X(z) = \displaystyle\sum_n x[n]\, z^{-n}$ | $z$ complexe, dans la zone de convergence | [ch. 4](../cours/04-implementation-equations-differences.qmd#def-transformee-z) |
+
+*Tableau 1 – Les trois représentations d'un signal discret*
+
+- **Hz → normalisée** : $f = \dfrac{f_\text{Hz}}{f_e} = f_\text{Hz}\, T_e$ et $\omega = 2\pi f = \Omega\, T_e$, où $\Omega = 2\pi f_\text{Hz}$ est la pulsation en rad/s. En Hz, la TFSD s'écrit $X(f) = \sum_n x(nT_e)\, e^{-j2\pi f n T_e}$ ([ch. 3](../cours/03-tfd-interpretation-frequentielle.qmd#eq-tfsd)).
+- **$z$ → Fourier** : $X(f) = X(z)\big|_{z = e^{j2\pi f}} = X(z)\big|_{z = e^{j\omega}}$. C'est possible **seulement si la zone de convergence contient le cercle unité** $|z| = 1$, le « lieu de la transformée de Fourier » ([ch. 4](../cours/04-implementation-equations-differences.qmd#def-transformee-z)).
+- **Équation aux différences → $H(z)$** : chaque $y[n-k]$ devient $z^{-k}\,Y(z)$ et chaque $x[n-l]$ devient $z^{-l}\,X(z)$ ([théorème du retard](../cours/04-implementation-equations-differences.qmd#prp-retard-transformee-z)), puis $H(z) = Y(z)/X(z)$.
+- **$H(z)$ → $h[n]$** : éléments simples, puis la paire $\alpha^n u[n] \leftrightarrow \frac{1}{1 - \alpha z^{-1}}$ (@sec-fiche-methode-z).
+- **Système** : $y = h \star x \iff Y(f) = H(f)\,X(f) \iff Y(z) = H(z)\,X(z)$ ([ch. 3](../cours/03-tfd-interpretation-frequentielle.qmd#thm-reponse-frequence)).
+
+::: {.complement}
+Le passage $X(z) \to X(f)$ est une simple **substitution**, mais la réciproque n'est pas automatique : il faut connaître la zone de convergence. $u[n]$ a une transformée en $z$ ($|z| > 1$) mais **pas de TFSD au sens usuel**, car le cercle unité est exclu de sa zone de convergence.
+:::
+
+## Échantillonnage {#sec-fiche-echantillonnage}
+
+- Signal échantillonné : $x_m(t) = \sum_n x_a(nT_e)\,\delta(t - nT_e)$.
+- **Périodisation du spectre** : $X_m(f) = \dfrac{1}{T_e}\displaystyle\sum_k X_a(f - kf_e)$, périodique de période $f_e$ ([ch. 1](../cours/01-echantillonnage-signal-discret.qmd#eq-periodisation)).
+- **Shannon-Nyquist** : $f_e \geq 2f_{\max}$ pour un signal à bande limitée. Pour une sinusoïde pure, il faut $f_e > 2f_0$ strictement. Sinon les motifs se chevauchent : c'est le **repliement** ([ch. 1](../cours/01-echantillonnage-signal-discret.qmd#thm-shannon)).
+- **Reconstruction** idéale (CNA) : gain $T_e$ sur $[-\frac{f_e}{2}, \frac{f_e}{2}]$, nul ailleurs ; $h_\mathrm{rec}(t) = \sinc(f_e t)$ et $x_\mathrm{rec}(t) = \sum_n x[n]\,\sinc\bigl(f_e(t - nT_e)\bigr)$ ([ch. 1](../cours/01-echantillonnage-signal-discret.qmd#eq-interpolation-shannon)).
+- **Réponse à une sinusoïde** ($h$ réelle) : $\cos(\omega_0 n) \to \lvert H(\omega_0)\rvert \cos\bigl(\omega_0 n + \operatorname{Arg} H(\omega_0)\bigr)$ ([ch. 3](../cours/03-tfd-interpretation-frequentielle.qmd#eq-reponse-sinusoide)).
+
+::: {.complement}
+**Repliement d'une sinusoïde : méthode.**
+
+1. Calculer la pulsation normalisée $\omega_0 = 2\pi \dfrac{f_0}{f_e}$.
+2. Si $|\omega_0| > \pi$ (soit $f_0 > f_e/2$), la **ramener dans $[-\pi, \pi]$** en retranchant un multiple de $2\pi$ : $\omega_0' = \omega_0 - 2\pi k$. Les deux pulsations donnent **les mêmes échantillons**, car $e^{j2\pi k n} = 1$ pour $n$ entier.
+3. La fréquence apparente est $f_0' = |f_0 - k f_e| \leq f_e/2$ : c'est elle qui ressort du CNA.
+
+Exemple ([partiel 2022-2023, ex. 1](../annales/2022-2023-partiel.qmd#sec-ann22-ex1)) : $f_e = 10$ Hz et $f_0 = 7$ Hz donnent $\omega_0 = 1{,}4\pi$, ramenée à $-0{,}6\pi$. On a donc $\cos(1{,}4\pi n) = \cos(0{,}6\pi n)$ : le signal apparaît à **3 Hz**.
+
+**Chaîne CAN → $H(\omega)$ → CNA.**
+
+1. $x[n] = x_a(nT_e)$.
+2. Ramener $\omega_0$ dans $[-\pi, \pi]$.
+3. Appliquer $H$ : module et phase en $\omega_0$.
+4. Reconstruire en remplaçant $n$ par $t/T_e$, avec la fréquence ramenée dans $[-\frac{f_e}{2}, \frac{f_e}{2}]$.
+
+Sans repliement, la chaîne complète équivaut au filtre analogique $H_a(f_\text{Hz}) = H\!\left(\omega = 2\pi \frac{f_\text{Hz}}{f_e}\right)$.
+
+**Piège** : ne jamais calculer $H$ en une pulsation hors de $[-\pi, \pi]$ avec une formule valable seulement sur cet intervalle (par exemple $H(\omega) = j\omega/T$).
+:::
+
+## Paires usuelles {#sec-fiche-paires}
+
+Paires du cours :
+
+| $x[n]$ | $X(z)$ | Zone de convergence | $X(f)$ |
+|---|---|---|---|
+| $\delta[n]$ | $1$ | tout $z$ | $1$ |
+| $\delta[n-k]$ | $z^{-k}$ | $z \neq 0$ (si $k > 0$) | $e^{-j2\pi f k}$ |
+| $\alpha^n u[n]$ | $\dfrac{1}{1 - \alpha z^{-1}} = \dfrac{z}{z - \alpha}$ | $\lvert z\rvert > \lvert\alpha\rvert$ | $\dfrac{1}{1 - \alpha\, e^{-j2\pi f}}$ si $\lvert\alpha\rvert < 1$ |
+| $\frac12\bigl(\delta[n] + \delta[n-1]\bigr)$ (moyenne) | $\frac12(1 + z^{-1})$ | $z \neq 0$ | $e^{-j\pi f}\cos(\pi f)$ |
+
+*Tableau 2 – Paires du cours : [impulsion](../cours/01-echantillonnage-signal-discret.qmd#def-echelon-impulsion), [retard](../cours/03-tfd-interpretation-frequentielle.qmd#thm-retard-tfsd), [exponentielle](../cours/04-implementation-equations-differences.qmd#eq-tz-exponentielle), [moyenne](../cours/03-tfd-interpretation-frequentielle.qmd#eq-h-moyenne-normalisee)*
+
+::: {.complement}
+Paires classiques, hors cours (vérifiées numériquement) :
+
+| $x[n]$ | $X(z)$ | Zone de convergence |
+|---|---|---|
+| $u[n]$ | $\dfrac{1}{1 - z^{-1}} = \dfrac{z}{z - 1}$ | $\lvert z\rvert > 1$ (pas de TFSD usuelle) |
+| $-\alpha^n u[-n-1]$ (anticausal) | $\dfrac{1}{1 - \alpha z^{-1}}$ | $\lvert z\rvert < \lvert\alpha\rvert$ |
+| $n\,\alpha^n u[n]$ | $\dfrac{\alpha z^{-1}}{(1 - \alpha z^{-1})^2}$ | $\lvert z\rvert > \lvert\alpha\rvert$ |
+| porte $p_N[n] = 1$ pour $0 \leq n \leq N-1$ | $\dfrac{1 - z^{-N}}{1 - z^{-1}}$ | $z \neq 0$ |
+| $\cos(\omega_0 n)\, u[n]$ | $\dfrac{1 - \cos\omega_0\, z^{-1}}{1 - 2\cos\omega_0\, z^{-1} + z^{-2}}$ | $\lvert z\rvert > 1$ |
+| $\sin(\omega_0 n)\, u[n]$ | $\dfrac{\sin\omega_0\, z^{-1}}{1 - 2\cos\omega_0\, z^{-1} + z^{-2}}$ | $\lvert z\rvert > 1$ |
+| $r^n\cos(\omega_0 n)\, u[n]$ | $\dfrac{1 - r\cos\omega_0\, z^{-1}}{1 - 2r\cos\omega_0\, z^{-1} + r^2 z^{-2}}$ | $\lvert z\rvert > r$ |
+
+*Tableau 3 – Paires classiques complémentaires*
+
+- **TFSD de la porte** de $N$ points : $P_N(f) = e^{-j\pi f(N-1)}\, \dfrac{\sin(\pi N f)}{\sin(\pi f)}$. Le module vaut $N$ en $f = 0$ et s'annule en $f = k/N$.
+- **Somme géométrique**, souvent rappelée dans les sujets : $\displaystyle\sum_{n=N_1}^{N_2} \alpha^n = \frac{\alpha^{N_1} - \alpha^{N_2+1}}{1 - \alpha}$.
+- Même $X(z)$, deux signaux différents ($\alpha^n u[n]$ et $-\alpha^n u[-n-1]$) : **c'est la zone de convergence qui tranche**. Sauf mention contraire, on prend le système **causal** (extérieur d'un disque).
+:::
+
+## Propriétés {#sec-fiche-proprietes}
+
+Propriétés du cours :
+
+| Opération | Temps | Fourier | $z$ |
+|---|---|---|---|
+| **Retard** de $k$ | $x[n-k]$ | $e^{-j2\pi f k}\, X(f)$ | $z^{-k}\, X(z)$ |
+| Convolution | $(h \star x)[n]$ | $H(f)\, X(f)$ | $H(z)\, X(z)$ |
+| Cascade (série) | $h_1 \star h_2$ | $H_1 H_2$ | $H_1 H_2$ |
+| Parallèle | $h_1 + h_2$ | $H_1 + H_2$ | $H_1 + H_2$ |
+
+*Tableau 4 – Propriétés du cours : [retard (Fourier)](../cours/03-tfd-interpretation-frequentielle.qmd#eq-retard-tfsd), [retard ($z$)](../cours/04-implementation-equations-differences.qmd#prp-retard-transformee-z), [convolution](../cours/03-tfd-interpretation-frequentielle.qmd#eq-y-egal-hx), [association](../cours/02-systemes-discrets-convolution.qmd#sec-association-systemes)*
+
+En pulsation : retard $\to e^{-j\omega k}\,X(\omega)$.
+
+::: {.complement}
+Propriétés classiques, hors cours (vérifiées numériquement) :
+
+| Opération | Temps | Fourier | $z$ |
+|---|---|---|---|
+| **Avance** de $k$ | $x[n+k]$ | $e^{+j2\pi f k}\, X(f)$ | $z^{k}\, X(z)$ |
+| Modulation | $e^{j2\pi f_0 n}\, x[n]$ | $X(f - f_0)$ | $X\bigl(z\, e^{-j2\pi f_0}\bigr)$ |
+| Modulation par un cosinus | $\cos(2\pi f_0 n)\, x[n]$ | $\frac12\bigl[X(f - f_0) + X(f + f_0)\bigr]$ | — |
+| Multiplication par $a^n$ | $a^n\, x[n]$ | — | $X(z/a)$ |
+| Retournement | $x[-n]$ | $X(-f)$ | $X(1/z)$ |
+| Conjugaison | $x^*[n]$ | $X^*(-f)$ | $X^*(z^*)$ |
+| Multiplication par $n$ | $n\, x[n]$ | $\dfrac{j}{2\pi}\dfrac{\mathrm{d}X}{\mathrm{d}f}$ | $-z\,\dfrac{\mathrm{d}X}{\mathrm{d}z}$ |
+| Décimation d'ordre 2 | $x[2n]$ | $\frac12\bigl[X(\frac{f}{2}) + X(\frac{f}{2} - \frac12)\bigr]$ | — |
+
+*Tableau 5 – Propriétés classiques complémentaires*
+
+- **Signal réel** : $X(-f) = X^*(f)$, $\lvert X\rvert$ est **paire** et $\operatorname{Arg} X$ **impaire**. D'où $x[-n] \leftrightarrow X^*(f)$ et $x[n] \star x[-n] \leftrightarrow \lvert X(f)\rvert^2$ ([partiel 2022-2023, ex. 2](../annales/2022-2023-partiel.qmd#sec-ann22-ex2)).
+- **Valeurs particulières** : $X(0) = \sum_n x[n]$ et $x[0] = \displaystyle\int_{-1/2}^{1/2} X(f)\,\mathrm{d}f$.
+- **Parseval** : $\displaystyle\sum_n \lvert x[n]\rvert^2 = \int_{-1/2}^{1/2} \lvert X(f)\rvert^2\,\mathrm{d}f$.
+- **En pulsation** : modulation $e^{j\omega_0 n} x[n] \to X(\omega - \omega_0)$ ; décimation $\to \frac12\bigl[X(\frac{\omega}{2}) + X(\frac{\omega}{2} - \pi)\bigr]$.
+- **Combiner deux opérations** : appliquer les règles **dans l'ordre**, en remplaçant la variable **partout**. Exemple : $x_1[n] = e^{j\pi n/2}\, x[n+2]$.
+  - L'avance donne $e^{j2\omega} X(\omega)$.
+  - La modulation remplace ensuite $\omega$ par $\omega - \frac{\pi}{2}$, **y compris dans l'exponentielle** : $X_1(\omega) = e^{j2(\omega - \pi/2)}\, X(\omega - \frac{\pi}{2}) = -e^{j2\omega} X(\omega - \frac{\pi}{2})$.
+- **Signes** : retard $x[n-k]$ → exposant **négatif** ($e^{-j\omega k}$, $z^{-k}$) ; avance $x[n+k]$ → exposant **positif**.
+- **Décimation** : plus court en revenant au temps quand c'est possible. Par exemple $(-0{,}8)^{2n} u[2n] = 0{,}64^n u[n]$.
+:::
+
+## Équation aux différences, $H(z)$ et $h[n]$ : méthode {#sec-fiche-methode-z}
+
+Forme générale (causale) : $\displaystyle\sum_k c_k\, y[n-k] = \sum_l d_l\, x[n-l]$, d'où $H(z) = \dfrac{\sum_l d_l\, z^{-l}}{\sum_k c_k\, z^{-k}} = \dfrac{N(z)}{D(z)}$ ([ch. 4](../cours/04-implementation-equations-differences.qmd#eq-h-z-fraction)).
+
+1. **$H(z)$** : transformée en $z$ de l'équation (théorème du retard), puis $H = Y/X$.
+2. **Pôles et zéros** : multiplier numérateur et dénominateur par la plus grande puissance de $z$, pour avoir des polynômes en $z$. Les zéros sont les racines de $N$, les pôles celles de $D$. **Ne pas oublier les zéros (ou pôles) en $z = 0$** que fait apparaître ce produit.
+3. **Stabilité** d'un système causal : stable $\iff$ **tous les pôles vérifient $|p_k| < 1$** ([ch. 4](../cours/04-implementation-equations-differences.qmd#thm-stabilite-poles)). C'est équivalent à $\sum_n |h[n]| < \infty$, et à une zone de convergence qui contient le cercle unité. Un **RIF est toujours stable**.
+4. **$H(f)$** : $H(z)$ en $z = e^{j2\pi f}$. Le module est grand près d'un pôle et nul sur un zéro placé sur le cercle unité ([lecture géométrique](../cours/04-implementation-equations-differences.qmd#eq-module-poles-zeros)).
+5. **$h[n]$** : décomposer $\dfrac{H(z)}{z} = \displaystyle\sum_k \frac{A_k}{z - p_k}$, d'où $H(z) = \sum_k \dfrac{A_k\, z}{z - p_k}$ et
+
+   $$h[n] = \sum_k A_k\, p_k^{\,n}\, u[n] \qquad (\text{système causal}).$$
+
+   Voir l'[exemple complet du cours](../cours/04-implementation-equations-differences.qmd#sec-exemple-complet-rii).
+
+::: {.complement}
+- **Coefficient** d'un pôle simple : $A_k = \left[(z - p_k)\,\dfrac{H(z)}{z}\right]_{z = p_k}$.
+- **Toujours contrôler** $h[0]$ et $h[1]$ par la récurrence avec $x = \delta$.
+- **Exemple du cours** : $y[n] + \frac14 y[n-1] - \frac38 y[n-2] = x[n]$.
+  - $H(z) = \dfrac{z^2}{(z + \frac34)(z - \frac12)}$ : pôles $-\frac34$ et $\frac12$ (stable), zéro double en 0.
+  - $\dfrac{H(z)}{z} = \dfrac{z}{(z + \frac34)(z - \frac12)}$, d'où $A_{-3/4} = \dfrac{-3/4}{-5/4} = \dfrac35$ et $A_{1/2} = \dfrac{1/2}{5/4} = \dfrac25$.
+  - $h[n] = \left[\frac35\left(-\frac34\right)^n + \frac25\left(\frac12\right)^n\right] u[n]$.
+  - Contrôle : $h[0] = 1$ et $h[1] = -\frac14$ ✓.
+- **Sens inverse ($H(z)$ → équation)** : écrire $H$ en puissances de $z^{-1}$, faire le produit en croix $D(z^{-1})\,Y = N(z^{-1})\,X$, puis traduire chaque $z^{-k}$ en retard de $k$.
+- **Cascade** : $H = H_1 H_2$, et les pôles de la cascade sont ceux de $H_1$ et de $H_2$ (sauf simplification pôle-zéro). Identifier les coefficients avec l'équation donnée ([exercice « Filtre RII et cascade »](../annales/2022-2023-partiel.qmd#sec-ann22-ex3)).
+:::
+
+## TFD (question de cours fréquente) {#sec-fiche-tfd}
+
+$$
+X[k] = \sum_{n=0}^{N-1} x[n]\, e^{-j2\pi \frac{kn}{M}}, \qquad k \in [\![0, M-1]\!], \qquad \Delta f = \frac{f_e}{M}.
+$$
+
+La TFD **n'est pas** la TFSD. La TFSD porte sur tous les échantillons et donne une fonction continue de $f$, périodique. La TFD porte sur $N$ échantillons (fenêtre d'observation) et donne $M$ valeurs de cette fonction ([ch. 3](../cours/03-tfd-interpretation-frequentielle.qmd#def-tfd)). La résolution est $\approx 1/\tau = f_e/N$ ([fenêtrage](../cours/03-tfd-interpretation-frequentielle.qmd#eq-fenetrage)).
+
+## Retards et phase {#sec-fiche-retards-phase}
+
+- Un retard pur $x[n-k]$ multiplie le spectre par $e^{-j\omega k}$ : module inchangé, phase $-\omega k$ **linéaire**.
+- **Retard de groupe** : $\tau = -\dfrac{\mathrm{d}\operatorname{Arg} H(\omega)}{\mathrm{d}\omega}$, en échantillons ([ch. 5](../cours/05-representation-en-phase.qmd#eq-retard-groupe)). Pour un retard pur de $k$, $\tau = k$.
+- **Phase linéaire** $\iff$ retard de groupe **constant**, donc pas de distorsion de phase. Pour un RIF, c'est le cas quand $h[n] = \pm h[M - n]$ (coefficients symétriques ou antisymétriques) ([ch. 5](../cours/05-representation-en-phase.qmd#eq-rif-symetrique)).
+- Exemple : la moyenne $\frac12(x[n] + x[n-1])$ a pour phase $-\pi f = -\frac{\omega}{2}$, soit $\tau = \frac12$ échantillon.

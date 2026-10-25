@@ -3,7 +3,7 @@
 > Détails techniques du projet : configuration Quarto, structure des dossiers, application de révision, scripts, build, hébergement.
 > Les choix de fond sont dans `CONTEXTE_PROJET.md` (section 5) ; les règles d'écriture dans `conventions.md`.
 >
-> Dernière mise à jour : 7 octobre 2026.
+> Dernière mise à jour : 25 octobre 2026 (§ 10 : publication sur GitHub Pages).
 
 ---
 
@@ -228,7 +228,14 @@ Pour un site de plusieurs centaines de pages : rendu d'un seul fichier (`quarto 
 
 ## 10. Hébergement
 
-**Non décidé** (question ouverte 1 de `CONTEXTE_PROJET.md`). En attendant : **utilisation locale uniquement** (`quarto preview`), conformément à la règle « pas de publication avant clarification des droits ».
+**GitHub Pages, accès public** (décision d'Armand du 25 octobre 2026, `CONTEXTE_PROJET.md` § 5.4). Adresse : https://armandgm43-droid.github.io/bristol-site/ (révisions : `https://armandgm43-droid.github.io/bristol-site/revision/`).
+
+- Construction : `.github/workflows/publier-site.yml`. À chaque push sur `main` (ou bouton « Run workflow » de l'onglet *Actions*), GitHub installe Quarto 1.10.19, lance `quarto render` et publie `_site/`. Aucune cellule de code n'est exécutée : les figures sont versionnées en SVG, Python n'est pas nécessaire.
+- Réglage unique sur GitHub : *Settings → Pages → Build and deployment → Source : GitHub Actions*.
+- Dépôt privé : GitHub Pages n'est disponible sur un dépôt privé qu'avec GitHub Pro (gratuit avec le GitHub Student Developer Pack). Sinon, il faudrait rendre le dépôt public.
+- Ce qui est publié : uniquement le contenu de `_site/` (pages `.qmd`, `revision/`, `assets/bristol-tokens.css`). Les `.md` de travail et `sources/` (ignoré par Git) ne le sont pas.
+- **Progression de révision** : liée à l'adresse (`localStorage`). Celle de `localhost:4848` ne se transfère pas vers le site publié (voir `ETAT_PROJET.md`, problème 17).
+- `quarto preview` (port 4848) reste utilisable en local.
 
 ### Dépôts GitHub
 

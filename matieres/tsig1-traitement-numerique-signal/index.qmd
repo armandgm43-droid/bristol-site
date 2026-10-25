@@ -36,6 +36,7 @@ Chapitres **à relire par Armand** : 30 blocs *À vérifier* ouverts (1, 4, 9, 1
 
 Partiel 2026-2027 : **jeudi 22 octobre 2026** (1 h 20, sans document, calculatrice autorisée, d'après les annales).
 
+- **[Fiche de révision : échantillonnage, TF et transformée en z](fiches/fiche-tf-tz-echantillonnage.qmd)** : passage entre temps, fréquence et $z$, repliement, paires et propriétés (retard, avance, modulation, retournement, décimation…), méthode équation → $H(z)$ → $h[n]$, TFD, retard de groupe.
 - **9 annales corrigées** : chaque sujet est affiché en images, découpé question par question, avec la solution juste en dessous (solutions rédigées par Claude et vérifiées par le calcul, à relire).
 
   | Sujet | Date | Source |

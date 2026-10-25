@@ -68,6 +68,7 @@ Inventaire complet, page par page et avec le rattachement aux chapitres : `analy
 | `tableau-2020-…` | `notes/2020-tableau-cours-NN.pdf`, 4 séances | externe | tableau numérique (support annoté), 2020 ; auteur probable : l'enseignant, non confirmé |
 | `tp` | `tp/tp-oscillateur-lc-350nm.pdf`, 11 p. | officielle | TP (TDM) : oscillateur LC intégré en CMOS 350 nm, sous Cadence (ajouté le 19 octobre 2026) |
 | — | `corriges/`, `annales/` | à préciser | corrigés manuscrits (phase 2) |
+| `sujet-2016-hf` | `annales/2016-2017-partiel-circuits-hf-oscillateurs.pdf`, 2 p. | officielle | partiel EA210 « Circuits HF et oscillateurs » (N. Deltimple) ; exercice II (paire croisée, résistance négative) corrigé par Claude : [Partiel 2016-2017 (Circuits HF)](annales/2016-2017-partiel-circuits-hf.qmd) (22 octobre 2026) |
 
 ## Remarques
 

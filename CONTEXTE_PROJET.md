@@ -6,7 +6,7 @@
 > Phrase de démarrage type :
 > « Lis `CONTEXTE_PROJET.md`, `conventions.md` et `ETAT_PROJET.md`, puis reprends le projet à partir de son état actuel. »
 >
-> Dernière mise à jour : 19 octobre 2026 (matières du S7).
+> Dernière mise à jour : 25 octobre 2026 (site publié sur GitHub Pages, accès public).
 
 ---
 
@@ -262,7 +262,8 @@ Les cours sont écrits dans des fichiers `.qmd` (Markdown enrichi). Quarto les t
   1. **accès réservé** à une liste d'adresses e-mail (solution privilégiée : Cloudflare Pages + Cloudflare Access, qui propose une offre gratuite pour un petit nombre d'utilisateurs) ;
   2. **accord des enseignants** concernés pour les contenus dérivés de leurs supports.
 - Tant que ces conditions ne sont pas réunies : utilisation **en local uniquement** (`quarto preview`), rien n'est publié.
-- **Attention :** un site GitHub Pages est **public**, même si le dépôt est privé (sauf offre GitHub Enterprise). Il ne convient donc pas au site de cours.
+- **Attention :** un site GitHub Pages est **public**, même si le dépôt est privé (sauf offre GitHub Enterprise).
+- **Décision du 2026-10-25 (Armand) :** pour pouvoir consulter Bristol depuis n'importe quel navigateur, le site est **publié sur GitHub Pages, en accès public**, à l'adresse https://armandgm43-droid.github.io/bristol-site/ (construit par GitHub Actions à chaque push sur `main`, voir `architecture.md` § 10). Armand accepte que le site soit lisible par toute personne qui en a l'adresse. Cette décision **remplace provisoirement** la condition « accès réservé + accord des enseignants » ci-dessus ; la solution Cloudflare Access reste possible plus tard. Les sources brutes (`sources/`, dont `travaux/`) ne sont toujours jamais publiées.
 - Option de repli, non tranchée : si un enseignant refuse, ne publier de sa matière que les parties qui ne reprennent pas ses supports.
 - À faire **avant la publication** :
   - une page « À propos » qui explique les quatre catégories et l'origine des notes ;
@@ -829,7 +830,7 @@ Chapitre 4 : 57 cartes (`flashcards/04-transmission-presence-bruit.yml`, 7 octob
 2. **Ne pas corriger silencieusement** une source.
 3. **Ne pas supprimer** une information importante des notes.
 4. **Ne pas générer les flashcards définitives** avant la validation du cours.
-5. **Ne publier les supports** (ni les contenus qui en dérivent) **qu'avec l'accord des enseignants et derrière un accès réservé** à la promo (voir § 5.4) ; aucun contenu personnel ou sans rapport avec le cours dans les pages publiées.
+5. **Ne jamais publier les sources brutes** (PDF des enseignants, scans, `sources/`). Le site (contenus dérivés) est publié sur GitHub Pages en accès public par décision d'Armand du 2026-10-25 (voir § 5.4) ; aucun contenu personnel ou sans rapport avec le cours dans les pages publiées.
 6. **Ne pas dépendre d'une conversation unique** : tout ce qui compte est dans les fichiers.
 7. **Conserver des identifiants stables** : fichiers, labels, flashcards.
 8. **Privilégier la maintenabilité** à la rapidité.
@@ -948,6 +949,7 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 | 2026-10-07 | TS227 ch. 1 et 4 vérifiés et validés ; 12 et 57 flashcards générées (statut `flashcards`) ; paquet TS227 : 186 cartes | Étapes 6 à 8 ; rapports ch. 1 et 4, § 17-18 |
 | 2026-10-07 | Nouvelle matière EANA3 — Circuits intégrés (F. Rivet, Y. Deval) ; plan en 5 chapitres validé le 8 octobre | Inventaire `matieres/eana3-circuits-integres/analyses/inventaire-sources.md` |
 | 2026-10-08 | Catégorie *Notes externes* (`.notes-externes`), variante des notes de cours pour les notes qui ne sont pas celles d'Armand | EANA3 : seules des notes d'anciennes promotions sont disponibles |
+| 2026-10-25 | Site publié sur **GitHub Pages, en accès public** (https://armandgm43-droid.github.io/bristol-site/), construit par GitHub Actions (`.github/workflows/publier-site.yml`) ; remplace provisoirement la condition « accès réservé + accord des enseignants » (§ 5.4, règle 19.5) | Choix d'Armand : accéder au site depuis n'importe quel navigateur, sans `quarto preview` |
 | 2026-10-19 | Les 16 matières du S7 sont dans Bristol (archive 2A redistribuée) ; sources : dossiers `tp/` et `travaux/` (travaux personnels, jamais publiés) ; documents d'un ancien élève en nature `externe` | Centraliser toute l'année ; voir `conventions.md` § 2 et `ETAT_PROJET.md` |
 
 ---
@@ -957,7 +959,7 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 À trancher au fil du projet. Une fois tranchée, une question passe dans le [journal des décisions](#21-journal-des-décisions).
 
 1. **Hébergement du site de cours** : public avec accord des enseignants, privé derrière une authentification, ou local uniquement ?
-   *Règle provisoire : utilisation en local uniquement (`quarto preview`), rien n'est publié.*
+   *Règle provisoire : utilisation en local uniquement (`quarto preview`), rien n'est publié.* *Remplacée le 2026-10-25 : site publié sur GitHub Pages, en accès public (choix d'Armand, § 5.4).*
    *Orientation (2026-10-07) : le site sera publié pour la promo ; privilégier un accès réservé par liste d'e-mails (ex. Cloudflare Access) et demander l'accord des enseignants. La règle provisoire s'applique tant que la question n'est pas tranchée.*
 2. **Dépôt** : un seul dépôt (site + application de révision), ou deux dépôts ? Les sources brutes restent dans tous les cas hors du dépôt public.
 3. ~~**Classes des quatre catégories**~~ : *tranchée le 2026-10-06, voir le journal des décisions.*

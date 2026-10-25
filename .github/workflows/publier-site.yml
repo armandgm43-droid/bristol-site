@@ -1,0 +1,52 @@
+# Publication du site Bristol sur GitHub Pages.
+# À chaque push sur main : GitHub installe Quarto, construit le site (_site/)
+# et le publie. Aucune commande à lancer en local.
+# Réglage à faire une fois sur GitHub : Settings → Pages → Source : « GitHub Actions ».
+# Voir architecture.md § 10.
+
+name: Publier le site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:   # bouton « Run workflow » dans l'onglet Actions
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  construire:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 1.10.19   # même version qu'en local (architecture.md § 9)
+
+      - name: Construire le site
+        run: quarto render
+
+      - name: Préparer la publication
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  publier:
+    needs: construire
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
+      - name: Publier sur GitHub Pages
+        id: deploiement
+        uses: actions/deploy-pages@v4
