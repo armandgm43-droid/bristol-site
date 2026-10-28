@@ -1,0 +1,27 @@
+---
+title: "Partiel 2017-2018 (Commande linéaire) — renvoi"
+subtitle: "AU201 · le fichier rangé sous cette année est une photo du sujet du 13 janvier 2017"
+matiere: auto1
+date-modified: 2026-10-27
+sources:
+  - id: sujet-1718-cl
+    fichier: annales/2017-2018-partiel-commande-lineaire.pdf
+    nature: officielle
+    pages: "1-3"
+  - id: sujet-1617-cl
+    fichier: annales/2016-2017-partiel-commande-lineaire.pdf
+    nature: officielle
+    pages: "1-3"
+---
+
+{{< include /_macros.qmd >}}
+
+::: {.a-verifier #av-ann1718cl-sujet-identique}
+**Source** [sujet-1718-cl, p. 1] : en-tête manuscrit « Vendredi 13 janvier 2017. Épreuve : AU201. Responsable de l'épreuve : A. Oustaloup. Durée : 14 h 00 – 15 h 30 », puis le problème « Le principe de la commande à grand gain… » (questions 1 à 5).
+
+**Problème** : ce fichier, rangé comme partiel de 2017-2018, est une **photo des mêmes feuilles** que `annales/2016-2017-partiel-commande-lineaire.pdf` [sujet-1617-cl] (même en-tête daté de janvier 2017, même écriture, mêmes défauts du papier) ; seul le traitement de l'image diffère (photo en niveaux de gris contre scan binarisé). Soit le même sujet a été redonné en 2017-2018 et la photo de la nouvelle épreuve n'a pas été conservée, soit le fichier a été mal attribué à l'année 2017-2018 lors du rangement.
+
+**Proposition** : ne pas dupliquer le corrigé ; considérer ce fichier comme un doublon du sujet de 2016-2017 et vérifier, si possible, le sujet réellement posé en 2017-2018. Si le doublon est confirmé, cette page peut être retirée du site (ou gardée comme simple renvoi).
+:::
+
+Le corrigé complet de ce sujet (restructuration en boucle élémentaire, lieu de Black, transmittances en asservissement et en régulation, sensibilités de l'entrée) est sur la page du [partiel 2016-2017](2016-2017-partiel-commande-lineaire.qmd#sec-ann1617cl-pb).

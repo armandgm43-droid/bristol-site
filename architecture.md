@@ -81,7 +81,10 @@ Fichiers générés, jamais versionnés : `_site/`, `.quarto/`, `*_files/`, `*_c
 | `website.search` | `true` | recherche plein texte côté navigateur |
 | `website.navbar` | Matières, Révisions, Conventions | barre de navigation |
 | `website.sidebar` | une barre par matière (`id: ts227`) | les chapitres y sont ajoutés à la main, dans l'ordre |
-| `format.html.theme` | clair : `cosmo` + `assets/bristol.scss` ; sombre : idem + `assets/bristol-sombre.scss` | thème (§ 4) |
+| `format.html.theme` | clair : `default` + `assets/bristol.scss` ; sombre : idem + `assets/bristol-sombre.scss` (cosmo abandonné le 28 octobre 2026 : il importait une police Google) | thème (§ 4) |
+| `project.pre-render` | `scripts/catalogue.ts` : catalogue des matières (§ 4.4) | accueil, annales, en-têtes |
+| `format.html.filters`, `template-partials`, `grid` | `assets/bristol.lua`, `assets/partials/title-block.html`, largeurs des colonnes | § 4.1 |
+| `website.navbar`, `page-footer` | Matières, Annales, Révisions ; « Conventions de lecture » dans le pied de page | navigation |
 | `format.html.css` | `assets/bristol-tokens.css` | jetons de DA, inclus dans chaque page |
 | `format.html.respect-user-color-scheme` | `true` | mode sombre selon le système, sauf choix explicite (bouton) |
 | `format.html.html-math-method` | `mathjax` | rendu des maths (Quarto 1.10 charge MathJax 4 ; l'application, MathJax 3.2.2) |
@@ -104,42 +107,45 @@ Fichiers générés, jamais versionnés : `_site/`, `.quarto/`, `*_files/`, `*_c
 
 ## 4. Direction artistique et thème
 
-Règles de la DA (métaphore, surfaces, typographie, catégories, mode sombre) : `conventions.md`, § 13. Ici, la mise en œuvre.
+Règles de la DA (palette, typographie, composants, catégories, mode sombre) : `conventions.md`, § 13. Ici, la mise en œuvre. **Refonte complète le 28 octobre 2026** (design system « Bristol 2026 »).
 
-### 4.1 Trois fichiers dans `assets/`
+### 4.1 Fichiers dans `assets/`
 
 | Fichier | Contenu | Lu par |
 |---|---|---|
-| `bristol-tokens.css` | **Source unique** : variables CSS (couleurs, polices, tailles, espacements), en clair et en sombre ; import des polices Google Fonts | le site (`format.html.css`) et l'application (`<link href="../assets/bristol-tokens.css">`) |
-| `bristol.scss` | Thème Quarto : règles seulement (barre de navigation, page de lecture, barres latérales, recherche, cartes de l'accueil, pastilles de statut, quatre catégories, impression). Aucune couleur en dur : tout passe par `var(--…)`. Côté Sass, seules les polices sont passées à Bootstrap | Quarto (thème clair et sombre) |
-| `bristol-sombre.scss` | Commentaire sentinelle `/*! dark */`, sans aucune couleur : il indique à Quarto que la feuille compilée est le thème sombre (sinon Quarto la traite comme claire, la classe `body.quarto-dark` n'est jamais posée et le bouton ne fait rien) | Quarto (thème sombre uniquement) |
-
-Les deux feuilles Bootstrap compilées (claire et sombre) sont donc presque identiques : c'est le **jeu de jetons actif** qui change les couleurs.
+| `bristol-tokens.css` | **Source unique** : `@font-face` des polices Geist (auto-hébergées), variables CSS (couleurs, échelle typographique, espacements, rayons, ombres, durées) en clair et en sombre, icônes Lucide en masques CSS (`--icon-…`, classe `.i .i-…`), style `kbd`, `prefers-reduced-motion` | le site (`format.html.css`) et l'application (`<link href="../assets/bristol-tokens.css">`) |
+| `fonts/` | `Geist-Variable.woff2`, `Geist-Italic-Variable.woff2`, `GeistMono-Variable.woff2` + `LICENSE-Geist.txt` (SIL OFL) ; copiés dans le site par `project.resources` | `bristol-tokens.css` |
+| `bristol.scss` | Thème Quarto (base `default`, plus `cosmo`) : règles seulement, en 10 parties (base, navigation, barres latérales, en-tête, lecture, quatre catégories, environnements de cours, « Pour continuer », accueil/annales/fiches, recherche/pied de page/impression). Aucune couleur en dur, sauf `$primary` passé à Bootstrap pour ses calculs internes | Quarto (thème clair et sombre) |
+| `bristol-sombre.scss` | Commentaire sentinelle `/*! dark */` (inchangé) | Quarto (thème sombre) |
+| `bristol.lua` | Filtre Quarto (`format.html.filters`) : lit `catalogue.json` ; en-tête de contexte des chapitres (matière, « Chapitre N sur M », état du contenu), des fiches matières (domaine) et des autres pages d'une matière ; section « Pour continuer » en fin de chapitre (flashcards, annales, retour à la matière) ; accès rapides en tête des fiches matières ; déclare `bristol.js` comme dépendance HTML (copié dans `site_libs/`) | Quarto |
+| `partials/title-block.html` | Copie du partial `title-block.html` de Quarto 1.10, avec la variable `bristol-context` au-dessus du titre (`format.html.template-partials`). À comparer au partial d'origine en cas de mise à jour de Quarto | Quarto |
+| `bristol.js` | JavaScript léger, sans dépendance : Ctrl/⌘ K (recherche), barre de progression de lecture et mémorisation du dernier chapitre ouvert (`localStorage` « `bristol:lecture` »), filtres de la bibliothèque, tuiles « Reprendre » et « Flashcards » de l'accueil (cartes dues lues dans « `bristol:v1` », le stockage de l'application, sans rien inventer), lien « Toutes les matières » dans la barre latérale. Sans JavaScript, toutes les pages restent complètes | toutes les pages |
+| `catalogue.json` | **Généré** par `scripts/catalogue.ts` (voir § 4.4) | `bristol.lua`, `bristol.js` |
 
 ### 4.2 Sélection du jeu de jetons
 
-Dans `bristol-tokens.css`, dans cet ordre :
+Inchangé : dans `bristol-tokens.css`, (1) `:root` clair, (2) `@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) }`, (3) `:root[data-theme="dark"]` (application) et `:root:has(> body.quarto-dark)` (site), (4) `:root:has(> body.quarto-light)`. Choix mémorisé dans `localStorage`, clé **`quarto-color-scheme`**, commun au site et à l'application (vérifié le 28 octobre 2026 dans les deux sens). **Les trois copies du jeu sombre et les deux du jeu clair doivent rester identiques.** Remarque : en `file://`, Quarto ne mémorise pas le choix (comportement normal).
 
-1. `:root` : valeurs claires (défaut) ;
-2. `@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) }` : sombre si le système l'est ;
-3. `:root[data-theme="dark"]` (application) et `:root:has(> body.quarto-dark)` (site) : sombre choisi explicitement ;
-4. `:root:has(> body.quarto-light)` : clair choisi explicitement sur le site alors que le système est sombre.
+### 4.3 Catégories, environnements, impression, PDF
 
-Choix explicite mémorisé dans `localStorage`, clé **`quarto-color-scheme`** (`alternate` = sombre, `default` = clair), écrite par le bouton de Quarto et par celui de l'application (même origine, donc même préférence). L'application lit cette clé dans un petit script en tête de page et la suit aussi entre onglets (événement `storage`).
+- Quatre catégories : formes, étiquettes et classes inchangées (filet à gauche + étiquette + fond) ; couleurs des jetons `--cat-…` reprises dans la nouvelle palette (mêmes familles).
+- Environnements de cours (`.theorem.definition`, `.proposition`, `.example`, `.exercise`, `.proof`, `.proof.solution`, `.proof.remark`) : encadré complet à bordure fine avec icône Lucide et teinte très légère par type (jetons `--env-…`) — forme distincte des catégories, même imbriqués. Démonstrations : filet fin et `∎` final.
+- « À retenir » : les sections `#sec-retenir-…` sont stylées en panneau de synthèse (icône signet). Aucune modification des `.qmd`.
+- Classe `.attention` stylée (proposition, voir `conventions.md` § 6), non utilisée dans les cours.
+- Impression (`@media print`) : navigation masquée, fonds retirés, repères conservés. **Rendu PDF (LaTeX) : toujours à faire.**
+- Figures : fond `--figure-bg` et marge `--figure-pad` en sombre (inchangé).
+- Mobile : `main.content { overflow-x: clip }` sous 768 px (les numéros d'équation de MathJax, positionnés en absolu, faisaient déborder la page) ; formules en ligne trop longues défilables.
+- Polices : auto-hébergées (plus de Google Fonts). MathJax reste chargé depuis jsDelivr (site : MathJax 4 ; application : 3.2.2).
 
-Les valeurs claires et sombres sont écrites deux fois dans ce même fichier (bloc `@media` et bloc explicite) : c'est imposé par CSS, sans préprocesseur. **Les deux copies doivent rester identiques.**
+### 4.4 Catalogue généré (`scripts/catalogue.ts`)
 
-### 4.3 Catégories, impression, PDF
-
-- Blocs `div.notes`, `div.complement`, `div.a-verifier` : filet à gauche + étiquette en `::before` + fond teinté, couleurs `--cat-…`. Segments `span.…` : couleur + symbole.
-- Impression (`@media print`) : feuille blanche, mêmes repères, sans fond.
-- Figures (`main.content figure img`) : fond `--figure-bg` et marge `--figure-pad`, nulle en clair ; en sombre, les SVG à couleurs fixes restent lisibles sur un fond blanc.
-- Blocs tranchés (`.a-verifier.tranche`) : étiquette `✓ Corrigé`, filet de 1,5 px au lieu de 3 px, fond `--cat-verifier-bg` mélangé à 50 % de transparent (`color-mix`) ; mêmes jetons `--cat-verifier…`, donc clair et sombre sans couleur en dur. Exemple dans `demo-conventions.qmd`.
-- **Rendu PDF (LaTeX) : pas encore fait.** Il faudra un filtre Lua ou des environnements LaTeX (`tcolorbox`) qui reproduisent filet et étiquette ; reprendre alors les couleurs claires de `bristol-tokens.css`.
-- Refonte allégée du 19 octobre 2026 (`conventions.md` § 13) : seuls les jetons, `bristol.scss`, le CSS de `revision/index.html` (pas son JavaScript), `index.qmd` et les tableaux de statut des fiches matières ont changé. Rendu contrôlé sur captures (accueil, fiche matière, chapitres, démo, application et séance de révision ; clair, sombre, mobile).
-- Polices et MathJax viennent d'Internet (Google Fonts, jsDelivr) : sans connexion, polices de repli et formules non rendues.
+- Script **Deno** lancé par Quarto avant chaque rendu complet (`project.pre-render` dans `_quarto.yml`) : rien à installer, ni sous Windows ni sur GitHub Actions. Lancement manuel : `quarto run scripts/catalogue.ts`.
+- Lit `matieres/*/index.qmd`, `cours/*.qmd` (titre, `chapitre`, `statut`), `annales/`, `fiches/`, `td/`, `tp/`, le nombre de cartes de `flashcards/NN-slug.yml`, et `revision/cartes/*.json` (paquets de la matière : `<code>.json` et `<code>-*.json`). Classement par domaine et nature (cours, TP, projet) : **`matieres/domaines.json`** (à compléter pour une nouvelle matière).
+- Écrit `assets/catalogue.json`, `_generes/accueil-acces.md` (tuiles de l'accueil), `_generes/accueil-matieres.md` (bibliothèque) et `_generes/annales.md` (page `annales.qmd`), seulement si leur contenu change. **Ces fichiers sont versionnés** : un rendu d'une seule page (`quarto render index.qmd`) ne lance pas le script et doit trouver les fichiers inclus. Ne pas les modifier à la main.
+- Conséquence : **plus aucun compteur à tenir à jour à la main sur l'accueil** (ancien § 13.7 de `conventions.md`).
 
 ---
+
 
 ## 5. Macros (`_macros.qmd`)
 
@@ -232,7 +238,8 @@ Pour un site de plusieurs centaines de pages : rendu d'un seul fichier (`quarto 
 
 - Construction : `.github/workflows/publier-site.yml`. À chaque push sur `main` (ou bouton « Run workflow » de l'onglet *Actions*), GitHub installe Quarto 1.10.19, lance `quarto render` et publie `_site/`. Aucune cellule de code n'est exécutée : les figures sont versionnées en SVG, Python n'est pas nécessaire.
 - Réglage unique sur GitHub : *Settings → Pages → Build and deployment → Source : GitHub Actions*.
-- Dépôt privé : GitHub Pages n'est disponible sur un dépôt privé qu'avec GitHub Pro (gratuit avec le GitHub Student Developer Pack). Sinon, il faudrait rendre le dépôt public.
+- Dépôt **rendu public** par Armand le 27 octobre 2026 (GitHub Pages n'est gratuit que sur un dépôt public). Tout ce qui est versionné est donc lisible, historique compris : ne jamais commiter de contenu personnel ni de source brute (`sources/` reste ignoré par Git). Alternative si le dépôt doit redevenir privé : GitHub Pro (Student Developer Pack) ou Cloudflare Pages.
+- Mis en ligne et contrôlé le 27 octobre 2026 (accueil et `revision/cartes/index.json` accessibles).
 - Ce qui est publié : uniquement le contenu de `_site/` (pages `.qmd`, `revision/`, `assets/bristol-tokens.css`). Les `.md` de travail et `sources/` (ignoré par Git) ne le sont pas.
 - **Progression de révision** : liée à l'adresse (`localStorage`). Celle de `localhost:4848` ne se transfère pas vers le site publié (voir `ETAT_PROJET.md`, problème 17).
 - `quarto preview` (port 4848) reste utilisable en local.
@@ -241,7 +248,7 @@ Pour un site de plusieurs centaines de pages : rendu d'un seul fichier (`quarto 
 
 | Dépôt | Visibilité | Contenu | Remarque |
 |---|---|---|---|
-| `armandgm43-droid/bristol-site` | **privé** | **dépôt du projet** : ce dossier (site Quarto, application dans `revision/`, fichiers de mémoire) | dépôt de référence |
+| `armandgm43-droid/bristol-site` | **public** depuis le 27 octobre 2026 (GitHub Pages) | **dépôt du projet** : ce dossier (site Quarto, application dans `revision/`, fichiers de mémoire) | dépôt de référence |
 | `armandgm43-droid/bristol` | public (GitHub Pages) | **ancien site de cartes** (application de révision seule) | **figé** depuis le 7 octobre 2026 : plus aucune modification ; **ne pas confondre** avec le dépôt du projet |
 
 La révision se fait désormais en local (§ 6). L'ancien dépôt `bristol` n'est plus mis à jour ; son sort (archiver, supprimer) pourra être décidé avec la question ouverte 2.

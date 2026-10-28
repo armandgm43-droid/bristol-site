@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Découpe du partiel EA210 « Circuits HF et oscillateurs » du 7/11/2016 en images
-(une par question). Seul l'exercice II (charge active à paire croisée, résistance
-négative) est découpé pour l'instant.
+(une par question) : exercice I (questions générales sur les circuits intégrés HF)
+et exercice II (charge active à paire croisée, résistance négative).
 
 Source : sources/eana3/annales/2016-2017-partiel-circuits-hf-oscillateurs.pdf (scan,
 2 pages). Pages rendues à 200 dpi avec pdftoppm (1700 x 2339 px), en niveaux de gris.
@@ -24,6 +24,13 @@ DPI = 200
 
 # (fichier, [(page du PDF, (x0, y0, x1, y1)), ...]) ; coordonnées à 200 dpi.
 BOITES = [
+    ('ex1',     [(1, (140, 765, 1600, 828))]),
+    ('ex1-q1',  [(1, (140, 832, 1290, 870))]),
+    ('ex1-q2',  [(1, (140, 880, 1600, 930))]),
+    ('ex1-q3',  [(1, (140, 940, 1500, 992))]),
+    ('ex1-q4',  [(1, (140, 1002, 1600, 1053))]),
+    ('ex1-q5',  [(1, (140, 1068, 1500, 1146))]),
+    ('ex1-q6',  [(1, (140, 1157, 1600, 1240))]),
     ('ex2',     [(1, (110, 1325, 1600, 2155))]),
     ('ex2-q1',  [(2, (110, 200, 1600, 290))]),
     ('ex2-q2',  [(2, (110, 296, 1600, 417))]),

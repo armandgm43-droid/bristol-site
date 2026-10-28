@@ -1,0 +1,15 @@
+---
+title: "Annales corrigées"
+subtitle: "Sujets des années précédentes, avec une solution sous chaque question."
+toc: false
+number-sections: false
+body-classes: page-hub
+---
+
+<!-- Liste générée par scripts/catalogue.ts à partir des dossiers matieres/*/annales/. -->
+
+::: {.complement}
+Les solutions sont rédigées par Claude : aucun corrigé officiel n'est reproduit. Chaque page cite ses sources et signale les énoncés ambigus.
+:::
+
+{{< include _generes/annales.md >}}

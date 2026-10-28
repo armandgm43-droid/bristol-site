@@ -951,6 +951,7 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 | 2026-10-08 | Catégorie *Notes externes* (`.notes-externes`), variante des notes de cours pour les notes qui ne sont pas celles d'Armand | EANA3 : seules des notes d'anciennes promotions sont disponibles |
 | 2026-10-25 | Site publié sur **GitHub Pages, en accès public** (https://armandgm43-droid.github.io/bristol-site/), construit par GitHub Actions (`.github/workflows/publier-site.yml`) ; remplace provisoirement la condition « accès réservé + accord des enseignants » (§ 5.4, règle 19.5) | Choix d'Armand : accéder au site depuis n'importe quel navigateur, sans `quarto preview` |
 | 2026-10-19 | Les 16 matières du S7 sont dans Bristol (archive 2A redistribuée) ; sources : dossiers `tp/` et `travaux/` (travaux personnels, jamais publiés) ; documents d'un ancien élève en nature `externe` | Centraliser toute l'année ; voir `conventions.md` § 2 et `ETAT_PROJET.md` |
+| 2026-10-28 | Refonte complète de l'interface (DA « Bristol 2026 », accueil généré par `scripts/catalogue.ts`, page Annales, contexte et « Pour continuer » sur les chapitres, application de révision en mode concentration) ; quatre catégories et contenus inchangés | Demande d'Armand : rendre Bristol moderne et agréable à utiliser tous les jours (`conventions.md` § 13) |
 
 ---
 
@@ -990,8 +991,9 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 - [ ] Styles des blocs des quatre catégories en PDF
 - [x] Macros LaTeX communes (`_macros.qmd`)
 - [x] Format des flashcards et des identifiants
-- [x] Direction artistique unique site + application (« fiche bristol »), mode sombre
-- [x] Dépôt Git initialisé (dépôt privé `armandgm43-droid/bristol-site`)
+- [x] Direction artistique unique site + application, mode sombre ; **refonte complète le 28 octobre 2026** (design system « Bristol 2026 », accueil en tableau de bord généré, `conventions.md` § 13)
+- [x] Dépôt Git initialisé (`armandgm43-droid/bristol-site`, public depuis le 27 octobre 2026)
+- [x] Site publié sur GitHub Pages : https://armandgm43-droid.github.io/bristol-site/ (27 octobre 2026)
 - [x] Script de conversion des flashcards (`scripts/flashcards.py`, avec contrôles)
 - [ ] Script de vérifications automatiques (`scripts/verifier.py`)
 - [x] Révision en local : `quarto preview` sur le port fixe 4848 ; ancien site GitHub Pages figé

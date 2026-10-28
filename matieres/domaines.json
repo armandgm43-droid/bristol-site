@@ -1,0 +1,26 @@
+{
+  "_commentaire": "Classement des matières sur l'accueil (domaines = UE) et nature de la matière. Lu par scripts/catalogue.ts. type : cours | tp | projet. Une matière absente de ce fichier est classée dans « Autres ».",
+  "domaines": [
+    { "id": "analogique", "titre": "Circuits et systèmes analogiques", "court": "Analogique" },
+    { "id": "numerique", "titre": "Électronique numérique", "court": "Numérique" },
+    { "id": "signal", "titre": "Automatique et signal", "court": "Automatique et signal" }
+  ],
+  "matieres": {
+    "eana1": { "domaine": "analogique", "type": "cours" },
+    "eaep1": { "domaine": "analogique", "type": "cours" },
+    "eana2": { "domaine": "analogique", "type": "cours" },
+    "eana3": { "domaine": "analogique", "type": "cours" },
+    "eana4": { "domaine": "analogique", "type": "tp" },
+    "earf1": { "domaine": "analogique", "type": "cours" },
+    "proj1": { "domaine": "analogique", "type": "projet" },
+    "numc1": { "domaine": "numerique", "type": "cours" },
+    "nume3": { "domaine": "numerique", "type": "projet" },
+    "numr1": { "domaine": "numerique", "type": "cours" },
+    "ts227": { "domaine": "numerique", "type": "cours" },
+    "auto1": { "domaine": "signal", "type": "cours" },
+    "auto2": { "domaine": "signal", "type": "tp" },
+    "auto3": { "domaine": "signal", "type": "cours" },
+    "tsig1": { "domaine": "signal", "type": "cours" },
+    "tsig2": { "domaine": "signal", "type": "tp" }
+  }
+}

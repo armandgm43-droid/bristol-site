@@ -1,0 +1,184 @@
+project:
+  type: website
+  output-dir: _site
+  # Seuls les fichiers .qmd sont des pages du site.
+  # Les fichiers .md (CONTEXTE_PROJET.md, README.md…) restent des documents de travail.
+  render:
+    - "*.qmd"
+    - "matieres/**/*.qmd"
+  # L'application de révision est copiée telle quelle dans le site.
+  resources:
+    - "revision/**"
+    # Jetons de DA : aussi lus par revision/index.html (../assets/bristol-tokens.css).
+    - "assets/bristol-tokens.css"
+  # Port fixe pour quarto preview : la progression de révision (localStorage) est
+  # propre à l'adresse http://localhost:4848. Ne pas changer ce port, ne pas passer
+  # par 127.0.0.1 (autre adresse, progression vide). Voir architecture.md § 6 et § 8.
+  preview:
+    port: 4848
+    browser: true
+
+lang: fr
+
+website:
+  title: "Bristol"
+  description: "Base de connaissances pour mes études d'ingénieur"
+  search: true
+  page-navigation: true
+  back-to-top-navigation: true
+  navbar:
+    left:
+      - text: "Matières"
+        href: index.qmd
+      - text: "Révisions"
+        href: revision/index.html
+      - text: "Conventions"
+        href: demo-conventions.qmd
+  sidebar:
+    - id: ts227
+      title: "TS227"
+      style: docked
+      contents:
+        - matieres/ts227-communications-numeriques/index.qmd
+        - section: "Cours"
+          contents:
+            - matieres/ts227-communications-numeriques/cours/01-introduction.qmd
+            - matieres/ts227-communications-numeriques/cours/02-communication-sans-bruit.qmd
+            - matieres/ts227-communications-numeriques/cours/03-dsp-signaux-codes-en-ligne.qmd
+            - matieres/ts227-communications-numeriques/cours/04-transmission-presence-bruit.qmd
+        # Ajouter les chapitres au fur et à mesure, dans l'ordre :
+        # - section: "Cours"
+        #   contents:
+        #     - matieres/ts227-communications-numeriques/cours/01-introduction.qmd
+    - id: eana3
+      title: "EANA3"
+      style: docked
+      contents:
+        - matieres/eana3-circuits-integres/index.qmd
+        - section: "Cours"
+          contents:
+            - matieres/eana3-circuits-integres/cours/01-generalites-contre-reaction.qmd
+            - matieres/eana3-circuits-integres/cours/02-amplificateurs-contre-reaction.qmd
+            - matieres/eana3-circuits-integres/cours/03-applications-contre-reaction.qmd
+            - matieres/eana3-circuits-integres/cours/04-oscillateurs.qmd
+            - matieres/eana3-circuits-integres/cours/05-references-de-tension.qmd
+        - section: "Annales corrigées"
+          contents:
+            - matieres/eana3-circuits-integres/annales/2016-2017-partiel-circuits-hf.qmd
+    # Matières du S7 mises en place le 19 octobre 2026 : fiche matière seule,
+    # ajouter la section « Cours » au premier chapitre rédigé.
+    - id: eana1
+      title: "EANA1"
+      style: docked
+      contents:
+        - matieres/eana1-composants-circuits-commutation/index.qmd
+    - id: eaep1
+      title: "EAEP1"
+      style: docked
+      contents:
+        - matieres/eaep1-conversion-energie/index.qmd
+    - id: eana2
+      title: "EANA2"
+      style: docked
+      contents:
+        - matieres/eana2-chaine-acquisition/index.qmd
+    - id: eana4
+      title: "EANA4"
+      style: docked
+      contents:
+        - matieres/eana4-tp-electronique/index.qmd
+    - id: earf1
+      title: "EARF1"
+      style: docked
+      contents:
+        - matieres/earf1-modulations-communications/index.qmd
+    - id: proj1
+      title: "PROJ1"
+      style: docked
+      contents:
+        - matieres/proj1-projet-analogique/index.qmd
+    - id: numc1
+      title: "NUMC1"
+      style: docked
+      contents:
+        - matieres/numc1-technologie-circuits-numeriques/index.qmd
+    - id: nume3
+      title: "NUME3"
+      style: docked
+      contents:
+        - matieres/nume3-conception-vhdl-fpga/index.qmd
+    - id: numr1
+      title: "NUMR1"
+      style: docked
+      contents:
+        - matieres/numr1-reseaux-internet/index.qmd
+    - id: auto1
+      title: "AUTO1"
+      style: docked
+      contents:
+        - matieres/auto1-commande-systemes-lineaires/index.qmd
+    - id: auto2
+      title: "AUTO2"
+      style: docked
+      contents:
+        - matieres/auto2-tp-automatique/index.qmd
+    - id: auto3
+      title: "AUTO3"
+      style: docked
+      contents:
+        - matieres/auto3-optimisation/index.qmd
+    - id: tsig1
+      title: "TSIG1"
+      style: docked
+      contents:
+        - matieres/tsig1-traitement-numerique-signal/index.qmd
+        - section: "Cours"
+          contents:
+            - matieres/tsig1-traitement-numerique-signal/cours/01-echantillonnage-signal-discret.qmd
+            - matieres/tsig1-traitement-numerique-signal/cours/02-systemes-discrets-convolution.qmd
+            - matieres/tsig1-traitement-numerique-signal/cours/03-tfd-interpretation-frequentielle.qmd
+            - matieres/tsig1-traitement-numerique-signal/cours/04-implementation-equations-differences.qmd
+            - matieres/tsig1-traitement-numerique-signal/cours/05-representation-en-phase.qmd
+        - section: "Fiches de révision"
+          contents:
+            - matieres/tsig1-traitement-numerique-signal/fiches/fiche-tf-tz-echantillonnage.qmd
+        - section: "Annales corrigées"
+          contents:
+            - matieres/tsig1-traitement-numerique-signal/annales/2025-2026-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2022-2023-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2019-2020-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2017-2018-examen.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2017-2018-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2016-2017-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2015-2016-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2014-2015-partiel.qmd
+            - matieres/tsig1-traitement-numerique-signal/annales/2013-2014-examen.qmd
+    - id: tsig2
+      title: "TSIG2"
+      style: docked
+      contents:
+        - matieres/tsig2-tp-signal/index.qmd
+
+format:
+  html:
+    theme:
+      light: [cosmo, assets/bristol.scss]
+      dark: [cosmo, assets/bristol.scss, assets/bristol-sombre.scss]
+    # Mode sombre : suit le système, sauf choix explicite (bouton de la barre).
+    respect-user-color-scheme: true
+    # Couleurs, polices, espacements : source unique, partagée avec revision/.
+    css: assets/bristol-tokens.css
+    toc: true
+    toc-title: "Sur cette page"
+    number-sections: true
+    html-math-method: mathjax
+    crossref:
+      eq-prefix: "équation"
+      fig-prefix: "figure"
+      tbl-prefix: "tableau"
+      sec-prefix: "section"
+      def-prefix: "définition"
+      thm-prefix: "théorème"
+      prp-prefix: "propriété"
+      prp-title: "Propriété"
+      exm-prefix: "exemple"

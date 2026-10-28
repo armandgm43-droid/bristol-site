@@ -3,7 +3,7 @@
 > Où en est le projet. Mis à jour **à la fin de chaque session de travail**.
 > Vision et méthode : `CONTEXTE_PROJET.md`. Règles : `conventions.md`. Technique : `architecture.md`. Tâches : `TODO.md`.
 >
-> Dernière mise à jour : 25 octobre 2026 (publication du site sur GitHub Pages).
+> Dernière mise à jour : 28 octobre 2026 (refonte complète de l'interface).
 
 ---
 
@@ -70,6 +70,8 @@ Décision du 7 octobre 2026 : le site sera **publié à la fin pour les étudian
 - [x] Archive 2A (19 octobre 2026) : 413 fichiers de `sources/2A.zip` rangés dans `sources/<code>/{support,td,tp,tp/fichiers,notes,corriges,annales,travaux}` et contrôlés ; fiches matières et inventaires des 14 matières du S7 ; `_quarto.yml` (14 barres latérales) ; accueil réorganisé par UE ; 14 paquets vides (`scripts/flashcards.py`) ; compléments des fiches TS227 (TP, TS205, notes 2023) et EANA3 (TP oscillateur LC) ; `conventions.md` § 2 (dossiers `tp/`, `travaux/`, documents d'un tiers, versions antérieures).
 
 - [x] Refonte allégée de la DA (19 octobre 2026) : jetons (`assets/bristol-tokens.css`), thème (`assets/bristol.scss`), CSS de l'application (`revision/index.html`, JavaScript inchangé), accueil en cartes par UE (`index.qmd`), statuts en pastilles dans 9 fiches matières ; police *Source Sans 3* ; `conventions.md` § 4 et § 13, `architecture.md` § 4.
+
+- [x] **Refonte complète de l'interface (28 octobre 2026)** : design system « Bristol 2026 » (`assets/bristol-tokens.css`, `assets/bristol.scss` réécrits ; polices Geist auto-hébergées dans `assets/fonts/`) ; accueil en tableau de bord généré par `scripts/catalogue.ts` (pre-render Deno) avec `matieres/domaines.json` ; page `annales.qmd` ; filtre `assets/bristol.lua` + partial `assets/partials/title-block.html` (contexte des chapitres, « Pour continuer », accès rapides des fiches matières) ; `assets/bristol.js` (Ctrl K, reprise de lecture, cartes dues, filtres) ; application de révision : CSS et gabarits refaits, mode concentration, progression de séance, liens profonds `#reviser=` / `#paquet=` (planification, stockage, fusion inchangés) ; `_quarto.yml` (pre-render, navigation, pied de page, filtre, grille, thème `default`). Contrôles : rendu Quarto 1.10.19 complet sans avertissement (65 pages), aucune erreur JavaScript en clair et en sombre, aucun débordement horizontal sur mobile (375 px), captures (accueil, fiche, chapitres, annales, révisions, séance ; clair, sombre, mobile), synchronisation clair/sombre site ↔ application. Copies des fichiers d'avant la refonte : `_apercu_tmp/avant-refonte/`. `conventions.md` § 6 et § 13, `architecture.md` § 3 et § 4.
 
 ## 3. En cours
 
@@ -147,6 +149,7 @@ Aucun chapitre rédigé : statut `brouillon` pour tous les chapitres proposés. 
 
 | Date | Décision | Où |
 |---|---|---|
+| 2026-10-28 | Refonte complète de l'interface (brief d'Armand) : DA « Bristol 2026 » à la place de « fiche bristol » ; accueil, page Annales et en-têtes générés depuis les fichiers (`scripts/catalogue.ts`) ; navigation Matières / Annales / Révisions ; fichiers générés `_generes/` et `assets/catalogue.json` versionnés — **choix par défaut, à valider** ; classe `.attention` proposée, non utilisée | `conventions.md` § 6, § 13 ; `architecture.md` § 4 |
 | 2026-10-25 | Site publié sur GitHub Pages en **accès public** (https://armandgm43-droid.github.io/bristol-site/), construit par GitHub Actions — **choix d'Armand**, remplace provisoirement « accès réservé + accord des enseignants » | `CONTEXTE_PROJET.md` § 5.4, règle 19.5, journal ; `architecture.md` § 10 |
 | 2026-10-20 | Annales : énoncé en images découpées par question, solution dessous ; sujets du recueil de TD traités comme annales — **choix d'Armand** ; doublons scan/recueil : images tirées du recueil (plus net), deux sources citées — choix par défaut | `conventions.md` § 2 ; fiche TSIG1 |
 | 2026-10-20 | TSIG1 : plan des notes d'Armand (5 chapitres) à la place du plan des notes 2023 ; méthode « deux temps » (rédaction + vérification le 20 oct., cartes définitives après la relecture d'Armand) — **choix d'Armand** ; notes d'Armand non datées rangées en `date-inconnue/feuillet-NN-recto|verso.jpg`, citées par feuillet — choix par défaut | fiche TSIG1 ; rapports `analyses/0N-*.md` |
@@ -201,7 +204,7 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 2. ~~TD et correction absents de `sources/`~~ : réglé.
 12. ~~Nouveau point *À vérifier* au chapitre 2 (`av-echelles-figure-cosinus-sureleve`)~~ : tranché le 7 octobre 2026 (axes normalisés).
 9. ~~Rendu des blocs tranchés~~ : stylé le 7 octobre 2026 dans `assets/bristol.scss` (jetons `--cat-verifier…`, clair et sombre), exemple dans `demo-conventions.qmd`. Rendu à contrôler avec `quarto preview`.
-16. **Deux dépôts GitHub à ne pas confondre** : `armandgm43-droid/bristol-site` (privé) est le dépôt du projet ; `armandgm43-droid/bristol` est l'ancien site de cartes, toujours en ligne avec GitHub Pages mais **figé** depuis le 7 octobre 2026 (voir `architecture.md` § 10).
+16. **Deux dépôts GitHub à ne pas confondre** : `armandgm43-droid/bristol-site` (**public** depuis le 27 octobre 2026, site publié sur https://armandgm43-droid.github.io/bristol-site/) est le dépôt du projet ; `armandgm43-droid/bristol` est l'ancien site de cartes, toujours en ligne avec GitHub Pages mais **figé** depuis le 7 octobre 2026 (voir `architecture.md` § 10).
 13. ~~**Application de révision liée au site**~~ : sans objet depuis que l'ancien site est figé (plus de copie isolée de `revision/`). Rappel : `revision/index.html` charge `../assets/bristol-tokens.css` ; à garder en tête si l'application est un jour copiée ailleurs.
 17. **Progression de révision locale** : liée à `http://localhost:4848` et au navigateur. Changer de port, passer par `127.0.0.1` ou changer de navigateur repart de zéro. La progression de l'ancien site GitHub Pages ne se transfère pas non plus. **L'export actuel de l'application exporte les cartes, pas la progression** : aucun transfert n'est possible tant que la tâche « export/import de la progression » de `TODO.md`, section « Avant la publication » n'est pas faite (corrigé le 7 octobre 2026).
 18. **Rendu des cartes non contrôlé dans le navigateur** : les formules du paquet TS227 (186 cartes ; 313 pour les ch. 1 et 4) compilent sans erreur avec MathJax 3.2.2 (contrôle de Claude), mais l'affichage réel dans l'application reste à vérifier avec `quarto preview`.
@@ -213,7 +216,7 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 3. ~~Version de Quarto inconnue~~ : 1.10.19, notée dans `architecture.md` § 9.
 4. **Rendu PDF des quatre catégories** non implémenté.
 5. **Progression des révisions liée à l'adresse du site** (`localStorage`) : déplacer l'application vers un autre hébergement fera repartir de zéro (l'export actuel ne contient que les cartes, pas la progression). À prendre en compte avant de choisir l'hébergement. **Export et import de la progression à faire avant la publication** (décision du 7 octobre 2026, `TODO.md`).
-6. **Polices et MathJax chargés depuis Internet** (Google Fonts, jsDelivr) : sans connexion, polices de repli et pas de formules dans l'application de révision.
+6. **MathJax chargé depuis Internet** (jsDelivr) : sans connexion, pas de formules. Les polices sont auto-hébergées depuis le 28 octobre 2026.
 7. ~~**Paquet `ts227.json` hérité**~~ : réglé (question 5) ; le fichier est désormais généré par `scripts/flashcards.py`, les cartes `ts-…` disparaissent à la prochaine ouverture de l'application.
 
 ---
@@ -225,6 +228,9 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 22. **Archive 2A** : `sources/2A.zip` (870 Mo) est encore présent ; son contenu utile est redistribué, Armand peut le supprimer. Non repris : doublons, fichiers personnels (Eirspace, inscription, stages, Ingénib, anglais), fichiers de compilation et exécutables, module « Intégrer l'entreprise ».
 23. ~~Rendu Quarto non contrôlé après l'ajout des 14 matières~~ : contrôlé le 19 octobre 2026 (Quarto 1.10.19 installé par Claude dans sa machine de travail, copie du projet sans `sources/`) : 27 pages, aucun avertissement ; captures de l'accueil et des fiches en clair, en sombre et sur mobile. Corrigé au passage : le code en ligne (`td code`, `li code`, `p code`) restait sur fond gris clair en mode sombre (règle de Bootstrap plus spécifique), `assets/bristol.scss` ; codes des matières insécables dans l'accueil. Non vérifiables dans cet environnement : polices et formules (Google Fonts et MathJax bloqués par le réseau de Claude).
 24. **Sources manquantes** : EANA1 (aucun support officiel), TSIG1 (pas de support de cours rédigé ; cours reconstruit à partir des notes d'Armand), conditionnement analogique en EANA2 (objectif annoncé, aucun support).
+
+25. **Annales sans entrée de barre latérale** (constaté le 28 octobre 2026) : `matieres/auto1-…/annales/` (7 pages) et `matieres/ts227-…/annales/` (5 pages) existent et sont publiées, mais ne figurent pas dans les barres latérales de `_quarto.yml`. L'accueil et la page Annales les listent déjà (catalogue généré).
+26. **Rendu sur le PC non contrôlé après la refonte** : à faire par Armand avec `quarto preview` (le catalogue est régénéré au lancement) ; si Quarto signale une erreur sur `scripts/catalogue.ts`, me la transmettre.
 
 ## 8. Questions ouvertes (suivi de `CONTEXTE_PROJET.md`, section 22)
 
@@ -282,3 +288,5 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 | 2026-10-22 | Bristol — EANA3 — Annale résistance négative | Partiel EA210 « Circuits HF et oscillateurs » 2016-2017, **exercice II** (charge active à paire croisée PMOS, $Z = 2/(g_{m3}-g_{m2})$, $A_v = -g_{m1}/(g_{m3}-g_{m2})$) corrigé : `annales/2016-2017-partiel-circuits-hf.qmd` (solutions en *Complément*, énoncé en images par question, script `sujets/2016-2017-partiel-circuits-hf-decoupe.py`) ; correspondance avec la Partie I du partiel 2013-2014 (même exercice) ; `_quarto.yml` (section « Annales corrigées » d'EANA3), fiche matière. Exercice I non corrigé. Rendu Quarto non contrôlé |
 | 2026-10-19 | Bristol — Paquets de langues | Deux paquets hors méthode des cours (comme les paquets hérités) : `revision/cartes/italien.json` (432 cartes, niveau B1 : conjugaison de tous les temps, subjonctif, impératif, vocabulaire dans les deux sens, faux amis) et `russe.json` (229 cartes, débutant : alphabet, prononciation, bases, vocabulaire dans les deux sens, accent tonique marqué) ; préfixes `it-` et `ru-` réservés ; ajoutés à `index.json` |
 | 2026-10-25 | Bristol — Publication GitHub Pages | Workflow `.github/workflows/publier-site.yml` (Quarto 1.10.19, `quarto render`, déploiement Pages) ; décision « accès public » reportée dans `CONTEXTE_PROJET.md` (§ 5.4, règle 19.5, journal, question 1), `architecture.md` § 10 et ce fichier. À faire par Armand : activer Pages (source « GitHub Actions »), commit et push |
+| 2026-10-27 | Bristol — Publication GitHub Pages (suite) | Dépôt `bristol-site` rendu **public** par Armand (Student Pack non nécessaire), Pages activé, workflow lancé : site en ligne, accueil et paquets de cartes accessibles ; `architecture.md` § 10 et problème 16 mis à jour |
+| 2026-10-28 | Bristol — Refonte de l'interface | Audit (captures), architecture UX, design system, implémentation (jetons, thème, accueil, annales, chapitres, fiches matières, application de révision), vérification (rendu complet, captures clair/sombre/mobile, recherche, équations, JavaScript) ; fichiers de mémoire mis à jour. Incident : une commande `git status` a été lancée par erreur par Claude (lecture seule, rien modifié) |

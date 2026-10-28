@@ -1,8 +1,8 @@
 ---
 title: "Partiel 2016-2017 (Circuits HF et oscillateurs) — corrigé"
-subtitle: "EA210, N. Deltimple, 7 novembre 2016 · 1 h 20, documents et calculatrice autorisés · exercice II : charge active à résistance négative"
+subtitle: "EA210, N. Deltimple, 7 novembre 2016 · 1 h 20, documents et calculatrice autorisés · questions générales, charge active à résistance négative"
 matiere: eana3
-date-modified: 2026-10-22
+date-modified: 2026-10-27
 sources:
   - id: sujet-2016-hf
     fichier: annales/2016-2017-partiel-circuits-hf-oscillateurs.pdf
@@ -19,14 +19,96 @@ sources:
 ::: {.complement}
 Aucun corrigé officiel : **toutes les solutions de cette page sont rédigées par Claude**. À relire avec un œil critique ; signaler toute erreur.
 
-Le sujet vient de l'ancien module EA210 « Circuits HF et oscillateurs », rangé avec EANA3. Seul l'**exercice II** (paire croisée PMOS, résistance négative) est corrigé ici ; l'exercice I (questions générales sur les circuits intégrés HF : pôle dominant, capacités intégrées, varactor MOS) ne l'est pas encore.
+Le sujet vient de l'ancien module EA210 « Circuits HF et oscillateurs », rangé avec EANA3. Il comporte deux exercices : questions générales sur les circuits intégrés HF (exercice I : pôle dominant, capacités intégrées, varactor MOS) et charge active à paire croisée PMOS (exercice II). Le corrigé manuscrit `2016-2017-corrige-manuscrit.pdf` rangé avec les annales porte sur le partiel « Contre-réaction » de la même année, pas sur ce sujet.
 
-**Le même exercice est tombé en 2013-2014** (Partie I « Étude de charges actives ») [sujet-2013-hf, p. 1] : ses questions 1 et 2 sont les questions 1 et 2 ci-dessous, sa question 3 est la question 7, sa question bonus 3+ est la question 10.
+L'exercice I est un questionnaire de cours : les réponses données sont des réponses types, sans corrigé de l'enseignante. Des questions voisines reviennent en 2022-2023 ([exercice I](2022-2023-partiel-circuits-hf.qmd#sec-ann2223hf-ex1) : capacité MOS, Miller).
+
+**L'exercice II est tombé en 2013-2014** (Partie I « Étude de charges actives ») [sujet-2013-hf, p. 1] : ses questions 1 et 2 sont les questions 1 et 2 de l'exercice II ci-dessous, sa question 3 est la question 7, sa question bonus 3+ est la question 10 (voir le [partiel 2013-2014](2013-2014-partiel-circuits-hf.qmd#sec-ann1314hf-ex1)).
 :::
 
-Chapitre du cours : [Oscillateur à résistance négative](../cours/04-oscillateurs.qmd#sec-resistance-negative) et [TD 4](../cours/04-oscillateurs.qmd#sec-td-resistance-negative).
+## Exercice I : questions générales sur les circuits intégrés HF (6 points) {#sec-ann16hf-ex1}
+
+![](sujets/2016-2017-partiel-circuits-hf-ex1.png){fig-alt="Exercice I : questions générales sur les circuits intégrés HF (6 points)."}
+
+Questions de cours. Chapitres liés : [pôles d'un étage source commune](../cours/01-generalites-contre-reaction.qmd#sec-poles-source-commune), [effet Miller](../cours/01-generalites-contre-reaction.qmd#sec-effet-miller) et [capacité variable](../cours/04-oscillateurs.qmd#sec-capacite-variable).
+
+![](sujets/2016-2017-partiel-circuits-hf-ex1-q1.png){fig-alt="Q1 : dans un circuit intégré HF, qu'est-ce qu'un pôle dominant ?"}
+
+:::: {.complement}
+::: {.solution}
+La fonction de transfert d'un circuit a autant de pôles que de nœuds « capacitifs » indépendants. Le **pôle dominant** est le pôle de plus basse fréquence, nettement séparé des autres (en pratique d'un facteur 4 à 10 au moins). Jusqu'au voisinage des pôles suivants, le circuit se comporte alors comme un premier ordre :
+$$H(j\omega) \approx \frac{H_0}{1 + j\omega/\omega_1}, \qquad f_{-3\,\mathrm{dB}} \approx \frac{\omega_1}{2\pi} .$$
+Il est associé au nœud de plus forte constante de temps $R_{nœud} C_{nœud}$ (résistance vue du nœud, capacités qui y sont reliées, capacités ramenées par effet Miller comprises) ; méthode et exemple : [pôle dominant d'un étage source commune](../cours/01-generalites-contre-reaction.qmd#eq-pole-dominant).
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex1-q2.png){fig-alt="Q2 : les pôles dominants doivent-ils être à basse ou à haute fréquence ?"}
+
+:::: {.complement}
+::: {.solution}
+Par définition, le pôle dominant est le **plus bas** en fréquence ; la question porte sur l'endroit où on le place. Dans un circuit HF (amplificateur, LNA, étage de mélangeur), il doit être à **haute fréquence**, au-delà de la bande utile : le gain doit encore être disponible à la fréquence de travail, et la bande passante est fixée par ce pôle. On cherche donc des nœuds de faible impédance (de l'ordre de $1/g_m$) et peu de capacités, en évitant l'effet Miller.
+
+Nuance : dans un amplificateur bouclé (amplificateur opérationnel), on **abaisse** volontairement le pôle dominant (compensation) pour garantir la marge de phase ([stabilité](../cours/01-generalites-contre-reaction.qmd#sec-stabiliser)) ; c'est l'inverse de ce qu'on recherche dans une chaîne HF en boucle ouverte, d'où le compromis gain-bande ([cours](../cours/01-generalites-contre-reaction.qmd#sec-gain-bande)).
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex1-q3.png){fig-alt="Q3 : proposer plusieurs méthodes pour réaliser des capacités intégrées en technologies silicium."}
+
+:::: {.complement}
+::: {.solution}
+- **Capacité MOS** : l'oxyde de grille sert de diélectrique ($C = C_{ox} W L$, avec $C_{ox} = \varepsilon_{ox}/t_{ox}$) ; la plus forte densité, mais non linéaire (dépend de la tension) et fuyante si l'oxyde est mince.
+- **Capacité de jonction** : jonction PN polarisée en inverse (diode, jonction drain-substrat) ; capacité variable avec la tension inverse (varicap), faible densité, non linéaire.
+- **Capacité MIM** (*metal-insulator-metal*) : deux armatures métalliques séparées par un diélectrique mince dédié ; linéaire, précise, bon facteur de qualité, mais demande des étapes de fabrication supplémentaires.
+- **Capacités entre niveaux de métal** : plan-plan entre deux couches d'interconnexion, ou **MOM / interdigitées** (*metal-oxide-metal*, doigts imbriqués exploitant les capacités latérales entre lignes d'un même niveau et entre niveaux) ; disponibles dans tout procédé CMOS standard.
+- **Capacité poly-poly** (PIP) : deux couches de polysilicium, procédés analogiques.
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex1-q4.png){fig-alt="Q4 : indiquer la ou les meilleures méthodes pour réaliser des capacités de faibles valeurs."}
+
+:::: {.complement}
+::: {.solution}
+Pour quelques femtofarads à quelques centaines de femtofarads, les capacités **métal-métal** : MOM interdigitées et MIM. Elles sont linéaires (indépendantes de la tension), peu sensibles à la température, précises en valeur relative (appariement), avec peu de pertes (bon $Q$ en HF) et une faible capacité parasite vers le substrat si on utilise les niveaux de métal hauts. La capacité MOS, très dense, convient au contraire aux **fortes** valeurs (découplage) ; pour une faible valeur, sa non-linéarité et ses parasites (capacité vers le substrat, résistance du canal) dominent.
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex1-q5.png){fig-alt="Q5 : à l'aide d'un schéma équivalent petit signal, donner une méthode (différente de celle du poly de cours) pour réaliser une capacité variable à l'aide d'un transistor MOS ; comment contrôler cette capacité ?"}
+
+:::: {.complement}
+::: {.solution}
+Le poly de 2016 n'est pas disponible ; la méthode vue dans le cours de Bristol est la **jonction drain-substrat** bloquée ([capacité variable](../cours/04-oscillateurs.qmd#sec-capacite-variable)). Autre méthode : le **varactor MOS**, qui utilise la capacité de **grille**.
+
+- **Montage** : source, drain et substrat (ou caisson) reliés ensemble ; la capacité est vue entre la grille et ce nœud commun. Variante courante : NMOS dans un caisson N (varactor à accumulation).
+- **Schéma petit signal** : la capacité d'oxyde $C_{ox}WL$ en série avec la capacité de la zone de charge d'espace sous la grille $C_{dep}$ (qui dépend de la tension), plus la résistance série du canal ou du caisson :
+$$C(V_{GB}) = \frac{C_{ox}\, C_{dep}(V_{GB})}{C_{ox} + C_{dep}(V_{GB})} .$$
+- **Comportement** : en accumulation ou en forte inversion, $C \approx C_{ox}WL$ (maximum) ; en déplétion, la zone de charge d'espace s'élargit et $C$ diminue jusqu'à un minimum.
+- **Contrôle** : par la tension continue $V_{GB}$ appliquée entre la grille et le nœud source-drain-substrat (tension de commande d'un VCO), le signal HF se superposant à cette polarisation. La plage $C_{max}/C_{min}$ (typiquement 2 à 3) fixe la plage d'accord de l'oscillateur ($f \propto 1/\sqrt{C}$).
+:::
+::::
+
+![](sujets/2016-2017-partiel-circuits-hf-ex1-q6.png){fig-alt="Q6 : avantages et inconvénients des circuits intégrés en technologies silicium par rapport aux circuits à composants discrets."}
+
+:::: {.complement}
+::: {.solution}
+**Avantages** :
+
+- encombrement et masse très réduits, grand nombre de transistors ;
+- interconnexions courtes : peu de parasites (inductances et capacités de câblage), donc fonctionnement à plus haute fréquence ;
+- **appariement** des composants voisins (mêmes procédé et température) : montages différentiels, miroirs, rapports de résistances ou de capacités précis ;
+- coût unitaire faible en grande série, fiabilité, consommation réduite.
+
+**Inconvénients** :
+
+- composants passifs médiocres : inductances de faible facteur de qualité (pertes dans le substrat conducteur), valeurs de capacités et de résistances limitées, tolérance absolue large (de l'ordre de ± 10 à 20 %) ;
+- substrat silicium conducteur : pertes et couplages entre blocs (bruit numérique ramené sur l'analogique) ;
+- faibles tensions de claquage : puissance et dynamique limitées ;
+- coûts fixes élevés (masques, conception) et pas de réglage possible après fabrication.
+:::
+::::
 
 ## Exercice II : étude d'un amplificateur HF (14 points) {#sec-ann16hf-ex2}
+
+Chapitre du cours : [Oscillateur à résistance négative](../cours/04-oscillateurs.qmd#sec-resistance-negative) et [TD 4](../cours/04-oscillateurs.qmd#sec-td-resistance-negative).
 
 ![](sujets/2016-2017-partiel-circuits-hf-ex2.png){fig-alt="Exercice II : paire croisée PMOS (fig. 1) et amplificateur différentiel NMOS M1, M1' à charge active auto-polarisée : PMOS montés en diode M3, M3' et paire croisée M2, M2' (fig. 2), courant de queue I0."}
 

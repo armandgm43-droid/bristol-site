@@ -1,0 +1,58 @@
+---
+title: "Bristol"
+subtitle: "Cours reconstruits et cartes de révision"
+description: "Filière Électronique · 2e année · semestre 7, 2026-2027"
+toc: false
+number-sections: false
+page-layout: full
+---
+
+<!--
+  Accueil : une carte par matière, groupées par UE (styles : assets/bristol.scss,
+  « Accueil »). Classe .ready = au moins un chapitre rédigé ; la dernière ligne
+  (.state) est écrite pour le lecteur, pas pour le suivi du projet (le détail
+  des statuts est dans chaque fiche matière et dans ETAT_PROJET.md).
+-->
+
+::: {.subject-group}
+## Circuits et systèmes analogiques {.ue-title .unnumbered .unlisted}
+
+:::: {.subject-grid}
+[[EANA1]{.code} [Composants et circuits de commutation]{.name} [À venir]{.state}](matieres/eana1-composants-circuits-commutation/index.qmd){.subject}
+[[EAEP1]{.code} [Électronique pour la conversion d'énergie 1]{.name} [À venir]{.state}](matieres/eaep1-conversion-energie/index.qmd){.subject}
+[[EANA2]{.code} [Chaîne d'acquisition et conditionnement du signal analogique]{.name} [À venir]{.state}](matieres/eana2-chaine-acquisition/index.qmd){.subject}
+[[EANA3]{.code} [Circuits intégrés]{.name} [5 chapitres · 150 cartes]{.state}](matieres/eana3-circuits-integres/index.qmd){.subject .ready}
+[[EANA4]{.code} [Travaux pratiques d'électronique]{.name} [Travaux pratiques]{.state}](matieres/eana4-tp-electronique/index.qmd){.subject}
+[[EARF1]{.code} [Modulations analogiques et numériques pour les communications]{.name} [À venir]{.state}](matieres/earf1-modulations-communications/index.qmd){.subject}
+[[PROJ1]{.code} [Projet analogique]{.name} [Projet]{.state}](matieres/proj1-projet-analogique/index.qmd){.subject}
+::::
+:::
+
+::: {.subject-group}
+## Électronique numérique {.ue-title .unnumbered .unlisted}
+
+:::: {.subject-grid}
+[[NUMC1]{.code} [Technologie des circuits numériques]{.name} [À venir]{.state}](matieres/numc1-technologie-circuits-numeriques/index.qmd){.subject}
+[[NUME3]{.code} [Conception VHDL/FPGA]{.name} [Projet]{.state}](matieres/nume3-conception-vhdl-fpga/index.qmd){.subject}
+[[NUMR1]{.code} [Introduction aux réseaux et à Internet. Programmation réseau]{.name} [À venir]{.state}](matieres/numr1-reseaux-internet/index.qmd){.subject}
+[[TS227]{.code} [Introduction aux communications numériques]{.name} [4 chapitres sur 6 · 186 cartes]{.state}](matieres/ts227-communications-numeriques/index.qmd){.subject .ready}
+::::
+:::
+
+::: {.subject-group}
+## Automatique et signal {.ue-title .unnumbered .unlisted}
+
+:::: {.subject-grid}
+[[AUTO1]{.code} [Commande des systèmes linéaires à temps continu et discret]{.name} [À venir]{.state}](matieres/auto1-commande-systemes-lineaires/index.qmd){.subject}
+[[AUTO2]{.code} [Travaux pratiques d'automatique 1 et 2]{.name} [Travaux pratiques]{.state}](matieres/auto2-tp-automatique/index.qmd){.subject}
+[[AUTO3]{.code} [Optimisation]{.name} [À venir]{.state}](matieres/auto3-optimisation/index.qmd){.subject}
+[[TSIG1]{.code} [Traitement numérique du signal]{.name} [5 chapitres sur 5 · 9 annales corrigées · 52 cartes]{.state}](matieres/tsig1-traitement-numerique-signal/index.qmd){.subject .ready}
+[[TSIG2]{.code} [Travaux pratiques signal]{.name} [Travaux pratiques]{.state}](matieres/tsig2-tp-signal/index.qmd){.subject}
+::::
+:::
+
+::: {.home-links}
+[Révisions](revision/index.html) [cartes à répétition espacée]{.muted}
+
+[Conventions](demo-conventions.qmd) [les quatre catégories de contenu]{.muted}
+:::

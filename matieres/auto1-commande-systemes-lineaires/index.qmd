@@ -61,6 +61,21 @@ Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources bru
 
 La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).
 
+## Annales corrigées {#sec-auto1-annales}
+
+Partiels de l'ancien module AU201 « Commande linéaire et approches linéarisantes » (solutions rédigées par Claude, à relire) :
+
+- [Partiel 2016-2017](annales/2016-2017-partiel-commande-lineaire.qmd) : principe de la commande à grand gain (A. Oustaloup) ;
+- [Partiel 2017-2018](annales/2017-2018-partiel-commande-lineaire.qmd) : renvoi, le fichier est une photo du sujet de 2016-2017 (*À vérifier*) ;
+- [Partiel 2014-2015](annales/2014-2015-partiel-commande-lineaire.qmd) : linéarisation par immersion, avance de phase, sensibilité de l'entrée ; bonus de commande avancée ;
+- [Partiel 2013-2014](annales/2013-2014-partiel-commande-lineaire.qmd) : linéarisation par immersion, correcteur à avance-retard de phase, précision.
+
+Partiels de l'ancien module AU205 « Commande à temps discret » : le même problème (commande numérique de position d'un moteur, $G(p) = 22/(p(1 + 0{,}16\,p))$) trois années de suite, synthèse d'un correcteur à avance de phase par transformation en $\Delta$ ($T = 1$ ms) puis en W ($T = 0{,}01$ s) (solutions rédigées par Claude, à relire) :
+
+- [Partiel 2017-2018](annales/2017-2018-partiel-temps-discret.qmd) : questions identiques à 2016-2017 ;
+- [Partiel 2016-2017](annales/2016-2017-partiel-temps-discret.qmd) : avec le corrigé manuscrit d'un ancien élève (questions 1 à 6) ;
+- [Partiel 2015-2016](annales/2015-2016-partiel-temps-discret.qmd) : parties inversées (W puis $\Delta$).
+
 ## Remarques
 
 - Les trois versions de la note de cours ont le même sommaire ; les écarts de texte restent à relever à l'analyse de chaque chapitre (la v03 sert de référence).

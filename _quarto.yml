@@ -6,11 +6,17 @@ project:
   render:
     - "*.qmd"
     - "matieres/**/*.qmd"
+  # Avant chaque rendu complet : catalogue des matières (accueil, page des
+  # annales, en-têtes des chapitres). Script Deno fourni par Quarto, aucune
+  # dépendance. Voir architecture.md § 4 et scripts/catalogue.ts.
+  pre-render: scripts/catalogue.ts
   # L'application de révision est copiée telle quelle dans le site.
   resources:
     - "revision/**"
     # Jetons de DA : aussi lus par revision/index.html (../assets/bristol-tokens.css).
     - "assets/bristol-tokens.css"
+    # Polices Geist auto-hébergées (lues par bristol-tokens.css).
+    - "assets/fonts/**"
   # Port fixe pour quarto preview : la progression de révision (localStorage) est
   # propre à l'adresse http://localhost:4848. Ne pas changer ce port, ne pas passer
   # par 127.0.0.1 (autre adresse, progression vide). Voir architecture.md § 6 et § 8.
@@ -19,20 +25,30 @@ project:
     browser: true
 
 lang: fr
+language:
+  search-text-placeholder: "Rechercher…"
 
 website:
   title: "Bristol"
   description: "Base de connaissances pour mes études d'ingénieur"
-  search: true
+  search:
+    location: navbar
+    type: textbox
+    copy-button: false
   page-navigation: true
   back-to-top-navigation: true
   navbar:
     left:
       - text: "Matières"
         href: index.qmd
+      - text: "Annales"
+        href: annales.qmd
       - text: "Révisions"
         href: revision/index.html
-      - text: "Conventions"
+  page-footer:
+    left: "Bristol · cours, annales et flashcards"
+    right:
+      - text: "Conventions de lecture"
         href: demo-conventions.qmd
   sidebar:
     - id: ts227
@@ -162,12 +178,24 @@ website:
 format:
   html:
     theme:
-      light: [cosmo, assets/bristol.scss]
-      dark: [cosmo, assets/bristol.scss, assets/bristol-sombre.scss]
+      light: [default, assets/bristol.scss]
+      dark: [default, assets/bristol.scss, assets/bristol-sombre.scss]
     # Mode sombre : suit le système, sauf choix explicite (bouton de la barre).
     respect-user-color-scheme: true
     # Couleurs, polices, espacements : source unique, partagée avec revision/.
     css: assets/bristol-tokens.css
+    # Contexte des chapitres et des matières (en-tête, « Pour continuer »),
+    # script du site (assets/bristol.js) : voir assets/bristol.lua.
+    filters:
+      - assets/bristol.lua
+    template-partials:
+      - assets/partials/title-block.html
+    grid:
+      sidebar-width: 272px
+      body-width: 760px
+      margin-width: 232px
+      gutter-width: 2.5rem
+    smooth-scroll: true
     toc: true
     toc-title: "Sur cette page"
     number-sections: true

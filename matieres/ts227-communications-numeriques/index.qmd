@@ -25,6 +25,18 @@ number-sections: false
 | 5 | Transmission sur fréquence porteuse | [Brouillon]{.statut .brouillon} |
 | 6 | Modulation et démodulation numériques | [Brouillon]{.statut .brouillon} |
 
+## Annales corrigées {#sec-annales-corrigees}
+
+Sujets de partiel des années précédentes, avec des solutions rédigées par Claude (aucun corrigé officiel) ; sources dans `sources/ts227/annales/`.
+
+| Année | Contenu | Page |
+|---|---|---|
+| 2019-2020 | Généralités ; BPSK (cyclostationnarité, DSP) ; décodage d'un SMS en 16-QAM | [Partiel 2019-2020](annales/2019-2020-partiel.qmd) |
+| 2018-2019 | Généralités ; réception I/Q sur porteuse, QPSK bruitée | [Partiel 2018-2019](annales/2018-2019-partiel.qmd) |
+| 2017-2018 | Questions de cours (probabilités, Nyquist, DSP d'une 4-PAM) ; émetteur 4-PAM en Matlab | [Partiel 2017-2018](annales/2017-2018-partiel.qmd) |
+| 2016-2017 | Questions de cours ; décalage de fréquence de l'oscillateur local | [Partiel 2016-2017](annales/2016-2017-partiel.qmd) |
+| 2015-2016 | Généralités, bruit blanc ; OOK à filtre ajustable (DSP, bande, $P_b$) | [Partiel 2015-2016](annales/2015-2016-partiel.qmd) |
+
 ## Table des notations
 
 Le cours Bristol suit les notations **du cours** (poly). Correspondance avec le TD :
@@ -74,6 +86,7 @@ Le cours Bristol suit les notations **du cours** (poly). Correspondance avec le 
 | `ts205` | `support/ts205-ofdm.pdf`, « Principes des communications multiporteuses. Introduction à l'OFDM », 3 p. | officielle | support complémentaire (ancien module TS205), rangé avec TS227 |
 | `notes-2023` | `notes/2023-notes-cours.pdf`, 16 p. | externe | notes manuscrites d'un ancien élève (promotion 2023), **reçues le 19 octobre 2026, pas encore exploitées** dans les chapitres |
 | — | `corriges/2023-…pdf` | externe | TD annoté, correction annotée, exercice 1 (ancien élève) |
+| `sujet-2015` … `sujet-2019` | `annales/2015-2016-partiel.pdf`, `2016-2017-partiel.pdf`, `2017-2018-partiel.pdf`, `2018-2019-partiel-p1.jpg` à `-p3.jpg`, `2019-2020-partiel.pdf` | officielle | sujets de partiel (photos ou scans), corrigés dans les [annales corrigées](#sec-annales-corrigees) |
 
 ## Remarques
 
