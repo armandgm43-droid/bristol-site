@@ -21,36 +21,58 @@ number-sections: false
 
 ## Chapitres
 
-Plan tiré des sommaires des deux supports. Matière distincte de TS227 (confirmé par Armand le 18 octobre 2026) ; les modulations numériques y sont vues côté circuits.
+Plan tiré des sommaires des deux supports (validé le 29 octobre 2026). Matière distincte de TS227 (confirmé par Armand le 18 octobre 2026) : les modulations numériques y sont vues côté circuits ; TS227 les approfondit (codage, bruit).
 
-| N° | Chapitre (proposé) | Contenu et sources | Statut |
+| N° | Chapitre | Contenu | Statut |
 |---|---|---|---|
-| 1 | Introduction : signaux et outils d'analyse | `mod-ana` : introduction, signaux et outils d'analyse | [Brouillon]{.statut .brouillon} |
-| 2 | Modulations linéaires | `mod-ana` : modulations d'amplitude | [Brouillon]{.statut .brouillon} |
-| 3 | Modulations angulaires | `mod-ana` : modulations de fréquence et de phase | [Brouillon]{.statut .brouillon} |
-| 4 | Introduction aux modulations numériques | `mod-num` : ASK, FSK, PSK, représentation IQ, critères de performance | [Brouillon]{.statut .brouillon} |
+| 1 | [Introduction : signaux et outils d'analyse](cours/01-introduction-signaux-outils.qmd) | antenne, types de modulations, TF, série de Fourier, Parseval, mélangeur | [Flashcards générées]{.statut .flashcards} |
+| 2 | [Modulations linéaires](cours/02-modulations-lineaires.qmd) | AMDBSP, AMDBAP (taux de modulation), BLU ; TD 1 (I), TD 3 (ex. 1) | [Flashcards générées]{.statut .flashcards} |
+| 3 | [Modulations angulaires](cours/03-modulations-angulaires.qmd) | FM (indice, Bessel, Carson, Armstrong, discriminateur), PM, bilan ; TD 1 (III), TD 2 (ex. 1), TD 3 (ex. 2) | [Flashcards générées]{.statut .flashcards} |
+| 4 | [Introduction aux modulations numériques](cours/04-modulations-numeriques.qmd) | ASK, PSK, FSK, constellation IQ, OOK, BPSK, QPSK, MPSK, QAM, MSK, GMSK ; TD 1 (II, IV), TD 2 (ex. 2-3) | [Flashcards générées]{.statut .flashcards} |
 
-Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
+Les quatre chapitres ont été rédigés, vérifiés et validés le 29 octobre 2026 (validation déléguée par Armand) : 11 blocs *À vérifier*, tous tranchés (corrections de coquilles du support). Aucune note d'Armand : les notes et corrigés d'un ancien élève (2023) sont en *Notes externes*. Les solutions des TD sans corrigé sont rédigées par Claude (*Complément*). **74 flashcards** générées le 29 octobre 2026 (17, 18, 21 et 18 par chapitre), dans le paquet « EARF1 » de l'application de révision.
 
 ## Table des notations
 
-À compléter lors de l'analyse du premier chapitre.
+| Grandeur | Notation du cours | Autres notations des sources |
+|---|---|---|
+| Signal modulant (message) | $m(t)$ | $S_{BB}$ (chaîne, mod-ana p. 7) |
+| Porteuse | $p(t) = A_p\cos(2\pi f_p t)$ | $\cos(\omega_p t)$ |
+| Signal modulé | $s(t)$ | $S_{AMDBAP}$, $S_{FM}$, $S_{PM}$… |
+| Fréquence porteuse | $f_p$ | $f_0$ (mod-ana p. 34-44, TD 2), $f_c$ et $F_0$ (mod-num) |
+| Fréquence, amplitude du modulant sinusoïdal | $f_m$, $A_m$ | |
+| Bande du modulant quelconque | $B_m$ | $B_0$ (questions p. 32) |
+| Taux de modulation AM | $k = \lvert m\rvert_\mathrm{max}/A$ | $m$ (TD 1), $k_{AM}$ |
+| Sensibilité d'un modulateur FM, PM | $k_f$ (Hz/V), $k_p$ | |
+| Excursion maximale en fréquence | $\Delta f = k_f A_m$ | |
+| Indice de modulation FM, PM | $\beta = \Delta f/f_m$, $\beta_{PM} = k_p A_m$ | $\beta_{FM}$ |
+| Bande utile FM, PM (Carson) | $B_s = 2(\beta + 1)f_m$ | $B_{FM}$, $B_{PM}$, $BW_C$ (TD 1) |
+| Fonction de Bessel de première espèce | $J_n(\beta)$ | |
+| Débit binaire, durée d'un bit | $D = 1/T_r$ | $D_b$, $T_b$ (TD) |
+| Période de la porteuse (numérique) | $T_c$ | |
+| Bits par symbole | $N_{sym} = \log_2 M$ | |
+| Bande utile, efficacité spectrale | $BW_{mod}$, $\eta = D/BW_{mod}$ | |
+| Composantes en phase et en quadrature | $I = E\cos\varphi_c$, $Q = E\sin\varphi_c$ | $i(t)$, $q(t)$ |
 
 ## Conventions de la matière
 
 - **Numéros de page** cités : pages du PDF.
-- Autres conventions (signe de la TF, notations…) : à fixer à l'analyse.
+- **Transformée de Fourier** : $X(f) = \int x(t)\,e^{-j2\pi f t}\,\mathrm{d}t$, unité imaginaire $j$ (forme de mod-ana p. 14 ; la p. 11 mélange $f$ et $\omega$ et note $i$ : bloc tranché `av-tf-pulsation-frequence`).
+- **Spectres d'amplitude** : unilatéraux (fréquences positives), comme dans le support ; une raie $A\cos(2\pi f t)$ a pour hauteur $A$ et pour puissance $A^2/2$.
+- **Vitesse de transmission** (*symbol rate*) en bauds (le support écrit « Bits/s » : bloc tranché `av-unite-symbol-rate`).
 
 ## Sources
 
-Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/earf1/` (hors dépôt).
+Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources brutes dans `sources/earf1/` (hors dépôt). Rapports d'analyse : `analyses/0N-*.md`.
 
 | id | Source | Nature | Remarque |
 |---|---|---|---|
-| `mod-ana` | `support/cours-01-modulations-analogiques.pdf` | officielle | 54 p. |
+| `mod-ana` | `support/cours-01-modulations-analogiques.pdf` | officielle | 54 p., version « Student », complète (aucun trou) |
 | `mod-num` | `support/cours-02-modulations-numeriques.pdf` | officielle | 30 p. |
-| `td…` | `td/` | officielle | TD 1 (GNU Radio, .pdf et .docx), TD 2 (modulateurs), TD 3 (démodulateurs) |
-| `notes-2023-…` | `notes/2023-…pdf` | externe | modulations analogiques, modulations numériques (ancien élève) |
-| — | `corriges/2023-…pdf` | externe | TD 1 à 3, manuscrits (ancien élève) |
+| `td1` | `td/td01-gnuradio-modulations.pdf` | officielle | TD machine GNU Radio (AM, ASK, FM, FSK) ; pas de corrigé |
+| `td2` | `td/td02-modulateurs.pdf` | officielle | modulateurs à oscillateur LC et varicap |
+| `td3` | `td/td03-demodulateurs.pdf` | officielle | détecteur d'enveloppe, démodulateur FM |
+| `notes-2023-ana`, `notes-2023-num` | `notes/2023-…pdf` | externe | notes d'un ancien élève (2023) |
+| `corrige-2023-td01` à `-td03` | `corriges/2023-…pdf` | externe | corrigés manuscrits (2023) ; celui du TD 1 suit une ancienne version papier dont l'énoncé manque |
 
-La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).
+La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand. Dans les chapitres, leur contenu est en bloc *Notes externes* (`conventions.md` § 5.1).

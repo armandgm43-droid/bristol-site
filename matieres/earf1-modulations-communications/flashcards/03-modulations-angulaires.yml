@@ -1,0 +1,203 @@
+# Flashcards — EARF1, chapitre 3 : Modulations angulaires.
+# Générées le 2026-10-29 à partir du cours validé (étape 8). Format : conventions.md § 10.
+matiere: earf1
+chapitre: 3
+cours: cours/03-modulations-angulaires.qmd
+ids-retires: []
+cartes:
+
+  - id: earf1-phase-frequence-instantanees
+    type: formule
+    question: |
+      Pour $s(t) = A\cos(2\pi f_p t + \varphi(t))$ : phase instantanée et fréquence instantanée ?
+    reponse: |
+      $$\theta_i = 2\pi f_p t + \varphi(t), \qquad f_i = \frac{1}{2\pi}\frac{\mathrm{d}\theta_i}{\mathrm{d}t} = f_p + \frac{1}{2\pi}\frac{\mathrm{d}\varphi}{\mathrm{d}t}$$
+    ref: eq-phase-frequence-instantanees
+    source: officiel
+
+  - id: earf1-avantages-angulaires
+    type: propriete
+    question: |
+      Trois avantages des modulations angulaires ?
+    reponse: |
+      - enveloppe constante : meilleur rendement des émetteurs (PA non linéaires) ;
+      - bonne immunité au bruit (SNR favorable) ;
+      - moins sensibles aux non-linéarités des blocs radio.
+    ref: sec-principe-angulaires
+    source: officiel
+
+  - id: earf1-fm-principe
+    type: formule
+    question: |
+      Principe de la FM : fréquence instantanée et expression de $s_{FM}(t)$ ?
+    reponse: |
+      $f_i = f_p + k_f m(t)$ ($k_f$ en Hz/V) :
+      $$s_{FM}(t) = A\cos\Bigl[2\pi f_p t + 2\pi k_f\int_0^t m(u)\,\mathrm{d}u\Bigr]$$
+    ref: eq-fm
+    source: officiel
+
+  - id: earf1-excursion-indice
+    type: formule
+    question: |
+      FM à modulant sinusoïdal $A_m\cos(2\pi f_m t)$ : excursion $\Delta f$, indice $\beta$ et expression de $s_{FM}$ ?
+    reponse: |
+      $\Delta f = k_f A_m$, $\beta = \Delta f/f_m$ :
+      $$s_{FM}(t) = A\cos[2\pi f_p t + \beta\sin(2\pi f_m t)]$$
+    ref: eq-fm-sinus
+    source: officiel
+
+  - id: earf1-fm-bessel-spectre
+    type: formule
+    question: |
+      Décomposition spectrale d'un signal FM à modulant sinusoïdal ?
+    reponse: |
+      $$s_{FM}(t) = A\sum_{n=-\infty}^{+\infty} J_n(\beta)\cos[2\pi(f_p + n f_m)t]$$
+      Raies espacées de $f_m$, d'amplitude $A J_n(\beta)$.
+    ref: eq-fm-bessel
+    source: officiel
+
+  - id: earf1-proprietes-spectre-fm
+    type: propriete
+    question: |
+      Propriétés théoriques du spectre FM (nombre de raies, symétrie, décroissance) ?
+    reponse: |
+      Infinité de raies centrées sur $f_p$ ; raies en $f_p \pm n f_m$ de même amplitude, en opposition de phase pour $n$ impair ($J_{-n} = (-1)^n J_n$) ; $J_n(\beta) \to 0$ quand $n \to \infty$.
+    ref: sec-fm-bessel
+    source: officiel
+
+  - id: earf1-fm-bande-etroite
+    type: resultat
+    question: |
+      Spectre FM pour $\beta \ll 1$ ?
+    reponse: |
+      $J_0 \approx 1$, $J_1 \approx \beta/2$, autres négligeables : porteuse et deux raies en $f_p \pm f_m$, bande $\approx 2f_m$ (comme l'AM).
+    ref: sec-fm-bessel
+    source: complement
+
+  - id: earf1-porteuse-nulle-fm
+    type: piege
+    question: |
+      L'amplitude de la raie de porteuse d'un signal FM est-elle constante ? Quand s'annule-t-elle ?
+    reponse: |
+      Non : elle vaut $A J_0(\beta)$, et s'annule pour $\beta \approx 2{,}405$ (premier zéro de $J_0$).
+    ref: sec-fm-bessel
+    source: complement
+
+  - id: earf1-puissance-fm
+    type: formule
+    question: |
+      Puissance d'un signal FM ? Dépend-elle de $\beta$ ?
+    reponse: |
+      $P_{FM} = \frac{A^2}{2}\sum J_n^2(\beta) = \frac{A^2}{2}$ : indépendante de $\beta$ (enveloppe constante) ; la modulation ne fait que répartir la puissance.
+    ref: eq-puissance-fm
+    source: officiel
+
+  - id: earf1-regle-carson
+    type: formule
+    question: |
+      Règle de Carson : nombre de raies retenues, pourcentage de puissance, bande ?
+    reponse: |
+      $N(\beta) = \beta + 1$ raies de chaque côté contiennent au moins 98 % de la puissance :
+      $$B_s = 2(\beta + 1)f_m$$
+    ref: eq-carson
+    source: officiel
+
+  - id: earf1-carson-limites
+    type: resultat
+    question: |
+      Bande de Carson pour $\beta \ll 1$ et pour $\beta \gg 1$ ?
+    reponse: |
+      $\beta \ll 1$ : $B_s \approx 2f_m$. $\beta \gg 1$ : $B_s \approx 2\beta f_m = 2\Delta f$.
+    ref: thm-carson
+    source: officiel
+
+  - id: earf1-carson-quelconque
+    type: formule
+    question: |
+      Indice et bande de Carson pour un modulant quelconque de bande $B_m$ ?
+    reponse: |
+      $\beta_{FM} = \Delta f/B_m = k_f|m|_\mathrm{max}/B_m$ ; $B_s = 2(\beta_{FM} + 1)B_m = 2(\Delta f + B_m)$.
+    ref: eq-carson-quelconque
+    source: officiel
+
+  - id: earf1-radio-fm
+    type: exercice
+    question: |
+      Radio FM : $\Delta f = 75$ kHz, $B_m = 15$ kHz. Indice et bande ?
+    reponse: |
+      $\beta = 5$ ; $B_s = 2(75 + 15) = 180$ kHz.
+    ref: exm-radio-fm
+    source: officiel
+
+  - id: earf1-armstrong
+    type: methode
+    question: |
+      Principe du modulateur d'Armstrong (FM à faible indice) ?
+    reponse: |
+      Si $|\varphi| \ll 1$ : $s_{FM} \approx A\cos(2\pi f_p t) - A\varphi(t)\sin(2\pi f_p t)$, avec $\varphi = 2\pi k_f\int m$ : intégrateur, mélangeur avec la porteuse déphasée de $-\pi/2$, soustraction à la porteuse.
+    ref: eq-armstrong
+    source: officiel
+
+  - id: earf1-discriminateur
+    type: methode
+    question: |
+      Démodulation FM par discrimination : principe ?
+    reponse: |
+      Dériver : $\mathrm{d}s_{FM}/\mathrm{d}t = -2\pi A(f_p + k_f m(t))\sin[\dots]$ ; l'information passe dans l'enveloppe, extraite par un détecteur d'enveloppe.
+    ref: eq-discriminateur
+    source: officiel
+
+  - id: earf1-pm-principe
+    type: formule
+    question: |
+      Modulation PM : expression, indice et bande de Carson (modulant sinusoïdal) ?
+    reponse: |
+      $s_{PM} = A\cos[2\pi f_p t + k_p m(t)]$ ; $\beta_{PM} = k_p A_m$ ; $B_{PM} = 2(\beta_{PM} + 1)f_m$.
+    ref: eq-pm-sinus
+    source: officiel
+
+  - id: earf1-pm-depuis-fm
+    type: relation
+    question: |
+      Comment obtenir un modulateur PM à partir d'un modulateur FM ? Quel circuit simple ?
+    reponse: |
+      Placer un dérivateur devant le modulateur FM (l'intégrale de la FM annule la dérivée) ; dérivateur simple : filtre CR passe-haut.
+    ref: sec-pm-mod-demod
+    source: officiel
+
+  - id: earf1-beta-limites
+    type: raisonnement
+    question: |
+      Pourquoi éviter $\beta < 1$ et $\beta > 20$ en FM ?
+    reponse: |
+      $\beta < 1$ : on perd l'avantage d'immunité au bruit. $\beta > 20$ : bande $2(\beta + 1)B_m$ excessive (plus de 4 MHz pour $B_m = 100$ kHz).
+    ref: exr-questions-angulaires
+    source: complement
+
+  - id: earf1-bilan-am-fm
+    type: relation
+    question: |
+      Comparer modulations linéaires et angulaires (2 avantages, 2 inconvénients chacune) ?
+    reponse: |
+      Linéaires : simples, encombrement réductible (BLU) ; mauvais rendement, peu robustes. Angulaires : robustes (bon SNR), bon rendement ; (dé)modulateurs complexes.
+    ref: sec-bilan-analogiques
+    source: officiel
+
+  - id: earf1-varicap-kf
+    type: exercice
+    question: |
+      Modulateur LC à varicap $C_{Dv} = C_0/(1 + V_p/V_0)^n$ en petit signal : $\lambda$ et $k_f$ ?
+    reponse: |
+      $C_{Dv} \approx C_0(1 + \lambda m)$ avec $\lambda = -n/V_0$ ;
+      $$k_f = -\frac{\lambda f_0}{2}\,\frac{C_0}{C + C_0}$$
+    ref: exr-td2-modulateur-varicap
+    source: notes-externes
+
+  - id: earf1-integrateur-demodulateur
+    type: raisonnement
+    question: |
+      Démodulateur du TD 3 : pourquoi un intégrateur suivi d'un détecteur d'enveloppe démodule-t-il la FM ?
+    reponse: |
+      $V_1 = \frac{U}{R_0C_0\omega}\cos(\omega t)$ : l'amplitude est inversement proportionnelle à la fréquence ; le détecteur d'enveloppe convertit ces variations d'amplitude en tension.
+    ref: exr-td3-demodulateur-fm
+    source: notes-externes

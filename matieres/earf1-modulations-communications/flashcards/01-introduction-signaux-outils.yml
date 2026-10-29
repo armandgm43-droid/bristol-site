@@ -1,0 +1,173 @@
+# Flashcards — EARF1, chapitre 1 : Introduction : signaux et outils d'analyse.
+# Générées le 2026-10-29 à partir du cours validé (étape 8). Format : conventions.md § 10.
+# Conversion : python scripts/flashcards.py (écrit revision/cartes/earf1.json).
+matiere: earf1
+chapitre: 1
+cours: cours/01-introduction-signaux-outils.qmd
+ids-retires: []
+cartes:
+
+  # --- Pourquoi moduler ---
+
+  - id: earf1-longueur-antenne
+    type: formule
+    question: |
+      Longueur $L_0$ de la tige d'antenne pour laquelle le courant (donc le rayonnement) est maximal, en fonction de la fréquence ?
+    reponse: |
+      $$L_0 = \frac{c}{2f} = \frac{\lambda}{2}$$
+      avec $c \approx 3 \cdot 10^8\ \mathrm{m/s}$ : la taille d'une antenne est inversement proportionnelle à la fréquence.
+    ref: eq-longueur-antenne
+    source: officiel
+
+  - id: earf1-antenne-exemples
+    type: exercice
+    question: |
+      Longueur $L_0 = \lambda/2$ d'une antenne à 10 kHz (spectre vocal) et à 1 GHz ?
+    reponse: |
+      10 kHz : $\lambda = 30$ km, $L_0 = 15$ km. 1 GHz : $\lambda = 30$ cm, $L_0 = 15$ cm.
+    ref: sec-antenne
+    source: officiel
+
+  - id: earf1-pourquoi-moduler
+    type: raisonnement
+    question: |
+      Pourquoi module-t-on un signal avant de le rayonner ?
+    reponse: |
+      Pour réduire l'encombrement de l'antenne ($L_0 = c/2f$) et améliorer ses performances, il faut augmenter la fréquence des signaux rayonnés : on transpose l'information en haute fréquence.
+    ref: sec-pourquoi-moduler
+    source: officiel
+
+  - id: earf1-definition-modulation
+    type: definition
+    question: |
+      Définition de la modulation et de la démodulation ; objectif de la chaîne ?
+    reponse: |
+      Moduler (démoduler) : introduire (extraire) l'information utile dans (d')un signal haute fréquence. Objectif : $s_{BB,Rx} = s_{BB,Tx}$.
+    ref: def-modulation
+    source: officiel
+
+  - id: earf1-types-modulations
+    type: definition
+    question: |
+      Forme générale d'un signal modulé et deux grandes familles de modulations ?
+    reponse: |
+      $s(t) = A(t)\cos(2\pi f(t)t + \varphi_c(t))$.
+      - linéaires : information dans l'amplitude $A(t)$ ;
+      - angulaires : information dans la fréquence $f(t)$ ou la phase $\varphi_c(t)$.
+    ref: eq-signal-module-general
+    source: officiel
+
+  - id: earf1-deux-etapes-modulation
+    type: methode
+    question: |
+      Quelles sont les deux étapes d'une modulation ?
+    reponse: |
+      1) introduire l'information dans le signal ; 2) décaler en fréquence (vers le haut à la modulation, vers le bas à la démodulation). Simultanées ou séparées selon la modulation.
+    ref: sec-types-modulations
+    source: officiel
+
+  # --- Outils d'analyse ---
+
+  - id: earf1-classification-signaux
+    type: definition
+    question: |
+      Signal déterministe / aléatoire : définition et domaine d'étude ? Cas des télécommunications ?
+    reponse: |
+      Déterministe : évolution connue à l'avance (étude temporelle et fréquentielle). Aléatoire : évolution inconnue (étude fréquentielle). En télécoms : aléatoire, d'où l'outil transformée de Fourier.
+    ref: sec-classification-signaux
+    source: officiel
+
+  - id: earf1-tf-definition
+    type: formule
+    question: |
+      Transformée de Fourier et transformée inverse (convention de la matière) ?
+    reponse: |
+      $$X(f) = \int_{-\infty}^{+\infty} x(t)\,e^{-j2\pi f t}\,\mathrm{d}t, \qquad x(t) = \int_{-\infty}^{+\infty} X(f)\,e^{j2\pi f t}\,\mathrm{d}f$$
+    ref: eq-tf
+    source: officiel
+
+  - id: earf1-periodique-spectre-discret
+    type: propriete
+    question: |
+      Quel type de spectre pour un signal périodique ? pour un signal apériodique ?
+    reponse: |
+      Périodique : spectre discret (raies). Apériodique : spectre continu.
+    ref: def-tf
+    source: officiel
+
+  - id: earf1-tf-cosinus
+    type: formule
+    question: |
+      TF de $A\cos(2\pi f_p t)$ et de $A\sin(2\pi f_p t)$ ?
+    reponse: |
+      $$\frac{A}{2}[\delta(f - f_p) + \delta(f + f_p)] \qquad j\frac{A}{2}[-\delta(f - f_p) + \delta(f + f_p)]$$
+    ref: eq-tf-cos-sin
+    source: officiel
+
+  - id: earf1-phase-sinus
+    type: piege
+    question: |
+      Spectres d'amplitude et de phase unilatéraux de $A\cos(2\pi f_p t)$ et de $A\sin(2\pi f_p t)$ ?
+    reponse: |
+      Même raie d'amplitude $A$ à $f_p$ ; phase $0$ pour le cosinus, $-\pi/2$ pour le sinus ($\sin x = \cos(x - \pi/2)$).
+    ref: sec-transformee-fourier
+    source: officiel
+
+  - id: earf1-serie-fourier-amplitude-phase
+    type: formule
+    question: |
+      Série de Fourier sous forme amplitude-phase : expressions de $A_x(n)$ et $\varphi_x(n)$ en fonction de $a_n$, $b_n$ ?
+    reponse: |
+      $$x(t) = \frac{a_0}{2} + \sum_{n \geq 1} A_x(n)\cos(2\pi n f t + \varphi_x(n))$$
+      $A_x(n) = \sqrt{a_n^2 + b_n^2}$, $\varphi_x(n) = -\arctan(b_n/a_n)$.
+    ref: eq-serie-amplitude-phase
+    source: officiel
+
+  - id: earf1-spectre-amplitude-non-periodique
+    type: formule
+    question: |
+      Signal non périodique écrit comme somme de cosinus : lien entre $A_x(f)$ et $X(f)$ ?
+    reponse: |
+      $A_x(f) = 2|X(f)|$ et $\varphi_x(f) = \arg X(f)$ (le 2 regroupe $f$ et $-f$).
+    ref: eq-spectre-continu
+    source: officiel
+
+  - id: earf1-parseval-periodique
+    type: formule
+    question: |
+      Égalité de Parseval pour un signal périodique (puissance) ?
+    reponse: |
+      $$P = \frac{1}{T}\int_0^T x^2\,\mathrm{d}t = \frac{a_0^2}{4} + \sum_{n=1}^{\infty}\frac{A_x^2(n)}{2}$$
+      Chaque raie d'amplitude $A$ porte $A^2/2$.
+    ref: eq-parseval-periodique
+    source: officiel
+
+  # --- Mélangeur ---
+
+  - id: earf1-melangeur
+    type: definition
+    question: |
+      Rôle et sortie d'un mélangeur ; nom des trois signaux ?
+    reponse: |
+      Il décale en fréquence : $s(t) = m(t)\,p(t)$, avec $m$ le signal modulant, $p$ la porteuse, $s$ le signal modulé.
+    ref: def-melangeur
+    source: officiel
+
+  - id: earf1-melange-deux-cosinus
+    type: resultat
+    question: |
+      Spectre de $A\cos(2\pi f_m t) \cdot \cos(2\pi f_p t)$ ?
+    reponse: |
+      Deux raies d'amplitude $A/2$ en $f_p - f_m$ et $f_p + f_m$ (aucune raie à $f_p$).
+    ref: eq-melange-sinus
+    source: officiel
+
+  - id: earf1-theoreme-modulation
+    type: formule
+    question: |
+      Spectre de $s(t) = A_p\cos(2\pi f_p t)\,m(t)$ pour un modulant quelconque ?
+    reponse: |
+      $$S(f) = \frac{A_p}{2}M(f - f_p) + \frac{A_p}{2}M(f + f_p)$$
+      Spectre du modulant recopié autour de $\pm f_p$ : largeur $2B_m$.
+    ref: eq-theoreme-modulation
+    source: officiel

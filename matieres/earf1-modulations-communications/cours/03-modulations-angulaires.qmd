@@ -1,0 +1,638 @@
+---
+title: "Modulations angulaires"
+matiere: earf1
+chapitre: 3
+enseignants: ["Thierry Taris"]
+annee: "2026-2027"
+statut: flashcards
+date-modified: 2026-10-29
+sources:
+  - id: mod-ana
+    fichier: support/cours-01-modulations-analogiques.pdf
+    nature: officielle
+    version: "Modulations analogiques, durée 2 h 40 (version « Student »)"
+    pages: "33-53"
+  - id: td1
+    fichier: td/td01-gnuradio-modulations.pdf
+    nature: officielle
+    version: "TD machine GNU Radio (2026-2027)"
+    pages: "7-10"
+  - id: td2
+    fichier: td/td02-modulateurs.pdf
+    nature: officielle
+    version: "EA 218, TD 2 – Modulateurs"
+    pages: "1-2"
+  - id: td3
+    fichier: td/td03-demodulateurs.pdf
+    nature: officielle
+    version: "EA 218, TD 3 – Démodulateurs"
+    pages: "2-3"
+  - id: notes-2023-ana
+    fichier: notes/2023-notes-modulations-analogiques.pdf
+    nature: externe
+    pages: "5-7"
+  - id: corrige-2023-td01
+    fichier: corriges/2023-td01-principe-modulations.pdf
+    nature: externe
+    pages: "3"
+  - id: corrige-2023-td02
+    fichier: corriges/2023-td02-modulateurs.pdf
+    nature: externe
+    pages: "1-2"
+  - id: corrige-2023-td03
+    fichier: corriges/2023-td03-demodulateurs.pdf
+    nature: externe
+    pages: "2-3"
+---
+
+{{< include /_macros.qmd >}}
+
+Dans une modulation **angulaire**, l'information est portée par la **fréquence** (modulation FM) ou la **phase** (modulation PM) instantanée du signal modulé ; son amplitude reste constante. Ce chapitre étudie la modulation de fréquence (indice de modulation, spectre de Bessel, puissance, règle de Carson, modulateur et démodulateur), puis la modulation de phase, et termine par un bilan des modulations analogiques.
+
+Notation : le support écrit la fréquence porteuse $f_0$ aux pages 34 à 44 et $f_p$ ensuite ; ce chapitre écrit **$f_p$** partout (table des notations de la [fiche matière](../index.qmd)).
+
+## Principe des modulations angulaires {#sec-principe-angulaires}
+
+::: {#def-modulation-angulaire}
+## Modulations angulaires (FM, PM)
+
+Une modulation angulaire consiste à introduire l'information du signal modulant dans la **fréquence instantanée** (modulation FM) ou dans la **phase instantanée** (modulation PM) du signal modulé [mod-ana, p. 34] :
+
+$$
+s(t) = A\cos\bigl(2\pi f_p t + \varphi(t)\bigr).
+$$ {#eq-signal-angulaire}
+:::
+
+::: {#def-phase-frequence-instantanees}
+## Phase et fréquence instantanées
+
+$$
+\theta_i(t) = 2\pi f_p t + \varphi(t),
+\qquad
+f_i(t) = \frac{1}{2\pi}\,\frac{\mathrm{d}\theta_i(t)}{\mathrm{d}t} = f_p + \frac{1}{2\pi}\,\frac{\mathrm{d}\varphi(t)}{\mathrm{d}t}.
+$$ {#eq-phase-frequence-instantanees}
+
+[mod-ana, p. 34]
+:::
+
+Avantages des modulations angulaires [mod-ana, p. 34] :
+
+- signal modulé à **enveloppe constante** : meilleur rendement des émetteurs (amplificateurs de puissance en classes non linéaires) ;
+- bonne **immunité au bruit**, rapport signal à bruit (SNR) favorable : meilleure sensibilité des récepteurs ;
+- moins sensibles que la modulation AM aux non-linéarités des blocs radio.
+
+::: {.complement}
+L'enveloppe constante explique les deux premiers avantages : l'information n'étant pas dans l'amplitude, un amplificateur non linéaire (saturé, donc efficace) ne la déforme pas, et un bruit additif qui modifie surtout l'amplitude perturbe peu la phase.
+:::
+
+## Modulation de fréquence (FM) {#sec-fm}
+
+### Principe {#sec-fm-principe}
+
+::: {#def-fm}
+## Modulation FM
+
+Le signal modulant $m(t)$ est introduit **de manière linéaire** dans la fréquence instantanée du signal modulé [mod-ana, p. 35] :
+
+$$
+f_i(t) = f_p + k_f\,m(t).
+$$ {#eq-fm-frequence}
+
+La phase instantanée devient
+
+$$
+\theta_i(t) = 2\pi\int_0^t f_i(u)\,\mathrm{d}u = 2\pi f_p t + 2\pi k_f\int_0^t m(u)\,\mathrm{d}u,
+$$
+
+et le signal modulé FM s'écrit
+
+$$
+s_{FM}(t) = A\cos\Bigl[2\pi f_p t + 2\pi k_f\int_0^t m(u)\,\mathrm{d}u\Bigr].
+$$ {#eq-fm}
+:::
+
+$k_f$ est la **sensibilité du modulateur**, en Hz/V [mod-ana, p. 45].
+
+### Modulant sinusoïdal : excursion et indice de modulation {#sec-fm-sinus}
+
+Avec $m(t) = A_m\cos(2\pi f_m t)$, la fréquence instantanée [mod-ana, p. 36]
+
+$$
+f_i(t) = f_p + k_f A_m\cos(2\pi f_m t)
+$$
+
+varie de manière sinusoïdale de $f_p - \Delta f$ à $f_p + \Delta f$ (@fig-signal-fm), avec
+
+$$
+\Delta f = k_f A_m,
+$$ {#eq-excursion}
+
+l'**excursion maximale en fréquence instantanée**.
+
+La phase instantanée vaut [mod-ana, p. 37]
+
+$$
+\theta_i(t) = 2\pi\int_0^t f_i(u)\,\mathrm{d}u = 2\pi f_p t + \frac{k_f A_m}{f_m}\sin(2\pi f_m t).
+$$
+
+::: {#def-indice-modulation}
+## Indice de modulation
+
+$$
+\beta = \frac{k_f A_m}{f_m} = \frac{\Delta f}{f_m},
+\qquad
+s_{FM}(t) = A\cos\bigl[2\pi f_p t + \beta\sin(2\pi f_m t)\bigr].
+$$ {#eq-fm-sinus}
+
+$\beta$ est appelé l'**indice de modulation** [mod-ana, p. 37].
+:::
+
+![Modulation de fréquence par un modulant sinusoïdal : le modulant, la fréquence instantanée, qui oscille entre $f_p - \Delta f$ et $f_p + \Delta f$, et le signal FM, d'amplitude constante. D'après le support [mod-ana, p. 36-37], recalculée ($f_p = 12 f_m$, $\beta = 8$).](../figures/03-signal-fm.svg){#fig-signal-fm}
+
+::: {.notes-externes}
+« $\Delta f$ est l'excursion maximale en fréquence instantanée, c'est-à-dire qu'on l'observe en fonction du temps » ; pour un signal aléatoire, la fréquence $f_m$ de l'indice est remplacée par la bande du modulant [notes-2023-ana, p. 5] (voir @sec-fm-quelconque).
+:::
+
+### Analyse spectrale : fonctions de Bessel {#sec-fm-bessel}
+
+Pour représenter $s_{FM}(t)$ en fonction de la fréquence, on le réécrit sous la forme [mod-ana, p. 38] :
+
+$$
+s_{FM}(t) = A\sum_{n=-\infty}^{+\infty} J_n(\beta)\cos\bigl[2\pi(f_p + n f_m)t\bigr],
+$$ {#eq-fm-bessel}
+
+où $J_n(\beta)$ est la **fonction de Bessel de première espèce d'ordre $n$** :
+
+$$
+J_n(\beta) = \sum_{m=0}^{+\infty}\frac{(-1)^m\,(\beta/2)^{n+2m}}{m!\,(n+m)!}.
+$$ {#eq-bessel}
+
+::: {.a-verifier .tranche #av-signe-serie-bessel}
+**Source** [mod-ana, p. 38] : « $J_n(\beta) = \sum_{m=0}^{+\infty}\frac{(-1)^n(\beta/2)^{n+2m}}{m!\,(n+m)!}$ ».
+
+**Problème** : le signe alterné porte sur l'indice de sommation $m$, pas sur $n$. Avec $(-1)^n$, tous les termes ont le même signe et la série donnerait $I_n(\beta)$ (fonction de Bessel *modifiée*), qui ne s'annule jamais : ce n'est pas le tableau de la p. 39 ($J_0(3) = -0{,}26$).
+
+**Proposition** : $(-1)^m$, comme dans @eq-bessel.
+
+**Décision** : proposition retenue (décision déléguée par Armand, 2026-10-29).
+:::
+
+Le support donne un **tableau de valeurs de $J_n(\beta)$** pour $\beta$ de 0 à 7 et $n$ de 0 à 16 [mod-ana, p. 39]. Extrait (arrondi à $10^{-2}$) :
+
+| $n$ \\ $\beta$ | 0,2 | 0,5 | 1 | 2 | 3 | 5 |
+|---|---|---|---|---|---|---|
+| 0 | 0,99 | 0,94 | 0,77 | 0,22 | −0,26 | −0,18 |
+| 1 | 0,10 | 0,24 | 0,44 | 0,58 | 0,34 | −0,33 |
+| 2 | 0,00 | 0,03 | 0,11 | 0,35 | 0,49 | 0,05 |
+| 3 | | | 0,02 | 0,13 | 0,31 | 0,36 |
+| 4 | | | | 0,03 | 0,13 | 0,39 |
+| 5 | | | | 0,01 | 0,04 | 0,26 |
+| 6 | | | | | 0,01 | 0,13 |
+| 7 | | | | | | 0,05 |
+| 8 | | | | | | 0,02 |
+
+: Valeurs de $J_n(\beta)$ (cases vides : $|J_n| < 0{,}01$). Colonnes 0,2, 1, 2, 3, 5 : tableau du support [mod-ana, p. 39] ; colonne 0,5 : calculée (*Complément*), utilisée au TD 1. {#tbl-bessel}
+
+![Fonctions de Bessel $J_0$ à $J_4$ en fonction de l'indice $\beta$. Reconstruite : courbes calculées (le support donne un tableau de valeurs). En pointillés, les zéros de $J_0$ (2,405 ; 5,520 ; 8,654).](../figures/03-bessel.svg){#fig-bessel}
+
+![Spectre d'amplitude d'un signal FM à modulant sinusoïdal ($A = 1$) : raies $|J_n(\beta)|$ en $f_p + n f_m$ pour $\beta = 0{,}2$ ; 1 ; 3 ; 5. Zone grisée : bande de Carson $2(\beta + 1)f_m$. D'après le support [mod-ana, p. 40], recalculée.](../figures/03-spectres-fm.svg){#fig-spectres-fm}
+
+**En théorie**, le module du spectre du signal FM est constitué [mod-ana, p. 41] :
+
+- d'une **infinité de raies** distantes de $f_m$, centrées sur $f_p$ ;
+- de raies d'amplitude $A\,J_n(\beta)$ ;
+- de raies symétriques en $f_p \pm n f_m$, de même amplitude mais **en opposition de phase pour $n$ impair** : $J_{-n}(\beta) = (-1)^n J_n(\beta)$ ;
+- le nombre de raies est infini, mais $J_n(\beta) \to 0$ quand $n \to \infty$.
+
+::: {.a-verifier .tranche #av-symetrie-bessel}
+**Source** [mod-ana, p. 41] : « Raies symétriques à $f_0 \pm nf_m$ de même amplitude mais en opposition de phase pour $n$ impair $A.J_n(\beta) = (-1)^n J_{-n}(\beta)$ ».
+
+**Problème** : le facteur $A$ n'apparaît que d'un côté de l'égalité (elle serait fausse pour $A \neq 1$). Sans ce facteur, la relation est juste (et équivalente à la forme usuelle, puisque $(-1)^{2n} = 1$).
+
+**Proposition** : $J_{-n}(\beta) = (-1)^n J_n(\beta)$.
+
+**Décision** : proposition retenue (décision déléguée par Armand, 2026-10-29).
+:::
+
+::: {.complement}
+- Pour $\beta \ll 1$ : $J_0 \approx 1$, $J_1 \approx \beta/2$ et $J_{n \geq 2} \approx 0$ : le spectre se réduit à la porteuse et à deux raies en $f_p \pm f_m$, comme en AM (mais la raie inférieure est en opposition de phase) : c'est la **FM à bande étroite** (@fig-spectres-fm, $\beta = 0{,}2$).
+- L'amplitude de la porteuse, $A\,J_0(\beta)$, dépend de $\beta$ et s'**annule** pour $\beta = 2{,}405$ (@fig-bessel) : la puissance est alors entièrement dans les raies latérales.
+:::
+
+**En pratique**, à mesure que l'on s'éloigne de la porteuse, les raies s'atténuent : un nombre fini $N(\beta)$ de raies, de part et d'autre de $f_p$, suffit à représenter l'essentiel du signal FM, et une **bande passante finie** $B_s$ est possible [mod-ana, p. 42] :
+
+$$
+B_s = 2N(\beta)\,f_m.
+$$ {#eq-bande-n-beta}
+
+Reste à choisir $N(\beta)$.
+
+### Puissance et règle de Carson {#sec-carson}
+
+La puissance d'un signal FM se calcule par le théorème de Parseval sur les raies de @eq-fm-bessel [mod-ana, p. 43] :
+
+$$
+P_{FM} = \sum_{n=-\infty}^{+\infty}\frac{\bigl(A\,J_n(\beta)\bigr)^2}{2} = \frac{A^2}{2}\sum_{n=-\infty}^{+\infty}J_n^2(\beta) = \frac{A^2}{2}.
+$$ {#eq-puissance-fm}
+
+::: {.complement}
+On a utilisé l'identité $\sum_{n=-\infty}^{+\infty}J_n^2(\beta) = 1$. Le résultat se retrouve directement : $s_{FM}$ est une sinusoïde d'amplitude constante $A$, de puissance $A^2/2$ quelle que soit la modulation. La modulation ne fait que **répartir** cette puissance entre la porteuse et les raies latérales.
+:::
+
+::: {#thm-carson}
+## Règle de Carson
+
+98 % de la puissance totale du signal FM est contenue dans les raies $n \in [-N(\beta), +N(\beta)]$ [mod-ana, p. 43] :
+
+$$
+\frac{A^2}{2}\sum_{n=-N(\beta)}^{+N(\beta)}J_n^2(\beta) \geq 0{,}98\,\frac{A^2}{2}
+\quad\text{pour}\quad
+N(\beta) = \beta + 1.
+$$
+
+La bande passante du signal FM s'écrit alors
+
+$$
+B_s = 2(\beta + 1)f_m.
+$$ {#eq-carson}
+
+- Pour $\beta \ll 1$ : $B_s \approx 2f_m$ ;
+- pour $\beta \gg 1$ : $B_s \approx 2\beta f_m = 2\Delta f$.
+:::
+
+::: {.notes-externes}
+Sur le tableau de Bessel, les notes de 2023 surlignent les valeurs à retenir selon que $\beta < 1$ (porteuse et premières raies) ou $\beta > 1$ (raies jusqu'à $n = \beta + 1$ environ) [notes-2023-ana, p. 6].
+:::
+
+::: {.complement}
+$N(\beta) = \beta + 1$ n'est pas forcément entier : on retient les raies $|n| \leq \beta + 1$. Exemples (@tbl-bessel) : pour $\beta = 1$, $N = 2$ et $J_0^2 + 2(J_1^2 + J_2^2) = 0{,}999$ ; pour $\beta = 3$, $N = 4$ et la somme vaut $0{,}998$. La règle de Carson est donc un peu pessimiste : elle garantit au moins 98 %.
+:::
+
+### Modulant quelconque {#sec-fm-quelconque}
+
+Pour un signal modulant quelconque, d'occupation spectrale $B_m$ [mod-ana, p. 44] :
+
+$$
+\beta_{FM} = \frac{\Delta f}{B_m} = \frac{k_f\,|m(t)|_\mathrm{max}}{B_m},
+\qquad
+B_s = 2(\beta_{FM} + 1)\,B_m = 2(\Delta f + B_m).
+$$ {#eq-carson-quelconque}
+
+$\Delta f$ est l'excursion maximale en fréquence instantanée.
+
+::: {#exm-radio-fm}
+## Radiodiffusion FM
+
+En radiodiffusion, la bande FM s'étend de 88 à 108 MHz. L'excursion maximale autorisée est $\Delta f = 75\ \mathrm{kHz}$, et $B_m = 15\ \mathrm{kHz}$ (norme haute fidélité, HiFi). Alors [mod-ana, p. 44] :
+
+$$
+\beta_{FM} = \frac{\Delta f}{B_m} = 5,
+\qquad
+B_s = 2(\Delta f + B_m) = 180\ \mathrm{kHz}.
+$$
+:::
+
+### Modulation et démodulation : principe {#sec-fm-mod-demod}
+
+**Génération** : l'objectif est de réaliser une transformation **linéaire** d'une variation de tension $u$ en variation de fréquence [mod-ana, p. 45] :
+
+$$
+f(u) = f_p + k_f\,u,
+$$
+
+où $k_f$ est la sensibilité du modulateur, en Hz/V. C'est le rôle d'un **oscillateur commandé en tension** (VCO), comme l'oscillateur LC à varicap du TD 2 (@exr-td2-modulateur-varicap).
+
+**Démodulation** : l'objectif est la transformation inverse, linéaire, d'une variation de fréquence en variation de tension. Cette contrainte de linéarité est difficile à tenir ; plusieurs solutions existent [mod-ana, p. 45] :
+
+- le **discriminateur** (ci-dessous) ;
+- la **boucle à verrouillage de phase** (*Phase Locked Loop*, PLL), vue dans le cours de N. Deltimple sur les PLL ;
+- d'autres circuits.
+
+### Modulateur d'Armstrong {#sec-armstrong}
+
+En développant @eq-signal-angulaire avec $\varphi(t) = 2\pi k_f\int_0^t m(u)\,\mathrm{d}u$ [mod-ana, p. 46] :
+
+$$
+s_{FM}(t) = A\cos(2\pi f_p t)\cos\varphi(t) - A\sin(2\pi f_p t)\sin\varphi(t).
+$$
+
+**À faible indice** : avec $m(t) = A_m\cos(2\pi f_m t)$, $\varphi(t) = \beta\sin(2\pi f_m t)$ et $|\varphi(t)| \leq \beta$. Si $\beta \ll 1$, alors $|\varphi(t)| \ll 1$, donc $\cos\varphi(t) \approx 1$ et $\sin\varphi(t) \approx \varphi(t)$ :
+
+$$
+s_{FM}(t) \approx A\cos(2\pi f_p t) - A\,\varphi(t)\sin(2\pi f_p t).
+$$ {#eq-armstrong}
+
+Le **modulateur d'Armstrong** réalise cette expression avec un intégrateur ($2\pi k_f\int_0^t$), un mélangeur, un déphaseur de $-\pi/2$ qui produit $A\sin(2\pi f_p t)$ à partir de la porteuse $A\cos(2\pi f_p t)$, et un sommateur (@fig-armstrong).
+
+![Modulateur d'Armstrong (FM à faible indice $\beta$). D'après le support [mod-ana, p. 46], redessinée.](../figures/03-modulateur-armstrong.svg){#fig-armstrong}
+
+::: {.complement}
+@eq-armstrong n'utilise qu'un mélangeur, comme une modulation d'amplitude, mais avec une porteuse en **quadrature** : c'est ce qui distingue la FM à bande étroite de l'AMDBAP, dont le spectre a la même largeur ($2f_m$). Pour obtenir un indice élevé, on multiplie ensuite la fréquence (une multiplication par $n$ multiplie aussi $\beta$ par $n$), technique classique non détaillée dans le support.
+:::
+
+### Démodulation par discrimination {#sec-discriminateur}
+
+On dérive le signal FM [mod-ana, p. 47] :
+
+$$
+\frac{\mathrm{d}s_{FM}(t)}{\mathrm{d}t} = -A\Bigl(2\pi f_p + \frac{\mathrm{d}\varphi(t)}{\mathrm{d}t}\Bigr)\sin\bigl[2\pi f_p t + \varphi(t)\bigr],
+\qquad
+\text{en FM : }\ \frac{\mathrm{d}\varphi(t)}{\mathrm{d}t} = 2\pi k_f\,m(t),
+$$
+
+$$
+\frac{\mathrm{d}s_{FM}(t)}{\mathrm{d}t} = -2\pi A\bigl(f_p + k_f\,m(t)\bigr)\sin\bigl[2\pi f_p t + \varphi(t)\bigr].
+$$ {#eq-discriminateur}
+
+L'information est maintenant contenue dans l'**enveloppe** du signal : un **filtre dérivateur** suivi d'un **détecteur d'enveloppe** restitue $m^*(t)$, image de $m(t)$ (@fig-discriminateur).
+
+::: {.a-verifier .tranche #av-derivee-fm-facteur-2pi}
+**Source** [mod-ana, p. 47] : « $\frac{dS_{FM}(t)}{dt} = -A.(2\pi f_P + k_f m(t))\sin[2\pi f_p t + \varphi(t)]$ ».
+
+**Problème** : avec $\mathrm{d}\varphi/\mathrm{d}t = 2\pi k_f\,m(t)$ (écrit sur la même diapositive), le terme en $m(t)$ doit garder le facteur $2\pi$.
+
+**Proposition** : $-A\bigl(2\pi f_p + 2\pi k_f\,m(t)\bigr)\sin[\dots] = -2\pi A\bigl(f_p + k_f\,m(t)\bigr)\sin[\dots]$ (@eq-discriminateur). La conclusion (enveloppe affine en $m(t)$) est inchangée.
+
+**Décision** : proposition retenue (décision déléguée par Armand, 2026-10-29).
+:::
+
+![Démodulation FM par discrimination : signal FM, sa dérivée (enveloppe $\propto f_p + k_f m(t)$, en pointillés) et sortie du détecteur d'enveloppe. D'après le support [mod-ana, p. 47], recalculée ($f_p = 12 f_m$, $\Delta f = 6 f_m$).](../figures/03-discriminateur.svg){#fig-discriminateur}
+
+::: {.complement}
+L'enveloppe $2\pi A(f_p + k_f m(t))$ reste positive tant que $\Delta f < f_p$ : la sortie du détecteur vaut $m(t)$ à un gain et à une composante continue ($\propto f_p$) près, que l'on retire par un condensateur de liaison. L'amplitude $A$ intervient dans le gain : en pratique, on fait précéder le dérivateur d'un **limiteur** qui rend l'amplitude constante.
+:::
+
+## Modulation de phase (PM) {#sec-pm}
+
+::: {#def-pm}
+## Modulation PM
+
+Le signal modulant $m(t)$ est introduit **de manière linéaire** dans la phase du signal modulé [mod-ana, p. 48] :
+
+$$
+\varphi(t) = k_p\,m(t),
+\qquad
+s_{PM}(t) = A\cos\bigl[2\pi f_p t + k_p\,m(t)\bigr].
+$$ {#eq-pm}
+:::
+
+**Modulant sinusoïdal**, $m(t) = A_m\cos(2\pi f_m t)$ :
+
+$$
+s_{PM}(t) = A\cos\bigl[2\pi f_p t + \beta_{PM}\cos(2\pi f_m t)\bigr],
+\qquad
+\beta_{PM} = k_p A_m,
+$$ {#eq-pm-sinus}
+
+où $\beta_{PM}$ est l'**indice de modulation** du signal modulé en phase. Occupation spectrale suivant la règle de Carson :
+
+$$
+B_{PM} = 2(\beta_{PM} + 1)f_m.
+$$ {#eq-carson-pm}
+
+C'est la **même théorie que la modulation de fréquence** [mod-ana, p. 48].
+
+### Modulation et démodulation du signal PM {#sec-pm-mod-demod}
+
+Un modulateur PM s'obtient en plaçant un **filtre dérivateur** devant un **modulateur de fréquence** [mod-ana, p. 49] :
+
+$$
+s_{PM}(t) = A\cos\Bigl[2\pi f_p t + k_p\int\frac{\partial m(u)}{\partial u}\,\mathrm{d}u\Bigr] = A\cos\bigl[2\pi f_p t + k_p\,m(t)\bigr].
+$$
+
+À retenir :
+
+- à une intégrale ou une dérivée près selon le cas, les modulateurs de phase et de fréquence se ressemblent ;
+- un signal modulé en fréquence présente toujours aussi une modulation de phase, et inversement ;
+- les démodulateurs, comme les modulateurs, se ressemblent à une intégrale ou une dérivée près.
+
+::: {.complement}
+- Si le modulateur de fréquence a une sensibilité $k_f$, sa phase vaut $2\pi k_f\int m'(u)\,\mathrm{d}u = 2\pi k_f\,m(t)$ : on obtient une PM de sensibilité $k_p = 2\pi k_f$ (à la constante d'intégration près).
+- Pour la PM, la fréquence instantanée vaut $f_i = f_p + \frac{k_p}{2\pi}\frac{\mathrm{d}m}{\mathrm{d}t}$ ; avec un modulant sinusoïdal, l'excursion est $\Delta f = \beta_{PM} f_m$ : on retrouve $\beta = \Delta f/f_m$ comme en FM. La différence : en FM, $\beta$ diminue quand $f_m$ augmente (à $\Delta f$ fixé) ; en PM, $\beta_{PM} = k_p A_m$ ne dépend pas de $f_m$.
+:::
+
+## Questions de cours {#sec-questions-angulaires}
+
+::: {#exr-questions-angulaires}
+## Questions du support sur les modulations angulaires
+
+[mod-ana, p. 50]
+
+1. Quel(s) paramètre(s) d'un signal permet(tent) de supporter une modulation angulaire ?
+2. Quel est le principe d'une modulation FM ? PM ?
+3. Quelles sont les trois caractéristiques importantes d'un signal modulé FM ?
+4. Quelle est en théorie la bande passante d'un signal modulé FM ?
+5. Quelles sont les caractéristiques harmoniques d'un signal modulé FM ?
+6. Selon la règle de Carson, quelle est la bande passante utile d'un signal FM ?
+7. Quelle conséquence sur le spectre si $\beta \ll 1$ ? $\beta \gg 1$ ?
+8. Comment obtient-on un (dé)modulateur PM à partir d'un (dé)modulateur FM ?
+9. Quel circuit simple permet de réaliser cette fonction ?
+10. Pourquoi ne choisit-on pas un indice $\beta < 1$ ou $\beta > 20$ ?
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+Réponses des notes de 2023 [notes-2023-ana, p. 7] (les deux erreurs relevées sont corrigées dans le bloc suivant) :
+
+2. Introduire l'information de manière linéaire dans la phase (PM).
+3. Excursion maximale en fréquence instantanée ; indice de modulation ; bande passante.
+4. Elle est infinie.
+5. Raies symétriques puis qui diminuent quand on s'éloigne.
+6. $B_s = 2(\beta_{FM} + 1)B_m$.
+8. On doit réaliser une action dérivée.
+9. Un circuit RC.
+10. Si $\beta > 20$, pour un signal de 100 kHz de bande passante, on obtient après modulation 4000 kHz : la bande passante est trop élevée.
+:::
+::::
+
+::: {.complement}
+- 1 : la **fréquence** ou la **phase** de la porteuse (les notes écrivent « fréquence ou amplitude », ce qui est faux : l'amplitude est le paramètre des modulations linéaires).
+- 2 : FM, $m(t)$ introduit linéairement dans la fréquence instantanée ; PM, dans la phase (@def-fm, @def-pm).
+- 5 : raies en $f_p \pm n f_m$, d'amplitude $A|J_n(\beta)|$, symétriques autour de **$f_p$** (et non de 0), décroissantes loin de $f_p$.
+- 7 : $\beta \ll 1$ : $B_s \approx 2f_m$, porteuse et deux raies (spectre semblable à l'AM) ; $\beta \gg 1$ : $B_s \approx 2\beta f_m = 2\Delta f$ (les notes écrivent « $B_s = 2\beta_{FM}$ », sans le facteur $f_m$).
+- 9 : le dérivateur le plus simple est un filtre **CR passe-haut** utilisé loin sous sa fréquence de coupure ($H(j\omega) \approx jRC\omega$).
+- 10 : avec $\beta < 1$, on perd l'avantage de la FM (immunité au bruit, qui augmente avec $\beta$) ; avec $\beta > 20$, la bande $2(\beta + 1)B_m$ devient excessive : $2 \times 21 \times 100\ \mathrm{kHz} = 4{,}2\ \mathrm{MHz}$ pour l'exemple des notes (qui arrondissent à $2\beta B_m = 4000\ \mathrm{kHz}$).
+:::
+
+## Exercices du TD {#sec-exercices-td-ch03}
+
+### TD 1 (GNU Radio) : modulation de fréquence analogique {#sec-td1-fm}
+
+::: {#exr-td1-fm}
+## Modulation FM, modulant sinusoïdal
+
+Le TD utilise $S_{FM}(t) = A_p\cos[2\pi f_p t + \beta\sin(2\pi f_m t)]$, avec $\beta = \Delta f/f_m$ et $\Delta f = k_f A_m$. Configuration par défaut : $A_m = 1\ \mathrm{V}$, $f_m = 0{,}7\ \mathrm{kHz}$ ; $A_p = 1\ \mathrm{V}$, $f_p = 10\ \mathrm{kHz}$ ; $\beta = 1$ [td1, p. 7-8].
+
+1. Justifier, sur l'allure temporelle, que la modulation observée est une modulation de fréquence.
+2. Rappeler les propriétés d'un spectre modulé FM en s'appuyant sur le spectre observé.
+3. Décrire les changements du spectre quand : a) la fréquence du modulant augmente ; b) la fréquence porteuse augmente ; c) l'indice de modulation augmente.
+4. Donner l'expression de la puissance $P_{FM}$ ; la calculer pour la configuration par défaut et vérifier avec la simulation.
+5. Selon la règle de Carson, donner l'expression de la puissance $P_C$ et de la bande passante $BW_C$ du signal modulé.
+6. Compléter, avec les valeurs théoriques, le tableau de $P_{FM}$, $P_C$, $BW_C$ et du nombre d'harmoniques pour $\beta = 0{,}5$ ; 1 ; 4,5. Vérifier $P_C$ en simulation pour $\beta = 0{,}5$.
+
+[td1, p. 8-10] (l'énoncé numérote deux questions « III.3 » ; elles sont ici renumérotées.)
+:::
+
+:::: {.complement}
+::: {.solution}
+1. L'amplitude reste constante ; seule la durée des périodes (donc la fréquence instantanée) varie, au rythme du modulant.
+2. Raies espacées de $f_m$, centrées sur $f_p$, d'amplitude $A_p|J_n(\beta)|$, symétriques, décroissantes loin de $f_p$ ; pour $\beta = 1$ : porteuse 0,77 V, raies 0,44 V, 0,11 V, 0,02 V (@tbl-bessel).
+3. a) À $\Delta f$ fixé, l'espacement des raies ($f_m$) augmente et $\beta = \Delta f/f_m$ diminue : moins de raies significatives. (Dans le logiciel, si c'est $\beta$ qui est fixé, seules les raies s'écartent et la bande $2(\beta+1)f_m$ augmente.) b) Le spectre est translaté, sans changer de forme. c) L'énergie se répartit sur davantage de raies : la bande s'élargit, l'amplitude de la porteuse $J_0(\beta)$ diminue (et s'annule pour $\beta = 2{,}405$).
+4. $P_{FM} = A_p^2/2 = 0{,}5\ \mathrm{V^2}$ (@eq-puissance-fm), indépendante de $\beta$ : on peut la vérifier sur la porteuse non modulée ($\beta = 0$), seule raie alors présente, ce que demande l'énoncé.
+5. $P_C = \dfrac{A_p^2}{2}\displaystyle\sum_{n=-N}^{N}J_n^2(\beta)$, avec $N$ = partie entière de $\beta + 1$ ; $BW_C = 2(\beta + 1)f_m$ (@eq-carson).
+6. Avec $f_m = 0{,}7\ \mathrm{kHz}$ et $A_p = 1\ \mathrm{V}$ (sommes calculées avec les valeurs exactes de $J_n$) :
+
+   | $\beta$ | 0,5 | 1 | 4,5 |
+   |---|---|---|---|
+   | $P_{FM}$ ($\mathrm{V^2}$) | 0,5 | 0,5 | 0,5 |
+   | $N$ (raies de part et d'autre) | 1 | 2 | 5 |
+   | $P_C$ ($\mathrm{V^2}$) | 0,499 | 0,4996 | 0,492 |
+   | $BW_C$ (kHz) | 2,1 | 2,8 | 7,7 |
+   | Nombre de raies ($2N + 1$) | 3 | 5 | 11 |
+
+   Pour $\beta = 0{,}5$ : $P_C = \frac12[J_0^2 + 2J_1^2] = \frac12[0{,}938^2 + 2 \times 0{,}242^2] = 0{,}499\ \mathrm{V^2}$.
+:::
+::::
+
+### TD 2 : modulateur FM à diode varicap {#sec-td2-varicap}
+
+::: {#exr-td2-modulateur-varicap}
+## Modulateur FM à varicap
+
+On fait varier la fréquence d'un oscillateur LC en agissant sur une capacité : une **diode varicap** $C_{Dv}$, placée en parallèle avec la capacité $C$ du circuit $LC$ (figure de l'énoncé : $L$ entre $V_{DD}$ et les nœuds $out+$ / $out-$, $C$ et $C_{Dv}(V_p)$ entre ces nœuds, deux transistors MOS croisés vers la masse). La varicap se comporte comme une capacité qui dépend de la tension $V_p$ :
+
+$$
+C_{Dv}(V_p) = \frac{C_0}{\bigl(1 + \frac{V_p}{V_0}\bigr)^n},
+\qquad C_0 = 30\ \mathrm{pF},\ V_0 = 700\ \mathrm{mV},\ n = 0{,}7.
+$$
+
+*Principe du circuit.*
+
+1. Quel type d'oscillateur reconnaît-on ? Établir sa fréquence d'oscillation $f_{osc}$ en fonction de $L$, $C$ et $C_{Dv}$.
+2. Quel est le nom de la configuration des transistors MOS ? À quoi sert-elle ?
+
+*Principe du modulateur.*
+
+3. $V_p$ est le message basse fréquence $m(t)$, de variations continues et très petites devant $V_0$. Écrire $C_{Dv}(m(t)) = C_0[1 + \lambda\,m(t)]$ ; que vaut $\lambda$ ? (On rappelle $(1 + x)^n \approx 1 + nx$ si $x \ll 1$.)
+4. Mettre la fréquence d'oscillation sous la forme $f_{osc} = f_0 + k_f\,m(t)$, avec $f_0 = \frac{1}{2\pi\sqrt{L(C + C_0)}}$. Que vaut $k_f$ ?
+5. Montrer que l'on a réalisé un modulateur FM en décrivant ses caractéristiques principales.
+
+*Application* : transmettre un signal d'amplitude maximale $|m(t)|_\mathrm{max} = 10\ \mathrm{mV}$ sur une porteuse $f_0 = 98\ \mathrm{MHz}$ avec une excursion $\Delta f = 75\ \mathrm{kHz}$.
+
+6. Rappeler la relation entre $\Delta f$, $|m(t)|_\mathrm{max}$ et $k_f$. Que vaut $k_f$ ?
+7. Calculer $L$ et $C$.
+8. Si $m(t)$ occupe une bande de 15 kHz : a) indice de modulation ; b) bande $B_s$ selon la règle de Carson.
+
+[td2, p. 1-2]
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+D'après le corrigé de 2023 [corrige-2023-td02, p. 1-2] :
+
+1. Oscillateur à résistance négative : $f_{osc} = \dfrac{1}{2\pi\sqrt{L(C + C_{Dv})}}$.
+2. Transistors MOS câblés en **paire croisée** ; impédance équivalente $-2/g_m$.
+3. $C_{Dv}(m) = C_0\bigl(1 + \frac{m}{V_0}\bigr)^{-n} \approx C_0\bigl(1 - \frac{n}{V_0}\,m\bigr)$, donc $\lambda = -\dfrac{n}{V_0}$.
+4. $f_{osc} = \dfrac{1}{2\pi\sqrt{L(C + C_0 + C_0\lambda m)}} = \dfrac{1}{2\pi\sqrt{L(C + C_0)}}\Bigl(1 + \dfrac{C_0\lambda m}{C + C_0}\Bigr)^{-1/2} \approx f_0\Bigl(1 - \dfrac12\,\dfrac{C_0\lambda}{C + C_0}\,m\Bigr)$ si $m \ll \dfrac{C + C_0}{\lambda C_0}$, d'où
+   $$
+   k_f = -\frac{\lambda f_0}{2}\,\frac{C_0}{C + C_0}.
+   $$
+5. On a introduit linéairement les variations du message $m(t)$ dans la fréquence : modulation FM.
+6. $k_f = \dfrac{\Delta f}{|m(t)|_\mathrm{max}} = \dfrac{75 \cdot 10^3}{10 \cdot 10^{-3}} = 7{,}5 \cdot 10^6\ \mathrm{Hz/V}$.
+7. $C = \dfrac{n\,C_0\,f_0}{2k_f V_0} - C_0$ et $L = \dfrac{1}{(2\pi f_0)^2(C + C_0)}$.
+8. a) $\beta = \Delta f/B_m = 5$ ; b) $B_s = 2(1 + \beta)B_m = 180\ \mathrm{kHz}$ (bande du signal modulé).
+:::
+::::
+
+::: {.complement}
+- 2 : la paire croisée présente entre $out+$ et $out-$ une résistance **négative** $-2/g_m$ qui compense les pertes du résonateur $LC$ (résistance parallèle $R_p$) ; l'oscillation démarre si $2/g_m < R_p$. C'est l'oscillateur à résistance négative du cours de circuits intégrés (EANA3).
+- 3 : avec les valeurs numériques, $\lambda = -0{,}7/0{,}7 = -1\ \mathrm{V^{-1}}$ ; l'approximation vaut si $|m| \ll V_0/n = 1\ \mathrm{V}$, ce que vérifie $|m|_\mathrm{max} = 10\ \mathrm{mV}$.
+- 4 : $\lambda < 0$, donc $k_f > 0$ : la fréquence **augmente** avec $V_p$ (la capacité de la varicap diminue).
+- 5 : $f_{osc}$ est affine en $m(t)$, l'amplitude d'oscillation ne dépend pas de $m$ : modulateur FM de sensibilité $k_f$, porteuse $f_0$, excursion $\Delta f = k_f|m|_\mathrm{max}$, linéaire tant que $|m| \ll V_0/n$.
+- 7 : $C + C_0 = \dfrac{0{,}7 \times 30\ \mathrm{pF} \times 98 \cdot 10^6}{2 \times 7{,}5 \cdot 10^6 \times 0{,}7} = 196\ \mathrm{pF}$, d'où $C = 166\ \mathrm{pF}$ et $L = \dfrac{1}{(2\pi \cdot 98 \cdot 10^6)^2 \times 196 \cdot 10^{-12}} = 13{,}5\ \mathrm{nH}$. L'exercice 2 du TD reprend ces valeurs, arrondies à $L = 13{,}4\ \mathrm{nH}$ et $C = 167\ \mathrm{pF}$ ([chapitre 4](04-modulations-numeriques.qmd#exr-td2-fsk-varicap)).
+- 8 : c'est l'exemple de la radiodiffusion FM (@exm-radio-fm).
+:::
+
+### TD 3 : démodulateur FM {#sec-td3-fm}
+
+::: {#exr-td3-demodulateur-fm}
+## Démodulateur FM à intégrateur
+
+On place devant le démodulateur d'enveloppe du [chapitre 2](02-modulations-lineaires.qmd#exr-td3-detecteur-principe) un étage à amplificateur opérationnel : $V_{FM}(t)$ attaque l'entrée inverseuse par une résistance $R_0$, un condensateur $C_0$ relie la sortie $V_1(t)$ à l'entrée inverseuse, l'entrée non inverseuse est à la masse ; $V_1$ attaque la diode $D$ et le circuit $R_1C_1$ de sortie $V_{out}(t)$.
+
+1. Déterminer la relation entre $V_1(t)$ et $V_{FM}(t)$.
+2. Donner l'expression de $V_1(t)$ si $V_{FM}(t) = U\sin(\omega_{FM}t)$.
+3. Donner l'allure de $V_1(t)$ si la fréquence du signal ne prend que deux valeurs, $f_{FM1}$ et $f_{FM2}$ (chronogramme de l'énoncé : une fréquence basse de 0 à 2 ms, une fréquence haute de 2 à 3 ms environ, puis de nouveau la fréquence basse).
+4. En déduire l'allure de $V_{out}(t)$ si $R_1C_1$ est correctement choisie.
+5. Quel type de démodulateur réalise-t-on ?
+6. Quelles sont les principales limitations de ce circuit ?
+
+[td3, p. 2-3]
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+D'après le corrigé de 2023 [corrige-2023-td03, p. 2-3] :
+
+1. $V_+ = V_- = 0$ ; en régime harmonique, $\frac{V_{FM}}{R_0} + jC_0\omega V_1 = 0$, d'où $V_1 = -\frac{1}{R_0C_0}\,\frac{1}{j\omega}V_{FM}$, soit
+   $$
+   V_1(t) = -\frac{1}{R_0C_0}\int V_{FM}(t)\,\mathrm{d}t.
+   $$
+2. $V_1(t) = -\dfrac{1}{R_0C_0}\displaystyle\int U\sin(\omega_{FM}t)\,\mathrm{d}t = +\dfrac{U}{R_0C_0\,\omega_{FM}}\cos(\omega_{FM}t)$.
+3. et 4. $V_1$ a une amplitude $U/(R_0C_0\omega_{FM1})$ ou $U/(R_0C_0\omega_{FM2})$ selon la fréquence : la plus basse fréquence donne la plus grande amplitude ; le détecteur d'enveloppe suit ces deux niveaux.
+6. On doit bien choisir deux fréquences distinctes.
+:::
+::::
+
+::: {.complement}
+- Le corrigé de 2023 suit une autre version de l'énoncé (fréquence haute, puis basse, puis haute) ; le raisonnement est le même.
+- 5 : l'intégrateur convertit la variation de **fréquence** en variation d'**amplitude** ($|V_1| \propto 1/f$), que le détecteur d'enveloppe démodule : c'est un **discriminateur** (démodulateur FM, ici FSK à deux fréquences), dual de celui du cours qui utilise un dérivateur ($|\mathrm{d}s/\mathrm{d}t| \propto f$).
+- 6 : la sortie dépend aussi de l'amplitude $U$ (bruit, évanouissements : il faut un limiteur) ; la conversion $1/f$ n'est pas linéaire en $f$ (sans gêne pour deux fréquences, gênante en FM analogique à forte excursion) ; un intégrateur idéal dérive (offset intégré : en pratique, résistance en parallèle sur $C_0$) ; enfin $R_1C_1$ doit à la fois filtrer la porteuse et suivre les changements de fréquence : avec seulement quelques périodes par symbole (figure de l'énoncé), le compromis est difficile (@fig-td3-demodulateur-fm).
+:::
+
+![TD 3, exercice 2 : signal à deux fréquences (3 et 6 kHz), sortie de l'intégrateur $V_1$ et sortie du détecteur d'enveloppe $V_{out}$ ($R_1C_1 = 1$ ms). Reconstruite : simulation, fréquences choisies d'après l'allure de la figure de l'énoncé [td3, p. 3].](../figures/03-td3-demodulateur-fm.svg){#fig-td3-demodulateur-fm}
+
+### Exemples d'application (corrigé de 2023) {#sec-exemples-2023-fm}
+
+::: {.notes-externes}
+Corrigé d'une ancienne version du TD 1 (2023), **énoncé non disponible** [corrige-2023-td01, p. 3] :
+
+- signal FM $s_{FM}(t) = A_p\cos(2\pi f_p t + \beta\sin(2\pi f_m t))$, où $\beta = \Delta f/f_m$ est l'indice de modulation et $\Delta f$ l'excursion maximale en fréquence instantanée ;
+- **exemple** : $\Delta f = f_\mathrm{max} - f_p = 75\ \mathrm{kHz}$ et $f_m = 2{,}5\ \mathrm{kHz}$ donnent $\beta = 30$ et $B_{FM} = 2(\beta + 1)f_m = 155\ \mathrm{kHz}$.
+:::
+
+::: {.complement}
+Contrôle : $2 \times 31 \times 2{,}5 = 155\ \mathrm{kHz}$, proche de $2\Delta f = 150\ \mathrm{kHz}$ ($\beta \gg 1$). Les autres exercices FM du corrigé (bande de 24 kHz, spectre à 9 raies) ne sont pas repris : leurs données viennent de l'énoncé manquant et ne peuvent pas être contrôlées.
+:::
+
+## Bilan des modulations analogiques {#sec-bilan-analogiques}
+
+Conclusion du support [mod-ana, p. 52-53] :
+
+- **Modulation** : le principe est de décaler en fréquence, vers le haut ou vers le bas, une information $m(t)$.
+- **Type de modulation** : l'information ou message $m(t)$, appelé signal modulant, peut être introduit dans l'amplitude, la phase ou la fréquence du signal modulé $s(t) = A(t)\cos(2\pi f(t)t + \varphi_c(t))$ :
+
+  | Modulations linéaires (amplitude) | Modulations angulaires (fréquence, phase) |
+  |---|---|
+  | + simples à mettre en œuvre | + robustes aux perturbations (bon SNR) |
+  | + encombrement spectral réductible (AMDB → BLU) | + meilleur rendement des émetteurs |
+  | − mauvais rendement des émetteurs | − systèmes de (dé)modulation complexes |
+  | − peu robustes aux perturbations | |
+
+- **Transformée de Fourier** : principal outil mathématique d'étude des modulations analogiques ; elle permet de passer du domaine temporel au domaine spectral.
+- **Représentation spectrale** : les signaux modulés sont étudiés pour un modulant sinusoïdal, puis le résultat est généralisé à des modulants quelconques.
+- **Caractéristiques d'une modulation** : AM, taux de modulation $k_{AM}$ ; FM, indice $\beta_{FM}$ et bande utile $B_{FM}$ ; PM, indice $\beta_{PM}$ et bande utile $B_{PM}$.
+
+La transition vers les modulations numériques (p. 54 du support) ouvre le [chapitre 4](04-modulations-numeriques.qmd).
+
+## À retenir {#sec-retenir-angulaires}
+
+- Modulations angulaires : information dans la phase ou la fréquence instantanée, $\theta_i = 2\pi f_p t + \varphi(t)$, $f_i = f_p + \frac{1}{2\pi}\frac{\mathrm{d}\varphi}{\mathrm{d}t}$ (@eq-phase-frequence-instantanees) ; enveloppe constante.
+- FM : $f_i = f_p + k_f m(t)$, $s_{FM} = A\cos[2\pi f_p t + 2\pi k_f\int_0^t m]$ (@eq-fm) ; $k_f$ en Hz/V.
+- Modulant sinusoïdal : $\Delta f = k_f A_m$, $\beta = \Delta f/f_m$, $s_{FM} = A\cos[2\pi f_p t + \beta\sin(2\pi f_m t)]$ (@eq-fm-sinus).
+- Spectre : raies $A J_n(\beta)$ en $f_p + n f_m$ (@eq-fm-bessel), $J_{-n} = (-1)^n J_n$, infinité de raies en théorie.
+- Puissance $P_{FM} = A^2/2$, indépendante de $\beta$ (@eq-puissance-fm).
+- Carson : 98 % de la puissance pour $|n| \leq \beta + 1$ ; $B_s = 2(\beta + 1)f_m$ (@eq-carson) ; quelconque : $\beta = \Delta f/B_m$, $B_s = 2(\Delta f + B_m)$ (@eq-carson-quelconque) ; radio FM : 180 kHz.
+- Modulateur d'Armstrong (faible indice) : $s \approx A\cos(2\pi f_p t) - A\varphi(t)\sin(2\pi f_p t)$ (@eq-armstrong).
+- Discriminateur : dérivateur + détecteur d'enveloppe, enveloppe $\propto f_p + k_f m(t)$ (@eq-discriminateur).
+- PM : $s_{PM} = A\cos[2\pi f_p t + k_p m(t)]$, $\beta_{PM} = k_p A_m$, $B_{PM} = 2(\beta_{PM} + 1)f_m$ (@eq-pm-sinus, @eq-carson-pm) ; PM = dérivateur + modulateur FM.

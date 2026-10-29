@@ -1,0 +1,181 @@
+# Flashcards — EARF1, chapitre 2 : Modulations linéaires.
+# Générées le 2026-10-29 à partir du cours validé (étape 8). Format : conventions.md § 10.
+matiere: earf1
+chapitre: 2
+cours: cours/02-modulations-lineaires.qmd
+ids-retires: []
+cartes:
+
+  - id: earf1-trois-types-am
+    type: definition
+    question: |
+      Quelles sont les trois modulations d'amplitude ?
+    reponse: |
+      AM double bande sans porteuse (AMDBSP), double bande avec porteuse (AMDBAP), bande latérale unique (BLU).
+    ref: def-am
+    source: officiel
+
+  # --- AMDBSP ---
+
+  - id: earf1-amdbsp-expression
+    type: formule
+    question: |
+      Expression du signal AMDBSP ?
+    reponse: |
+      $$s_{AMDBSP}(t) = m(t)\cos(2\pi f_p t)$$
+      La porteuse est directement mélangée au modulant.
+    ref: eq-amdbsp
+    source: officiel
+
+  - id: earf1-amdbsp-spectre
+    type: propriete
+    question: |
+      Deux propriétés du spectre d'un signal AMDBSP (modulant de bande $B_m$) ?
+    reponse: |
+      Pas de raie à la fréquence porteuse $f_p$ ; bande passante doublée : $2B_m$.
+    ref: sec-amdbsp-principe
+    source: officiel
+
+  - id: earf1-amdbsp-enveloppe
+    type: piege
+    question: |
+      Peut-on démoduler un signal AMDBSP avec un détecteur d'enveloppe ? Pourquoi ?
+    reponse: |
+      Non : son enveloppe est $|m(t)|$ (inversion de phase de la porteuse quand $m$ change de signe). Il faut une démodulation cohérente.
+    ref: sec-amdbsp-principe
+    source: complement
+
+  - id: earf1-amdbsp-demodulation
+    type: methode
+    question: |
+      Démodulation cohérente d'un signal AMDBSP : opérations et signal obtenu ?
+    reponse: |
+      Multiplier par $\cos(2\pi f_p t)$ : $v = \frac12 m(t) + \frac12 m(t)\cos(4\pi f_p t)$ ; passe-bas ($f_c \ll f_p$) : $r(t) = \frac12 m(t)$.
+    ref: eq-demod-amdbsp
+    source: officiel
+
+  - id: earf1-amdbsp-probleme-phase
+    type: piege
+    question: |
+      Problème de démodulation de l'AMDBSP si la porteuse de réception est déphasée de $\varphi$ ?
+    reponse: |
+      $r(t) = \frac12 m(t)\cos\varphi$ : l'amplitude dépend du déphasage (variable), nulle si $\varphi = \pi/2$ : information corrompue. Solution : envoyer la porteuse (AMDBAP).
+    ref: eq-demod-amdbsp-dephasage
+    source: officiel
+
+  # --- AMDBAP ---
+
+  - id: earf1-amdbap-expression
+    type: formule
+    question: |
+      Expression d'un signal AMDBAP, cas général et modulant sinusoïdal ?
+    reponse: |
+      $s = (A + m(t))\cos(2\pi f_p t)$ ; avec $m = A_m\cos(2\pi f_m t)$ :
+      $$s = A[1 + k\cos(2\pi f_m t)]\cos(2\pi f_p t), \quad k = A_m/A$$
+    ref: eq-amdbap-sinus
+    source: officiel
+
+  - id: earf1-taux-modulation
+    type: definition
+    question: |
+      Définition du taux de modulation $k$ d'un signal AMDBAP ?
+    reponse: |
+      Rapport entre l'amplitude du modulant et celle de la porteuse : $k = |m(t)|_\mathrm{max}/A$.
+    ref: def-taux-modulation
+    source: officiel
+
+  - id: earf1-taux-smax-smin
+    type: methode
+    question: |
+      Comment mesurer le taux de modulation sur l'allure temporelle d'un signal AM ?
+    reponse: |
+      $$k = \frac{S_\mathrm{max} - S_\mathrm{min}}{S_\mathrm{max} + S_\mathrm{min}}$$
+      car $S_\mathrm{max} = A(1 + k)$ et $S_\mathrm{min} = A(1 - k)$.
+    ref: eq-taux-smax-smin
+    source: officiel
+
+  - id: earf1-surmodulation
+    type: condition
+    question: |
+      Allure de l'enveloppe AMDBAP pour $k < 1$, $k = 1$, $k > 1$ ? Condition d'exploitation ?
+    reponse: |
+      $k < 1$ : enveloppe de la forme de $m(t)$. $k = 1$ : idem, porteuse nulle au passage à zéro. $k > 1$ : surmodulation, l'enveloppe ne suit plus $m(t)$. Condition : $k \leq 1$.
+    ref: sec-amdbap-temporel
+    source: officiel
+
+  - id: earf1-amdbap-trois-raies
+    type: resultat
+    question: |
+      Spectre d'un signal AMDBAP à modulant sinusoïdal (amplitudes et fréquences) ?
+    reponse: |
+      Porteuse $A$ à $f_p$ ; deux raies $kA/2$ en $f_p - f_m$ (BLI) et $f_p + f_m$ (BLS).
+    ref: eq-amdbap-trois-raies
+    source: officiel
+
+  - id: earf1-amdbap-demodulation
+    type: methode
+    question: |
+      Démodulation d'un signal AMDBAP : étapes ?
+    reponse: |
+      Récupérer la porteuse pour synchroniser $p_{Rx}$ (pas de déphasage) ; multiplier ; passe-bas ($\frac{A}{2} + \frac{kA}{2}m$) ; supprimer la composante continue : $r = \frac{kA}{2}m(t)$.
+    ref: eq-demod-amdbap
+    source: officiel
+
+  - id: earf1-rendement-amdbap
+    type: formule
+    question: |
+      Puissance et rendement d'un signal AMDBAP à modulant sinusoïdal ? Valeur maximale ?
+    reponse: |
+      $$P = \frac{A^2}{2}\Bigl(1 + \frac{k^2}{2}\Bigr), \qquad \eta = \frac{k^2}{2 + k^2}$$
+      Au plus $1/3$ ($k = 1$) ; $11\ \%$ pour $k = 0{,}5$.
+    ref: eq-rendement-amdbap
+    source: complement
+
+  # --- BLU ---
+
+  - id: earf1-blu-principe
+    type: definition
+    question: |
+      Principe de l'AM BLU et bande occupée ?
+    reponse: |
+      Supprimer une des bandes latérales (BLS ou BLI), qui dupliquent l'information : bande $B_m$ au lieu de $2B_m$.
+    ref: def-am-blu
+    source: officiel
+
+  - id: earf1-bandes-am
+    type: resultat
+    question: |
+      Modulant de bande $B_0$ : bande du signal AM double bande ? du signal BLU ?
+    reponse: |
+      Double bande : $2B_0$. BLU : $B_0$.
+    ref: exr-questions-am
+    source: notes-externes
+
+  - id: earf1-blu-filtrage
+    type: piege
+    question: |
+      Pourquoi le filtre de génération BLU est-il difficile à réaliser, et comment le faciliter ?
+    reponse: |
+      Les deux bandes se touchent en $f_p$ : il faut une forte réjection (-60 à -80 dB/décade). Si le modulant est filtré sous $\Delta f$, les bandes sont séparées de $2\Delta f$ : réjection modérée suffisante.
+    ref: sec-blu-modulation
+    source: officiel
+
+  # --- Détecteur d'enveloppe (TD 3) ---
+
+  - id: earf1-detecteur-enveloppe-etats
+    type: raisonnement
+    question: |
+      Détecteur d'enveloppe (diode, $R_1C_1$) : deux états de fonctionnement et expression de $V_{out}$ ?
+    reponse: |
+      Diode passante si $V_{AM} > V_{out}$ : $V_{out} = V_{AM}$. Bloquée si $V_{AM} < V_{out}$ : décharge, $V_{out} = U e^{-t/R_1C_1}$.
+    ref: exr-td3-detecteur-principe
+    source: notes-externes
+
+  - id: earf1-detecteur-constante-temps
+    type: condition
+    question: |
+      Conditions sur $\tau = R_1C_1$ d'un détecteur d'enveloppe démodulant de l'OOK (porteuse $f_p$, bit $T_b$) ?
+    reponse: |
+      $\tau \gg 1/f_p$ (faible ondulation) et $\tau$ assez petit pour passer sous le seuil pendant un « 0 » ($U e^{-T_b/\tau} <$ seuil), soit environ $T_b/4 < \tau < T_b/2$.
+    ref: exr-td3-detecteur-ook
+    source: complement

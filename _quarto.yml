@@ -108,6 +108,12 @@ website:
       style: docked
       contents:
         - matieres/earf1-modulations-communications/index.qmd
+        - section: "Cours"
+          contents:
+            - matieres/earf1-modulations-communications/cours/01-introduction-signaux-outils.qmd
+            - matieres/earf1-modulations-communications/cours/02-modulations-lineaires.qmd
+            - matieres/earf1-modulations-communications/cours/03-modulations-angulaires.qmd
+            - matieres/earf1-modulations-communications/cours/04-modulations-numeriques.qmd
     - id: proj1
       title: "PROJ1"
       style: docked

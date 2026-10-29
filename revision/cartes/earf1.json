@@ -1,5 +1,450 @@
 {
   "deck": "EARF1 — Modulations analogiques et numériques pour les communications",
   "color": "#FFF0A6",
-  "items": []
+  "items": [
+    {
+      "key": "earf1-longueur-antenne",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Longueur $L_0$ de la tige d'antenne pour laquelle le courant (donc le rayonnement) est maximal, en fonction de la fréquence ?",
+      "back": "$$L_0 = \\frac{c}{2f} = \\frac{\\lambda}{2}$$\navec $c \\approx 3 \\cdot 10^8\\ \\mathrm{m/s}$ : la taille d'une antenne est inversement proportionnelle à la fréquence."
+    },
+    {
+      "key": "earf1-antenne-exemples",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Longueur $L_0 = \\lambda/2$ d'une antenne à 10 kHz (spectre vocal) et à 1 GHz ?",
+      "back": "10 kHz : $\\lambda = 30$ km, $L_0 = 15$ km. 1 GHz : $\\lambda = 30$ cm, $L_0 = 15$ cm."
+    },
+    {
+      "key": "earf1-pourquoi-moduler",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Pourquoi module-t-on un signal avant de le rayonner ?",
+      "back": "Pour réduire l'encombrement de l'antenne ($L_0 = c/2f$) et améliorer ses performances, il faut augmenter la fréquence des signaux rayonnés : on transpose l'information en haute fréquence."
+    },
+    {
+      "key": "earf1-definition-modulation",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Définition de la modulation et de la démodulation ; objectif de la chaîne ?",
+      "back": "Moduler (démoduler) : introduire (extraire) l'information utile dans (d')un signal haute fréquence. Objectif : $s_{BB,Rx} = s_{BB,Tx}$."
+    },
+    {
+      "key": "earf1-types-modulations",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Forme générale d'un signal modulé et deux grandes familles de modulations ?",
+      "back": "$s(t) = A(t)\\cos(2\\pi f(t)t + \\varphi_c(t))$.\n- linéaires : information dans l'amplitude $A(t)$ ;\n- angulaires : information dans la fréquence $f(t)$ ou la phase $\\varphi_c(t)$."
+    },
+    {
+      "key": "earf1-deux-etapes-modulation",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Quelles sont les deux étapes d'une modulation ?",
+      "back": "1) introduire l'information dans le signal ; 2) décaler en fréquence (vers le haut à la modulation, vers le bas à la démodulation). Simultanées ou séparées selon la modulation."
+    },
+    {
+      "key": "earf1-classification-signaux",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Signal déterministe / aléatoire : définition et domaine d'étude ? Cas des télécommunications ?",
+      "back": "Déterministe : évolution connue à l'avance (étude temporelle et fréquentielle). Aléatoire : évolution inconnue (étude fréquentielle). En télécoms : aléatoire, d'où l'outil transformée de Fourier."
+    },
+    {
+      "key": "earf1-tf-definition",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Transformée de Fourier et transformée inverse (convention de la matière) ?",
+      "back": "$$X(f) = \\int_{-\\infty}^{+\\infty} x(t)\\,e^{-j2\\pi f t}\\,\\mathrm{d}t, \\qquad x(t) = \\int_{-\\infty}^{+\\infty} X(f)\\,e^{j2\\pi f t}\\,\\mathrm{d}f$$"
+    },
+    {
+      "key": "earf1-periodique-spectre-discret",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Quel type de spectre pour un signal périodique ? pour un signal apériodique ?",
+      "back": "Périodique : spectre discret (raies). Apériodique : spectre continu."
+    },
+    {
+      "key": "earf1-tf-cosinus",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "TF de $A\\cos(2\\pi f_p t)$ et de $A\\sin(2\\pi f_p t)$ ?",
+      "back": "$$\\frac{A}{2}[\\delta(f - f_p) + \\delta(f + f_p)] \\qquad j\\frac{A}{2}[-\\delta(f - f_p) + \\delta(f + f_p)]$$"
+    },
+    {
+      "key": "earf1-phase-sinus",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Spectres d'amplitude et de phase unilatéraux de $A\\cos(2\\pi f_p t)$ et de $A\\sin(2\\pi f_p t)$ ?",
+      "back": "Même raie d'amplitude $A$ à $f_p$ ; phase $0$ pour le cosinus, $-\\pi/2$ pour le sinus ($\\sin x = \\cos(x - \\pi/2)$)."
+    },
+    {
+      "key": "earf1-serie-fourier-amplitude-phase",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Série de Fourier sous forme amplitude-phase : expressions de $A_x(n)$ et $\\varphi_x(n)$ en fonction de $a_n$, $b_n$ ?",
+      "back": "$$x(t) = \\frac{a_0}{2} + \\sum_{n \\geq 1} A_x(n)\\cos(2\\pi n f t + \\varphi_x(n))$$\n$A_x(n) = \\sqrt{a_n^2 + b_n^2}$, $\\varphi_x(n) = -\\arctan(b_n/a_n)$."
+    },
+    {
+      "key": "earf1-spectre-amplitude-non-periodique",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Signal non périodique écrit comme somme de cosinus : lien entre $A_x(f)$ et $X(f)$ ?",
+      "back": "$A_x(f) = 2|X(f)|$ et $\\varphi_x(f) = \\arg X(f)$ (le 2 regroupe $f$ et $-f$)."
+    },
+    {
+      "key": "earf1-parseval-periodique",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Égalité de Parseval pour un signal périodique (puissance) ?",
+      "back": "$$P = \\frac{1}{T}\\int_0^T x^2\\,\\mathrm{d}t = \\frac{a_0^2}{4} + \\sum_{n=1}^{\\infty}\\frac{A_x^2(n)}{2}$$\nChaque raie d'amplitude $A$ porte $A^2/2$."
+    },
+    {
+      "key": "earf1-melangeur",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Rôle et sortie d'un mélangeur ; nom des trois signaux ?",
+      "back": "Il décale en fréquence : $s(t) = m(t)\\,p(t)$, avec $m$ le signal modulant, $p$ la porteuse, $s$ le signal modulé."
+    },
+    {
+      "key": "earf1-melange-deux-cosinus",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Spectre de $A\\cos(2\\pi f_m t) \\cdot \\cos(2\\pi f_p t)$ ?",
+      "back": "Deux raies d'amplitude $A/2$ en $f_p - f_m$ et $f_p + f_m$ (aucune raie à $f_p$)."
+    },
+    {
+      "key": "earf1-theoreme-modulation",
+      "chap": "Ch. 01 — Introduction : signaux et outils d'analyse",
+      "front": "Spectre de $s(t) = A_p\\cos(2\\pi f_p t)\\,m(t)$ pour un modulant quelconque ?",
+      "back": "$$S(f) = \\frac{A_p}{2}M(f - f_p) + \\frac{A_p}{2}M(f + f_p)$$\nSpectre du modulant recopié autour de $\\pm f_p$ : largeur $2B_m$."
+    },
+    {
+      "key": "earf1-trois-types-am",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Quelles sont les trois modulations d'amplitude ?",
+      "back": "AM double bande sans porteuse (AMDBSP), double bande avec porteuse (AMDBAP), bande latérale unique (BLU)."
+    },
+    {
+      "key": "earf1-amdbsp-expression",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Expression du signal AMDBSP ?",
+      "back": "$$s_{AMDBSP}(t) = m(t)\\cos(2\\pi f_p t)$$\nLa porteuse est directement mélangée au modulant."
+    },
+    {
+      "key": "earf1-amdbsp-spectre",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Deux propriétés du spectre d'un signal AMDBSP (modulant de bande $B_m$) ?",
+      "back": "Pas de raie à la fréquence porteuse $f_p$ ; bande passante doublée : $2B_m$."
+    },
+    {
+      "key": "earf1-amdbsp-enveloppe",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Peut-on démoduler un signal AMDBSP avec un détecteur d'enveloppe ? Pourquoi ?",
+      "back": "Non : son enveloppe est $|m(t)|$ (inversion de phase de la porteuse quand $m$ change de signe). Il faut une démodulation cohérente."
+    },
+    {
+      "key": "earf1-amdbsp-demodulation",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Démodulation cohérente d'un signal AMDBSP : opérations et signal obtenu ?",
+      "back": "Multiplier par $\\cos(2\\pi f_p t)$ : $v = \\frac12 m(t) + \\frac12 m(t)\\cos(4\\pi f_p t)$ ; passe-bas ($f_c \\ll f_p$) : $r(t) = \\frac12 m(t)$."
+    },
+    {
+      "key": "earf1-amdbsp-probleme-phase",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Problème de démodulation de l'AMDBSP si la porteuse de réception est déphasée de $\\varphi$ ?",
+      "back": "$r(t) = \\frac12 m(t)\\cos\\varphi$ : l'amplitude dépend du déphasage (variable), nulle si $\\varphi = \\pi/2$ : information corrompue. Solution : envoyer la porteuse (AMDBAP)."
+    },
+    {
+      "key": "earf1-amdbap-expression",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Expression d'un signal AMDBAP, cas général et modulant sinusoïdal ?",
+      "back": "$s = (A + m(t))\\cos(2\\pi f_p t)$ ; avec $m = A_m\\cos(2\\pi f_m t)$ :\n$$s = A[1 + k\\cos(2\\pi f_m t)]\\cos(2\\pi f_p t), \\quad k = A_m/A$$"
+    },
+    {
+      "key": "earf1-taux-modulation",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Définition du taux de modulation $k$ d'un signal AMDBAP ?",
+      "back": "Rapport entre l'amplitude du modulant et celle de la porteuse : $k = |m(t)|_\\mathrm{max}/A$."
+    },
+    {
+      "key": "earf1-taux-smax-smin",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Comment mesurer le taux de modulation sur l'allure temporelle d'un signal AM ?",
+      "back": "$$k = \\frac{S_\\mathrm{max} - S_\\mathrm{min}}{S_\\mathrm{max} + S_\\mathrm{min}}$$\ncar $S_\\mathrm{max} = A(1 + k)$ et $S_\\mathrm{min} = A(1 - k)$."
+    },
+    {
+      "key": "earf1-surmodulation",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Allure de l'enveloppe AMDBAP pour $k < 1$, $k = 1$, $k > 1$ ? Condition d'exploitation ?",
+      "back": "$k < 1$ : enveloppe de la forme de $m(t)$. $k = 1$ : idem, porteuse nulle au passage à zéro. $k > 1$ : surmodulation, l'enveloppe ne suit plus $m(t)$. Condition : $k \\leq 1$."
+    },
+    {
+      "key": "earf1-amdbap-trois-raies",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Spectre d'un signal AMDBAP à modulant sinusoïdal (amplitudes et fréquences) ?",
+      "back": "Porteuse $A$ à $f_p$ ; deux raies $kA/2$ en $f_p - f_m$ (BLI) et $f_p + f_m$ (BLS)."
+    },
+    {
+      "key": "earf1-amdbap-demodulation",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Démodulation d'un signal AMDBAP : étapes ?",
+      "back": "Récupérer la porteuse pour synchroniser $p_{Rx}$ (pas de déphasage) ; multiplier ; passe-bas ($\\frac{A}{2} + \\frac{kA}{2}m$) ; supprimer la composante continue : $r = \\frac{kA}{2}m(t)$."
+    },
+    {
+      "key": "earf1-rendement-amdbap",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Puissance et rendement d'un signal AMDBAP à modulant sinusoïdal ? Valeur maximale ?",
+      "back": "$$P = \\frac{A^2}{2}\\Bigl(1 + \\frac{k^2}{2}\\Bigr), \\qquad \\eta = \\frac{k^2}{2 + k^2}$$\nAu plus $1/3$ ($k = 1$) ; $11\\ \\%$ pour $k = 0{,}5$."
+    },
+    {
+      "key": "earf1-blu-principe",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Principe de l'AM BLU et bande occupée ?",
+      "back": "Supprimer une des bandes latérales (BLS ou BLI), qui dupliquent l'information : bande $B_m$ au lieu de $2B_m$."
+    },
+    {
+      "key": "earf1-bandes-am",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Modulant de bande $B_0$ : bande du signal AM double bande ? du signal BLU ?",
+      "back": "Double bande : $2B_0$. BLU : $B_0$."
+    },
+    {
+      "key": "earf1-blu-filtrage",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Pourquoi le filtre de génération BLU est-il difficile à réaliser, et comment le faciliter ?",
+      "back": "Les deux bandes se touchent en $f_p$ : il faut une forte réjection (-60 à -80 dB/décade). Si le modulant est filtré sous $\\Delta f$, les bandes sont séparées de $2\\Delta f$ : réjection modérée suffisante."
+    },
+    {
+      "key": "earf1-detecteur-enveloppe-etats",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Détecteur d'enveloppe (diode, $R_1C_1$) : deux états de fonctionnement et expression de $V_{out}$ ?",
+      "back": "Diode passante si $V_{AM} > V_{out}$ : $V_{out} = V_{AM}$. Bloquée si $V_{AM} < V_{out}$ : décharge, $V_{out} = U e^{-t/R_1C_1}$."
+    },
+    {
+      "key": "earf1-detecteur-constante-temps",
+      "chap": "Ch. 02 — Modulations linéaires",
+      "front": "Conditions sur $\\tau = R_1C_1$ d'un détecteur d'enveloppe démodulant de l'OOK (porteuse $f_p$, bit $T_b$) ?",
+      "back": "$\\tau \\gg 1/f_p$ (faible ondulation) et $\\tau$ assez petit pour passer sous le seuil pendant un « 0 » ($U e^{-T_b/\\tau} <$ seuil), soit environ $T_b/4 < \\tau < T_b/2$."
+    },
+    {
+      "key": "earf1-phase-frequence-instantanees",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Pour $s(t) = A\\cos(2\\pi f_p t + \\varphi(t))$ : phase instantanée et fréquence instantanée ?",
+      "back": "$$\\theta_i = 2\\pi f_p t + \\varphi(t), \\qquad f_i = \\frac{1}{2\\pi}\\frac{\\mathrm{d}\\theta_i}{\\mathrm{d}t} = f_p + \\frac{1}{2\\pi}\\frac{\\mathrm{d}\\varphi}{\\mathrm{d}t}$$"
+    },
+    {
+      "key": "earf1-avantages-angulaires",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Trois avantages des modulations angulaires ?",
+      "back": "- enveloppe constante : meilleur rendement des émetteurs (PA non linéaires) ;\n- bonne immunité au bruit (SNR favorable) ;\n- moins sensibles aux non-linéarités des blocs radio."
+    },
+    {
+      "key": "earf1-fm-principe",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Principe de la FM : fréquence instantanée et expression de $s_{FM}(t)$ ?",
+      "back": "$f_i = f_p + k_f m(t)$ ($k_f$ en Hz/V) :\n$$s_{FM}(t) = A\\cos\\Bigl[2\\pi f_p t + 2\\pi k_f\\int_0^t m(u)\\,\\mathrm{d}u\\Bigr]$$"
+    },
+    {
+      "key": "earf1-excursion-indice",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "FM à modulant sinusoïdal $A_m\\cos(2\\pi f_m t)$ : excursion $\\Delta f$, indice $\\beta$ et expression de $s_{FM}$ ?",
+      "back": "$\\Delta f = k_f A_m$, $\\beta = \\Delta f/f_m$ :\n$$s_{FM}(t) = A\\cos[2\\pi f_p t + \\beta\\sin(2\\pi f_m t)]$$"
+    },
+    {
+      "key": "earf1-fm-bessel-spectre",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Décomposition spectrale d'un signal FM à modulant sinusoïdal ?",
+      "back": "$$s_{FM}(t) = A\\sum_{n=-\\infty}^{+\\infty} J_n(\\beta)\\cos[2\\pi(f_p + n f_m)t]$$\nRaies espacées de $f_m$, d'amplitude $A J_n(\\beta)$."
+    },
+    {
+      "key": "earf1-proprietes-spectre-fm",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Propriétés théoriques du spectre FM (nombre de raies, symétrie, décroissance) ?",
+      "back": "Infinité de raies centrées sur $f_p$ ; raies en $f_p \\pm n f_m$ de même amplitude, en opposition de phase pour $n$ impair ($J_{-n} = (-1)^n J_n$) ; $J_n(\\beta) \\to 0$ quand $n \\to \\infty$."
+    },
+    {
+      "key": "earf1-fm-bande-etroite",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Spectre FM pour $\\beta \\ll 1$ ?",
+      "back": "$J_0 \\approx 1$, $J_1 \\approx \\beta/2$, autres négligeables : porteuse et deux raies en $f_p \\pm f_m$, bande $\\approx 2f_m$ (comme l'AM)."
+    },
+    {
+      "key": "earf1-porteuse-nulle-fm",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "L'amplitude de la raie de porteuse d'un signal FM est-elle constante ? Quand s'annule-t-elle ?",
+      "back": "Non : elle vaut $A J_0(\\beta)$, et s'annule pour $\\beta \\approx 2{,}405$ (premier zéro de $J_0$)."
+    },
+    {
+      "key": "earf1-puissance-fm",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Puissance d'un signal FM ? Dépend-elle de $\\beta$ ?",
+      "back": "$P_{FM} = \\frac{A^2}{2}\\sum J_n^2(\\beta) = \\frac{A^2}{2}$ : indépendante de $\\beta$ (enveloppe constante) ; la modulation ne fait que répartir la puissance."
+    },
+    {
+      "key": "earf1-regle-carson",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Règle de Carson : nombre de raies retenues, pourcentage de puissance, bande ?",
+      "back": "$N(\\beta) = \\beta + 1$ raies de chaque côté contiennent au moins 98 % de la puissance :\n$$B_s = 2(\\beta + 1)f_m$$"
+    },
+    {
+      "key": "earf1-carson-limites",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Bande de Carson pour $\\beta \\ll 1$ et pour $\\beta \\gg 1$ ?",
+      "back": "$\\beta \\ll 1$ : $B_s \\approx 2f_m$. $\\beta \\gg 1$ : $B_s \\approx 2\\beta f_m = 2\\Delta f$."
+    },
+    {
+      "key": "earf1-carson-quelconque",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Indice et bande de Carson pour un modulant quelconque de bande $B_m$ ?",
+      "back": "$\\beta_{FM} = \\Delta f/B_m = k_f|m|_\\mathrm{max}/B_m$ ; $B_s = 2(\\beta_{FM} + 1)B_m = 2(\\Delta f + B_m)$."
+    },
+    {
+      "key": "earf1-radio-fm",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Radio FM : $\\Delta f = 75$ kHz, $B_m = 15$ kHz. Indice et bande ?",
+      "back": "$\\beta = 5$ ; $B_s = 2(75 + 15) = 180$ kHz."
+    },
+    {
+      "key": "earf1-armstrong",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Principe du modulateur d'Armstrong (FM à faible indice) ?",
+      "back": "Si $|\\varphi| \\ll 1$ : $s_{FM} \\approx A\\cos(2\\pi f_p t) - A\\varphi(t)\\sin(2\\pi f_p t)$, avec $\\varphi = 2\\pi k_f\\int m$ : intégrateur, mélangeur avec la porteuse déphasée de $-\\pi/2$, soustraction à la porteuse."
+    },
+    {
+      "key": "earf1-discriminateur",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Démodulation FM par discrimination : principe ?",
+      "back": "Dériver : $\\mathrm{d}s_{FM}/\\mathrm{d}t = -2\\pi A(f_p + k_f m(t))\\sin[\\dots]$ ; l'information passe dans l'enveloppe, extraite par un détecteur d'enveloppe."
+    },
+    {
+      "key": "earf1-pm-principe",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Modulation PM : expression, indice et bande de Carson (modulant sinusoïdal) ?",
+      "back": "$s_{PM} = A\\cos[2\\pi f_p t + k_p m(t)]$ ; $\\beta_{PM} = k_p A_m$ ; $B_{PM} = 2(\\beta_{PM} + 1)f_m$."
+    },
+    {
+      "key": "earf1-pm-depuis-fm",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Comment obtenir un modulateur PM à partir d'un modulateur FM ? Quel circuit simple ?",
+      "back": "Placer un dérivateur devant le modulateur FM (l'intégrale de la FM annule la dérivée) ; dérivateur simple : filtre CR passe-haut."
+    },
+    {
+      "key": "earf1-beta-limites",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Pourquoi éviter $\\beta < 1$ et $\\beta > 20$ en FM ?",
+      "back": "$\\beta < 1$ : on perd l'avantage d'immunité au bruit. $\\beta > 20$ : bande $2(\\beta + 1)B_m$ excessive (plus de 4 MHz pour $B_m = 100$ kHz)."
+    },
+    {
+      "key": "earf1-bilan-am-fm",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Comparer modulations linéaires et angulaires (2 avantages, 2 inconvénients chacune) ?",
+      "back": "Linéaires : simples, encombrement réductible (BLU) ; mauvais rendement, peu robustes. Angulaires : robustes (bon SNR), bon rendement ; (dé)modulateurs complexes."
+    },
+    {
+      "key": "earf1-varicap-kf",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Modulateur LC à varicap $C_{Dv} = C_0/(1 + V_p/V_0)^n$ en petit signal : $\\lambda$ et $k_f$ ?",
+      "back": "$C_{Dv} \\approx C_0(1 + \\lambda m)$ avec $\\lambda = -n/V_0$ ;\n$$k_f = -\\frac{\\lambda f_0}{2}\\,\\frac{C_0}{C + C_0}$$"
+    },
+    {
+      "key": "earf1-integrateur-demodulateur",
+      "chap": "Ch. 03 — Modulations angulaires",
+      "front": "Démodulateur du TD 3 : pourquoi un intégrateur suivi d'un détecteur d'enveloppe démodule-t-il la FM ?",
+      "back": "$V_1 = \\frac{U}{R_0C_0\\omega}\\cos(\\omega t)$ : l'amplitude est inversement proportionnelle à la fréquence ; le détecteur d'enveloppe convertit ces variations d'amplitude en tension."
+    },
+    {
+      "key": "earf1-ask-fsk-psk",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "ASK, FSK, PSK : quel paramètre de $s(t) = E\\cos(2\\pi f_c t + \\varphi_c)$ chacune déplace-t-elle ?",
+      "back": "ASK : amplitude $E$. FSK : fréquence $f_c$. PSK : phase $\\varphi_c$."
+    },
+    {
+      "key": "earf1-criteres-performance",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "Trois critères de performance d'une modulation numérique ?",
+      "back": "- détectabilité (qualité de démodulation pour un SNR donné) ;\n- efficacité spectrale (encombrement pour un débit donné) ;\n- efficacité en puissance (type d'amplification supporté). Liés par un compromis."
+    },
+    {
+      "key": "earf1-composantes-iq",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "Composantes $I$ et $Q$ d'un signal $E\\cos(2\\pi f_c t + \\varphi_c)$ ?",
+      "back": "$$s = I\\cos(2\\pi f_c t) + Q\\cos(2\\pi f_c t + \\pi/2)$$\n$I = E\\cos\\varphi_c$, $Q = E\\sin\\varphi_c$, $E^2 = I^2 + Q^2$."
+    },
+    {
+      "key": "earf1-modulateur-iq",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "Structure d'un modulateur IQ ?",
+      "back": "Calculateur numérique ($m \\to I, Q$), deux CNA, deux mélangeurs (porteuse et porteuse déphasée de $\\pi/2$), un sommateur. Le même circuit produit toutes les modulations."
+    },
+    {
+      "key": "earf1-constellation-ask-psk",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "Points de constellation de l'OOK et de la BPSK (« 0 » et « 1 ») ?",
+      "back": "OOK : « 0 » en $(0, 0)$, « 1 » en $(E, 0)$. BPSK : « 0 » en $(E, 0)$ (phase 0), « 1 » en $(-E, 0)$ (phase $\\pi$)."
+    },
+    {
+      "key": "earf1-metrique-generale",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "Vitesse de transmission, bande utile et efficacité spectrale en fonction de $D$ et $N_{sym}$ ?",
+      "back": "Vitesse $D/N_{sym}$ (bauds) ; $BW_{mod} \\approx 2D/N_{sym}$ ;\n$$\\eta = \\frac{D}{BW_{mod}} \\approx \\frac{N_{sym}}{2}\\ \\mathrm{bit/s/Hz}$$"
+    },
+    {
+      "key": "earf1-unite-vitesse-symboles",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "Unité de la vitesse de transmission (*symbol rate*) ? Différence avec le débit binaire ?",
+      "back": "Le baud (symboles/s), pas le bit/s. Débit binaire = vitesse × bits par symbole (QPSK : vitesse = débit/2)."
+    },
+    {
+      "key": "earf1-ook",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "OOK : taux de modulation, bande après filtrage, efficacité spectrale ?",
+      "back": "$m = 100\\ \\%$ ; $BW_{OOK} = 2D$ ; $\\eta = 0{,}5$. Spectre : raie de porteuse + lobes, puissance dans $[F_0 - D, F_0 + D]$."
+    },
+    {
+      "key": "earf1-bpsk",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "BPSK : bande après filtrage, efficacité, raie de porteuse ?",
+      "back": "$BW_{BPSK} = 2D$, $\\eta = 0{,}5$, pas de raie de porteuse (lobe principal $2D$). Application : WiFi bas débit."
+    },
+    {
+      "key": "earf1-qpsk",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "QPSK : bits par symbole, vitesse, bande, efficacité ?",
+      "back": "2 bits/symbole ; vitesse $D/2$ ; $BW_{QPSK} = D$ ; $\\eta = 1 = 2\\eta_{BPSK}$. Application : WiFi a, b, g, n."
+    },
+    {
+      "key": "earf1-mpsk",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "MPSK ($M = 2^{N_{sym}}$) : efficacité, écart de phase, inconvénients ?",
+      "back": "$\\eta = N_{sym}\\eta_{BPSK}$ ; $\\Delta\\varphi = 2\\pi/M$ (8PSK : 45°, 16PSK : 22,5°) ; architecture plus complexe, récepteur plus sensible au bruit ; $M > 128$ difficile."
+    },
+    {
+      "key": "earf1-qam",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "Principe de la QAM ; vitesse de transmission d'une MQAM ?",
+      "back": "Combine modulation de phase et d'amplitude (grille dans le plan IQ) ; vitesse $= D/\\log_2 M$ (16QAM : $D/4$, 64QAM : $D/6$, 1024QAM : $D/10$)."
+    },
+    {
+      "key": "earf1-fsk-constellation",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "Différence de comportement de $(I, Q)$ pendant un bit entre ASK/PSK et FSK ?",
+      "back": "ASK, PSK : $(I, Q)$ constant pendant le bit. FSK : $i(t)$, $q(t)$ varient, le point tourne sur le cercle de rayon $E$."
+    },
+    {
+      "key": "earf1-msk",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "CPFSK et MSK : définitions ; excursion de la MSK ?",
+      "back": "CPFSK : FSK à phase continue. MSK : CPFSK avec $\\Delta f = 1/(4T_r)$ ; quart de tour par bit (horaire pour « 0 », anti-horaire pour « 1 »)."
+    },
+    {
+      "key": "earf1-gmsk",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "GMSK : principe, bande, efficacité, applications ?",
+      "back": "MSK précédée d'un filtre gaussien sur le signal binaire ; $BW \\approx D$, $\\eta \\approx 1$ ; GSM, Bluetooth."
+    },
+    {
+      "key": "earf1-lobe-msk",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "Largeur théorique du lobe principal du spectre MSK ?",
+      "back": "$1{,}5D$ (zéros à $\\pm 0{,}75D$ de la porteuse) ; le support lit $1{,}75D$ sur une mesure."
+    },
+    {
+      "key": "earf1-fsk-varicap",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "TD 2 : message binaire 0 / 0,7 V sur la varicap ($f$ = 98 et 101 MHz, $D$ = 4 Mbit/s). Type, bande (Carson), efficacité ?",
+      "back": "FSK à phase continue ; $f_c = 99{,}5$ MHz, $\\Delta f = 1{,}5$ MHz ; $BW = 2(D + \\Delta f) = 11$ MHz ; $\\eta = 0{,}36$."
+    },
+    {
+      "key": "earf1-ook-vdd",
+      "chap": "Ch. 04 — Introduction aux modulations numériques",
+      "front": "TD 2 : message binaire sur l'alimentation de l'oscillateur LC. Type de modulation et défauts ?",
+      "back": "OOK (oscillateur éteint pour « 0 ») ; « 0 » indiscernable d'une absence d'émission, temps de démarrage de l'oscillateur à chaque « 1 », sensibilité à l'alimentation, $\\eta = 0{,}5$."
+    }
+  ]
 }

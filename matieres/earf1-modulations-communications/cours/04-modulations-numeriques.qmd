@@ -1,0 +1,497 @@
+---
+title: "Introduction aux modulations numériques"
+matiere: earf1
+chapitre: 4
+enseignants: ["Thierry Taris"]
+annee: "2026-2027"
+statut: flashcards
+date-modified: 2026-10-29
+sources:
+  - id: mod-num
+    fichier: support/cours-02-modulations-numeriques.pdf
+    nature: officielle
+    version: "Introduction aux modulations numériques, durée 1 h 20"
+    pages: "1-30"
+  - id: mod-ana
+    fichier: support/cours-01-modulations-analogiques.pdf
+    nature: officielle
+    version: "Modulations analogiques, durée 2 h 40 (version « Student »)"
+    pages: "54"
+  - id: td1
+    fichier: td/td01-gnuradio-modulations.pdf
+    nature: officielle
+    version: "TD machine GNU Radio (2026-2027)"
+    pages: "6, 10"
+  - id: td2
+    fichier: td/td02-modulateurs.pdf
+    nature: officielle
+    version: "EA 218, TD 2 – Modulateurs"
+    pages: "2-3"
+  - id: notes-2023-num
+    fichier: notes/2023-notes-modulations-numeriques.pdf
+    nature: externe
+    pages: "1"
+  - id: corrige-2023-td01
+    fichier: corriges/2023-td01-principe-modulations.pdf
+    nature: externe
+    pages: "3-4"
+  - id: corrige-2023-td02
+    fichier: corriges/2023-td02-modulateurs.pdf
+    nature: externe
+    pages: "2-4"
+---
+
+{{< include /_macros.qmd >}}
+
+Le message à transmettre est désormais **numérique** (binaire). Ce chapitre présente les trois familles de modulations numériques (ASK, PSK, FSK), leur représentation dans le plan IQ (diagramme de constellation), puis les caractéristiques des principales modulations (OOK, BPSK, QPSK, MPSK, QAM, FSK, MSK, GMSK) : débit binaire, vitesse de transmission, bande passante et efficacité spectrale.
+
+## De l'analogique vers le numérique {#sec-analogique-numerique}
+
+Aujourd'hui, l'information ou message $m(t)$ est de type **numérique** : $m(t) = \dots 0\,1\,1\,0\,1\,0\,0\,0\,1\,0\,1 \dots$ [mod-ana, p. 54]. Cela :
+
+- permet le **prétraitement par encodage** (NRZ, Manchester…) : plus de sécurité dans le transport de l'information, maîtrise de l'encombrement spectral, correction des défauts liés à la transmission (meilleure qualité de communication), architecture de traitement du signal très compacte (technologie silicium CMOS) ;
+- ouvre la voie à des **modulations complexes** (QAM, QPSK, GMSK…) : haut débit d'information, très robustes aux perturbations, bande passante utile réduite.
+
+## Introduction {#sec-introduction-numeriques}
+
+### Principe {#sec-principe-numeriques}
+
+Le message à transmettre $m(t)$ est **discret et de type binaire** [mod-num, p. 4]. Le signal modulé s'écrit
+
+$$
+s(t) = E\cos(2\pi f_c t + \varphi_c),
+$$ {#eq-signal-numerique}
+
+et l'on déplace, au rythme des bits, l'un de ses paramètres :
+
+- **ASK** (*Amplitude Shift Keying*) : modulation par déplacement d'amplitude ($E$) ;
+- **FSK** (*Frequency Shift Keying*) : modulation par déplacement de fréquence ($f_c$) ;
+- **PSK** (*Phase Shift Keying*) : modulation par déplacement de phase ($\varphi_c$).
+
+::: {.notes-externes}
+Avec un modulant numérique, il n'y a « plus de notion de linéarité » [notes-2023-num, p. 1].
+:::
+
+::: {.complement}
+Comprendre : en analogique, la qualité de la modulation dépend de la linéarité de la relation entre $m(t)$ et l'amplitude, la fréquence ou la phase (par exemple $f_i = f_p + k_f m(t)$ en FM, [chapitre 3](03-modulations-angulaires.qmd#eq-fm-frequence)) ; en numérique, le paramètre ne prend qu'un nombre fini de valeurs, et seule compte leur distinction à la réception.
+:::
+
+### Critères de performance {#sec-criteres-performance}
+
+[mod-num, p. 5]
+
+- **Détectabilité** : qualité de la démodulation pour un rapport signal à bruit (SNR) donné.
+- **Efficacité spectrale** : encombrement spectral pour un débit d'information donné (*bit rate*).
+- **Efficacité en puissance** : type d'amplification (efficace ou non) supportée par la modulation.
+
+Exemple du support : une modulation à deux états d'amplitude (un bit par symbole) est bonne en détectabilité et en efficacité en puissance mais mauvaise en efficacité spectrale ; une modulation à quatre niveaux d'amplitude (deux bits par symbole : 01, 10, 11, 00) a les qualités inverses. Les **trois critères sont liés par un compromis**.
+
+| | Détectabilité | Efficacité spectrale | Efficacité en puissance |
+|---|---|---|---|
+| 2 niveaux, 1 bit par symbole | + | − | + |
+| 4 niveaux, 2 bits par symbole | − | + | − |
+
+: Compromis entre les critères de performance, d'après l'exemple du support [mod-num, p. 5]. {#tbl-compromis}
+
+::: {.complement}
+Avec quatre niveaux d'amplitude à puissance crête donnée, les niveaux sont plus proches (moins bonne détectabilité), l'amplitude n'est pas constante (amplificateur linéaire, peu efficace), mais chaque symbole porte deux bits (meilleure efficacité spectrale, voir @eq-efficacite-generale).
+:::
+
+## Représentation {#sec-representation}
+
+### Allures temporelles {#sec-allures-temporelles}
+
+Pour le message 10010 [mod-num, p. 7] :
+
+| Modulation | Transmission d'un « 0 » | Transmission d'un « 1 » |
+|---|---|---|
+| ASK | $E_0\cos(2\pi f_c t + 0)$ | $E_1\cos(2\pi f_c t + 0)$ |
+| FSK | $E\cos(2\pi f_0 t + 0)$ | $E\cos(2\pi f_1 t + 0)$ |
+| PSK | $E\cos(2\pi f_0 t + 0)$ | $E\cos(2\pi f_0 t + \pi)$ |
+
+: Signaux transmis pour chaque bit ($T_r$ : durée d'un bit, $T_c$ : période de la porteuse). D'après le support [mod-num, p. 7]. {#tbl-ask-fsk-psk}
+
+![Allures temporelles ASK, FSK et PSK pour le message 10010. D'après le support [mod-num, p. 7], recalculée (4 périodes de porteuse par bit).](../figures/04-allures-ask-fsk-psk.svg){#fig-allures-ask-fsk-psk}
+
+::: {.complement}
+Pour la PSK, le support écrit la porteuse $f_0$ (dans le tableau) et $f_c$ ailleurs : c'est la même fréquence porteuse.
+:::
+
+### Constellation IQ {#sec-constellation-iq}
+
+En développant @eq-signal-numerique [mod-num, p. 8] :
+
+$$
+s(t) = E\cos(\varphi_c)\cos(2\pi f_c t) - E\sin(\varphi_c)\sin(2\pi f_c t)
+= E\cos(\varphi_c)\cos(2\pi f_c t) + E\sin(\varphi_c)\cos\Bigl(2\pi f_c t + \frac{\pi}{2}\Bigr),
+$$
+
+$$
+s(t) = I\cos(2\pi f_c t) + Q\cos\Bigl(2\pi f_c t + \frac{\pi}{2}\Bigr),
+\qquad
+I = E\cos(\varphi_c),\quad Q = E\sin(\varphi_c),\quad E^2 = I^2 + Q^2.
+$$ {#eq-iq}
+
+::: {#def-constellation}
+## Diagramme de constellation
+
+Le signal $s(t)$, défini par $(E, \varphi_c)$, est représenté par le point $(I, Q)$ du plan : $I$ est la **composante en phase**, $Q$ la **composante en quadrature**. Le diagramme de constellation trace $Q = f(I)$ pour tous les symboles de la modulation [mod-num, p. 8].
+:::
+
+Exemples [mod-num, p. 9] :
+
+- **ASK** : « 0 » → amplitude $E_0$, phase 0, soit $(I, Q) = (E_0, 0)$ ; « 1 » → $(E_1, 0)$ ;
+- **PSK** : « 0 » → amplitude $E$, phase 0, soit $(E, 0)$ ; « 1 » → phase $\pi$, soit $(-E, 0)$.
+
+![Diagrammes de constellation. D'après le support [mod-num, p. 12, 15, 18, 21, 22], redessinée ; étiquettes binaires du support pour OOK, BPSK et QPSK.](../figures/04-constellations.svg){#fig-constellations}
+
+### Modulateur IQ {#sec-modulateur-iq}
+
+@eq-iq conduit au **modulateur vectoriel** (modulateur IQ) [mod-num, p. 10] : un **calculateur numérique** transforme le message $m(t)$ en deux suites $I$ et $Q$ ; deux convertisseurs numérique-analogique (CNA) produisent $i(t)$ et $q(t)$ ; deux mélangeurs les multiplient par la porteuse $\cos(\omega_c t)$ et par sa version déphasée de $+\pi/2$ ; un sommateur forme le message modulé $s(t)$. Les signaux numériques sont en basse fréquence, les signaux analogiques en haute fréquence (@fig-modulateur-iq).
+
+![Modulateur IQ (modulateur vectoriel). D'après le support [mod-num, p. 10], redessinée.](../figures/04-modulateur-iq.svg){#fig-modulateur-iq}
+
+::: {.complement}
+Le même circuit produit **toutes** les modulations numériques : seul le calcul de $(I, Q)$ change. C'est pourquoi la plupart des émetteurs modernes sont des modulateurs IQ.
+:::
+
+## Grandeurs caractéristiques {#sec-grandeurs}
+
+Les caractéristiques des modulations numériques sont reliées au débit binaire $D$ [mod-num, p. 30] :
+
+- **débit binaire** (*bit rate*) : $D = 1/T_r$ (bit/s), où $T_r$ est la durée d'un bit ;
+- **nombre de bits par symbole** : $N_{sym}$ ;
+- **vitesse de transmission** (*symbol rate*, *baud rate*) : $D/N_{sym}$ ;
+- **bande passante utile** pour un débit binaire donné : $BW_{mod} \approx 2D/N_{sym}$ (Hz) ;
+- **efficacité spectrale** :
+
+  $$
+  \eta = \frac{D}{BW_{mod}} \approx \frac{N_{sym}}{2}\ \ (\mathrm{bit/s/Hz}).
+  $$ {#eq-efficacite-generale}
+
+::: {.a-verifier .tranche #av-unite-symbol-rate}
+**Source** [mod-num, p. 12, 15, 18, 30] : « Vitesse Transmission (Symbol Rate) : $1/T_r$ (Bits/s) » (OOK, BPSK), « $1/2.T_r$ (Bits/s) » (QPSK), « Symbol Rate (Baud Rate) : $D/N_{sym}$ (Bits/s) » (bilan).
+
+**Problème** : une vitesse de transmission compte des **symboles** par seconde ; son unité est le baud (Bd), pas le bit/s (sinon elle se confond avec le débit binaire, alors que le support insiste sur la différence : $[\text{Symbol Rate}]_{QPSK} = \text{Bit Rate}/2$). Le support lui-même parle de « R = 500 kbauds » (p. 19).
+
+**Proposition** : vitesse de transmission en **bauds** (symboles/s).
+
+**Décision** : proposition retenue (décision déléguée par Armand, 2026-10-29).
+:::
+
+::: {.complement}
+- $M$ symboles distincts portent $N_{sym} = \log_2 M$ bits chacun.
+- Avec des impulsions rectangulaires, le lobe principal du spectre a une largeur $2R$, où $R = D/N_{sym}$ est la vitesse de transmission : d'où $BW_{mod} \approx 2D/N_{sym}$ et $\eta \approx N_{sym}/2$ (@fig-dsp-numeriques).
+:::
+
+## Modulations d'amplitude : OOK {#sec-ook}
+
+La plus populaire des modulations d'amplitude numériques est l'**OOK** (*On-Off Keying*) [mod-num, p. 12] : la porteuse est émise (amplitude $E$) pour un « 1 » et éteinte pour un « 0 ». Constellation : deux points, $0$ et $(E, 0)$ (@fig-constellations).
+
+- taux de modulation : $m = 100\ \%$ ;
+- débit binaire : $D = 1/T_r$ ;
+- fréquence porteuse : $F_0 = 1/T_c$ ;
+- vitesse de transmission : $1/T_r$, donc $[\text{Symbol Rate}]_{OOK} = \text{Bit Rate}$.
+
+**Spectre** [mod-num, p. 13-14] : une raie à la porteuse $F_0$ et des lobes, avec des zéros en $F_0 \pm D, F_0 \pm 2D, \dots$ ; bande passante théorique **infinie**, mais l'essentiel de la puissance est concentré dans la bande $[F_0 - D,\ F_0 + D]$. Après **filtrage** :
+
+$$
+BW_{OOK} = 2D,
+\qquad
+\eta_{OOK} = \frac{D}{BW_{mod}} = 0{,}5.
+$$ {#eq-ook}
+
+::: {.notes-externes}
+OOK : modulation d'amplitude ; débit $D = 1/T_r$ (bit/s) ; 1 symbole = 1 bit [notes-2023-num, p. 1].
+:::
+
+::: {.complement}
+L'OOK est une AMDBAP à 100 % ([chapitre 2](02-modulations-lineaires.qmd#sec-amdbap)) dont le modulant est un signal binaire (0, 1) : d'où la raie de porteuse, qui ne porte aucune information, et la démodulation par simple détecteur d'enveloppe ([TD 3](02-modulations-lineaires.qmd#exr-td3-detecteur-ook)).
+:::
+
+## Modulations de phase {#sec-modulations-phase}
+
+### BPSK {#sec-bpsk}
+
+La plus simple des modulations de phase numériques est la **BPSK** (*Binary Phase Shift Keying*) [mod-num, p. 15-17] : la phase vaut 0 pour un « 0 » et $\pi$ pour un « 1 ». Constellation : deux points antipodaux, $(E, 0)$ pour « 0 » et $(-E, 0)$ pour « 1 ».
+
+- débit binaire $D = 1/T_r$, fréquence porteuse $1/T_c$, vitesse de transmission $1/T_r$ : $[\text{Symbol Rate}]_{BPSK} = \text{Bit Rate}$ ;
+- spectre (mesure pour $D = 1\ \mathrm{Mbit/s}$) : lobe principal de largeur $2D$, sans raie de porteuse ; bande théorique infinie, puissance concentrée dans la bande $[-D, +D]$ autour de la porteuse ;
+- après filtrage :
+
+  $$
+  BW_{BPSK} = 2D,
+  \qquad
+  \eta_{BPSK} = \frac{D}{BW_{mod}} = 0{,}5.
+  $$ {#eq-bpsk}
+
+Application : WiFi bas débit.
+
+::: {.complement}
+Les spectres mesurés du support (BPSK, QPSK) sont tracés autour de 0 (axe de $-4$ à $+4$ MHz) : ce sont des spectres **centrés sur la porteuse** (enveloppe complexe), d'où les bandes « $[-D, +D]$ » ; en fréquence réelle, il s'agit de $[f_c - D,\ f_c + D]$, comme pour l'OOK. La BPSK est une AMDBSP à modulant binaire $\pm 1$ : même bande que l'OOK, mais sans raie de porteuse, donc toute la puissance sert à l'information.
+:::
+
+### QPSK {#sec-qpsk}
+
+**QPSK** (*Quadrature Phase Shift Keying*) : modulation de phase à **4 états** (symboles) [mod-num, p. 18-20]. Chaque symbole porte **2 bits** : 00, 01, 11, 10, placés sur les quatre diagonales du plan IQ (@fig-constellations).
+
+- débit binaire $D = 1/T_r$, fréquence porteuse $1/T_c$, vitesse de transmission $1/(2T_r)$ :
+
+  $$
+  [\text{Symbol Rate}]_{QPSK} = \frac{\text{Bit Rate}}{2} ;
+  $$
+
+- spectre (mesure pour $R = 500$ kbauds, soit $D = 1\ \mathrm{Mbit/s}$) : lobe principal de largeur $2R = D$ ; puissance concentrée dans $[-D/2, +D/2]$ autour de la porteuse ;
+- après filtrage :
+
+  $$
+  BW_{QPSK} = D,
+  \qquad
+  \eta_{QPSK} = 2\,\eta_{BPSK} = 1.
+  $$ {#eq-qpsk}
+
+Application : normes WiFi a, b, g, n…
+
+::: {.notes-externes}
+QPSK : modulation de phase à 4 états ; sauts de phase de plus en plus petits entre les symboles pour réduire le *symbol rate* : débit identique, vitesse plus lente, et on envoie plus de bits par symbole [notes-2023-num, p. 1].
+:::
+
+### 8PSK, 16PSK… MPSK {#sec-mpsk}
+
+Modulations de phase à 8 états, 16 états… $M = 2^{N_{sym}}$ états ($N_{sym}$ : nombre de bits par symbole) [mod-num, p. 21] :
+
+| | 8PSK | 16PSK |
+|---|---|---|
+| Bits par symbole | 3 | 4 |
+| Écart de phase | $\Delta\varphi = \pi/4 = 45°$ | $\Delta\varphi = \pi/8 = 22{,}5°$ |
+| Vitesse de transmission | $\text{Bit Rate}/3$ | $\text{Bit Rate}/4$ |
+| Application | standard cellulaire EDGE | DVB-S (TV satellite) |
+
+Pour une MPSK ($M = 32, 64, \dots$) :
+
+- l'**efficacité spectrale augmente** : $\eta_{MPSK} = N_{sym}\,\eta_{BPSK}$ ;
+- l'**écart de phase est réduit** : $\Delta\varphi_{MPSK} \approx \dfrac{2\pi}{2^{N_{sym}}}$ ; pour $M > 128$, $\Delta\varphi_{MPSK}$ est difficile à contrôler en pratique ;
+- d'où une **architecture radio plus complexe** et un **récepteur plus sensible au bruit**.
+
+::: {.complement}
+L'écart entre deux phases voisines est exactement $2\pi/M = 2\pi/2^{N_{sym}}$ (le support écrit « $\approx$ »). Les points restent sur le cercle de rayon $E$ (enveloppe constante) mais se rapprochent : la distance entre voisins vaut $2E\sin(\pi/M)$, d'où la sensibilité au bruit.
+:::
+
+## Modulations de phase et d'amplitude : QAM {#sec-qam}
+
+La **QAM** (*Quadrature Amplitude Modulation*) combine modulations de phase et d'amplitude [mod-num, p. 22]. En **16QAM**, les 16 symboles forment une grille $4 \times 4$ du plan IQ ; 1 symbole = 4 bits, $[\text{Symbol Rate}]_{16QAM} = \text{Bit Rate}/4$ ; deux symboles voisins diffèrent en phase et en amplitude ($\Delta E = E$ ou $E/3$ selon le support).
+
+::: {.a-verifier .tranche #av-dphi-16qam}
+**Source** [mod-num, p. 22] : « $\Delta\varphi = \frac{\pi}{8} = 45°$ & $\Delta E = E$ ou $E/3$ » (16QAM).
+
+**Problème** : $\pi/8 = 22{,}5°$, pas $45°$ ($45° = \pi/4$). Dans une grille 16QAM, les écarts de phase entre points ne sont d'ailleurs pas uniformes : les points des coins sont à 45° des axes, les autres points du cercle extérieur à $\arctan(1/3) \approx 18{,}4°$.
+
+**Proposition** : retenir $\Delta\varphi = \pi/4 = 45°$ entre les points des coins (diagonales) et signaler que la phase seule ne suffit plus à distinguer les symboles (l'amplitude intervient) ; ne pas utiliser la valeur « $\pi/8$ ».
+
+**Décision** : proposition retenue (décision déléguée par Armand, 2026-10-29).
+:::
+
+**MQAM** : $[\text{Symbol Rate}]_{MQAM} = \text{Bit Rate}/\log_2 M$ :
+
+| Modulation | 16QAM | 32QAM | 64QAM | 128QAM | 256QAM | 1024QAM |
+|---|---|---|---|---|---|---|
+| Bits par symbole | 4 | 5 | 6 | 7 | 8 | 10 |
+| Application | | DVB-T | décodeurs TV | | DVB-C | 5G |
+
+: Vitesse de transmission $= \text{Bit Rate}/N_{sym}$ et applications citées par le support [mod-num, p. 22]. {#tbl-mqam}
+
+## Modulations de fréquence : FSK, CPFSK, MSK, GMSK {#sec-fsk}
+
+### FSK et FSK à phase continue {#sec-fsk-cpfsk}
+
+Modulations par **saut discret de la fréquence porteuse** (*Frequency Shift Keying*) [mod-num, p. 23-25] :
+
+- **FSK** : à chaque changement de bit, le signal modulé peut présenter une **discontinuité** de phase ;
+- **CPFSK** (*Continuous Phase Frequency Shift Keying*) : la phase est **continue**. Le cas particulier d'excursion en fréquence
+
+  $$
+  \Delta f = \frac{1}{4T_r}
+  $$ {#eq-msk-excursion}
+
+  est la **MSK** (*Minimum Shift Keying*).
+
+**Constellation** : pour l'ASK et la PSK, $(I, Q)$ est **constant** pendant la transmission d'un bit [mod-num, p. 23]. Pour la FSK, avec $s_0(t) = E\cos(2\pi f_0 t)$ et $s_1(t) = E\cos(2\pi f_1 t)$ écrits sous la forme $i(t)\cos(2\pi f_c t + \varphi_c) + q(t)\cos(2\pi f_c t + \pi/2)$, avec $E^2 = i^2 + q^2$, le point $S_i$ **se déplace sur le cercle** de rayon $E$ : $i(t)$ et $q(t)$ **varient** pendant la transmission du bit [mod-num, p. 24].
+
+**CPFSK** : transmission d'un « 0 » : quart de tour dans le sens horaire ; transmission d'un « 1 » : quart de tour dans le sens anti-horaire [mod-num, p. 25]. Débit binaire $1/T_r$, fréquence porteuse $1/T_c$, vitesse de transmission $1/T_r$ : $[\text{Symbol Rate}]_{FSK} = \text{Bit Rate}$.
+
+::: {.complement}
+- Le quart de tour par bit et @eq-msk-excursion sont liés : avec $f_{0,1} = f_c \mp \Delta f$, la phase relative à la porteuse $f_c$ tourne de $2\pi\Delta f\,T_r = \pi/2$ pendant un bit. L'écart $f_1 - f_0 = 1/(2T_r)$ est le plus petit qui rende les deux signaux orthogonaux sur un bit, d'où le nom *Minimum Shift Keying*.
+- La CPFSK s'obtient naturellement avec un oscillateur commandé en tension (VCO) attaqué par le signal binaire, comme au TD 2 (@exr-td2-fsk-varicap) : la phase d'un oscillateur ne saute pas.
+:::
+
+### MSK et GMSK {#sec-msk-gmsk}
+
+**Spectre MSK** (mesure pour $D = 271\ \mathrm{kbit/s}$) [mod-num, p. 26-27] : bande théorique infinie ; lobe principal mesuré de largeur $1{,}75 \times D$ ; puissance concentrée dans $[-D/2, +D/2]$ autour de la porteuse $F_0$.
+
+**GMSK** (*Gaussian Minimum Shift Keying*) : on ajoute un **filtre gaussien** sur le signal binaire avant la modulation MSK ; le spectre est beaucoup plus compact (environ 250 kHz pour $D = 271$ kbit/s) :
+
+$$
+BW_{GMSK} \approx D,
+\qquad
+\eta_{GMSK} \approx 1.
+$$ {#eq-gmsk}
+
+Applications : standard cellulaire GSM, Bluetooth…
+
+::: {.a-verifier .tranche #av-lobe-msk}
+**Source** [mod-num, p. 26-27] : sur le spectre mesuré de la MSK, la largeur du lobe principal est cotée « $1{,}75 \times D$ ».
+
+**Problème** : pour une MSK idéale, les premiers zéros du spectre sont à $\pm 0{,}75\,D$ de la porteuse : le lobe principal a une largeur théorique de $1{,}5\,D$ (@fig-dsp-numeriques). La valeur $1{,}75\,D$ est une lecture sur une mesure (axe gradué de 100 en 100 kHz) et ne correspond pas à la valeur théorique.
+
+**Proposition** : retenir **$1{,}5\,D$** comme largeur théorique du lobe principal MSK ; garder $1{,}75\,D$ comme valeur lue sur la mesure du support.
+
+**Décision** : proposition retenue (décision déléguée par Armand, 2026-10-29).
+:::
+
+![Densités spectrales théoriques, centrées sur la porteuse, pour un même débit binaire $D$ : BPSK (lobe principal $2D$ ; l'OOK a la même forme, plus une raie de porteuse), QPSK ($D$), MSK ($1{,}5D$, lobes secondaires beaucoup plus faibles). Reconstruite : formules classiques, impulsions rectangulaires pour BPSK et QPSK.](../figures/04-dsp-numeriques.svg){#fig-dsp-numeriques}
+
+## Bilan {#sec-bilan-numeriques}
+
+[mod-num, p. 29-30]
+
+- **Principe** : le signal modulé $s(t) = E\cos(2\pi f_c t + \varphi_c)$ est généré par décalage **discret** de la fréquence (FSK), de la phase (PSK) ou de l'amplitude (ASK).
+- **Représentation** : $s(t)$, défini par $(E, \varphi_c)$, est représenté par un diagramme de constellation $(I, Q)$ avec $I = E\cos\varphi_c$, $Q = E\sin\varphi_c$, $E^2 = I^2 + Q^2$.
+- **Métrique** : débit binaire $D$, bits par symbole $N_{sym}$, vitesse $D/N_{sym}$, bande utile $\approx 2D/N_{sym}$, efficacité $\eta \approx N_{sym}/2$ (@eq-efficacite-generale).
+- **Intérêt** : augmenter le débit par combinaison des modulations (QAM) ou par densification de la constellation (8PSK, 16PSK, 32QAM…) ; sécuriser et rendre robustes les transmissions par l'encodage et le décodage des données (NRZ, Manchester, unipolaire…).
+
+| Modulation | Bits/symbole | Vitesse | $BW_{mod}$ (filtrée) | $\eta$ (bit/s/Hz) |
+|---|---|---|---|---|
+| OOK | 1 | $D$ | $2D$ | 0,5 |
+| BPSK | 1 | $D$ | $2D$ | 0,5 |
+| QPSK | 2 | $D/2$ | $D$ | 1 |
+| 8PSK | 3 | $D/3$ | $2D/3$ | 1,5 |
+| 16QAM | 4 | $D/4$ | $D/2$ | 2 |
+| GMSK | 1 | $D$ | $\approx D$ | $\approx 1$ |
+
+: Récapitulatif. Lignes 8PSK et 16QAM : *Complément*, appliquant @eq-efficacite-generale. {#tbl-recapitulatif-numeriques}
+
+::: {.complement}
+Le support renvoie, pour la suite (codage, performances en présence de bruit), au cours de G. Ferré : c'est le cours TS227 de communications numériques ([chapitre 4 de TS227](../../ts227-communications-numeriques/cours/04-transmission-presence-bruit.qmd)).
+:::
+
+## Exercices du TD {#sec-exercices-td-ch04}
+
+### TD 1 (GNU Radio) : modulations numériques {#sec-td1-numeriques}
+
+::: {#exr-td1-ask-numerique}
+## Modulations d'amplitude numériques
+
+Fenêtre « Signal Modulant », temporel, case « Random Data » cochée [td1, p. 6].
+
+1. Calculer le débit binaire $D_b$ du signal modulant.
+2. Fenêtre « Signal Modulé », case « Modulation 1 » : donner le nom de la modulation observée.
+3. Case « Modulation 2 » : donner le nom de la modulation observée. Comparer ces deux modulations en donnant au moins un avantage de l'une sur l'autre.
+4. Spectre du signal modulé : calculer la bande passante utile $BW_{mod}$ et l'efficacité spectrale. Le spectre utile est-il symétrique ? Pourquoi ? Que se passe-t-il quand on change la fréquence de la porteuse ?
+:::
+
+:::: {.complement}
+::: {.solution}
+Les valeurs dépendent du fichier de simulation, qui n'est pas dans les sources : seule la méthode est donnée.
+
+1. Mesurer la durée $T_r$ d'un bit (le plus court palier du signal aléatoire) : $D_b = 1/T_r$.
+2. et 3. Les deux modulations de cette partie sont des modulations d'amplitude numériques ; les deux formes possibles avec deux niveaux sont l'**OOK** (amplitudes $0$ et $E$, la porteuse disparaît pendant les « 0 ») et l'ASK **antipodale** (amplitudes $\pm E$, identique à la BPSK). Avantage de l'OOK : démodulation simple par détecteur d'enveloppe ; avantage de l'antipodale : pas de raie de porteuse (toute la puissance porte l'information) et, à puissance crête égale, points deux fois plus éloignés (meilleure détectabilité).
+4. $BW_{mod} = 2D_b$ (lobe principal) et $\eta = 0{,}5$ (@eq-ook, @eq-bpsk). Le spectre est symétrique autour de $f_p$ : le modulant est réel, ses bandes latérales inférieure et supérieure sont images l'une de l'autre (comme en AM double bande, [chapitre 2](02-modulations-lineaires.qmd#sec-amdbap-spectre)). Changer la fréquence porteuse translate le spectre sans changer sa forme ni sa largeur.
+:::
+::::
+
+::: {#exr-td1-fsk}
+## Modulation de fréquence numérique
+
+Modulant aléatoire binaire ; porteuse $A_p = 1\ \mathrm{V}$, $f_p = 10\ \mathrm{kHz}$ ; indice $\beta = 1$ [td1, p. 10].
+
+1. Justifier que la modulation observée est une FSK et non une GMSK.
+2. Donner l'expression de la bande passante utile d'un signal FSK et la calculer (l'excursion $\Delta f$ est ici très faible devant le débit $D$).
+3. Décrire et justifier la forme de la constellation IQ.
+:::
+
+:::: {.complement}
+::: {.solution}
+1. Les changements de fréquence sont brusques à chaque transition de bit ; en GMSK, le filtre gaussien adoucit les transitions de fréquence (et l'excursion vaut $D/4$).
+2. Par la règle de Carson, avec un modulant binaire de débit $D$ : $BW_{FSK} \approx 2(\Delta f + D)$ (forme du corrigé de 2023, @exr-td2-fsk-varicap) ; si $\Delta f \ll D$, $BW_{FSK} \approx 2D$. La valeur numérique dépend du débit de la simulation.
+3. Les points se déplacent **sur un cercle** de rayon $A_p$ : l'amplitude est constante, seule la phase tourne, dans un sens pour un « 1 » et dans l'autre pour un « 0 » [mod-num, p. 24-25].
+:::
+::::
+
+### TD 2 : modulateurs numériques à oscillateur LC {#sec-td2-numeriques}
+
+Ces exercices réutilisent le modulateur à varicap du [chapitre 3](03-modulations-angulaires.qmd#exr-td2-modulateur-varicap) : $C_{Dv}(V_p) = C_0/(1 + V_p/V_0)^n$ avec $C_0 = 30\ \mathrm{pF}$, $V_0 = 700\ \mathrm{mV}$, $n = 0{,}7$. Le message $m(t)$ est un signal binaire : « 1 » = $+0{,}7\ \mathrm{V}$, « 0 » = $0\ \mathrm{V}$, bits de $0{,}25\ \mu\mathrm{s}$ (chronogramme de l'énoncé : « 1 » jusqu'à 2 µs, « 0 » « 0 » de 2 à 2,5 µs, « 1 » de 2,5 à 2,75 µs, puis « 0 ») [td2, p. 2-3].
+
+::: {#exr-td2-fsk-varicap}
+## Message binaire sur la varicap
+
+$m(t)$ est appliqué sur $C_{Dv}$ ; $L = 13{,}4\ \mathrm{nH}$, $C = 167\ \mathrm{pF}$.
+
+1. Expliquer simplement le fonctionnement du circuit. Représenter le signal de sortie $V_{out} = V_{out+} - V_{out-}$.
+2. Quel type de modulateur réalise-t-on ?
+3. Donner les caractéristiques de ce modulateur pour le signal binaire proposé.
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+D'après le corrigé de 2023 [corrige-2023-td02, p. 2-3] :
+
+1. Niveau haut, $V_p = 0{,}7\ \mathrm{V}$ : $C_{Dv}(0{,}7) = 0{,}615\,C_0$ et $f_1 = \dfrac{1}{2\pi\sqrt{L(C + 0{,}615\,C_0)}} = 101\ \mathrm{MHz}$. Niveau bas : $C_{Dv}(0) = C_0$ et $f_0 = 98\ \mathrm{MHz}$. Sortie : deux fréquences, même amplitude.
+2. Modulation **FSK**.
+3. $T_\mathrm{bit} = 0{,}25\ \mu\mathrm{s}$, $D_b = 4\ \mathrm{Mbit/s}$ ; $f_c = \frac{f_1 + f_0}{2} = 99{,}5\ \mathrm{MHz}$ ; $\Delta f = f_1 - f_c = 1{,}5\ \mathrm{MHz}$ ; $BW_{FSK} = 2(D_b + \Delta f) = 11\ \mathrm{MHz}$ ; vitesse de transmission $= D_b$ ; $\eta = D_b/BW_{FSK} = 0{,}36$.
+
+Pour une **GMSK** (question 5 de l'exercice 3, traitée ici par le corrigé) : ajout d'un filtre gaussien ; $\Delta f = D_b/4 = 1\ \mathrm{MHz}$ ; $BW_{GMSK} = D_b = 4\ \mathrm{MHz}$ ; vitesse $4\ \mathrm{MBd}$ ; $\eta = 1$. Intérêt : envoyer le plus fort débit possible dans la bande la plus restreinte.
+:::
+::::
+
+::: {.complement}
+- Contrôle : $(1 + 0{,}7/0{,}7)^{0{,}7} = 2^{0{,}7} = 1{,}625$, donc $C_{Dv} = 18{,}5\ \mathrm{pF}$ et $f_1 = 100{,}96\ \mathrm{MHz}$ ; $f_0 = 97{,}96\ \mathrm{MHz}$.
+- Ici $V_p = V_0$ : l'approximation linéaire du [chapitre 3](03-modulations-angulaires.qmd#exr-td2-modulateur-varicap) ($|m| \ll V_0/n$) ne vaut plus, et l'on calcule les deux fréquences exactement (sensibilité moyenne $3\ \mathrm{MHz}/0{,}7\ \mathrm{V} \approx 4{,}3\ \mathrm{MHz/V}$, au lieu de $7{,}5\ \mathrm{MHz/V}$ en petit signal).
+- La phase d'un oscillateur ne saute pas : cette FSK est à **phase continue** (CPFSK). Pour la rendre MSK, il faudrait $\Delta f = D/4 = 1\ \mathrm{MHz}$, donc des niveaux de $V_p$ plus faibles ; pour une GMSK, filtrer en plus $m(t)$ par un filtre gaussien.
+:::
+
+::: {#exr-td2-ook-vdd}
+## Message binaire sur l'alimentation
+
+$m(t)$ est maintenant appliqué sur l'alimentation $V_{DD}$ ; l'entrée $V_p$ de la varicap est à la masse ; $L$ et $C$ de l'application de l'exercice 1.
+
+1. Expliquer simplement le fonctionnement. Représenter $V_{out}(t)$.
+2. Quel type de modulateur réalise-t-on ?
+3. Donner les caractéristiques de ce modulateur pour le signal binaire proposé.
+4. Quels sont les défauts principaux de ce modulateur ?
+5. Quelles modifications faut-il apporter au circuit pour en faire un modulateur GMSK ?
+:::
+
+:::: {.notes-externes}
+::: {.solution}
+D'après le corrigé de 2023 [corrige-2023-td02, p. 3-4] :
+
+1. Deux cas : « 0 », oscillateur éteint, pas de signal ; « 1 », oscillation à $f_1 = \dfrac{1}{2\pi\sqrt{L(C + C_0)}} = 98\ \mathrm{MHz}$.
+2. Modulateur **OOK**.
+3. $T_\mathrm{bit} = 0{,}25\ \mu\mathrm{s}$, $D_b = 4\ \mathrm{Mbit/s}$ ; $BW_{OOK} = 2D_b = 8\ \mathrm{MHz}$ ; vitesse de transmission $= D_b$ ; $\eta = 0{,}5$.
+4. Principal défaut : il est difficile de distinguer l'envoi d'un « 0 » de l'absence d'émission.
+5. Voir la solution GMSK de l'exercice précédent.
+:::
+::::
+
+::: {.complement}
+- 4 (autres défauts) : à chaque « 1 », l'oscillateur doit **démarrer** (temps d'établissement de l'oscillation, qui limite le débit : à 98 MHz, un bit ne dure que 24,5 périodes) ; l'amplitude et même la fréquence dépendent de l'alimentation (couplage à $V_{DD}$) ; enfin, l'OOK a une mauvaise efficacité spectrale (0,5) et une enveloppe non constante.
+- 5 : appliquer le message sur la varicap (et non sur $V_{DD}$), le filtrer par un filtre gaussien, et régler les niveaux de $V_p$ pour obtenir $\Delta f = D/4$ (@eq-msk-excursion).
+:::
+
+### Exemples d'application (corrigé de 2023) {#sec-exemples-2023-num}
+
+::: {.notes-externes}
+Corrigé d'une ancienne version du TD 1 (2023), **énoncé non disponible** [corrige-2023-td01, p. 3-4] :
+
+- **OOK** : 6 bits en 0,6 ms, donc $T_b = 0{,}1\ \mathrm{ms}$, $D_b = 1/T_b = 10\ \mathrm{kbit/s}$ et $BW = 2D_b = 20\ \mathrm{kHz}$.
+- **Modulation à amplitude constante, 8PSK** (la FSK étant écartée) : $N_{sym} = \log_2 8 = 3$ bits par symbole ; vitesse $D_b/3$ ; $\Delta\varphi = 45°$ ; $\eta = \dfrac{D_b}{2D_b/N_{sym}} = \dfrac32 = 1{,}5$.
+:::
+
+## À retenir {#sec-retenir-numeriques}
+
+- Message binaire ; $s(t) = E\cos(2\pi f_c t + \varphi_c)$ : ASK ($E$), FSK ($f_c$), PSK ($\varphi_c$) (@eq-signal-numerique).
+- Critères : détectabilité, efficacité spectrale, efficacité en puissance, liés par un compromis (@tbl-compromis).
+- Plan IQ : $I = E\cos\varphi_c$, $Q = E\sin\varphi_c$, $s = I\cos(2\pi f_c t) + Q\cos(2\pi f_c t + \pi/2)$ (@eq-iq) ; modulateur IQ universel.
+- $D = 1/T_r$ ; vitesse $D/N_{sym}$ (en bauds) ; $BW_{mod} \approx 2D/N_{sym}$ ; $\eta \approx N_{sym}/2$ (@eq-efficacite-generale).
+- OOK et BPSK : $BW = 2D$, $\eta = 0{,}5$ (@eq-ook, @eq-bpsk) ; QPSK : $BW = D$, $\eta = 1$ (@eq-qpsk) ; MPSK : $\eta = N_{sym}\eta_{BPSK}$, $\Delta\varphi = 2\pi/M$ ; MQAM : vitesse $D/\log_2 M$.
+- FSK : $(I, Q)$ tourne sur le cercle pendant le bit ; CPFSK : phase continue ; MSK : $\Delta f = 1/(4T_r)$ (@eq-msk-excursion), lobe principal $1{,}5D$ ; GMSK (filtre gaussien) : $BW \approx D$, $\eta \approx 1$ (@eq-gmsk).

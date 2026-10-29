@@ -3,7 +3,7 @@
 > Où en est le projet. Mis à jour **à la fin de chaque session de travail**.
 > Vision et méthode : `CONTEXTE_PROJET.md`. Règles : `conventions.md`. Technique : `architecture.md`. Tâches : `TODO.md`.
 >
-> Dernière mise à jour : 28 octobre 2026 (refonte complète de l'interface).
+> Dernière mise à jour : 29 octobre 2026 (EARF1 : 4 chapitres validés, 74 flashcards).
 
 ---
 
@@ -26,6 +26,8 @@ Révision : en local avec `quarto preview` (port fixe 4848, `http://localhost:48
 **TSIG1 — Traitement numérique du signal (20 octobre 2026)** : notes d'Armand reçues (24 photos : 13 feuillets, 22 pages + 2 doublons), rangées dans `sources/tsig1/notes/date-inconnue/` + `date-inconnue.pdf`, transcrites (`sources/tsig1/transcriptions/notes-2026.md`). **Plan des notes d'Armand retenu** (choix d'Armand, à la place du plan des notes 2023) : 1. Échantillonnage et signal discret, 2. Systèmes discrets et convolution, 3. TFD et interprétation fréquentielle des SLI, 4. Implémentation des SLI et équations aux différences, 5. SLI et représentation en phase. Les **5 chapitres sont rédigés et vérifiés** (statut `verifie`) : notes d'Armand en `.notes`, notes 2023 et corrigés de TD 2023 en `.notes-externes`, 16 exercices des TD 1 à 3 intégrés (sections « Exercices du TD »), 11 figures ; vérification : ~290 blocs de formules et 16 exercices recalculés, 1 801 formules compilées (MathJax 3.2.2), rendu Quarto sans avertissement. **30 blocs *À vérifier* ouverts** (1/4/9/11/5), dont 11 erreurs des corrigés 2023. Méthode « deux temps » choisie par Armand : il relit et tranche, puis Claude génère les cartes définitives et retire le paquet provisoire `tsig1p-`. Partiel le jeudi 22 octobre.
 
 **TSIG1 — Annales (20 octobre 2026)** : 9 sujets corrigés, affichés **en images découpées question par question** avec la solution sous chaque question (demande d'Armand) : partiels 2014-2015, 2015-2016, 2016-2017, 2017-2018, 2019-2020, 2022-2023, 2025-2026, examens de mars 2014 et mars 2018 (les trois derniers sujets du recueil de TD ; 2014-2015 et 2016-2017 y figurent aussi, identiques aux scans). 138 images (≈ 2 Mo) dans `annales/sujets/`, régénérables (`<annale>-decoupe.py`, `normaliser-largeur.py`) ; 9 figures calculées ; 11 blocs *À vérifier* `av-ann…` (énoncés ambigus ou incomplets) ; chaque solution vérifiée par le calcul ; rendu Quarto du site complet sans avertissement.
+
+**EARF1 — Modulations analogiques et numériques (29 octobre 2026)** : à la demande d'Armand (« fais toutes les étapes jusqu'à ce que ce cours soit considéré comme validé »), les **4 chapitres** sont analysés, rédigés, vérifiés et **validés** (statut `valide`, validation déléguée par Armand) : 1. Introduction : signaux et outils d'analyse ; 2. Modulations linéaires ; 3. Modulations angulaires ; 4. Introduction aux modulations numériques. Le support « Student » est complet (aucun trou). Sources : supports de T. Taris, TD 1 (GNU Radio, sans corrigé), TD 2 et 3, notes et corrigés de 2023 (ancien élève, `.notes-externes`). 16 figures régénérables ; 11 blocs *À vérifier*, **tous tranchés** par Claude sur délégation (coquilles du support : signe de la série de Bessel, facteur $2\pi$ du discriminateur, $\pi/8 \neq 45°$ en 16QAM, unité du *symbol rate*…) ; solutions des TD sans corrigé en *Complément*. Rapports : `matieres/earf1-modulations-communications/analyses/0N-*.md`. **Flashcards générées** (étape 8, à la demande d'Armand) : 74 cartes (17/18/21/18), `revision/cartes/earf1.json` ; statut `flashcards`.
 
 Décision du 7 octobre 2026 : le site sera **publié à la fin pour les étudiants de la promo**, derrière un accès réservé et avec l'accord des enseignants (`CONTEXTE_PROJET.md` § 5.4).
 
@@ -73,6 +75,8 @@ Décision du 7 octobre 2026 : le site sera **publié à la fin pour les étudian
 
 - [x] **Refonte complète de l'interface (28 octobre 2026)** : design system « Bristol 2026 » (`assets/bristol-tokens.css`, `assets/bristol.scss` réécrits ; polices Geist auto-hébergées dans `assets/fonts/`) ; accueil en tableau de bord généré par `scripts/catalogue.ts` (pre-render Deno) avec `matieres/domaines.json` ; page `annales.qmd` ; filtre `assets/bristol.lua` + partial `assets/partials/title-block.html` (contexte des chapitres, « Pour continuer », accès rapides des fiches matières) ; `assets/bristol.js` (Ctrl K, reprise de lecture, cartes dues, filtres) ; application de révision : CSS et gabarits refaits, mode concentration, progression de séance, liens profonds `#reviser=` / `#paquet=` (planification, stockage, fusion inchangés) ; `_quarto.yml` (pre-render, navigation, pied de page, filtre, grille, thème `default`). Contrôles : rendu Quarto 1.10.19 complet sans avertissement (65 pages), aucune erreur JavaScript en clair et en sombre, aucun débordement horizontal sur mobile (375 px), captures (accueil, fiche, chapitres, annales, révisions, séance ; clair, sombre, mobile), synchronisation clair/sombre site ↔ application. Copies des fichiers d'avant la refonte : `_apercu_tmp/avant-refonte/`. `conventions.md` § 6 et § 13, `architecture.md` § 3 et § 4.
 
+- [x] EARF1 (29 octobre 2026) : 4 chapitres `cours/01` à `04` (statut `valide`), 16 figures (`figures/0N-*.py` + SVG), 4 rapports d'analyse, fiche matière (plan, table des notations, conventions, sources), barre latérale `_quarto.yml`, inventaire mis à jour. Contrôles : rendu Quarto 1.10.19 sans avertissement (projet minimal), 1094 formules compilées avec MathJax 3.2.2 sans erreur, références croisées résolues.
+
 ## 3. En cours
 
 - EANA3 : plan proposé (5 chapitres) et choix par défaut à revoir par Armand (inventaire § 4, § 7, § 8). Analyse du chapitre 1 possible ; notes d'Armand attendues.
@@ -113,6 +117,17 @@ Remarque : « brouillon » signifie ici « sources officielles reçues, rien de 
 
 « brouillon » : sources reçues, rien de rédigé. Le support 2025 ne contient pas de cours rédigé (plan + exercices + TD). Détail : `matieres/eana3-circuits-integres/analyses/inventaire-sources.md`.
 
+### EARF1 — Modulations analogiques et numériques
+
+| N° | Chapitre | Fichier | Statut | Blocs *À vérifier* |
+|---|---|---|---|---|
+| 1 | Introduction : signaux et outils d'analyse | `cours/01-introduction-signaux-outils.qmd` | **flashcards** (17 cartes) | 0 ouvert + 2 tranchés (`av-tf-pulsation-frequence`, `av-indices-fourier`) |
+| 2 | Modulations linéaires | `cours/02-modulations-lineaires.qmd` | **flashcards** (18 cartes) | 0 ouvert + 3 tranchés (`av-condition-surmodulation`, `av-bornes-spectre-dbap`, `av-niveau-05-td3`) |
+| 3 | Modulations angulaires | `cours/03-modulations-angulaires.qmd` | **flashcards** (21 cartes) | 0 ouvert + 3 tranchés (`av-signe-serie-bessel`, `av-symetrie-bessel`, `av-derivee-fm-facteur-2pi`) |
+| 4 | Introduction aux modulations numériques | `cours/04-modulations-numeriques.qmd` | **flashcards** (18 cartes) | 0 ouvert + 3 tranchés (`av-unite-symbol-rate`, `av-dphi-16qam`, `av-lobe-msk`) |
+
+Validation déléguée par Armand le 29 octobre 2026 : à relire quand il le souhaite (les blocs tranchés et les *Compléments* sont les passages à regarder en priorité).
+
 ### Matières du S7 mises en place le 19 octobre 2026
 
 Aucun chapitre rédigé : statut `brouillon` pour tous les chapitres proposés. Détail dans chaque fiche matière et dans `analyses/inventaire-sources.md`.
@@ -126,7 +141,7 @@ Aucun chapitre rédigé : statut `brouillon` pour tous les chapitres proposés. 
 | EANA1 — Composants et circuits de commutation | à établir | **aucun support officiel** |
 | EANA2 — Chaîne d'acquisition | 5 chapitres proposés | CAN (F. Rivet) + bruit (T. Taris) |
 | EANA4 — TP d'électronique | TP | poly 2026, TP 1 à 5 |
-| EARF1 — Modulations | 4 chapitres proposés | T. Taris |
+| EARF1 — Modulations | **4 chapitres, 74 flashcards** (29 octobre 2026) | T. Taris ; voir le tableau ci-dessus |
 | NUMC1 — Technologie des circuits numériques | 6 chapitres proposés | S. Renaud, B. Le Gal ; TD VHDL |
 | NUME3 — Conception VHDL/FPGA | projet | lecteur MP3 |
 | NUMR1 — Réseaux et Internet | à établir | 368 p. de diapositives ; paquet hérité `reseaux.json` |
@@ -149,6 +164,7 @@ Aucun chapitre rédigé : statut `brouillon` pour tous les chapitres proposés. 
 
 | Date | Décision | Où |
 |---|---|---|
+| 2026-10-29 | EARF1 : plan en 4 chapitres validé ; Armand **délègue la validation** (« toutes les étapes jusqu'à valide ») : 11 blocs *À vérifier* tranchés par Claude (propositions retenues, ligne **Décision** « déléguée par Armand ») ; flashcards non demandées | rapports EARF1 ; fiche matière |
 | 2026-10-28 | Refonte complète de l'interface (brief d'Armand) : DA « Bristol 2026 » à la place de « fiche bristol » ; accueil, page Annales et en-têtes générés depuis les fichiers (`scripts/catalogue.ts`) ; navigation Matières / Annales / Révisions ; fichiers générés `_generes/` et `assets/catalogue.json` versionnés — **choix par défaut, à valider** ; classe `.attention` proposée, non utilisée | `conventions.md` § 6, § 13 ; `architecture.md` § 4 |
 | 2026-10-25 | Site publié sur GitHub Pages en **accès public** (https://armandgm43-droid.github.io/bristol-site/), construit par GitHub Actions — **choix d'Armand**, remplace provisoirement « accès réservé + accord des enseignants » | `CONTEXTE_PROJET.md` § 5.4, règle 19.5, journal ; `architecture.md` § 10 |
 | 2026-10-20 | Annales : énoncé en images découpées par question, solution dessous ; sujets du recueil de TD traités comme annales — **choix d'Armand** ; doublons scan/recueil : images tirées du recueil (plus net), deux sources citées — choix par défaut | `conventions.md` § 2 ; fiche TSIG1 |
@@ -290,3 +306,5 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 | 2026-10-25 | Bristol — Publication GitHub Pages | Workflow `.github/workflows/publier-site.yml` (Quarto 1.10.19, `quarto render`, déploiement Pages) ; décision « accès public » reportée dans `CONTEXTE_PROJET.md` (§ 5.4, règle 19.5, journal, question 1), `architecture.md` § 10 et ce fichier. À faire par Armand : activer Pages (source « GitHub Actions »), commit et push |
 | 2026-10-27 | Bristol — Publication GitHub Pages (suite) | Dépôt `bristol-site` rendu **public** par Armand (Student Pack non nécessaire), Pages activé, workflow lancé : site en ligne, accueil et paquets de cartes accessibles ; `architecture.md` § 10 et problème 16 mis à jour |
 | 2026-10-28 | Bristol — Refonte de l'interface | Audit (captures), architecture UX, design system, implémentation (jetons, thème, accueil, annales, chapitres, fiches matières, application de révision), vérification (rendu complet, captures clair/sombre/mobile, recherche, équations, JavaScript) ; fichiers de mémoire mis à jour. Incident : une commande `git status` a été lancée par erreur par Claude (lecture seule, rien modifié) |
+| 2026-10-29 | Bristol — EARF1 — Chapitres 1 à 4 | Lecture complète des sources (supports, 3 TD, notes et corrigés 2023) ; 4 chapitres rédigés avec 16 figures, TD intégrés (TD 1 parties I à IV, TD 2, TD 3), corrigés 2023 en *Notes externes* ; 11 AV tranchés sur délégation ; vérification (rendu Quarto, MathJax, recalculs numériques) ; statut `valide` ; fiche matière, `_quarto.yml`, inventaire, `ETAT_PROJET.md` mis à jour |
+| 2026-10-29 | Bristol — EARF1 — Flashcards | 74 cartes (`flashcards/01` à `04`, identifiants `earf1-…`), 246 formules compilées (MathJax 3.2.2), `scripts/flashcards.py --verifier` sans erreur puis lancé : `revision/cartes/earf1.json` (74 cartes) ; statut `flashcards` ; fiche matière mise à jour. À faire par Armand : push, contrôle du rendu en ligne |

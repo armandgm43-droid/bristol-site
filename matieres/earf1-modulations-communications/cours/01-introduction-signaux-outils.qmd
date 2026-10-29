@@ -1,0 +1,309 @@
+---
+title: "Introduction : signaux et outils d'analyse"
+matiere: earf1
+chapitre: 1
+enseignants: ["Thierry Taris"]
+annee: "2026-2027"
+statut: flashcards
+date-modified: 2026-10-29
+sources:
+  - id: mod-ana
+    fichier: support/cours-01-modulations-analogiques.pdf
+    nature: officielle
+    version: "Modulations analogiques, durée 2 h 40 (version « Student »)"
+    pages: "1-18"
+  - id: notes-2023-ana
+    fichier: notes/2023-notes-modulations-analogiques.pdf
+    nature: externe
+    pages: "1-3"
+---
+
+{{< include /_macros.qmd >}}
+
+Ce chapitre explique **pourquoi** on module un signal pour le transmettre par voie hertzienne, présente les grandes familles de modulations, puis rassemble les outils d'analyse utilisés dans toute la matière : transformée et série de Fourier, puissance d'un signal (égalité de Parseval) et décalage en fréquence par un **mélangeur**.
+
+## Signal et télécommunications {#sec-signal-telecom}
+
+Un **signal** est un support physique permettant de transporter de l'information [mod-ana, p. 4]. Exemples :
+
+- signaux sonores : fluctuations de la pression de l'air ;
+- signaux visuels : variations de la lumière ;
+- signaux électromagnétiques (EM) : polarisation de charges dans l'air.
+
+Les télécommunications utilisent les signaux électromagnétiques : une **onde électromagnétique se propage dans l'air**, puis elle est **transformée en signal électrique** pour être traitée par l'électronique.
+
+## Pourquoi moduler ? {#sec-pourquoi-moduler}
+
+### Propriété d'une antenne {#sec-antenne}
+
+Une antenne élémentaire est une tige métallique de longueur $L$ alimentée par un générateur sinusoïdal de fréquence $f$. L'intensité du courant $i(t)$ dans la tige varie avec la longueur $L$ : il y a échange d'énergie avec l'air (**rayonnement**), et ce courant passe par un **maximum** pour une longueur particulière $L = L_0$ [mod-ana, p. 5] :
+
+$$
+L_0 = \frac{c}{2f} = \frac{\lambda}{2},
+$$ {#eq-longueur-antenne}
+
+où $c \approx 3 \cdot 10^8\ \mathrm{m\,s^{-1}}$ est la vitesse de la lumière, $f$ la fréquence du signal (Hz) et $\lambda$ sa longueur d'onde (m).
+
+::: {.notes-externes}
+Au maximum du courant débité par le générateur correspond le maximum de puissance transmise à l'antenne [notes-2023-ana, p. 1].
+:::
+
+La taille d'une antenne est donc **inversement proportionnelle à la fréquence** du signal appliqué [mod-ana, p. 6] :
+
+- pour un signal vocal (spectre de 2 à 20 kHz), à $f = 10\ \mathrm{kHz}$ : $L_0 = 15\ \mathrm{km}$ ;
+- à $f = 1\ \mathrm{GHz}$ : $L_0 = 15\ \mathrm{cm}$.
+
+Pour **réduire l'encombrement** ($L_0$) et améliorer les performances d'une antenne, on **augmente la fréquence** des signaux rayonnés : c'est le principe de la **modulation**.
+
+::: {.complement}
+Vérification : $\lambda = c/f = 3 \cdot 10^8 / 10^4 = 30\ \mathrm{km}$, d'où $L_0 = 15\ \mathrm{km}$ ; à 1 GHz, $\lambda = 30\ \mathrm{cm}$ et $L_0 = 15\ \mathrm{cm}$.
+:::
+
+### Moduler et démoduler {#sec-moduler-demoduler}
+
+::: {#def-modulation}
+## Modulation, démodulation
+
+**Moduler** (resp. **démoduler**) un signal est l'opération qui consiste à introduire (resp. extraire) l'information utile dans (resp. d'un) signal haute fréquence (HF) [mod-ana, p. 7].
+:::
+
+![Chaîne de transmission : le signal d'information en bande de base (BB) est transposé en haute fréquence (HF ou RF) par le modulateur, se propage dans l'air, puis est ramené en bande de base par le démodulateur. D'après le support [mod-ana, p. 7], redessinée.](../figures/01-chaine-modulation.svg){#fig-chaine-modulation}
+
+L'objectif de la chaîne est de restituer au destinataire le signal émis : $s_{BB,Rx} = s_{BB,Tx}$ (@fig-chaine-modulation).
+
+### Types de modulations {#sec-types-modulations}
+
+Un signal modulé s'écrit de façon générale [mod-ana, p. 8] :
+
+$$
+s(t) = A(t)\cos\bigl(2\pi f(t)\,t + \varphi_c(t)\bigr).
+$$ {#eq-signal-module-general}
+
+L'information peut être placée :
+
+- dans l'**amplitude** $A(t)$ : modulations **linéaires** (modulation d'amplitude, [chapitre 2](02-modulations-lineaires.qmd)) ;
+- dans la **fréquence** $f(t)$ ou la **phase** $\varphi_c(t)$ : modulations **angulaires** (modulations de fréquence et de phase, [chapitre 3](03-modulations-angulaires.qmd)).
+
+::: {.notes-externes}
+Les modulations angulaires sont « plus robustes » [notes-2023-ana, p. 1] (voir les avantages des modulations angulaires au [chapitre 3](03-modulations-angulaires.qmd#sec-principe-angulaires)).
+:::
+
+Une modulation comporte deux étapes :
+
+1. l'**introduction de l'information** dans le signal ;
+2. le **décalage en fréquence**, vers les hautes fréquences (modulation) ou vers les basses fréquences (démodulation).
+
+Ces opérations peuvent être réalisées simultanément ou séparément : cela dépend de la modulation.
+
+## Signaux et outils d'analyse {#sec-outils-analyse}
+
+### Classification des signaux {#sec-classification-signaux}
+
+Un signal est représenté par une fonction d'une ou de plusieurs variables ; dans ce cours, une seule : le temps $t$. Les signaux se classent en deux catégories [mod-ana, p. 10] :
+
+- **déterministes** : on connaît leur évolution à l'avance (étude temporelle et fréquentielle) ;
+- **aléatoires** : on ne connaît pas leur évolution à l'avance (étude fréquentielle).
+
+Les signaux des télécommunications portent une information inconnue à l'avance : ce sont des signaux **aléatoires**, étudiés dans le domaine fréquentiel. L'outil d'étude est la **transformée de Fourier** (TF).
+
+### Transformée de Fourier {#sec-transformee-fourier}
+
+::: {#def-tf}
+## Transformée de Fourier
+
+$$
+X(f) = \int_{-\infty}^{+\infty} x(t)\,e^{-j2\pi f t}\,\mathrm{d}t,
+\qquad
+x(t) = \int_{-\infty}^{+\infty} X(f)\,e^{+j2\pi f t}\,\mathrm{d}f.
+$$ {#eq-tf}
+
+[mod-ana, p. 11, 14]
+:::
+
+À retenir [mod-ana, p. 11] :
+
+- un signal **périodique** dans le temps a un **spectre discret** (des raies) ;
+- un signal **apériodique** dans le temps a un **spectre continu**.
+
+TF du cosinus et du sinus de pulsation $\omega_p = 2\pi f_p$ :
+
+$$
+A\cos(2\pi f_p t) \xrightarrow{\ \TF\ } \frac{A}{2}\bigl[\delta(f - f_p) + \delta(f + f_p)\bigr],
+\qquad
+A\sin(2\pi f_p t) \xrightarrow{\ \TF\ } j\,\frac{A}{2}\bigl[-\delta(f - f_p) + \delta(f + f_p)\bigr].
+$$ {#eq-tf-cos-sin}
+
+::: {.a-verifier .tranche #av-tf-pulsation-frequence}
+**Source** [mod-ana, p. 11] : « $x(t) \xrightarrow{\text{TFD}} X(f) = \int_{-\infty}^{+\infty} x(t)\,e^{-i\omega t}\,\mathrm{d}t$ » et « $s(t) = A\cos(\omega_p t) \xrightarrow{\text{TFD}} S(f) = \frac{A}{2}[\delta(\omega - \omega_p) + \delta(\omega + \omega_p)]$ » (de même pour le sinus et pour la représentation p. 12).
+
+**Problème** : la diapositive mélange la variable $f$ (dans $X(f)$, $\mathrm{d}f$) et la pulsation $\omega$ (dans l'exponentielle et les Dirac). Or $\delta(\omega - \omega_p) = \frac{1}{2\pi}\,\delta(f - f_p)$ : les deux écritures ne sont pas équivalentes à un facteur $2\pi$ près. Par ailleurs, l'opération est notée « TFD » (sigle habituel de la transformée de Fourier *discrète*) alors qu'il s'agit de la transformée de Fourier continue ; l'unité imaginaire est notée $i$ ici et $j$ ailleurs dans le cours (p. 14).
+
+**Proposition** : écrire tout en fréquence, $X(f) = \int x(t)\,e^{-j2\pi f t}\,\mathrm{d}t$ (forme de la p. 14) et $\TF[A\cos(2\pi f_p t)] = \frac{A}{2}[\delta(f - f_p) + \delta(f + f_p)]$, comme dans @eq-tf et @eq-tf-cos-sin ; noter « TF ».
+
+**Décision** : proposition retenue (décision déléguée par Armand, 2026-10-29).
+:::
+
+Représentation [mod-ana, p. 12] : sur un **spectre d'amplitude unilatéral** (fréquences positives), $A\cos(2\pi f_p t)$ et $A\sin(2\pi f_p t)$ donnent la même raie d'amplitude $A$ à $f_p$ ; leurs **spectres de phase** diffèrent : $0$ pour le cosinus, $-\pi/2$ pour le sinus. On représente « parfois » le spectre bilatéral complexe @eq-tf-cos-sin : deux raies de poids $A/2$ en $\pm f_p$, réelles pour le cosinus, imaginaires et de signes opposés pour le sinus.
+
+::: {.complement}
+La phase $-\pi/2$ du sinus vient de $A\sin(2\pi f_p t) = A\cos(2\pi f_p t - \pi/2)$.
+:::
+
+### Série de Fourier {#sec-serie-fourier}
+
+::: {#thm-serie-fourier}
+## Développement en série de Fourier
+
+Tout signal périodique $x(t)$ de période $T$ (fréquence $f = 1/T$) peut s'écrire comme une somme de sinus et de cosinus [mod-ana, p. 13] :
+
+$$
+x(t) = \frac{a_0}{2} + \sum_{n=1}^{\infty}\bigl[a_n\cos(2\pi n f t) + b_n\sin(2\pi n f t)\bigr],
+$$ {#eq-serie-fourier}
+
+avec
+
+$$
+a_n = \frac{2}{T}\int_0^T x(t)\cos(2\pi n f t)\,\mathrm{d}t,
+\qquad
+b_n = \frac{2}{T}\int_0^T x(t)\sin(2\pi n f t)\,\mathrm{d}t,
+\qquad
+a_0 = \frac{2}{T}\int_0^T x(t)\,\mathrm{d}t.
+$$
+:::
+
+On regroupe les termes de même fréquence ; c'est le passage de la série à la transformée de Fourier :
+
+$$
+x(t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} A_x(n)\cos\bigl(2\pi n f t + \varphi_x(n)\bigr),
+\qquad
+A_x(n) = \sqrt{a_n^2 + b_n^2},
+\qquad
+\varphi_x(n) = -\arctan\frac{b_n}{a_n}.
+$$ {#eq-serie-amplitude-phase}
+
+$A_x(n)$ est le **spectre d'amplitude** et $\varphi_x(n)$ le **spectre de phase** : des raies aux fréquences $f_0, 2f_0, 3f_0, \dots$ (harmoniques).
+
+::: {.a-verifier .tranche #av-indices-fourier}
+**Source** [mod-ana, p. 13] : « $a_n = \frac{2}{T}\int_0^T x(t).\cos(2\pi f t).\mathrm{d}t$ » et « $b_n = \frac{2}{T}\int_0^T x(t).\sin(2\pi f t).\mathrm{d}t$ » ; [mod-ana, p. 14] : « $\varphi_x(n) = \arg X(f)$ ».
+
+**Problème** : il manque l'indice $n$ dans l'argument des cosinus et sinus des coefficients (sinon tous les $a_n$ seraient égaux) ; p. 14, la phase d'un signal non périodique est une fonction de $f$, pas de $n$.
+
+**Proposition** : $\cos(2\pi n f t)$ et $\sin(2\pi n f t)$ dans $a_n$ et $b_n$ ; $\varphi_x(f) = \arg X(f)$.
+
+**Décision** : proposition retenue (décision déléguée par Armand, 2026-10-29).
+:::
+
+::: {.complement}
+Le signe $-$ de $\varphi_x(n)$ : $A_x\cos(\theta + \varphi_x) = A_x\cos\varphi_x\cos\theta - A_x\sin\varphi_x\sin\theta$, donc $a_n = A_x\cos\varphi_x$ et $b_n = -A_x\sin\varphi_x$, d'où $\tan\varphi_x = -b_n/a_n$ (au quadrant près : l'$\arctan$ ne suffit que si $a_n > 0$). Les notes de 2023 écrivent $\varphi_x(n) = \arctan(b_n/a_n)$, sans le signe [notes-2023-ana, p. 2] : c'est le support qui est juste.
+:::
+
+### Signaux non périodiques {#sec-signaux-non-periodiques}
+
+Si $x(t)$ est un signal quelconque non périodique, son spectre $X(f)$ est une fonction **continue** de la fréquence, comportant une infinité de composantes harmoniques [mod-ana, p. 14] :
+
+$$
+x(t) = \int_0^{+\infty} A_x(f)\cos\bigl(2\pi f t + \varphi_x(f)\bigr)\,\mathrm{d}f,
+\qquad
+A_x(f) = 2\,|X(f)|,
+\qquad
+\varphi_x(f) = \arg X(f),
+$$ {#eq-spectre-continu}
+
+avec $X(f)$ donné par @eq-tf.
+
+::: {.complement}
+Le facteur 2 vient du regroupement des fréquences $f$ et $-f$ : pour un signal réel, $X(-f) = X^*(f)$, et $X(f)e^{j2\pi ft} + X(-f)e^{-j2\pi ft} = 2|X(f)|\cos(2\pi f t + \arg X(f))$.
+:::
+
+### Puissance d'un signal {#sec-puissance-signal}
+
+La puissance d'un signal est égale à la somme des puissances des composantes de son spectre d'amplitude [mod-ana, p. 15].
+
+::: {#thm-parseval}
+## Égalité de Parseval
+
+- **Signal périodique** (puissance moyenne) :
+
+  $$
+  P = \frac{1}{T}\int_0^T x^2(t)\,\mathrm{d}t = \frac{a_0^2}{4} + \sum_{n=1}^{\infty}\frac{A_x^2(n)}{2}.
+  $$ {#eq-parseval-periodique}
+
+- **Signal non périodique** (énergie) :
+
+  $$
+  E = \int_{-\infty}^{+\infty} x^2(t)\,\mathrm{d}t = \frac12\int_0^{+\infty} A_x^2(f)\,\mathrm{d}f.
+  $$ {#eq-parseval-energie}
+
+Le premier membre est le calcul **temporel**, le second le calcul **spectral**.
+:::
+
+::: {.complement}
+- Chaque raie $A\cos(2\pi n f t + \varphi)$ a pour puissance moyenne $A^2/2$ ; la composante continue $a_0/2$ a pour puissance $a_0^2/4$.
+- Avec $A_x(f) = 2|X(f)|$, @eq-parseval-energie s'écrit $E = 2\int_0^{+\infty}|X(f)|^2\,\mathrm{d}f = \int_{-\infty}^{+\infty}|X(f)|^2\,\mathrm{d}f$ : c'est la forme habituelle du théorème de Parseval.
+:::
+
+## Modulation et décalage en fréquence {#sec-decalage-frequence}
+
+### Le mélangeur {#sec-melangeur}
+
+Pour réaliser l'opération de décalage en fréquence dans une (dé)modulation, on utilise un **mélangeur**, ou multiplieur analogique [mod-ana, p. 16].
+
+::: {#def-melangeur}
+## Mélangeur
+
+Le mélangeur reçoit le **signal modulant** $m(t)$ et la **porteuse** $p(t)$ ; il délivre le **signal modulé**
+
+$$
+s(t) = m(t)\,p(t).
+$$ {#eq-melangeur}
+
+Le signal modulé est le produit du signal modulant par la porteuse.
+:::
+
+### Modulant sinusoïdal {#sec-melangeur-sinus}
+
+Avec $m(t) = A\cos(2\pi f_m t)$ et $p(t) = \cos(2\pi f_p t)$ [mod-ana, p. 17] :
+
+$$
+s(t) = A\cos(2\pi f_p t)\cos(2\pi f_m t) = \frac{A}{2}\cos\bigl[2\pi(f_p + f_m)t\bigr] + \frac{A}{2}\cos\bigl[2\pi(f_p - f_m)t\bigr].
+$$ {#eq-melange-sinus}
+
+Le spectre de $s(t)$ comporte deux raies d'amplitude $A/2$, aux fréquences $f_p - f_m$ et $f_p + f_m$, symétriques par rapport à $f_p$ (@fig-melangeur-spectres, en haut).
+
+::: {.complement}
+Formule utilisée : $\cos a \cos b = \frac12[\cos(a + b) + \cos(a - b)]$.
+:::
+
+### Modulant quelconque {#sec-melangeur-quelconque}
+
+Avec un modulant quelconque $m(t)$, de spectre $M(f)$, et $p(t) = A_p\cos(2\pi f_p t)$ [mod-ana, p. 18] :
+
+$$
+s(t) = A_p\cos(2\pi f_p t)\,m(t) = A_p\,\frac{e^{j2\pi f_p t} + e^{-j2\pi f_p t}}{2}\,m(t),
+$$
+
+$$
+S(f) = \frac{A_p}{2}\int_{-\infty}^{+\infty} m(t)\,e^{-j2\pi(f - f_p)t}\,\mathrm{d}t + \frac{A_p}{2}\int_{-\infty}^{+\infty} m(t)\,e^{-j2\pi(f + f_p)t}\,\mathrm{d}t,
+$$
+
+$$
+S(f) = \frac{A_p}{2}\,M(f - f_p) + \frac{A_p}{2}\,M(f + f_p).
+$$ {#eq-theoreme-modulation}
+
+Le spectre du modulant est **recopié autour de $\pm f_p$**, avec un facteur $A_p/2$ (@fig-melangeur-spectres, en bas).
+
+![Décalage en fréquence par un mélangeur. En haut : modulant sinusoïdal, deux raies de hauteur $A/2$ en $f_p \pm f_m$. En bas : modulant quelconque de largeur $B_m$, spectre recopié autour de $f_p$ (seules les fréquences positives sont représentées). D'après le support [mod-ana, p. 17-18], redessinée (échelles normalisées).](../figures/01-melangeur-spectres.svg){#fig-melangeur-spectres}
+
+::: {.complement}
+@eq-theoreme-modulation est le **théorème de modulation** de la transformée de Fourier : multiplier par $e^{j2\pi f_p t}$ décale le spectre de $+f_p$. Sur les fréquences positives, le spectre de $s$ occupe la bande $[f_p - B_m,\ f_p + B_m]$ si $m(t)$ occupe $[0, B_m]$ : sa largeur est doublée ($2B_m$).
+:::
+
+## À retenir {#sec-retenir-introduction}
+
+- Longueur d'antenne optimale $L_0 = c/(2f) = \lambda/2$ (@eq-longueur-antenne) : on module pour rayonner à haute fréquence avec une antenne de taille raisonnable.
+- Modulation : introduire l'information dans un signal HF et le décaler en fréquence ; objectif $s_{BB,Rx} = s_{BB,Tx}$.
+- $s(t) = A(t)\cos(2\pi f(t)t + \varphi_c(t))$ : information dans l'amplitude (modulations linéaires) ou dans la fréquence ou la phase (modulations angulaires) (@eq-signal-module-general).
+- Signal périodique → spectre discret ; apériodique → spectre continu. $\TF[A\cos(2\pi f_p t)] = \frac{A}{2}[\delta(f - f_p) + \delta(f + f_p)]$ (@eq-tf-cos-sin).
+- Série de Fourier : $A_x(n) = \sqrt{a_n^2 + b_n^2}$, $\varphi_x(n) = -\arctan(b_n/a_n)$ (@eq-serie-amplitude-phase) ; non périodique : $A_x(f) = 2|X(f)|$ (@eq-spectre-continu).
+- Parseval : $P = a_0^2/4 + \sum A_x^2(n)/2$ (signal périodique) ; chaque raie d'amplitude $A$ porte $A^2/2$ (@eq-parseval-periodique).
+- Mélangeur : $s = m \cdot p$ (@eq-melangeur) ; $\cos$ par $\cos$ : raies $A/2$ en $f_p \pm f_m$ (@eq-melange-sinus) ; modulant quelconque : $S(f) = \frac{A_p}{2}[M(f - f_p) + M(f + f_p)]$ (@eq-theoreme-modulation).

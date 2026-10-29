@@ -1,0 +1,174 @@
+# Flashcards — EARF1, chapitre 4 : Introduction aux modulations numériques.
+# Générées le 2026-10-29 à partir du cours validé (étape 8). Format : conventions.md § 10.
+matiere: earf1
+chapitre: 4
+cours: cours/04-modulations-numeriques.qmd
+ids-retires: []
+cartes:
+
+  - id: earf1-ask-fsk-psk
+    type: definition
+    question: |
+      ASK, FSK, PSK : quel paramètre de $s(t) = E\cos(2\pi f_c t + \varphi_c)$ chacune déplace-t-elle ?
+    reponse: |
+      ASK : amplitude $E$. FSK : fréquence $f_c$. PSK : phase $\varphi_c$.
+    ref: eq-signal-numerique
+    source: officiel
+
+  - id: earf1-criteres-performance
+    type: definition
+    question: |
+      Trois critères de performance d'une modulation numérique ?
+    reponse: |
+      - détectabilité (qualité de démodulation pour un SNR donné) ;
+      - efficacité spectrale (encombrement pour un débit donné) ;
+      - efficacité en puissance (type d'amplification supporté).
+      Liés par un compromis.
+    ref: sec-criteres-performance
+    source: officiel
+
+  - id: earf1-composantes-iq
+    type: formule
+    question: |
+      Composantes $I$ et $Q$ d'un signal $E\cos(2\pi f_c t + \varphi_c)$ ?
+    reponse: |
+      $$s = I\cos(2\pi f_c t) + Q\cos(2\pi f_c t + \pi/2)$$
+      $I = E\cos\varphi_c$, $Q = E\sin\varphi_c$, $E^2 = I^2 + Q^2$.
+    ref: eq-iq
+    source: officiel
+
+  - id: earf1-modulateur-iq
+    type: methode
+    question: |
+      Structure d'un modulateur IQ ?
+    reponse: |
+      Calculateur numérique ($m \to I, Q$), deux CNA, deux mélangeurs (porteuse et porteuse déphasée de $\pi/2$), un sommateur. Le même circuit produit toutes les modulations.
+    ref: sec-modulateur-iq
+    source: officiel
+
+  - id: earf1-constellation-ask-psk
+    type: resultat
+    question: |
+      Points de constellation de l'OOK et de la BPSK (« 0 » et « 1 ») ?
+    reponse: |
+      OOK : « 0 » en $(0, 0)$, « 1 » en $(E, 0)$. BPSK : « 0 » en $(E, 0)$ (phase 0), « 1 » en $(-E, 0)$ (phase $\pi$).
+    ref: sec-constellation-iq
+    source: officiel
+
+  - id: earf1-metrique-generale
+    type: formule
+    question: |
+      Vitesse de transmission, bande utile et efficacité spectrale en fonction de $D$ et $N_{sym}$ ?
+    reponse: |
+      Vitesse $D/N_{sym}$ (bauds) ; $BW_{mod} \approx 2D/N_{sym}$ ;
+      $$\eta = \frac{D}{BW_{mod}} \approx \frac{N_{sym}}{2}\ \mathrm{bit/s/Hz}$$
+    ref: eq-efficacite-generale
+    source: officiel
+
+  - id: earf1-unite-vitesse-symboles
+    type: piege
+    question: |
+      Unité de la vitesse de transmission (*symbol rate*) ? Différence avec le débit binaire ?
+    reponse: |
+      Le baud (symboles/s), pas le bit/s. Débit binaire = vitesse × bits par symbole (QPSK : vitesse = débit/2).
+    ref: sec-grandeurs
+    source: officiel
+
+  - id: earf1-ook
+    type: resultat
+    question: |
+      OOK : taux de modulation, bande après filtrage, efficacité spectrale ?
+    reponse: |
+      $m = 100\ \%$ ; $BW_{OOK} = 2D$ ; $\eta = 0{,}5$. Spectre : raie de porteuse + lobes, puissance dans $[F_0 - D, F_0 + D]$.
+    ref: eq-ook
+    source: officiel
+
+  - id: earf1-bpsk
+    type: resultat
+    question: |
+      BPSK : bande après filtrage, efficacité, raie de porteuse ?
+    reponse: |
+      $BW_{BPSK} = 2D$, $\eta = 0{,}5$, pas de raie de porteuse (lobe principal $2D$). Application : WiFi bas débit.
+    ref: eq-bpsk
+    source: officiel
+
+  - id: earf1-qpsk
+    type: resultat
+    question: |
+      QPSK : bits par symbole, vitesse, bande, efficacité ?
+    reponse: |
+      2 bits/symbole ; vitesse $D/2$ ; $BW_{QPSK} = D$ ; $\eta = 1 = 2\eta_{BPSK}$. Application : WiFi a, b, g, n.
+    ref: eq-qpsk
+    source: officiel
+
+  - id: earf1-mpsk
+    type: propriete
+    question: |
+      MPSK ($M = 2^{N_{sym}}$) : efficacité, écart de phase, inconvénients ?
+    reponse: |
+      $\eta = N_{sym}\eta_{BPSK}$ ; $\Delta\varphi = 2\pi/M$ (8PSK : 45°, 16PSK : 22,5°) ; architecture plus complexe, récepteur plus sensible au bruit ; $M > 128$ difficile.
+    ref: sec-mpsk
+    source: officiel
+
+  - id: earf1-qam
+    type: definition
+    question: |
+      Principe de la QAM ; vitesse de transmission d'une MQAM ?
+    reponse: |
+      Combine modulation de phase et d'amplitude (grille dans le plan IQ) ; vitesse $= D/\log_2 M$ (16QAM : $D/4$, 64QAM : $D/6$, 1024QAM : $D/10$).
+    ref: sec-qam
+    source: officiel
+
+  - id: earf1-fsk-constellation
+    type: propriete
+    question: |
+      Différence de comportement de $(I, Q)$ pendant un bit entre ASK/PSK et FSK ?
+    reponse: |
+      ASK, PSK : $(I, Q)$ constant pendant le bit. FSK : $i(t)$, $q(t)$ varient, le point tourne sur le cercle de rayon $E$.
+    ref: sec-fsk-cpfsk
+    source: officiel
+
+  - id: earf1-msk
+    type: definition
+    question: |
+      CPFSK et MSK : définitions ; excursion de la MSK ?
+    reponse: |
+      CPFSK : FSK à phase continue. MSK : CPFSK avec $\Delta f = 1/(4T_r)$ ; quart de tour par bit (horaire pour « 0 », anti-horaire pour « 1 »).
+    ref: eq-msk-excursion
+    source: officiel
+
+  - id: earf1-gmsk
+    type: resultat
+    question: |
+      GMSK : principe, bande, efficacité, applications ?
+    reponse: |
+      MSK précédée d'un filtre gaussien sur le signal binaire ; $BW \approx D$, $\eta \approx 1$ ; GSM, Bluetooth.
+    ref: eq-gmsk
+    source: officiel
+
+  - id: earf1-lobe-msk
+    type: piege
+    question: |
+      Largeur théorique du lobe principal du spectre MSK ?
+    reponse: |
+      $1{,}5D$ (zéros à $\pm 0{,}75D$ de la porteuse) ; le support lit $1{,}75D$ sur une mesure.
+    ref: sec-msk-gmsk
+    source: complement
+
+  - id: earf1-fsk-varicap
+    type: exercice
+    question: |
+      TD 2 : message binaire 0 / 0,7 V sur la varicap ($f$ = 98 et 101 MHz, $D$ = 4 Mbit/s). Type, bande (Carson), efficacité ?
+    reponse: |
+      FSK à phase continue ; $f_c = 99{,}5$ MHz, $\Delta f = 1{,}5$ MHz ; $BW = 2(D + \Delta f) = 11$ MHz ; $\eta = 0{,}36$.
+    ref: exr-td2-fsk-varicap
+    source: notes-externes
+
+  - id: earf1-ook-vdd
+    type: exercice
+    question: |
+      TD 2 : message binaire sur l'alimentation de l'oscillateur LC. Type de modulation et défauts ?
+    reponse: |
+      OOK (oscillateur éteint pour « 0 ») ; « 0 » indiscernable d'une absence d'émission, temps de démarrage de l'oscillateur à chaque « 1 », sensibilité à l'alimentation, $\eta = 0{,}5$.
+    ref: exr-td2-ook-vdd
+    source: notes-externes

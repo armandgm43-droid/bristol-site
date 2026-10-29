@@ -68,6 +68,8 @@ Plan tiré des sommaires des deux supports. Matière distincte de TS227 (confirm
 
 Aucune question bloquante à l'inventaire. Le plan proposé (§ 3) est à valider avant l'analyse du premier chapitre.
 
+**29 octobre 2026** : plan validé et appliqué (4 chapitres, statut `valide`) ; slugs : `01-introduction-signaux-outils`, `02-modulations-lineaires`, `03-modulations-angulaires`, `04-modulations-numeriques`. Le support « Student » est complet (aucun trou). Rapports : `analyses/0N-*.md`.
+
 ## 6. Correspondance des noms
 
 Chemin dans `2A.zip` (sans le préfixe `2A/`) → chemin dans `sources/earf1/`.
