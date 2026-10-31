@@ -2,7 +2,7 @@
 title: "Partiel 2019-2020 — corrigé"
 subtitle: "TS227, G. Ferré · 1 h 30, documents et calculatrice interdits"
 matiere: ts227
-date-modified: 2026-10-27
+date-modified: 2026-10-31
 sources:
   - id: sujet-2019
     fichier: annales/2019-2020-partiel.pdf
@@ -17,7 +17,7 @@ Aucun corrigé officiel : **toutes les solutions de cette page sont rédigées p
 
 **Notations.** Le sujet suit les notations du TD : $g(t)$ filtre de mise en forme (cours : $h(t)$), $n(t)$ bruit (cours : $z_l(t)$), $R_A(n) = \E[A_k A_{k+n}]$ (cours : $R_A[m] = \E[A_n A^*_{n-m}]$, même valeur pour des symboles réels stationnaires).
 
-**Correspondances.** Les questions 1, 2, 3 et 6 sont les questions 1, 3, 5 et 6 du [partiel 2015-2016](2015-2016-partiel.qmd#sec-ann1516-gen) ; les questions 4 et 5 sont les questions 7 et 9 du [partiel 2018-2019](2018-2019-partiel.qmd#sec-ann1819-gen) ; les questions 9 à 11 reprennent les questions 15 à 17 du [partiel 2017-2018](2017-2018-partiel.qmd#sec-ann1718-cours) avec une BPSK ; les questions 7 à 9 suivent l'exercice 2 du TD ([cyclostationnarité et DSP](../cours/03-dsp-signaux-codes-en-ligne.qmd#exr-td-bennett)). L'exercice 2 (16-QAM) relève du chapitre 6 du cours, pas encore rédigé.
+**Correspondances.** Les questions 1, 2, 3 et 6 sont les questions 1, 3, 5 et 6 du [partiel 2015-2016](2015-2016-partiel.qmd#sec-ann1516-gen) ; les questions 4 et 5 sont les questions 7 et 9 du [partiel 2018-2019](2018-2019-partiel.qmd#sec-ann1819-gen) ; les questions 9 à 11 reprennent les questions 15 à 17 du [partiel 2017-2018](2017-2018-partiel.qmd#sec-ann1718-cours) avec une BPSK ; les questions 7 à 9 suivent l'exercice 2 du TD ([cyclostationnarité et DSP](../td/td01-transmissions-bande-de-base.qmd#exr-td-bennett)). L'exercice 2 (16-QAM) relève du chapitre 6 du cours, pas encore rédigé.
 :::
 
 ## Généralités sur les communications numériques {#sec-ann1920-gen}
@@ -94,7 +94,7 @@ $$m_{s_l}(t + \Ts) = m_A \sum_k g\big(t - (k - 1)\Ts\big) = m_A \sum_{k'} g(t - 
 $$R_{s_l}(t, \tau) = \E[s_l(t)\, s_l(t - \tau)] = \sum_k \sum_m R_A[m - k]\; g(t - k\Ts)\; g(t - \tau - m\Ts).$$
 En remplaçant $t$ par $t + \Ts$ et en posant $k' = k - 1$, $m' = m - 1$ (la différence $m' - k' = m - k$ ne change pas), on retrouve la même double somme : $R_{s_l}(t + \Ts, \tau) = R_{s_l}(t, \tau)$.
 
-$s_l$ est donc **cyclostationnaire** de période $\Ts$ (et non stationnaire : $R_{s_l}(t, \tau)$ dépend de la position de $t$ dans le symbole). C'est la démonstration de l'exercice 2 du TD ([exercice](../cours/03-dsp-signaux-codes-en-ligne.qmd#exr-td-bennett), q. 3 et 6).
+$s_l$ est donc **cyclostationnaire** de période $\Ts$ (et non stationnaire : $R_{s_l}(t, \tau)$ dépend de la position de $t$ dans le symbole). C'est la démonstration de l'exercice 2 du TD ([exercice](../td/td01-transmissions-bande-de-base.qmd#exr-td-bennett), q. 3 et 6).
 :::
 ::::
 
@@ -116,13 +116,13 @@ Porte sur $[0, \Ts]$ : $|G(f)|^2 = \Ts^2\sinc^2(f\Ts)$, avec $\sinc(x) = \frac{\
 
 **Cas 1.** $R_A = \delta$ (question 8), la somme vaut 1 :
 $$\boxed{\Gamma_{s_l}(f) = \Ts\,\sinc^2(f\Ts)}$$
-(c'est la [2-PAM du TD](../cours/03-dsp-signaux-codes-en-ligne.qmd#exr-td-dsp-2pam)).
+(c'est la [2-PAM du TD](../td/td01-transmissions-bande-de-base.qmd#exr-td-dsp-2pam)).
 
 **Cas 2.** $m_A = \frac13 - \frac23 = -\frac13$, $\E(A_k^2) = 1$, $\sigma_A^2 = 1 - \frac19 = \frac89$. Par indépendance, $R_A[n] = \sigma_A^2\,\delta[n] + m_A^2 = \frac89\,\delta[n] + \frac19$. Avec la formule sommatoire de Poisson, $\sum_n e^{-j2\pi fn\Ts} = \frac{1}{\Ts}\sum_k \delta(f - \frac{k}{\Ts})$ :
 $$\Gamma_{s_l}(f) = \frac{|G(f)|^2}{\Ts}\left[\frac89 + \frac{1}{9\Ts}\sum_k \delta\!\left(f - \frac{k}{\Ts}\right)\right].$$
 $|G(k/\Ts)|^2 = 0$ pour $k \neq 0$ et $\Ts^2$ pour $k = 0$ : seule la raie en $0$ subsiste.
 $$\boxed{\Gamma_{s_l}(f) = \frac89\,\Ts\,\sinc^2(f\Ts) + \frac19\,\delta(f)}$$
-Contrôle : puissance $\frac89 + \frac19 = 1 = \E(A_k^2)$ ✓. Les symboles non équiprobables ne sont plus centrés : une partie de la puissance ($m_A^2 = \frac19$) passe dans une raie à la fréquence nulle (composante continue), sans transporter d'information. Même mécanisme que pour l'[OOK](../cours/03-dsp-signaux-codes-en-ligne.qmd#exr-td-dsp-ook).
+Contrôle : puissance $\frac89 + \frac19 = 1 = \E(A_k^2)$ ✓. Les symboles non équiprobables ne sont plus centrés : une partie de la puissance ($m_A^2 = \frac19$) passe dans une raie à la fréquence nulle (composante continue), sans transporter d'information. Même mécanisme que pour l'[OOK](../td/td01-transmissions-bande-de-base.qmd#exr-td-dsp-ook).
 :::
 ::::
 

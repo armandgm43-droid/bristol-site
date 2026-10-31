@@ -5,7 +5,7 @@ chapitre: 4
 enseignants: ["Yann Deval"]
 annee: "2026-2027"
 statut: flashcards
-date-modified: 2026-10-18
+date-modified: 2026-10-31
 sources:
   - id: support
     fichier: support/support-cours-2025.pdf
@@ -64,10 +64,10 @@ Ce chapitre ouvre la partie *Oscillateurs et références de tension* de Yann De
 2. oscillateurs non sinusoïdaux : astables, oscillateurs en anneau (cours 7) ;
 3. bruit de phase des oscillateurs : théories de Leeson et de Hajimiri (cours 9).
 
-Les TD associés sont le TD 4 « Oscillateur à résistance négative », le TD 6 « Oscillateur sinusoïdal à base d'amplificateur opérationnel » et le TD additionnel « Oscillateur en anneau » [support, p. 2] ; Bristol y ajoute l'oscillateur à déphasage du recueil distribué comme TD 4 en 2026 [td04-2026, p. 1-4].
+Les TD associés sont le TD 4 « Oscillateur à résistance négative », le TD 6 « Oscillateur sinusoïdal à base d'amplificateur opérationnel » et le TD additionnel « Oscillateur en anneau » [support, p. 2] ; Bristol y ajoute l'oscillateur à déphasage du recueil distribué comme TD 4 en 2026 [td04-2026, p. 1-4]. Ces TD sont corrigés question par question dans des pages à part (@sec-exercices-td-ch04).
 
 ::: {.notes-externes}
-Le support ne contient aucun cours rédigé. Le cours ci-dessous vient des notes manuscrites d'un étudiant en 2023 [notes-2023-c03-05], [notes-2023-c07] et [notes-2023-c09] ; elles ne sont pas celles d'Armand. Les corrigés de TD sont aussi externes [corr-2023-td04], [corr-2025-td04], [corr-2023-td05-anneau].
+Le support ne contient aucun cours rédigé. Le cours ci-dessous vient des notes manuscrites d'un étudiant en 2023 [notes-2023-c03-05], [notes-2023-c07] et [notes-2023-c09] ; elles ne sont pas celles d'Armand. Les corrigés de TD, repris dans les pages de TD, sont aussi externes [corr-2023-td04], [corr-2025-td04], [corr-2023-td05-anneau].
 :::
 
 ::: {.complement}
@@ -186,7 +186,7 @@ $$
 R_{eq} = -\frac{2}{g_m} .
 $$ {#eq-resistance-paire-croisee}
 
-Le signe « − » vient de la réaction (schéma équivalent, voir @sec-td-resistance-negative). Pour faire varier $R_{eq}$, on fait varier le courant (donc $g_m$).
+Le signe « − » vient de la réaction (schéma équivalent, voir [TD 4](../td/td04-oscillateur-resistance-negative.qmd#sec-td-resistance-negative)). Pour faire varier $R_{eq}$, on fait varier le courant (donc $g_m$).
 
 **Schéma complet** : un résonateur $LC$ parallèle est branché entre les deux drains ; la prise médiane de $L$ est reliée à $V_{DD}$ ; la paire croisée, en dessous, apporte $-R_{eq}$. Les deux sorties sont des sinusoïdes en opposition de phase, de valeur moyenne nulle en différentiel [notes-2023-c03-05, p. 6].
 :::
@@ -202,7 +202,7 @@ Le plan du cours 5 mentionne les classes A, B et C [support, p. 2]. **Aucune not
 ### Oscillateur à déphasage {#sec-oscillateur-dephasage}
 
 ::: {.notes-externes}
-Un amplificateur inverseur $A$ est rebouclé sur lui-même par trois cellules $RC$ en cascade (résistance série, condensateur vers la masse) [notes-2023-c03-05, p. 6]. Les notes indiquent seulement « faire les calculs (3ᵉ ordre) » : le calcul complet est l'objet du sujet de 2021 (@sec-td-dephasage).
+Un amplificateur inverseur $A$ est rebouclé sur lui-même par trois cellules $RC$ en cascade (résistance série, condensateur vers la masse) [notes-2023-c03-05, p. 6]. Les notes indiquent seulement « faire les calculs (3ᵉ ordre) » : le calcul complet est l'objet du sujet de 2021 ([recueil de sujets de Y. Deval, exercice 1](../td/td04-2026-recueil-sujets-deval.qmd#sec-td-dephasage)).
 :::
 
 ## Oscillateurs non sinusoïdaux {#sec-oscillateurs-non-sinusoidaux}
@@ -262,7 +262,7 @@ cohérent avec $T = 6\Delta t$ pour $N = 3$ et avec le corrigé externe du TD, $
 :::
 
 ::: {.complement}
-Le temps de propagation d'un inverseur est le temps de charge de sa capacité de sortie : $\Delta t \approx \frac{C\,\Delta V}{I}$ (excursion $\Delta V$, courant $I$). On retrouve les deux leviers des notes : agir sur $C$ (capacité variable) ou sur $I$ (courant). L'énoncé du TD additionnel part exactement de cette expression (@sec-td-anneau).
+Le temps de propagation d'un inverseur est le temps de charge de sa capacité de sortie : $\Delta t \approx \frac{C\,\Delta V}{I}$ (excursion $\Delta V$, courant $I$). On retrouve les deux leviers des notes : agir sur $C$ (capacité variable) ou sur $I$ (courant). L'énoncé du TD additionnel part exactement de cette expression ([TD additionnel](../td/td-add-oscillateur-anneau.qmd#sec-td-anneau)).
 :::
 
 ::: {.notes-externes}
@@ -354,246 +354,21 @@ Pour l'oscillateur $LC$, $\Gamma$ a une forme cosinusoïdale : nulle aux extremu
 **Conséquences.** Comme $h_\phi$ est un échelon, le bruit intégré au fil du temps fait **dériver** la phase sans rappel (alors que l'amplitude est ramenée par la non-linéarité). Le bruit de phase est d'autant plus faible que $\Gamma$ est petite là où le bruit est injecté : l'idéal est de n'injecter du courant (par exemple de commuter les transistors) qu'aux instants où $\Gamma \approx 0$, c'est-à-dire aux sommets de la sinusoïde pour un oscillateur $LC$. Pour l'anneau, les fronts lents (notes : « très mauvaise transition entre le 0 et le 1 ») élargissent les zones où $\Gamma \neq 0$, d'où un bruit de phase plus élevé que celui d'un $LC$. La normalisation par $q_{max}$ traduit qu'un même courant perturbe moins un nœud qui porte une grande charge (grande amplitude, grande capacité).
 :::
 
-## TD 4 : oscillateur à résistance négative {#sec-td-resistance-negative}
+## Exercices du TD {#sec-exercices-td-ch04}
 
-![Oscillateur BiCMOS à doubles inverseurs et résistance négative du TD 4 : paire croisée PMOS $M_{101}$, $M_{102}$, réseau $RLC$, paire croisée NPN $Q_1$, $Q_2$ polarisée par $I_{bias}$. D'après le support [support, p. 20, figure 1], redessiné.](../figures/04-resistance-negative.svg){#fig-resistance-negative}
+Les TD rattachés à ce chapitre sont corrigés question par question dans leurs propres pages, énoncé découpé à l'appui :
 
-::: {#exr-oscillateur-resistance-negative}
-## Oscillateur à résistance négative [support, p. 20-21]
-
-On étudie un oscillateur différentiel totalement intégré en technologie BiCMOS, à doubles inverseurs et résistance négative (@fig-resistance-negative). Le réseau $RLC$ est en réalité un simple réseau $LC$ intégré dont les pertes, liées aux imperfections des composants réactifs, sont représentées par la résistance d'amortissement $R$. Pour que le circuit oscille, il faut que les deux paires croisées $(M_{101}, M_{102})$ et $(Q_1, Q_2)$ compensent ces pertes, ce qui revient à annuler la résistance $R$.
-
-**I. Paire croisée à transistors à effet de champ** (partie supérieure, isolée en figure 2 de l'énoncé : les deux PMOS, sources à $V_{DD}$, courants $i$ identiques dans les deux branches, tension $v$ entre les drains).
-
-1. En admettant que, par symétrie, les courants aux variations dans les deux branches sont identiques et valent $i$, en déduire, en fonction de la transconductance $g_{mMOS}$ des PMOS, l'impédance différentielle équivalente vue depuis les drains, notée $R_{MOS}$.
-2. L'expression de $R_{MOS}$ présente une caractéristique remarquable et plutôt inhabituelle. Dire laquelle et expliquer qualitativement que cela était évident a priori.
-
-**II. Paire croisée à transistors bipolaires** (partie inférieure : $Q_1$, $Q_2$ et $I_{bias}$).
-
-3. Calculer, en fonction de la transconductance $g_{mBJT}$ des NPN, l'impédance différentielle équivalente vue depuis les collecteurs, notée $R_{BJT}$.
-4. Le résultat est très proche du précédent. Dire en quoi cela était attendu.
-
-**III. Oscillateur complet** (on suppose le théorème de superposition applicable).
-
-5. Calculer l'impédance $R_{OSC}$ que les composants actifs présentent en parallèle avec le réseau $RLC$, en fonction de $g_{mMOS}$ et $g_{mBJT}$. C'est cette expression qui vaut au circuit son appellation d'« oscillateur à résistance négative ».
-6. En déduire qu'une valeur particulière de $R_{OSC}$ permet au circuit d'être « juste oscillant ».
-7. Comment, en pratique, va-t-on ajuster la valeur de $R_{OSC}$ pour se placer dans la condition précédente ?
-:::
-
-:::: {.solution}
-::: {.notes-externes}
-D'après les corrigés externes [corr-2025-td04, p. 1-5] et [corr-2023-td04, p. 1-3], qui concordent.
-
-1. Schéma petits signaux : sources des PMOS à la masse ; au nœud gauche (drain de $M_{101}$, grille de $M_{102}$), $g_m v_{gs101}$ et $r_{ds}$ ; au nœud droit (drain de $M_{102}$, grille de $M_{101}$), $g_m v_{gs102}$ et $r_{ds}$ ; source de test $v$ entre les drains, courant $i$ entrant à gauche et sortant à droite. Par symétrie, $g_{m101} = g_{m102}$ et $r_{ds101} = r_{ds102}$ [corr-2025-td04, p. 1].
-   - Maille : $v = v_{gs102} - v_{gs101}$ ;
-   - nœuds : $i = g_m v_{gs101} + \frac{v_{gs102}}{r_{ds}}$ et $-i = g_m v_{gs102} + \frac{v_{gs101}}{r_{ds}}$.
-
-   En égalant, $v_{gs101}\left(g_m + \frac{1}{r_{ds}}\right) = -v_{gs102}\left(g_m + \frac{1}{r_{ds}}\right)$, donc $v_{gs101} = -v_{gs102}$ et $v = -2v_{gs101}$. Alors
-   $$
-   R_{MOS} = \frac{v}{i} = \frac{-2}{g_{mMOS} - \frac{1}{r_{ds}}} \simeq -\frac{2}{g_{mMOS}} \quad (g_m r_{ds} \gg 1) .
-   $$ {#eq-r-mos}
-2. $R_{MOS}$ est **négative** [corr-2025-td04, p. 2]. Le corrigé de 2023 l'explique par le câblage : chaque transistor est à la fois « câblé en diode » et en source commune (gain $-g_m R_D$), montage inverseur [corr-2023-td04, p. 2].
-3. Même étude avec, à chaque nœud, $r_{be}$, $r_{ce}$ et $g_m v_{be}$ ; par symétrie ($I_{C1} = I_{C2} = I_{bias}/2$), $v_{be1} = -v_{be2}$ et $v = 2v_{be2}$ [corr-2025-td04, p. 3-4] :
-   $$
-   R_{BJT} = \frac{2}{\frac{1}{r_{be}} + \frac{1}{r_{ce}} - g_{mBJT}} \simeq -\frac{2}{g_{mBJT}},
-   $$ {#eq-r-bjt}
-   car $r_{ce} \gg r_{be}$ et $g_m r_{be} = \beta \gg 1$.
-4. C'est attendu : même câblage (paire croisée).
-5. Aux variations, $R_{MOS}$, le réseau $LC$ avec ses pertes $R$ et $R_{BJT}$ sont en parallèle :
-   $$
-   R_{OSC} = R_{MOS} /\!/ R_{BJT} = -\frac{2}{g_{mMOS} + g_{mBJT}} < 0 .
-   $$ {#eq-r-osc}
-6. Pour compenser les pertes, $R_{OSC} = -R$ : la résistance totale en parallèle avec $L$ et $C$ est alors infinie [corr-2025-td04, p. 5].
-7. $g_{mMOS} = 2\sqrt{k\frac{W}{L}\,|I_{Dsat}|}$ et $g_{mBJT} = \frac{I_C}{U_T}$, avec $|I_{Dsat}| = I_C = \frac{I_{bias}}{2}$ dans chaque branche : on règle $R_{OSC}$ avec le courant $I_{bias}$ [corr-2025-td04, p. 5].
-:::
-::::
-
-::: {.complement}
-**Question 2, version détaillée** (le corrigé de 2025 pose la question sans y répondre). Si chaque PMOS était monté en diode (grille sur son propre drain), chacun présenterait $\frac{1}{g_m}$ et la résistance différentielle vaudrait $+\frac{2}{g_m}$ : une charge ordinaire. En croisant les connexions, une hausse de la tension d'un drain fait **baisser** l'autre drain (étage source commune), ce qui fait encore monter le premier : c'est une réaction positive, et la résistance change de signe. On retrouve @eq-resistance-paire-croisee du cours.
-
-**Question 6.** « Juste oscillant » correspond à l'égalité : avec $R_{OSC} = -R$, le circuit $LC$ est sans pertes et oscille à $\omega_0 = \frac{1}{\sqrt{LC}}$. Pour garantir le démarrage malgré les dispersions, on choisit en pratique $|R_{OSC}|$ un peu plus petit que $R$ (plus de $g_m$ qu'il n'en faut) ; l'amplitude se limite ensuite d'elle-même.
-
-**Intérêt de la double paire.** Les deux paires sont en parallèle et parcourues par le même courant $I_{bias}$ : pour un même courant, on obtient $g_{mMOS} + g_{mBJT}$, donc une résistance négative plus forte qu'avec une seule paire.
-:::
-
-## TD 6 : oscillateur sinusoïdal à base d'amplificateur opérationnel {#sec-td-oscillateur-aop}
-
-![Oscillateur à pont réactif du TD 6 (a) et montage réactif seul (b). D'après le support [support, p. 24, figures 1 et 2], redessiné.](../figures/04-pont-reactif.svg){#fig-pont-reactif}
-
-::: {#exr-oscillateur-aop}
-## Oscillateur sinusoïdal à base d'amplificateur opérationnel [support, p. 24-25]
-
-On étudie un oscillateur sinusoïdal construit autour d'un amplificateur opérationnel idéal câblé en réaction (@fig-pont-reactif (a)). Le circuit $RLC$ est un circuit $LC$ idéal auquel est ajoutée une résistance $R_p$ pour représenter les pertes liées aux faibles coefficients de qualité des composants passifs intégrés sur silicium.
-
-**A. Étude du montage réactif** (@fig-pont-reactif (b)).
-
-1. L'amplificateur opérationnel est idéal : en déduire la tension de sortie de l'amplificateur en fonction de $V_{in}$.
-2. Déduire du résultat précédent la tension $V_f$ aux bornes de la résistance de réaction $R_f$, toujours en fonction de $V_{in}$.
-3. En déduire le courant $I_{in}$ en fonction de $R_f$ et $V_{in}$ et, par conséquent, l'impédance d'entrée du montage en fonction de $R_f$.
-4. Dire en quoi cette valeur est particulière.
-
-**B. Étude de l'oscillateur complet** (@fig-pont-reactif (a)).
-
-5. Quelle valeur doit-on donner à $R_f$ en fonction de $R_p$ pour assurer un fonctionnement de la structure en oscillateur entretenu ? Justifier.
-6. Quelle sera la fréquence d'oscillation en fonction de $L$ et de $C$ ?
-:::
-
-::: {.complement}
-**Proposition de solution (aucun corrigé).**
-
-1. L'amplificateur est en réaction négative par le pont de deux résistances $R$ (entrée $-$), donc $V_+ = V_-$ ; le pont donne $V_- = \frac{V_{out}}{2}$ et $V_+ = V_{in}$ : c'est un amplificateur non inverseur de gain $1 + \frac{R}{R} = 2$, soit $V_{out} = 2V_{in}$.
-2. $R_f$ relie l'entrée à la sortie : $V_f = V_{in} - V_{out} = -V_{in}$ (tension orientée de l'entrée vers la sortie, comme sur la figure).
-3. Aucun courant n'entre dans l'entrée $+$ : tout $I_{in}$ traverse $R_f$, $I_{in} = \frac{V_f}{R_f} = -\frac{V_{in}}{R_f}$, d'où
-   $$
-   Z_{in} = \frac{V_{in}}{I_{in}} = -R_f .
-   $$ {#eq-impedance-pont-reactif}
-4. L'impédance d'entrée est une **résistance négative** : le montage fournit du courant à ce qui est branché sur son entrée au lieu d'en absorber (convertisseur d'impédance négative).
-5. Le montage est en parallèle avec $L$, $C$ et $R_p$. La résistance équivalente vaut $\frac{1}{\frac{1}{R_p} - \frac{1}{R_f}}$ : elle est infinie (circuit $LC$ sans pertes, oscillation entretenue) pour
-   $$
-   R_f = R_p .
-   $$
-   En pratique, $R_f$ légèrement inférieure à $R_p$ pour que l'oscillation démarre (conductance totale négative), l'amplitude étant ensuite limitée par la saturation de l'amplificateur.
-6. Il reste un circuit $LC$ idéal : $f_0 = \frac{1}{2\pi\sqrt{LC}}$ ($\omega_0 = \frac{1}{\sqrt{LC}}$).
-
-C'est le même principe que le TD 4 : une résistance négative compense les pertes du résonateur ; ici elle est obtenue avec un amplificateur opérationnel au lieu d'une paire croisée.
-:::
-
-## TD additionnel : oscillateur en anneau {#sec-td-anneau}
-
-::: {#exr-oscillateur-anneau}
-## Oscillateur en anneau [support, p. 26-28]
-
-**Partie I : oscillateur en anneau.** On considère une chaîne d'inverseurs logiques de longueur quasi infinie en technologie bipolaire. Lorsque les opérateurs sont identiques, le temps de propagation moyen de l'information peut se mettre, sous certaines conditions, sous la forme
-$$
-t_p = t_{p0} + \frac{C\,\Delta V}{I_{moyen}},
-$$
-où $t_{p0}$ est le temps de propagation intrinsèque de la porte (lié à la mobilité des porteurs), $\Delta V$ l'excursion logique du signal de sortie, $I_{moyen}$ le courant moyen consommé par l'opérateur et $C$ la capacité totale équivalente en sortie. On reboucle une chaîne constituée d'un nombre $M$ impair d'inverseurs CML.
-
-1. Expliquer simplement qu'il s'agit d'un oscillateur.
-2. Exprimer la fréquence d'oscillation $f_{osc}$ en fonction de $t_p$.
-3. Lorsque l'oscillateur est implanté sur silicium, si on veut faire varier $f_{osc}$, sur quel paramètre peut-on agir ?
-
-**Partie II : inverseur à retard programmable.** Figure 1 de l'énoncé (non redessinée) : bloc de génération du courant ; deux PNP $Q_{101}$ et $Q_{102}$ (rapport des surfaces d'émetteur $N$) produisent une tension $V_{ref}$ appliquée entre drain et source d'un PMOS $M_0$, dont la grille est commandée par $V_{ctrl}$ ; le courant de $M_0$ est recopié par des miroirs NMOS $M_1$, $M_2$, $M_i$ (dimensions $W_k$, $L_k$). Figure 2 : inverseur CML BiCMOS, paire différentielle $Q_1$, $Q_2$ polarisée par le courant $I_0$ issu du bloc précédent, charge PMOS $M_{100}$ en régime linéaire.
-
-1. Donner l'expression de $V_{ref}$ en fonction du potentiel thermodynamique $U_T$ et de $N$, rapport des surfaces d'émetteurs de $Q_{101}$ et $Q_{102}$.
-2. On suppose que le PMOS $M_0$ est en régime linéaire. En déduire l'expression du courant de drain $I_0$ de $M_i$ en fonction de $V_{ctrl}$, $V_{Tp}$, des dimensions $W_0$, $L_0$, $W_1$, $L_1$, $W_i$, $L_i$, de $V_{ref}$ et de $k'_p$. Rappels : NMOS saturé, $I_{DS} = k'_n \frac{W}{L}(V_{GS} - V_{Tn})^2$ ; PMOS linéaire, $I_{DS} = -2k'_p \frac{W}{L}(V_{GS} - V_{Tp})\,V_{DS}$.
-3. Calculer l'excursion logique de l'inverseur CML en fonction de $I_0$, $k'_p$, $W_{100}$, $L_{100}$, $V_{ctrl}$ et $V_{Tp}$ (PMOS en régime linéaire).
-4. En déduire l'excursion logique en fonction de $W_{100}$, $L_{100}$, $W_0$, $L_0$, $W_1$, $L_1$, $W_i$, $L_i$, $U_T$ et $N$. En quoi cette expression est-elle remarquable ?
-5. Exprimer le temps de propagation moyen de cet inverseur en fonction de $t_{p0}$, $C$, $k'_p$, $W_{100}$, $L_{100}$, $V_{ctrl}$ et $V_{Tp}$.
-6. Dans une technologie BiCMOS de taille minimale 1 µm, choisir des valeurs permettant d'obtenir une excursion logique de 400 mV ($U_T = 25$ mV, $N = 6$).
-7. En déduire la fréquence d'oscillation d'un oscillateur en anneau de 5 inverseurs de ce type pour $V_{ctrl} = 2$ V puis 3 V, avec les valeurs de la question 6, $C = 100$ fF, $t_{p0} = 50$ ps, $k'_p = 40$ µA/V² et $V_{Tp} = -0{,}7$ V.
-:::
-
-:::: {.solution}
-::: {.notes-externes}
-D'après le corrigé externe [corr-2023-td05-anneau, p. 1-3].
-
-**Partie I.**
-
-1. Un nombre $M$ impair d'inverseurs donne un signe négatif sur la boucle : aucun état n'est stable, le circuit oscille.
-2. Chaque front est retardé de $t_p$ par étage ; le niveau haut dure $M t_p$, la période $T = 2Mt_p$ :
-   $$
-   f_{osc} = \frac{1}{2Mt_p} .
-   $$
-3. On peut agir sur le courant moyen, ou sur une capacité variable.
-
-**Partie II.**
-
-1. $V_{EB} = U_T \ln\left|\frac{I_C}{I_S}\right|$ ; la maille donne $V_{ref} = V_{EB101} - V_{EB102} = U_T \ln\left|\frac{N I_{C1}}{I_{C2}}\right|$ ; $M_1$ et $M_2$ forment un miroir, donc $I_{C1} = I_{C2}$ et
-   $$
-   V_{ref} = U_T \ln N .
-   $$
-2. $M_0$ linéaire avec $V_{DS0} = V_{ref}$ : $I_{DS0} = -2k'_p\frac{W_0}{L_0}(V_{ctrl} + V_{Tp})\,V_{ref}$. Les miroirs ($I_{D2} = -I_{D0} = I_{D1}$, $I_{Di} = I_{D1}\frac{W_i}{W_1}\frac{L_1}{L_i}$) donnent
-   $$
-   I_0 = 2k'_p\,\frac{W_i W_0}{W_1}\,\frac{L_1}{L_i L_0}\,(V_{ctrl} + V_{Tp})\,V_{ref} .
-   $$
-3. Dans la paire, tout $I_0$ passe soit dans $Q_1$, soit dans $Q_2$. Si $I_{CQ1} = 0$, $V_{DS100} = 0$ et $V_S = V_{DD}$ (niveau haut) ; si $I_{CQ1} = I_0$, $V_S = V_{DD} - |V_{DS100}|$ (niveau bas). Avec $M_{100}$ linéaire :
-   $$
-   \Delta V = |V_{DS100}| = \frac{L_{100}\, I_0}{2k'_p\, W_{100}\,(V_{ctrl} + V_{Tp})} .
-   $$
-4. $\Delta V = \frac{L_{100}}{W_{100}}\,\frac{W_0}{L_0}\,\frac{L_1}{W_1}\,\frac{W_i}{L_i}\,U_T \ln N$.
-5. $t_p = t_{p0} + \frac{C\,\Delta V}{I_0} = t_{p0} + \frac{C\,L_{100}}{2k'_p\,(V_{ctrl} + V_{Tp})\,W_{100}}$.
-6. $\frac{W_1}{W_i}\,\frac{W_{100}}{W_0} = \frac{U_T \ln N}{\Delta V} = 9$, d'où $W_1 = W_i = W_{100} = 30$ µm et $W_0 = 3{,}3$ µm (voir le bloc ci-dessous).
-7. $f = 1{,}22$ GHz pour $V_{ctrl} = 2$ V et $f = 1{,}47$ GHz pour $V_{ctrl} = 3$ V, avec « $f = \frac{1}{2Nt_p}$ » (voir le bloc ci-dessous).
-:::
-::::
-
-::: {.a-verifier .tranche #av-anneau-dimensionnement}
-**Source** [corr-2023-td05-anneau, p. 3], questions 6 et 7 : « $\frac{W_1}{W_i}\frac{W_{100}}{W_0} = \frac{U_T\ln(N)}{\Delta V} = 9$ » ; « $W_1 = W_i = W_{100} = 30$ µm, $W_0 = 3{,}3$ µm » ; « $f = \frac{1}{2Nt_p}$ ».
-
-**Problème** :
-
-- $\frac{U_T \ln N}{\Delta V} = \frac{25 \times 1{,}79}{400} \approx 0{,}11$, et non 9 : c'est l'inverse, $\frac{\Delta V}{U_T \ln N} \approx 8{,}9$ ;
-- d'après la question 4 (toutes les longueurs à 1 µm), c'est $\frac{W_0 W_i}{W_{100} W_1}$ qui doit valoir 8,9 ; les valeurs choisies donnent 0,11, soit $\Delta V \approx 5$ mV au lieu de 400 mV ;
-- à la question 7, $N$ (rapport d'émetteurs, 6) est écrit à la place de $M$ (nombre d'inverseurs, 5).
-
-**Proposition** (recalculée par Claude) : toutes les longueurs à 1 µm et $\frac{W_0 W_i}{W_{100} W_1} = \frac{\Delta V}{U_T \ln N} \approx 8{,}9$, par exemple $W_0 = W_i = W_{100} = 30$ µm et $W_1 = 3{,}3$ µm (rapport 9,1, $\Delta V \approx 407$ mV). Question 7 : seul $W_{100}/L_{100} = 30$ intervient. Pour $V_{ctrl} = 2$ V, $V_{ctrl} + V_{Tp} = 1{,}3$ V, $t_p = 50 + \frac{100 \cdot 10^{-15} \times 10^{-6}}{2 \times 40 \cdot 10^{-6} \times 1{,}3 \times 30 \cdot 10^{-6}} \approx 50 + 32 = 82$ ps et $f_{osc} = \frac{1}{2 \times 5 \times 82\ \mathrm{ps}} \approx 1{,}22$ GHz ; pour 3 V, $t_p \approx 50 + 18 = 68$ ps et $f_{osc} \approx 1{,}47$ GHz. Les valeurs numériques du corrigé sont donc justes avec $M = 5$.
-
-**Décision** : proposition retenue (Armand a délégué la décision ; calcul vérifié par Claude), 2026-10-14.
-:::
-
-::: {.complement}
-**Question 4, « en quoi est-ce remarquable ? »** (sans réponse dans le corrigé) : l'excursion logique ne dépend que de **rapports de dimensions** et de $U_T \ln N$. Elle est indépendante de $V_{ctrl}$, de $k'_p$ et de $V_{Tp}$ : $V_{ctrl}$ règle le courant, donc le temps de propagation et la fréquence (question 5), sans changer l'amplitude des signaux ; elle est aussi insensible aux dispersions du procédé (les rapports de dimensions sont bien reproduits). Elle reste proportionnelle à $U_T = kT/q$, donc à la température absolue.
-
-**Plage d'accord.** La fréquence ne dépend de $V_{ctrl}$ que par $V_{ctrl} + V_{Tp}$ : l'oscillateur est commandé en tension, de 1,22 à 1,47 GHz pour $V_{ctrl}$ de 2 à 3 V.
-:::
-
-## Sujet 2021 : oscillateur à déphasage {#sec-td-dephasage}
-
-![Oscillateur à déphasage en technologie MOS du sujet de 2021 : amplificateur inverseur $M_1$ (résistance $R$ au drain, $\alpha R$ à la source) rebouclé par trois cellules $RC$. D'après le sujet [td04-2026, p. 1, figure 1], redessiné.](../figures/04-dephasage.svg){#fig-dephasage}
-
-::: {#exr-oscillateur-dephasage}
-## Oscillateur à déphasage [td04-2026, p. 1-2]
-
-On s'intéresse à l'oscillateur à déphasage (*phase shift oscillator*) en technologie MOS de la @fig-dephasage. Les conditions de polarisation sont telles que $M_1$ fonctionne en régime saturé. Pour calculer les conditions d'oscillation, on isole l'amplificateur inverseur construit autour de $M_1$ (figure 2a de l'énoncé : $M_1$, $R$ au drain, $\alpha R$ à la source) et on le remplace par son quadripôle équivalent (figure 2b : entrée ouverte, source de tension $v_s$ en série avec $R_s$ en sortie).
-
-1. Établir le schéma équivalent aux petites variations de l'amplificateur.
-2. En supposant $g_m \alpha R \gg 1$, montrer que le gain de l'amplificateur s'exprime simplement $A_v \approx -1/\alpha$.
-3. Déterminer $R_s$ en fonction de $R$.
-4. Redessiner l'oscillateur selon le schéma équivalent de la figure 3 de l'énoncé (quadripôle de l'amplificateur suivi du réseau déphaseur) en exprimant $v_s$ et $R_s$.
-5. À l'aide de l'annexe, montrer que la condition de fréquence du critère de Barkhausen est vérifiée lorsque $\omega_0 = \frac{\sqrt{6}}{RC}$.
-6. Calculer l'atténuation entre $v_2$ et $v_1$ due au réseau déphaseur lorsque $\omega = \omega_0$.
-7. En déduire la valeur de $\alpha$ nécessaire à la condition d'entretien du critère de Barkhausen.
-8. Un couple $RC$ assurant un déphasage de 90°, expliquer pourquoi il est nécessaire d'en mettre trois en série pour garantir la rotation de phase de 180° qui compense celle de l'amplificateur inverseur.
-
-**Annexe.** La fonction de transfert du réseau déphaseur (trois cellules : $R$ série, $C$ vers la masse) s'exprime
-$$
-\frac{v_2}{v_1} = \frac{1}{1 - 5R^2C^2\omega^2 + j\left(6RC\omega - (RC\omega)^3\right)} .
-$$
-:::
-
-::: {.complement}
-**Proposition de solution (aucun corrigé).**
-
-1. Grille ouverte ; $g_m v_{gs}$ du drain vers la source ; $R$ du drain à la masse (alimentation à la masse aux variations) ; $\alpha R$ de la source à la masse ; $r_{ds}$ négligée.
-2. Le courant $g_m v_{gs}$ traverse $\alpha R$ : $v_e = v_{gs} + \alpha R\, g_m v_{gs}$, et $v_{out} = -R\, g_m v_{gs}$, donc
-   $$
-   A_v = -\frac{g_m R}{1 + g_m \alpha R} \approx -\frac{1}{\alpha} \quad (g_m \alpha R \gg 1) .
-   $$
-   La dégénérescence de source rend le gain indépendant de $g_m$ (contre-réaction courant-série, [chapitre 2](02-amplificateurs-contre-reaction.qmd#sec-cr-courant-serie)).
-3. Vue du drain, on voit $R$ en parallèle avec la résistance de sortie du transistor dégénéré, très grande ($r_{ds}(1 + g_m\alpha R)$) : $R_s \approx R$.
-4. Sortie de l'amplificateur : source $v_s = -\frac{v_e}{\alpha}$ en série avec $R_s = R$. Cette résistance joue le rôle de la **première** résistance série du réseau : l'oscillateur est un réseau à trois cellules $R$, $C$ exactement conforme à l'annexe, avec $v_1 = v_s$, et $v_2$ ramenée sur la grille ($v_e = v_2$, grille ouverte : le réseau n'est pas chargé).
-5. Condition de fréquence : le gain de boucle $A_v \frac{v_2}{v_1}$ doit être réel positif ; $A_v$ est réel négatif, donc $\frac{v_2}{v_1}$ doit être réel négatif. Partie imaginaire nulle : $6RC\omega_0 = (RC\omega_0)^3$, soit
-   $$
-   \omega_0 = \frac{\sqrt{6}}{RC} .
-   $$
-6. À $\omega_0$, $5R^2C^2\omega_0^2 = 30$ : $\frac{v_2}{v_1} = \frac{1}{1 - 30} = -\frac{1}{29}$. Le réseau atténue d'un facteur 29 et déphase de 180°.
-7. Condition d'entretien : $A_v \cdot \left(-\frac{1}{29}\right) = \frac{1}{29\alpha} \geqslant 1$, soit
-   $$
-   \alpha \leqslant \frac{1}{29}, \qquad |A_v| \geqslant 29 ;
-   $$
-   « juste oscillant » pour $\alpha = \frac{1}{29}$.
-8. Une cellule $RC$ ne déphase de 90° qu'**asymptotiquement** (quand $\omega \to \infty$, où son gain tend vers 0) : deux cellules n'atteignent 180° qu'à fréquence infinie, avec un gain nul. Avec trois cellules, le déphasage maximal tend vers 270°, et 180° est atteint à une fréquence finie, $\omega_0$, avec une atténuation finie (1/29) qu'un amplificateur peut compenser. C'est la même raison qui impose $C_1'$ dans l'oscillateur Colpitts (@sec-colpitts).
-
-**Variante de 2022** [td04-2026, p. 3-4] : même étude avec un amplificateur à deux transistors ($M_2$ en source suiveuse, $R_s$ négligeable) et un réseau **passe-haut** ($C$ série, $R$ vers la masse). L'annexe donne $\frac{v_2}{v_1} = \frac{1}{\left(1 - \frac{5}{X^2}\right) + j\left(\frac{1}{X^3} - \frac{6}{X}\right)}$ avec $X = RC\omega$ : la partie imaginaire s'annule pour $X^2 = \frac{1}{6}$, soit $\omega_0 = \frac{1}{\sqrt{6}\,RC}$, et $\frac{v_2}{v_1} = \frac{1}{1 - 30} = -\frac{1}{29}$ : même condition d'entretien.
-:::
+- [TD 4 : oscillateur à résistance négative](../td/td04-oscillateur-resistance-negative.qmd#sec-td-resistance-negative) (paires croisées PMOS et NPN, $R_{OSC} = -\frac{2}{g_{mMOS} + g_{mBJT}}$, réglage par $I_{bias}$) ;
+- [TD 6 : oscillateur sinusoïdal à base d'amplificateur opérationnel](../td/td06-oscillateur-aop.qmd#sec-td-oscillateur-aop) (pont réactif : $Z_{in} = -R_f$, oscillation entretenue pour $R_f = R_p$) ;
+- [TD additionnel : oscillateur en anneau](../td/td-add-oscillateur-anneau.qmd#sec-td-anneau) (anneau de $M$ inverseurs, $f_{osc} = \frac{1}{2Mt_p}$ ; inverseur CML BiCMOS à retard commandé par $V_{ctrl}$ ; bloc tranché `av-anneau-dimensionnement`) ;
+- [Recueil de sujets de Y. Deval (TD 4 en 2026), exercices 1 et 2 : oscillateur à déphasage](../td/td04-2026-recueil-sujets-deval.qmd#sec-td-dephasage) (sujets de 2021 et 2022 : $\omega_0 = \frac{\sqrt{6}}{RC}$, atténuation $-\frac{1}{29}$, $|A_v| \geqslant 29$).
 
 ## À retenir {#sec-retenir-oscillateurs}
 
 - **Principe** : un oscillateur est une boucle placée volontairement sur la condition d'instabilité $1 + A\beta = 0$ à une seule pulsation ; il démarre sur le bruit *(notes externes)*.
 - **Critère de Barkhausen** (@def-critere-barkhausen) : phase du gain de boucle nulle (inversion du soustracteur comprise) à $\omega_1$ ; $|A\beta| \geqslant 1$ (strictement au démarrage) *(notes externes ; démarrage : complément)*.
 - **Colpitts** (2 C, 1 L) / **Hartley** (1 C, 2 L) ; Colpitts à source commune : $\omega_0 = \frac{1}{\sqrt{LC_{eq}}}$ avec $C_{eq} = C_1'$ série $C_2'$ (@eq-frequence-colpitts) ; entretien $g_m r_{ds} = \frac{C_2'}{C_1'}$ (@eq-entretien-colpitts) ; gain intrinsèque $-g_m r_{ds}$ (@eq-gain-intrinseque) ; une diode bloquée sert de capacité variable *(notes externes)*.
-- **Résistance négative** : paire croisée, $R_{eq} = -\frac{2}{g_m}$ (@eq-resistance-paire-croisee), réglée par le courant ; elle compense les pertes $R$ du résonateur : oscillation pour $R_{osc} = -R$ (TD 4 : $R_{OSC} = -\frac{2}{g_{mMOS} + g_{mBJT}}$, @eq-r-osc) *(notes et corrigés externes)* ; même idée avec un AOP : $Z_{in} = -R_f$, $R_f = R_p$ (TD 6, @eq-impedance-pont-reactif) *(complément)*.
+- **Résistance négative** : paire croisée, $R_{eq} = -\frac{2}{g_m}$ (@eq-resistance-paire-croisee), réglée par le courant ; elle compense les pertes $R$ du résonateur : oscillation pour $R_{osc} = -R$ (TD 4 : $R_{OSC} = -\frac{2}{g_{mMOS} + g_{mBJT}}$, [TD 4](../td/td04-oscillateur-resistance-negative.qmd#eq-r-osc)) *(notes et corrigés externes)* ; même idée avec un AOP : $Z_{in} = -R_f$, $R_f = R_p$ (TD 6, [TD 6](../td/td06-oscillateur-aop.qmd#eq-impedance-pont-reactif)) *(complément)*.
 - **Oscillateur à déphasage** : trois cellules $RC$ (une cellule ne fait 90° qu'à l'infini) ; $\omega_0 = \frac{\sqrt{6}}{RC}$, atténuation $-\frac{1}{29}$, il faut $|A_v| \geqslant 29$ *(complément, sujet de 2021)*.
 - **Astable** : charge et décharge de $C$ à courant $I$ entre deux seuils, $F = \frac{I}{2\,\Delta V\, C}$ (@eq-frequence-astable) *(notes externes)*.
 - **Anneau** : nombre impair d'inverseurs, $T = 2N\Delta t$, $F = \frac{1}{2N\Delta t}$ (@eq-frequence-anneau ; bloc `av-frequence-anneau`) ; accord par le courant ou une capacité variable ; anneau différentiel : nombre pair d'étages possible, sorties en quadrature (bloc `av-phases-anneau-differentiel`) *(notes et corrigé externes)*.

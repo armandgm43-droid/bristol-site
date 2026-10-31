@@ -126,5 +126,6 @@
 - [ ] Phase 2 : préciser la correspondance des numéros de questions entre l'énoncé et la correction du TD (versions différentes).
 - [ ] Décider du sort des paquets hérités (question 6).
 - [ ] Révision par chapitre et mode « veille d'examen » dans l'application.
-- [ ] Synchronisation de la progression entre appareils (question 8).
+- [x] Synchronisation de la progression entre appareils (question 8) : Supabase, 31 octobre 2026 (`architecture.md` § 6.1). **À faire par Armand** : créer le projet Supabase, lancer `scripts/supabase-bristol.sql`, remplir `revision/sync-config.js`, déclarer les URL de redirection, push.
+- [ ] Synchro : configurer un SMTP dans Supabase avant d'ouvrir la synchro à la promo.
 - [ ] Phase 2 : TD, TP, annales, corrigés.

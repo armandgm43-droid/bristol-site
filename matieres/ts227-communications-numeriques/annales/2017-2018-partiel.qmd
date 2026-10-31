@@ -2,7 +2,7 @@
 title: "Partiel 2017-2018 — corrigé"
 subtitle: "TS227, Guillaume Ferré · 1 h 30, documents et calculatrice interdits"
 matiere: ts227
-date-modified: 2026-10-27
+date-modified: 2026-10-31
 sources:
   - id: sujet-2017
     fichier: annales/2017-2018-partiel.pdf
@@ -17,7 +17,7 @@ Aucun corrigé officiel : **toutes les solutions de cette page sont rédigées p
 
 **Notations.** Le sujet suit les notations du TD : $g(t)$ filtre d'émission (cours : $h(t)$), $g_a(t)$ filtre de réception (cours : $h_a(t)$), $v(t) = (g \star g_a)(t)$ filtre global (cours : $g(t)$), $h_l(t)$ canal (cours : $h_c(t)$), $n_l(t)$ bruit (cours : $z_l(t)$), $R_A(n) = \E[A_k A_{k+n}]$ (cours : $R_A[m] = \E[A_n A^*_{n-m}]$, même valeur pour des symboles réels stationnaires).
 
-**Correspondances.** Questions 5, 12 et 14 : questions 2, 5 et 6 du [partiel 2016-2017](2016-2017-partiel.qmd#sec-ann1617-cours) ; questions 15 à 17 : questions 9 à 11 du [partiel 2019-2020](2019-2020-partiel.qmd#sec-ann1920-ex1) ; questions 14 à 16 : exercice 2 du TD (q. 9-10, [DSP d'une 2-PAM](../cours/03-dsp-signaux-codes-en-ligne.qmd#exr-td-dsp-2pam)) avec une 4-PAM ; partie 2 : étude pratique du TD (ex. 5), avec $D_s = 1$ Msymbole/s et $F_e = 10$ MHz au lieu de 2 ksymboles/s et 8 kHz.
+**Correspondances.** Questions 5, 12 et 14 : questions 2, 5 et 6 du [partiel 2016-2017](2016-2017-partiel.qmd#sec-ann1617-cours) ; questions 15 à 17 : questions 9 à 11 du [partiel 2019-2020](2019-2020-partiel.qmd#sec-ann1920-ex1) ; questions 14 à 16 : exercice 2 du TD (q. 9-10, [DSP d'une 2-PAM](../td/td01-transmissions-bande-de-base.qmd#exr-td-dsp-2pam)) avec une 4-PAM ; partie 2 : étude pratique du TD (ex. 5), avec $D_s = 1$ Msymbole/s et $F_e = 10$ MHz au lieu de 2 ksymboles/s et 8 kHz.
 :::
 
 ![](sujets/2017-2018-partiel-notations.png){fig-alt="Notations et hypothèses : Tb, Ts, nb ; M = 2^nb symboles ; bk information binaire émise à kTb, uniforme sur {0, 1}, E[bk bk'] = E[bk] E[bk'] ; g(t) filtre d'émission et ga(t) filtre de réception ; canal hl(t) à bande passante infinie ; bruit nl(t) blanc gaussien de variance σ²nl."}

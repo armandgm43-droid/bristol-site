@@ -5,7 +5,7 @@ chapitre: 3
 enseignants: ["Thierry Taris"]
 annee: "2026-2027"
 statut: flashcards
-date-modified: 2026-10-29
+date-modified: 2026-10-31
 sources:
   - id: mod-ana
     fichier: support/cours-01-modulations-analogiques.pdf
@@ -300,7 +300,7 @@ $$
 f(u) = f_p + k_f\,u,
 $$
 
-où $k_f$ est la sensibilité du modulateur, en Hz/V. C'est le rôle d'un **oscillateur commandé en tension** (VCO), comme l'oscillateur LC à varicap du TD 2 (@exr-td2-modulateur-varicap).
+où $k_f$ est la sensibilité du modulateur, en Hz/V. C'est le rôle d'un **oscillateur commandé en tension** (VCO), comme l'oscillateur LC à varicap du [TD 2](../td/td02-modulateurs.qmd#exr-td2-modulateur-varicap).
 
 **Démodulation** : l'objectif est la transformation inverse, linéaire, d'une variation de fréquence en variation de tension. Cette contrainte de linéarité est difficile à tenir ; plusieurs solutions existent [mod-ana, p. 45] :
 
@@ -456,154 +456,11 @@ Réponses des notes de 2023 [notes-2023-ana, p. 7] (les deux erreurs relevées s
 
 ## Exercices du TD {#sec-exercices-td-ch03}
 
-### TD 1 (GNU Radio) : modulation de fréquence analogique {#sec-td1-fm}
+Les TD sont corrigés question par question dans leurs propres pages, énoncé découpé à l'appui :
 
-::: {#exr-td1-fm}
-## Modulation FM, modulant sinusoïdal
-
-Le TD utilise $S_{FM}(t) = A_p\cos[2\pi f_p t + \beta\sin(2\pi f_m t)]$, avec $\beta = \Delta f/f_m$ et $\Delta f = k_f A_m$. Configuration par défaut : $A_m = 1\ \mathrm{V}$, $f_m = 0{,}7\ \mathrm{kHz}$ ; $A_p = 1\ \mathrm{V}$, $f_p = 10\ \mathrm{kHz}$ ; $\beta = 1$ [td1, p. 7-8].
-
-1. Justifier, sur l'allure temporelle, que la modulation observée est une modulation de fréquence.
-2. Rappeler les propriétés d'un spectre modulé FM en s'appuyant sur le spectre observé.
-3. Décrire les changements du spectre quand : a) la fréquence du modulant augmente ; b) la fréquence porteuse augmente ; c) l'indice de modulation augmente.
-4. Donner l'expression de la puissance $P_{FM}$ ; la calculer pour la configuration par défaut et vérifier avec la simulation.
-5. Selon la règle de Carson, donner l'expression de la puissance $P_C$ et de la bande passante $BW_C$ du signal modulé.
-6. Compléter, avec les valeurs théoriques, le tableau de $P_{FM}$, $P_C$, $BW_C$ et du nombre d'harmoniques pour $\beta = 0{,}5$ ; 1 ; 4,5. Vérifier $P_C$ en simulation pour $\beta = 0{,}5$.
-
-[td1, p. 8-10] (l'énoncé numérote deux questions « III.3 » ; elles sont ici renumérotées.)
-:::
-
-:::: {.complement}
-::: {.solution}
-1. L'amplitude reste constante ; seule la durée des périodes (donc la fréquence instantanée) varie, au rythme du modulant.
-2. Raies espacées de $f_m$, centrées sur $f_p$, d'amplitude $A_p|J_n(\beta)|$, symétriques, décroissantes loin de $f_p$ ; pour $\beta = 1$ : porteuse 0,77 V, raies 0,44 V, 0,11 V, 0,02 V (@tbl-bessel).
-3. a) À $\Delta f$ fixé, l'espacement des raies ($f_m$) augmente et $\beta = \Delta f/f_m$ diminue : moins de raies significatives. (Dans le logiciel, si c'est $\beta$ qui est fixé, seules les raies s'écartent et la bande $2(\beta+1)f_m$ augmente.) b) Le spectre est translaté, sans changer de forme. c) L'énergie se répartit sur davantage de raies : la bande s'élargit, l'amplitude de la porteuse $J_0(\beta)$ diminue (et s'annule pour $\beta = 2{,}405$).
-4. $P_{FM} = A_p^2/2 = 0{,}5\ \mathrm{V^2}$ (@eq-puissance-fm), indépendante de $\beta$ : on peut la vérifier sur la porteuse non modulée ($\beta = 0$), seule raie alors présente, ce que demande l'énoncé.
-5. $P_C = \dfrac{A_p^2}{2}\displaystyle\sum_{n=-N}^{N}J_n^2(\beta)$, avec $N$ = partie entière de $\beta + 1$ ; $BW_C = 2(\beta + 1)f_m$ (@eq-carson).
-6. Avec $f_m = 0{,}7\ \mathrm{kHz}$ et $A_p = 1\ \mathrm{V}$ (sommes calculées avec les valeurs exactes de $J_n$) :
-
-   | $\beta$ | 0,5 | 1 | 4,5 |
-   |---|---|---|---|
-   | $P_{FM}$ ($\mathrm{V^2}$) | 0,5 | 0,5 | 0,5 |
-   | $N$ (raies de part et d'autre) | 1 | 2 | 5 |
-   | $P_C$ ($\mathrm{V^2}$) | 0,499 | 0,4996 | 0,492 |
-   | $BW_C$ (kHz) | 2,1 | 2,8 | 7,7 |
-   | Nombre de raies ($2N + 1$) | 3 | 5 | 11 |
-
-   Pour $\beta = 0{,}5$ : $P_C = \frac12[J_0^2 + 2J_1^2] = \frac12[0{,}938^2 + 2 \times 0{,}242^2] = 0{,}499\ \mathrm{V^2}$.
-:::
-::::
-
-### TD 2 : modulateur FM à diode varicap {#sec-td2-varicap}
-
-::: {#exr-td2-modulateur-varicap}
-## Modulateur FM à varicap
-
-On fait varier la fréquence d'un oscillateur LC en agissant sur une capacité : une **diode varicap** $C_{Dv}$, placée en parallèle avec la capacité $C$ du circuit $LC$ (figure de l'énoncé : $L$ entre $V_{DD}$ et les nœuds $out+$ / $out-$, $C$ et $C_{Dv}(V_p)$ entre ces nœuds, deux transistors MOS croisés vers la masse). La varicap se comporte comme une capacité qui dépend de la tension $V_p$ :
-
-$$
-C_{Dv}(V_p) = \frac{C_0}{\bigl(1 + \frac{V_p}{V_0}\bigr)^n},
-\qquad C_0 = 30\ \mathrm{pF},\ V_0 = 700\ \mathrm{mV},\ n = 0{,}7.
-$$
-
-*Principe du circuit.*
-
-1. Quel type d'oscillateur reconnaît-on ? Établir sa fréquence d'oscillation $f_{osc}$ en fonction de $L$, $C$ et $C_{Dv}$.
-2. Quel est le nom de la configuration des transistors MOS ? À quoi sert-elle ?
-
-*Principe du modulateur.*
-
-3. $V_p$ est le message basse fréquence $m(t)$, de variations continues et très petites devant $V_0$. Écrire $C_{Dv}(m(t)) = C_0[1 + \lambda\,m(t)]$ ; que vaut $\lambda$ ? (On rappelle $(1 + x)^n \approx 1 + nx$ si $x \ll 1$.)
-4. Mettre la fréquence d'oscillation sous la forme $f_{osc} = f_0 + k_f\,m(t)$, avec $f_0 = \frac{1}{2\pi\sqrt{L(C + C_0)}}$. Que vaut $k_f$ ?
-5. Montrer que l'on a réalisé un modulateur FM en décrivant ses caractéristiques principales.
-
-*Application* : transmettre un signal d'amplitude maximale $|m(t)|_\mathrm{max} = 10\ \mathrm{mV}$ sur une porteuse $f_0 = 98\ \mathrm{MHz}$ avec une excursion $\Delta f = 75\ \mathrm{kHz}$.
-
-6. Rappeler la relation entre $\Delta f$, $|m(t)|_\mathrm{max}$ et $k_f$. Que vaut $k_f$ ?
-7. Calculer $L$ et $C$.
-8. Si $m(t)$ occupe une bande de 15 kHz : a) indice de modulation ; b) bande $B_s$ selon la règle de Carson.
-
-[td2, p. 1-2]
-:::
-
-:::: {.notes-externes}
-::: {.solution}
-D'après le corrigé de 2023 [corrige-2023-td02, p. 1-2] :
-
-1. Oscillateur à résistance négative : $f_{osc} = \dfrac{1}{2\pi\sqrt{L(C + C_{Dv})}}$.
-2. Transistors MOS câblés en **paire croisée** ; impédance équivalente $-2/g_m$.
-3. $C_{Dv}(m) = C_0\bigl(1 + \frac{m}{V_0}\bigr)^{-n} \approx C_0\bigl(1 - \frac{n}{V_0}\,m\bigr)$, donc $\lambda = -\dfrac{n}{V_0}$.
-4. $f_{osc} = \dfrac{1}{2\pi\sqrt{L(C + C_0 + C_0\lambda m)}} = \dfrac{1}{2\pi\sqrt{L(C + C_0)}}\Bigl(1 + \dfrac{C_0\lambda m}{C + C_0}\Bigr)^{-1/2} \approx f_0\Bigl(1 - \dfrac12\,\dfrac{C_0\lambda}{C + C_0}\,m\Bigr)$ si $m \ll \dfrac{C + C_0}{\lambda C_0}$, d'où
-   $$
-   k_f = -\frac{\lambda f_0}{2}\,\frac{C_0}{C + C_0}.
-   $$
-5. On a introduit linéairement les variations du message $m(t)$ dans la fréquence : modulation FM.
-6. $k_f = \dfrac{\Delta f}{|m(t)|_\mathrm{max}} = \dfrac{75 \cdot 10^3}{10 \cdot 10^{-3}} = 7{,}5 \cdot 10^6\ \mathrm{Hz/V}$.
-7. $C = \dfrac{n\,C_0\,f_0}{2k_f V_0} - C_0$ et $L = \dfrac{1}{(2\pi f_0)^2(C + C_0)}$.
-8. a) $\beta = \Delta f/B_m = 5$ ; b) $B_s = 2(1 + \beta)B_m = 180\ \mathrm{kHz}$ (bande du signal modulé).
-:::
-::::
-
-::: {.complement}
-- 2 : la paire croisée présente entre $out+$ et $out-$ une résistance **négative** $-2/g_m$ qui compense les pertes du résonateur $LC$ (résistance parallèle $R_p$) ; l'oscillation démarre si $2/g_m < R_p$. C'est l'oscillateur à résistance négative du cours de circuits intégrés (EANA3).
-- 3 : avec les valeurs numériques, $\lambda = -0{,}7/0{,}7 = -1\ \mathrm{V^{-1}}$ ; l'approximation vaut si $|m| \ll V_0/n = 1\ \mathrm{V}$, ce que vérifie $|m|_\mathrm{max} = 10\ \mathrm{mV}$.
-- 4 : $\lambda < 0$, donc $k_f > 0$ : la fréquence **augmente** avec $V_p$ (la capacité de la varicap diminue).
-- 5 : $f_{osc}$ est affine en $m(t)$, l'amplitude d'oscillation ne dépend pas de $m$ : modulateur FM de sensibilité $k_f$, porteuse $f_0$, excursion $\Delta f = k_f|m|_\mathrm{max}$, linéaire tant que $|m| \ll V_0/n$.
-- 7 : $C + C_0 = \dfrac{0{,}7 \times 30\ \mathrm{pF} \times 98 \cdot 10^6}{2 \times 7{,}5 \cdot 10^6 \times 0{,}7} = 196\ \mathrm{pF}$, d'où $C = 166\ \mathrm{pF}$ et $L = \dfrac{1}{(2\pi \cdot 98 \cdot 10^6)^2 \times 196 \cdot 10^{-12}} = 13{,}5\ \mathrm{nH}$. L'exercice 2 du TD reprend ces valeurs, arrondies à $L = 13{,}4\ \mathrm{nH}$ et $C = 167\ \mathrm{pF}$ ([chapitre 4](04-modulations-numeriques.qmd#exr-td2-fsk-varicap)).
-- 8 : c'est l'exemple de la radiodiffusion FM (@exm-radio-fm).
-:::
-
-### TD 3 : démodulateur FM {#sec-td3-fm}
-
-::: {#exr-td3-demodulateur-fm}
-## Démodulateur FM à intégrateur
-
-On place devant le démodulateur d'enveloppe du [chapitre 2](02-modulations-lineaires.qmd#exr-td3-detecteur-principe) un étage à amplificateur opérationnel : $V_{FM}(t)$ attaque l'entrée inverseuse par une résistance $R_0$, un condensateur $C_0$ relie la sortie $V_1(t)$ à l'entrée inverseuse, l'entrée non inverseuse est à la masse ; $V_1$ attaque la diode $D$ et le circuit $R_1C_1$ de sortie $V_{out}(t)$.
-
-1. Déterminer la relation entre $V_1(t)$ et $V_{FM}(t)$.
-2. Donner l'expression de $V_1(t)$ si $V_{FM}(t) = U\sin(\omega_{FM}t)$.
-3. Donner l'allure de $V_1(t)$ si la fréquence du signal ne prend que deux valeurs, $f_{FM1}$ et $f_{FM2}$ (chronogramme de l'énoncé : une fréquence basse de 0 à 2 ms, une fréquence haute de 2 à 3 ms environ, puis de nouveau la fréquence basse).
-4. En déduire l'allure de $V_{out}(t)$ si $R_1C_1$ est correctement choisie.
-5. Quel type de démodulateur réalise-t-on ?
-6. Quelles sont les principales limitations de ce circuit ?
-
-[td3, p. 2-3]
-:::
-
-:::: {.notes-externes}
-::: {.solution}
-D'après le corrigé de 2023 [corrige-2023-td03, p. 2-3] :
-
-1. $V_+ = V_- = 0$ ; en régime harmonique, $\frac{V_{FM}}{R_0} + jC_0\omega V_1 = 0$, d'où $V_1 = -\frac{1}{R_0C_0}\,\frac{1}{j\omega}V_{FM}$, soit
-   $$
-   V_1(t) = -\frac{1}{R_0C_0}\int V_{FM}(t)\,\mathrm{d}t.
-   $$
-2. $V_1(t) = -\dfrac{1}{R_0C_0}\displaystyle\int U\sin(\omega_{FM}t)\,\mathrm{d}t = +\dfrac{U}{R_0C_0\,\omega_{FM}}\cos(\omega_{FM}t)$.
-3. et 4. $V_1$ a une amplitude $U/(R_0C_0\omega_{FM1})$ ou $U/(R_0C_0\omega_{FM2})$ selon la fréquence : la plus basse fréquence donne la plus grande amplitude ; le détecteur d'enveloppe suit ces deux niveaux.
-6. On doit bien choisir deux fréquences distinctes.
-:::
-::::
-
-::: {.complement}
-- Le corrigé de 2023 suit une autre version de l'énoncé (fréquence haute, puis basse, puis haute) ; le raisonnement est le même.
-- 5 : l'intégrateur convertit la variation de **fréquence** en variation d'**amplitude** ($|V_1| \propto 1/f$), que le détecteur d'enveloppe démodule : c'est un **discriminateur** (démodulateur FM, ici FSK à deux fréquences), dual de celui du cours qui utilise un dérivateur ($|\mathrm{d}s/\mathrm{d}t| \propto f$).
-- 6 : la sortie dépend aussi de l'amplitude $U$ (bruit, évanouissements : il faut un limiteur) ; la conversion $1/f$ n'est pas linéaire en $f$ (sans gêne pour deux fréquences, gênante en FM analogique à forte excursion) ; un intégrateur idéal dérive (offset intégré : en pratique, résistance en parallèle sur $C_0$) ; enfin $R_1C_1$ doit à la fois filtrer la porteuse et suivre les changements de fréquence : avec seulement quelques périodes par symbole (figure de l'énoncé), le compromis est difficile (@fig-td3-demodulateur-fm).
-:::
-
-![TD 3, exercice 2 : signal à deux fréquences (3 et 6 kHz), sortie de l'intégrateur $V_1$ et sortie du détecteur d'enveloppe $V_{out}$ ($R_1C_1 = 1$ ms). Reconstruite : simulation, fréquences choisies d'après l'allure de la figure de l'énoncé [td3, p. 3].](../figures/03-td3-demodulateur-fm.svg){#fig-td3-demodulateur-fm}
-
-### Exemples d'application (corrigé de 2023) {#sec-exemples-2023-fm}
-
-::: {.notes-externes}
-Corrigé d'une ancienne version du TD 1 (2023), **énoncé non disponible** [corrige-2023-td01, p. 3] :
-
-- signal FM $s_{FM}(t) = A_p\cos(2\pi f_p t + \beta\sin(2\pi f_m t))$, où $\beta = \Delta f/f_m$ est l'indice de modulation et $\Delta f$ l'excursion maximale en fréquence instantanée ;
-- **exemple** : $\Delta f = f_\mathrm{max} - f_p = 75\ \mathrm{kHz}$ et $f_m = 2{,}5\ \mathrm{kHz}$ donnent $\beta = 30$ et $B_{FM} = 2(\beta + 1)f_m = 155\ \mathrm{kHz}$.
-:::
-
-::: {.complement}
-Contrôle : $2 \times 31 \times 2{,}5 = 155\ \mathrm{kHz}$, proche de $2\Delta f = 150\ \mathrm{kHz}$ ($\beta \gg 1$). Les autres exercices FM du corrigé (bande de 24 kHz, spectre à 9 raies) ne sont pas repris : leurs données viennent de l'énoncé manquant et ne peuvent pas être contrôlées.
-:::
+- [TD 1, partie III : modulation de fréquence analogique](../td/td01-gnuradio-modulations.qmd#sec-td01-ex3) (et l'[ancienne version de 2023](../td/td01-gnuradio-modulations.qmd#sec-exemples-2023-fm)) ;
+- [TD 2, exercice 1 : modulateur FM à diode varicap](../td/td02-modulateurs.qmd#sec-td02-ex1) ;
+- [TD 3, exercice 2 : démodulateur FM à intégrateur](../td/td03-demodulateurs.qmd#sec-td03-ex2).
 
 ## Bilan des modulations analogiques {#sec-bilan-analogiques}
 

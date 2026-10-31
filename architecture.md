@@ -3,7 +3,7 @@
 > Détails techniques du projet : configuration Quarto, structure des dossiers, application de révision, scripts, build, hébergement.
 > Les choix de fond sont dans `CONTEXTE_PROJET.md` (section 5) ; les règles d'écriture dans `conventions.md`.
 >
-> Dernière mise à jour : 25 octobre 2026 (§ 10 : publication sur GitHub Pages).
+> Dernière mise à jour : 31 octobre 2026 (§ 6.1 : synchronisation de la progression, Supabase).
 
 ---
 
@@ -161,7 +161,7 @@ Inchangé : dans `bristol-tokens.css`, (1) `:root` clair, (2) `@media (prefers-c
 - Barre de navigation : même dessin que celle du site (`conventions.md` § 13.6). Liens écrits en dur dans le `<header class="site-head">` : à tenir alignés sur `website.navbar` de `_quarto.yml`. « Révisions » ramène à la liste des paquets sans recharger la page ; « Bristol » et les autres liens mènent aux pages du site. Script de navigation séparé du script de l'application (il ne touche ni aux paquets ni à la progression).
 - Mode sombre : les feuilles (liste, dialogues) deviennent sombres ; les fiches de révision restent en papier clair (jetons `--card-…`, redéfinis sur `.study`).
 - Maths : MathJax 3.2.2 (`tex-svg`) chargé depuis `cdn.jsdelivr.net`.
-- Progression : `localStorage`, clé `bristol:v1` (format `{ v: 1, decks }`). Elle est **propre au navigateur et à l'adresse du site** (protocole + nom d'hôte + port) : changer d'hébergement, de domaine ou de port repart d'une progression vide. **L'export actuel de l'application exporte les cartes (texte recto/verso), pas la progression** : il ne permet pas de la transférer. Transfert de la progression : tâche « export/import de la progression » de `TODO.md`, section « Avant la publication » (pas encore fait).
+- Progression : `localStorage`, clé `bristol:v1` (format `{ v: 1, decks }`), copie de travail sur chaque appareil, **synchronisée entre appareils** par un compte Supabase quand on est connecté (§ 6.1, depuis le 31 octobre 2026). Sans connexion, elle est **propre au navigateur et à l'adresse du site** (protocole + nom d'hôte + port) : changer d'hébergement, de domaine ou de port repart d'une progression vide. **L'export actuel de l'application exporte les cartes (texte recto/verso), pas la progression** : il ne permet pas de la transférer. Transfert de la progression : tâche « export/import de la progression » de `TODO.md`, section « Avant la publication » (pas encore fait).
 - **Révision en local (depuis le 7 octobre 2026)** : `quarto preview` sert le site sur un **port fixe, 4848** (`project.preview.port` dans `_quarto.yml`, avec `browser: true`). L'application est donc toujours à l'adresse `http://localhost:4848/revision/` et la progression est retrouvée d'un lancement à l'autre.
   - Ne pas changer ce port, ni lancer `quarto preview --port …` : autre adresse, progression vide.
   - Toujours passer par `localhost`, pas par `127.0.0.1` (autre adresse pour le navigateur).
@@ -178,6 +178,19 @@ Inchangé : dans `bristol-tokens.css`, (1) `:root` clair, (2) `@media (prefers-c
   ```
 
 - Fusion à l'ouverture : une `key` existante est mise à jour **sans perte de progression** ; une nouvelle est ajoutée ; une carte absente du fichier est supprimée.
+
+### 6.1 Synchronisation entre appareils (Supabase, 31 octobre 2026)
+
+- **Activation** : `revision/sync-config.js` donne `url` et `anonKey` (clé publique) du projet Supabase. Vides : synchro désactivée, bouton nuage masqué. La clé publique peut être versionnée et publiée ; **jamais** la clé `service_role`/`secret`.
+- **Base** : table `public.bristol_paquets` (`user_id`, `uid`, `rev`, `data` jsonb, `updated_at`), une ligne par utilisateur et par paquet, créée par `scripts/supabase-bristol.sql` ; sécurité par RLS (chacun ne voit que ses lignes). `uid` = `src:<fichier>.json` pour un paquet du dépôt, `id:<id>` pour un paquet perso.
+- **Connexion** : bouton nuage de la barre de l'application ; lien de connexion envoyé par e-mail (et code à usage unique si le modèle d'e-mail Supabase contient `{{ .Token }}`). Session gardée dans `localStorage` (`bristol:sync:auth`). Redirections autorisées à déclarer dans Supabase (Authentication > URL Configuration) : `https://armandgm43-droid.github.io/bristol-site/revision/**` et `http://localhost:4848/revision/**`.
+- **Bibliothèque** : `@supabase/supabase-js@2.117.3` (UMD, jsDelivr), chargée seulement si la synchro est configurée.
+- **Fusion, carte par carte** (identité : `key` si présente, sinon `id`) : progression (`state`, `due`, `ivl`, `ease`, `step`, `reps`, `lapses`) de la version au `pm` (horodatage de la dernière réponse, annulation ou remise à zéro) le plus récent, puis au plus grand `reps` ; contenu des cartes perso au `cm` le plus récent ; contenu des cartes du dépôt jamais fusionné (chaque appareil relit `cartes/*.json`) ; réglages du paquet au `mm` le plus récent ; compteurs du jour au maximum. Cartes perso supprimées : pierres tombales `gone` dans le paquet ; paquet supprimé : ligne `{ deleted: true, at }`.
+- **Écritures concurrentes** : mise à jour conditionnelle sur `rev` (lecture, fusion, écriture si `rev` inchangé, sinon nouvel essai).
+- **Rythme** : envoi 3 s après une modification ; récupération à l'ouverture, au retour sur l'onglet et toutes les 2 min (seuls les paquets dont `rev` a changé sont téléchargés). Hors ligne : les paquets en attente sont notés (`bristol:sync:dirty:<user>`) et envoyés plus tard.
+- **Mode claude.ai** (base de l'artifact) : synchro Supabase inactive, rien ne change.
+- **Limites** : le service d'e-mail intégré de Supabase n'envoie qu'aux membres de l'équipe du projet, avec un petit quota horaire ; pour la promo, configurer un SMTP (Authentication > Emails > SMTP Settings). Un projet Supabase gratuit est mis en pause après une semaine sans activité (le relancer depuis le tableau de bord).
+- Tests (31 octobre 2026) : faux Supabase partagé entre deux navigateurs (Playwright) : envoi initial, révisions transmises, révisions concurrentes fusionnées, paquet perso créé, carte supprimée, paquet supprimé ; vraie bibliothèque chargée sans erreur. Copie d'avant la synchro : `_apercu_tmp/avant-synchro/index.html`.
 
 ### Paquets présents
 

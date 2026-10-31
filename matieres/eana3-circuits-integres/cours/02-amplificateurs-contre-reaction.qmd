@@ -5,7 +5,7 @@ chapitre: 2
 enseignants: ["François Rivet"]
 annee: "2026-2027"
 statut: flashcards
-date-modified: 2026-10-18
+date-modified: 2026-10-31
 sources:
   - id: support
     fichier: support/support-cours-2025.pdf
@@ -27,16 +27,6 @@ sources:
     nature: externe
     seance: inconnue
     pages: "1-8"
-  - id: notes-2023-c08
-    fichier: notes/2023-cours-08-rivet.pdf
-    nature: externe
-    seance: inconnue
-    pages: "1-4"
-  - id: corr-2023-recueil
-    fichier: corriges/2023-recueil-corriges-td.pdf
-    nature: externe
-    seance: inconnue
-    pages: "3"
 ---
 
 {{< include /_macros.qmd >}}
@@ -243,65 +233,11 @@ Chaque type rapproche le montage du **quadripôle idéal** correspondant à sa f
 Dans tous les cas, si $A\beta_F \gg 1$, la fonction de transfert tend vers $1/\beta_F$ et hérite des propriétés vues au chapitre 1 ([robustesse](01-generalites-contre-reaction.qmd#sec-robustesse), [linéarisation](01-generalites-contre-reaction.qmd#sec-linearisation), [compromis gain-bande](01-generalites-contre-reaction.qmd#sec-gain-bande)).
 :::
 
-## Exercice : où est la contre-réaction ? {#sec-td-ou-est-la-contre-reaction}
+## Exercices du TD {#sec-exercices-td-ch02}
 
-Cet exercice est le TD 1 du support 2025 [support, p. 11-12] (sujet EA234 de F. Rivet ; fichier séparé identique : `td/td01-ou-est-la-contre-reaction.pdf`). En 2023, il a été traité en cours (cours 8) [notes-2023-c08, p. 1].
+Le TD de ce chapitre est corrigé question par question dans sa propre page, énoncé découpé à l'appui :
 
-![Exercice « Où est la contre-réaction ? » : montage (a) et schéma équivalent aux petites variations découpé en quadripôles $A$ et $\beta_F$, sans $R_C$ (b). (a) D'après le support [support, p. 11, figure 1], redessiné. (b) D'après les notes externes [notes-2023-c08, p. 2-3] et le corrigé externe [corr-2023-recueil, p. 3], redessiné.](../figures/02-ou-est-la-contre-reaction.svg){#fig-ou-est-la-contre-reaction}
-
-::: {#exr-ou-est-la-contre-reaction}
-## Où est la contre-réaction ? [support, p. 11-12]
-
-On fera l'hypothèse que la tension d'alimentation $V_{CC}$ est dimensionnée de manière à garantir un fonctionnement en régime linéaire (mode amplificateur) du transistor, et on **ne négligera pas l'effet Early** sur l'ensemble du problème. $C_1 = C_2 = 100\ \mu\mathrm{F}$ sont des condensateurs de liaison d'impédance négligeable à la fréquence de travail (@fig-ou-est-la-contre-reaction a).
-
-**Partie 1 : où est la contre-réaction ?** Le but est de rechercher la fonction de transfert et les impédances d'entrée et de sortie.
-
-1. Établir le schéma équivalent aux petites variations du circuit en séparant l'amplificateur $A$ constitué de $M_1$ d'une part, et le réseau de contre-réaction $\beta_F$ constitué par $R_x$ d'autre part. $R_C$ ne sera pas considérée dans cette partie.
-2. Identifier le type de contre-réaction.
-3. D'après le cours, donner la représentation schématique de ce type de contre-réaction.
-4. Identifier directement paramètre par paramètre les valeurs de $A$, $\beta_F$, $Z_e$, $Z_s$.
-5. En appliquant directement la théorie de la contre-réaction donnée dans le cours, donner l'expression de $A_{OL}$, $Z_i$, $Z_o$ et enfin de la fonction de transfert $\frac{i_o}{v_i} = \frac{A}{1 + \beta_F A}$.
-
-**Partie 2 : robustesse.** On considère la charge $R_C$.
-
-6. Donner une expression de $v_o$ en fonction de $i_o$ et $R_C$.
-7. Donner une expression de la fonction de transfert $\frac{v_o}{v_i}$.
-8. Dans le cadre d'une intégration monolithique de ce circuit, on considère que $R_X$ et $R_C$ sont soumis aux mêmes variations de processus de fabrication du fait de leur proximité physique, ce qui implique une variation homogène de leur valeur. On considérera que $R'_X = \alpha R_X$ et $R'_C = \alpha R_C$, $\alpha$ étant un coefficient compris entre 0,8 et 1,2. Commenter alors l'impact de ces variations technologiques sur la fonction du circuit.
-:::
-
-:::: {.solution}
-::: {.notes-externes}
-Montage « source commune » (émetteur commun, voir le complément ci-dessous) : gain $-g_m R_C$. La capacité ne laisse passer que les petites variations ; la résistance de polarisation ne se dessine pas [notes-2023-c08, p. 1].
-
-1. Schéma équivalent du transistor bipolaire : $r_{be}$ entre base et émetteur, source $\beta i_b = g_m v_{be}$ et $r_{ce}$ entre collecteur et émetteur. Le transistor amplifie : c'est le bloc $A$ ; $R_x$ est le bloc $\beta_F$ (@fig-ou-est-la-contre-reaction b) [notes-2023-c08, p. 1-3]. On néglige $i_b$ devant $\beta i_b$ : $R_x$ est parcourue par $i_o$ [notes-2023-c08, p. 3].
-2. Contre-réaction du type **courant-série** [notes-2023-c08, p. 3] ; [corr-2023-recueil, p. 3].
-3. Représentation : @fig-cr-courant-serie.
-4. Par identification avec le cours [notes-2023-c08, p. 4] ; [corr-2023-recueil, p. 3] :
-   $$
-   A = g_m, \qquad \beta_F = R_x, \qquad Z_e = r_{be}, \qquad Z_s = r_{ce} .
-   $$
-5. $A_{OL} = g_m R_x$, « c'est grand, on veut du gain » ; $Z_i = r_{be}(1 + g_m R_x)$ et $Z_o = r_{ce}(1 + g_m R_x)$, grandes aussi [corr-2023-recueil, p. 3] ; les notes écrivent directement $Z_i = g_m r_{be} R_x$ et $Z_{out} = g_m r_{ce} R_x$ [notes-2023-c08, p. 4]. Enfin
-   $$
-   \frac{i_o}{v_i} = \frac{g_m}{1 + g_m R_x} \approx \frac{1}{R_x} .
-   $$ {#eq-td1-transconductance}
-6. $v_o = -R_C\, i_o$ [notes-2023-c08, p. 4].
-7. $\frac{v_o}{v_i} = \frac{v_o}{i_o} \times \frac{i_o}{v_i} = -\frac{R_C}{R_x}$ [notes-2023-c08, p. 4] ; [corr-2023-recueil, p. 3].
-8. PVT : *Process, Voltage, Temperature* ; la valeur d'une résistance fabriquée varie de l'ordre de 20 %. Mais
-   $$
-   -\frac{R'_C}{R'_X} = -\frac{\alpha R_C}{\alpha R_X} = -\frac{R_C}{R_X} :
-   $$
-   le gain ne dépend pas de $\alpha$ [notes-2023-c08, p. 4].
-:::
-::::
-
-::: {.complement}
-**Précisions.**
-
-- Le transistor $M_1$ de la figure est **bipolaire** (NPN) : le montage est un **émetteur commun** à résistance d'émetteur $R_x$ (« source commune » dans les notes, terme du transistor MOS). L'« effet Early » de l'énoncé est modélisé par $r_{ce}$.
-- Les expressions $Z_i \approx g_m r_{be} R_x$ et $Z_o \approx g_m r_{ce} R_x$ des notes supposent $g_m R_x \gg 1$ ; de même $i_o/v_i \approx 1/R_x$ (@eq-td1-transconductance) et $v_o/v_i \approx -R_C/R_x$.
-- Le résultat de la question 8 illustre la [robustesse](01-generalites-contre-reaction.qmd#sec-robustesse-beta) : le gain ne dépend plus que d'un **rapport** de résistances voisines sur la puce, insensible à une dispersion commune. Il ne dépend plus de $g_m$, qui varie avec la température et la polarisation.
-- Le modèle des quadripôles est approché : il néglige le courant $i_b$ dans $R_x$, et $r_{ce}$ relie en réalité la sortie au nœud d'émetteur, donc au réseau $\beta_F$. Le calcul direct sur le schéma complet donne des résultats très proches quand $\beta = g_m r_{be} \gg 1$ et $r_{ce} \gg R_x$.
-:::
+- [TD 1 : où est la contre-réaction ?](../td/td01-ou-est-la-contre-reaction.qmd#sec-td-ou-est-la-contre-reaction) (émetteur commun à résistance d'émetteur : contre-réaction courant-série, robustesse aux dispersions ; traité en cours en 2023).
 
 ## À retenir {#sec-retenir-amplificateurs-cr}
 
@@ -310,4 +246,4 @@ Montage « source commune » (émetteur commun, voir le complément ci-dessous) 
 - Dans les quatre cas, la fonction de transfert vaut $\frac{A}{1 + A\beta_F}$ : $\frac{v_o}{i_i}$ (@eq-ft-tension-parallele), $\frac{i_o}{i_i}$ (@eq-ft-courant-parallele), $\frac{v_o}{v_i}$ (@eq-ft-tension-serie), $\frac{i_o}{v_i}$ (@eq-ft-courant-serie) ; valable si $Z_s$ est grande (sortie Norton) ou petite (sortie Thévenin) devant la charge *(notes externes)*.
 - Impédances (@tbl-synthese-contre-reaction) : réinjection série ⇒ $Z_i = Z_e(1 + A_{OL})$ ; parallèle ⇒ $Z_i = Z_e/(1 + A_{OL})$ ; prélèvement de courant ⇒ $Z_o = Z_s(1 + A_{OL})$ ; de tension ⇒ $Z_o = Z_s/(1 + A_{OL})$ *(notes externes)*.
 - Pour calculer $Z_o$, on éteint les générateurs **indépendants** (source de courant ⇒ circuit ouvert, source de tension ⇒ court-circuit) *(notes externes)*.
-- Émetteur commun à résistance d'émetteur $R_x$ : contre-réaction courant-série, $A = g_m$, $\beta_F = R_x$, $i_o/v_i \approx 1/R_x$ ; avec la charge $R_C$, $v_o/v_i \approx -R_C/R_x$, insensible aux variations communes des résistances (@exr-ou-est-la-contre-reaction) *(notes externes)*.
+- Émetteur commun à résistance d'émetteur $R_x$ : contre-réaction courant-série, $A = g_m$, $\beta_F = R_x$, $i_o/v_i \approx 1/R_x$ ; avec la charge $R_C$, $v_o/v_i \approx -R_C/R_x$, insensible aux variations communes des résistances ([TD 1](../td/td01-ou-est-la-contre-reaction.qmd#exr-ou-est-la-contre-reaction)) *(notes externes)*.

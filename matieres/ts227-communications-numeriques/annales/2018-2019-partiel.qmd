@@ -2,7 +2,7 @@
 title: "Partiel 2018-2019 — corrigé"
 subtitle: "TS227, G. Ferré · 1 h 30, documents et calculatrice interdits"
 matiere: ts227
-date-modified: 2026-10-27
+date-modified: 2026-10-31
 sources:
   - id: sujet-2018
     fichier: "annales/2018-2019-partiel-p{1,2,3}.jpg"
@@ -17,7 +17,7 @@ Aucun corrigé officiel : **toutes les solutions de cette page sont rédigées p
 
 **Notations.** Le sujet suit les notations du TD : $g(t)$ filtre de mise en forme (cours : $h(t)$), $g_a(t)$ filtre de réception (cours : $h_a(t)$), $v(t) = (g \star g_a)(t)$ filtre global (cours : $g(t)$), $h(t)$ canal (cours : $h_c(t)$), $n'_l[n]$ bruit échantillonné (cours : $Z'_n$), $r_l[n]$ échantillon reçu (cours : $r_n$).
 
-**Correspondances.** Les questions 7 et 9 reviennent en 2019-2020 (questions 4 et 5, [corrigé 2019-2020](2019-2020-partiel.qmd#sec-ann1920-gen)) ; la question 1 est la question 2 de l'exercice 1 du TD avec une 4-PAM au lieu d'une 8-PAM ; les questions 19 et 20 transposent l'étude pratique du TD (ex. 5, q. 12-13, [exercice du chapitre 4](../cours/04-transmission-presence-bruit.qmd#exr-td-constellation-bruitee)) à une QPSK. Le récepteur I/Q de l'exercice est celui de la figure 3 du [partiel 2016-2017](2016-2017-partiel.qmd#sec-ann1617-ex).
+**Correspondances.** Les questions 7 et 9 reviennent en 2019-2020 (questions 4 et 5, [corrigé 2019-2020](2019-2020-partiel.qmd#sec-ann1920-gen)) ; la question 1 est la question 2 de l'exercice 1 du TD avec une 4-PAM au lieu d'une 8-PAM ; les questions 19 et 20 transposent l'étude pratique du TD (ex. 5, q. 12-13, [corrigé du TD](../td/td01-transmissions-bande-de-base.qmd#exr-td-constellation-bruitee)) à une QPSK. Le récepteur I/Q de l'exercice est celui de la figure 3 du [partiel 2016-2017](2016-2017-partiel.qmd#sec-ann1617-ex).
 :::
 
 ![](sujets/2018-2019-partiel-notations.png){fig-alt="Notations et hypothèses : Tb, Ts et nb désignent le temps bit, le temps symbole et le nombre de bits par symbole ; bk est l'information binaire émise à l'instant kTb ; les bk sont iid, de loi uniforme sur {0, 1}."}

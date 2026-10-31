@@ -2,7 +2,7 @@
 title: "Partiel 2015-2016 — corrigé"
 subtitle: "TS227, G. Ferré, R. Tajan, F. Rivet · 2 h, documents et calculatrice interdits"
 matiere: ts227
-date-modified: 2026-10-27
+date-modified: 2026-10-31
 sources:
   - id: sujet-2015
     fichier: annales/2015-2016-partiel.pdf
@@ -17,7 +17,7 @@ Aucun corrigé officiel : **toutes les solutions de cette page sont rédigées p
 
 **Notations.** Le sujet suit les notations du TD : $g_\alpha(t)$ pour le filtre de mise en forme (cours : $h(t)$), $v_\alpha(t)$ pour le filtre global (cours : $g(t)$), $n_l(t)$ et $n'_l[n]$ pour le bruit (cours : $z_l(t)$, $Z'_n$), $r_l[n]$ pour l'échantillon reçu (cours : $r_n$), $R_A[n] = \E(A_k A_{k+n})$ (cours : $\E[A_n A^*_{n-m}]$, même valeur pour des symboles réels stationnaires). La question 16 définit $\operatorname{sinc}(x) = \frac{\sin x}{x}$ ; les solutions utilisent celle du cours, $\sinc(x) = \frac{\sin \pi x}{\pi x}$ (voir la [fiche matière](../index.qmd)).
 
-**Correspondances.** Les questions 1, 3, 5 et 6 reviennent à l'identique en 2019-2020 (questions 1, 2, 3 et 6, [corrigé 2019-2020](2019-2020-partiel.qmd#sec-ann1920-gen)). Le cas $\alpha = 1$ de l'exercice 2 est la DSP de l'OOK de l'exercice 2, question 11 du TD ([exercice du chapitre 3](../cours/03-dsp-signaux-codes-en-ligne.qmd#exr-td-dsp-ook)) ; le cas $\alpha = \frac12$ est le [code Manchester](../cours/02-communication-sans-bruit.qmd#exm-manchester) ; la question 17 reprend l'exercice 3 du TD ([filtrage adapté](../cours/04-transmission-presence-bruit.qmd#exr-td-filtre-adapte)).
+**Correspondances.** Les questions 1, 3, 5 et 6 reviennent à l'identique en 2019-2020 (questions 1, 2, 3 et 6, [corrigé 2019-2020](2019-2020-partiel.qmd#sec-ann1920-gen)). Le cas $\alpha = 1$ de l'exercice 2 est la DSP de l'OOK de l'exercice 2, question 11 du TD ([corrigé du TD](../td/td01-transmissions-bande-de-base.qmd#exr-td-dsp-ook)) ; le cas $\alpha = \frac12$ est le [code Manchester](../cours/02-communication-sans-bruit.qmd#exm-manchester) ; la question 17 reprend l'exercice 3 du TD ([filtrage adapté](../td/td01-transmissions-bande-de-base.qmd#exr-td-filtre-adapte)).
 :::
 
 ![](sujets/2015-2016-partiel-notations.png){fig-alt="Notations et hypothèses : Tb, Ts et nb désignent le temps bit, le temps symbole et le nombre de bits par symbole ; bk est l'information binaire émise à l'instant kTb ; les bk sont iid, de loi uniforme sur {0, 1}."}
@@ -180,7 +180,7 @@ La moyenne non nulle $m_A = \frac12$ crée un **spectre de raies** aux multiples
 ::: {.solution}
 $|G_1(f)|^2 = \Ts^2\sinc^2(f\Ts)$ s'annule en $f = \frac{k}{\Ts}$ pour $k \neq 0$ et vaut $\Ts^2$ en $0$ : seule la raie en $f = 0$ subsiste.
 $$\boxed{\Gamma_{s_l}^1(f) = \frac{\Ts}{4}\sinc^2(f\Ts) + \frac14\,\delta(f)}$$
-C'est le résultat de l'[exercice du TD sur l'OOK](../cours/03-dsp-signaux-codes-en-ligne.qmd#exr-td-dsp-ook). Lobe principal sur $[-\frac{1}{\Ts}, \frac{1}{\Ts}]$, sommet $\frac{\Ts}{4}$ ; la raie (composante continue du signal, puissance $m_A^2 = \frac14$) est en $f = 0$ (@fig-ann15-dsp-ook-alpha, en haut).
+C'est le résultat de l'[exercice du TD sur l'OOK](../td/td01-transmissions-bande-de-base.qmd#exr-td-dsp-ook). Lobe principal sur $[-\frac{1}{\Ts}, \frac{1}{\Ts}]$, sommet $\frac{\Ts}{4}$ ; la raie (composante continue du signal, puissance $m_A^2 = \frac14$) est en $f = 0$ (@fig-ann15-dsp-ook-alpha, en haut).
 :::
 ::::
 
@@ -244,7 +244,7 @@ $v_\alpha(t) = \int g_\alpha(u)\, g_\alpha(u - t)\, \mathrm{d}u$ est l'autocorr�
 - $g_\alpha$ est nul hors de $[0, \Ts]$, donc $g_\alpha(u)\,g_\alpha(u - t)$ est nul pour $|t| \geq \Ts$ : $v_\alpha(n\Ts) = 0$ pour tout $n \neq 0$.
 - $v_\alpha(0) = \int g_\alpha^2 = \Ts \neq 0$.
 
-Le critère est donc respecté, pour $\alpha = 1$ comme pour $\alpha = \frac12$ (et en fait pour tout $\alpha$). Formes explicites : $v_1(t) = \Ts\,\Lambda(t/\Ts)$ (triangle de base $[-\Ts, \Ts]$) ; $v_{1/2}$ vaut $\Ts - 3|t|$ pour $|t| \leq \frac{\Ts}{2}$ et $|t| - \Ts$ pour $\frac{\Ts}{2} \leq |t| \leq \Ts$ (minimum $-\frac{\Ts}{2}$ en $\pm\frac{\Ts}{2}$, nul en $\pm\frac{\Ts}{3}$ et $\pm\Ts$). C'est l'exercice 3 du TD avec la porte ([exercice](../cours/04-transmission-presence-bruit.qmd#exr-td-filtre-adapte)).
+Le critère est donc respecté, pour $\alpha = 1$ comme pour $\alpha = \frac12$ (et en fait pour tout $\alpha$). Formes explicites : $v_1(t) = \Ts\,\Lambda(t/\Ts)$ (triangle de base $[-\Ts, \Ts]$) ; $v_{1/2}$ vaut $\Ts - 3|t|$ pour $|t| \leq \frac{\Ts}{2}$ et $|t| - \Ts$ pour $\frac{\Ts}{2} \leq |t| \leq \Ts$ (minimum $-\frac{\Ts}{2}$ en $\pm\frac{\Ts}{2}$, nul en $\pm\frac{\Ts}{3}$ et $\pm\Ts$). C'est l'exercice 3 du TD avec la porte ([exercice](../td/td01-transmissions-bande-de-base.qmd#exr-td-filtre-adapte)).
 :::
 ::::
 

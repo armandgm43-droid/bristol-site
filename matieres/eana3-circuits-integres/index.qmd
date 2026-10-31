@@ -31,6 +31,23 @@ Plan Bristol tiré du support officiel (`support`, p. 1-2). Le support comporte 
 | 4 | [Oscillateurs](cours/04-oscillateurs.qmd) | Oscillateurs et références de tension (Y. Deval), ch. 1 | cours 3, 5, 7 et 9 ; TD 4, TD 6, TD additionnel, sujet 2021 | [Flashcards générées]{.statut .flashcards} |
 | 5 | [Références de tension](cours/05-references-de-tension.qmd) | Oscillateurs et références de tension (Y. Deval), ch. 2 | cours 10, 12 et 13 ; TD 5, sujets 2025 et 2026 | [Flashcards générées]{.statut .flashcards} |
 
+## TD corrigés
+
+Énoncés découpés question par question, correction sous chaque question : corrigés d'anciens élèves (*Notes externes*) et explications de Claude (*Complément*) ; il n'y a pas encore de notes d'Armand. Les chapitres ne contiennent plus les corrections de TD, seulement une section « Exercices du TD » qui renvoie aux pages (31 octobre 2026). Les exercices guidés du cours magistral (séparation des pôles, dégénérescence inductive, bandgap de Widlar) restent dans les chapitres.
+
+| TD | Contenu | Chapitre | Corrections disponibles |
+|---|---|---|---|
+| [TD 1 — Où est la contre-réaction ?](td/td01-ou-est-la-contre-reaction.qmd) | émetteur commun à résistance d'émetteur : contre-réaction courant-série, robustesse | 2 | notes et corrigé 2023 (externes), Claude |
+| [TD 2 — Un circuit pour l'espace](td/td02-circuit-pour-l-espace.qmd) | générateur de courant dual-$V_T$ immunisé aux radiations, boucle d'OTA | 3 | Claude |
+| [TD 3 — Analyse d'un circuit de modulation d'amplitude](td/td03-modulation-amplitude.qmd) | contre-réaction courant-série, sens de la boucle, bande passante | 3 | Claude |
+| [Sujet 2025 (TD 3 en 2026) — Une référence des circuits intégrés](td/td03-2026-bandgap-brokaw.qmd) | bandgap de Brokaw en contre-réaction tension-parallèle (partie F. Rivet) | 3 | Claude |
+| [TD additionnel — VDD is not your BFF](td/td-add-vdd-is-not-your-bff.qmd) | régulateur LDO : tension-série, rejet de l'alimentation, stabilité ; bloc ouvert `av-vdd-gain-recopie` | 3 | Claude |
+| [TD 4 — Oscillateur à résistance négative](td/td04-oscillateur-resistance-negative.qmd) | doubles paires croisées PMOS et NPN | 4 | corrigés 2023 et 2025 (externes), Claude |
+| [TD 4 (2026) — Recueil de sujets de Y. Deval](td/td04-2026-recueil-sujets-deval.qmd) | oscillateurs à déphasage (2021, 2022), bandgap de Brokaw (2025, partie Y. Deval), générateur de courant suppresseur de variations (2026) | 4 et 5 | Claude |
+| [TD 5 — Référence de tension CMOS stable en température](td/td05-reference-tension-cmos.qmd) | référence SOI à deux tensions de seuil, TC0 | 5 | Claude |
+| [TD 6 — Oscillateur sinusoïdal à base d'amplificateur opérationnel](td/td06-oscillateur-aop.qmd) | pont réactif : résistance négative à AOP | 4 | Claude |
+| [TD additionnel — Oscillateur en anneau](td/td-add-oscillateur-anneau.qmd) | anneau d'inverseurs CML BiCMOS à retard programmable | 4 | corrigé 2023 (externe), Claude |
+
 ## Table des notations
 
 À compléter lors de l'analyse de chaque chapitre. Notations relevées à l'inventaire (à confirmer) :

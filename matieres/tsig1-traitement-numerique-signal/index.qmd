@@ -30,7 +30,19 @@ Plan tiré des **notes de cours d'Armand** (2026-2027), complété par les notes
 | 4 | [Implémentation des SLI et équations aux différences](cours/04-implementation-equations-differences.qmd) | RIF/RII, transformée en $z$, pôles et zéros, stabilité, éléments simples ; TD 2 et 3 | [Vérifié]{.statut .verifie} |
 | 5 | [SLI et représentation en phase](cours/05-representation-en-phase.qmd) | retard de groupe, phase linéaire, minimum de phase, passe-tout ; TD 1 et 3 | [Vérifié]{.statut .verifie} |
 
-Chapitres **à relire par Armand** : 30 blocs *À vérifier* ouverts (1, 4, 9, 11 et 5 par chapitre). Les cartes définitives seront générées après cette relecture.
+Chapitres **à relire par Armand** : 30 blocs *À vérifier* ouverts, 19 dans les chapitres (1, 4, 7, 4 et 3 par chapitre) et 11 dans les pages de TD (erreurs des corrigés de 2023, 3, 5 et 3 par TD). Les cartes définitives seront générées après cette relecture.
+
+## TD corrigés {#sec-td-corriges}
+
+Énoncés du recueil de TD découpés question par question, correction sous chaque question : corrigé d'un ancien élève (*Notes externes*), explications de Claude (*Complément*) ; pas de notes d'Armand sur les TD. Les chapitres ne contiennent plus les corrections de TD, seulement un renvoi (31 octobre 2026).
+
+| TD | Contenu | Corrections disponibles |
+|---|---|---|
+| [TD 1 — Systèmes discrets et représentation en fréquence](td/td01-systemes-discrets-representation-frequence.qmd) | convolution, association de SLI, causalité et phase nulle, RIF, filtres en quadrature, gabarit | corrigé 2023, Claude |
+| [TD 2 — Transformée en z et équation aux différences](td/td02-transformee-z-equation-differences.qmd) | porte et trapèze, équation aux différences d'ordre 2, filtres RIF et RII | corrigé 2023, Claude |
+| [TD 3 — Placement pôles/zéros et RII](td/td03-placement-poles-zeros-rii.qmd) | pôles et zéros, phase linéaire et passe-tout, $G(z) = H(-z^2)$ ; annexe du recueil | corrigé 2023, Claude |
+
+Les sujets d'examen reproduits en fin de recueil (2013, 2014, 2016, 2017, 2019) sont corrigés dans les annales ci-dessous ([liste](td/td03-placement-poles-zeros-rii.qmd#sec-td03-sujets-examen)).
 
 ## Préparation du partiel {#sec-partiel}
 
@@ -82,7 +94,7 @@ Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources bru
 |---|---|---|---|
 | `notes` | `notes/date-inconnue.pdf` (photos dans `notes/date-inconnue/`) | personnelle | notes d'Armand, 13 feuillets, cours 2026-2027 ; transcription `transcriptions/notes-2026.md` |
 | `illustrations` | `support/illustrations-berthoumieu.pdf` | officielle | 6 p. |
-| `td` | `td/recueil-td-2023.pdf` | officielle | 23 p. : TD 1 à 3 (intégrés aux chapitres 2 à 5), annexe, anciens sujets d'examen |
+| `td` | `td/recueil-td-2023.pdf` | officielle | 23 p. : TD 1 à 3 (corrigés dans les pages de TD), annexe, anciens sujets d'examen |
 | `notes-2023-chNN` | `notes/2023-cours-chNN-…pdf` | externe | 5 chapitres (ancien élève) |
 | `fiche-rappels` | `notes/externe-fiche-rappels-traitement-signal.pdf` | externe | fiche de rappels (archive « Annales 2A élec ») |
 | `corrige-2023-tdNN` | `corriges/2023-…pdf` | externe | TD 1 à 3, manuscrits ; plusieurs erreurs relevées (blocs `av-td-…`) |

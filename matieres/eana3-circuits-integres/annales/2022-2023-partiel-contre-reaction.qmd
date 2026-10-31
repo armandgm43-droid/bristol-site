@@ -2,7 +2,7 @@
 title: "Partiel 2022-2023 (Circuits contre-réactionnés) — corrigé"
 subtitle: "EA211, F. Rivet, 16 novembre 2022 · 1 h 20, documents manuscrits autorisés, aucune calculatrice · un circuit immunisé"
 matiere: eana3
-date-modified: 2026-10-28
+date-modified: 2026-10-31
 sources:
   - id: sujet-2022-cr
     fichier: annales/2022-2023-partiel-contre-reaction-p1.jpg   # une photo par page : -p1.jpg, -p2.jpg
@@ -17,12 +17,12 @@ sources:
 {{< include /_macros.qmd >}}
 
 ::: {.complement}
-**Origine des solutions.** Le corrigé manuscrit « TD3 – Un circuit immunisé » des notes de 2023 (un tiers) [corr-2023-td03-immunise] corrige **ce sujet**, repris en TD en 2023 (même circuit à deux résistances $R_1$, $R_2$, mêmes questions 1 à 10) ; le [chapitre 3](../cours/03-applications-contre-reaction.qmd#sec-td-circuit-espace) l'avait écarté faute d'énoncé. Il est repris en *Notes externes* sous chaque question ; les solutions détaillées en *Complément* sont rédigées par Claude ; les désaccords sont signalés en *À vérifier*. Sujet photographié : images tournées et contrastées, perspective non corrigée. À relire avec un œil critique ; signaler toute erreur.
+**Origine des solutions.** Le corrigé manuscrit « TD3 – Un circuit immunisé » des notes de 2023 (un tiers) [corr-2023-td03-immunise] corrige **ce sujet**, repris en TD en 2023 (même circuit à deux résistances $R_1$, $R_2$, mêmes questions 1 à 10) ; le [TD 2](../td/td02-circuit-pour-l-espace.qmd#sec-td-circuit-espace) l'avait écarté faute d'énoncé. Il est repris en *Notes externes* sous chaque question ; les solutions détaillées en *Complément* sont rédigées par Claude ; les désaccords sont signalés en *À vérifier*. Sujet photographié : images tournées et contrastées, perspective non corrigée. À relire avec un œil critique ; signaler toute erreur.
 
 Le TD « Un circuit pour l'espace » du support 2025 (chapitre 3) étudie une autre version du même thème (référence immunisée aux variations, deux NMOS à seuils différents).
 :::
 
-Chapitres du cours : [contre-réaction de courant-parallèle](../cours/02-amplificateurs-contre-reaction.qmd#sec-cr-courant-parallele), [synthèse](../cours/02-amplificateurs-contre-reaction.qmd#sec-synthese-cr), [« Un circuit pour l'espace »](../cours/03-applications-contre-reaction.qmd#sec-td-circuit-espace).
+Chapitres du cours : [contre-réaction de courant-parallèle](../cours/02-amplificateurs-contre-reaction.qmd#sec-cr-courant-parallele), [synthèse](../cours/02-amplificateurs-contre-reaction.qmd#sec-synthese-cr), [« Un circuit pour l'espace »](../td/td02-circuit-pour-l-espace.qmd#sec-td-circuit-espace).
 
 ![](sujets/2022-2023-partiel-contre-reaction-intro.png){fig-alt="Énoncé commun : circuit alimenté par VDD ; les perturbations de l'alimentation sont une tension variable d'entrée Δv, qui produit un courant Ii + ii dans R1, et un courant de sortie Io + io. M1 et M2 NMOS saturés, transconductances gm1 et gm2, modulation de longueur de canal prise en compte sauf avis contraire. Figure 1 : R1 entre Vdd + Δv et un nœud relié au drain de M1 et à la grille de M2 ; M2 a son drain à la sortie (courant Io + io, tension vo) et sa source reliée à la grille de M1 et à R2 vers la masse ; source de M1 à la masse."}
 

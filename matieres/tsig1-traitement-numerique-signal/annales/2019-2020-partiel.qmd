@@ -2,7 +2,7 @@
 title: "Partiel 2019-2020 — corrigé"
 subtitle: "TS201 (TSIG1), 11 décembre 2019, 1^re^ session · 1 h 20, sans document, calculatrice autorisée"
 matiere: tsig1
-date-modified: 2026-10-20
+date-modified: 2026-10-31
 sources:
   - id: sujet-2019
     fichier: td/recueil-td-2023.pdf
@@ -15,7 +15,7 @@ sources:
 ::: {.complement}
 Aucun corrigé officiel : **toutes les solutions de cette page sont rédigées par Claude**. Le sujet vient de l'annexe du recueil de TD [sujet-2019, p. 21-23 du PDF] ; les figures de l'exercice 3 (page 23 du recueil) sont regroupées avec son énoncé. À relire avec un œil critique ; signaler toute erreur.
 
-Aucun exercice n'est repris à l'identique d'une autre annale. Variantes proches : l'exercice 1 est la version **antisymétrique** de l'[exercice 3 du partiel 2015-2016](2015-2016-partiel.qmd#sec-ann15-ex3) (même méthode, autres valeurs) ; l'exercice 2 applique l'[exercice du TD sur le filtre à phase nulle](../cours/05-representation-en-phase.qmd#exr-td-filtre-phase-nulle) ; l'exercice 3 rappelle les lectures de diagrammes pôles/zéros de [2022-2023](2022-2023-partiel.qmd#sec-ann22-ex4) et [2025-2026](2025-2026-partiel.qmd#sec-ann25-ex5) ; la définition de la TFD (exercice 4) revient dans presque tous les sujets.
+Aucun exercice n'est repris à l'identique d'une autre annale. Variantes proches : l'exercice 1 est la version **antisymétrique** de l'[exercice 3 du partiel 2015-2016](2015-2016-partiel.qmd#sec-ann15-ex3) (même méthode, autres valeurs) ; l'exercice 2 applique l'[exercice du TD sur le filtre à phase nulle](../td/td01-systemes-discrets-representation-frequence.qmd#exr-td-filtre-phase-nulle) ; l'exercice 3 rappelle les lectures de diagrammes pôles/zéros de [2022-2023](2022-2023-partiel.qmd#sec-ann22-ex4) et [2025-2026](2025-2026-partiel.qmd#sec-ann25-ex5) ; la définition de la TFD (exercice 4) revient dans presque tous les sujets.
 :::
 
 Rappels fournis avec le sujet : échelon $u[n] = 0$ pour $n < 0$, $u[n] = 1$ pour $n \geq 0$ ; $\delta(n-k) \overset{z}{\longleftrightarrow} z^{-k}$ et $a^n u(n) \overset{z}{\longleftrightarrow} \dfrac{1}{1 - a z^{-1}}$ avec $|a| < 1$ ; $\sum_{n=N_1}^{N_2} \alpha^n = \dfrac{\alpha^{N_1} - \alpha^{N_2+1}}{1 - \alpha}$.
@@ -123,7 +123,7 @@ Filtre **non causal** (échantillon en $n = -2$), symétrique autour de $n = 0$.
 ::: {.solution}
 La TF de $h(-n)$ est $\sum_n h(-n)\, e^{-j2\pi f n} = H(e^{-j2\pi f}) = H^*(e^{j2\pi f})$ ($h$ réelle). Le produit des deux étages donne
 $$\boxed{H_{sr}(e^{j2\pi f}) = H(e^{j2\pi f})\, H^*(e^{j2\pi f}) = \left|H(e^{j2\pi f})\right|^2}$$
-réelle et positive : **phase nulle**, même raisonnement que la [méthode 1 du TD sur le filtre à phase nulle](../cours/05-representation-en-phase.qmd#exr-td-filtre-phase-nulle). Ici $H_{sr}(e^{j2\pi f}) = 6 - 2\cos(4\pi f)$, entre $4$ ($f = 0$, $\frac12$) et $8$ ($f = \pm\frac14$).
+réelle et positive : **phase nulle**, même raisonnement que la [méthode 1 du TD sur le filtre à phase nulle](../td/td01-systemes-discrets-representation-frequence.qmd#exr-td-filtre-phase-nulle). Ici $H_{sr}(e^{j2\pi f}) = 6 - 2\cos(4\pi f)$, entre $4$ ($f = 0$, $\frac12$) et $8$ ($f = \pm\frac14$).
 
 Contrôle : la TF directe de $h_{sr}$ donne $6 - e^{j4\pi f} - e^{-j4\pi f} = 6 - 2\cos 4\pi f$, égale à $4(1 + \sin^2 2\pi f)$ (vérifié numériquement en $f = 0$ ; $0{,}125$ ; $0{,}25$ ; $0{,}5$).
 :::

@@ -2,7 +2,7 @@
 title: "Partiel 2025-2026 — corrigé"
 subtitle: "EANA3 (EA234), Y. Deval et F. Rivet, 24 octobre 2025 · deux épreuves d'une heure, documents manuscrits autorisés, sans calculatrice · bandgap de Brokaw"
 matiere: eana3
-date-modified: 2026-10-27
+date-modified: 2026-10-31
 sources:
   - id: sujet-2025
     fichier: annales/2025-2026-partiel.pdf
@@ -17,8 +17,8 @@ Aucun corrigé officiel : **toutes les solutions de cette page sont rédigées p
 
 Le sujet réunit deux épreuves sur le même circuit, le **bandgap de Brokaw** : stabilité en température (Y. Deval, exercice 1) et lecture en contre-réaction (F. Rivet, exercice 2). Les deux parties ont été redistribuées en TD en 2026 et sont **déjà résolues dans le cours** :
 
-- exercice 1 : [chapitre 5, sujet 2025 (partie Deval)](../cours/05-references-de-tension.qmd#sec-td-brokaw-deval) ;
-- exercice 2 : [chapitre 3, sujet 2025](../cours/03-applications-contre-reaction.qmd#sec-td-brokaw).
+- exercice 1 : [recueil de sujets de Y. Deval, exercice 3](../td/td04-2026-recueil-sujets-deval.qmd#sec-td-brokaw-deval) ;
+- exercice 2 : [sujet 2025, partie F. Rivet](../td/td03-2026-bandgap-brokaw.qmd#sec-td-brokaw).
 
 Cette page donne donc, sous chaque question, une solution courte et renvoie au cours pour le détail.
 :::
@@ -29,13 +29,13 @@ Cette page donne donc, sous chaque question, une solution courte et renvoie au c
 
 ![](sujets/2025-2026-partiel-ex1-annexe.png){fig-alt="Annexes : Ic = Is exp(VBE/UT) ; UT = kT/q, 26 mV à 300 K ; dVBE/dT = (VBE − VBG)/T, avec VBG = 1,26 V à 300 K (TC−)."}
 
-Chapitre du cours : [références de tension](../cours/05-references-de-tension.qmd#sec-td-brokaw-deval) ; principe du [miroir de Widlar](../cours/05-references-de-tension.qmd#sec-ptat).
+TD corrigé : [recueil de sujets de Y. Deval, exercice 3](../td/td04-2026-recueil-sujets-deval.qmd#sec-td-brokaw-deval) ; principe du [miroir de Widlar](../cours/05-references-de-tension.qmd#sec-ptat).
 
 ![](sujets/2025-2026-partiel-ex1-q1.png){fig-alt="Partie 1 : polarisation en courant, alternative au miroir de courant. Q1 : l'amplificateur étant parfait, la différence de potentiel entre ses entrées est nulle au point de fonctionnement ; en déduire la relation entre VC1 et VC2."}
 
 :::: {.complement}
 ::: {.solution}
-Gain infini et sortie finie : $V_+ - V_- = 0$, donc $\boxed{V_{C1} = V_{C2}}$. Détail : [cours](../cours/05-references-de-tension.qmd#sec-td-brokaw-deval).
+Gain infini et sortie finie : $V_+ - V_- = 0$, donc $\boxed{V_{C1} = V_{C2}}$. Détail : [TD corrigé](../td/td04-2026-recueil-sujets-deval.qmd#sec-td-brokaw-deval).
 :::
 ::::
 
@@ -104,7 +104,7 @@ La base de $Q_1$ est à $V_{Ref}$ et son émetteur au haut de $R$ : $\boxed{V_{R
 ::: {.solution}
 $V_{ptat}$ est proportionnelle à $T$, donc $\frac{\mathrm{d}V_{ptat}}{\mathrm{d}T} = \frac{V_{ptat}}{T}$ ; avec l'annexe :
 $$\frac{\mathrm{d}V_{Ref}}{\mathrm{d}T} = \frac{V_{BE1} - V_{BG}}{T} + \frac{V_{ptat}}{T} = \boxed{\frac{V_{Ref} - V_{BG}}{T}}$$
-nulle si et seulement si $V_{Ref} = V_{BG} = 1{,}26$ V. On règle $R/R_\Delta$ pour atteindre cette valeur ; le TC0 n'est obtenu qu'à une température (ici 300 K). Détail : [cours](../cours/05-references-de-tension.qmd#sec-td-brokaw-deval).
+nulle si et seulement si $V_{Ref} = V_{BG} = 1{,}26$ V. On règle $R/R_\Delta$ pour atteindre cette valeur ; le TC0 n'est obtenu qu'à une température (ici 300 K). Détail : [TD corrigé](../td/td04-2026-recueil-sujets-deval.qmd#sec-td-brokaw-deval).
 :::
 ::::
 
@@ -122,7 +122,7 @@ $I_{ptat} = \frac{2U_T\ln N}{R_\Delta}$ : c'est **$R_\Delta$** (avec le rapport 
 
 ![](sujets/2025-2026-partiel-ex2-rappels.png){fig-alt="Rappels : schéma équivalent petits signaux d'un transistor NPN : rbe entre base et émetteur (tension vbe), source de courant gm·vbe entre collecteur et émetteur."}
 
-Chapitre du cours : [applications de la contre-réaction, sujet 2025](../cours/03-applications-contre-reaction.qmd#sec-td-brokaw) ; méthode : [contre-réaction tension-parallèle](../cours/02-amplificateurs-contre-reaction.qmd#sec-cr-tension-parallele).
+TD corrigé : [sujet 2025, partie F. Rivet](../td/td03-2026-bandgap-brokaw.qmd#sec-td-brokaw) ; méthode : [contre-réaction tension-parallèle](../cours/02-amplificateurs-contre-reaction.qmd#sec-cr-tension-parallele).
 
 ::: {.complement}
 **Écart avec l'énoncé recopié au chapitre 3.** L'énoncé du chapitre 3 (issu du TD 3 de 2026, identique à ce sujet) écrit « $i_F = \beta_F\, v_{ref}$ » à la question 1, « $A_v$ très grand ($> 10^3$) » et « $Z_{sortie}$ » avant la question 7 ; le sujet et le TD portent « $i_1 = \beta_F . v_{ref}$ », « $> 10^5$ » et « $Z_{ampli}$ ». Ces écarts sont des erreurs de recopie dans Bristol, sans effet sur les solutions ; ils sont signalés pour correction du chapitre 3.
@@ -132,7 +132,7 @@ Chapitre du cours : [applications de la contre-réaction, sujet 2025](../cours/0
 
 :::: {.complement}
 ::: {.solution}
-On prélève la **tension** $v_{ref}$ (bases de $Q_1$, $Q_2$ reliées à la sortie) et on réinjecte des **courants** (collecteurs) aux nœuds d'entrée de « $A$ » : contre-réaction **tension-parallèle**. $A$ est une transimpédance, $\beta_F$ une conductance. Détail : [cours](../cours/03-applications-contre-reaction.qmd#sec-td-brokaw).
+On prélève la **tension** $v_{ref}$ (bases de $Q_1$, $Q_2$ reliées à la sortie) et on réinjecte des **courants** (collecteurs) aux nœuds d'entrée de « $A$ » : contre-réaction **tension-parallèle**. $A$ est une transimpédance, $\beta_F$ une conductance. Détail : [TD corrigé](../td/td03-2026-bandgap-brokaw.qmd#sec-td-brokaw).
 :::
 ::::
 
@@ -175,7 +175,7 @@ $$v_{ref} = v_{be_1}\left[1 + g_m R_1\left(1 + \frac{1}{1 + g_m R_2}\right)\righ
 :::: {.complement}
 ::: {.solution}
 $$\beta_F = \frac{g_m v_{be_1}}{v_{ref}} \approx \frac{1}{R_1\left(1 + \frac{1}{1 + g_m R_2}\right)} \;\approx\; \boxed{\frac{1}{R_1}}$$
-la dernière forme supposant $g_m R_2 \gg 1$. Le cours signale que cette hypothèse est discutable : au repos, $g_m R_2 = \frac{\Delta V_{BE}}{V_T} = \ln 8 \approx 2{,}1$, et le facteur correctif vaut environ 1,3 ([cours](../cours/03-applications-contre-reaction.qmd#sec-td-brokaw)).
+la dernière forme supposant $g_m R_2 \gg 1$. Le corrigé du TD signale que cette hypothèse est discutable : au repos, $g_m R_2 = \frac{\Delta V_{BE}}{V_T} = \ln 8 \approx 2{,}1$, et le facteur correctif vaut environ 1,3 ([TD corrigé](../td/td03-2026-bandgap-brokaw.qmd#sec-td-brokaw)).
 :::
 ::::
 

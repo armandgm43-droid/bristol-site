@@ -161,7 +161,7 @@ cartes:
       TD 2 : message binaire 0 / 0,7 V sur la varicap ($f$ = 98 et 101 MHz, $D$ = 4 Mbit/s). Type, bande (Carson), efficacité ?
     reponse: |
       FSK à phase continue ; $f_c = 99{,}5$ MHz, $\Delta f = 1{,}5$ MHz ; $BW = 2(D + \Delta f) = 11$ MHz ; $\eta = 0{,}36$.
-    ref: exr-td2-fsk-varicap
+    ref: ../td/td02-modulateurs.qmd#exr-td2-fsk-varicap
     source: notes-externes
 
   - id: earf1-ook-vdd
@@ -170,5 +170,5 @@ cartes:
       TD 2 : message binaire sur l'alimentation de l'oscillateur LC. Type de modulation et défauts ?
     reponse: |
       OOK (oscillateur éteint pour « 0 ») ; « 0 » indiscernable d'une absence d'émission, temps de démarrage de l'oscillateur à chaque « 1 », sensibilité à l'alimentation, $\eta = 0{,}5$.
-    ref: exr-td2-ook-vdd
+    ref: ../td/td02-modulateurs.qmd#exr-td2-ook-vdd
     source: notes-externes

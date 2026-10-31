@@ -909,7 +909,7 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 - ~~générer les fichiers `cartes/*.json` à partir des flashcards du site (`matieres/*/flashcards/`) par un script~~ : fait (`scripts/flashcards.py`, 7 octobre 2026) ;
 - lien « Voir dans le cours » sur chaque carte (champ `ref`) ;
 - révision d'un seul chapitre, et mode « veille d'examen » ;
-- à plus long terme : synchronisation de la progression entre appareils.
+- ~~synchronisation de la progression entre appareils~~ : fait (Supabase, 31 octobre 2026, `architecture.md` § 6.1).
 
 ---
 
@@ -951,6 +951,7 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 | 2026-10-08 | Catégorie *Notes externes* (`.notes-externes`), variante des notes de cours pour les notes qui ne sont pas celles d'Armand | EANA3 : seules des notes d'anciennes promotions sont disponibles |
 | 2026-10-25 | Site publié sur **GitHub Pages, en accès public** (https://armandgm43-droid.github.io/bristol-site/), construit par GitHub Actions (`.github/workflows/publier-site.yml`) ; remplace provisoirement la condition « accès réservé + accord des enseignants » (§ 5.4, règle 19.5) | Choix d'Armand : accéder au site depuis n'importe quel navigateur, sans `quarto preview` |
 | 2026-10-19 | Les 16 matières du S7 sont dans Bristol (archive 2A redistribuée) ; sources : dossiers `tp/` et `travaux/` (travaux personnels, jamais publiés) ; documents d'un ancien élève en nature `externe` | Centraliser toute l'année ; voir `conventions.md` § 2 et `ETAT_PROJET.md` |
+| 2026-10-31 | Synchronisation de la progression entre appareils par **Supabase** (connexion par lien e-mail, table `bristol_paquets` protégée par RLS, fusion carte par carte, `revision/sync-config.js`) ; `localStorage` reste la copie de travail ; inactive dans la version claude.ai | Choix d'Armand (question 8) : réviser sur PC et téléphone avec la même progression ; Supabase plutôt qu'un Gist pour que la promo puisse aussi s'en servir (`architecture.md` § 6.1) |
 | 2026-10-28 | Refonte complète de l'interface (DA « Bristol 2026 », accueil généré par `scripts/catalogue.ts`, page Annales, contexte et « Pour continuer » sur les chapitres, application de révision en mode concentration) ; quatre catégories et contenus inchangés | Demande d'Armand : rendre Bristol moderne et agréable à utiliser tous les jours (`conventions.md` § 13) |
 
 ---
@@ -969,7 +970,7 @@ Tous ont été générés **avant** la méthode Bristol. Ils sont à considérer
 6. **Paquets hérités** (réseaux, anglais, VHDL, C et Unix, LaTeX) : les migrer vers le nouveau système, ou les conserver tels quels ?
    *Règle provisoire : conservés tels quels dans `revision/cartes/`, avec leurs clés actuelles ; leurs préfixes (`res-`, `ang-`, `vhdl-`, `cu-`, `latex-`, `ts-`) sont réservés (`ts-` : paquet TS227 abandonné, préfixe jamais réutilisé).*
 7. ~~**Premier chapitre de test de TS227**~~ : *tranchée le 2026-10-07 : chapitre 2.*
-8. **Synchronisation de la progression** entre appareils : nécessaire à terme, solution à choisir.
+8. ~~**Synchronisation de la progression** entre appareils~~ : *tranchée le 2026-10-31 : compte Supabase (connexion par e-mail), fusion carte par carte ; voir le journal des décisions.*
 
 *Les questions 9 à 12 (déjà tranchées) sont suivies dans `ETAT_PROJET.md`, section 8.*
 

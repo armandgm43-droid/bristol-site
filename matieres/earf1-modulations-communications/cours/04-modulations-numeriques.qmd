@@ -5,7 +5,7 @@ chapitre: 4
 enseignants: ["Thierry Taris"]
 annee: "2026-2027"
 statut: flashcards
-date-modified: 2026-10-29
+date-modified: 2026-10-31
 sources:
   - id: mod-num
     fichier: support/cours-02-modulations-numeriques.pdf
@@ -206,7 +206,7 @@ OOK : modulation d'amplitude ; débit $D = 1/T_r$ (bit/s) ; 1 symbole = 1 bit [n
 :::
 
 ::: {.complement}
-L'OOK est une AMDBAP à 100 % ([chapitre 2](02-modulations-lineaires.qmd#sec-amdbap)) dont le modulant est un signal binaire (0, 1) : d'où la raie de porteuse, qui ne porte aucune information, et la démodulation par simple détecteur d'enveloppe ([TD 3](02-modulations-lineaires.qmd#exr-td3-detecteur-ook)).
+L'OOK est une AMDBAP à 100 % ([chapitre 2](02-modulations-lineaires.qmd#sec-amdbap)) dont le modulant est un signal binaire (0, 1) : d'où la raie de porteuse, qui ne porte aucune information, et la démodulation par simple détecteur d'enveloppe ([TD 3](../td/td03-demodulateurs.qmd#exr-td3-detecteur-ook)).
 :::
 
 ## Modulations de phase {#sec-modulations-phase}
@@ -321,7 +321,7 @@ Modulations par **saut discret de la fréquence porteuse** (*Frequency Shift Key
 
 ::: {.complement}
 - Le quart de tour par bit et @eq-msk-excursion sont liés : avec $f_{0,1} = f_c \mp \Delta f$, la phase relative à la porteuse $f_c$ tourne de $2\pi\Delta f\,T_r = \pi/2$ pendant un bit. L'écart $f_1 - f_0 = 1/(2T_r)$ est le plus petit qui rende les deux signaux orthogonaux sur un bit, d'où le nom *Minimum Shift Keying*.
-- La CPFSK s'obtient naturellement avec un oscillateur commandé en tension (VCO) attaqué par le signal binaire, comme au TD 2 (@exr-td2-fsk-varicap) : la phase d'un oscillateur ne saute pas.
+- La CPFSK s'obtient naturellement avec un oscillateur commandé en tension (VCO) attaqué par le signal binaire, comme au [TD 2](../td/td02-modulateurs.qmd#exr-td2-fsk-varicap) : la phase d'un oscillateur ne saute pas.
 :::
 
 ### MSK et GMSK {#sec-msk-gmsk}
@@ -376,116 +376,10 @@ Le support renvoie, pour la suite (codage, performances en présence de bruit), 
 
 ## Exercices du TD {#sec-exercices-td-ch04}
 
-### TD 1 (GNU Radio) : modulations numériques {#sec-td1-numeriques}
+Les TD sont corrigés question par question dans leurs propres pages, énoncé découpé à l'appui :
 
-::: {#exr-td1-ask-numerique}
-## Modulations d'amplitude numériques
-
-Fenêtre « Signal Modulant », temporel, case « Random Data » cochée [td1, p. 6].
-
-1. Calculer le débit binaire $D_b$ du signal modulant.
-2. Fenêtre « Signal Modulé », case « Modulation 1 » : donner le nom de la modulation observée.
-3. Case « Modulation 2 » : donner le nom de la modulation observée. Comparer ces deux modulations en donnant au moins un avantage de l'une sur l'autre.
-4. Spectre du signal modulé : calculer la bande passante utile $BW_{mod}$ et l'efficacité spectrale. Le spectre utile est-il symétrique ? Pourquoi ? Que se passe-t-il quand on change la fréquence de la porteuse ?
-:::
-
-:::: {.complement}
-::: {.solution}
-Les valeurs dépendent du fichier de simulation, qui n'est pas dans les sources : seule la méthode est donnée.
-
-1. Mesurer la durée $T_r$ d'un bit (le plus court palier du signal aléatoire) : $D_b = 1/T_r$.
-2. et 3. Les deux modulations de cette partie sont des modulations d'amplitude numériques ; les deux formes possibles avec deux niveaux sont l'**OOK** (amplitudes $0$ et $E$, la porteuse disparaît pendant les « 0 ») et l'ASK **antipodale** (amplitudes $\pm E$, identique à la BPSK). Avantage de l'OOK : démodulation simple par détecteur d'enveloppe ; avantage de l'antipodale : pas de raie de porteuse (toute la puissance porte l'information) et, à puissance crête égale, points deux fois plus éloignés (meilleure détectabilité).
-4. $BW_{mod} = 2D_b$ (lobe principal) et $\eta = 0{,}5$ (@eq-ook, @eq-bpsk). Le spectre est symétrique autour de $f_p$ : le modulant est réel, ses bandes latérales inférieure et supérieure sont images l'une de l'autre (comme en AM double bande, [chapitre 2](02-modulations-lineaires.qmd#sec-amdbap-spectre)). Changer la fréquence porteuse translate le spectre sans changer sa forme ni sa largeur.
-:::
-::::
-
-::: {#exr-td1-fsk}
-## Modulation de fréquence numérique
-
-Modulant aléatoire binaire ; porteuse $A_p = 1\ \mathrm{V}$, $f_p = 10\ \mathrm{kHz}$ ; indice $\beta = 1$ [td1, p. 10].
-
-1. Justifier que la modulation observée est une FSK et non une GMSK.
-2. Donner l'expression de la bande passante utile d'un signal FSK et la calculer (l'excursion $\Delta f$ est ici très faible devant le débit $D$).
-3. Décrire et justifier la forme de la constellation IQ.
-:::
-
-:::: {.complement}
-::: {.solution}
-1. Les changements de fréquence sont brusques à chaque transition de bit ; en GMSK, le filtre gaussien adoucit les transitions de fréquence (et l'excursion vaut $D/4$).
-2. Par la règle de Carson, avec un modulant binaire de débit $D$ : $BW_{FSK} \approx 2(\Delta f + D)$ (forme du corrigé de 2023, @exr-td2-fsk-varicap) ; si $\Delta f \ll D$, $BW_{FSK} \approx 2D$. La valeur numérique dépend du débit de la simulation.
-3. Les points se déplacent **sur un cercle** de rayon $A_p$ : l'amplitude est constante, seule la phase tourne, dans un sens pour un « 1 » et dans l'autre pour un « 0 » [mod-num, p. 24-25].
-:::
-::::
-
-### TD 2 : modulateurs numériques à oscillateur LC {#sec-td2-numeriques}
-
-Ces exercices réutilisent le modulateur à varicap du [chapitre 3](03-modulations-angulaires.qmd#exr-td2-modulateur-varicap) : $C_{Dv}(V_p) = C_0/(1 + V_p/V_0)^n$ avec $C_0 = 30\ \mathrm{pF}$, $V_0 = 700\ \mathrm{mV}$, $n = 0{,}7$. Le message $m(t)$ est un signal binaire : « 1 » = $+0{,}7\ \mathrm{V}$, « 0 » = $0\ \mathrm{V}$, bits de $0{,}25\ \mu\mathrm{s}$ (chronogramme de l'énoncé : « 1 » jusqu'à 2 µs, « 0 » « 0 » de 2 à 2,5 µs, « 1 » de 2,5 à 2,75 µs, puis « 0 ») [td2, p. 2-3].
-
-::: {#exr-td2-fsk-varicap}
-## Message binaire sur la varicap
-
-$m(t)$ est appliqué sur $C_{Dv}$ ; $L = 13{,}4\ \mathrm{nH}$, $C = 167\ \mathrm{pF}$.
-
-1. Expliquer simplement le fonctionnement du circuit. Représenter le signal de sortie $V_{out} = V_{out+} - V_{out-}$.
-2. Quel type de modulateur réalise-t-on ?
-3. Donner les caractéristiques de ce modulateur pour le signal binaire proposé.
-:::
-
-:::: {.notes-externes}
-::: {.solution}
-D'après le corrigé de 2023 [corrige-2023-td02, p. 2-3] :
-
-1. Niveau haut, $V_p = 0{,}7\ \mathrm{V}$ : $C_{Dv}(0{,}7) = 0{,}615\,C_0$ et $f_1 = \dfrac{1}{2\pi\sqrt{L(C + 0{,}615\,C_0)}} = 101\ \mathrm{MHz}$. Niveau bas : $C_{Dv}(0) = C_0$ et $f_0 = 98\ \mathrm{MHz}$. Sortie : deux fréquences, même amplitude.
-2. Modulation **FSK**.
-3. $T_\mathrm{bit} = 0{,}25\ \mu\mathrm{s}$, $D_b = 4\ \mathrm{Mbit/s}$ ; $f_c = \frac{f_1 + f_0}{2} = 99{,}5\ \mathrm{MHz}$ ; $\Delta f = f_1 - f_c = 1{,}5\ \mathrm{MHz}$ ; $BW_{FSK} = 2(D_b + \Delta f) = 11\ \mathrm{MHz}$ ; vitesse de transmission $= D_b$ ; $\eta = D_b/BW_{FSK} = 0{,}36$.
-
-Pour une **GMSK** (question 5 de l'exercice 3, traitée ici par le corrigé) : ajout d'un filtre gaussien ; $\Delta f = D_b/4 = 1\ \mathrm{MHz}$ ; $BW_{GMSK} = D_b = 4\ \mathrm{MHz}$ ; vitesse $4\ \mathrm{MBd}$ ; $\eta = 1$. Intérêt : envoyer le plus fort débit possible dans la bande la plus restreinte.
-:::
-::::
-
-::: {.complement}
-- Contrôle : $(1 + 0{,}7/0{,}7)^{0{,}7} = 2^{0{,}7} = 1{,}625$, donc $C_{Dv} = 18{,}5\ \mathrm{pF}$ et $f_1 = 100{,}96\ \mathrm{MHz}$ ; $f_0 = 97{,}96\ \mathrm{MHz}$.
-- Ici $V_p = V_0$ : l'approximation linéaire du [chapitre 3](03-modulations-angulaires.qmd#exr-td2-modulateur-varicap) ($|m| \ll V_0/n$) ne vaut plus, et l'on calcule les deux fréquences exactement (sensibilité moyenne $3\ \mathrm{MHz}/0{,}7\ \mathrm{V} \approx 4{,}3\ \mathrm{MHz/V}$, au lieu de $7{,}5\ \mathrm{MHz/V}$ en petit signal).
-- La phase d'un oscillateur ne saute pas : cette FSK est à **phase continue** (CPFSK). Pour la rendre MSK, il faudrait $\Delta f = D/4 = 1\ \mathrm{MHz}$, donc des niveaux de $V_p$ plus faibles ; pour une GMSK, filtrer en plus $m(t)$ par un filtre gaussien.
-:::
-
-::: {#exr-td2-ook-vdd}
-## Message binaire sur l'alimentation
-
-$m(t)$ est maintenant appliqué sur l'alimentation $V_{DD}$ ; l'entrée $V_p$ de la varicap est à la masse ; $L$ et $C$ de l'application de l'exercice 1.
-
-1. Expliquer simplement le fonctionnement. Représenter $V_{out}(t)$.
-2. Quel type de modulateur réalise-t-on ?
-3. Donner les caractéristiques de ce modulateur pour le signal binaire proposé.
-4. Quels sont les défauts principaux de ce modulateur ?
-5. Quelles modifications faut-il apporter au circuit pour en faire un modulateur GMSK ?
-:::
-
-:::: {.notes-externes}
-::: {.solution}
-D'après le corrigé de 2023 [corrige-2023-td02, p. 3-4] :
-
-1. Deux cas : « 0 », oscillateur éteint, pas de signal ; « 1 », oscillation à $f_1 = \dfrac{1}{2\pi\sqrt{L(C + C_0)}} = 98\ \mathrm{MHz}$.
-2. Modulateur **OOK**.
-3. $T_\mathrm{bit} = 0{,}25\ \mu\mathrm{s}$, $D_b = 4\ \mathrm{Mbit/s}$ ; $BW_{OOK} = 2D_b = 8\ \mathrm{MHz}$ ; vitesse de transmission $= D_b$ ; $\eta = 0{,}5$.
-4. Principal défaut : il est difficile de distinguer l'envoi d'un « 0 » de l'absence d'émission.
-5. Voir la solution GMSK de l'exercice précédent.
-:::
-::::
-
-::: {.complement}
-- 4 (autres défauts) : à chaque « 1 », l'oscillateur doit **démarrer** (temps d'établissement de l'oscillation, qui limite le débit : à 98 MHz, un bit ne dure que 24,5 périodes) ; l'amplitude et même la fréquence dépendent de l'alimentation (couplage à $V_{DD}$) ; enfin, l'OOK a une mauvaise efficacité spectrale (0,5) et une enveloppe non constante.
-- 5 : appliquer le message sur la varicap (et non sur $V_{DD}$), le filtrer par un filtre gaussien, et régler les niveaux de $V_p$ pour obtenir $\Delta f = D/4$ (@eq-msk-excursion).
-:::
-
-### Exemples d'application (corrigé de 2023) {#sec-exemples-2023-num}
-
-::: {.notes-externes}
-Corrigé d'une ancienne version du TD 1 (2023), **énoncé non disponible** [corrige-2023-td01, p. 3-4] :
-
-- **OOK** : 6 bits en 0,6 ms, donc $T_b = 0{,}1\ \mathrm{ms}$, $D_b = 1/T_b = 10\ \mathrm{kbit/s}$ et $BW = 2D_b = 20\ \mathrm{kHz}$.
-- **Modulation à amplitude constante, 8PSK** (la FSK étant écartée) : $N_{sym} = \log_2 8 = 3$ bits par symbole ; vitesse $D_b/3$ ; $\Delta\varphi = 45°$ ; $\eta = \dfrac{D_b}{2D_b/N_{sym}} = \dfrac32 = 1{,}5$.
-:::
+- [TD 1, parties II et IV : modulations numériques ASK et FSK](../td/td01-gnuradio-modulations.qmd#sec-td01-ex2) (et l'[ancienne version de 2023](../td/td01-gnuradio-modulations.qmd#sec-exemples-2023-num)) ;
+- [TD 2, exercices 2 et 3 : modulateurs FSK et OOK à oscillateur LC](../td/td02-modulateurs.qmd#sec-td02-ex2).
 
 ## À retenir {#sec-retenir-numeriques}
 

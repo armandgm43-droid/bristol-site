@@ -13,3 +13,7 @@ __pycache__/
 .venv/
 
 **/*.quarto_ipynb
+
+# Fichiers de travail de Claude (aperçus de sources : jamais publiés)
+/_apercu_tmp/
+/Claude outputs/

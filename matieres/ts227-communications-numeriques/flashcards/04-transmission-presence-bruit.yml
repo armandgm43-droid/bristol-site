@@ -526,7 +526,7 @@ cartes:
     reponse: |
       $P_b = Q\left(\sqrt{\frac{2E_b}{N_0}}\right)$ ; $\frac{g_0}{\sigma} = \sqrt{2E_b/N_0}$,
       soit $20\log_{10}\frac{g_0}{\sigma} = 10\log_{10}\frac{E_b}{N_0} + 3\ \mathrm{dB}$.
-    ref: exr-td-probabilite-erreur
+    ref: ../td/td01-transmissions-bande-de-base.qmd#exr-td-probabilite-erreur
     source: officiel
 
   - id: ts227-pb-influence-m
@@ -548,7 +548,7 @@ cartes:
     reponse: |
       Un triangle de sommet $\Ts$ en $t = D$, nul hors de $[D - \Ts, D + \Ts]$.
       Il vérifie le critère de Nyquist aux instants $D + n\Ts$, avec $g_0 = \Ts = E_h$.
-    ref: exr-td-filtre-adapte
+    ref: ../td/td01-transmissions-bande-de-base.qmd#exr-td-filtre-adapte
     source: officiel
 
   - id: ts227-exercice-causalite-premier-symbole
@@ -558,7 +558,7 @@ cartes:
     reponse: |
       Elle est **retardée** de $D$ : $A_0$ n'atteint le maximum de $g$ qu'en $t = D \geq \Ts$,
       et l'échantillonneur doit être calé sur les instants $D + n\Ts$.
-    ref: exr-td-filtre-adapte
+    ref: ../td/td01-transmissions-bande-de-base.qmd#exr-td-filtre-adapte
     source: complement
 
   - id: ts227-exercice-bruit-echantillonne
@@ -568,7 +568,7 @@ cartes:
     reponse: |
       $R_{z'_l}[k] = \frac{N_0}{2}\, g(k\Ts) = \frac{N_0}{2}\, g(0)\, \delta_k$ ($g$ de Nyquist) :
       bruit stationnaire, décorrélé, de variance $\sigma^2 = \frac{N_0}{2} g(0)$.
-    ref: exr-td-probabilite-erreur
+    ref: ../td/td01-transmissions-bande-de-base.qmd#exr-td-probabilite-erreur
     source: officiel
 
   - id: ts227-bruit-blanc-echantillons-piege
@@ -578,7 +578,7 @@ cartes:
     reponse: |
       Un bruit blanc a une puissance infinie. Limité à $[-f_e/2, f_e/2]$ avant échantillonnage,
       ses échantillons ont la variance $\frac{N_0}{2T_e}$, égale à $\frac{N_0}{2}$ seulement si $T_e = 1$.
-    ref: exr-td-probabilite-erreur
+    ref: ../td/td01-transmissions-bande-de-base.qmd#exr-td-probabilite-erreur
     source: complement
 
   - id: ts227-exercice-fiabilite-4pam
@@ -588,5 +588,5 @@ cartes:
     reponse: |
       $\sigma = \frac{1}{4}$ : intervalles $[A - 0{,}75, A + 0{,}75]$, disjoints et sans seuil.
       $P_s = 2 \cdot \frac{3}{4}\, Q(4) \approx 4{,}8 \cdot 10^{-5}$ : transmission fiable.
-    ref: exr-td-constellation-bruitee
+    ref: ../td/td01-transmissions-bande-de-base.qmd#exr-td-constellation-bruitee
     source: complement

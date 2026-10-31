@@ -62,6 +62,16 @@ website:
             - matieres/ts227-communications-numeriques/cours/02-communication-sans-bruit.qmd
             - matieres/ts227-communications-numeriques/cours/03-dsp-signaux-codes-en-ligne.qmd
             - matieres/ts227-communications-numeriques/cours/04-transmission-presence-bruit.qmd
+        - section: "TD corrigés"
+          contents:
+            - matieres/ts227-communications-numeriques/td/td01-transmissions-bande-de-base.qmd
+        - section: "Annales corrigées"
+          contents:
+            - matieres/ts227-communications-numeriques/annales/2019-2020-partiel.qmd
+            - matieres/ts227-communications-numeriques/annales/2018-2019-partiel.qmd
+            - matieres/ts227-communications-numeriques/annales/2017-2018-partiel.qmd
+            - matieres/ts227-communications-numeriques/annales/2016-2017-partiel.qmd
+            - matieres/ts227-communications-numeriques/annales/2015-2016-partiel.qmd
         # Ajouter les chapitres au fur et à mesure, dans l'ordre :
         # - section: "Cours"
         #   contents:
@@ -78,9 +88,29 @@ website:
             - matieres/eana3-circuits-integres/cours/03-applications-contre-reaction.qmd
             - matieres/eana3-circuits-integres/cours/04-oscillateurs.qmd
             - matieres/eana3-circuits-integres/cours/05-references-de-tension.qmd
+        - section: "TD corrigés"
+          contents:
+            - matieres/eana3-circuits-integres/td/td01-ou-est-la-contre-reaction.qmd
+            - matieres/eana3-circuits-integres/td/td02-circuit-pour-l-espace.qmd
+            - matieres/eana3-circuits-integres/td/td03-modulation-amplitude.qmd
+            - matieres/eana3-circuits-integres/td/td03-2026-bandgap-brokaw.qmd
+            - matieres/eana3-circuits-integres/td/td04-oscillateur-resistance-negative.qmd
+            - matieres/eana3-circuits-integres/td/td04-2026-recueil-sujets-deval.qmd
+            - matieres/eana3-circuits-integres/td/td05-reference-tension-cmos.qmd
+            - matieres/eana3-circuits-integres/td/td06-oscillateur-aop.qmd
+            - matieres/eana3-circuits-integres/td/td-add-vdd-is-not-your-bff.qmd
+            - matieres/eana3-circuits-integres/td/td-add-oscillateur-anneau.qmd
         - section: "Annales corrigées"
           contents:
+            - matieres/eana3-circuits-integres/annales/2025-2026-partiel.qmd
+            - matieres/eana3-circuits-integres/annales/2022-2023-partiel-circuits-hf.qmd
+            - matieres/eana3-circuits-integres/annales/2022-2023-partiel-contre-reaction.qmd
+            - matieres/eana3-circuits-integres/annales/2017-2018-partiel-circuits-hf.qmd
+            - matieres/eana3-circuits-integres/annales/2017-2018-partiel-contre-reaction.qmd
             - matieres/eana3-circuits-integres/annales/2016-2017-partiel-circuits-hf.qmd
+            - matieres/eana3-circuits-integres/annales/2016-2017-partiel-contre-reaction.qmd
+            - matieres/eana3-circuits-integres/annales/2015-2016-partiel-contre-reaction.qmd
+            - matieres/eana3-circuits-integres/annales/2013-2014-partiel-circuits-hf.qmd
     # Matières du S7 mises en place le 19 octobre 2026 : fiche matière seule,
     # ajouter la section « Cours » au premier chapitre rédigé.
     - id: eana1
@@ -114,6 +144,11 @@ website:
             - matieres/earf1-modulations-communications/cours/02-modulations-lineaires.qmd
             - matieres/earf1-modulations-communications/cours/03-modulations-angulaires.qmd
             - matieres/earf1-modulations-communications/cours/04-modulations-numeriques.qmd
+        - section: "TD corrigés"
+          contents:
+            - matieres/earf1-modulations-communications/td/td01-gnuradio-modulations.qmd
+            - matieres/earf1-modulations-communications/td/td02-modulateurs.qmd
+            - matieres/earf1-modulations-communications/td/td03-demodulateurs.qmd
     - id: proj1
       title: "PROJ1"
       style: docked
@@ -139,6 +174,15 @@ website:
       style: docked
       contents:
         - matieres/auto1-commande-systemes-lineaires/index.qmd
+        - section: "Annales corrigées"
+          contents:
+            - matieres/auto1-commande-systemes-lineaires/annales/2017-2018-partiel-temps-discret.qmd
+            - matieres/auto1-commande-systemes-lineaires/annales/2017-2018-partiel-commande-lineaire.qmd
+            - matieres/auto1-commande-systemes-lineaires/annales/2016-2017-partiel-temps-discret.qmd
+            - matieres/auto1-commande-systemes-lineaires/annales/2016-2017-partiel-commande-lineaire.qmd
+            - matieres/auto1-commande-systemes-lineaires/annales/2015-2016-partiel-temps-discret.qmd
+            - matieres/auto1-commande-systemes-lineaires/annales/2014-2015-partiel-commande-lineaire.qmd
+            - matieres/auto1-commande-systemes-lineaires/annales/2013-2014-partiel-commande-lineaire.qmd
     - id: auto2
       title: "AUTO2"
       style: docked
@@ -161,6 +205,11 @@ website:
             - matieres/tsig1-traitement-numerique-signal/cours/03-tfd-interpretation-frequentielle.qmd
             - matieres/tsig1-traitement-numerique-signal/cours/04-implementation-equations-differences.qmd
             - matieres/tsig1-traitement-numerique-signal/cours/05-representation-en-phase.qmd
+        - section: "TD corrigés"
+          contents:
+            - matieres/tsig1-traitement-numerique-signal/td/td01-systemes-discrets-representation-frequence.qmd
+            - matieres/tsig1-traitement-numerique-signal/td/td02-transformee-z-equation-differences.qmd
+            - matieres/tsig1-traitement-numerique-signal/td/td03-placement-poles-zeros-rii.qmd
         - section: "Fiches de révision"
           contents:
             - matieres/tsig1-traitement-numerique-signal/fiches/fiche-tf-tz-echantillonnage.qmd

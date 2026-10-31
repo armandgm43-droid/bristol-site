@@ -567,7 +567,7 @@ cartes:
     reponse: |
       $$\bar{m}_{s_l} = \frac{m_A}{\Ts} \int_{-\infty}^{+\infty} h(t)\, \mathrm{d}t$$
       (changement de variable $t \leftarrow t - k\Ts$, puis Chasles).
-    ref: exr-td-bennett
+    ref: ../td/td01-transmissions-bande-de-base.qmd#exr-td-bennett
     source: officiel
 
   - id: ts227-exercice-dsp-2pam
@@ -577,7 +577,7 @@ cartes:
     reponse: |
       $m_A = 0$, $R_A[0] = 1$, $R_A[k \neq 0] = 0$, donc
       $$\Gamma_{s_l}(f) = \frac{|H(f)|^2}{\Ts} = \Ts \sinc^2(\Ts f)$$
-    ref: exr-td-dsp-2pam
+    ref: ../td/td01-transmissions-bande-de-base.qmd#exr-td-dsp-2pam
     source: officiel
 
   - id: ts227-exercice-dsp-ook
@@ -587,7 +587,7 @@ cartes:
     reponse: |
       $R_A[0] = \frac{1}{2}$, $R_A[d \neq 0] = \frac{1}{4}$ ; formule sommatoire de Poisson, et $|H|^2$ nul en $k/\Ts$ ($k \neq 0$) :
       $$\Gamma_{s_l}(f) = \frac{\Ts}{4} \sinc^2(f\Ts) + \frac{1}{4}\, \delta(f)$$
-    ref: exr-td-dsp-ook
+    ref: ../td/td01-transmissions-bande-de-base.qmd#exr-td-dsp-ook
     source: complement
 
   - id: ts227-ook-raie-moyenne
@@ -598,7 +598,7 @@ cartes:
       De la moyenne non nulle $m_A = \frac{1}{2}$ : $A_k = \frac{1}{2} + B_k$, $B_k$ centré (partie continue, 2-PAM de variance $\frac14$),
       la moyenne donne une raie de puissance $m_A^2 = \frac{1}{4}$.
       La moitié de la puissance ($\frac12$) est dans la raie à $f = 0$, qui ne transporte pas d'information.
-    ref: exr-td-dsp-ook
+    ref: ../td/td01-transmissions-bande-de-base.qmd#exr-td-dsp-ook
     source: complement
 
   - id: ts227-exercice-largeur-bande
@@ -609,5 +609,5 @@ cartes:
     reponse: |
       $\Ts = 0{,}5\ \mathrm{ms}$ : allure de $\sinc^2(f\Ts)$ sur $[-4, 4]\ \mathrm{kHz}$, **périodisée** tous les $8\ \mathrm{kHz}$ (temps discret).
       Zéros aux multiples de $2\ \mathrm{kHz}$ : lobe principal $[-2, 2]\ \mathrm{kHz}$, largeur $4\ \mathrm{kHz}$ ($B = 1/\Ts = 2\ \mathrm{kHz}$).
-    ref: exr-td-largeur-bande
+    ref: ../td/td01-transmissions-bande-de-base.qmd#exr-td-largeur-bande
     source: complement

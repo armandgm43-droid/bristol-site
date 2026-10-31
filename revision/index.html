@@ -53,6 +53,16 @@ h1,h2,h3{letter-spacing:var(--tracking-tight); font-weight:600}
   :root:not([data-theme="light"]) .theme-toggle .on{display:inline-block}
   :root:not([data-theme="light"]) .theme-toggle .off{display:none}
 }
+.sync-btn{position:relative; display:inline-flex; align-items:center; justify-content:center; width:2.25rem; height:2.25rem; border:0; border-radius:var(--radius-sm); background:none; color:var(--text-muted); cursor:pointer; padding:0}
+.sync-btn:hover{color:var(--text); background:var(--surface-2)}
+.sync-btn svg{width:1.15rem; height:1.15rem}
+.sync-btn::after{content:""; position:absolute; right:.4rem; bottom:.45rem; width:.45rem; height:.45rem; border-radius:50%; background:var(--text-subtle); box-shadow:0 0 0 2px var(--bg); display:none}
+.sync-btn[data-state="ok"]::after{display:block; background:var(--success)}
+.sync-btn[data-state="sync"]::after{display:block; background:var(--accent)}
+.sync-btn[data-state="error"]::after{display:block; background:var(--danger)}
+.sync-btn[data-state="offline"]::after{display:block; background:var(--warning)}
+.sync-info{margin:0 0 var(--space-4); font-size:var(--text-sm); color:var(--text-muted)}
+.sync-info strong{color:var(--text)}
 .save-status{font-size:var(--text-xs); color:var(--text-muted); display:inline-flex; align-items:center; gap:.45rem; text-align:right}
 .save-status::before{content:""; width:.45rem; height:.45rem; border-radius:50%; background:var(--success); flex:none}
 .save-status[data-state="pending"]::before,.save-status[data-state="saving"]::before,.save-status[data-state="loading"]::before{background:var(--text-subtle)}
@@ -148,8 +158,8 @@ main.wrap{flex:1; padding-top:var(--space-10); padding-bottom:var(--space-11)}
 .field{display:grid; gap:.4rem; margin:0; min-width:0}
 .field > label,.field > legend{font-weight:500; font-size:var(--text-sm); color:var(--text-secondary); padding:0}
 fieldset.field{border:0; padding:0}
-textarea,input[type=text],input[type=number],input[type=search],select{font:inherit; font-size:var(--text-base); color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:.5rem .7rem; width:100%; min-height:2.25rem; transition:border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease)}
-textarea:focus,input[type=text]:focus,input[type=number]:focus,input[type=search]:focus,select:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft-strong)}
+textarea,input[type=text],input[type=email],input[type=number],input[type=search],select{font:inherit; font-size:var(--text-base); color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:.5rem .7rem; width:100%; min-height:2.25rem; transition:border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease)}
+textarea:focus,input[type=text]:focus,input[type=email]:focus,input[type=number]:focus,input[type=search]:focus,select:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft-strong)}
 textarea{line-height:1.5; resize:vertical; min-height:5rem}
 input[type=file]{font:inherit; font-size:var(--text-sm); color:var(--text-muted); max-width:100%}
 .add-foot{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:var(--space-3); margin-top:var(--space-4)}
@@ -301,6 +311,9 @@ body.studying .toast-wrap{padding-bottom:calc(6rem + env(safe-area-inset-bottom,
     <li><a href="./index.html" aria-current="page" data-act="home" id="navRevisions">Révisions</a></li>
   </ul>
   <div class="nav-end">
+    <button class="sync-btn" id="syncBtn" type="button" hidden data-state="off" title="Synchronisation entre appareils" aria-label="Synchronisation entre appareils">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+    </button>
     <span class="save-status" id="saveStatus" data-state="loading" aria-live="polite">Chargement…</span>
     <button class="theme-toggle" id="themeToggle" type="button" title="Basculer le mode sombre" aria-label="Basculer le mode sombre">
       <span class="i i-moon off" aria-hidden="true"></span><span class="i i-sun on" aria-hidden="true"></span>
@@ -309,6 +322,7 @@ body.studying .toast-wrap{padding-bottom:calc(6rem + env(safe-area-inset-bottom,
 </nav></header>
 <main id="app" class="wrap"></main>
 <dialog id="dlg" aria-labelledby="dlgTitle"></dialog>
+<script src="sync-config.js"></script>
 <div class="toast-wrap" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -462,7 +476,7 @@ function pickNext(deck, now, s) {
 
 /* ---------- Modèle ---------- */
 function newCard(front, back, created, key = '', chap = '') {
-  return { id: newId('c'), front, back, key, chap, state: 'new', due: 0, ivl: 0, ease: S.startEase, step: 0, reps: 0, lapses: 0, created, b: 0 };
+  return { id: newId('c'), front, back, key, chap, state: 'new', due: 0, ivl: 0, ease: S.startEase, step: 0, reps: 0, lapses: 0, created, b: 0, pm: 0, cm: created };
 }
 function normCard(c) {
   return {
@@ -471,7 +485,8 @@ function normCard(c) {
     src: c.src ? String(c.src).slice(0, 120) : '',
     state: ['new', 'learning', 'review', 'relearning'].includes(c.state) ? c.state : 'new',
     due: +c.due || 0, ivl: +c.ivl || 0, ease: +c.ease || S.startEase, step: +c.step || 0,
-    reps: +c.reps || 0, lapses: +c.lapses || 0, created: +c.created || Date.now(), b: +c.b || 0
+    reps: +c.reps || 0, lapses: +c.lapses || 0, created: +c.created || Date.now(), b: +c.b || 0,
+    pm: +c.pm || 0, cm: +c.cm || 0
   };
 }
 function normDeck(d) {
@@ -481,6 +496,7 @@ function normDeck(d) {
   return {
     id: d.id, name: d.name || 'Sans titre', created: +d.created || Date.now(), color: d.color || PALETTE[0].c, src: d.src ? String(d.src) : '',
     settings: { newPerDay: npd }, today: d.today && typeof d.today === 'object' ? { day: +d.today.day || 0, newSeen: +d.today.newSeen || 0, reviews: +d.today.reviews || 0 } : { day: 0, newSeen: 0, reviews: 0 },
+    mm: +d.mm || 0, gone: d.gone && typeof d.gone === 'object' ? d.gone : {},
     cards
   };
 }
@@ -498,6 +514,7 @@ function setStatus(st) {
   el.innerHTML = '<span>' + esc(txt) + '</span>'; el.dataset.state = st; el.title = txt;
 }
 
+const hooks = {};
 const Store = (() => {
   const LS = 'bristol:v1';
   let mode = 'memory', col = null, inbox = null, timer = null, busy = false, again = false, halted = false, lastFailed = false;
@@ -547,6 +564,7 @@ const Store = (() => {
   }
 
   function touch(deckId, w = {}) {
+    if (hooks.touch) hooks.touch(deckId, w);
     if (mode === 'memory' || halted) return;
     const e = dirty.get(deckId) || { meta: false, buckets: new Set(), all: false, del: false };
     if (w.meta) e.meta = true;
@@ -560,7 +578,7 @@ const Store = (() => {
 
   const groupBuckets = deck => { const g = new Map(); for (const c of deck.cards) { if (!g.has(c.b)) g.set(c.b, []); g.get(c.b).push(c); } return g; };
   const stripB = ({ b, ...rest }) => rest;
-  const metaOf = d => ({ v: 1, name: d.name, created: d.created, color: d.color, src: d.src || '', settings: d.settings, today: d.today });
+  const metaOf = d => ({ v: 1, name: d.name, created: d.created, color: d.color, src: d.src || '', settings: d.settings, today: d.today, mm: d.mm || 0, gone: d.gone || {} });
 
   // Un document est limité à 256 Kio : les cartes sont réparties en blocs.
   function rebalance(groups, e) {
@@ -682,6 +700,360 @@ const Store = (() => {
   return { init, load, touch, flush, settle, watchInbox, mode: () => mode, pending: () => dirty.size > 0 };
 })();
 
+
+/* ---------- Synchronisation entre appareils (Supabase) ---------- */
+// Active uniquement en stockage local (site publié, quarto preview), quand
+// sync-config.js donne l'adresse et la clé publique du projet Supabase.
+// localStorage reste le stockage de travail ; le compte garde une copie
+// partagée de chaque paquet (table bristol_paquets), fusionnée carte par
+// carte : la révision la plus récente gagne (champ pm), le contenu modifié
+// le plus récemment gagne pour les cartes créées à la main (champ cm).
+// Les cartes des paquets du dépôt (src) gardent le contenu du dépôt.
+const Cloud = (() => {
+  const CFG = window.BRISTOL_SYNC || {};
+  const LIB = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js';
+  const TABLE = 'bristol_paquets';
+  const KD = 'bristol:sync:dirty', KR = 'bristol:sync:revs', KP = 'bristol:sync:pending';
+  const PROG = ['state', 'due', 'ivl', 'ease', 'step', 'reps', 'lapses', 'pm'];
+  let sb = null, user = null, state = 'off', busy = false, again = false, timer = null, applying = false;
+  let lastOk = 0, lastErr = '', dirty = {}, revs = {}, started = false;
+  const touched = new Set();
+
+  const readJ = (k, def) => { try { const v = JSON.parse(localStorage.getItem(k)); return v && typeof v === 'object' ? v : def; } catch { return def; } };
+  const writeJ = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* ignoré */ } };
+  const persist = () => { if (!user) return; writeJ(KD + ':' + user.id, dirty); writeJ(KR + ':' + user.id, revs); };
+  const configured = () => !!(CFG.url && CFG.anonKey);
+  const uidOf = d => d.src ? 'src:' + d.src : 'id:' + d.id;
+  const cardUid = c => c.key ? 'k:' + c.key : 'i:' + c.id;
+  const findLocal = uid => App.decks.find(d => uidOf(d) === uid);
+  const latest = x => {
+    let t = Math.max(+x.mm || 0, +x.created || 0);
+    for (const c of (x.cards || [])) t = Math.max(t, +c.pm || 0, +c.cm || 0);
+    return t;
+  };
+  const cmpProg = (a, b) => ((+a.pm || 0) - (+b.pm || 0)) || ((+a.reps || 0) - (+b.reps || 0)) || ((+a.due || 0) - (+b.due || 0));
+  const alive = (c, gone) => { const g = gone[cardUid(c)]; return g == null || g < Math.max(+c.pm || 0, +c.cm || 0); };
+
+  function serialize(d) {
+    return {
+      v: 1, name: d.name, color: d.color, created: d.created, src: d.src || '', settings: d.settings, today: d.today,
+      mm: d.mm || 0, gone: d.gone || {},
+      cards: d.cards.map(c => ({
+        id: c.id, key: c.key, chap: c.chap, src: c.src, front: c.front, back: c.back,
+        state: c.state, due: c.due, ivl: c.ivl, ease: c.ease, step: c.step, reps: c.reps, lapses: c.lapses,
+        created: c.created, pm: c.pm || 0, cm: c.cm || 0
+      }))
+    };
+  }
+
+  // Fusionne la copie distante r dans le paquet local d (modifié sur place).
+  // lc : le paquet local a changé ; rc : la copie distante est en retard.
+  function mergeInto(d, r) {
+    let lc = false, rc = false;
+    const rm = +r.mm || 0, dm = +d.mm || 0;
+    if (rm > dm) {
+      if (r.name) d.name = String(r.name).slice(0, 80);
+      if (r.color) d.color = String(r.color);
+      if (r.settings && Number.isFinite(+r.settings.newPerDay)) d.settings = { newPerDay: +r.settings.newPerDay };
+      d.mm = rm; lc = true;
+    } else if (dm > rm) rc = true;
+
+    const rt = r.today || {}, rday = +rt.day || 0;
+    if (rday > d.today.day) { d.today = { day: rday, newSeen: +rt.newSeen || 0, reviews: +rt.reviews || 0 }; lc = true; }
+    else if (rday < d.today.day) rc = true;
+    else for (const k of ['newSeen', 'reviews']) {
+      const x = +rt[k] || 0;
+      if (x > d.today[k]) { d.today[k] = x; lc = true; } else if (x < d.today[k]) rc = true;
+    }
+
+    const gone = d.gone || (d.gone = {}), rg = r.gone && typeof r.gone === 'object' ? r.gone : {};
+    for (const [k, t] of Object.entries(rg)) if (!(gone[k] >= +t)) { gone[k] = +t; lc = true; }
+    for (const [k, t] of Object.entries(gone)) if (!(+rg[k] >= t)) rc = true;
+
+    const rmap = new Map();
+    for (const x of (Array.isArray(r.cards) ? r.cards : [])) if (x && typeof x === 'object') rmap.set(cardUid(x), x);
+    for (const c of d.cards) {
+      const u = cardUid(c), x = rmap.get(u);
+      if (!x) { rc = true; continue; }
+      rmap.delete(u);
+      const p = cmpProg(x, c);
+      if (p > 0) { const n = normCard(x); for (const k of PROG) c[k] = n[k]; lc = true; }
+      else if (p < 0) rc = true;
+      if (!c.src) {
+        const q = (+x.cm || 0) - (+c.cm || 0);
+        if (q > 0) { c.front = String(x.front ?? c.front); c.back = String(x.back ?? c.back); c.chap = String(x.chap ?? c.chap); c.cm = +x.cm; lc = true; }
+        else if (q < 0) rc = true;
+      }
+    }
+    if (rmap.size) {
+      const ids = new Set(d.cards.map(c => c.id)), maxB = d.cards.reduce((m, c) => Math.max(m, c.b || 0), 0);
+      let added = 0;
+      for (const x of rmap.values()) {
+        const c = normCard(x);
+        if (!alive(c, gone)) continue;
+        if (!x.id || ids.has(c.id)) c.id = newId('c');
+        c.b = maxB; ids.add(c.id); d.cards.push(c); added++;
+      }
+      if (added) { d.cards.sort((a, b) => a.created - b.created); lc = true; }
+    }
+    const n0 = d.cards.length;
+    d.cards = d.cards.filter(c => alive(c, gone));
+    if (d.cards.length !== n0) { lc = true; rc = true; }
+    return { lc, rc };
+  }
+
+  function saveLocal(d) { applying = true; try { Store.touch(d.id, { all: true }); } finally { applying = false; } }
+
+  // Applique une copie distante ; renvoie true si le serveur doit être mis à jour.
+  function applyRow(uid, data) {
+    if (!data || typeof data !== 'object') return true;
+    let d = findLocal(uid);
+    const mark = dirty[uid];
+    if (data.deleted) {
+      if (!d) return false;
+      if (latest(d) > (+data.at || 0)) return true;
+      App.decks = App.decks.filter(x => x !== d);
+      applying = true; try { Store.touch(d.id, { del: true }); } finally { applying = false; }
+      touched.add(d.id);
+      return false;
+    }
+    if (!d) {
+      if (mark && mark.del && latest(data) <= mark.del) return false;
+      d = normDeck({ ...data, id: uid.startsWith('id:') ? uid.slice(3) : newId('d'), src: uid.startsWith('src:') ? uid.slice(4) : '', cards: [] });
+      d.mm = +data.mm || 0;
+      App.decks.push(d);
+      mergeInto(d, data);
+      saveLocal(d); touched.add(d.id);
+      return false;
+    }
+    const { lc, rc } = mergeInto(d, data);
+    if (lc) { saveLocal(d); touched.add(d.id); }
+    return rc;
+  }
+
+  async function fetchRow(uid) {
+    const { data, error } = await sb.from(TABLE).select('rev,data').eq('uid', uid).limit(1);
+    if (error) throw error;
+    return data && data[0] || null;
+  }
+  async function pushOne(uid) {
+    for (let i = 0; i < 4; i++) {
+      const row = await fetchRow(uid);
+      if (row) applyRow(uid, row.data);
+      const d = findLocal(uid), mark = dirty[uid];
+      let payload;
+      if (d) payload = serialize(d);
+      else if (mark && mark.del) {
+        if (!row || (row.data && row.data.deleted)) return true;
+        payload = { v: 1, deleted: true, at: mark.del };
+      } else return true;
+      if (row) {
+        const { data, error } = await sb.from(TABLE).update({ data: payload, rev: row.rev + 1, updated_at: new Date().toISOString() })
+          .eq('uid', uid).eq('rev', row.rev).select('rev');
+        if (error) throw error;
+        if (data && data.length) { revs[uid] = row.rev + 1; return true; }
+      } else {
+        const { error } = await sb.from(TABLE).insert({ uid, rev: 1, data: payload });
+        if (!error) { revs[uid] = 1; return true; }
+        if (error.code !== '23505') throw error;
+      }
+    }
+    return false;
+  }
+
+  async function pull() {
+    const { data: rows, error } = await sb.from(TABLE).select('uid,rev');
+    if (error) throw error;
+    const changed = rows.filter(r => revs[r.uid] !== r.rev).map(r => r.uid);
+    for (let i = 0; i < changed.length; i += 10) {
+      const { data, error: e2 } = await sb.from(TABLE).select('uid,rev,data').in('uid', changed.slice(i, i + 10));
+      if (e2) throw e2;
+      for (const row of data) {
+        if (applyRow(row.uid, row.data) && !dirty[row.uid]) dirty[row.uid] = Date.now();
+        revs[row.uid] = row.rev;
+      }
+    }
+    const server = new Set(rows.map(r => r.uid));
+    for (const d of App.decks) { const u = uidOf(d); if (!server.has(u) && !dirty[u]) dirty[u] = Date.now(); }
+  }
+
+  function refreshViews() {
+    if (!touched.size) return;
+    const ids = [...touched]; touched.clear();
+    if (App.view === 'home') { renderHome(); return; }
+    for (const id of ids) {
+      const d = getDeck(id);
+      if (!d) { if (App.deckId === id || (App.s && App.s.deckId === id)) go('home'); continue; }
+      refreshAfterExternal(d);
+    }
+  }
+
+  async function sync() {
+    clearTimeout(timer); timer = null;
+    if (!sb || !user) return;
+    if (busy) { again = true; return; }
+    busy = true; setState('sync');
+    try {
+      await Store.settle();
+      await pull();
+      for (const uid of Object.keys(dirty)) {
+        const mark = dirty[uid];
+        if (await pushOne(uid) && dirty[uid] === mark) delete dirty[uid];
+      }
+      persist();
+      lastOk = Date.now(); lastErr = '';
+      setState(Object.keys(dirty).length ? 'error' : 'ok');
+    } catch (e) {
+      persist();
+      lastErr = (e && (e.message || e.code)) || 'erreur inconnue';
+      setState(navigator.onLine === false ? 'offline' : 'error');
+      schedule(30000);
+    } finally {
+      busy = false;
+      refreshViews();
+      if (again) { again = false; schedule(500); }
+    }
+  }
+  function schedule(ms) { if (!user) return; clearTimeout(timer); timer = setTimeout(sync, ms); }
+
+  // Appelé par Store.touch à chaque modification locale.
+  // Avant la connexion (ou pendant le démarrage), les paquets modifiés sont
+  // notés à part, puis envoyés à la connexion suivante.
+  function note(deckId) {
+    if (applying) return;
+    const d = getDeck(deckId); if (!d) return;
+    if (!user) { const p = readJ(KP, {}); p[uidOf(d)] = Date.now(); writeJ(KP, p); return; }
+    dirty[uidOf(d)] = Date.now(); persist();
+    schedule(3000);
+  }
+  function deckDeleted(d) {
+    if (!user) return;  // sans compte : la suppression reste locale
+    dirty[uidOf(d)] = { del: Date.now() }; persist();
+    schedule(1000);
+  }
+
+  function setState(st) {
+    state = st;
+    const b = $('#syncBtn'); if (!b) return;
+    b.dataset.state = st;
+    const label = { off: 'Synchronisation désactivée : clique pour te connecter', sync: 'Synchronisation…', ok: 'Synchronisé', error: 'Synchronisation en échec', offline: 'Hors ligne : synchronisation en attente' }[st] || '';
+    b.title = label; b.setAttribute('aria-label', label);
+    if (dlg.open && $('#syncDlg')) renderDialog();
+  }
+
+  function setUser(u) {
+    const prev = user ? user.id : null;
+    user = u || null;
+    if (!user) { dirty = {}; revs = {}; setState('off'); return; }
+    if (user.id !== prev) {
+      dirty = readJ(KD + ':' + user.id, {}); revs = readJ(KR + ':' + user.id, {});
+      const p = readJ(KP, {});
+      for (const [u, t] of Object.entries(p)) if (!dirty[u]) dirty[u] = t;
+      try { localStorage.removeItem(KP); } catch { /* ignoré */ }
+      persist();
+      schedule(0);
+    }
+  }
+
+  function loadLib() {
+    if (window.supabase && window.supabase.createClient) return Promise.resolve();
+    return new Promise((res, rej) => {
+      const sc = document.createElement('script');
+      sc.src = LIB; sc.async = true; sc.onload = res; sc.onerror = () => rej(new Error('bibliothèque Supabase introuvable'));
+      document.head.appendChild(sc);
+    });
+  }
+
+  async function init() {
+    if (started || !configured() || Store.mode() !== 'local') return;
+    started = true;
+    hooks.touch = note;
+    const b = $('#syncBtn'); b.hidden = false; b.addEventListener('click', openDialog);
+    setState('off');
+    try { await loadLib(); }
+    catch (e) { lastErr = e.message; setState('error'); return; }
+    sb = window.supabase.createClient(CFG.url, CFG.anonKey, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'implicit', storageKey: 'bristol:sync:auth' }
+    });
+    sb.auth.onAuthStateChange((ev, session) => { setTimeout(() => setUser(session && session.user), 0); });
+    const { data } = await sb.auth.getSession();
+    setUser(data && data.session && data.session.user);
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') schedule(300); else if (Object.keys(dirty).length) sync(); });
+    window.addEventListener('online', () => schedule(300));
+    setInterval(() => { if (document.visibilityState === 'visible') schedule(0); }, 120000);
+  }
+
+  /* --- Dialogue --- */
+  let sentTo = '';
+  function ago(t) {
+    const s = Math.round((Date.now() - t) / 1000);
+    if (s < 60) return 'à l’instant';
+    if (s < 3600) return 'il y a ' + Math.round(s / 60) + ' min';
+    return 'à ' + new Date(t).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  }
+  function openDialog() { openDialogHTML('<div id="syncDlg"></div>'); renderDialog(); }
+  function renderDialog() {
+    const box = $('#syncDlg'); if (!box) return;
+    setTimeout(() => $$('[data-close]', box).forEach(b => b.addEventListener('click', () => dlg.close())), 0);
+    if (!sb) {
+      box.innerHTML = `<h2 class="dlg-title">Synchronisation entre appareils</h2><p class="sync-info">Le service de synchronisation n'a pas pu être chargé${lastErr ? ' (' + esc(lastErr) + ')' : ''}. Vérifie ta connexion, puis recharge la page.</p>
+        <div class="dlg-actions"><button class="btn primary" data-close>Fermer</button></div>`;
+    } else if (user) {
+      const pending = Object.keys(dirty).length;
+      const line = state === 'sync' ? 'Synchronisation en cours…'
+        : state === 'ok' ? `Tout est synchronisé (${ago(lastOk)}).`
+        : state === 'offline' ? 'Hors ligne : tes révisions sont gardées sur cet appareil et seront envoyées au retour de la connexion.'
+        : `La dernière synchronisation a échoué${lastErr ? ' : ' + esc(lastErr) : ''}. Nouvel essai automatique.` + (pending ? ` ${pl(pending, 'paquet')} en attente d'envoi.` : '');
+      box.innerHTML = `<h2 class="dlg-title">Synchronisation entre appareils</h2>
+        <p class="sync-info">Connecté avec <strong>${esc(user.email || '')}</strong>. Ta progression est la même sur tous les appareils où tu te connectes avec cette adresse.</p>
+        <p class="sync-info">${line}</p>
+        <div class="dlg-actions"><button class="btn quiet danger" id="syOut">Se déconnecter</button><button class="btn" data-close>Fermer</button><button class="btn primary" id="syNow"${state === 'sync' ? ' disabled' : ''}>Synchroniser maintenant</button></div>`;
+      $('#syNow').addEventListener('click', () => sync());
+      $('#syOut').addEventListener('click', async () => {
+        await sync();
+        try { await sb.auth.signOut(); } catch { /* ignoré */ }
+        setUser(null); dlg.close(); toast('Déconnecté : la progression reste enregistrée sur cet appareil');
+      });
+    } else {
+      box.innerHTML = `<h2 class="dlg-title">Synchronisation entre appareils</h2>
+        <p class="sync-info">Connecte-toi avec ton adresse e-mail pour retrouver ta progression sur tous tes appareils (ordinateur, téléphone…). Pas de mot de passe : tu reçois un lien de connexion par e-mail.</p>
+        <div class="field"><label for="syMail">Adresse e-mail</label><input id="syMail" type="email" autocomplete="email" value="${esc(sentTo)}" placeholder="prenom.nom@exemple.fr"></div>
+        <div id="syCodeWrap"${sentTo ? '' : ' hidden'}>
+          <p class="sync-info" style="margin-top:var(--space-4)">E-mail envoyé à <strong>${esc(sentTo)}</strong>. Ouvre le lien sur cet appareil, ou entre ici le code reçu dans l'e-mail.</p>
+          <div class="field"><label for="syCode">Code reçu par e-mail</label><input id="syCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="10"></div>
+        </div>
+        <p class="field-error" id="syErr" role="alert" hidden></p>
+        <div class="dlg-actions"><button class="btn quiet" data-close>Annuler</button>${sentTo ? '<button class="btn" id="sySend">Renvoyer le lien</button><button class="btn primary" id="syVerify">Valider le code</button>' : '<button class="btn primary" id="sySend">Recevoir le lien</button>'}</div>`;
+      const err = m => { const e = $('#syErr'); e.textContent = m; e.hidden = !m; };
+      $('#sySend').addEventListener('click', async ev => {
+        const mail = $('#syMail').value.trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { err('Adresse e-mail invalide.'); return; }
+        ev.target.disabled = true; err('');
+        const { error } = await sb.auth.signInWithOtp({ email: mail, options: { emailRedirectTo: location.origin + location.pathname } });
+        ev.target.disabled = false;
+        if (error) { err('Envoi impossible : ' + (error.message || error.code)); return; }
+        sentTo = mail; renderDialog();
+      });
+      const v = $('#syVerify');
+      if (v) {
+        const verify = async () => {
+          const token = $('#syCode').value.replace(/\s/g, '');
+          if (!token) { err('Entre le code reçu par e-mail.'); return; }
+          v.disabled = true; err('');
+          const { data, error } = await sb.auth.verifyOtp({ email: sentTo, token, type: 'email' });
+          v.disabled = false;
+          if (error) { err('Code refusé : ' + (error.message || error.code)); return; }
+          setUser(data && data.user); sentTo = ''; dlg.close(); toast('Connecté : synchronisation en cours');
+        };
+        v.addEventListener('click', verify);
+        $('#syCode').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); verify(); } });
+      }
+    }
+  }
+
+  return { init, sync, deckDeleted, cardUid, mergeInto, serialize, applyRow, state: () => state };
+})();
+
 /* ---------- Mise en forme des cartes ---------- */
 function renderRich(src) {
   // Le code entre `…` est mis de côté en premier : ni formule ni mise en forme
@@ -767,6 +1139,7 @@ function createDeck(name, color) {
   const now = Date.now();
   const d = normDeck({ id: newId('d'), name, created: now, color: color || PALETTE[App.decks.length % PALETTE.length].c, cards: [] });
   d.today = { day: dayNum(now), newSeen: 0, reviews: 0 };
+  d.mm = now;
   App.decks.push(d);
   Store.touch(d.id, { all: true, soon: true });
   return d;
@@ -1011,14 +1384,14 @@ function renderDeck() {
   $('#sName').addEventListener('change', e => {
     const v = e.target.value.trim();
     if (!v || v === d.name) { e.target.value = d.name; return; }
-    d.name = v; $('#deckTitle').textContent = v; Store.touch(d.id, { meta: true }); toast('Nom enregistré');
+    d.name = v; d.mm = Date.now(); $('#deckTitle').textContent = v; Store.touch(d.id, { meta: true }); toast('Nom enregistré');
   });
   $('#sNew').addEventListener('change', e => {
     let v = parseInt(e.target.value, 10); if (!Number.isFinite(v) || v < 0) v = 0; v = Math.min(999, v);
-    e.target.value = v; d.settings.newPerDay = v; Store.touch(d.id, { meta: true }); renderDeckSummary(); toast('Limite enregistrée');
+    e.target.value = v; d.settings.newPerDay = v; d.mm = Date.now(); Store.touch(d.id, { meta: true }); renderDeckSummary(); toast('Limite enregistrée');
   });
   $$('input[name="sColor"]').forEach(r => r.addEventListener('change', e => {
-    d.color = e.target.value; $('#deckSheet').style.setProperty('--tint', d.color); Store.touch(d.id, { meta: true });
+    d.color = e.target.value; d.mm = Date.now(); $('#deckSheet').style.setProperty('--tint', d.color); Store.touch(d.id, { meta: true });
   }));
 }
 function renderDeckSummary() {
@@ -1078,11 +1451,14 @@ function deleteCard(deckId, cardId) {
   const d = getDeck(deckId); if (!d) return;
   const idx = d.cards.findIndex(c => c.id === cardId); if (idx < 0) return;
   const [card] = d.cards.splice(idx, 1);
+  const gk = Cloud.cardUid(card);
+  d.gone[gk] = Date.now();
   Store.touch(d.id, { bucket: card.b, meta: true });
   renderDeckSummary(); renderCardList();
   toast('Carte supprimée', { label: 'Annuler', run: () => {
     if (!getDeck(deckId)) return;
     d.cards.splice(Math.min(idx, d.cards.length), 0, card);
+    delete d.gone[gk]; card.cm = Date.now();
     Store.touch(d.id, { bucket: card.b, meta: true });
     if (App.view === 'deck' && App.deckId === deckId) { renderDeckSummary(); renderCardList(); }
   } });
@@ -1090,6 +1466,7 @@ function deleteCard(deckId, cardId) {
 
 /* ---------- Dialogues ---------- */
 let lastFocus = null;
+function openDialogHTML(html) { openDialog(html); }
 function openDialog(html) {
   lastFocus = document.activeElement;
   dlg.innerHTML = `<div class="dlg-body">${html}</div>`;
@@ -1137,7 +1514,7 @@ function openEditCard(deckId, cardId, after) {
   const save = () => {
     const front = f.value.trim(), back = b.value.trim();
     if (!front || !back) { $('#eErr').hidden = false; return; }
-    c.front = front; c.back = back;
+    c.front = front; c.back = back; c.cm = Date.now();
     Store.touch(d.id, { bucket: c.b, meta: true });
     dlg.close();
     if (App.view === 'deck') renderCardList();
@@ -1308,7 +1685,8 @@ function confirmReset(deckId) {
     text: 'Toutes les cartes redeviendront nouvelles et leur historique de révision sera effacé. Le contenu des cartes est conservé.',
     confirm: 'Remettre à zéro', danger: true,
     onConfirm: () => {
-      d.cards.forEach(c => Object.assign(c, { state: 'new', due: 0, ivl: 0, ease: S.startEase, step: 0, reps: 0, lapses: 0 }));
+      const t0 = Date.now();
+      d.cards.forEach(c => Object.assign(c, { state: 'new', due: 0, ivl: 0, ease: S.startEase, step: 0, reps: 0, lapses: 0, pm: t0 }));
       Store.touch(d.id, { all: true, soon: true });
       renderDeckSummary(); renderCardList(); toast('Progression remise à zéro');
     }
@@ -1322,6 +1700,7 @@ function confirmDeleteDeck(deckId) {
     confirm: 'Supprimer le paquet', danger: true,
     onConfirm: () => {
       App.decks = App.decks.filter(x => x.id !== d.id);
+      Cloud.deckDeleted(d);
       Store.touch(d.id, { del: true, soon: true });
       go('home'); toast('Paquet supprimé');
     }
@@ -1429,6 +1808,7 @@ function grade(g) {
   if (card.state === 'new') { d.today.newSeen++; s.sinceNew = 0; } else s.sinceNew++;
   Object.assign(card, s.outcomes[g].card);
   card.reps = (card.reps || 0) + 1;
+  card.pm = Date.now();
   d.today.reviews++; s.studied++; s.lastId = card.id;
   Store.touch(d.id, { meta: true, bucket: card.b });
   nextCard();
@@ -1439,6 +1819,7 @@ function undo() {
   if (!card) { $('#btnUndo').disabled = !s.undo.length; return; }
   for (const k of Object.keys(card)) delete card[k];
   Object.assign(card, u.prev);
+  card.pm = Date.now();
   d.today = u.today; s.sinceNew = u.sinceNew; s.lastId = u.lastId; s.studied = u.studied;
   Store.touch(d.id, { meta: true, bucket: card.b });
   nextCard({ card, kind: kindOf(card) });
@@ -1541,6 +1922,7 @@ async function boot() {
   setStatus(mode === 'memory' ? 'memory' : 'saved');
   go('home');
   Store.watchInbox(applyBatch);
+  if (mode === 'local') Cloud.init().catch(() => {});
   // Lien profond depuis le site (fin de chapitre, fiche matière, accueil) :
   // #reviser=<fichier>.json lance la révision du paquet, #paquet=<fichier>.json l'ouvre.
   const openFromHash = () => {

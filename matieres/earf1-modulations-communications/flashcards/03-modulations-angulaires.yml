@@ -190,7 +190,7 @@ cartes:
     reponse: |
       $C_{Dv} \approx C_0(1 + \lambda m)$ avec $\lambda = -n/V_0$ ;
       $$k_f = -\frac{\lambda f_0}{2}\,\frac{C_0}{C + C_0}$$
-    ref: exr-td2-modulateur-varicap
+    ref: ../td/td02-modulateurs.qmd#exr-td2-modulateur-varicap
     source: notes-externes
 
   - id: earf1-integrateur-demodulateur
@@ -199,5 +199,5 @@ cartes:
       Démodulateur du TD 3 : pourquoi un intégrateur suivi d'un détecteur d'enveloppe démodule-t-il la FM ?
     reponse: |
       $V_1 = \frac{U}{R_0C_0\omega}\cos(\omega t)$ : l'amplitude est inversement proportionnelle à la fréquence ; le détecteur d'enveloppe convertit ces variations d'amplitude en tension.
-    ref: exr-td3-demodulateur-fm
+    ref: ../td/td03-demodulateurs.qmd#exr-td3-demodulateur-fm
     source: notes-externes

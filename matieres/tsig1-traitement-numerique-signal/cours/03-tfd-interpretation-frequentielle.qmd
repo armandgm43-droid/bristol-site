@@ -5,7 +5,7 @@ chapitre: 3
 enseignants: ["Yannick Berthoumieu"]
 annee: "2026-2027"
 statut: verifie
-date-modified: 2026-10-20
+date-modified: 2026-10-31
 sources:
   - id: notes
     fichier: notes/date-inconnue.pdf
@@ -480,108 +480,10 @@ L'identification du second crochet à $H^*(f_0)$ suppose $h[n]$ **réelle**. On 
 
 ## Exercices du TD {#sec-exercices-td-ch03}
 
-::: {#exr-td-rif-retard-quatre}
-## Réponse en fréquence de $y[n] = x[n] - x[n-4]$
+Les TD sont corrigés question par question dans leurs propres pages, énoncé découpé à l'appui :
 
-On considère le filtre $H$ régi par l'équation $y[n] = x[n] - x[n-4]$.
-
-a. Calculer et tracer la réponse fréquentielle (module et phase) dans la gamme de fréquences $-\frac{f_e}{2} \leq f \leq \frac{f_e}{2}$.
-b. Démontrer que la sortie d'un filtre quelconque de réponse impulsionnelle $h[n]$, excité par la séquence $x_1[n] = A\,e^{j2\pi f_0 n T_e}$, est
-   $$
-   y[n] = A\,|H(f_0)|\, e^{j2\pi f_0 n T_e + j\operatorname{Arg}(H(f_0))},
-   $$
-   où $\operatorname{Arg}(H(f_0))$ est l'argument de $H(f)$ à la fréquence $f_0$.
-c. Quelle est la sortie du filtre $H$ pour l'entrée $x[n] = \cos\bigl(\frac{\pi n}{2}\bigr) + \cos\bigl(\frac{\pi n}{4}\bigr)$, $-\infty \leq n \leq +\infty$ ? Indication : utiliser b.
-d. Expliquer les résultats de la question c à partir de ceux de la question a. Si $x[n]$ avait une moyenne $m_x$, quelle serait la moyenne de $y[n]$ ?
-
-[td, p. 5-6]
-:::
-
-:::: {.notes-externes}
-::: {.solution}
-On travaille en fréquence normalisée ($f \in [-\frac12, \frac12]$).
-
-a. Par le théorème du retard (@eq-retard-tfsd), $Y(f) = X(f) - e^{-j8\pi f} X(f)$, d'où
-
-$$
-H(f) = 1 - e^{-j8\pi f} = e^{-j4\pi f}\bigl(e^{j4\pi f} - e^{-j4\pi f}\bigr) = 2j\, e^{-j4\pi f} \sin(4\pi f),
-\qquad |H(f)| = 2\,|\sin(4\pi f)|.
-$$
-
-Le module, tracé sur $[-\frac12, \frac12]$, est formé de quatre arches de hauteur 2.
-
-b. $y[n] = \sum_{k=0}^{M-1} h[k]\, A\, e^{j2\pi f_0 (n-k)} = A\, e^{j2\pi f_0 n} \sum_{k} h[k]\, e^{-j2\pi f_0 k} = A\, e^{j2\pi f_0 n}\, H(f_0)$ : la somme est l'expression de la TF évaluée en $f_0$. D'où $y[n] = A\,|H(f_0)|\, e^{j2\pi f_0 n + j\operatorname{Arg}(H(f_0))}$. Pour $x[n] = A\cos(2\pi f_0 n)$, on prend la partie réelle : $y[n] = A\,|H(f_0)|\cos\bigl(2\pi f_0 n + \operatorname{Arg}(H(f_0))\bigr)$ ; pour une somme $\sum_i a_i \cos(2\pi f_i n)$, $y[n] = \sum_i a_i\,|H(f_i)|\cos\bigl(2\pi f_i n + \operatorname{Arg}(H(f_i))\bigr)$.
-
-c. $2\pi f_0 n = \frac{\pi n}{2}$ donne $f_0 = \frac14$ et $2\pi f_1 n = \frac{\pi n}{4}$ donne $f_1 = \frac18$. $H(f_0) = 2j\,e^{-j\pi}\sin(\pi) = 0$ ; $H(f_1) = 2j\,e^{-j\pi/2}\sin(\frac{\pi}{2}) = 2$, soit $|H(f_1)| = 2$ et $\operatorname{Arg}(H(f_1)) = 0$. Finalement
-
-$$
-y[n] = 2\cos\Bigl(\frac{\pi n}{4}\Bigr).
-$$
-
-d. $f_0 = \frac14$ tombe sur un zéro de $|H|$ : la composante est éliminée ; $f_1 = \frac18$ tombe sur un maximum (gain 2, phase nulle). La moyenne est la composante à $f = 0$, où $H(0) = 0$ : $m_y = 0$.
-
-[corrige-2023-td01, p. 9-11]
-:::
-::::
-
-::: {.a-verifier #av-td-retard-quatre-ecriture}
-**Source** [corrige-2023-td01, p. 9] : « $Y(f) = X(f) - e^{-8j\pi f} X(f)$ », puis à la ligne suivante « $X(f) = X(f)\,(1 - e^{-j8\pi f})$ ».
-
-**Problème** : le premier membre de la seconde ligne est $Y(f)$ ; telle qu'écrite, l'égalité imposerait $X(f) = 0$ là où $e^{-j8\pi f} \neq 1$.
-
-**Proposition** : $Y(f) = X(f)\,(1 - e^{-j8\pi f})$, d'où $H(f) = 1 - e^{-j8\pi f}$ (forme retenue dans la solution ci-dessus).
-:::
-
-::: {.complement}
-- **Zéros et maxima** : $|H(f)|$ s'annule en $f = 0, \pm\frac14, \pm\frac12$ et vaut 2 en $f = \pm\frac18, \pm\frac38$ (filtre « en peigne »).
-- **Phase** (non tracée dans le corrigé) : $\operatorname{Arg}(H(f)) = \frac{\pi}{2} - 4\pi f$ là où $\sin(4\pi f) > 0$, et $-\frac{\pi}{2} - 4\pi f$ là où $\sin(4\pi f) < 0$ (modulo $2\pi$). Elle est linéaire par morceaux, de pente $-4\pi$ (retard de 2 échantillons, voir le [chapitre 5](05-representation-en-phase.qmd#sec-phase-lineaire)), avec des sauts de $\pi$ aux zéros de $|H|$.
-- **Contrôle direct de c** : $\cos\bigl(\frac{\pi(n-4)}{2}\bigr) = \cos\bigl(\frac{\pi n}{2} - 2\pi\bigr) = \cos\bigl(\frac{\pi n}{2}\bigr)$ et $\cos\bigl(\frac{\pi(n-4)}{4}\bigr) = -\cos\bigl(\frac{\pi n}{4}\bigr)$ ; donc $y[n] = 2\cos\bigl(\frac{\pi n}{4}\bigr)$.
-- Le passage à la partie réelle en b suppose $h[n]$ **réelle** : alors $H(-f_0) = H^*(f_0)$ et les deux exponentielles de $\cos$ donnent des sorties conjuguées.
-- Moyenne : directement, $\E\{y[n]\} = m_x - m_x = 0$.
-:::
-
-::: {#exr-td-filtres-quadrature}
-## Filtres en quadrature
-
-On considère le système de réponse impulsionnelle $h_A[n] = 0{,}5\,\delta[n] - \delta[n-1] + 0{,}5\,\delta[n-2]$.
-
-1. Le système est-il linéaire, invariant, stable et causal ?
-2. Tracer le module de la réponse fréquentielle associée à $h_A[n]$. Conclure sur le type d'action fréquentielle de $h_A[n]$.
-3. On considère la transformation $h_C[n] = (-1)^n\, h_A[n]$ pour tout entier $n$. Donner la relation entre $H_A(f)$ et $H_C(f)$ et tracer $H_C(f)$. Conclusion.
-
-[td, p. 6]
-:::
-
-:::: {.notes-externes}
-::: {.solution}
-1. Causal : n'utilise que des éléments du passé et du présent ; stable : réponse impulsionnelle finie.
-2. $$
-H_A(f) = 0{,}5 - e^{-j2\pi f} + 0{,}5\, e^{-j4\pi f} = e^{-j2\pi f}\bigl(0{,}5\, e^{j2\pi f} - 1 + 0{,}5\, e^{-j2\pi f}\bigr) = e^{-j2\pi f}\bigl(\cos(2\pi f) - 1\bigr).
-$$
-Le module est maximal en $f = \pm\frac12$ : **passe-haut** (courbe « PH » du corrigé, tracée avec la courbe « PB » de $H_C$).
-3. $$
-H_C(f) = \sum_n h_A[n]\,(-1)^n e^{-j2\pi f n} = \sum_n h_A[n]\, e^{j\pi n}\, e^{-j2\pi f n} = \sum_n h_A[n]\, e^{-j2\pi (f - \frac12) n} = H_A\Bigl(f - \frac12\Bigr).
-$$
-$H_C$ est le **passe-bas** obtenu en décalant $H_A$ de $\frac12$. Les deux branches se calculent avec les mêmes coefficients : $x_\mathrm{PH}[n] = h_A[0]\,x[n] + h_A[1]\,x[n-1] + \dots$ et $x_\mathrm{PB}[n] = h_A[0]\,x[n] - h_A[1]\,x[n-1] + \dots$
-
-[corrige-2023-td01, p. 11-12]
-:::
-::::
-
-::: {.a-verifier #av-td-quadrature-minimum}
-**Source** [corrige-2023-td01, p. 12] : graphe de $|H_A(f)|$ (courbe noire « PH ») dont le minimum, en $f = 0$, est nettement au-dessus de l'axe.
-
-**Problème** : $|H_A(0)| = |0{,}5 - 1 + 0{,}5| = 0$ ; le croquis laisse croire qu'un filtre passe-haut laisse passer une part de la composante continue.
-
-**Proposition** : $|H_A(f)| = 1 - \cos(2\pi f) = 2\sin^2(\pi f)$, nul en $f = 0$, égal à 2 en $f = \pm\frac12$.
-:::
-
-::: {.complement}
-- $H_A(f) = -2\sin^2(\pi f)\, e^{-j2\pi f}$ : phase linéaire $\pi - 2\pi f$ (réponse impulsionnelle symétrique, retard d'un échantillon).
-- $h_C[n] = 0{,}5\,\delta[n] + \delta[n-1] + 0{,}5\,\delta[n-2]$ et $|H_C(f)| = 1 + \cos(2\pi f) = 2\cos^2(\pi f)$ : 2 en $f = 0$, nul en $f = \pm\frac12$ ($\pm f_e/2$).
-- Conclusion : multiplier $h[n]$ par $(-1)^n = e^{j\pi n}$ décale la réponse en fréquence de $\frac12$ ($f_e/2$) et transforme un passe-bas en passe-haut et inversement. Les deux modules sont symétriques par rapport à $f = \frac14$ et $|H_A(f)| + |H_C(f)| = 2$ : ils se partagent la bande en deux moitiés complémentaires, d'où le nom de filtres en quadrature (filtres miroirs).
-- Linéarité et invariance (question 1) : c'est un RIF, voir l'[exercice du chapitre 2](02-systemes-discrets-convolution.qmd#exr-td-rif-proprietes).
-:::
+- [TD 1, exercice 6 : réponse en fréquence de $y[n] = x[n] - x[n-4]$](../td/td01-systemes-discrets-representation-frequence.qmd#sec-td01-ex6) ;
+- [TD 1, exercice 7 : filtres en quadrature](../td/td01-systemes-discrets-representation-frequence.qmd#sec-td01-ex7).
 
 ## À retenir {#sec-retenir-tfd}
 

@@ -168,7 +168,7 @@ cartes:
       Détecteur d'enveloppe (diode, $R_1C_1$) : deux états de fonctionnement et expression de $V_{out}$ ?
     reponse: |
       Diode passante si $V_{AM} > V_{out}$ : $V_{out} = V_{AM}$. Bloquée si $V_{AM} < V_{out}$ : décharge, $V_{out} = U e^{-t/R_1C_1}$.
-    ref: exr-td3-detecteur-principe
+    ref: ../td/td03-demodulateurs.qmd#exr-td3-detecteur-principe
     source: notes-externes
 
   - id: earf1-detecteur-constante-temps
@@ -177,5 +177,5 @@ cartes:
       Conditions sur $\tau = R_1C_1$ d'un détecteur d'enveloppe démodulant de l'OOK (porteuse $f_p$, bit $T_b$) ?
     reponse: |
       $\tau \gg 1/f_p$ (faible ondulation) et $\tau$ assez petit pour passer sous le seuil pendant un « 0 » ($U e^{-T_b/\tau} <$ seuil), soit environ $T_b/4 < \tau < T_b/2$.
-    ref: exr-td3-detecteur-ook
+    ref: ../td/td03-demodulateurs.qmd#exr-td3-detecteur-ook
     source: complement

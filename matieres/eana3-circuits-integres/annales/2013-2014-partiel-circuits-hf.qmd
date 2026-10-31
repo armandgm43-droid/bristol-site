@@ -2,7 +2,7 @@
 title: "Partiel 2013-2014 (Circuits HF et oscillateurs) — corrigé"
 subtitle: "EA210, N. Deltimple, 7 janvier 2014 · 2 h, documents et calculatrice autorisés · charges actives, oscillateur en anneau, inverseur à retard paramétrable"
 matiere: eana3
-date-modified: 2026-10-27
+date-modified: 2026-10-31
 sources:
   - id: sujet-2013-hf
     fichier: annales/2013-2014-partiel-circuits-hf-oscillateurs.pdf
@@ -23,12 +23,12 @@ Aucun corrigé officiel de ce partiel. Les énoncés sont des extraits du scan d
 **Correspondances avec d'autres sujets.**
 
 - La **partie I** (charges actives) est l'exercice II du [partiel 2016-2017](2016-2017-partiel-circuits-hf.qmd#sec-ann16hf-ex2), corrigé en détail : ses questions 1, 2, 3 et 3+ sont les questions 1, 2, 7 et 10 de 2016-2017. Seules des solutions courtes sont données ici.
-- Les **parties II et III** (oscillateur en anneau, inverseur à retard paramétrable) sont le TD additionnel « Oscillateur en anneau » du cours [support, p. 26-28], traité au [chapitre 4](../cours/04-oscillateurs.qmd#sec-td-anneau) avec le corrigé d'un étudiant de 2023 [corr-2023-td05-anneau]. Ce corrigé est repris ci-dessous en *notes externes* sous les questions correspondantes ; les solutions détaillées sont de Claude. Seules les questions 4 et 5 (lecture de la figure 3) et 6.3 (application numérique) n'existent pas dans le TD.
+- Les **parties II et III** (oscillateur en anneau, inverseur à retard paramétrable) sont le TD additionnel « Oscillateur en anneau » du cours [support, p. 26-28], corrigé dans sa [page de TD](../td/td-add-oscillateur-anneau.qmd#sec-td-anneau) avec le corrigé d'un étudiant de 2023 [corr-2023-td05-anneau]. Ce corrigé est repris ci-dessous en *notes externes* sous les questions correspondantes ; les solutions détaillées sont de Claude. Seules les questions 4 et 5 (lecture de la figure 3) et 6.3 (application numérique) n'existent pas dans le TD.
 
 Attention aux notations : dans ce sujet, $N$ désigne le nombre d'inverseurs de l'anneau à la question 6 (le TD écrit $M$), puis le rapport des surfaces d'émetteurs de $Q_{101}$ et $Q_{102}$ à partir de la question 8.
 :::
 
-Chapitres du cours : [oscillateur à résistance négative](../cours/04-oscillateurs.qmd#sec-resistance-negative) (partie I), [oscillateurs en anneau](../cours/04-oscillateurs.qmd#sec-anneau) et [TD additionnel](../cours/04-oscillateurs.qmd#sec-td-anneau) (parties II et III).
+Chapitres du cours : [oscillateur à résistance négative](../cours/04-oscillateurs.qmd#sec-resistance-negative) (partie I), [oscillateurs en anneau](../cours/04-oscillateurs.qmd#sec-anneau) et [TD additionnel](../td/td-add-oscillateur-anneau.qmd#sec-td-anneau) (parties II et III).
 
 ## Partie I : étude de charges actives {#sec-ann1314hf-ex1}
 
@@ -163,7 +163,7 @@ Avec la figure 3, en restant dans la zone linéaire, $F_{osc}$ est presque propo
 
 ![](sujets/2013-2014-partiel-circuits-hf-ex3.png){fig-alt="Partie III, figure 4 (bloc de génération du courant) : PNP Q101 (émetteur à VDD) et Q102 (×N, diode, émetteur relié au drain du PMOS M0), bases communes ; Vref aux bornes de M0 (source à VDD, grille commandée par Contrôle, Vctrl entre VDD et Contrôle) ; miroirs NMOS M1 (diode), M2 (W2 = W1, L2 = L1) et Mi (Wi, Li) dont le drain fournit Io à Isink."}
 
-Chapitre du cours : [TD additionnel, partie II](../cours/04-oscillateurs.qmd#sec-td-anneau).
+Chapitre du cours : [TD additionnel, partie II](../td/td-add-oscillateur-anneau.qmd#sec-td-anneau).
 
 ![](sujets/2013-2014-partiel-circuits-hf-ex3-q8.png){fig-alt="Q8 : expression de la tension Vref en fonction du potentiel thermodynamique Ut et de N, rapport des surfaces d'émetteurs de Q101 et Q102."}
 
@@ -251,11 +251,11 @@ Corrigé du TD [corr-2023-td05-anneau, p. 3] : « $\frac{W_1}{W_i}\frac{W_{100}}
 ::: {.a-verifier .tranche #av-ann1314hf-dimensionnement}
 **Source** [corr-2023-td05-anneau, p. 3] (corrigé du TD identique) : « $\frac{W_1}{W_i}\frac{W_{100}}{W_0} = \frac{U_T\ln(N)}{\Delta V} = 9$ », d'où « $W_1 = W_i = W_{100} = 30$ µm, $W_0 = 3{,}3$ µm ».
 
-**Problème** : $\frac{U_T\ln N}{\Delta V} = \frac{25 \times 1{,}79}{400} \approx 0{,}11$ ; c'est l'inverse qui vaut 8,9. Avec les valeurs du corrigé, la question 12 donne $\Delta V \approx 5$ mV au lieu de 400 mV. Même erreur déjà relevée et tranchée au chapitre 4 (bloc [`av-anneau-dimensionnement`](../cours/04-oscillateurs.qmd#av-anneau-dimensionnement)).
+**Problème** : $\frac{U_T\ln N}{\Delta V} = \frac{25 \times 1{,}79}{400} \approx 0{,}11$ ; c'est l'inverse qui vaut 8,9. Avec les valeurs du corrigé, la question 12 donne $\Delta V \approx 5$ mV au lieu de 400 mV. Même erreur déjà relevée et tranchée au chapitre 4 (bloc [`av-anneau-dimensionnement`](../td/td-add-oscillateur-anneau.qmd#av-anneau-dimensionnement)).
 
 **Proposition** : $\frac{W_0 W_i}{W_{100} W_1} \approx 8{,}9$ avec toutes les longueurs à 1 µm, par exemple $W_0 = W_i = W_{100} = 30$ µm et $W_1 = 3{,}3$ µm (voir la solution ci-dessous).
 
-**Décision** : même correction que le bloc `av-anneau-dimensionnement` du chapitre 4, retenu le 2026-10-14 (même corrigé, même question) ; reprise ici par Claude, 2026-10-27.
+**Décision** : même correction que le bloc `av-anneau-dimensionnement` du [TD additionnel « Oscillateur en anneau »](../td/td-add-oscillateur-anneau.qmd#av-anneau-dimensionnement), retenu le 2026-10-14 (même corrigé, même question) ; reprise ici par Claude, 2026-10-27.
 :::
 
 :::: {.complement}

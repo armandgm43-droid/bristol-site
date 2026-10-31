@@ -2,7 +2,7 @@
 title: "Partiel 2016-2017 — corrigé"
 subtitle: "TS227, G. Ferré, R. Tajan et F. Rivet · 1 h 30, documents et calculatrice interdits"
 matiere: ts227
-date-modified: 2026-10-27
+date-modified: 2026-10-31
 sources:
   - id: sujet-2016
     fichier: annales/2016-2017-partiel.pdf
@@ -17,7 +17,7 @@ Aucun corrigé officiel : **toutes les solutions de cette page sont rédigées p
 
 **Notations.** Le sujet suit les notations du TD : $g(t)$ filtre de mise en forme (cours : $h(t)$), $g_a(t)$ filtre de réception (cours : $h_a(t)$), $v(t) = (g \star g_a)(t)$ filtre global (cours : $g(t)$), $h_l(t)$ canal (cours : $h_c(t)$), $n_l(t)$ bruit (cours : $z_l(t)$), $r_l[n]$ échantillon reçu (cours : $r_n$), $R_A[n]$ autocorrélation des symboles. Voir la table des notations de la [fiche matière](../index.qmd).
 
-**Correspondances.** La question 2 est la question 5 de 2017-2018, la question 5 sa question 12, la question 6 sa question 14 ; la question 3 recoupe sa question 9 ([corrigé 2017-2018](2017-2018-partiel.qmd)). Les questions 8 et 9 reprennent l'étude pratique du TD (ex. 5, q. 12-13, [exercice du chapitre 4](../cours/04-transmission-presence-bruit.qmd#exr-td-constellation-bruitee)) avec $\sigma = \frac16$. L'exercice utilise le récepteur I/Q de la [figure 1 du partiel 2018-2019](2018-2019-partiel.qmd#sec-ann1819-ex) ; il relève du chapitre 5 du cours (transmission sur fréquence porteuse), pas encore rédigé.
+**Correspondances.** La question 2 est la question 5 de 2017-2018, la question 5 sa question 12, la question 6 sa question 14 ; la question 3 recoupe sa question 9 ([corrigé 2017-2018](2017-2018-partiel.qmd)). Les questions 8 et 9 reprennent l'étude pratique du TD (ex. 5, q. 12-13, [corrigé du TD](../td/td01-transmissions-bande-de-base.qmd#exr-td-constellation-bruitee)) avec $\sigma = \frac16$. L'exercice utilise le récepteur I/Q de la [figure 1 du partiel 2018-2019](2018-2019-partiel.qmd#sec-ann1819-ex) ; il relève du chapitre 5 du cours (transmission sur fréquence porteuse), pas encore rédigé.
 :::
 
 ![](sujets/2016-2017-partiel-notations.png){fig-alt="Notations et hypothèses : Tb, Ts, nb ; bk information binaire émise à kTb, variable aléatoire discrète uniforme sur {0, 1}, E[bk bk'] = E[bk] E[bk'] ; canal hl(t) à bande passante infinie ; bruit en bande de base nl(t) blanc, gaussien de variance σ²nl et de DSP bilatérale N0/2."}
@@ -79,7 +79,7 @@ Conséquence : la bande de $v$ est au moins $\frac{1}{2\Ts}$ ([bande minimale](.
 :::: {.complement}
 ::: {.solution}
 - Le **cosinus surélevé** de facteur de retombée $\beta \in [0, 1]$, de bande $\frac{1 + \beta}{2\Ts}$ ([exemple du cours](../cours/02-communication-sans-bruit.qmd#exm-cosinus-sureleve)) ; pour $\beta = 0$, le sinus cardinal $v(t) = \sinc(t/\Ts)$, de bande minimale $\frac{1}{2\Ts}$.
-- Le **triangle** $v(t) = \Ts\,\Lambda(t/\Ts)$ de base $[-\Ts, \Ts]$, obtenu avec une porte de durée $\Ts$ et son filtre adapté (exercice 3 du TD, [exercice](../cours/04-transmission-presence-bruit.qmd#exr-td-filtre-adapte)) : nul en $n\Ts$, $n \neq 0$.
+- Le **triangle** $v(t) = \Ts\,\Lambda(t/\Ts)$ de base $[-\Ts, \Ts]$, obtenu avec une porte de durée $\Ts$ et son filtre adapté (exercice 3 du TD, [exercice](../td/td01-transmissions-bande-de-base.qmd#exr-td-filtre-adapte)) : nul en $n\Ts$, $n \neq 0$.
 
 Plus généralement, tout $v$ nul hors de $]-\Ts, \Ts[$ et non nul en $0$ convient.
 :::
@@ -125,7 +125,7 @@ avec $n'_l[n]$ gaussien centré (bruit gaussien filtré). C'est le [modèle disc
 ::: {.solution}
 Avec $v[0] = 1$, $r_l[n] = A_n + n'_l[n]$ et $\sigma = \frac16$ (bloc `av-ann1617-variance-bruit-blanc`) : $\pm 3\sigma = \pm\frac12$. Les échantillons reçus se trouvent, avec 99,7 % de confiance ([loi gaussienne](../cours/03-dsp-signaux-codes-en-ligne.qmd#prp-loi-gaussienne)), dans quatre intervalles de l'axe réel :
 $$[-3{,}5\,;\,-2{,}5], \quad [-1{,}5\,;\,-0{,}5], \quad [0{,}5\,;\,1{,}5], \quad [2{,}5\,;\,3{,}5].$$
-Les seuils de décision optimaux (symboles équiprobables) sont au milieu des symboles, en $-2$, $0$ et $2$. Les intervalles sont **disjoints** et ne contiennent aucun seuil : il reste une marge de $0{,}5$ entre chaque intervalle et le seuil voisin. Le dessin est celui de la figure du TD avec des intervalles plus étroits ([figure du chapitre 4](../cours/04-transmission-presence-bruit.qmd#fig-constellation-bruitee), où $\sigma = \frac14$).
+Les seuils de décision optimaux (symboles équiprobables) sont au milieu des symboles, en $-2$, $0$ et $2$. Les intervalles sont **disjoints** et ne contiennent aucun seuil : il reste une marge de $0{,}5$ entre chaque intervalle et le seuil voisin. Le dessin est celui de la figure du TD avec des intervalles plus étroits ([figure du corrigé du TD](../td/td01-transmissions-bande-de-base.qmd#fig-constellation-bruitee), où $\sigma = \frac14$).
 :::
 ::::
 

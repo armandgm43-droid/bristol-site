@@ -5,7 +5,7 @@ chapitre: 3
 enseignants: ["Romain Tajan"]
 annee: "2026-2027"
 statut: flashcards
-date-modified: 2026-10-07
+date-modified: 2026-10-31
 sources:
   - id: poly
     fichier: poly_ts227.pdf
@@ -648,7 +648,7 @@ Le même résultat est obtenu au tableau par un calcul direct [notes, f. 5 v°] 
 :::
 
 ::: {.complement}
-**Puissance du signal émis.** Avec la définition du TD ($P_{s_l} = \bar{R}_{s_l}(0)$, @exr-td-bennett, q. 8), $P_{s_l} = \tilde{R}_{s_l}(0) = \frac{1}{\Ts} \sum_d R_A[d]\, R_h(-d\Ts)$. Pour des symboles iid centrés, $P_{s_l} = \frac{\sigma_A^2}{\Ts}\, R_h(0) = \frac{\sigma_A^2 E_h}{\Ts}$, où $E_h = \int |h(t)|^2\, \mathrm{d}t$ est l'énergie du filtre de mise en forme : énergie moyenne par symbole, divisée par la durée d'un symbole.
+**Puissance du signal émis.** Avec la définition du TD ($P_{s_l} = \bar{R}_{s_l}(0)$, [TD, exercice 2](../td/td01-transmissions-bande-de-base.qmd#exr-td-bennett), q. 8), $P_{s_l} = \tilde{R}_{s_l}(0) = \frac{1}{\Ts} \sum_d R_A[d]\, R_h(-d\Ts)$. Pour des symboles iid centrés, $P_{s_l} = \frac{\sigma_A^2}{\Ts}\, R_h(0) = \frac{\sigma_A^2 E_h}{\Ts}$, où $E_h = \int |h(t)|^2\, \mathrm{d}t$ est l'énergie du filtre de mise en forme : énergie moyenne par symbole, divisée par la durée d'un symbole.
 :::
 
 ## Exemple : mise en forme par une porte {#sec-dsp-porte}
@@ -754,98 +754,12 @@ La DSP s'annule aux fréquences $k/\Ts$, $k \neq 0$. Son **lobe principal** occu
 
 ## Exercices du TD {#sec-exercices-td-dsp}
 
-Les exercices suivants viennent du TD « Transmissions en bande de base » [td] ; ils sont écrits avec les notations du cours (le TD note $g(t)$ le filtre de mise en forme, $s_s(t)$ le signal des symboles et $R_s$ le débit symbole ; voir la table des notations de la fiche matière).
+Le TD « Transmissions en bande de base » est corrigé question par question dans sa propre page, énoncé découpé à l'appui :
 
-::: {.complement}
-**Convention d'autocorrélation.** L'énoncé du TD définit $R_A[k] = \E(A_n A^*_{n+k})$ et $R_{s_l}(t, \tau) = \E(s_l(t)\, s_l^*(t + \tau))$ [td, p. 2] ; sa correction [td-correction, p. 5 et 8], le support [poly, p. 83] et les notes [notes, f. 5 r°] utilisent $\E(s_l(t)\, s_l^*(t - \tau))$ et $R_A[k] = \E(A_n A^*_{n-k})$. Le cours suit partout cette seconde convention (décision d'Armand, 2026-10-07), y compris dans l'exercice ci-dessous. Avec la convention de l'énoncé, la formule de Bennett s'écrirait avec $e^{+j2\pi f m\Ts}$ (ou $R_A^*[m]$) : la DSP obtenue est la même, et pour des symboles réels $R_A$ est pair.
-:::
+- [TD, exercice 2 : cyclostationnarité et DSP](../td/td01-transmissions-bande-de-base.qmd#sec-td01-ex2) (démonstration de la formule de Bennett, DSP d'une 2-PAM et d'une 2-OOK) ;
+- [TD, exercice 5, questions 10-11 : DSP et largeur de bande](../td/td01-transmissions-bande-de-base.qmd#exr-td-largeur-bande).
 
-::: {#exr-td-bennett}
-## Cyclostationnarité et DSP [td, p. 2, ex. 2, q. 1-9]
-
-Soit $\{A_k\}_{k \in \mathbb{Z}}$ la séquence des symboles délivrée par le codeur en ligne. Les symboles forment un processus à temps discret stationnaire de moyenne $m_A = \E(A_k)$ et d'autocorrélation $R_A[k]$. Cette séquence est transmise avec un débit symbole $D_s = 1/\Ts$ ; le signal à temps continu correspondant est $s_a(t) = \sum_{k=-\infty}^{+\infty} A_k\, \delta(t - k\Ts)$.
-
-1. Exprimer $s_l(t)$ à partir des $A_k$ et de la réponse impulsionnelle $h(t)$ du filtre de mise en forme.
-2. Calculer $m_{s_l}(t) = \E(s_l(t))$.
-3. Montrer que la fonction $t \mapsto m_{s_l}(t)$ est périodique de période $\Ts$.
-4. Calculer $\bar{m}_{s_l} = \frac{1}{\Ts} \int_0^{\Ts} m_{s_l}(t)\, \mathrm{d}t$.
-5. Calculer la fonction d'autocorrélation $R_{s_l}(t, \tau)$.
-6. Montrer que la fonction $t \mapsto R_{s_l}(t, \tau)$ est périodique de période $\Ts$.
-7. Calculer la fonction d'autocorrélation moyennée $\bar{R}_{s_l}(\tau) = \frac{1}{\Ts} \int_0^{\Ts} R_{s_l}(t, \tau)\, \mathrm{d}t$.
-8. En déduire la puissance de $s_l(t)$, définie par $P_{s_l} = \bar{R}_{s_l}(0)$.
-9. Démontrer la formule de Bennett en calculant la DSP de $s_l(t)$.
-:::
-
-::: {.solution}
-Correction du TD [td-correction, p. 4-7] : questions 1 à 3, 5 à 7 et 9, voir la démonstration du @thm-bennett ($s_l(t) = \sum_k A_k\, h(t - k\Ts)$ ; $\bar{R}_{s_l}$ est l'autocorrélation moyennée $\tilde{R}_{s_l}$ de @eq-autocorrelation-moyennee). Question 4 :
-
-$$
-\bar{m}_{s_l} = \frac{1}{\Ts} \int_0^{\Ts} m_{s_l}(t)\, \mathrm{d}t = \frac{m_A}{\Ts} \sum_{k} \int_{-k\Ts}^{-(k-1)\Ts} h(t)\, \mathrm{d}t = \frac{m_A}{\Ts} \int_{-\infty}^{+\infty} h(t)\, \mathrm{d}t
-$$
-
-(changement de variable $t \leftarrow t - k\Ts$, puis relation de Chasles).
-:::
-
-::: {.complement}
-Question 8 (sans corrigé) : $P_{s_l} = \bar{R}_{s_l}(0) = \frac{1}{\Ts} \sum_d R_A[d]\, R_h(-d\Ts)$ ; pour des symboles iid centrés, $P_{s_l} = \sigma_A^2 E_h / \Ts$ (voir le complément qui suit @cor-bennett-iid).
-:::
-
-::: {#exr-td-dsp-2pam}
-## DSP d'une 2-PAM [td, p. 2, ex. 2, q. 10]
-
-Calculer et représenter la DSP du signal $s_l(t)$ pour les hypothèses suivantes :
-
-- les symboles sont 2-PAM ($A_k \in \{-1, 1\}$), uniformément et identiquement distribués ;
-- le filtre de mise en forme vaut $h(t) = 1$ si $0 \leq t < \Ts$, 0 sinon.
-:::
-
-::: {.solution}
-Correction du TD [td-correction, p. 7-8]. $\E(A_k) = 1 \times 0{,}5 + (-1) \times 0{,}5 = 0$ ; $R_A[k] = \E(|A_n|^2) = 1$ si $k = 0$ et $R_A[k] = \E(A_n)\,\E(A^*_{n-k}) = 0$ sinon. Donc $\sum_d R_A[d]\, e^{-j2\pi f d\Ts} = 1$ et $\Gamma_{s_l}(f) = \frac{|H(f)|^2}{\Ts}$. Avec $H(f) = e^{-j\pi f\Ts}\, \Ts \sinc(f\Ts)$ (bloc `av-phase-tf-porte-td`) :
-
-$$
-\Gamma_{s_l}(f) = \Ts \sinc^2(\Ts f) .
-$$
-
-La correction trace cette DSP en marquant la **bande passante** sur le lobe principal $[-1/\Ts, 1/\Ts]$ [td-correction, p. 9] (@fig-dsp-2pam-ook, en haut).
-:::
-
-::: {#exr-td-dsp-ook}
-## DSP d'une 2-OOK [td, p. 2, ex. 2, q. 11]
-
-Même question pour des symboles 2-OOK (*On Off Keying*, $A_k \in \{0, 1\}$), uniformément et identiquement distribués, avec le même filtre de mise en forme.
-:::
-
-::: {.complement}
-Solution (la correction du TD n'en donne pas) :
-
-- $m_A = \frac{1}{2}$ ; $R_A[0] = \E(|A_n|^2) = \frac{1}{2}$ ; pour $d \neq 0$, $R_A[d] = \E(A_n)\,\E(A^*_{n-d}) = \frac{1}{4}$ (symboles indépendants) ;
-- donc $\sum_d R_A[d]\, e^{-j2\pi f d\Ts} = \frac{1}{4} + \frac{1}{4} \sum_d e^{-j2\pi f d\Ts} = \frac{1}{4} + \frac{1}{4\Ts} \sum_k \delta\!\left(f - \frac{k}{\Ts}\right)$, par la formule sommatoire de Poisson ;
-- avec $|H(f)|^2 = \Ts^2 \sinc^2(f\Ts)$, qui s'annule en $f = k/\Ts$ pour $k \neq 0$ :
-
-$$
-\Gamma_{s_l}(f) = \frac{\Ts}{4} \sinc^2(f\Ts) + \frac{1}{4}\, \delta(f) .
-$$
-
-Interprétation : $A_k = \frac{1}{2} + B_k$ avec $B_k \in \{-\frac{1}{2}, \frac{1}{2}\}$ centré. La partie centrée donne une DSP continue, celle d'une 2-PAM de variance $\frac{1}{4}$ ; la moyenne $m_A = \frac{1}{2}$ donne une composante continue, la raie $\frac{1}{4}\,\delta(f)$ (puissance $m_A^2 = \frac{1}{4}$). Puissance totale : $\frac{1}{4} + \frac{1}{4} = \frac{1}{2} = \E(|A_k|^2)$. À puissance égale, la moitié de la puissance de l'OOK est dépensée dans la raie à $f = 0$, qui ne transporte pas d'information (comparer avec la constellation antipodale du chapitre 2).
-:::
-
-![DSP de la 2-PAM $\{-1, 1\}$ (en haut) et de la 2-OOK $\{0, 1\}$ (en bas), avec un filtre de mise en forme en porte d'amplitude 1 sur $[0, \Ts[$. La flèche représente la raie $\frac{1}{4}\,\delta(f)$, de poids $\frac{1}{4}$ (sa hauteur n'est pas à l'échelle). Exercices du TD [td, p. 2, ex. 2, q. 10-11] ; 2-PAM d'après la correction du TD [td-correction, p. 9], redessinée ; 2-OOK : reconstruite (complément, aucune source ne la donne). Axes normalisés ($f\Ts$, $\Gamma_{s_l}/\Ts$), échelle linéaire.](../figures/03-dsp-2pam-ook.svg){#fig-dsp-2pam-ook}
-
-::: {#exr-td-largeur-bande}
-## Étude pratique : DSP et largeur de bande [td, p. 4, ex. 5, q. 10-11]
-
-Hypothèses de l'étude pratique : fréquence d'échantillonnage $f_e = 1/T_e = 8\ \mathrm{kHz}$ ; filtre de mise en forme en porte de durée $\Ts$ (celui de l'exercice précédent), échantillonné à $T_e$ et normalisé en énergie [td, p. 4, q. 6] ; débit symbole $D_s = 2\ \mathrm{ksymboles/s}$, donc $\Ts = 0{,}5\ \mathrm{ms}$ ; symboles 4-PAM, $A_k \in \{\pm 1, \pm 3\}$.
-
-10. Représenter l'allure de la DSP de $s_l[n]$.
-11. Si l'on définit la largeur de bande de $s_l[n]$ comme la largeur du lobe principal de la DSP, combien vaut-elle ?
-:::
-
-::: {.complement}
-Solution (aucune source ne la donne) :
-
-- Le filtre échantillonné compte $\Ts f_e = 4$ échantillons égaux. Pour des symboles 4-PAM équiprobables et indépendants, $m_A = 0$ et $\sigma_A^2 = \frac{1}{4}(1 + 9 + 9 + 1) = 5$ : par @eq-dsp-iid-centres, la DSP a l'allure de $|H(f)|^2$, c'est-à-dire, sur $[-f_e/2, f_e/2] = [-4, 4]\ \mathrm{kHz}$, celle d'un $\sinc^2(f\Ts)$ (exactement $\left|\frac{\sin(\pi f \Ts)}{\sin(\pi f T_e)}\right|^2$ pour le filtre échantillonné), **périodisée** de période $f_e = 8\ \mathrm{kHz}$ puisque $s_l[n]$ est à temps discret.
-- Elle s'annule aux multiples de $1/\Ts = 2\ \mathrm{kHz}$ (sauf aux multiples de $f_e$) : le lobe principal occupe $[-2, 2]\ \mathrm{kHz}$. Sa largeur est donc $2/\Ts = 4\ \mathrm{kHz}$ ; avec la convention $[-B, B]$ du cours, $B = 1/\Ts = 2\ \mathrm{kHz}$ (@eq-dsp-porte).
-:::
+La différence de convention d'autocorrélation entre l'énoncé du TD et le cours est expliquée en tête de l'[exercice 2](../td/td01-transmissions-bande-de-base.qmd#sec-td01-ex2).
 
 ## À retenir {#sec-retenir-dsp}
 
@@ -863,4 +777,4 @@ Origine : support officiel, sauf mention *(notes)*, *(TD)* ou *(complément)*.
 - **Formule de Bennett** : si les symboles $A_m$ forment un processus **stationnaire** à temps discret, $X(t) = \sum_m A_m h(t - m\Ts)$ est **cyclostationnaire** de période $\Ts$ et $\Gamma_X(f) = \frac{|H(f)|^2}{\Ts} \sum_m R_A[m]\, e^{-j2\pi f m\Ts}$, avec $R_A[m] = \E[A_n A^*_{n-m}]$ (@thm-bennett) ; démonstration *(TD)*.
 - **Symboles iid centrés** : $\Gamma_{s_l}(f) = \sigma_A^2\, |H(f)|^2 / \Ts$ (@cor-bennett-iid) *(TD, notes)* ; la DSP a la forme de $|H(f)|^2$ : le filtre de mise en forme fixe la bande occupée *(TD)*.
 - **Porte de durée $\Ts$** : $\Gamma_{s_l}(f) = \sigma_A^2 \Ts \sinc^2(f\Ts)$, avec $\sinc(x) = \frac{\sin \pi x}{\pi x}$ ; lobe principal $[-1/\Ts, 1/\Ts]$, soit $B = 1/\Ts$ (@eq-dsp-porte) *(notes, TD ; sommet $\sigma_A^2\Ts$ d'après la correction du TD, les notes écrivent $\sigma_a^2/\Ts$ : `av-dsp-porte-notes`)*.
-- **Symboles non centrés** (OOK) : la moyenne $m_A$ crée des raies dans la DSP ; avec une porte, $\Gamma_{s_l}(f) = \frac{\Ts}{4}\sinc^2(f\Ts) + \frac{1}{4}\delta(f)$ (@exr-td-dsp-ook) *(complément)*.
+- **Symboles non centrés** (OOK) : la moyenne $m_A$ crée des raies dans la DSP ; avec une porte, $\Gamma_{s_l}(f) = \frac{\Ts}{4}\sinc^2(f\Ts) + \frac{1}{4}\delta(f)$ ([TD, exercice 2, q. 11](../td/td01-transmissions-bande-de-base.qmd#exr-td-dsp-ook)) *(complément)*.

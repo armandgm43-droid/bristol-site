@@ -204,7 +204,7 @@ cartes:
       $$I_1 = \frac{V_{T_1} - V_{T_2}}{R}$$
       Les deux seuils subissent le même décalage $\Delta V_T$ : leur différence, donc $I_1$, ne change pas
       (tant que $R$ et $\mu_n C_{ox}$ sont stables et les MOS saturés).
-    ref: fig-dual-vt
+    ref: ../td/td02-circuit-pour-l-espace.qmd#fig-dual-vt
     source: complement
 
   - id: eana3-dual-vt-transimpedance
@@ -214,7 +214,7 @@ cartes:
     reponse: |
       Tension-parallèle ($R$ prélève $v_{DS_1}$ et réinjecte un courant au nœud de grille) :
       $$A_r = r_{DS}\,\frac{1 - g_m R}{1 + g_m r_{DS}}$$
-    ref: exr-circuit-espace
+    ref: ../td/td02-circuit-pour-l-espace.qmd#exr-circuit-espace
     source: officiel
 
   - id: eana3-dual-vt-boucle-ota
@@ -224,7 +224,7 @@ cartes:
     reponse: |
       $$\frac{i_1}{i_o} = \frac{1}{1 + A_g\, g_m r_{DS} R}$$
       Tend vers 0 : les perturbations de $I_1$ sont divisées par le gain de boucle $A_g\, g_m r_{DS} R$.
-    ref: exr-circuit-espace
+    ref: ../td/td02-circuit-pour-l-espace.qmd#exr-circuit-espace
     source: complement
 
   # --- TD 3 : modulateur d'amplitude ---
@@ -236,7 +236,7 @@ cartes:
     reponse: |
       $M_N$ est monté en diode ; il prélève le courant $I_o$ et fournit $V_{fb}$ en série avec $V_{mod}$ :
       **courant-série**. Diode MOS ≈ résistance $1/g_{m_N}$, donc $\beta_F = \frac{1}{g_{m_N}}$.
-    ref: exr-modulation-amplitude
+    ref: ../td/td03-modulation-amplitude.qmd#exr-modulation-amplitude
     source: complement
 
   - id: eana3-modulateur-am-sens-bornes
@@ -246,7 +246,7 @@ cartes:
     reponse: |
       Non : une hausse de $V_{mod}$ fait diminuer $I_o$, donc $V_{fb}$ ($A\beta_F < 0$, réaction positive).
       Il faut **échanger les bornes** : $V_{fb}$ sur $+$, $V_{mod}$ sur $-$, pour que $V_{fb}$ suive $V_{mod}$.
-    ref: exr-modulation-amplitude
+    ref: ../td/td03-modulation-amplitude.qmd#exr-modulation-amplitude
     source: complement
 
   # --- TD additionnel : régulateur LDO ---
@@ -258,7 +258,7 @@ cartes:
     reponse: |
       **Tension-série** (pont $R_1$-$R_2$ en parallèle sur la sortie, tension réinjectée à l'entrée de $A_v$).
       $\beta_F = \frac{R_1}{R_1 + R_2}$ et $V_{out} = V_{ref}\left(1 + \frac{R_2}{R_1}\right)$.
-    ref: exr-vdd-bff
+    ref: ../td/td-add-vdd-is-not-your-bff.qmd#exr-vdd-bff
     source: complement
 
   - id: eana3-ldo-impedance-sortie-gain-faible
@@ -269,7 +269,7 @@ cartes:
       $A\beta_F \approx 1$ seulement : $Z_{out} = \frac{r_{ds}}{1 + A\beta_F} \approx \frac{r_{ds}}{2}$.
       L'impédance reste de l'ordre de $r_{ds}$, trop grande pour une source de tension ; les variations
       de l'alimentation sont mal rejetées.
-    ref: exr-vdd-bff
+    ref: ../td/td-add-vdd-is-not-your-bff.qmd#exr-vdd-bff
     source: complement
 
   # --- Sujet 2025 : bandgap de Brokaw ---
@@ -281,7 +281,7 @@ cartes:
     reponse: |
       **Tension-parallèle** : $\beta_F \approx \frac{1}{R_1\left(1 + \frac{1}{1 + g_m R_2}\right)} \approx \frac{1}{R_1}$.
       Mais au repos $g_m R_2 = \ln 8 \approx 2{,}1$ : le facteur $\approx 1{,}3$ n'est pas négligeable en toute rigueur.
-    ref: fig-bandgap-brokaw
+    ref: ../td/td03-2026-bandgap-brokaw.qmd#fig-bandgap-brokaw
     source: complement
 
   - id: eana3-brokaw-bruit-dimensionnement-r1
@@ -291,5 +291,5 @@ cartes:
     reponse: |
       $\frac{v_{ref}}{i_i} = \frac{A}{1 + A\beta_F} \approx \frac{1}{\beta_F} \approx R_1$, indépendant de $A_v$.
       Choisir $R_1$ **petite**, en compromis avec la valeur de $V_{ref}$ et sa compensation en température.
-    ref: exr-bandgap-brokaw
+    ref: ../td/td03-2026-bandgap-brokaw.qmd#exr-bandgap-brokaw
     source: complement

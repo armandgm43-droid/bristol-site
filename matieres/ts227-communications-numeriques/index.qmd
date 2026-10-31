@@ -25,6 +25,14 @@ number-sections: false
 | 5 | Transmission sur fréquence porteuse | [Brouillon]{.statut .brouillon} |
 | 6 | Modulation et démodulation numériques | [Brouillon]{.statut .brouillon} |
 
+## TD corrigés
+
+Énoncé découpé question par question, correction sous chaque question : corrigé officiel du TD (autre version de l'énoncé, correspondance des questions indiquée), solutions et explications de Claude (*Complément*) pour les questions sans corrigé. Les chapitres ne contiennent plus les corrections du TD, seulement un renvoi (31 octobre 2026).
+
+| TD | Contenu | Corrections disponibles |
+|---|---|---|
+| [TD 1 — Transmissions en bande de base](td/td01-transmissions-bande-de-base.qmd) | 8-PAM et étiquetage de Gray ; cyclostationnarité et DSP (Bennett, 2-PAM, 2-OOK) ; critère de Nyquist et filtrage adapté ; probabilité d'erreur et récepteur optimal ; étude pratique | corrigé officiel partiel (ex. 1 à 4), Claude ; ex. 5, q. 1-9 non traitées |
+
 ## Annales corrigées {#sec-annales-corrigees}
 
 Sujets de partiel des années précédentes, avec des solutions rédigées par Claude (aucun corrigé officiel) ; sources dans `sources/ts227/annales/`.

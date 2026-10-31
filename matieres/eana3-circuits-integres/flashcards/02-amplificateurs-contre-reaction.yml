@@ -241,7 +241,7 @@ cartes:
     reponse: |
       Contre-réaction **courant-série** ($R_x$ est parcourue par $i_o$) :
       $$A = g_m, \quad \beta_F = R_x, \quad Z_e = r_{be}, \quad Z_s = r_{ce}$$
-    ref: exr-ou-est-la-contre-reaction
+    ref: ../td/td01-ou-est-la-contre-reaction.qmd#exr-ou-est-la-contre-reaction
     source: notes-externes
 
   - id: eana3-emetteur-commun-rx-impedances
@@ -252,7 +252,7 @@ cartes:
       $A_{OL} = g_m R_x$ ; $Z_i = r_{be}(1 + g_m R_x)$ ; $Z_o = r_{ce}(1 + g_m R_x)$ ;
       $$\frac{i_o}{v_i} = \frac{g_m}{1 + g_m R_x} \approx \frac{1}{R_x}$$
       (approximations pour $g_m R_x \gg 1$).
-    ref: eq-td1-transconductance
+    ref: ../td/td01-ou-est-la-contre-reaction.qmd#eq-td1-transconductance
     source: notes-externes
 
   - id: eana3-emetteur-commun-robustesse-rapport
@@ -262,5 +262,5 @@ cartes:
     reponse: |
       $v_o = -R_C\, i_o$, donc $\dfrac{v_o}{v_i} \approx -\dfrac{R_C}{R_x}$.
       $-\dfrac{\alpha R_C}{\alpha R_x} = -\dfrac{R_C}{R_x}$ : le gain ne dépend que d'un **rapport** de résistances voisines, insensible à une dispersion commune, et ne dépend plus de $g_m$.
-    ref: exr-ou-est-la-contre-reaction
+    ref: ../td/td01-ou-est-la-contre-reaction.qmd#exr-ou-est-la-contre-reaction
     source: notes-externes

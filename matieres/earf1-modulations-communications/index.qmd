@@ -32,6 +32,16 @@ Plan tiré des sommaires des deux supports (validé le 29 octobre 2026). Matièr
 
 Les quatre chapitres ont été rédigés, vérifiés et validés le 29 octobre 2026 (validation déléguée par Armand) : 11 blocs *À vérifier*, tous tranchés (corrections de coquilles du support). Aucune note d'Armand : les notes et corrigés d'un ancien élève (2023) sont en *Notes externes*. Les solutions des TD sans corrigé sont rédigées par Claude (*Complément*). **74 flashcards** générées le 29 octobre 2026 (17, 18, 21 et 18 par chapitre), dans le paquet « EARF1 » de l'application de révision.
 
+## TD corrigés
+
+Énoncés découpés question par question, correction sous chaque question : notes d'Armand (*Notes de cours*), corrigé d'un ancien élève (*Notes externes*), explications de Claude (*Complément*). Les chapitres ne contiennent plus les corrections de TD, seulement un renvoi (31 octobre 2026).
+
+| TD | Contenu | Corrections disponibles |
+|---|---|---|
+| [TD 1 — Modulations sous GNU Radio](td/td01-gnuradio-modulations.qmd) | AM, ASK, FM, FSK ; ancienne version de 2023 | Claude ; corrigé 2023 (autre énoncé) |
+| [TD 2 — Modulateurs](td/td02-modulateurs.qmd) | modulateur FM à varicap, FSK et OOK à oscillateur LC | Armand (9 octobre 2026), corrigé 2023, Claude |
+| [TD 3 — Démodulateurs](td/td03-demodulateurs.qmd) | détecteur d'enveloppe, démodulateur OOK, démodulateur FM | Armand, corrigé 2023, Claude |
+
 ## Table des notations
 
 | Grandeur | Notation du cours | Autres notations des sources |

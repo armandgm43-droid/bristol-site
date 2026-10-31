@@ -2,7 +2,7 @@
 title: "Partiel 2016-2017 (Circuits HF et oscillateurs) — corrigé"
 subtitle: "EA210, N. Deltimple, 7 novembre 2016 · 1 h 20, documents et calculatrice autorisés · questions générales, charge active à résistance négative"
 matiere: eana3
-date-modified: 2026-10-27
+date-modified: 2026-10-31
 sources:
   - id: sujet-2016-hf
     fichier: annales/2016-2017-partiel-circuits-hf-oscillateurs.pdf
@@ -108,7 +108,7 @@ $$C(V_{GB}) = \frac{C_{ox}\, C_{dep}(V_{GB})}{C_{ox} + C_{dep}(V_{GB})} .$$
 
 ## Exercice II : étude d'un amplificateur HF (14 points) {#sec-ann16hf-ex2}
 
-Chapitre du cours : [Oscillateur à résistance négative](../cours/04-oscillateurs.qmd#sec-resistance-negative) et [TD 4](../cours/04-oscillateurs.qmd#sec-td-resistance-negative).
+Chapitre du cours : [Oscillateur à résistance négative](../cours/04-oscillateurs.qmd#sec-resistance-negative) et [TD 4](../td/td04-oscillateur-resistance-negative.qmd#sec-td-resistance-negative).
 
 ![](sujets/2016-2017-partiel-circuits-hf-ex2.png){fig-alt="Exercice II : paire croisée PMOS (fig. 1) et amplificateur différentiel NMOS M1, M1' à charge active auto-polarisée : PMOS montés en diode M3, M3' et paire croisée M2, M2' (fig. 2), courant de queue I0."}
 
