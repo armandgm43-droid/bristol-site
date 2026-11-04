@@ -133,6 +133,10 @@ website:
       style: docked
       contents:
         - matieres/eana4-tp-electronique/index.qmd
+        - section: "TP"
+          contents:
+            - matieres/eana4-tp-electronique/tp/tp04-modulations-am-fm.qmd
+            - matieres/eana4-tp-electronique/tp/tp05-oscillateur-lc.qmd
     - id: earf1
       title: "EARF1"
       style: docked

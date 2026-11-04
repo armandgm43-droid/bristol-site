@@ -1,0 +1,318 @@
+---
+title: "TP 4/5 — Modulations d'amplitude et de fréquence"
+subtitle: "EANA4 (ex EA208), J.-M. Vinassa · préparation corrigée et trame de compte rendu (multiplieur AD633, AM, détection d'enveloppe, OOK, FM)"
+matiere: eana4
+date-modified: 2026-11-03
+sources:
+  - id: poly
+    fichier: tp/poly-tp-2026-vinassa.pdf
+    nature: officielle
+    version: "2026"
+    pages: "44-57"
+  - id: cr-2023-am
+    fichier: corriges/2023-tp-modulations-amplitude-frequence-cr.pdf
+    nature: externe
+    pages: "1"
+---
+
+{{< include /_macros.qmd >}}
+
+::: {.complement}
+**Mode d'emploi.** TP tournant : selon le binôme, il est fait en 4^e^ ou en 5^e^ séance, en alternance avec l'[oscillateur sinusoïdal LC](tp05-oscillateur-lc.qmd). La page suit l'ordre de l'énoncé [poly, p. 44-57]. Pour chaque partie :
+
+- les questions et réglages de l'énoncé sont résumés en texte normal (support officiel) ;
+- les réponses aux cadres « Préparation » et les valeurs attendues sont **rédigées par Claude** (blocs *Complément*), à partir de l'énoncé, de ses annexes et des formules du cours de modulations ([EARF1](../../earf1-modulations-communications/cours/02-modulations-lineaires.qmd), [modulations angulaires](../../earf1-modulations-communications/cours/03-modulations-angulaires.qmd)) ; toutes les valeurs numériques ont été recalculées ;
+- les tableaux **« Trame du CR »** donnent la prévision et laissent la colonne *Mesure* vide, à remplir en séance.
+
+Le seul document d'un ancien binôme pour ce TP [cr-2023-am] est une page de préparation de l'AM (*Notes externes*).
+:::
+
+## Préparation générale {#sec-tp45-preparation}
+
+L'énoncé demande de lire le texte en entier (schémas et annexes), de revoir le cours sur les modulations et de faire les calculs des cadres grisés ; avant toute manipulation, lire l'annexe « Utilisation de l'analyseur de spectre » [poly, p. 44 et 57]. Seule la partie gauche de la maquette, « Mod AM », est utilisée [poly, p. 45].
+
+::: {.complement}
+**Ce qu'il faut savoir lire sur la maquette** [poly, p. 45] :
+
+| Point | Rôle |
+|---|---|
+| J1 (PT1) | entrée BF $x(t)$ (entrée X du multiplieur U6, AD633) |
+| J2 (PT2) | entrée HF $y(t)$ (entrée Y) |
+| J4 | sortie $s(t) = K\,x(t)\,y(t)$ du multiplieur |
+| J5 | vers l'analyseur de spectre (par C4, S1 et un réseau de résistances de 2 kΩ) : **seuls les niveaux relatifs** des raies y sont exploitables |
+| J9 | sortie du détecteur d'enveloppe : diode Schottky D2 (BAT42), puis $R_5 = 5{,}6\ \mathrm{k\Omega}$ en parallèle avec $C_5 = 4{,}7\ \mathrm{nF}$ |
+
+**Rappels sur l'analyseur de spectre** (annexe commune, [poly, p. 57]) : vérifier le niveau maximal admissible avant de brancher ; régler dans l'ordre la plage de fréquence (centre + *span*), la RBW (inférieure à l'écart entre deux raies), le niveau de référence et l'échelle (10 dB/div), puis les curseurs. L'analyseur ne donne aucune information de phase.
+:::
+
+## Partie A — Modulation d'amplitude {#sec-tp45-am}
+
+### Préparation : signal modulé et spectre {#sec-tp45-prep-am}
+
+Énoncé [poly, p. 45] : avec $x(t) = X_m\cos(\omega t) + X_o$ ($X_m < X_o$) et une porteuse $A\cos(\Omega_o t)$, exprimer $s(t) = x(t)\,y(t)$, identifier l'indice de modulation $m$ (annexe B.1), décomposer $s(t)$ en sinusoïdes, prévoir son spectre et donner les amplitudes de la porteuse et des raies latérales.
+
+::: {.complement}
+On garde le gain $K$ du multiplieur (le cadre l'omet, la partie I le fait mesurer) :
+
+$$s(t) = K A\,\big(X_o + X_m\cos\omega t\big)\cos\Omega_o t = K A X_o\Big(1 + \frac{X_m}{X_o}\cos\omega t\Big)\cos\Omega_o t .$$
+
+Par identification avec $s(t) = A'(1 + m\,u(t))\cos\Omega_o t$, $|u(t)| \le 1$ (annexe B.1) :
+
+$$m = \frac{X_m}{X_o}, \qquad 0 < m < 1 \iff X_m < X_o .$$ {#eq-tp45-indice-am}
+
+Avec $\cos a\cos b = \tfrac12[\cos(a+b) + \cos(a-b)]$ :
+
+$$s(t) = \underbrace{K A X_o\cos\Omega_o t}_{\text{porteuse}} + \underbrace{\frac{K A X_m}{2}\cos(\Omega_o + \omega)t + \frac{K A X_m}{2}\cos(\Omega_o - \omega)t}_{\text{raies latérales}} .$$ {#eq-tp45-spectre-am}
+
+Spectre (unilatéral) : trois raies, à $F_o$ (amplitude $KAX_o$) et à $F_o \pm f$ (amplitude $\dfrac{KAX_m}{2} = \dfrac{m}{2}\,KAX_o$ chacune). Écart relatif des raies latérales : $20\log(m/2)$ dB sous la porteuse.
+
+**Applications numériques du TP** ($A = 5$ V, soit 10 Vcàc ; $X_m = 2$ V, soit 4 Vcàc ; $m = 0{,}8$ ; $K = 0{,}1\ \mathrm{V^{-1}}$, valeur nominale de l'AD633, dont la sortie vaut $(X_1 - X_2)(Y_1 - Y_2)/10\ \mathrm{V}$) :
+
+| Grandeur | Expression | Valeur |
+|---|---|---|
+| Composante continue à régler | $X_o = X_m/m$ | **2,5 V** |
+| Amplitude de la porteuse en J4 | $KAX_o$ | 1,25 V |
+| Amplitude de chaque raie latérale en J4 | $KAX_m/2$ | 0,50 V |
+| Écart raie latérale / porteuse | $20\log(m/2)$ | **−7,96 dB** |
+| Enveloppe : maximum / minimum | $KA(X_o \pm X_m)$ | 2,25 V / 0,25 V |
+:::
+
+::: {.notes-externes}
+Le compte rendu de 2023 fait le même calcul et identifie $m = X_m/X_o$ ; il écrit ensuite $s(t) = AX_m[\cos(t(\omega - \Omega_o)) + \cos(t(\Omega_o + \omega))] + AX_o\cos(\Omega_o t)$ [cr-2023-am, p. 1].
+:::
+
+::: {.a-verifier #av-tp45-facteur-demi-cr2023}
+**Source** [cr-2023-am, p. 1] : raies latérales d'amplitude $AX_m$.
+
+**Problème** : le produit $\cos a\cos b$ fait apparaître un facteur $\tfrac12$ ; avec cette expression, la puissance des raies latérales serait 4 fois trop grande (+6 dB).
+
+**Proposition** : amplitude $AX_m/2$ (sans $K$) pour chaque raie latérale, comme dans @eq-tp45-spectre-am.
+:::
+
+### Préparation : démodulateur d'enveloppe {#sec-tp45-prep-detecteur}
+
+Énoncé [poly, p. 45] : expliquer le fonctionnement du démodulateur d'enveloppe et prévoir les chronogrammes (annexe E). L'annexe E indique un redressement crête par diode et condensateur, une constante de temps $\tau = RC$ égale à la moyenne géométrique des périodes HF et BF, et une diode rapide à petit seuil (Schottky, ≈ 0,3 V), avec une amplitude HF d'au moins 3 V [poly, p. 49].
+
+::: {.complement}
+**Fonctionnement.** Quand $s(t)$ dépasse la tension $v_{C}$ du condensateur (plus le seuil de la diode), la diode conduit et charge $C_5$ jusqu'à la crête de l'alternance positive ; le reste de la période HF, elle est bloquée et $C_5$ se décharge dans $R_5$. La sortie suit donc les crêtes, c'est-à-dire l'enveloppe $KA\,x(t)$, avec une petite ondulation à 455 kHz et une composante continue ($\propto X_o$).
+
+**Choix de $\tau$.** Il faut $T_{HF} \ll \tau$ (peu d'ondulation) et $\tau$ assez petit pour que la décharge suive les descentes de l'enveloppe. Condition classique de non-décrochage pour une modulation sinusoïdale : $\tau \le \dfrac{\sqrt{1 - m^2}}{m\,\omega}$.
+
+| Grandeur | Valeur |
+|---|---|
+| $\tau = R_5 C_5$ | $5{,}6\ \mathrm{k\Omega} \times 4{,}7\ \mathrm{nF} = 26{,}3\ \mathrm{\mu s}$ |
+| $T_{HF} = 1/455\ \mathrm{kHz}$ | 2,20 µs |
+| Moyenne géométrique $\sqrt{T_{HF}\,T_{BF}}$ ($T_{BF} = 1$ ms) | 46,9 µs (même ordre de grandeur que $\tau$) |
+| Limite de non-décrochage à $m = 0{,}8$, $f = 1$ kHz | 119 µs : respectée |
+
+**Chronogrammes prévus** (@fig-tp45-detecteur) : sinusoïde à 1 kHz, décalée vers le bas du seuil de la diode, de crête ≈ 2,25 V moins le seuil. **Point à surveiller** : au creux de l'enveloppe, l'amplitude HF n'est que de 0,25 V, sous le seuil de la BAT42 ; la diode ne conduit presque plus et les creux de la sinusoïde démodulée sont **écrasés vers 0**. C'est la limite annoncée par l'annexe E (« au moins 3 V » de HF) : on ne l'atteint pas au minimum de l'enveloppe avec ces réglages.
+:::
+
+![Signal modulé en J4 et sortie du détecteur en J9, simulés avec les valeurs de la maquette (diode Schottky exponentielle, ≈ 0,4 V à 10 mA). En haut, $m = 0{,}8$ : la sortie suit l'enveloppe sauf dans les creux, écrasés par le seuil de la diode. En bas, surmodulation : la sortie suit $|x(t)|$ et non $x(t)$. Simulation (Complément).](../figures/tp04-detecteur-enveloppe.svg){#fig-tp45-detecteur}
+
+### Trame du CR — I. Caractérisation du multiplieur {#sec-tp45-multiplieur}
+
+Réglages [poly, p. 46] : générateur en « High Z » ; sinusoïde de 455 kHz, 10 Vcàc sur J2 (vérifiée en PT2) ; tension continue de 1 V sur J1 (vérifiée en PT1). Observer J4 et en déduire $K$.
+
+::: {.complement}
+$s(t) = K \times 1\ \mathrm{V} \times 5\cos\Omega_o t$ : on attend une sinusoïde de **1 Vcàc** en J4, soit $K = \dfrac{V_{J4,\,càc}}{1\ \mathrm{V} \times 10\ \mathrm{V_{càc}}} = 0{,}1\ \mathrm{V^{-1}}$. Un petit décalage continu en J4 révèle les offsets d'entrée (annexe F, [poly, p. 49]).
+:::
+
+| Grandeur | Prévision | Mesure | Commentaire |
+|---|---|---|---|
+| Amplitude HF en PT2 | 10 Vcàc | | |
+| Tension en PT1 | 1 V | | |
+| Amplitude en J4 | 1 Vcàc | | |
+| $K = V_{J4,\,càc}/(1\ \mathrm{V} \times 10\ \mathrm{V_{càc}})$ | 0,1 V⁻¹ | | |
+| Composante continue en J4 (offset) | ≈ 0 | | |
+
+### Trame du CR — II. Modulation d'amplitude avec porteuse {#sec-tp45-am-porteuse}
+
+Réglages [poly, p. 46] : HF 455 kHz, 10 Vcàc sur J2 ; BF 1 kHz, 4 Vcàc sur J1, offset $X_o$ à régler pour $m = 0{,}8$. Observer $s(t)$ en synchronisant sur la BF, puis en mode XY (modulant en X, modulé en Y) : trapèze de petite base AA′ et de grande base BB′. Relier BB′/AA′ à $m$.
+
+::: {.complement}
+**Trapèze.** En XY, l'abscisse est $x(t)$ et l'ordonnée $s(t)$ ; pour une abscisse donnée, la HF balaie verticalement $\pm KA\,x$. Les bases verticales valent donc $BB' = 2KA(X_o + X_m)$ et $AA' = 2KA(X_o - X_m)$, d'où :
+
+$$\frac{BB'}{AA'} = \frac{1 + m}{1 - m}, \qquad m = \frac{BB' - AA'}{BB' + AA'} .$$ {#eq-tp45-trapeze}
+
+À $m = 0{,}8$ : $BB' = 4{,}5$ V, $AA' = 0{,}5$ V, rapport **9**. La même formule s'applique au chronogramme avec $V_{max,càc}$ et $V_{min,càc}$ de l'enveloppe. Le rapport étant grand, une petite erreur sur AA′ pèse beaucoup sur $m$ : mesurer AA′ avec un calibre adapté.
+:::
+
+| Grandeur | Prévision | Mesure | Commentaire |
+|---|---|---|---|
+| Offset $X_o$ pour $m = 0{,}8$ | 2,5 V | | |
+| Enveloppe : $V_{max,càc}$ en J4 | 4,5 V | | |
+| Enveloppe : $V_{min,càc}$ en J4 | 0,5 V | | |
+| Trapèze : BB′ | 4,5 V | | |
+| Trapèze : AA′ | 0,5 V | | |
+| BB′/AA′ | 9 | | |
+| $m$ recalculé (@eq-tp45-trapeze) | 0,8 | | |
+
+**II.2 Analyse du spectre** [poly, p. 46] : vérifier S1, observer J5 autour de la porteuse, *span* 1 kHz/div, RBW 100 Hz ; pour $m = 0{,}8$, relever amplitude et fréquence de chaque raie.
+
+::: {.complement}
+Trois raies attendues, à 454, 455 et 456 kHz. Le niveau absolu en J5 dépend de l'atténuation du réseau de sortie : comparer les **écarts** en dB. Une RBW de 100 Hz sépare largement des raies espacées de 1 kHz (balayage plus lent).
+:::
+
+| Raie | Fréquence prévue | Niveau relatif prévu | Fréquence mesurée | Niveau mesuré (dBm) | Niveau relatif mesuré |
+|---|---|---|---|---|---|
+| latérale inférieure | 454 kHz | −7,96 dB | | | |
+| porteuse | 455 kHz | 0 dB (référence) | | | |
+| latérale supérieure | 456 kHz | −7,96 dB | | | |
+| $m$ déduit : $m = 2 \cdot 10^{\Delta/20}$ | | 0,8 | | | |
+
+### Trame du CR — III. Démodulation à détecteur d'enveloppe {#sec-tp45-demodulation}
+
+Énoncé [poly, p. 46] : relever le signal démodulé en J9 pour $m = 80$ % et expliquer la synchronisation de l'oscilloscope ; observer l'influence d'une surmodulation ($m > 1$) en jouant sur $X_o$ et conclure.
+
+::: {.complement}
+**Synchronisation** : sur le signal BF (voie qui observe J1/PT1, ou sortie de synchronisation du générateur BF en déclenchement externe). Déclencher sur J4 ne donne pas d'image stable, car la HF n'est pas synchrone de la BF.
+
+**Surmodulation** ($X_o < X_m$, par exemple $X_o = 1{,}5$ V, $m \approx 1{,}33$) : $x(t)$ change de signe ; le produit reste une AM à porteuse (toujours **trois raies**, la porteuse baisse avec $X_o$), mais la phase de la HF s'inverse quand $x(t) < 0$. L'enveloppe réelle devient $|KA\,x(t)|$ : le détecteur restitue $|x(t)|$, signal **déformé** (rebonds à chaque passage par zéro, @fig-tp45-detecteur, en bas). En XY, le trapèze se referme en pointe puis se croise (« nœud papillon »). Conclusion : il faut $m \le 1$ pour pouvoir démoduler par simple détection d'enveloppe.
+
+**Remarque.** Avec un multiplieur, la surmodulation ne crée pas de nouvelles raies ; avec un émetteur réel qui écrête, si.
+:::
+
+| Observation | Prévision | Relevé | Commentaire |
+|---|---|---|---|
+| Signal en J9, $m = 0{,}8$ : forme | sinusoïde 1 kHz, creux écrasés | | |
+| Signal en J9 : crête | ≈ 2,25 V moins le seuil de D2 | | |
+| Ondulation HF résiduelle | faible ($\tau \gg T_{HF}$) | | |
+| $X_o$ au seuil de surmodulation | 2 V ($m = 1$) | | |
+| Signal en J9, $m > 1$ | $\lvert x(t)\rvert$ : sinusoïde redressée | | |
+| Trapèze, $m > 1$ | bases croisées | | |
+| Spectre, $m > 1$ | toujours 3 raies, porteuse plus faible | | |
+
+### Trame du CR — IV. Illustration de la modulation OOK {#sec-tp45-ook}
+
+Réglages [poly, p. 47] : signal modulant carré, offset 2 V, 4 Vcàc ($m = 1$). Visualiser J1, J4 et le spectre en J5 ; « simuler » un train numérique avec moins de 1 que de 0 en passant le rapport cyclique à 20 % puis 10 % ; expliquer l'évolution du spectre (nombre de raies, décroissance, amplitude, écartement, largeur des lobes) ; relation entre débit et encombrement spectral.
+
+::: {.complement}
+Le modulant vaut 4 V pendant $\alpha T$ et 0 V le reste de la période $T = 1$ ms : la HF est **tout ou rien**. Série de Fourier du carré d'amplitude $V = 4$ V et de rapport cyclique $\alpha$ : composante continue $\alpha V$, harmonique $k$ d'amplitude $2\alpha V\,|\sinc(k\alpha)|$ (avec $\sinc x = \sin(\pi x)/(\pi x)$). Après multiplication par la porteuse :
+
+- une raie à $F_o$, d'amplitude $KA\,\alpha V$ ;
+- des raies à $F_o \pm k \cdot 1\ \mathrm{kHz}$, d'amplitude $KA\,\alpha V\,|\sinc(k\alpha)|$ chacune, soit $20\log|\sinc(k\alpha)|$ dB sous la porteuse.
+
+| | $\alpha = 50$ % | $\alpha = 20$ % | $\alpha = 10$ % |
+|---|---|---|---|
+| Écartement des raies | 1 kHz | 1 kHz | 1 kHz |
+| Raies nulles (rangs $k$) | pairs | multiples de 5 | multiples de 10 |
+| Lobe principal (zéros à $\pm 1/(\alpha T)$) | ± 2 kHz | ± 5 kHz | ± 10 kHz |
+| Raie $k = 1$ / porteuse | −3,9 dB | −0,6 dB | −0,1 dB |
+| Raie $k = 3$ / porteuse | −13,5 dB | −5,9 dB | −1,3 dB |
+| Porteuse, relativement au cas 50 % | 0 dB | −8,0 dB | −14,0 dB |
+
+Quand $\alpha$ diminue, l'impulsion est plus courte : l'enveloppe en sinus cardinal s'élargit (lobes de largeur $1/(\alpha T)$), plus de raies sont significatives, et toutes les raies baissent car l'énergie moyenne diminue (@fig-tp45-spectres, en haut). **Débit** : la plus courte durée d'un symbole $T_b$ fixe le lobe principal, de largeur $2/T_b$ ; l'encombrement spectral est donc **proportionnel au débit**.
+:::
+
+| Observation | Prévision | Relevé | Commentaire |
+|---|---|---|---|
+| J1 : carré 0 / 4 V, 50 % | | | |
+| J4 : salves de HF (tout ou rien) | | | |
+| Spectre 50 % : raies présentes | porteuse + rangs impairs | | |
+| Spectre 50 % : raie $k = 1$ | −3,9 dB / porteuse | | |
+| Spectre 20 % : premier zéro | $F_o \pm 5$ kHz | | |
+| Spectre 10 % : premier zéro | $F_o \pm 10$ kHz | | |
+| Évolution du niveau de la porteuse | −8 dB puis −14 dB | | |
+
+## Partie B — Modulation de fréquence {#sec-tp45-fm}
+
+La modulation est faite par le générateur HF lui-même ; la porteuse est à 455 kHz, fréquence intermédiaire standard des récepteurs radio. Préparation : revoir les transformées de Fourier et les fonctions de Bessel [poly, p. 51].
+
+::: {.complement}
+Rappels de l'annexe [poly, p. 53-55] : indice $m = \Delta F/F_M$ ; pour un modulant sinusoïdal, $v(t) = V_p\cos(\omega_p t + m\sin\omega_m t)$ et la raie de rang $n$ (à $F_0 + nF_M$) a pour amplitude $V_p|J_n(m)|$ ; formule de Carson $B_P = 2(\Delta F + F_M)$. La puissance totale ne dépend pas de $m$ : $\sum_n J_n^2(m) = 1$.
+:::
+
+::: {.a-verifier #av-tp45-developpement-bessel}
+**Source** [poly, p. 55] : « $\frac{v(t)}{V_p} = J_0(m)\cos(\omega_p t) + 2\cos(\omega_p t)\sum_{n=1}^{\infty} J_n(m)\cos((2n)\omega_m t) - 2\sin(\omega_p t)\sum_{n=1}^{\infty} J_{2n+1}(m)\sin((2n+1)\omega_m t)$ », puis « $+\ 2 J_4(m)\sin 4\omega_m t \,.\, \sin\omega_p t$ » ; même page, $\sin(m\sin\omega_m t) = 2\sum_{n=1}^{\infty} J_{2n+1}(m)\sin((2n+1)\omega_m t)$.
+
+**Problème** : trois coquilles dans le développement. (1) Le coefficient de $\cos(2n\omega_m t)$ est $J_{2n}(m)$, pas $J_n(m)$ (la ligne précédente l'écrit correctement). (2) Les sommes en $J_{2n+1}$ doivent commencer à $n = 0$, sinon le terme en $J_1$, pourtant écrit ensuite, n'apparaît pas. (3) Le terme d'ordre 4 vient de la somme paire : $+\,2J_4(m)\cos 4\omega_m t\,\cos\omega_p t$. Le résultat final (raies $J_n$ à $\omega_p \pm n\omega_m$, signe $(-1)^n$ côté inférieur) est juste.
+
+**Proposition** : $\cos(m\sin\theta) = J_0(m) + 2\sum_{n \ge 1} J_{2n}(m)\cos 2n\theta$ ; $\sin(m\sin\theta) = 2\sum_{n \ge 0} J_{2n+1}(m)\sin(2n+1)\theta$ ; terme d'ordre 4 : $+\,2J_4(m)\cos 4\omega_m t\,\cos\omega_p t$.
+:::
+
+### Préparation et trame — 1° Réglage préliminaire sans modulation {#sec-tp45-fm-reglage}
+
+Réglages [poly, p. 51] : générateur en « output load 50 Ω », porteuse sinusoïdale 455 kHz, 50 mVeff sous 50 Ω. Préparation : calculer la puissance $P$ en dBm ($P_{dBm} = 10\log(P/1\ \mathrm{mW})$). Mesurer la tension à vide à l'oscilloscope (conforme ? pourquoi ?), puis le niveau $P_{c,dBm}$ à l'analyseur et comparer.
+
+::: {.complement}
+$$P = \frac{V_{eff}^2}{R} = \frac{(50\ \mathrm{mV})^2}{50\ \Omega} = 50\ \mathrm{\mu W}, \qquad P_{dBm} = 10\log\frac{50\ \mathrm{\mu W}}{1\ \mathrm{mW}} = -13{,}0\ \mathrm{dBm}.$$
+
+**Tension à vide** : en mode « output load 50 Ω », le générateur affiche la tension aux bornes d'une charge de 50 Ω, en supposant le diviseur formé par sa résistance interne de 50 Ω et la charge. L'oscilloscope (1 MΩ) ne charge pas la sortie : il voit la f.é.m., **deux fois plus grande** : 100 mVeff, soit 141 mV crête ou 283 mVcàc. Ce n'est donc pas « conforme » à l'affichage, et c'est normal. L'analyseur, lui, présente 50 Ω : on attend ≈ −13 dBm (un peu moins avec les pertes du câble).
+:::
+
+| Grandeur | Prévision | Mesure | Commentaire |
+|---|---|---|---|
+| Tension à vide (oscilloscope) | 100 mVeff = 283 mVcàc | | |
+| $P_{c,dBm}$ (analyseur 50 Ω) | −13,0 dBm | | |
+
+### Trame du CR — 2° Modulation avec m = 2,405 {#sec-tp45-fm-2405}
+
+Réglages [poly, p. 51] : FM, $F_M = 1$ kHz, porteuse 455 kHz, excursion $\Delta F$ pour $m = 2{,}405$. Relever le spectre en dBm ; exprimer $\Delta dB = P_{c,dBm} - P_{n,dBm}$ en fonction de $J_n(m)$ ; en déduire $J_0$ à $J_3$ expérimentaux et comparer à l'annexe C ; relever la largeur occupée à −15 dB de la raie la plus haute et comparer à Carson.
+
+::: {.complement}
+**Excursion** : $\Delta F = mF_M = 2{,}405$ kHz. $m = 2{,}405$ est le premier zéro de $J_0$ : **la porteuse disparaît**, ce qui permet de régler $\Delta F$ précisément en cherchant l'extinction de la raie centrale.
+
+**Écarts** : la raie de rang $n$ a l'amplitude $V_p|J_n(m)|$, et $P_c$ est le niveau de la porteuse **non modulée** (1°), donc :
+
+$$\Delta dB_n = P_{c,dBm} - P_{n,dBm} = -20\log|J_n(m)|, \qquad |J_n(m)| = 10^{-\Delta dB_n/20}.$$ {#eq-tp45-ecart-bessel}
+
+**Largeur occupée** : la raie la plus haute est $J_1$ (−5,7 dB) ; à −15 dB d'elle (−20,7 dB), on garde les rangs $|n| \le 3$ (−14,0 dB) et on exclut $n = 4$ (−23,8 dB) : $B_{-15\ dB} \approx 2 \times 3F_M = 6$ kHz. Carson : $B_P = 2(2{,}405 + 1) = 6{,}81$ kHz. Spectres théoriques : @fig-tp45-spectres, en bas.
+:::
+
+| Rang $n$ | Fréquences | $\lvert J_n(2{,}405)\rvert$ théorique | $\Delta dB_n$ prévu | $P_{n,dBm}$ mesuré | $\Delta dB_n$ mesuré | $\lvert J_n\rvert$ expérimental |
+|---|---|---|---|---|---|---|
+| 0 | 455 kHz | 0,000 | (raie éteinte) | | | |
+| 1 | 455 ± 1 kHz | 0,519 | 5,7 dB | | | |
+| 2 | 455 ± 2 kHz | 0,432 | 7,3 dB | | | |
+| 3 | 455 ± 3 kHz | 0,199 | 14,0 dB | | | |
+| 4 | 455 ± 4 kHz | 0,065 | 23,8 dB | | | |
+| 5 | 455 ± 5 kHz | 0,016 | 35,7 dB | | | |
+| Largeur à −15 dB | | | ≈ 6 kHz | | | |
+| Carson $2(\Delta F + F_M)$ | | | 6,81 kHz | | | |
+
+### Trame du CR — 3° m = 10 {#sec-tp45-fm-10}
+
+Énoncé [poly, p. 52] : $F_M = 1$ kHz, excursion pour $m = 10$ ; évaluer la bande occupée à −15 dB et comparer à Carson.
+
+::: {.complement}
+$\Delta F = 10$ kHz ; Carson : $B_P = 2(10 + 1) = 22$ kHz. La raie la plus haute est $J_8$ ($|J_8(10)| = 0{,}318$, −10,0 dB) ; à −15 dB d'elle (−25 dB), le dernier rang retenu est $n = 12$ (−24,0 dB, très près du seuil), $n = 13$ (−30,8 dB) est exclu : $B_{-15\ dB} \approx 24$ kHz, proche de Carson. Les raies $n = 1$ (−27,2 dB) et $n = 6$ (−36,8 dB) sont très faibles alors qu'elles sont dans la bande : la décroissance n'est pas monotone. *Span* conseillé : 5 kHz/div ; RBW 100 ou 300 Hz.
+:::
+
+| Grandeur | Prévision | Mesure | Commentaire |
+|---|---|---|---|
+| Excursion $\Delta F$ | 10 kHz | | |
+| Raie la plus haute | $n = \pm 8$, −10,0 dB | | |
+| Bande occupée à −15 dB | ≈ 24 kHz | | |
+| Carson | 22 kHz | | |
+
+### Trame du CR — 4° NBFM {#sec-tp45-nbfm}
+
+Énoncé [poly, p. 52] : $m = 0{,}4$ ; relever le spectre en dBm, en déduire $J_1(m)$ expérimental, comparer à la valeur donnée par le développement limité de l'annexe et conclure sur l'occupation spectrale. Développement de l'annexe [poly, p. 54] : $J_n(m) = \left(\frac{m}{2}\right)^n\left[\frac{1}{n!} - \frac{1}{1!\,(n+1)!}\left(\frac{m}{2}\right)^2 + \frac{1}{2!\,(n+2)!}\left(\frac{m}{2}\right)^4 - \dots\right]$.
+
+::: {.complement}
+$\Delta F = 0{,}4$ kHz.
+
+$$J_1(0{,}4) \approx 0{,}2\left(1 - \frac{0{,}04}{2}\right) = 0{,}196 \ \ (\text{valeur exacte } 0{,}1960), \qquad J_0(0{,}4) \approx 1 - 0{,}04 = 0{,}960, \qquad J_2(0{,}4) \approx \frac{0{,}04}{2} = 0{,}020 .$$
+
+Niveaux attendus sous la porteuse non modulée : $J_0$ −0,35 dB, $J_1$ **−14,2 dB**, $J_2$ −34,1 dB. Seules la porteuse et les deux premières raies latérales comptent : bande ≈ $2F_M = 2$ kHz, comme en AM (Carson donne 2,8 kHz). La NBFM a l'encombrement d'une AM ; sa différence avec l'AM est la phase de la raie inférieure ($J_{-1} = -J_1$), invisible à l'analyseur.
+:::
+
+| Grandeur | Prévision | Mesure | Commentaire |
+|---|---|---|---|
+| Excursion $\Delta F$ | 0,4 kHz | | |
+| $\Delta dB_0$ (porteuse) | 0,35 dB | | |
+| $\Delta dB_1$ | 14,2 dB | | |
+| $J_1$ expérimental ($10^{-\Delta dB_1/20}$) | 0,196 | | |
+| $\Delta dB_2$ | 34,1 dB | | |
+| Bande occupée | ≈ 2 kHz | | |
+
+![Spectres théoriques. En haut, OOK (carré 0/4 V à 1 kHz) pour trois rapports cycliques, niveaux relatifs à la porteuse du cas 50 %. En bas, FM ($F_M = 1$ kHz) pour les trois indices du TP, niveaux relatifs à la porteuse non modulée ; bande de Carson grisée. Calcul (Complément).](../figures/tp04-spectres-ook-fm.svg){#fig-tp45-spectres}
+
+## À retenir {#sec-retenir-tp45}
+
+- AM par multiplieur : $m = X_m/X_o$ (@eq-tp45-indice-am) ; trois raies, latérales à $20\log(m/2)$ dB sous la porteuse (@eq-tp45-spectre-am) ; trapèze : $m = (BB' - AA')/(BB' + AA')$ (@eq-tp45-trapeze). Valable pour $m \le 1$.
+- Détecteur d'enveloppe : $T_{HF} \ll \tau = RC \le \sqrt{1 - m^2}/(m\omega)$ ; la HF doit rester nettement au-dessus du seuil de la diode, même au creux de l'enveloppe.
+- OOK : spectre de raies en $|\sinc(k\alpha)|$ ; lobe principal de largeur $2/T_b$, proportionnelle au débit.
+- FM : $m = \Delta F/F_M$ ; raie $n$ à $20\log|J_n(m)|$ dB de la porteuse non modulée (@eq-tp45-ecart-bessel) ; extinction de la porteuse à $m = 2{,}405$ ; Carson $2(\Delta F + F_M)$ ; NBFM ($m < 1$) : bande ≈ $2F_M$.
+- Générateur en « 50 Ω » : la tension à vide est le double de la tension affichée.

@@ -29,7 +29,10 @@ Matière de TP : pas de chapitre de cours ; TP traités en phase 2 (dossier `tp/
 | TP 1 | commutation de diode et de transistor |
 | TP 2 | propriétés de la contre-réaction (lien avec EANA3) |
 | TP 3 | amplificateur à MOSFET en hautes fréquences |
-| TP 4 / 5 | modulations d'amplitude et de fréquence (lien avec EARF1) |
+| TP 4 / 5 | modulations d'amplitude et de fréquence (lien avec EARF1) : [préparation et trame de CR](tp/tp04-modulations-am-fm.qmd) |
+| TP 5 / 4 | oscillateur sinusoïdal LC (lien avec EANA3, oscillateurs) : [préparation et trame de CR](tp/tp05-oscillateur-lc.qmd) |
+
+Les TP 4 et 5 sont **tournants** : selon le binôme, on fait les modulations puis l'oscillateur, ou l'inverse [poly, p. 1].
 
 ## Table des notations
 
@@ -47,6 +50,7 @@ Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources bru
 | id | Source | Nature | Remarque |
 |---|---|---|---|
 | `poly` | `tp/poly-tp-2026-vinassa.pdf` | officielle | énoncés des TP |
+| `cr-2023-am`, `cr-2023-lc` | `corriges/2023-tp-modulations-amplitude-frequence-cr.pdf`, `corriges/2023-tp04-05-cr.pdf` (porte sur l'oscillateur LC) | externe | cités dans les pages des TP 4/5 et 5/4 |
 | — | `corriges/2023-…pdf` | externe | comptes rendus d'un binôme d'une promotion antérieure (TP 1 à 5), manuscrits |
 
 La nature `externe` désigne des documents qui ne viennent ni des enseignants ni d'Armand (notes et corrigés manuscrits d'un ancien élève, promotion 2023). Dans les chapitres, leur contenu ira en bloc *Notes externes* (`conventions.md` § 5.1).

@@ -1,0 +1,320 @@
+---
+title: "TP 5/4 — Oscillateur sinusoïdal LC"
+subtitle: "EANA4 (ex EA208), J.-M. Vinassa · préparation corrigée et trame de compte rendu (inverseur CMOS 4069UB, Barkhausen, résonateur céramique)"
+matiere: eana4
+date-modified: 2026-11-03
+sources:
+  - id: poly
+    fichier: tp/poly-tp-2026-vinassa.pdf
+    nature: officielle
+    version: "2026"
+    pages: "59-69"
+  - id: cr-2023-lc
+    fichier: corriges/2023-tp04-05-cr.pdf
+    nature: externe
+    pages: "1-9"
+---
+
+{{< include /_macros.qmd >}}
+
+::: {.complement}
+**Mode d'emploi.** TP tournant : selon le binôme, il est fait en 4^e^ ou en 5^e^ séance, en alternance avec les [modulations AM et FM](tp04-modulations-am-fm.qmd). La page suit l'ordre de l'énoncé [poly, p. 59-69] :
+
+- les questions de l'énoncé sont résumées en texte normal (support officiel) ;
+- les réponses de la partie « Théorie générale » (la préparation demandée) et les prévisions sont **rédigées par Claude** (blocs *Complément*) ; toutes les valeurs numériques ont été recalculées ;
+- les tableaux **« Trame du CR »** donnent la prévision et laissent la colonne *Mesure* vide.
+
+Le compte rendu d'un binôme de 2023 [cr-2023-lc] (rangé sous le nom `2023-tp04-05-cr.pdf`, mais il porte sur ce TP) fournit des valeurs mesurées, reprises en *Notes externes* pour donner un ordre de grandeur. Il contient des erreurs, signalées.
+
+Cours associé : oscillateurs et critère de Barkhausen ([EANA3, chapitre 4](../../eana3-circuits-integres/cours/04-oscillateurs.qmd)).
+:::
+
+**Maquette** [poly, p. 66] : inverseur CMOS non bufférisé U1A (CD4069UB), $V_{cc} = 10$ V ; $R_1 = 1\ \mathrm{M\Omega}$ entre l'entrée (Vin, J5) et la sortie (Vout, J3) ; réseau de retour en π : $C_3$ côté sortie, bobine $L_1 = 220\ \mathrm{\mu H}$, $C_4$ côté entrée (VR, J7) ; cavalier S2 pour ouvrir la boucle ; entrée de test U2 par $C_5 = 0{,}1\ \mathrm{\mu F}$. Le schéma porte $C_3 = C_4 = 1$ nF ; les manipulations utilisent $C_3 = 1$ nF et $C_4 = 3{,}3$ nF [poly, p. 62-63].
+
+## Préparation — Théorie générale {#sec-tp54-theorie}
+
+### I. Schéma de l'amplificateur {#sec-tp54-amplificateur}
+
+**Polarisation** [poly, p. 60] : indiquer le ou les composants qui polarisent la porte dans sa zone linéaire, donner le point de repos théorique $(V_i, V_o)$ et le reporter sur la caractéristique de transfert.
+
+::: {.complement}
+C'est **$R_1$ (1 MΩ)**, résistance de contre-réaction entre sortie et entrée. L'entrée de la porte (grilles) ne consomme aucun courant continu, donc aucune chute de tension dans $R_1$ : $V_i = V_o$. $C_5$ isole ce point de repos du générateur (et la bobine relie sortie et retour en continu sans le modifier).
+
+Pour deux transistors parfaitement complémentaires, la caractéristique est symétrique et coupe la droite $V_o = V_i$ en son milieu :
+
+$$V_i = V_o = \frac{V_{cc}}{2} = 5\ \mathrm{V}.$$
+
+Sur la caractéristique de transfert, ce point est l'intersection avec la première bissectrice, au **milieu de la zone de forte pente** : c'est là que le gain est maximal et que la porte est linéaire pour de petits signaux.
+:::
+
+::: {.notes-externes}
+Même résultat : point de repos à $V_{DD}/2$ grâce à $R_1$ ; mesuré : $V_{out} = 4{,}91$ V [cr-2023-lc, p. 1 et 5].
+:::
+
+**Schéma dynamique** [poly, p. 60] : avec le modèle du MOS (source $g_{m1}v_{gs}$ en parallèle avec $r_{ds1}$, sans capacités parasites), donner le schéma de l'inverseur complet, son impédance de sortie $R_s$ (à $v_{gs} = 0$) et son gain à vide $A_v$. Le poly note $g_m = g_{m1} + g_{m2}$ [poly, p. 62].
+
+::: {.complement}
+En dynamique, $V_{DD}$ et $V_{SS}$ sont à la masse : les deux sources sont à la masse, les deux grilles reçoivent $v_{in}$, les deux drains sont reliés à la sortie. Les deux modèles se mettent en **parallèle** : une source $g_m v_{in}$ ($g_m = g_{m1} + g_{m2}$) et $r_{ds1} \parallel r_{ds2}$.
+
+$$R_s = r_{ds1} \parallel r_{ds2} = \frac{r_{ds}}{2}, \qquad A_v = \frac{v_{out}}{v_{in}} = -g_m R_s = -(g_{m1} + g_{m2})\frac{r_{ds}}{2} = -g_{m1}r_{ds1}$$ {#eq-tp54-gain-inverseur}
+
+(les deux dernières égalités avec $g_{m1} = g_{m2}$ et $r_{ds1} = r_{ds2}$).
+:::
+
+**Schéma équivalent complet** [poly, p. 60] : sans signal sur U2, avec les pertes de la bobine (résistance série $r$) et $R_1$ très grande.
+
+::: {.complement}
+Voir @fig-tp54-schema : source $g_m v_{in}$ et $R_s$ en sortie ; $C_3$ entre Vout et la masse ; $r$ et $L_1$ en série de Vout à VR ; $C_4$ entre VR et la masse ; boucle fermée : $v_R = v_{in}$. $R_1$ (1 MΩ) est négligée devant les impédances du réseau, et l'impédance d'entrée de la porte est infinie.
+:::
+
+![Schéma petits signaux de l'oscillateur, boucle fermée. Reconstruit d'après le schéma de la maquette [poly, p. 66] et le modèle du MOS [poly, p. 60] (Complément).](../figures/tp05-schema-petits-signaux.svg){#fig-tp54-schema}
+
+### II.1 Identification des paramètres de la boucle {#sec-tp54-boucle}
+
+Énoncé [poly, p. 60-61] : redessiner le schéma en faisant apparaître $A$ (chaîne directe) et $B$ (réseau de retour sélectif). Condition de Barkhausen : $T = AB = +1$, soit $|T| = 1$ et $\arg T = 0$ (360°) ; pour le démarrage, $|T| \ge 1$.
+
+::: {.complement}
+On ouvre la boucle en S2 : on attaque l'entrée par $v_{in}$ et on récupère $v_R$.
+
+- **$A$** : l'inverseur (source $g_m v_{in}$, $R_s$) chargé par le réseau, d'impédance $Z_c = Z_3 \parallel (Z_L + Z_4)$ avec $Z_3 = \frac{1}{jC_3\omega}$, $Z_4 = \frac{1}{jC_4\omega}$, $Z_L = r + jL\omega$ :
+$$A = \frac{v_{out}}{v_{in}} = -g_m\,(R_s \parallel Z_c).$$
+- **$B$** : le diviseur $Z_L$, $Z_4$ (rien ne charge VR) :
+$$B = \frac{v_R}{v_{out}} = \frac{Z_4}{Z_L + Z_4} = \frac{1}{1 - LC_4\omega^2 + j\,rC_4\omega}.$$
+:::
+
+### II.2 Calcul des conditions d'oscillation {#sec-tp54-conditions}
+
+Énoncé [poly, p. 61] : calculer $T(j\omega)$ ; en déduire la fréquence d'oscillation $F_o$ (condition de phase) et la condition de démarrage (gain $G_o$), en fonction de $g_m$, $R_s$, $L$, $r$, $C_3$, $C_4$ ; donner $F_o$ et $G_o$ quand $r \to 0$ et $R_s \gg 1/(C_3\omega)$ ; incertitude sur $F_o$ si $L$ et $C$ sont connus à 10 %.
+
+::: {.complement}
+En multipliant numérateur et dénominateur de $T = AB$ par $(jC_3\omega)(jC_4\omega)$ :
+
+$$T(j\omega) = \frac{-g_m R_s}{1 - LC_4\omega^2 - R_s r C_3 C_4\omega^2 + j\left[rC_4\omega + R_s(C_3 + C_4)\omega - R_s L C_3 C_4\omega^3\right]} .$$ {#eq-tp54-gain-boucle}
+
+**Condition de phase** ($T$ réel) : la partie imaginaire du dénominateur s'annule :
+
+$$\omega_o^2 = \frac{1}{L}\left(\frac{1}{C_3} + \frac{1}{C_4} + \frac{r}{R_s C_3}\right), \qquad F_o = \frac{\omega_o}{2\pi}.$$ {#eq-tp54-frequence}
+
+À cette pulsation, la partie réelle du dénominateur vaut $-\left[\frac{C_4}{C_3}\left(1 + \frac{r}{R_s}\right) + R_s r C_3 C_4\omega_o^2\right] < 0$ : avec le signe − du numérateur, $T(j\omega_o)$ est **réel positif** (le réseau en π apporte les 180° qui complètent l'inversion de la porte).
+
+**Condition de gain** (démarrage) :
+
+$$G_o = T(j\omega_o) = \frac{g_m R_s}{\dfrac{C_4}{C_3}\left(1 + \dfrac{r}{R_s}\right) + R_s r C_3 C_4\omega_o^2} \ \ge 1 .$$ {#eq-tp54-gain-demarrage}
+
+**Cas limite $r \to 0$** :
+
+$$F_o = \frac{1}{2\pi\sqrt{L\,C_{eq}}},\quad C_{eq} = \frac{C_3 C_4}{C_3 + C_4}; \qquad G_o = g_m R_s\,\frac{C_3}{C_4} = |A_v|\,\frac{C_3}{C_4}, \quad \text{démarrage si } |A_v| \ge \frac{C_4}{C_3}.$$ {#eq-tp54-cas-limite}
+
+À $\omega_o$, la branche $L$–$C_4$ est inductive et résonne en parallèle avec $C_3$ : la porte n'est plus chargée ($A = A_v$) et le retour vaut $B = -C_3/C_4$. Avec $r = 0$, ce résultat ne dépend pas de $R_s$ ; l'hypothèse $R_s \gg 1/(C_3\omega)$ de l'énoncé sert à rendre négligeable le terme $R_s r C_3 C_4 \omega_o^2$ devant $C_4/C_3$ quand $r$ n'est pas nul. Attention à l'ordre des limites : si $R_s \to \infty$ à $r$ fixé, on obtient au contraire $G_o \to g_m/(r C_3 C_4\omega_o^2)$ (oscillateur Colpitts à source de courant idéale).
+
+**Incertitude.** $F_o \propto (L\,C_{eq})^{-1/2}$, donc $\dfrac{\Delta F_o}{F_o} = \dfrac{1}{2}\left(\dfrac{\Delta L}{L} + \dfrac{\Delta C_{eq}}{C_{eq}}\right)$, avec $\dfrac{\Delta C_{eq}}{C_{eq}} = \dfrac{C_4}{C_3 + C_4}\dfrac{\Delta C_3}{C_3} + \dfrac{C_3}{C_3 + C_4}\dfrac{\Delta C_4}{C_4} \le 10\ \%$. Au pire : $\Delta F_o/F_o = \frac12(10\ \% + 10\ \%)$, soit **10 %** ; en sommant quadratiquement (erreurs indépendantes) : 6,4 %.
+
+**Applications numériques** ($L = 220\ \mathrm{\mu H}$, $C_3 = 1$ nF, $C_4 = 3{,}3$ nF, $r \to 0$) : $C_{eq} = 0{,}767$ nF, $F_o \approx$ **387 kHz** (± 39 kHz au pire) ; démarrage si $|A_v| \ge 3{,}3$. Avec $C_3 = C_4 = 1$ nF (valeurs du schéma) : $F_o = 480$ kHz et il suffit de $|A_v| \ge 1$.
+:::
+
+::: {.notes-externes}
+Le binôme de 2023 écrit $\omega_o = 1/\sqrt{L(C_3 + C_4)}$, trouve $f_o = 164$ kHz, et prend $|T(j\omega_o)| = 2g_m R_s = 16{,}8$ (gain à vide) comme condition de démarrage [cr-2023-lc, p. 4 et 8].
+:::
+
+::: {.a-verifier #av-tp54-erreurs-cr2023}
+**Source** [cr-2023-lc, p. 4-8] : $\omega_o = 1/\sqrt{L(C_3 + C_4)}$ ; $|T(j\omega_o)| = 2g_mR_s$ ; puis $g_{m1} = |A_v|/R_s = 7{,}9 \times 10^{-2}$ S, alors que ce même compte rendu écrit $A_v = -2g_mR_s$.
+
+**Problème** : (1) $C_3$ et $C_4$ sont en série dans la boucle, pas en parallèle (@eq-tp54-cas-limite) ; (2) le gain de boucle à $\omega_o$ vaut $|A_v|\,C_3/C_4$ et non $|A_v|$ ; (3) avec $A_v = -2g_{m1}R_s$, on a $g_{m1} = |A_v|/(2R_s)$.
+
+**Proposition** : $F_o = 1/(2\pi\sqrt{L C_3C_4/(C_3+C_4)})$ ; $G_o = |A_v|\,C_3/C_4$ ; avec leurs mesures ($|A_v| = 16{,}8$, $R_s = 213\ \Omega$) : $g_m = g_{m1} + g_{m2} = 79$ mS, $g_{m1} = 39$ mS, $r_{ds1} = 426\ \Omega$.
+:::
+
+## Trame du CR — Manipulation {#sec-tp54-manipulation}
+
+### 1° Caractéristiques de la chaîne directe {#sec-tp54-chaine-directe}
+
+Énoncé [poly, p. 62] : $V_{cc} = 10$ V ; S2, $L_1$, $C_4$, $C_3$ débranchés. Relever $V_{out}$ continu, montrer qu'on est en régime linéaire et comparer au point de repos théorique. Attaquer en U2 par une sinusoïde d'amplitude et de fréquence telles que la sortie soit non déformée et en opposition de phase ; mesurer l'amplification à vide. Mesurer $R_s$ (charge de 10 kΩ) en indiquant la méthode ; en déduire $g_{m1}$ et $r_{ds1}$ ($g_{m1} = g_{m2}$, $r_{ds1} = r_{ds2}$, $g_m = g_{m1} + g_{m2}$).
+
+::: {.complement}
+**Choix du signal** : quelques dizaines de mV crête (sortie non écrêtée), à une fréquence de quelques kHz : assez haut pour que $C_5$ et l'effet Miller de $R_1$ ($R_1/(1 + |A_v|)$, quelques dizaines de kΩ) ne coupent pas le signal, assez bas pour rester dans la bande passante de la porte.
+
+**Méthode pour $R_s$** (diviseur de tension) : on mesure la sortie à vide $V_{vide}$ puis chargée par $R_L$ (de préférence à travers un condensateur, pour ne pas déplacer le point de repos), à même entrée :
+
+$$V_{charge} = V_{vide}\,\frac{R_L}{R_L + R_s} \ \Rightarrow\ R_s = R_L\left(\frac{V_{vide}}{V_{charge}} - 1\right).$$
+
+Avec $R_L = 10\ \mathrm{k\Omega}$ et $R_s$ de quelques centaines d'ohms, $V_{charge}$ ne baisse que de quelques % : mesurer les deux tensions avec le même calibre et en moyennant ; une charge plus proche de $R_s$ (1 kΩ par exemple) donne une mesure plus précise, à condition de rester en régime linéaire.
+
+**Exploitation** (@eq-tp54-gain-inverseur) : $g_m = |A_v|/R_s$, $g_{m1} = g_m/2$, $r_{ds1} = 2R_s$.
+:::
+
+::: {.notes-externes}
+Mesures de 2023 : $V_{out} = 4{,}91$ V ; $|A_v| = 840\ \mathrm{mV}/50\ \mathrm{mV} = 16{,}8$ à 1 kHz ; $V_{vide} = 4{,}91$, $V_{charge} = 4{,}81$ avec 10 kΩ, d'où $R_s = 213\ \Omega$ [cr-2023-lc, p. 5-6].
+:::
+
+| Grandeur | Prévision | Mesure | Commentaire |
+|---|---|---|---|
+| $V_{out}$ continu | $V_{cc}/2 = 5$ V | | |
+| Signal d'entrée (amplitude, fréquence) | qq. 10 mV, qq. kHz | | |
+| $\lvert A_v\rvert = V_{out}/V_{in}$ | > 3,3 nécessaire | | |
+| Déphasage sortie / entrée | 180° | | |
+| $V_{vide}$ / $V_{charge}$ ($R_L = 10\ \mathrm{k\Omega}$) | | | |
+| $R_s = R_L(V_{vide}/V_{charge} - 1)$ | qq. 100 Ω | | |
+| $g_m = \lvert A_v\rvert/R_s$ | | | |
+| $g_{m1} = g_m/2$ | | | |
+| $r_{ds1} = 2R_s$ | | | |
+
+### 2° Résistance de perte de la bobine {#sec-tp54-bobine}
+
+Énoncé [poly, p. 62] : mesure à l'impédancemètre : $Q_0 = 88$, $L_1 = 220\ \mathrm{\mu H}$ à 455 kHz. $Q$ = puissance réactive / puissance active. L'appliquer à un circuit $L$, $r$ série et à un circuit $L$, $R$ parallèle ; calculer $r$ à 455 kHz.
+
+::: {.complement}
+- **Série** (même courant $I$) : $Q = \dfrac{L\omega I^2}{r I^2} = \dfrac{L\omega}{r}$.
+- **Parallèle** (même tension $V$) : $Q = \dfrac{V^2/(L\omega)}{V^2/R} = \dfrac{R}{L\omega}$.
+
+À 455 kHz : $L\omega = 220\ \mathrm{\mu H} \times 2\pi \times 455\ \mathrm{kHz} = 629\ \Omega$, donc
+
+$$r = \frac{L\omega}{Q_0} = \frac{629}{88} = 7{,}15\ \Omega \qquad (\text{équivalent parallèle } R = Q_0L\omega = 55{,}3\ \mathrm{k\Omega}).$$
+:::
+
+### 3° Calcul numérique des paramètres d'oscillation {#sec-tp54-calcul-numerique}
+
+Énoncé [poly, p. 62] : avec $L_1$, $R_s$, $r$, $g_m$ connus, $C_3 = 1$ nF et $C_4 = 3{,}3$ nF, calculer la fréquence d'oscillation théorique, $T(j\omega_0)$ et vérifier la condition de démarrage.
+
+::: {.complement}
+Formules : @eq-tp54-frequence et @eq-tp54-gain-demarrage. **Exemple** avec les mesures de 2023 ($|A_v| = 16{,}8$, $R_s = 213\ \Omega$, donc $g_m = 79$ mS) et $r = 7{,}15\ \Omega$ :
+
+| Grandeur | Formule | Valeur |
+|---|---|---|
+| Terme correctif $r/(R_sC_3)$ dans $\omega_o^2$ | | +2,6 % sur $\omega_o^2$ |
+| $F_o$ | @eq-tp54-frequence | **392,3 kHz** (387,3 kHz si $r = 0$) |
+| $C_4/C_3\,(1 + r/R_s)$ | | 3,41 |
+| $R_s r C_3 C_4 \omega_o^2$ | | 0,03 |
+| $G_o = T(j\omega_o)$ | @eq-tp54-gain-demarrage | **4,88 ≥ 1** : démarrage assuré |
+
+L'hypothèse $R_s \gg 1/(C_3\omega)$ (≈ 400 Ω) n'est pas vérifiée avec $R_s = 213\ \Omega$, mais le terme qu'elle permet de négliger reste petit ici (0,03 devant 3,41).
+:::
+
+| Grandeur | Prévision (avec mes mesures) | Valeur obtenue | Commentaire |
+|---|---|---|---|
+| $\omega_o^2 = \frac{1}{L}\left(\frac{1}{C_3} + \frac{1}{C_4} + \frac{r}{R_sC_3}\right)$ | | | |
+| $F_o$ | ≈ 387-392 kHz | | |
+| $G_o$ (@eq-tp54-gain-demarrage) | ≈ $\lvert A_v\rvert/3{,}3$ | | |
+| Condition de démarrage $G_o \ge 1$ | | | |
+
+::: {.a-verifier #av-tp54-frequence-attendue}
+**Source** [poly, p. 63] : balayage « entre 400 kHz et 500 kHz » pour chercher la résonance avec $C_3 = 1$ nF, $C_4 = 3{,}3$ nF et $L_1 = 220\ \mathrm{\mu H}$. Le compte rendu de 2023 relève une résonance à 445,5 kHz, de bande passante [444,9 ; 446,6] kHz [cr-2023-lc, p. 9].
+
+**Problème** : avec ces valeurs, $F_o$ théorique vaut 387 kHz (392 kHz avec la correction $r/R_s$), en dehors de la plage de balayage et 13 % sous la mesure de 2023 (au-delà des 10 % d'incertitude). Avec $C_3 = C_4 = 1$ nF (valeurs du schéma, [poly, p. 66]) on trouverait 480 kHz. Par ailleurs, une bande de 1,7 kHz est bien plus étroite que ce que permet une bobine de $Q_0 = 88$ chargée par $R_s$ ; elle ressemble plutôt au résonateur céramique (oscillation prévue vers 446 kHz, § 6°).
+
+**Proposition** : en séance, relever les valeurs réellement câblées ($L_1$, $C_3$, $C_4$, marquage) et élargir le balayage vers 350 kHz si rien n'apparaît entre 400 et 500 kHz.
+:::
+
+### 4° Mesure en boucle ouverte {#sec-tp54-boucle-ouverte}
+
+Énoncé [poly, p. 63] : boucle ouverte par S2 (impédance d'entrée de l'inverseur quasi infinie, $C_{in} \ll C_4$) ; $C_3 = 1$ nF, $C_4 = 3{,}3$ nF, $L_1$ branchés ; attaque en U2 ; $T(j\omega)$ mesuré entre J5 ($V_{in}$) et J7 ($V_R$).
+
+**4.1 Fréquence d'oscillation probable** : $V_R$ non déformée ; balayage rapide entre 400 et 500 kHz ; chercher la résonance ($V_R$ maximale et en phase avec $V_{in}$) ; déterminer précisément la fréquence de résonance et la bande à −3 dB (sondes ×10, couplage AC, traces centrées).
+
+::: {.complement}
+**Le bon critère est la phase.** D'après @eq-tp54-gain-boucle, $|T|$ ne présente un vrai maximum près de $F_o$ que si $R_s$ est grand devant les impédances du réseau ; avec $R_s \approx 200\ \Omega$, $|T|$ décroît régulièrement avec la fréquence et la phase ne tourne que d'une dizaine de degrés par 50 kHz autour de $F_o$ (@fig-tp54-boucle-ouverte). Repérer $F_o$ par **$V_R$ en phase avec $V_{in}$** (mode XY : droite de pente positive), plutôt que par le maximum d'amplitude. La « bande à −3 dB » peut alors ne pas être mesurable ; noter ce qu'on observe.
+
+**Sondes** : une sonde ×10 (≈ 10-15 pF) sur J3 s'ajoute à $C_3$ (1 nF) et abaisse $F_o$ d'environ 0,5 % ; sur J7, elle est négligeable devant $C_4$.
+:::
+
+![Gain de boucle $T(j\omega)$ calculé par @eq-tp54-gain-boucle ($L_1 = 220\ \mathrm{\mu H}$, $r = 7{,}15\ \Omega$, $C_3 = 1$ nF, $C_4 = 3{,}3$ nF, $|A_v| = 16{,}8$) pour $R_s = 213\ \Omega$ (mesure de 2023) et pour une hypothèse $R_s = 2\ \mathrm{k\Omega}$ : la sélectivité dépend fortement de $R_s$. La phase s'annule près de $F_o$ dans les deux cas. Calcul (Complément).](../figures/tp05-boucle-ouverte.svg){#fig-tp54-boucle-ouverte}
+
+| Grandeur | Prévision | Mesure | Commentaire |
+|---|---|---|---|
+| $F_o$ ($V_R$ en phase avec $V_{in}$) | ≈ 387-392 kHz (§ 3°) | | |
+| Bande à −3 dB | peu marquée si $R_s$ faible | | |
+
+**4.2 Condition de démarrage** : mesurer le gain de boucle quand il est réel ($f = F_o$) ; la condition est-elle satisfaite ? comparer à la théorie. Que devient $G_o$ avec $C_4 = 1$ nF au lieu de 3,3 nF ? conséquence prévisible d'un gain de boucle trop grand ?
+
+::: {.complement}
+Avec $C_4 = 1$ nF : $G_o \approx |A_v|\,C_3/C_4 = |A_v|$, soit **3,3 fois plus** (≈ 16 avec les valeurs de 2023 ; 16,0 par @eq-tp54-gain-demarrage), et $F_o$ monte vers 480 kHz. Un gain de boucle trop grand fait croître l'oscillation jusqu'à une **saturation franche** de la porte : $V_{out}$ devient presque carré, riche en harmoniques ; la distorsion augmente, la fréquence dépend davantage des non-linéarités (moins stable), et l'oscillateur peut tendre vers un fonctionnement en relaxation.
+:::
+
+::: {.notes-externes}
+Mesures de 2023, faites « à $f = F_o = 164$ kHz » : $V_{out}/V_{in} = 1{,}8$ avec $C_4 = 3{,}3$ nF, et $0{,}2$ avec $C_4 = 1$ nF ; conclusion du binôme : « pour $C_4 = 3{,}3$ nF la condition de Barkhausen est vérifiée, pour $C_4 = 1$ nF ce n'est plus le cas » [cr-2023-lc, p. 9].
+:::
+
+::: {.a-verifier #av-tp54-gain-c4-cr2023}
+**Source** [cr-2023-lc, p. 9] : gain de boucle 1,8 ($C_4 = 3{,}3$ nF) et 0,2 ($C_4 = 1$ nF).
+
+**Problème** : la théorie (@eq-tp54-cas-limite) prévoit l'inverse : $G_o$ est **multiplié** par 3,3 quand $C_4$ passe de 3,3 nF à 1 nF. La mesure de 2023 a été faite à 164 kHz, leur $f_o$ théorique erroné ([voir plus haut](#av-tp54-erreurs-cr2023)), loin de la fréquence de phase nulle, et porte sur $V_{out}/V_{in}$ et non sur $V_R/V_{in}$ : elle ne mesure pas $G_o$.
+
+**Proposition** : mesurer $V_R/V_{in}$ (J7/J5) à la fréquence où la phase est nulle, pour chaque valeur de $C_4$.
+:::
+
+| Grandeur | Prévision | Mesure | Commentaire |
+|---|---|---|---|
+| $G_o = V_R/V_{in}$ à $F_o$, $C_4 = 3{,}3$ nF | $\approx \lvert A_v\rvert/3{,}3$ (4,9 avec 2023) | | |
+| Condition $G_o \ge 1$ | satisfaite | | |
+| $F_o$ avec $C_4 = 1$ nF | ≈ 480 kHz | | |
+| $G_o$ avec $C_4 = 1$ nF | $\approx \lvert A_v\rvert$ (≈ 16) | | |
+
+**4.3 Prévision de l'amplitude** (méthode du premier harmonique) [poly, p. 63-64] : le gain apparent vis-à-vis du fondamental diminue quand l'amplitude augmente (cas extrême : carré de 10 Vcàc, fondamental $2V_{cc}/\pi = 6{,}37$ V) ; l'oscillation se stabilise quand $T(\omega_0) = 1$ pour le fondamental. Relevés : voies sur J5, J7 et J3 (sondes ×10 compensées) ; à $F_o$, augmenter $V_{in}$ jusqu'à $V_R = V_{in}$ (réajuster la fréquence si la phase a glissé) ; noter l'amplitude ; relever les trois signaux, puis les spectres FFT de $V_{out}$ et $V_R$.
+
+::: {.complement}
+À $F_o$, le retour vaut $|B| = C_3/C_4 = 0{,}30$ (@eq-tp54-cas-limite). L'équilibre $V_R = V_{in}$ est atteint quand le gain de la porte pour le fondamental tombe à $C_4/C_3 = 3{,}3$, au lieu de $|A_v|$ en petits signaux. **Borne supérieure** : si $V_{out}$ devient un carré de 10 Vcàc, $V_R \le 0{,}30 \times 6{,}37 = 1{,}93$ V crête, soit **≈ 3,9 Vcàc** au plus sur $V_{in}$ et $V_R$.
+
+**Spectres attendus** : $V_{out}$ écrêté symétriquement (repos à $V_{cc}/2$) contient surtout des harmoniques **impairs** (carré : $H_3/H_1 = 1/3$, −9,5 dB ; $H_5/H_1$ −14 dB) ; $H_2$ reste faible si l'écrêtage est symétrique. Le réseau de retour filtre : $|B(n\omega_o)|/|B(\omega_o)|$ vaut **−13,8 dB** pour $n = 2$ et **−21,2 dB** pour $n = 3$ (calcul avec $r \to 0$) ; $V_R$ reste donc quasi sinusoïdal même quand $V_{out}$ se déforme.
+:::
+
+| Grandeur | Prévision | Mesure | Commentaire |
+|---|---|---|---|
+| Amplitude quand $V_R = V_{in}$ | ≤ 1,9 V crête | | |
+| Fréquence réajustée | ≈ $F_o$ | | |
+| Forme de $V_{out}$ | sinus écrêté | | |
+| FFT de $V_{out}$ : $H_2$, $H_3$ (dB / $H_1$) | $H_2$ faible ; $H_3$ ≥ −9,5 dB | | |
+| FFT de $V_R$ : $H_2$, $H_3$ (dB / $H_1$) | ≈ 14 et 21 dB plus bas que dans $V_{out}$ | | |
+
+### 5° Mesure sur l'oscillateur rebouclé {#sec-tp54-reboucle}
+
+Énoncé [poly, p. 64] : débrancher le générateur, fermer S2. Relever $V_{in}$ et $V_{out}$ ; mesurer précisément la fréquence et vérifier qu'elle correspond à $F_o$. Relever le spectre de $V_{out}$ au moins jusqu'à l'harmonique 3 (pureté spectrale) ; mesurer $A_2/A_1$ et $A_3/A_1$ en dB ; comparer aux prévisions issues de la boucle ouverte.
+
+::: {.complement}
+On doit retrouver, à quelques ‰ près, la fréquence de phase nulle mesurée en 4.1, et des amplitudes proches de celles du point d'équilibre $V_R = V_{in}$ de 4.3 : le rebouclage réalise exactement cette condition. Le spectre de $V_{out}$ doit ressembler à celui relevé en 4.3 à l'équilibre.
+:::
+
+| Grandeur | Prévision | Mesure | Commentaire |
+|---|---|---|---|
+| Fréquence d'oscillation | = $F_o$ mesurée en 4.1 | | |
+| Amplitude de $V_{in}$ | ≈ valeur de 4.3 | | |
+| Amplitude de $V_{out}$ | | | |
+| $A_2/A_1$ (dB) | faible (écrêtage symétrique) | | |
+| $A_3/A_1$ (dB) | ≈ valeur de 4.3 | | |
+
+### 6° Résonateur céramique à la place de la bobine {#sec-tp54-resonateur}
+
+Énoncé [poly, p. 64-65] : schéma équivalent du résonateur (résonance série $\omega_s$, $LC_a\omega_s^2 = 1$, et parallèle $\omega_p$, très proches, $\omega_s < \omega_p$) ; entre les deux, comportement **inductif**, seul utilisable à la place de $L_1$. Donner $F_s$ et $F_p$ d'après le tableau de l'annexe C ; remplacer $jL_1\omega$ par $jX(\omega)$ dans Barkhausen ; calculer les impédances de $C_3 = 1$ nF et $C_4 = 3{,}3$ nF, « quasi constantes » autour de 455 kHz ; en déduire la fréquence précise d'oscillation. Essai : résonateur « 455 » (cube bleu foncé) à la place de $L_1$, $C_3 = 1$ nF, $C_4 = 3{,}3$ nF ; relever $V_{in}$, $V_{out}$ et la fréquence.
+
+::: {.complement}
+**Fréquences de résonance** (tableau $R + jX$, pas de 100 Hz, [poly, p. 67-69]) : $X$ change de signe entre 442,1 kHz ($-0{,}06\ \Omega$) et 442,2 kHz ($+9{,}0\ \Omega$), donc **$F_s \approx 442{,}1$ kHz** ; $X$ repasse par zéro entre 457,5 kHz ($+83{,}8\ \mathrm{k\Omega}$) et 457,6 kHz ($-125\ \mathrm{k\Omega}$), là où $|Z|$ est maximal, donc **$F_p \approx 457{,}5$ kHz** (l'impédancemètre de l'annexe B affiche 457,557 kHz).
+
+**Condition de phase** avec $r \to 0$ : en remplaçant $L\omega$ par $X$ dans @eq-tp54-frequence, $X(\omega_o) = \dfrac{1}{C_3\omega_o} + \dfrac{1}{C_4\omega_o} = \dfrac{1}{C_{eq}\omega_o}$.
+
+À 455 kHz : $\dfrac{1}{C_3\omega} = 349{,}8\ \Omega$, $\dfrac{1}{C_4\omega} = 106{,}0\ \Omega$, somme **455,8 Ω**. Dans le tableau, $X = 455{,}8\ \Omega$ entre 445,9 kHz (440,7 Ω) et 446,0 kHz (456,6 Ω) : **$F_o \approx 446{,}0$ kHz** (446,05 kHz si l'on tient compte de la variation de $1/(C_{eq}\omega)$ avec la fréquence). C'est le point « Ceq1 » du graphique de l'annexe [poly, p. 69].
+
+| Condensateurs | $1/(C_{eq}\omega)$ | $F_o$ (tableau) |
+|---|---|---|
+| $C_3 = C_4 = 3{,}3$ nF (Ceq) | ≈ 217 Ω | 444,2 kHz |
+| $C_3 = 1$ nF, $C_4 = 3{,}3$ nF (Ceq1) | ≈ 465 Ω | **446,0 kHz** |
+| $C_3 = C_4 = 1$ nF (Ceq2) | ≈ 711 Ω | 447,4 kHz |
+
+Diviser $C_{eq}$ par 3,3 ne déplace la fréquence que de 3 kHz (0,7 %) : la réactance du résonateur varie très vite entre $F_s$ et $F_p$, d'où la **stabilité en fréquence**, bien meilleure qu'avec $L_1$ (où $F_o \propto C_{eq}^{-1/2}$ bougerait de 80 %).
+
+**Correction due aux pertes** : comme pour $r$ (@eq-tp54-frequence), la résistance du résonateur ajoute $R/(R_s C_3\omega)$ à la réactance à compenser. Avec $R \approx 14\ \Omega$ (tableau) et $R_s = 213\ \Omega$ : +23 Ω, soit $F_o \approx 446{,}2$ kHz. Ordre de grandeur de l'écart : 0,05 %.
+:::
+
+| Grandeur | Prévision | Mesure | Commentaire |
+|---|---|---|---|
+| $F_s$ (tableau) | 442,1 kHz | — | |
+| $F_p$ (tableau) | 457,5 kHz | — | |
+| $1/(C_3\omega) + 1/(C_4\omega)$ à 455 kHz | 455,8 Ω | — | |
+| Fréquence d'oscillation avec le résonateur | ≈ 446,0 kHz | | |
+| Forme de $V_{in}$, $V_{out}$ | | | |
+
+## À retenir {#sec-retenir-tp54}
+
+- Inverseur CMOS polarisé par $R_1$ entre entrée et sortie : repos à $V_{cc}/2$ ; $R_s = r_{ds}/2$, $A_v = -g_mR_s$ avec $g_m = g_{m1} + g_{m2}$ (@eq-tp54-gain-inverseur).
+- Gain de boucle de l'oscillateur en π : @eq-tp54-gain-boucle ; phase nulle à $\omega_o^2 = \frac{1}{L}\left(\frac{1}{C_3} + \frac{1}{C_4} + \frac{r}{R_sC_3}\right)$ (@eq-tp54-frequence).
+- Sans pertes : $F_o = 1/(2\pi\sqrt{LC_{eq}})$, $C_{eq} = C_3C_4/(C_3 + C_4)$ ; démarrage si $|A_v| \ge C_4/C_3$ (@eq-tp54-cas-limite).
+- Bobine : $Q = L\omega/r$ (série), $Q = R/(L\omega)$ (parallèle).
+- L'amplitude se stabilise par la non-linéarité de la porte (premier harmonique) ; le réseau de retour filtre les harmoniques.
+- Résonateur céramique ou quartz : utilisé dans sa zone inductive, entre $F_s$ et $F_p$ ; $F_o$ donnée par $X(\omega_o) = 1/(C_{eq}\omega_o)$, très peu sensible aux capacités.
