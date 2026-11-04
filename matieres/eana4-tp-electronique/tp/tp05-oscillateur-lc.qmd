@@ -13,6 +13,11 @@ sources:
     fichier: corriges/2023-tp04-05-cr.pdf
     nature: externe
     pages: "1-9"
+  - id: mesures-armand
+    fichier: "—"
+    nature: personnelle
+    seance: 2026-11-04
+    pages: "—"
 ---
 
 {{< include /_macros.qmd >}}
@@ -22,7 +27,7 @@ sources:
 
 - les questions de l'énoncé sont résumées en texte normal (support officiel) ;
 - les réponses de la partie « Théorie générale » (la préparation demandée) et les prévisions sont **rédigées par Claude** (blocs *Complément*) ; toutes les valeurs numériques ont été recalculées ;
-- les tableaux **« Trame du CR »** donnent la prévision et laissent la colonne *Mesure* vide.
+- les tableaux **« Trame du CR »** donnent la prévision et laissent la colonne *Mesure* vide, sauf pour les valeurs déjà mesurées par Armand en séance ($|A_v|$ et $R_s$, *Notes de cours*, [mesures-armand]), qui servent aux applications numériques.
 
 Le compte rendu d'un binôme de 2023 [cr-2023-lc] (rangé sous le nom `2023-tp04-05-cr.pdf`, mais il porte sur ce TP) fournit des valeurs mesurées, reprises en *Notes externes* pour donner un ordre de grandeur. Il contient des erreurs, signalées.
 
@@ -119,9 +124,9 @@ Le binôme de 2023 écrit $\omega_o = 1/\sqrt{L(C_3 + C_4)}$, trouve $f_o = 164$
 ::: {.a-verifier #av-tp54-erreurs-cr2023}
 **Source** [cr-2023-lc, p. 4-8] : $\omega_o = 1/\sqrt{L(C_3 + C_4)}$ ; $|T(j\omega_o)| = 2g_mR_s$ ; puis $g_{m1} = |A_v|/R_s = 7{,}9 \times 10^{-2}$ S, alors que ce même compte rendu écrit $A_v = -2g_mR_s$.
 
-**Problème** : (1) $C_3$ et $C_4$ sont en série dans la boucle, pas en parallèle (@eq-tp54-cas-limite) ; (2) le gain de boucle à $\omega_o$ vaut $|A_v|\,C_3/C_4$ et non $|A_v|$ ; (3) avec $A_v = -2g_{m1}R_s$, on a $g_{m1} = |A_v|/(2R_s)$.
+**Problème** : (1) $C_3$ et $C_4$ sont en série dans la boucle, pas en parallèle (@eq-tp54-cas-limite) ; (2) le gain de boucle à $\omega_o$ vaut $|A_v|\,C_3/C_4$ et non $|A_v|$ ; (3) avec $A_v = -2g_{m1}R_s$, on a $g_{m1} = |A_v|/(2R_s)$. (4) $R_s = 213\ \Omega$ contredit la mesure de séance ($2{,}98\ \mathrm{k\Omega}$, [mesures-armand]) ; leur méthode ($V_{vide} = 4{,}91$, $V_{charge} = 4{,}81$, soit 2 % d'écart) est très sensible aux erreurs de lecture.
 
-**Proposition** : $F_o = 1/(2\pi\sqrt{L C_3C_4/(C_3+C_4)})$ ; $G_o = |A_v|\,C_3/C_4$ ; avec leurs mesures ($|A_v| = 16{,}8$, $R_s = 213\ \Omega$) : $g_m = g_{m1} + g_{m2} = 79$ mS, $g_{m1} = 39$ mS, $r_{ds1} = 426\ \Omega$.
+**Proposition** : $F_o = 1/(2\pi\sqrt{L C_3C_4/(C_3+C_4)})$ ; $G_o = |A_v|\,C_3/C_4$ ; avec leurs mesures ($|A_v| = 16{,}8$, $R_s = 213\ \Omega$) : $g_m = g_{m1} + g_{m2} = 79$ mS, $g_{m1} = 39$ mS, $r_{ds1} = 426\ \Omega$ ; retenir plutôt $R_s = 2{,}98\ \mathrm{k\Omega}$ (mesure de séance).
 :::
 
 ## Trame du CR — Manipulation {#sec-tp54-manipulation}
@@ -137,9 +142,13 @@ Le binôme de 2023 écrit $\omega_o = 1/\sqrt{L(C_3 + C_4)}$, trouve $f_o = 164$
 
 $$V_{charge} = V_{vide}\,\frac{R_L}{R_L + R_s} \ \Rightarrow\ R_s = R_L\left(\frac{V_{vide}}{V_{charge}} - 1\right).$$
 
-Avec $R_L = 10\ \mathrm{k\Omega}$ et $R_s$ de quelques centaines d'ohms, $V_{charge}$ ne baisse que de quelques % : mesurer les deux tensions avec le même calibre et en moyennant ; une charge plus proche de $R_s$ (1 kΩ par exemple) donne une mesure plus précise, à condition de rester en régime linéaire.
+Avec $R_L = 10\ \mathrm{k\Omega}$ et $R_s \approx 3\ \mathrm{k\Omega}$, $V_{charge}$ baisse d'environ 23 % : la mesure est précise. Si $R_s$ n'était que de quelques centaines d'ohms, la baisse ne serait que de quelques % et une petite erreur de lecture fausserait fortement $R_s$ (c'est probablement ce qui est arrivé en 2023, voir plus bas).
 
 **Exploitation** (@eq-tp54-gain-inverseur) : $g_m = |A_v|/R_s$, $g_{m1} = g_m/2$, $r_{ds1} = 2R_s$.
+:::
+
+::: {.notes}
+Mesures en séance : $|A_v| = 15{,}6$ ; $R_s = 2{,}98\ \mathrm{k\Omega}$ [mesures-armand]. D'où $g_m = |A_v|/R_s = 5{,}23$ mS, $g_{m1} = 2{,}62$ mS, $r_{ds1} = 2R_s = 5{,}96\ \mathrm{k\Omega}$ ; contrôle : $g_{m1}r_{ds1} = 15{,}6 = |A_v|$.
 :::
 
 ::: {.notes-externes}
@@ -150,13 +159,13 @@ Mesures de 2023 : $V_{out} = 4{,}91$ V ; $|A_v| = 840\ \mathrm{mV}/50\ \mathrm{m
 |---|---|---|---|
 | $V_{out}$ continu | $V_{cc}/2 = 5$ V | | |
 | Signal d'entrée (amplitude, fréquence) | qq. 10 mV, qq. kHz | | |
-| $\lvert A_v\rvert = V_{out}/V_{in}$ | > 3,3 nécessaire | | |
+| $\lvert A_v\rvert = V_{out}/V_{in}$ | > 3,7 nécessaire | 15,6 | |
 | Déphasage sortie / entrée | 180° | | |
 | $V_{vide}$ / $V_{charge}$ ($R_L = 10\ \mathrm{k\Omega}$) | | | |
-| $R_s = R_L(V_{vide}/V_{charge} - 1)$ | qq. 100 Ω | | |
-| $g_m = \lvert A_v\rvert/R_s$ | | | |
-| $g_{m1} = g_m/2$ | | | |
-| $r_{ds1} = 2R_s$ | | | |
+| $R_s = R_L(V_{vide}/V_{charge} - 1)$ | qq. kΩ | 2,98 kΩ | |
+| $g_m = \lvert A_v\rvert/R_s$ | | 5,23 mS | |
+| $g_{m1} = g_m/2$ | | 2,62 mS | |
+| $r_{ds1} = 2R_s$ | | 5,96 kΩ | |
 
 ### 2° Résistance de perte de la bobine {#sec-tp54-bobine}
 
@@ -176,30 +185,30 @@ $$r = \frac{L\omega}{Q_0} = \frac{629}{88} = 7{,}15\ \Omega \qquad (\text{équiv
 Énoncé [poly, p. 62] : avec $L_1$, $R_s$, $r$, $g_m$ connus, $C_3 = 1$ nF et $C_4 = 3{,}3$ nF, calculer la fréquence d'oscillation théorique, $T(j\omega_0)$ et vérifier la condition de démarrage.
 
 ::: {.complement}
-Formules : @eq-tp54-frequence et @eq-tp54-gain-demarrage. **Exemple** avec les mesures de 2023 ($|A_v| = 16{,}8$, $R_s = 213\ \Omega$, donc $g_m = 79$ mS) et $r = 7{,}15\ \Omega$ :
+Formules : @eq-tp54-frequence et @eq-tp54-gain-demarrage, avec les mesures de séance ($|A_v| = 15{,}6$, $R_s = 2{,}98\ \mathrm{k\Omega}$, [mesures-armand]) et $r = 7{,}15\ \Omega$ :
 
-| Grandeur | Formule | Valeur |
-|---|---|---|
-| Terme correctif $r/(R_sC_3)$ dans $\omega_o^2$ | | +2,6 % sur $\omega_o^2$ |
-| $F_o$ | @eq-tp54-frequence | **392,3 kHz** (387,3 kHz si $r = 0$) |
-| $C_4/C_3\,(1 + r/R_s)$ | | 3,41 |
-| $R_s r C_3 C_4 \omega_o^2$ | | 0,03 |
-| $G_o = T(j\omega_o)$ | @eq-tp54-gain-demarrage | **4,88 ≥ 1** : démarrage assuré |
+| Grandeur | Formule | $C_4 = 3{,}3$ nF | $C_4 = 1$ nF (§ 4.2) |
+|---|---|---|---|
+| Terme correctif $r/(R_sC_3)$ dans $\omega_o^2$ | | +0,18 % | +0,12 % |
+| $F_o$ | @eq-tp54-frequence | **387,7 kHz** (387,3 si $r = 0$) | 480,2 kHz |
+| $\frac{C_4}{C_3}(1 + r/R_s)$ | | 3,31 | 1,00 |
+| $R_s r C_3 C_4 \omega_o^2$ | | 0,42 | 0,19 |
+| Diviseur (somme) | | 3,73 | 1,20 |
+| $G_o = T(j\omega_o) = \lvert A_v\rvert/\text{diviseur}$ | @eq-tp54-gain-demarrage | **4,19 ≥ 1** : démarrage assuré | 13,0 |
 
-L'hypothèse $R_s \gg 1/(C_3\omega)$ (≈ 400 Ω) n'est pas vérifiée avec $R_s = 213\ \Omega$, mais le terme qu'elle permet de négliger reste petit ici (0,03 devant 3,41).
+L'hypothèse $R_s \gg 1/(C_3\omega)$ (≈ 410 Ω) est vérifiée (rapport ≈ 7). En revanche, le terme de pertes $R_s r C_3 C_4\omega_o^2$ n'est plus négligeable : il réduit $G_o$ d'environ 11 % par rapport au cas limite $|A_v|\,C_3/C_4 = 4{,}73$. C'est l'effet annoncé plus haut : à $R_s$ grand, les pertes de la bobine comptent davantage.
 :::
 
-| Grandeur | Prévision (avec mes mesures) | Valeur obtenue | Commentaire |
-|---|---|---|---|
-| $\omega_o^2 = \frac{1}{L}\left(\frac{1}{C_3} + \frac{1}{C_4} + \frac{r}{R_sC_3}\right)$ | | | |
-| $F_o$ | ≈ 387-392 kHz | | |
-| $G_o$ (@eq-tp54-gain-demarrage) | ≈ $\lvert A_v\rvert/3{,}3$ | | |
-| Condition de démarrage $G_o \ge 1$ | | | |
+| Grandeur | Valeur calculée (mesures de séance) | Commentaire |
+|---|---|---|
+| $F_o$ | 387,7 kHz | |
+| $G_o$ (@eq-tp54-gain-demarrage) | 4,19 | |
+| Condition de démarrage $G_o \ge 1$ | satisfaite | |
 
 ::: {.a-verifier #av-tp54-frequence-attendue}
 **Source** [poly, p. 63] : balayage « entre 400 kHz et 500 kHz » pour chercher la résonance avec $C_3 = 1$ nF, $C_4 = 3{,}3$ nF et $L_1 = 220\ \mathrm{\mu H}$. Le compte rendu de 2023 relève une résonance à 445,5 kHz, de bande passante [444,9 ; 446,6] kHz [cr-2023-lc, p. 9].
 
-**Problème** : avec ces valeurs, $F_o$ théorique vaut 387 kHz (392 kHz avec la correction $r/R_s$), en dehors de la plage de balayage et 13 % sous la mesure de 2023 (au-delà des 10 % d'incertitude). Avec $C_3 = C_4 = 1$ nF (valeurs du schéma, [poly, p. 66]) on trouverait 480 kHz. Par ailleurs, une bande de 1,7 kHz est bien plus étroite que ce que permet une bobine de $Q_0 = 88$ chargée par $R_s$ ; elle ressemble plutôt au résonateur céramique (oscillation prévue vers 446 kHz, § 6°).
+**Problème** : avec ces valeurs, $F_o$ théorique vaut 387,7 kHz (avec la correction $r/R_s$ et $R_s = 2{,}98\ \mathrm{k\Omega}$), en dehors de la plage de balayage et 13 % sous la mesure de 2023 (au-delà des 10 % d'incertitude). Avec $C_3 = C_4 = 1$ nF (valeurs du schéma, [poly, p. 66]) on trouverait 480 kHz. Par ailleurs, une bande de 1,7 kHz est bien plus étroite que celle de la boucle avec $L_1$ (≈ 48 kHz à −3 dB avec $R_s = 2{,}98\ \mathrm{k\Omega}$, § 4.1) ; elle ressemble plutôt au résonateur céramique (oscillation prévue vers 446 kHz, § 6°).
 
 **Proposition** : en séance, relever les valeurs réellement câblées ($L_1$, $C_3$, $C_4$, marquage) et élargir le balayage vers 350 kHz si rien n'apparaît entre 400 et 500 kHz.
 :::
@@ -211,22 +220,23 @@ L'hypothèse $R_s \gg 1/(C_3\omega)$ (≈ 400 Ω) n'est pas vérifiée avec $R_s
 **4.1 Fréquence d'oscillation probable** : $V_R$ non déformée ; balayage rapide entre 400 et 500 kHz ; chercher la résonance ($V_R$ maximale et en phase avec $V_{in}$) ; déterminer précisément la fréquence de résonance et la bande à −3 dB (sondes ×10, couplage AC, traces centrées).
 
 ::: {.complement}
-**Le bon critère est la phase.** D'après @eq-tp54-gain-boucle, $|T|$ ne présente un vrai maximum près de $F_o$ que si $R_s$ est grand devant les impédances du réseau ; avec $R_s \approx 200\ \Omega$, $|T|$ décroît régulièrement avec la fréquence et la phase ne tourne que d'une dizaine de degrés par 50 kHz autour de $F_o$ (@fig-tp54-boucle-ouverte). Repérer $F_o$ par **$V_R$ en phase avec $V_{in}$** (mode XY : droite de pente positive), plutôt que par le maximum d'amplitude. La « bande à −3 dB » peut alors ne pas être mesurable ; noter ce qu'on observe.
+**Résonance attendue.** D'après @eq-tp54-gain-boucle, $|T|$ ne présente un vrai maximum près de $F_o$ que si $R_s$ est grand devant les impédances du réseau. C'est le cas avec $R_s = 2{,}98\ \mathrm{k\Omega}$ (@fig-tp54-boucle-ouverte) : maximum $|T| \approx 4{,}24$ vers 384 kHz, à 1 % sous $F_o$ ; bande à −3 dB ≈ **358 à 406 kHz** (≈ 48 kHz, $Q \approx 8$) ; phase ≈ ±23° à $F_o \pm 10$ kHz. Le maximum d'amplitude localise donc bien la résonance, mais il est large : fixer $F_o$ précisément par **$V_R$ en phase avec $V_{in}$** (mode XY : droite de pente positive). Avec les 213 Ω du CR de 2023, au contraire, $|T|$ décroîtrait régulièrement sans pic.
 
 **Sondes** : une sonde ×10 (≈ 10-15 pF) sur J3 s'ajoute à $C_3$ (1 nF) et abaisse $F_o$ d'environ 0,5 % ; sur J7, elle est négligeable devant $C_4$.
 :::
 
-![Gain de boucle $T(j\omega)$ calculé par @eq-tp54-gain-boucle ($L_1 = 220\ \mathrm{\mu H}$, $r = 7{,}15\ \Omega$, $C_3 = 1$ nF, $C_4 = 3{,}3$ nF, $|A_v| = 16{,}8$) pour $R_s = 213\ \Omega$ (mesure de 2023) et pour une hypothèse $R_s = 2\ \mathrm{k\Omega}$ : la sélectivité dépend fortement de $R_s$. La phase s'annule près de $F_o$ dans les deux cas. Calcul (Complément).](../figures/tp05-boucle-ouverte.svg){#fig-tp54-boucle-ouverte}
+![Gain de boucle $T(j\omega)$ calculé par @eq-tp54-gain-boucle ($L_1 = 220\ \mathrm{\mu H}$, $r = 7{,}15\ \Omega$, $C_3 = 1$ nF, $C_4 = 3{,}3$ nF) pour les mesures de séance ($R_s = 2{,}98\ \mathrm{k\Omega}$, $|A_v| = 15{,}6$) et pour celles du CR de 2023 ($R_s = 213\ \Omega$, $|A_v| = 16{,}8$) : la sélectivité dépend fortement de $R_s$. La phase s'annule près de $F_o$ dans les deux cas. Calcul (Complément).](../figures/tp05-boucle-ouverte.svg){#fig-tp54-boucle-ouverte}
 
 | Grandeur | Prévision | Mesure | Commentaire |
 |---|---|---|---|
-| $F_o$ ($V_R$ en phase avec $V_{in}$) | ≈ 387-392 kHz (§ 3°) | | |
-| Bande à −3 dB | peu marquée si $R_s$ faible | | |
+| $F_o$ ($V_R$ en phase avec $V_{in}$) | 387,7 kHz (§ 3°) | | |
+| Maximum de $V_R/V_{in}$ | ≈ 4,2 vers 384 kHz | | |
+| Bande à −3 dB | ≈ 358 à 406 kHz | | |
 
 **4.2 Condition de démarrage** : mesurer le gain de boucle quand il est réel ($f = F_o$) ; la condition est-elle satisfaite ? comparer à la théorie. Que devient $G_o$ avec $C_4 = 1$ nF au lieu de 3,3 nF ? conséquence prévisible d'un gain de boucle trop grand ?
 
 ::: {.complement}
-Avec $C_4 = 1$ nF : $G_o \approx |A_v|\,C_3/C_4 = |A_v|$, soit **3,3 fois plus** (≈ 16 avec les valeurs de 2023 ; 16,0 par @eq-tp54-gain-demarrage), et $F_o$ monte vers 480 kHz. Un gain de boucle trop grand fait croître l'oscillation jusqu'à une **saturation franche** de la porte : $V_{out}$ devient presque carré, riche en harmoniques ; la distorsion augmente, la fréquence dépend davantage des non-linéarités (moins stable), et l'oscillateur peut tendre vers un fonctionnement en relaxation.
+Avec $C_4 = 1$ nF : $G_o \approx |A_v|\,C_3/C_4 = |A_v|$, soit environ **3 fois plus** (13,0 par @eq-tp54-gain-demarrage avec les mesures de séance, § 3°), et $F_o$ monte vers 480 kHz. Un gain de boucle trop grand fait croître l'oscillation jusqu'à une **saturation franche** de la porte : $V_{out}$ devient presque carré, riche en harmoniques ; la distorsion augmente, la fréquence dépend davantage des non-linéarités (moins stable), et l'oscillateur peut tendre vers un fonctionnement en relaxation.
 :::
 
 ::: {.notes-externes}
@@ -243,22 +253,22 @@ Mesures de 2023, faites « à $f = F_o = 164$ kHz » : $V_{out}/V_{in} = 1{,}8$ 
 
 | Grandeur | Prévision | Mesure | Commentaire |
 |---|---|---|---|
-| $G_o = V_R/V_{in}$ à $F_o$, $C_4 = 3{,}3$ nF | $\approx \lvert A_v\rvert/3{,}3$ (4,9 avec 2023) | | |
+| $G_o = V_R/V_{in}$ à $F_o$, $C_4 = 3{,}3$ nF | 4,19 | | |
 | Condition $G_o \ge 1$ | satisfaite | | |
 | $F_o$ avec $C_4 = 1$ nF | ≈ 480 kHz | | |
-| $G_o$ avec $C_4 = 1$ nF | $\approx \lvert A_v\rvert$ (≈ 16) | | |
+| $G_o$ avec $C_4 = 1$ nF | 13,0 | | |
 
 **4.3 Prévision de l'amplitude** (méthode du premier harmonique) [poly, p. 63-64] : le gain apparent vis-à-vis du fondamental diminue quand l'amplitude augmente (cas extrême : carré de 10 Vcàc, fondamental $2V_{cc}/\pi = 6{,}37$ V) ; l'oscillation se stabilise quand $T(\omega_0) = 1$ pour le fondamental. Relevés : voies sur J5, J7 et J3 (sondes ×10 compensées) ; à $F_o$, augmenter $V_{in}$ jusqu'à $V_R = V_{in}$ (réajuster la fréquence si la phase a glissé) ; noter l'amplitude ; relever les trois signaux, puis les spectres FFT de $V_{out}$ et $V_R$.
 
 ::: {.complement}
-À $F_o$, le retour vaut $|B| = C_3/C_4 = 0{,}30$ (@eq-tp54-cas-limite). L'équilibre $V_R = V_{in}$ est atteint quand le gain de la porte pour le fondamental tombe à $C_4/C_3 = 3{,}3$, au lieu de $|A_v|$ en petits signaux. **Borne supérieure** : si $V_{out}$ devient un carré de 10 Vcàc, $V_R \le 0{,}30 \times 6{,}37 = 1{,}93$ V crête, soit **≈ 3,9 Vcàc** au plus sur $V_{in}$ et $V_R$.
+À $F_o$, le rapport $T/|A_v|$ vaut $1/3{,}73 = 0{,}27$ avec les mesures de séance (§ 3° ; $C_3/C_4 = 0{,}30$ sans pertes). L'équilibre $V_R = V_{in}$ est atteint quand le gain de la porte pour le fondamental tombe à ≈ 3,7, au lieu de 15,6 en petits signaux. **Borne supérieure** : si $V_{out}$ devient un carré de 10 Vcàc, $V_R \le 0{,}27 \times 6{,}37 = 1{,}71$ V crête, soit **≈ 3,4 Vcàc** au plus sur $V_{in}$ et $V_R$.
 
 **Spectres attendus** : $V_{out}$ écrêté symétriquement (repos à $V_{cc}/2$) contient surtout des harmoniques **impairs** (carré : $H_3/H_1 = 1/3$, −9,5 dB ; $H_5/H_1$ −14 dB) ; $H_2$ reste faible si l'écrêtage est symétrique. Le réseau de retour filtre : $|B(n\omega_o)|/|B(\omega_o)|$ vaut **−13,8 dB** pour $n = 2$ et **−21,2 dB** pour $n = 3$ (calcul avec $r \to 0$) ; $V_R$ reste donc quasi sinusoïdal même quand $V_{out}$ se déforme.
 :::
 
 | Grandeur | Prévision | Mesure | Commentaire |
 |---|---|---|---|
-| Amplitude quand $V_R = V_{in}$ | ≤ 1,9 V crête | | |
+| Amplitude quand $V_R = V_{in}$ | ≤ 1,7 V crête | | |
 | Fréquence réajustée | ≈ $F_o$ | | |
 | Forme de $V_{out}$ | sinus écrêté | | |
 | FFT de $V_{out}$ : $H_2$, $H_3$ (dB / $H_1$) | $H_2$ faible ; $H_3$ ≥ −9,5 dB | | |
@@ -299,7 +309,7 @@ On doit retrouver, à quelques ‰ près, la fréquence de phase nulle mesurée 
 
 Diviser $C_{eq}$ par 3,3 ne déplace la fréquence que de 3 kHz (0,7 %) : la réactance du résonateur varie très vite entre $F_s$ et $F_p$, d'où la **stabilité en fréquence**, bien meilleure qu'avec $L_1$ (où $F_o \propto C_{eq}^{-1/2}$ bougerait de 80 %).
 
-**Correction due aux pertes** : comme pour $r$ (@eq-tp54-frequence), la résistance du résonateur ajoute $R/(R_s C_3\omega)$ à la réactance à compenser. Avec $R \approx 14\ \Omega$ (tableau) et $R_s = 213\ \Omega$ : +23 Ω, soit $F_o \approx 446{,}2$ kHz. Ordre de grandeur de l'écart : 0,05 %.
+**Correction due aux pertes** : comme pour $r$ (@eq-tp54-frequence), la résistance du résonateur ajoute $R/(R_s C_3\omega)$ à la réactance à compenser. Avec $R \approx 14\ \Omega$ (tableau) et $R_s = 2{,}98\ \mathrm{k\Omega}$ : +1,7 Ω seulement, négligeable : $F_o \approx 446{,}05$ kHz.
 :::
 
 | Grandeur | Prévision | Mesure | Commentaire |
