@@ -208,9 +208,11 @@ L'hypothèse $R_s \gg 1/(C_3\omega)$ (≈ 410 Ω) est vérifiée (rapport ≈ 7)
 ::: {.a-verifier #av-tp54-frequence-attendue}
 **Source** [poly, p. 63] : balayage « entre 400 kHz et 500 kHz » pour chercher la résonance avec $C_3 = 1$ nF, $C_4 = 3{,}3$ nF et $L_1 = 220\ \mathrm{\mu H}$. Le compte rendu de 2023 relève une résonance à 445,5 kHz, de bande passante [444,9 ; 446,6] kHz [cr-2023-lc, p. 9].
 
+**Mesure** [mesures-armand] : résonance à 400 kHz, dans la plage de balayage de l'énoncé et à +3,2 % de la théorie, donc dans l'incertitude de 10 % ; cohérente avec $L_1 \approx 206\ \mathrm{\mu H}$ (§ 4.1). La résonance très étroite vers 446 kHz relevée en 2023, et retrouvée en séance avec un autre composant branché par erreur, ne correspond donc pas à $L_1$.
+
 **Problème** : avec ces valeurs, $F_o$ théorique vaut 387,7 kHz (avec la correction $r/R_s$ et $R_s = 2{,}98\ \mathrm{k\Omega}$), en dehors de la plage de balayage et 13 % sous la mesure de 2023 (au-delà des 10 % d'incertitude). Avec $C_3 = C_4 = 1$ nF (valeurs du schéma, [poly, p. 66]) on trouverait 480 kHz. Par ailleurs, une bande de 1,7 kHz est bien plus étroite que celle de la boucle avec $L_1$ (≈ 48 kHz à −3 dB avec $R_s = 2{,}98\ \mathrm{k\Omega}$, § 4.1) ; elle ressemble plutôt au résonateur céramique (oscillation prévue vers 446 kHz, § 6°).
 
-**Proposition** : en séance, relever les valeurs réellement câblées ($L_1$, $C_3$, $C_4$, marquage) et élargir le balayage vers 350 kHz si rien n'apparaît entre 400 et 500 kHz.
+**Proposition** : pas d'erreur de l'énoncé : la fréquence théorique (387,7 kHz) et la mesure (400 kHz) sont compatibles avec les tolérances ; le balayage « 400 à 500 kHz » est seulement un peu étroit (la bande commence à 361 kHz). Bloc à lever si Armand est d'accord.
 :::
 
 ### 4° Mesure en boucle ouverte {#sec-tp54-boucle-ouverte}
@@ -225,13 +227,35 @@ L'hypothèse $R_s \gg 1/(C_3\omega)$ (≈ 410 Ω) est vérifiée (rapport ≈ 7)
 **Sondes** : une sonde ×10 (≈ 10-15 pF) sur J3 s'ajoute à $C_3$ (1 nF) et abaisse $F_o$ d'environ 0,5 % ; sur J7, elle est négligeable devant $C_4$.
 :::
 
+::: {.notes}
+Mesures en séance [mesures-armand], $C_4 = 3{,}3$ nF : résonance à **400 kHz**, $V_R = 753$ mV pour $V_{in} = 206{,}2$ mV, soit un gain de boucle de **3,65** ; bande à −3 dB (niveau $753/\sqrt{2}$ mV) de **361 à 421 kHz** (60 kHz, $Q \approx 6{,}7$). Deux premiers relevés, faits avec un autre composant branché par erreur (446,4 kHz, puis 410 kHz), ne sont pas retenus.
+:::
+
+::: {.complement}
+**Comparaison avec le modèle.** Avec les valeurs nominales ($L_1 = 220\ \mathrm{\mu H}$, $r = 7{,}15\ \Omega$), le modèle prévoit 387,7 kHz, un gain de 4,19 et 48 kHz de bande : la fréquence mesurée est 3,2 % plus haute et le gain 13 % plus bas. Les deux écarts s'expliquent avec deux paramètres seulement :
+
+- **$L_1 \approx 206\ \mathrm{\mu H}$** (−6 %, dans la tolérance de 10 %) : déplace la fréquence ;
+- **$r \approx 15\ \Omega$** au lieu de 7,15 Ω : d'après @eq-tp54-gain-demarrage, le diviseur doit valoir $15{,}6/3{,}65 = 4{,}27$, donc $R_s r C_3 C_4 \omega_o^2 = 4{,}27 - 3{,}31 = 0{,}96$, soit $r = 15{,}4\ \Omega$.
+
+| | Mesure | Modèle nominal | Modèle ajusté ($L = 206\ \mathrm{\mu H}$, $r = 15{,}4\ \Omega$) |
+|---|---|---|---|
+| $F_o$, $C_4 = 3{,}3$ nF | 400 kHz | 387,7 kHz | 401,1 kHz |
+| Gain, $C_4 = 3{,}3$ nF | 3,65 | 4,19 | 3,65 |
+| Bande à −3 dB | 361 à 421 kHz | 358 à 406 kHz | 366 à 421 kHz |
+| $F_o$, $C_4 = 1$ nF | 497 kHz | 480,2 kHz | 496,6 kHz |
+| Gain, $C_4 = 1$ nF | 10,7 | 13,0 | 10,7 |
+
+Le modèle ajusté sur la seule mesure à 3,3 nF **prédit la mesure à 1 nF** (fréquence et gain) : le modèle @eq-tp54-gain-boucle est validé. La résistance de perte effective est environ deux fois celle déduite de $Q_0 = 88$ ($Q \approx L\omega/r \approx 34$ à 400 kHz) : $Q_0$ a été mesuré à l'impédancemètre, à faible signal et à 455 kHz ; en fonctionnement s'ajoutent les pertes des condensateurs, des sondes et de la porte, attribuées ici à $r$ (méthode de l'énoncé, § 2°).
+:::
+
 ![Gain de boucle $T(j\omega)$ calculé par @eq-tp54-gain-boucle ($L_1 = 220\ \mathrm{\mu H}$, $r = 7{,}15\ \Omega$, $C_3 = 1$ nF, $C_4 = 3{,}3$ nF) pour les mesures de séance ($R_s = 2{,}98\ \mathrm{k\Omega}$, $|A_v| = 15{,}6$) et pour celles du CR de 2023 ($R_s = 213\ \Omega$, $|A_v| = 16{,}8$) : la sélectivité dépend fortement de $R_s$. La phase s'annule près de $F_o$ dans les deux cas. Calcul (Complément).](../figures/tp05-boucle-ouverte.svg){#fig-tp54-boucle-ouverte}
 
 | Grandeur | Prévision | Mesure | Commentaire |
 |---|---|---|---|
 | $F_o$ ($V_R$ en phase avec $V_{in}$) | 387,7 kHz (§ 3°) | | |
-| Maximum de $V_R/V_{in}$ | ≈ 4,2 vers 384 kHz | | |
-| Bande à −3 dB | ≈ 358 à 406 kHz | | |
+| Fréquence de résonance | 387,7 kHz (maximum vers 384 kHz) | 400 kHz | +3,2 % |
+| $V_R$ / $V_{in}$ à la résonance | ≈ 4,2 | 753 mV / 206,2 mV = 3,65 | −13 % |
+| Bande à −3 dB ($V_R = 753/\sqrt{2} = 532$ mV) | ≈ 358 à 406 kHz (48 kHz) | 361 à 421 kHz (60 kHz) | +25 % |
 
 **4.2 Condition de démarrage** : mesurer le gain de boucle quand il est réel ($f = F_o$) ; la condition est-elle satisfaite ? comparer à la théorie. Que devient $G_o$ avec $C_4 = 1$ nF au lieu de 3,3 nF ? conséquence prévisible d'un gain de boucle trop grand ?
 
@@ -241,6 +265,14 @@ Avec $C_4 = 1$ nF : $G_o \approx |A_v|\,C_3/C_4 = |A_v|$, soit environ **3 fois 
 
 ::: {.notes-externes}
 Mesures de 2023, faites « à $f = F_o = 164$ kHz » : $V_{out}/V_{in} = 1{,}8$ avec $C_4 = 3{,}3$ nF, et $0{,}2$ avec $C_4 = 1$ nF ; conclusion du binôme : « pour $C_4 = 3{,}3$ nF la condition de Barkhausen est vérifiée, pour $C_4 = 1$ nF ce n'est plus le cas » [cr-2023-lc, p. 9].
+:::
+
+::: {.notes}
+Mesure en séance [mesures-armand], $C_4 = 1$ nF : $F_o = 497$ kHz, $V_R = 2{,}2$ V pour $V_{in} = 206$ mV, soit un gain de boucle de **10,7**, environ 2,9 fois celui obtenu avec 3,3 nF : le gain augmente bien quand $C_4$ diminue, contrairement au CR de 2023.
+:::
+
+::: {.complement}
+À $V_{in} = 206$ mV, la sortie de la porte atteint environ $15{,}6 \times 0{,}206 \approx 3{,}2$ V : on est près de la limite du régime linéaire (5 V autour du repos). Une légère compression du gain n'est pas exclue ; refaire un point à $V_{in} \approx 50$ mV permettrait de le vérifier.
 :::
 
 ::: {.a-verifier #av-tp54-gain-c4-cr2023}
@@ -253,10 +285,10 @@ Mesures de 2023, faites « à $f = F_o = 164$ kHz » : $V_{out}/V_{in} = 1{,}8$ 
 
 | Grandeur | Prévision | Mesure | Commentaire |
 |---|---|---|---|
-| $G_o = V_R/V_{in}$ à $F_o$, $C_4 = 3{,}3$ nF | 4,19 | | |
-| Condition $G_o \ge 1$ | satisfaite | | |
-| $F_o$ avec $C_4 = 1$ nF | ≈ 480 kHz | | |
-| $G_o$ avec $C_4 = 1$ nF | 13,0 | | |
+| $G_o = V_R/V_{in}$ à $F_o$, $C_4 = 3{,}3$ nF | 4,19 | 753/206,2 = 3,65 | −13 % (pertes, § 4.1) |
+| Condition $G_o \ge 1$ | satisfaite | satisfaite | |
+| $F_o$ avec $C_4 = 1$ nF | ≈ 480 kHz | 497 kHz | +3,5 % |
+| $G_o$ avec $C_4 = 1$ nF | 13,0 | 2,2 V/206 mV = 10,7 | −18 % ; 10,7 prévu par le modèle ajusté |
 
 **4.3 Prévision de l'amplitude** (méthode du premier harmonique) [poly, p. 63-64] : le gain apparent vis-à-vis du fondamental diminue quand l'amplitude augmente (cas extrême : carré de 10 Vcàc, fondamental $2V_{cc}/\pi = 6{,}37$ V) ; l'oscillation se stabilise quand $T(\omega_0) = 1$ pour le fondamental. Relevés : voies sur J5, J7 et J3 (sondes ×10 compensées) ; à $F_o$, augmenter $V_{in}$ jusqu'à $V_R = V_{in}$ (réajuster la fréquence si la phase a glissé) ; noter l'amplitude ; relever les trois signaux, puis les spectres FFT de $V_{out}$ et $V_R$.
 
@@ -268,7 +300,17 @@ Mesures de 2023, faites « à $f = F_o = 164$ kHz » : $V_{out}/V_{in} = 1{,}8$ 
 
 | Grandeur | Prévision | Mesure | Commentaire |
 |---|---|---|---|
-| Amplitude quand $V_R = V_{in}$ | ≤ 1,7 V crête | | |
+| Amplitude quand $V_R = V_{in}$ | ≤ 1,7 V crête (≤ 1,49 V avec le modèle ajusté) | 2,7 Vcàc = 1,35 V crête | 90 % de la borne |
+::: {.notes}
+Mesure en séance [mesures-armand] : $V_R = V_{in}$ pour **2,7 Vcàc** (1,35 V crête).
+:::
+
+::: {.complement}
+Avec le modèle ajusté de 4.1, $V_R/V_{out} = 3{,}65/15{,}6 = 0{,}234$ au fondamental à $F_o$ ; la borne devient $0{,}234 \times 6{,}37 = 1{,}49$ V crête (3,0 Vcàc). La mesure en est à 90 % : le fondamental de $V_{out}$ vaut ≈ $1{,}35/0{,}234 = 5{,}8$ V crête, $V_{out}$ est donc nettement écrêté : c'est le fondamental d'une sinusoïde d'amplitude ≈ 7 V écrêtée à ±5 V, pour laquelle $H_3/H_1 \approx -18$ dB (un vrai carré donnerait 6,37 V et −9,5 dB). Le gain de la porte vis-à-vis du fondamental est tombé de 15,6 (petits signaux) à ≈ 4,3 : c'est cette compression qui fixe l'amplitude.
+:::
+
+| Grandeur | Prévision | Mesure | Commentaire |
+|---|---|---|---|
 | Fréquence réajustée | ≈ $F_o$ | | |
 | Forme de $V_{out}$ | sinus écrêté | | |
 | FFT de $V_{out}$ : $H_2$, $H_3$ (dB / $H_1$) | $H_2$ faible ; $H_3$ ≥ −9,5 dB | | |
@@ -284,11 +326,21 @@ On doit retrouver, à quelques ‰ près, la fréquence de phase nulle mesurée 
 
 | Grandeur | Prévision | Mesure | Commentaire |
 |---|---|---|---|
-| Fréquence d'oscillation | = $F_o$ mesurée en 4.1 | | |
-| Amplitude de $V_{in}$ | ≈ valeur de 4.3 | | |
+| Fréquence d'oscillation | = $F_o$ mesurée en 4.1 (400 kHz) | 395 kHz | −1,3 % |
+| Amplitude de $V_{in}$ | ≈ valeur de 4.3 (2,7 Vcàc) | | |
 | Amplitude de $V_{out}$ | | | |
-| $A_2/A_1$ (dB) | faible (écrêtage symétrique) | | |
-| $A_3/A_1$ (dB) | ≈ valeur de 4.3 | | |
+| $A_2/A_1$ (dB) | faible (écrêtage symétrique) | −40 dB | |
+| $A_3/A_1$ (dB) | ≈ −18 dB (sinus écrêté, § 4.3) | −20 dB | |
+
+::: {.notes}
+Mesures en séance [mesures-armand], boucle fermée, $C_4 = 3{,}3$ nF : oscillation à **395 kHz** ; spectre de $V_{out}$ : $A_2$ à **−40 dB** et $A_3$ à **−20 dB** de $A_1$.
+:::
+
+::: {.complement}
+**Fréquence** : 1,3 % sous la fréquence de phase nulle de 4.1. En saturation, la porte ajoute un petit déphasage (et ses capacités parasites comptent davantage) ; la boucle compense en glissant le long de la phase du réseau, qui ne tourne que d'environ 2° par kHz autour de $F_o$ (bande de 60 kHz) : un déphasage de quelques degrés suffit à expliquer 5 kHz.
+
+**$A_2 = -40$ dB** : écrêtage très symétrique, cohérent avec le repos à $V_{cc}/2$ (5 V mesurés au 1°). **$A_3 = -20$ dB** ($A_3/A_1 = 0{,}1$) : bien moins que les −9,5 dB d'un carré ; c'est la valeur d'une sinusoïde écrêtée à environ 70 % de sa crête, ce qui correspond au fondamental déduit de 4.3 (≈ 5,8 V crête) : boucle ouverte et boucle fermée concordent. La saturation douce de la porte arrondit encore les fronts et abaisse $H_3$.
+:::
 
 ### 6° Résonateur céramique à la place de la bobine {#sec-tp54-resonateur}
 
@@ -317,8 +369,16 @@ Diviser $C_{eq}$ par 3,3 ne déplace la fréquence que de 3 kHz (0,7 %) : la ré
 | $F_s$ (tableau) | 442,1 kHz | — | |
 | $F_p$ (tableau) | 457,5 kHz | — | |
 | $1/(C_3\omega) + 1/(C_4\omega)$ à 455 kHz | 455,8 Ω | — | |
-| Fréquence d'oscillation avec le résonateur | ≈ 446,0 kHz | | |
+| Fréquence d'oscillation avec le résonateur | ≈ 446,0 kHz | 446 kHz | écart < 0,1 % |
 | Forme de $V_{in}$, $V_{out}$ | | | |
+
+::: {.notes}
+Mesure en séance [mesures-armand] : avec le résonateur céramique, $C_3 = 1$ nF et $C_4 = 3{,}3$ nF, oscillation à **446 kHz**.
+:::
+
+::: {.complement}
+La prévision tirée du tableau d'impédance (446,0 à 446,05 kHz) est retrouvée à mieux que 0,1 %, alors qu'avec $L_1$ l'écart théorie-mesure était de 3 % (400 kHz pour 387,7 kHz prévus) et que la fréquence bougeait de 1,3 % entre boucle ouverte et boucle fermée. Le résonateur impose la fréquence : sa réactance varie si vite entre $F_s$ et $F_p$ que ni la tolérance des condensateurs, ni le déphasage de la porte saturée ne la déplacent sensiblement. C'est l'intérêt d'un résonateur céramique ou d'un quartz.
+:::
 
 ## À retenir {#sec-retenir-tp54}
 
