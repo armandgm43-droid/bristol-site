@@ -24,6 +24,20 @@ number-sections: false
 
 *Plan à établir.*
 
+## Annales corrigées
+
+Chaque sujet est affiché en images, découpé question par question, avec la solution juste en dessous (solutions rédigées par Claude et vérifiées par le calcul, à relire). Sujets de l'ancien module EA 205 / « CCC » (A. Ghiotto).
+
+| Sujet | Date | Source |
+|---|---|---|
+| [Partiel 2022-2023](annales/2022-2023-partiel.qmd) : schéma aux variations, schéma instantané, pompe de charge à diodes | 03/01/2023 | photos |
+| [Partiel 2017-2018](annales/2017-2018-partiel.qmd) : schéma aux variations, schéma instantané, diodes en commutation, monostable à portes NOR | 24/11/2017 | photos |
+| [Partiel 2015-2016](annales/2015-2016-partiel.qmd) : transistor commandé par un signal carré, oscillateur à portes CMOS | 13/12/2015 | scan |
+| [Partiel 2014-2015](annales/2014-2015-partiel.qmd) : transistor commandé par un signal carré, astable à AOP, QCM | 12/11/2014 | photos |
+| [Partiel 2013-2014](annales/2013-2014-partiel.qmd) : diodes en commutation, transistor commandé par un signal carré, LM555 | 25/11/2013 | scan |
+
+Exercices repris : le transistor commandé à travers un condensateur (2013-2014 ex. II, 2014-2015 ex. I, 2015-2016 ex. I) ; les diodes en commutation (2013-2014 ex. I, 2017-2018 ex. III). 3 blocs *À vérifier* (`av-ann…`).
+
 ## Table des notations
 
 À compléter lors de l'analyse du premier chapitre.

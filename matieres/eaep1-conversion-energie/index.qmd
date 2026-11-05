@@ -35,6 +35,26 @@ Plan tiré de l'organisation du cours (`cours`, p. 2) : un chapitre Bristol par 
 
 Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
 
+## TD corrigés
+
+Énoncé affiché en images, découpé question par question, avec la solution juste en dessous (solutions rédigées par Claude, à relire et à compléter par la correction faite en séance).
+
+| TD | Séance | Contenu |
+|---|---|---|
+| [EI-TD SEPIC](td/td01-sepic.qmd) | 6 novembre 2026 (TD1, TD3) | étude fonctionnelle du SEPIC : séquences, rapport de conversion, courants des inductances, ondulation de sortie ; 2 blocs *À vérifier* ouverts (unité de $L_1$, notation de $\Delta u_s$) |
+
+## Annales corrigées
+
+Chaque sujet est affiché en images, découpé question par question, avec la solution juste en dessous (solutions rédigées par Claude et vérifiées par le calcul, à relire). Sujets de l'ancien module EA207 (même intitulé, même enseignant).
+
+| Sujet | Date | Source |
+|---|---|---|
+| [Partiel 2022-2023](annales/2022-2023-partiel.qmd) : questions de cours, chargeur buck-boost, commande, thermique | 10/01/2023 | photos |
+| [Partiel 2017-2018](annales/2017-2018-partiel.qmd) : hacheur boost (conductions continue, critique, discontinue), thermique | 22/12/2017 | scan (aussi dans le poly de TD, p. 2-3) |
+| [Partiel 2016-2017](annales/2016-2017-partiel.qmd) : SEPIC, pertes d'une diode, commande | 06/01/2017 | scan |
+
+Exercice repris : le circuit de commande push-pull (2016-2017, ex. 3 ; 2022-2023, partie B). 6 blocs *À vérifier* (`av-ann…`).
+
 ## Table des notations
 
 À compléter lors de l'analyse du premier chapitre.
@@ -53,6 +73,7 @@ Inventaire complet : `analyses/inventaire-sources.md` (non publié). Sources bru
 | `cours` | `support/cours-2026-vinassa.pdf` | officielle | support de cours 2026-2027 |
 | — | `support/aide-decomposition-serie-fourier.pdf, support/lire-datasheet-transistor-puissance.pdf` | officielle | aides (scans : lecture sur image) |
 | — | `support/datasheets/` | officielle | BYV29 (diode), IRFZ34N (MOSFET) |
+| `td-sepic` | `td/td-sepic-2024-vinassa.pdf` | officielle | EI-TD « Étude fonctionnelle du convertisseur SEPIC » (S_24, 1 p.), séance du 6 novembre 2026 |
 | `td` | `td/poly-td-2022-2023-vinassa.pdf` | officielle | poly de TD « EA207 Enseignement intégré », 2022-2023 |
 | `be` | `td/be-2024-vinassa.pdf` | officielle | bureau d'études PSIM, 2024 |
 | `notes-2023` | `notes/2023-notes-cours.pdf` | externe | 2 p. (ancien élève) |

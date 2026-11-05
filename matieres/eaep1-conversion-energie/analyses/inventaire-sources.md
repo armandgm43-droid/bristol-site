@@ -32,6 +32,7 @@
 |---|---|---|
 | `td/be-2024-vinassa.pdf` | 6 | 0,4 Mo |
 | `td/poly-td-2022-2023-vinassa.pdf` | 34 | 5,3 Mo |
+| `td/td-sepic-2024-vinassa.pdf` | 1 | 0,1 Mo |
 
 ### `notes/` — notes de cours
 
@@ -93,3 +94,4 @@ Chemin dans `2A.zip` (sans le préfixe `2A/`) → chemin dans `sources/eaep1/`.
 | `EEL7FE-UEA Circuits et Systèmes Analogiques/EEL7-EAEP1 Électronique pour la Conversion d'Energie 1/comment lire la data sheet dun transistor de puissance 2.pdf` | `support/lire-datasheet-transistor-puissance.pdf` |
 | `EEL7FE-UEA Circuits et Systèmes Analogiques/EEL7-EAEP1 Électronique pour la Conversion d'Energie 1/S_24_EA207_BE_JMV.pdf` | `td/be-2024-vinassa.pdf` |
 | `S7/S7/Électronique pour la Conversion d’Energie/TD/EA207_EI-TD_poly_2022-2023_JMV.pdf` | `td/poly-td-2022-2023-vinassa.pdf` |
+| `2A/EEL7FE-UEA Circuits et Systèmes Analogiques/EEL7-EAEP1 Électronique pour la Conversion d'Energie 1/S_24_EA207_TD_SEPIC_JMV.pdf` (ajouté le 5 novembre 2026, dossier `Documents/Enseirb/2A`) | `td/td-sepic-2024-vinassa.pdf` |

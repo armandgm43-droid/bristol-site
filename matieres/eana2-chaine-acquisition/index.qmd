@@ -33,6 +33,17 @@ Plan tiré des sommaires des deux supports. Le premier objectif annoncé (« pri
 
 Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
 
+## Annales corrigées
+
+Sujets de l'ancien module EA222 « Initiation aux bruits en électronique », rangés ici par défaut (partie bruit, chapitres 4 et 5 ; rattachement à confirmer). Chaque sujet est affiché en images, question par question, avec la solution juste en dessous (solutions rédigées par Claude et vérifiées par le calcul, à relire).
+
+| Sujet | Contenu | Source |
+|---|---|---|
+| [Partiel 2016-2017](annales/2016-2017-partiel-initiation-bruit.qmd) | corrélation, bruit équivalent, ENBW, facteur de bruit, température équivalente | scan |
+| [Partiel 2015-2016](annales/2015-2016-partiel-initiation-bruit.qmd) | mêmes exercices, autres valeurs | scan |
+
+1 bloc *À vérifier* (`av-ann1617-piege-in`).
+
 ## Table des notations
 
 À compléter lors de l'analyse du premier chapitre.

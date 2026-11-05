@@ -31,6 +31,18 @@ Matière de TP : pas de chapitre de cours (théorie : TSIG1). TP traités en pha
 | 3 | filtrage linéaire : effet fréquentiel, signal de parole bruité |
 | 4 | pour aller plus loin : sélectivité, débruitage sur la TF, signal biomédical |
 
+## Annales corrigées {#sec-annales}
+
+Partiels de TP sur machine de l'ancien module TS202 (sujets officiels). Chaque sujet est affiché en images, découpé question par question, avec la solution juste en dessous (solutions rédigées par Claude, code Matlab testé sous GNU Octave, à relire). Les fichiers sonores des sujets ne sont pas dans les sources : les questions qui en dépendent sont corrigées par la méthode et le code.
+
+| Sujet | Contenu | Source |
+|---|---|---|
+| [Partiel 2017-2018 (groupes 5 et 7)](annales/2017-2018-partiel-groupes-5-7.qmd) | fenêtrage d'un cosinus ; filtre récursif et $Y = XH$ ; parole bruitée, RSB et réjecteur | photos |
+| [Partiel 2016-2017](annales/2016-2017-partiel.qmd) | TFC/TFD, signaux DTMF et spectrogramme ; associations de filtres ; débruitage d'une musique | PDF LaTeX |
+| [Partiel 2014-2015](annales/2014-2015-partiel.qmd) | spectre échantillonné, TFD et fenêtres ; filtre RII (pôles, zéros, $h[n]$) ; débruitage | photos |
+
+Exercices repris d'un sujet à l'autre : débruitage par réjecteur $1 - 2r\cos\theta\, z^{-1} + r^2 z^{-2}$ (2016, 2017 et poly de TP) ; suppression de sinusoïdes parasites (2014, 2016, 2017) ; effet du fenêtrage sur une sinusoïde (2014, 2017 et poly). 5 blocs *À vérifier* (`av-ann…`) signalent des énoncés ambigus ou incomplets.
+
 ## Table des notations
 
 À compléter lors de l'analyse du premier chapitre.

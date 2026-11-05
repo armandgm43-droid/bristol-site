@@ -123,6 +123,9 @@ website:
       style: docked
       contents:
         - matieres/eaep1-conversion-energie/index.qmd
+        - section: "TD corrigés"
+          contents:
+            - matieres/eaep1-conversion-energie/td/td01-sepic.qmd
     - id: eana2
       title: "EANA2"
       style: docked

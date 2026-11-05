@@ -32,6 +32,16 @@ Plan tiré de l'« Outline » du support 2026-2027 (`slides`).
 
 Plan **proposé à l'inventaire** du 19 octobre 2026 : à valider avant l'analyse du chapitre 1.
 
+## Annales corrigées
+
+| Épreuve | Contenu | Corrigé de l'enseignant |
+|---|---|---|
+| [Test 2023-2024](annales/2023-2024-test.qmd) (20 décembre 2023) | moindres carrés sur données fréquentielles complexes ; maximisation concave, contraintes linéaires, KKT | oui (sauf ex. 2 q. 9) |
+| [Partiel 2022-2023](annales/2022-2023-partiel.qmd) (daté du 5 mai 2022) | moindres carrés à 3 mesures ; critère quadratique, Newton, contrainte et KKT | début (ex. 1 q. 1-2) |
+| [Partiel 2021-2022](annales/2021-2022-partiel.qmd) (19 mai 2022) | points critiques ; moindres carrés sur un modèle de récurrence ; KKT avec contrainte non linéaire | oui |
+
+Les fichiers `2021-2022-test.pdf` et `2022-2023-test.pdf` reprennent les sujets des partiels de même année (avec corrigé) : ils sont intégrés aux pages ci-dessus.
+
 ## Table des notations
 
 À compléter lors de l'analyse du premier chapitre.

@@ -3,7 +3,7 @@
 > Où en est le projet. Mis à jour **à la fin de chaque session de travail**.
 > Vision et méthode : `CONTEXTE_PROJET.md`. Règles : `conventions.md`. Technique : `architecture.md`. Tâches : `TODO.md`.
 >
-> Dernière mise à jour : 3 novembre 2026 (EANA4 : préparations et trames de CR des TP 4/5 et 5/4).
+> Dernière mise à jour : 5 novembre 2026 (EAEP1 : TD SEPIC corrigé).
 
 ---
 
@@ -141,7 +141,7 @@ Aucun chapitre rédigé : statut `brouillon` pour tous les chapitres proposés. 
 | AUTO1 — Commande des systèmes linéaires | 6 chapitres proposés | note de cours Melchior (v03 de référence) |
 | AUTO2 — TP d'automatique | TP | 2 polys de TP |
 | AUTO3 — Optimisation | 4 chapitres proposés | support en anglais (R. Malti) |
-| EAEP1 — Conversion d'énergie 1 | 7 chapitres proposés | support 2026 (J.-M. Vinassa) |
+| EAEP1 — Conversion d'énergie 1 | 7 chapitres proposés | support 2026 (J.-M. Vinassa) ; **EI-TD SEPIC corrigé** (5 novembre 2026), 2 AV ouverts |
 | EANA1 — Composants et circuits de commutation | à établir | **aucun support officiel** |
 | EANA2 — Chaîne d'acquisition | 5 chapitres proposés | CAN (F. Rivet) + bruit (T. Taris) |
 | EANA4 — TP d'électronique | TP | poly 2026 ; **TP 4/5 et 5/4 : préparation + trame de CR** (3 novembre 2026), 5 AV ouverts |
@@ -323,3 +323,4 @@ Toutes ces décisions ont été **validées par Armand** le 6 octobre 2026 et re
 | 2026-11-04 | Bristol — EANA4 — TP 5/4, boucle ouverte | Mesures 4.1 d'Armand en *Notes de cours* : maximum de $V_R$ = 347 mV à 410 kHz (+5,8 % / théorie), bande −3 dB 382,8-480 kHz (97 kHz, 2 fois la prévision, dissymétrique) ; première mesure (446,4 kHz) faite avec un autre composant, écartée ; `av-tp54-frequence-attendue` complété (mesure dans l'incertitude, à trancher par Armand) ; PDF régénéré |
 | 2026-11-04 | Bristol — EANA4 — TP 5/4, vraies mesures 4.1-4.2 | Relevés précédents (446,4 et 410 kHz) faits avec un autre composant, remplacés : $C_4 = 3{,}3$ nF : 400 kHz, gain 3,65, bande 361-421 kHz ; $C_4 = 1$ nF : 497 kHz, gain 10,7. Modèle ajusté ($L_1 \approx 206$ µH, $r \approx 15{,}4$ Ω) qui prédit la mesure à 1 nF ; `av-tp54-frequence-attendue` : proposition de levée (pas d'erreur de l'énoncé), à confirmer par Armand ; PDF régénéré |
 | 2026-11-04 | Bristol — EANA4 — TP 5/4, fin des mesures | 4.3 : $V_R = V_{in}$ à 2,7 Vcàc (90 % de la borne du modèle ajusté) ; 5° : 395 kHz, $A_2$ −40 dB, $A_3$ −20 dB (sinus écrêté, cohérent avec 4.3) ; 6° : résonateur à 446 kHz (prévu 446,0-446,05 kHz) ; page et PDF à jour. Reste : FFT de 4.3 (non relevées), bloc `av-tp54-frequence-attendue` à lever si Armand est d'accord |
+| 2026-11-05 | Bristol — EAEP1 — TD SEPIC | Sujet de l'EI-TD du 6 novembre (`S_24_EA207_TD_SEPIC_JMV.pdf`, trouvé dans `Documents/Enseirb/2A`) copié dans `sources/eaep1/td/td-sepic-2024-vinassa.pdf` (MD5 contrôlé) ; page `td/td01-sepic.qmd` au format des TD d'EARF1 (16 images, `td/sujets/decoupe-td.py`), solutions de Claude en *Complément* (15 questions, valeurs recalculées) ; figure `figures/td01-sepic-chronogrammes.py` + SVG ($L_2$ = 680 µH choisi, non donné) ; **2 AV ouverts** : `av-td-sepic-unite-l1` (« 330 µF » pour $L_1$), `av-td-sepic-notation-ondulation` ($U_{C\max}$ pour $u_s$) ; `_quarto.yml` (section « TD corrigés » d'EAEP1), fiche matière, inventaire. Rendu Quarto non contrôlé. Fichier temporaire `Claude outputs/contact-td-sepic.png` supprimable |

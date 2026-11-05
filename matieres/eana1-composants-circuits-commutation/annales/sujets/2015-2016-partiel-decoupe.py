@@ -5,8 +5,8 @@ exercice et une par question).
 Source : sources/eana1/annales/2015-2016-partiel.pdf (scan, 3 pages). Pages
 rendues à 200 dpi avec pdftoppm, en niveaux de gris, contraste renforcé. Les
 annotations manuscrites d'un étudiant (table de vérité, niveaux logiques « 0 »
-et « 1 » sur le schéma, flèche au-dessus de C1) sont effacées (rectangles
-blanchis). L'en-tête de l'exercice II, à cheval sur les pages 2 et 3, est
+et « 1 » sur le schéma, flèche au-dessus de C1, lettres « c » et « e » sur le
+schéma de l'exercice I) sont effacées (rectangles blanchis). L'en-tête de l'exercice II, à cheval sur les pages 2 et 3, est
 recomposé en une image. Largeurs uniformisées à la fin, PNG 16 couleurs.
 
 Usage (depuis la racine du projet Bristol) :
@@ -32,19 +32,24 @@ PAGES = {1: {}, 2: {}, 3: {}}
 # Annotations manuscrites de la page 2 (coordonnées à 200 dpi).
 MASQUES_P2 = [
     (1180, 440, 1400, 625),   # table de vérité à droite des questions 2 c, d et 3
-    (900, 700, 1015, 733),    # flèche au-dessus de « C1 »
-    (928, 760, 950, 787), (988, 736, 1020, 778),   # « 1 » de part et d'autre de C1
-    (170, 968, 200, 995),     # « 1 » à l'entrée de la porte I
-    (430, 968, 458, 1003),    # « 0 » à la sortie de la porte I
-    (930, 1050, 958, 1080),   # « 0 » à la sortie de la porte II
-    (752, 1110, 780, 1140),   # « 1 » sur Vc
-    (1348, 1003, 1380, 1029), # « 1 » à la sortie de la porte III
+    (905, 700, 1015, 729), (905, 729, 936, 735),   # flèche au-dessus de « C1 »
+    (926, 796, 948, 816), (994, 755, 1024, 787),   # « 1 » de part et d'autre de C1
+    (192, 950, 216, 980),     # « 1 » à l'entrée de la porte I
+    (457, 955, 480, 978),     # « 0 » à la sortie de la porte I
+    (563, 994, 587, 1016),    # « 1 » entre R2 et R1
+    (738, 962, 762, 980),     # « 1 » à l'entrée de la porte II
+    (925, 1030, 958, 1057),   # « 0 » à la sortie de la porte II
+    (752, 1108, 782, 1148),   # « 1 » sur Vc
+    (1348, 975, 1380, 1012),  # « 1 » souligné à la sortie de la porte III
 ]
+
+# Annotations manuscrites de la page 1 (lettres « c » et « e » sur le schéma).
+MASQUES_P1 = [(636, 1175, 653, 1197), (1132, 1078, 1153, 1101)]
 
 # (fichier, [(page, (x0, y0, x1, y1)[, masques]), ...]) ; plusieurs morceaux
 # sont empilés verticalement.
 BOITES = [
-    ('ex1',    [(1, (150, 830, 1500, 1940))]),
+    ('ex1',    [(1, (150, 830, 1500, 1940), MASQUES_P1)]),
     ('ex1-q1', [(1, (150, 1975, 1500, 2020))]),
     ('ex1-q2', [(2, (150, 288, 1500, 525), MASQUES_P2)]),
     ('ex1-q3', [(2, (150, 557, 1150, 598))]),
